@@ -31,22 +31,9 @@
 		29EC86F23006AABE00E16D51 /* MessageComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		29EC86F53006AD7F00E16D51 /* Exceptions for "MorningHello" folder in "MorningHello" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 29B441A12F3BE23E00A4F417 /* MorningHello */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		29B441A42F3BE23E00A4F417 /* MorningHello */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				29EC86F53006AD7F00E16D51 /* Exceptions for "MorningHello" folder in "MorningHello" target */,
-			);
 			path = MorningHello;
 			sourceTree = "<group>";
 		};
