@@ -110,8 +110,11 @@ struct IntroVideoView: View {
         case 3...5:
             return "spring_intro"
 
-        case 6...8:
+        case 6, 7:
             return "summer_intro"
+
+        case 8:
+            return "august_intro"
 
         case 9...11:
             return "autumn_intro"

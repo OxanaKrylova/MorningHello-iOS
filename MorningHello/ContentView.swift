@@ -53,6 +53,7 @@ struct ContentView: View {
     @State private var showEmergencyMessageAlert = false
     @State private var showEmergencyContactSelection = false
     @State private var showSystemShareSheet = false
+    @State private var showBirthdayGreeting = false
     
     @AppStorage("showOrthodoxHolidays") private var showOrthodoxHolidays = true
     @AppStorage("showCatholicHolidays") private var showCatholicHolidays = true
@@ -64,12 +65,6 @@ struct ContentView: View {
     
     private let lastCheckInKey = "lastCheckInDate"
     
-    struct HolidayContent {
-        let images: [String]
-        let phrases: [String]
-        let category: String
-    }
-    
     struct SundayContent {
         let images: [String]
         let phrases: [String]
@@ -80,17 +75,33 @@ struct ContentView: View {
         let phrase: String
     }
     
-    struct ShareSheet: UIViewControllerRepresentable {
-        let items: [Any]
-        
-        func makeUIViewController(context: Context) -> UIActivityViewController {
-            UIActivityViewController(activityItems: items, applicationActivities: nil)
+    @State private var lastCheckInDate: Date?
+    func stableDailyIndex(
+        count: Int,
+        salt: Int = 0,
+        date: Date = Date()
+    ) -> Int {
+        guard count > 0 else {
+            return 0
         }
         
-        func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
+        let components = Calendar.current.dateComponents(
+            [.year, .month, .day],
+            from: date
+        )
+        
+        let year = components.year ?? 0
+        let month = components.month ?? 0
+        let day = components.day ?? 0
+        
+        let dailyNumber =
+        year * 10_000 +
+        month * 100 +
+        day +
+        salt
+        
+        return abs(dailyNumber) % count
     }
-    @State private var lastCheckInDate: Date?
-    
     var isCheckInBlocked: Bool {
         guard let lastCheckInDate else {
             return false
@@ -365,32 +376,7 @@ struct ContentView: View {
         
         return savedName
     }
-    func stableDailyIndex(
-        count: Int,
-        salt: Int = 0,
-        date: Date = Date()
-    ) -> Int {
-        guard count > 0 else {
-            return 0
-        }
-        
-        let components = Calendar.current.dateComponents(
-            [.year, .month, .day],
-            from: date
-        )
-        
-        let year = components.year ?? 0
-        let month = components.month ?? 0
-        let day = components.day ?? 0
-        
-        let dailyNumber =
-        year * 10_000 +
-        month * 100 +
-        day +
-        salt
-        
-        return abs(dailyNumber) % count
-    }
+
     func birthdayContent(for date: Date = Date()) -> HolidayContent? {
         let defaults = UserDefaults.standard
         
@@ -427,85 +413,7 @@ struct ContentView: View {
             category: "День рождения"
         )
     }
-    var smartPhrase: String {
 
-        // 1. День рождения
-        if let birthday = birthdayContent(),
-           let phrase = birthday.phrases.first {
-
-            return phrase
-        }
-
-        // 2. Праздник
-        if let holiday = holidayContent(),
-           !holiday.phrases.isEmpty {
-
-            let availableCount = min(
-                holiday.images.count,
-                holiday.phrases.count
-            )
-
-            guard availableCount > 0 else {
-                return "Доброе утро!"
-            }
-
-            let index = stableDailyIndex(
-                count: availableCount,
-                salt: 500
-            )
-
-            return holiday.phrases[index]
-        }
-
-        // 3. Понедельник
-        if let monday = mondayCoffeeContent(),
-           let phrase = monday.phrases.first {
-
-            return phrase
-        }
-
-        // 4. Шаббат
-        if showJewishHolidays,
-           let shabbat = currentShabbatContent() {
-
-            return shabbat.phrase
-        }
-
-        // 5. Воскресенье
-        if showOrthodoxHolidays || showCatholicHolidays {
-            if let sunday = sundayContent(),
-               let phrase = sunday.phrases.first {
-
-                return phrase
-            }
-        }
-
-        // 6. Февраль
-        if let february = februaryContent(),
-           let phrase = february.phrases.first {
-
-            return phrase
-        }
-
-        // 7. Декабрь
-        if let december = decemberContent(),
-           let phrase = december.phrases.first {
-
-            return phrase
-        }
-
-        // 8. Обычная сезонная фраза
-        guard !phrases.isEmpty else {
-            return "Доброе утро!"
-        }
-
-        let index = stableDailyIndex(
-            count: phrases.count,
-            salt: 900
-        )
-
-        return phrases[index]
-    }
     func birthdayContent() -> HolidayContent? {
         let savedDay = UserDefaults.standard.integer(
             forKey: "profile_birth_day"
@@ -637,487 +545,42 @@ struct ContentView: View {
     private func sundayContent(
         date: Date = Date()
     ) -> HolidayContent? {
-        
-        let calendar = Calendar.current
-        let currentDate = calendar.startOfDay(for: date)
-        
-        let components = calendar.dateComponents(
-            [.year, .weekday],
-            from: currentDate
-        )
-        
-        guard let year = components.year,
-              let weekday = components.weekday else {
-            return nil
-        }
-        
-        // В Calendar.current:
-        // 1 — воскресенье
-        // 2 — понедельник
-        guard weekday == 1 else {
-            return nil
-        }
-        
-        let images = (1...48).map {
-            "Sunday_\($0)"
-        }
-        
-        let phrases = [
-            "Пусть это воскресное утро начнётся спокойно, светло и с добрых мыслей.",
-            "Желаю уютного воскресенья, душевного тепла и приятных мгновений.",
-            "Пусть сегодняшний день подарит отдых, радость и хорошее настроение.",
-            "Пусть воскресное утро наполнит сердце покоем, благодарностью и светом.",
-            "Желаю провести этот день рядом с теми, кто вам дорог.",
-            "Пусть воскресенье принесёт тёплые встречи, искренние улыбки и добрые новости.",
-            "Желаю неспешного утра, ароматного чая и душевного равновесия.",
-            "Пусть этот воскресный день будет мягким, уютным и по-настоящему добрым.",
-            "Желаю оставить заботы позади и насладиться каждым мгновением этого дня.",
-            "Пусть воскресенье подарит новые силы, вдохновение и внутренний покой.",
-            "Желаю светлого утра, приятного отдыха и гармонии в душе.",
-            "Пусть сегодняшний день наполнит дом уютом, а сердце — радостью.",
-            "Желаю доброго воскресенья, спокойных мыслей и счастливых минут.",
-            "Пусть это утро станет началом тёплого и прекрасного дня.",
-            "Желаю провести воскресенье легко, радостно и без лишней спешки.",
-            "Пусть сегодня найдётся время для отдыха, улыбок и любимых людей.",
-            "Желаю воскресного уюта, душевного тепла и приятных сюрпризов.",
-            "Пусть этот день подарит вам чувство спокойствия и тихого счастья.",
-            "Желаю добрых разговоров, тёплых встреч и прекрасного настроения.",
-            "Пусть воскресное утро принесёт надежду, вдохновение и хорошие мысли.",
-            "Желаю отдохнуть душой, набраться сил и встретить новый день с улыбкой.",
-            "Пусть сегодняшнее воскресенье будет наполнено заботой и любовью.",
-            "Желаю светлого дня, уютного дома и спокойствия в сердце.",
-            "Пусть воскресенье подарит вам больше радости, чем забот.",
-            "Желаю начать этот день с благодарности и добрых ожиданий.",
-            "Пусть воскресное утро согреет душу и наполнит жизнь светом.",
-            "Желаю вам приятного отдыха и счастливых мгновений рядом с близкими.",
-            "Пусть сегодняшний день пройдёт спокойно, легко и благополучно.",
-            "Желаю тёплого воскресенья, искренних улыбок и хороших новостей.",
-            "Пусть этот день поможет восстановить силы и обрести душевный покой.",
-            "Желаю уютного утра, любимой музыки и приятных мыслей.",
-            "Пусть воскресенье станет маленьким праздником для души.",
-            "Желаю вам спокойствия, гармонии и радости в каждом мгновении.",
-            "Пусть сегодняшний день подарит ощущение тепла и защищённости.",
-            "Желаю доброго воскресного утра и прекрасного продолжения дня.",
-            "Пусть этот день будет наполнен светом, заботой и благодарностью.",
-            "Желаю провести воскресенье с улыбкой и лёгкостью в сердце.",
-            "Пусть утро начнётся с хороших мыслей, а день продолжится добрыми событиями.",
-            "Желаю вам тишины для отдыха, тепла для души и радости для сердца.",
-            "Пусть воскресный день подарит приятные встречи и счастливые воспоминания.",
-            "Желаю забыть о спешке и насладиться красотой сегодняшнего дня.",
-            "Пусть это воскресенье наполнит вас силами и верой в хорошее.",
-            "Желаю спокойного утра, душевного комфорта и семейного уюта.",
-            "Пусть сегодняшний день принесёт светлые мысли и приятные перемены.",
-            "Желаю вам доброты вокруг, мира внутри и улыбки на лице.",
-            "Пусть воскресное утро подарит тепло, покой и вдохновение.",
-            "Желаю провести этот день в гармонии с собой и окружающим миром.",
-            "Пусть воскресенье завершится благодарностью за всё хорошее, что было сегодня."
-        ]
-        
-        let availableCount = min(
-            images.count,
-            phrases.count
-        )
-        
-        guard availableCount > 0 else {
-            return nil
-        }
-        
-        guard let yearStart = calendar.date(
-            from: DateComponents(
-                year: year,
-                month: 1,
-                day: 1
-            )
-        ) else {
-            return nil
-        }
-        
-        // Находим первое воскресенье текущего года.
-        guard let firstSunday = calendar.nextDate(
-            after: calendar.date(
-                byAdding: .day,
-                value: -1,
-                to: yearStart
-            ) ?? yearStart,
-            matching: DateComponents(weekday: 1),
-            matchingPolicy: .nextTime,
-            direction: .forward
-        ) else {
-            return nil
-        }
-        
-        let firstSundayStart = calendar.startOfDay(
-            for: firstSunday
-        )
-        
-        let daysFromFirstSunday = calendar.dateComponents(
-            [.day],
-            from: firstSundayStart,
-            to: currentDate
-        ).day ?? 0
-        
-        guard daysFromFirstSunday >= 0 else {
-            return nil
-        }
-        
-        let sundayNumber = daysFromFirstSunday / 7
-        
-        // После 48-й пары коллекция начинается заново.
-        let index = sundayNumber % availableCount
-        
-        return HolidayContent(
-            images: [
-                images[index]
-            ],
-            phrases: [
-                phrases[index]
-            ],
-            category: "sunday"
+        SundayPostcardProvider.content(
+            for: date
         )
     }
     
     func decemberContent(
         date: Date = Date()
     ) -> HolidayContent? {
-        
-        let calendar = Calendar.current
-        
-        let components = calendar.dateComponents(
-            [.year, .month, .day],
-            from: date
-        )
-        
-        guard let year = components.year,
-              let month = components.month,
-              let day = components.day,
-              month == 12 else {
-            return nil
-        }
-        
-        // На 1 декабря уже есть отдельная праздничная открытка.
-        guard day != 1 else {
-            return nil
-        }
-        
-        let images = (1...26).map {
-            "December_\($0)"
-        }
-        
-        let phrases = [
-            "Пусть декабрьское утро принесёт тепло, уют и добрые новости.",
-            "Желаю светлого дня, спокойных мыслей и приятных зимних мгновений.",
-            "Пусть этот декабрьский день будет наполнен заботой, радостью и душевным теплом.",
-            "Пусть за окном будет прохладно, а в сердце всегда остаётся тепло.",
-            "Желаю уютного утра, хорошего настроения и исполнения маленьких желаний.",
-            "Пусть сегодняшний день подарит повод улыбнуться и поверить в хорошее.",
-            "Желаю тёплых встреч, добрых слов и приятных зимних чудес.",
-            "Пусть декабрь наполнит дом светом, сердце — покоем, а день — радостью.",
-            "Желаю спокойного утра и прекрасного продолжения дня.",
-            "Пусть зимняя атмосфера подарит вдохновение, уют и душевное равновесие.",
-            "Желаю, чтобы сегодня вас окружали только добрые люди и хорошие события.",
-            "Пусть этот день будет мягким, светлым и наполненным приятными мгновениями.",
-            "Желаю зимнего уюта, душевного тепла и прекрасного настроения.",
-            "Пусть сегодняшнее утро станет началом доброго и счастливого дня.",
-            "Желаю спокойствия в душе, тепла в доме и радости в сердце.",
-            "Пусть декабрьский день принесёт хорошие новости и приятные сюрпризы.",
-            "Желаю светлых мыслей, тёплых встреч и ощущения приближающегося чуда.",
-            "Пусть сегодняшний день подарит вам уют, заботу и искренние улыбки.",
-            "Желаю доброго утра и дня, наполненного теплом и благодарностью.",
-            "Пусть в этот зимний день найдётся время для отдыха, радости и любимых людей.",
-            "Желаю, чтобы холод оставался только за окном, а дома было тепло и спокойно.",
-            "Пусть декабрьское утро подарит надежду, вдохновение и хорошее настроение.",
-            "Желаю приятного дня, добрых разговоров и счастливых мгновений.",
-            "Пусть этот зимний день будет красивым, уютным и по-настоящему добрым.",
-            "Желаю тепла в сердце, мира в душе и света в каждом мгновении.",
-            "Пусть сегодняшний день станет ещё одной доброй страницей вашей зимы."
-        ]
-        
-        let availableCount = min(
-            images.count,
-            phrases.count
-        )
-        
-        guard availableCount > 0 else {
-            return nil
-        }
-        
-        /*
-         Выбор зависит от года и дня декабря.
-         
-         Поэтому:
-         - при повторных открытиях в один день открытка не меняется;
-         - в следующем году порядок будет другим;
-         - на разных декабрьских датах будут выбираться разные позиции.
-         */
-        let index = stableDailyIndex(
-            count: availableCount,
-            salt: year + 1200,
-            date: date
-        )
-        
-        return HolidayContent(
-            images: [images[index]],
-            phrases: [phrases[index]],
-            category: "december"
+        DecemberPostcardProvider.content(
+            for: date
         )
     }
     private func februaryContent(
         date: Date = Date()
     ) -> HolidayContent? {
-        
-        let calendar = Calendar.current
-        
-        let components = calendar.dateComponents(
-            [.month, .day],
-            from: date
-        )
-        
-        guard let month = components.month,
-              let day = components.day,
-              month == 2,
-              (1...29).contains(day) else {
-            return nil
-        }
-        
-        let images = (1...29).map {
-            "February_\($0)"
-        }
-        
-        let phrases = [
-            "Пусть февральское утро принесёт светлые мысли, душевное тепло и хорошие новости.",
-            "Желаю спокойного дня, приятных встреч и уютных зимних мгновений.",
-            "Пусть этот февральский день будет наполнен заботой, радостью и добрыми событиями.",
-            "Пусть за окном ещё царит зима, а в сердце уже чувствуется приближение весны.",
-            "Желаю уютного утра, прекрасного настроения и исполнения добрых желаний.",
-            "Пусть сегодняшний день подарит вам повод улыбнуться и поверить в лучшее.",
-            "Желаю тёплых слов, искренних улыбок и приятных февральских чудес.",
-            "Пусть февраль наполнит дом светом, душу — спокойствием, а день — радостью.",
-            "Желаю доброго утра и прекрасного продолжения этого зимнего дня.",
-            "Пусть февральская атмосфера подарит вдохновение, гармонию и душевное равновесие.",
-            "Желаю, чтобы сегодня вас окружали заботливые люди и счастливые события.",
-            "Пусть этот день будет светлым, спокойным и наполненным приятными мгновениями.",
-            "Желаю зимнего уюта, сердечного тепла и хорошего настроения.",
-            "Пусть сегодняшнее утро станет началом доброго и благополучного дня.",
-            "Желаю мира в душе, тепла в доме и радости в каждом мгновении.",
-            "Пусть февральский день принесёт приятные сюрпризы и долгожданные новости.",
-            "Желаю светлых мыслей, тёплых встреч и ощущения скорого приближения весны.",
-            "Пусть сегодняшний день подарит вам уют, заботу и искреннюю радость."
-        ]
-        
-        let imageIndex = day - 1
-        
-        guard images.indices.contains(imageIndex),
-              !phrases.isEmpty else {
-            return nil
-        }
-        
-        // Пока фраз 18, после 18 февраля они повторяются.
-        let phraseIndex = imageIndex % phrases.count
-        
-        return HolidayContent(
-            images: [
-                images[imageIndex]
-            ],
-            phrases: [
-                phrases[phraseIndex]
-            ],
-            category: "Февраль"
+        FebruaryPostcardProvider.content(
+            for: date
         )
     }
     private func mondayCoffeeContent(
         date: Date = Date()
     ) -> HolidayContent? {
-        
-        let calendar = Calendar.current
-        let currentDate = calendar.startOfDay(for: date)
-        
-        let components = calendar.dateComponents(
-            [.year, .month, .weekday],
-            from: currentDate
+        MondayPostcardProvider.content(
+            for: date
         )
-        
-        guard let year = components.year,
-              let month = components.month,
-              let weekday = components.weekday else {
+    }
+    private func hanukkahContent(
+        date: Date = Date()
+    ) -> HolidayContent? {
+
+        guard showJewishHolidays else {
             return nil
         }
-        
-        // В Calendar:
-        // 1 — воскресенье
-        // 2 — понедельник
-        guard weekday == 2 else {
-            return nil
-        }
-        
-        let images: [String]
-        let phrases: [String]
-        let seasonStart: Date
-        
-        // MARK: - Тёплый период
-        // С 1 марта по 31 августа.
-        
-        if (3...8).contains(month) {
-            
-            images = (1...25).map {
-                "MondayWarm_\($0)"
-            }
-            
-            phrases = [
-                "Пусть этот понедельник начнётся спокойно, тепло и с приятных мыслей.",
-                "Новая неделя — новый шанс сделать что-то хорошее для себя.",
-                "Пусть аромат утреннего кофе наполнит этот день бодростью и вдохновением.",
-                "Желаю мягкого начала недели, добрых встреч и хороших новостей.",
-                "Пусть сегодня всё складывается легко, а настроение остаётся солнечным.",
-                "Начните неделю с заботы о себе и веры в хорошее.",
-                "Пусть этот понедельник подарит силы, ясные мысли и приятные мгновения.",
-                "Новая неделя уже началась. Пусть она будет доброй и успешной.",
-                "Желаю уютного утра, душевного равновесия и прекрасного дня.",
-                "Пусть чашка кофе станет началом спокойной и счастливой недели.",
-                "Пусть понедельничное утро принесёт бодрость, спокойствие и уверенность в своих силах.",
-                "Желаю начать новую неделю с улыбки, вдохновения и приятных ожиданий.",
-                "Пусть этот день будет лёгким, добрым и наполненным хорошими событиями.",
-                "Новая неделя открывает новые возможности. Пусть каждая из них принесёт радость.",
-                "Желаю тёплого утра, ароматного кофе и прекрасного настроения на весь день.",
-                "Пусть понедельник подарит удачное начало всем важным делам.",
-                "Начните эту неделю с добрых мыслей, спокойного сердца и веры в себя.",
-                "Пусть сегодня рядом будут заботливые люди, искренние улыбки и хорошие новости.",
-                "Желаю бодрости, вдохновения и лёгкости во всех начинаниях.",
-                "Пусть новая неделя принесёт приятные перемены и исполнение маленьких желаний.",
-                "Пусть утренний кофе согреет, взбодрит и настроит на прекрасный день.",
-                "Желаю спокойного понедельника, успешных дел и душевного тепла.",
-                "Пусть начало недели будет наполнено светом, уютом и добрыми надеждами.",
-                "Сегодня начинается новая неделя. Пусть она подарит много поводов для улыбки.",
-                "Желаю уверенного начала дня, ясных мыслей и приятных результатов."
-            ]
-            
-            guard let start = calendar.date(
-                from: DateComponents(
-                    year: year,
-                    month: 3,
-                    day: 1
-                )
-            ) else {
-                return nil
-            }
-            
-            seasonStart = start
-            
-        } else {
-            
-            // MARK: - Холодный период
-            // С 1 сентября по конец февраля.
-            
-            images = (1...25).map {
-                "MondayCold_\($0)"
-            }
-            
-            phrases = [
-                "Пусть горячий кофе согреет это утро, а новая неделя принесёт добрые события.",
-                "Желаю тёплого понедельника, спокойных мыслей и уютного настроения.",
-                "Пусть за окном будет прохладно, а в душе всегда остаётся тепло.",
-                "Начните новую неделю с чашки кофе, улыбки и веры в хорошее.",
-                "Пусть этот понедельник будет уютным, неторопливым и наполненным заботой.",
-                "Желаю бодрого утра, душевного тепла и удачного начала недели.",
-                "Пусть аромат кофе напомнит: даже холодное утро может быть прекрасным.",
-                "Новая неделя начинается. Пусть в ней будет больше света, радости и тёплых встреч.",
-                "Желаю спокойного понедельника, хороших новостей и приятных сюрпризов.",
-                "Пусть чашка горячего кофе согреет руки, а добрые мысли — сердце.",
-                "Пусть этот день подарит энергию для дел и время для приятного отдыха.",
-                "Новая неделя — ещё одна возможность приблизиться к своей мечте.",
-                "Желаю ароматного кофе, добрых разговоров и замечательного начала недели.",
-                "Пусть понедельник будет светлым, продуктивным и наполненным приятными мгновениями.",
-                "Начните новый день без спешки, с улыбкой и заботой о себе.",
-                "Пусть эта неделя принесёт спокойствие в душе и успех во всех начинаниях.",
-                "Желаю лёгкого пробуждения, бодрого настроения и удачного понедельника.",
-                "Пусть сегодняшний день станет добрым началом счастливой и успешной недели.",
-                "Пусть чашка любимого напитка подарит тепло, бодрость и вдохновение.",
-                "Желаю приятного утра, уверенных решений и радостных событий.",
-                "Пусть понедельник напомнит, что каждый новый день может стать особенным.",
-                "Начните неделю с маленького шага к тому, что делает вас счастливее.",
-                "Пусть сегодня работа приносит удовлетворение, а отдых восстанавливает силы.",
-                "Желаю спокойного ритма, ясных мыслей и добрых людей рядом.",
-                "Пусть новая неделя начнётся с приятного события и хорошей новости."
-            ]
-            
-            // В сентябре–декабре холодный сезон начинается
-            // 1 сентября текущего года.
-            //
-            // В январе–феврале он начался
-            // 1 сентября предыдущего года.
-            
-            let coldSeasonYear: Int
-            
-            if month >= 9 {
-                coldSeasonYear = year
-            } else {
-                coldSeasonYear = year - 1
-            }
-            
-            guard let start = calendar.date(
-                from: DateComponents(
-                    year: coldSeasonYear,
-                    month: 9,
-                    day: 1
-                )
-            ) else {
-                return nil
-            }
-            
-            seasonStart = start
-        }
-        
-        let availableCount = min(
-            images.count,
-            phrases.count
-        )
-        
-        guard availableCount > 0 else {
-            return nil
-        }
-        
-        // Находим первый понедельник сезона.
-        guard let firstMonday = calendar.nextDate(
-            after: calendar.date(
-                byAdding: .day,
-                value: -1,
-                to: seasonStart
-            ) ?? seasonStart,
-            matching: DateComponents(weekday: 2),
-            matchingPolicy: .nextTime,
-            direction: .forward
-        ) else {
-            return nil
-        }
-        
-        let firstMondayStart = calendar.startOfDay(
-            for: firstMonday
-        )
-        
-        // Считаем количество полных недель
-        // от первого понедельника сезона.
-        let daysFromFirstMonday = calendar.dateComponents(
-            [.day],
-            from: firstMondayStart,
-            to: currentDate
-        ).day ?? 0
-        
-        guard daysFromFirstMonday >= 0 else {
-            return nil
-        }
-        
-        let mondayNumber = daysFromFirstMonday / 7
-        
-        // После 25-й пары коллекция начинается заново.
-        let index = mondayNumber % availableCount
-        
-        return HolidayContent(
-            images: [
-                images[index]
-            ],
-            phrases: [
-                phrases[index]
-            ],
-            category: "mondayCoffee"
+
+        return HanukkahPostcardProvider.content(
+            for: date
         )
     }
     func currentWeekday() -> String {
@@ -1591,26 +1054,12 @@ struct ContentView: View {
             
             return pancakeDay
         }
-        // Персеиды — 11, 12 и 13 августа.
-        if month == 8 && day >= 11 && day <= 13 {
-            let imageIndex = day - 10
-            
-            return HolidayContent(
-                images: [
-                    "Holiday_Perceids_\(imageIndex)"
-                ],
-                phrases: [
-                    "Пусть падающая звезда исполнит самое доброе желание.",
-                    "Сегодня небо напоминает: чудеса случаются совсем рядом.",
-                    "Пусть звёздный дождь принесёт надежду, спокойствие и вдохновение."
-                ],
-                category: "Персеиды"
-            )
-        }
-        
-        
-        if (day == 31 && month == 12) || (day == 1 && month == 1) {
-            return HolidayContent(images: ["holiday_new_year", "holiday_new_year_2"], phrases: ["С Новым годом!", "Пусть Новый год будет светлым и спокойным!"], category: "Нейтральный")
+        if let internationalHoliday =
+            InternationalHolidayProvider.content(
+                for: today
+            ) {
+
+            return internationalHoliday
         }
         
         if day == 7 && month == 1 {
@@ -1621,84 +1070,12 @@ struct ContentView: View {
             return HolidayContent(images: ["holiday_epiphany"], phrases: ["С Крещением!", "Пусть в душе будет свет и мир!"], category: "Православный")
         }
         
-        if day == 25 && month == 1 {
-            return HolidayContent(images: ["holiday_student"], phrases: ["С Днём студента!", "Помни, что знания открывают новые возможности!"], category: "Нейтральный")
-        }
-        
-        if day == 4 && month == 2 {
-            return HolidayContent(images: ["holiday_cancer"], phrases: ["Во Всемирный день борьбы против рака желаю крепкого здоровья!"], category: "Нейтральный")
-        }
-        
-        if day == 9 && month == 2 {
-            return HolidayContent(images: ["holiday_dentist"], phrases: ["С Международным днём стоматолога!"], category: "Нейтральный")
-        }
-        
-        if day == 14 && month == 2 {
-            return HolidayContent(images: ["holiday_valentine"], phrases: ["С Днём святого Валентина!", "Пусть в сердце будет любовь и радость!"], category: "Нейтральный")
-        }
-        
-        if day == 1 && month == 3 {
-            return HolidayContent(images: ["holiday_spring_beginning"], phrases: ["С первым днём весны!"], category: "Нейтральный")
-        }
-        
-        if day == 3 && month == 3 {
-            return HolidayContent(images: ["holiday_wild"], phrases: ["С Всемирным днём дикой природы!"], category: "Нейтральный")
-        }
-        
-        if day == 8 && month == 3 {
-            return HolidayContent(images: ["holiday_womens_day"], phrases: ["С 8 Марта!", "С Днем Весны и улыбок!"], category: "Нейтральный")
-        }
-        
         if day == 17 && month == 3 {
             return HolidayContent(images: ["holiday_Patrick"], phrases: ["С Днём святого Патрика!", "Пусть удача, радость и добро будут рядом!"], category: "Католический")
         }
         
-        if day == 20 && month == 3 {
-            return HolidayContent(images: ["holiday_earth"], phrases: ["С Днём Земли!", "Берегите наш общий дом!"], category: "Нейтральный")
-        }
-        
-        if day == 22 && month == 3 {
-            return HolidayContent(images: ["holiday_vernal_equinox"], phrases: ["С Весенним равноденствием!"], category: "Нейтральный")
-        }
-        
         if day == 7 && month == 4 {
             return HolidayContent(images: ["holiday_annunciation"], phrases: ["С Благовещением!", "Пусть этот день принесёт добрые вести!"], category: "Православный")
-        }
-        
-        if day == 12 && month == 4 {
-            return HolidayContent(
-                images: [
-                    "holiday_cosmonautics"
-                ],
-                phrases: [
-                    "С Днём космонавтики!"
-                ],
-                category: "Нейтральный"
-            )
-        }
-        
-        if day == 1 && month == 5 {
-            return HolidayContent(images: ["holiday_labor_day"], phrases: ["Пусть май принесёт силы и радость!"], category: "Нейтральный")
-        }
-        
-        if day == 9 && month == 5 {
-            return HolidayContent(images: ["holiday_victory"], phrases: ["С Днём Победы.", "Пусть в сердцах всегда будут память, мир и благодарность."], category: "Нейтральный")
-        }
-        
-        if day == 1 && month == 6 {
-            return HolidayContent(images: ["holiday_children"], phrases: ["С Днём защиты детей!"], category: "Нейтральный")
-        }
-        
-        if day == 6 && month == 6 {
-            return HolidayContent(images: ["holiday_RussianLanguage"], phrases: ["С Днём русского языка!"], category: "Нейтральный")
-        }
-        
-        if day == 2 && month == 7 {
-            return HolidayContent(images: ["holiday_dog"], phrases: ["С Международным днём собак!"], category: "Нейтральный")
-        }
-        
-        if day == 4 && month == 7 {
-            return HolidayContent(images: ["holiday_USA"], phrases: ["С Днем независимости США!", "Happy Independence Day!"], category: "Нейтральный")
         }
         
         if day == 7 && month == 7 {
@@ -1787,32 +1164,12 @@ struct ContentView: View {
             return HolidayContent(images: ["holiday_family_love"], phrases: ["С Днём семьи, любви и верности!", "Пусть в доме всегда будут любовь, тепло и согласие!"], category: "Православный")
         }
         
-        if day == 14 && month == 7 {
-            return HolidayContent(images: ["holiday_Bastilia"], phrases: ["С Днём взятия Бастилии!"], category: "Нейтральный")
-        }
-        
         if day == 28 && month == 7 {
             return HolidayContent(images: ["holiday_baptism"], phrases: ["С Днём крещения Руси!"], category: "Православный")
         }
         
-        if day == 8 && month == 8 {
-            return HolidayContent(images: ["holiday_cat"], phrases: ["С Всемирным днём кошек!"], category: "Нейтральный")
-        }
-        
         if day == 28 && month == 8 {
             return HolidayContent(images: ["holiday_dormition"], phrases: ["С Успением Пресвятой Богородицы!", "Пусть этот день принесёт мир, свет и душевное спокойствие."], category: "Православный")
-        }
-        
-        if day == 1 && month == 9 {
-            return HolidayContent(images: ["holiday_school_year"], phrases: ["С началом нового учебного года!"], category: "Нейтральный")
-        }
-        
-        if day == 22 && month == 9 {
-            return HolidayContent(images: ["holiday_autumnal_equinox"], phrases: ["С Осенним равноденствием!"], category: "Нейтральный")
-        }
-        
-        if day == 1 && month == 10 {
-            return HolidayContent(images: ["holiday_elderly_day"], phrases: ["С Днём пожилых людей!", "Желаю счастливых долгих лет жизни."], category: "Нейтральный")
         }
         
         if day == 31 && month == 10 {
@@ -1876,16 +1233,9 @@ struct ContentView: View {
                 category: "Католический"
             )
         }
-        if day == 11 && month == 11 {
-            return HolidayContent(images: ["holiday_shopping"], phrases: ["Сегодня - День шопинга!"], category: "Нейтральный")
-        }
         
         if month == 11 && weekday == 5 && weekOfMonth == 4 {
             return HolidayContent(images: ["holiday_thanksgiving"], phrases: ["С Днём Благодарения!", "Пусть ваш дом будет наполнен семейным счастьем и благодарностью за каждый новый день."], category: "Католический")
-        }
-        
-        if day == 1 && month == 12 {
-            return HolidayContent(images: ["holiday_winter_beginning"], phrases: ["С первым днём зимы!"], category: "Нейтральный")
         }
         
         if (day == 24 && month == 12) || (day == 25 && month == 12) {
@@ -2296,6 +1646,34 @@ struct ContentView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
+                Button {
+                    showBirthdayGreeting = true
+
+                } label: {
+                    Label(
+                        "Поздравить с днём рождения",
+                        systemImage: "birthday.cake.fill"
+                    )
+                    .font(
+                        .system(
+                            .subheadline,
+                            design: .rounded
+                        )
+                        .weight(.semibold)
+                    )
+                    .foregroundColor(
+                        Color(
+                            red: 0.12,
+                            green: 0.16,
+                            blue: 0.28
+                        )
+                    )
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 12)
+                    .background(.white.opacity(0.55))
+                    .clipShape(Capsule())
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
                 
                 HStack(spacing: 14) {
                     Button {
@@ -2395,246 +1773,220 @@ struct ContentView: View {
             return "Доброй ночи"
         }
     }
-    var smartImage: String {
+    private var currentPostcard: SelectedPostcard {
 
         // 1. День рождения
         if let birthday = birthdayContent(),
-           let image = birthday.images.first {
+           let image = birthday.images.first,
+           let phrase = birthday.phrases.first {
 
-            return image
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
         }
 
         // 2. Праздник
-        if let holiday = holidayContent(),
-           !holiday.images.isEmpty {
+        if let holiday = holidayContent() {
 
-            let index = stableDailyIndex(
-                count: holiday.images.count,
-                salt: 900
+            let availableCount = min(
+                holiday.images.count,
+                holiday.phrases.count
             )
 
-            return holiday.images[index]
+            if availableCount > 0 {
+                let index = stableDailyIndex(
+                    count: availableCount,
+                    salt: 500
+                )
+
+                return SelectedPostcard(
+                    image: holiday.images[index],
+                    phrase: holiday.phrases[index]
+                )
+            }
         }
 
         // 3. Понедельник
         if let monday = mondayCoffeeContent(),
-           let image = monday.images.first {
+           let image = monday.images.first,
+           let phrase = monday.phrases.first {
 
-            return image
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
         }
 
         // 4. Шаббат
-        // Только если включены еврейские праздники.
         if showJewishHolidays,
            let shabbat = currentShabbatContent() {
 
-            return shabbat.image
+            return SelectedPostcard(
+                image: shabbat.image,
+                phrase: shabbat.phrase
+            )
         }
 
         // 5. Воскресенье
-        // Только если включены православные
-        // или католические праздники.
         if showOrthodoxHolidays || showCatholicHolidays {
             if let sunday = sundayContent(),
-               let image = sunday.images.first {
+               let image = sunday.images.first,
+               let phrase = sunday.phrases.first {
 
-                return image
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
             }
         }
 
         // 6. Февраль
         if let february = februaryContent(),
-           let image = february.images.first {
+           let image = february.images.first,
+           let phrase = february.phrases.first {
 
-            return image
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
         }
 
         // 7. Декабрь
         if let december = decemberContent(),
-           let image = december.images.first {
+           let image = december.images.first,
+           let phrase = december.phrases.first {
 
-            return image
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
         }
+        // Ханука
+        if let hanukkah = hanukkahContent(),
+           let image = hanukkah.images.first,
+           let phrase = hanukkah.phrases.first {
 
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
+        }
         // 8. Обычная сезонная открытка
         let weekday = currentWeekday()
-        let name = "\(currentSeason())_\(weekday)"
+        let seasonalImageName = "\(currentSeason())_\(weekday)"
 
-        return images.contains(name)
-            ? name
+        let fallbackImage = images.contains(seasonalImageName)
+            ? seasonalImageName
             : "winter_monday"
+
+        let fallbackPhrase: String
+
+        if phrases.isEmpty {
+            fallbackPhrase = "Доброе утро!"
+        } else {
+            let phraseIndex = stableDailyIndex(
+                count: phrases.count,
+                salt: 900
+            )
+
+            fallbackPhrase = phrases[phraseIndex]
+        }
+
+        return SelectedPostcard(
+            image: fallbackImage,
+            phrase: fallbackPhrase
+        )
     }
-        var postcardScreen: some View {
-            return GeometryReader { geometry in
-                ZStack {
-                    Image(smartImage)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(
-                            width: geometry.size.width,
-                            height: geometry.size.height
-                        )
-                        .clipped()
-                    
-                    LinearGradient(
-                        gradient: Gradient(
-                            colors: [
-                                .black.opacity(0.45),
-                                .clear
-                            ]
-                        ),
-                        startPoint: .top,
-                        endPoint: .center
-                    )
-                    .frame(
-                        width: geometry.size.width,
-                        height: geometry.size.height
-                    )
-                    
-                    VStack(spacing: 1) {
-                        if !profileDisplayName.isEmpty {
-                            Text("\(profileDisplayName) желает:")
-                                .font(.system(.headline, design: .rounded))
-                                .fontWeight(.semibold)
-                                .foregroundColor(.white.opacity(0.95))
-                        }
-                        
-                        Text(smartPhrase)
-                            .font(.system(.title2, design: .rounded))
-                            .fontWeight(.semibold)
-                            .lineSpacing(6)
-                            .foregroundColor(.white)
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding(.horizontal, 22)
-                    .padding(.vertical, 16)
-                    .frame(width: 330, alignment: .center)
-                    .background(.black.opacity(0.24))
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 18,
-                            style: .continuous
-                        )
-                    )
-                    .position(
-                        x: geometry.size.width / 2,
-                        y: 215
-                    )
-                    
-                    VStack(spacing: 0) {
-                        Spacer()
-                        
-                        HStack(spacing: 32) {
-                            Button {
-                                showPostcard = false
-                            } label: {
-                                Image(systemName: "house.fill")
-                                    .font(.title2)
-                                    .foregroundColor(.white)
-                                    .frame(width: 64, height: 64)
-                                    .background(.ultraThinMaterial)
-                                    .clipShape(Circle())
-                            }
-                            
-                            Button {
-                                emergencyContactsForSharing =
-                                loadContactsForSharing()
-                                
-                                guard !emergencyContactsForSharing.isEmpty else {
-                                    showContacts = true
-                                    return
-                                }
-                                
-                                showContactForWhatsApp = true
-                            } label: {
-                                
-                                Image(
-                                    systemName: "square.and.arrow.up"
-                                )
-                                .font(.title2)
-                                .foregroundColor(.white)
-                                .frame(width: 64, height: 64)
-                                .background(.ultraThinMaterial)
-                                .clipShape(Circle())
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, 44)
-                    }
-                    .frame(
-                        maxWidth: .infinity,
-                        maxHeight: .infinity,
-                        alignment: .bottom
-                    )
+
+    var smartImage: String {
+        currentPostcard.image
+    }
+
+    var smartPhrase: String {
+        currentPostcard.phrase
+    }
+    var postcardScreen: some View {
+        PostcardScreen(
+            imageName: smartImage,
+            phrase: smartPhrase,
+            profileDisplayName: profileDisplayName,
+            onHomeTap: {
+                showPostcard = false
+            },
+            onShareTap: {
+                emergencyContactsForSharing =
+                    loadContactsForSharing()
+
+                guard !emergencyContactsForSharing.isEmpty
+                else {
+                    showContacts = true
+                    return
                 }
-                .frame(
-                    width: geometry.size.width,
-                    height: geometry.size.height
-                )
-                .clipped()
-                .confirmationDialog(
-                    "Кому отправить открытку?",
-                    isPresented: $showContactForWhatsApp,
-                    titleVisibility: .visible
+
+                showContactForWhatsApp = true
+            }
+        )
+        .confirmationDialog(
+            "Кому отправить открытку?",
+            isPresented: $showContactForWhatsApp,
+            titleVisibility: .visible
+        ) {
+            ForEach(loadContactsForSharing()) { contact in
+                Button(
+                    "WhatsApp: \(contact.name) \(contact.surname)"
                 ) {
-                    ForEach(loadContactsForSharing()) { contact in
-                        Button(
-                            "WhatsApp: \(contact.name) \(contact.surname)"
-                        ) {
-                            openWhatsApp(
-                                for: contact,
-                                message: postcardShareText
-                            )
-                        }
-                    }
-                    
-                    Button("Поделиться с любым контактом") {
-                        showShareSheet = true
-                    }
-                    
-                    Button("Отправить всем через iMessage") {
-                        emergencyContactsForSharing =
-                        loadContactsForSharing()
-                        
-                        showMessageComposer = true
-                    }
-                    
-                    Button("Отмена", role: .cancel) {
-                    }
-                }
-                
-                .sheet(isPresented: $showShareSheet) {
-                    if let postcardImage = UIImage(named: smartImage) {
-                        ShareSheet(
-                            items: [
-                                postcardImage,
-                                postcardShareText
-                            ]
-                        )
-                    } else {
-                        ShareSheet(
-                            items: [
-                                postcardShareText
-                            ]
-                        )
-                    }
-                }
-                .sheet(isPresented: $showMessageComposer) {
-                    let contacts = loadContactsForSharing()
-                    
-                    MessageComposerView(
-                        recipients: contacts.map {
-                            $0.phoneDigits
-                        },
-                        message: postcardShareText,
-                        image: UIImage(named: smartImage)
+                    openWhatsApp(
+                        for: contact,
+                        message: postcardShareText
                     )
                 }
             }
-            .ignoresSafeArea()
+
+            Button("Поделиться с любым контактом") {
+                showShareSheet = true
+            }
+
+            Button("Отправить всем через iMessage") {
+                emergencyContactsForSharing =
+                    loadContactsForSharing()
+
+                showMessageComposer = true
+            }
+
+            Button("Отмена", role: .cancel) {
+            }
         }
-        
+        .sheet(isPresented: $showShareSheet) {
+            if let postcardImage = UIImage(
+                named: smartImage
+            ) {
+                ShareSheet(
+                    items: [
+                        postcardImage,
+                        postcardShareText
+                    ]
+                )
+            } else {
+                ShareSheet(
+                    items: [
+                        postcardShareText
+                    ]
+                )
+            }
+        }
+        .sheet(isPresented: $showMessageComposer) {
+            let contacts = loadContactsForSharing()
+
+            MessageComposerView(
+                recipients: contacts.map {
+                    $0.phoneDigits
+                },
+                message: postcardShareText,
+                image: UIImage(named: smartImage)
+            )
+        }
+    }
         var body: some View {
             NavigationStack {
                 ZStack {
@@ -2661,6 +2013,14 @@ struct ContentView: View {
                     }
                     .sheet(isPresented: $showContacts) {
                         EmergencyContactsView()
+                    }
+                    .sheet(
+                        isPresented: $showBirthdayGreeting
+                    ) {
+                        BirthdayGreetingView(
+                            emergencyContacts:
+                                loadContactsForSharing()
+                        )
                     }
                     .onChange(of: showContacts) { _, isShowing in
                         if !isShowing {

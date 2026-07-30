@@ -7,9 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2901FEA8300EC7E600CB306F /* BackendModels.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901FEA7300EC7E600CB306F /* BackendModels.swift.swift */; };
+		2901FEA8300EC7E600CB306F /* BackendModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901FEA7300EC7E600CB306F /* BackendModels.swift */; };
 		292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B3D5430126C50005F4183 /* FeedbackView.swift */; };
 		293388A62FF31CDD0076642F /* EmergencyContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293388A52FF31CDD0076642F /* EmergencyContactsView.swift */; };
+		29B76C43301AA87500D1D295 /* PostcardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C42301AA86B00D1D295 /* PostcardScreen.swift */; };
+		29B76C55301AAC7F00D1D295 /* MondayPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C54301AAC7F00D1D295 /* MondayPostcardProvider.swift */; };
+		29B76C59301B582A00D1D295 /* HanukkahPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C58301B582500D1D295 /* HanukkahPostcardProvider.swift */; };
+		29B76C5B301B6DA500D1D295 /* BirthdayGreetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C5A301B6DA500D1D295 /* BirthdayGreetingView.swift */; };
+		29B76C5D301B704500D1D295 /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C5C301B704500D1D295 /* ShareSheet.swift */; };
+		29B76C72301BD0B000D1D295 /* HolidayContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C71301BD0B000D1D295 /* HolidayContent.swift */; };
+		29B76C74301BD1F300D1D295 /* SelectedPostcard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C73301BD1F300D1D295 /* SelectedPostcard.swift */; };
+		29B76C7A301BD94C00D1D295 /* SundayPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C79301BD94C00D1D295 /* SundayPostcardProvider.swift */; };
+		29B76C7C301BDF9800D1D295 /* FebruaryPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C7B301BDF9800D1D295 /* FebruaryPostcardProvider.swift */; };
+		29B76C7E301BF11200D1D295 /* DecemberPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C7D301BF11200D1D295 /* DecemberPostcardProvider.swift */; };
+		29B76C80301BF9E100D1D295 /* InternationalHolidayProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C7F301BF9E100D1D295 /* InternationalHolidayProvider.swift */; };
 		29BDC65C30082B5D00EEA736 /* CheckInNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */; };
 		29BDC65E30082BA800EEA736 /* NotificationDelegate..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */; };
 		29CA8E2B2FFEF94500F59ECA /* HolidaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */; };
@@ -19,10 +30,21 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2901FEA7300EC7E600CB306F /* BackendModels.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendModels.swift.swift; sourceTree = "<group>"; };
+		2901FEA7300EC7E600CB306F /* BackendModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendModels.swift; sourceTree = "<group>"; };
 		292B3D5430126C50005F4183 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		293388A52FF31CDD0076642F /* EmergencyContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContactsView.swift; sourceTree = "<group>"; };
 		29B441A22F3BE23E00A4F417 /* MorningHello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MorningHello.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		29B76C42301AA86B00D1D295 /* PostcardScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostcardScreen.swift; sourceTree = "<group>"; };
+		29B76C54301AAC7F00D1D295 /* MondayPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondayPostcardProvider.swift; sourceTree = "<group>"; };
+		29B76C58301B582500D1D295 /* HanukkahPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanukkahPostcardProvider.swift; sourceTree = "<group>"; };
+		29B76C5A301B6DA500D1D295 /* BirthdayGreetingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayGreetingView.swift; sourceTree = "<group>"; };
+		29B76C5C301B704500D1D295 /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
+		29B76C71301BD0B000D1D295 /* HolidayContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayContent.swift; sourceTree = "<group>"; };
+		29B76C73301BD1F300D1D295 /* SelectedPostcard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedPostcard.swift; sourceTree = "<group>"; };
+		29B76C79301BD94C00D1D295 /* SundayPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SundayPostcardProvider.swift; sourceTree = "<group>"; };
+		29B76C7B301BDF9800D1D295 /* FebruaryPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FebruaryPostcardProvider.swift; sourceTree = "<group>"; };
+		29B76C7D301BF11200D1D295 /* DecemberPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecemberPostcardProvider.swift; sourceTree = "<group>"; };
+		29B76C7F301BF9E100D1D295 /* InternationalHolidayProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternationalHolidayProvider.swift; sourceTree = "<group>"; };
 		29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInNotificationManager.swift; sourceTree = "<group>"; };
 		29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate..swift; sourceTree = "<group>"; };
 		29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidaySettingsView.swift; sourceTree = "<group>"; };
@@ -31,9 +53,22 @@
 		29EC86F23006AABE00E16D51 /* MessageComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		29B76C41301AA79700D1D295 /* Exceptions for "MorningHello" folder in "MorningHello" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 29B441A12F3BE23E00A4F417 /* MorningHello */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		29B441A42F3BE23E00A4F417 /* MorningHello */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				29B76C41301AA79700D1D295 /* Exceptions for "MorningHello" folder in "MorningHello" target */,
+			);
 			path = MorningHello;
 			sourceTree = "<group>";
 		};
@@ -58,16 +93,13 @@
 		29B441992F3BE23E00A4F417 = {
 			isa = PBXGroup;
 			children = (
-				292B3D5430126C50005F4183 /* FeedbackView.swift */,
-				2901FEA7300EC7E600CB306F /* BackendModels.swift.swift */,
-				29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */,
-				29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */,
-				29EC86F23006AABE00E16D51 /* MessageComposerView.swift */,
-				29CA8E3B3004435500F59ECA /* IntroVideoView.swift */,
-				29CA8E2E30043ECB00F59ECA /* Videos */,
-				29CA8E2C300197C800F59ECA /* ProfileView.swift */,
-				29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */,
-				293388A52FF31CDD0076642F /* EmergencyContactsView.swift */,
+				29B76C78301BD31700D1D295 /* Intro */,
+				29B76C77301BD2AB00D1D295 /* Views */,
+				29B76C76301BD28400D1D295 /* Notifications */,
+				29B76C75301BD25100D1D295 /* Sharing */,
+				29B76C70301BCFEC00D1D295 /* Models */,
+				29B76C44301AAB9900D1D295 /* HolidayProvider */,
+				2901FEA7300EC7E600CB306F /* BackendModels.swift */,
 				29B441A42F3BE23E00A4F417 /* MorningHello */,
 				29B441A32F3BE23E00A4F417 /* Products */,
 			);
@@ -79,6 +111,140 @@
 				29B441A22F3BE23E00A4F417 /* MorningHello.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		29B76C44301AAB9900D1D295 /* HolidayProvider */ = {
+			isa = PBXGroup;
+			children = (
+				29B76C53301AAC4200D1D295 /* February */,
+				29B76C50301AAC2B00D1D295 /* December */,
+				29B76C4F301AAC2100D1D295 /* Sunday */,
+				29B76C4E301AAC1700D1D295 /* Monday */,
+				29B76C4D301AAC0E00D1D295 /* Birthday */,
+				29B76C4C301AAC0000D1D295 /* International */,
+				29B76C4B301AABEC00D1D295 /* Jewish */,
+				29B76C4A301AABE100D1D295 /* Catholic */,
+				29B76C47301AABBF00D1D295 /* Orthodox */,
+			);
+			path = HolidayProvider;
+			sourceTree = "<group>";
+		};
+		29B76C47301AABBF00D1D295 /* Orthodox */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Orthodox;
+			sourceTree = "<group>";
+		};
+		29B76C4A301AABE100D1D295 /* Catholic */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Catholic;
+			sourceTree = "<group>";
+		};
+		29B76C4B301AABEC00D1D295 /* Jewish */ = {
+			isa = PBXGroup;
+			children = (
+				29B76C58301B582500D1D295 /* HanukkahPostcardProvider.swift */,
+			);
+			path = Jewish;
+			sourceTree = "<group>";
+		};
+		29B76C4C301AAC0000D1D295 /* International */ = {
+			isa = PBXGroup;
+			children = (
+				29B76C7F301BF9E100D1D295 /* InternationalHolidayProvider.swift */,
+			);
+			path = International;
+			sourceTree = "<group>";
+		};
+		29B76C4D301AAC0E00D1D295 /* Birthday */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Birthday;
+			sourceTree = "<group>";
+		};
+		29B76C4E301AAC1700D1D295 /* Monday */ = {
+			isa = PBXGroup;
+			children = (
+				29B76C54301AAC7F00D1D295 /* MondayPostcardProvider.swift */,
+			);
+			path = Monday;
+			sourceTree = "<group>";
+		};
+		29B76C4F301AAC2100D1D295 /* Sunday */ = {
+			isa = PBXGroup;
+			children = (
+				29B76C79301BD94C00D1D295 /* SundayPostcardProvider.swift */,
+			);
+			path = Sunday;
+			sourceTree = "<group>";
+		};
+		29B76C50301AAC2B00D1D295 /* December */ = {
+			isa = PBXGroup;
+			children = (
+				29B76C7D301BF11200D1D295 /* DecemberPostcardProvider.swift */,
+			);
+			path = December;
+			sourceTree = "<group>";
+		};
+		29B76C53301AAC4200D1D295 /* February */ = {
+			isa = PBXGroup;
+			children = (
+				29B76C7B301BDF9800D1D295 /* FebruaryPostcardProvider.swift */,
+			);
+			path = February;
+			sourceTree = "<group>";
+		};
+		29B76C70301BCFEC00D1D295 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				29B76C71301BD0B000D1D295 /* HolidayContent.swift */,
+				29B76C73301BD1F300D1D295 /* SelectedPostcard.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		29B76C75301BD25100D1D295 /* Sharing */ = {
+			isa = PBXGroup;
+			children = (
+				29EC86F23006AABE00E16D51 /* MessageComposerView.swift */,
+				29B76C5C301B704500D1D295 /* ShareSheet.swift */,
+			);
+			path = Sharing;
+			sourceTree = "<group>";
+		};
+		29B76C76301BD28400D1D295 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */,
+				29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		29B76C77301BD2AB00D1D295 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				29B76C42301AA86B00D1D295 /* PostcardScreen.swift */,
+				29B76C5A301B6DA500D1D295 /* BirthdayGreetingView.swift */,
+				292B3D5430126C50005F4183 /* FeedbackView.swift */,
+				29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */,
+				293388A52FF31CDD0076642F /* EmergencyContactsView.swift */,
+				29CA8E2C300197C800F59ECA /* ProfileView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		29B76C78301BD31700D1D295 /* Intro */ = {
+			isa = PBXGroup;
+			children = (
+				29CA8E3B3004435500F59ECA /* IntroVideoView.swift */,
+				29CA8E2E30043ECB00F59ECA /* Videos */,
+			);
+			path = Intro;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -156,15 +322,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29B76C7A301BD94C00D1D295 /* SundayPostcardProvider.swift in Sources */,
+				29B76C72301BD0B000D1D295 /* HolidayContent.swift in Sources */,
 				293388A62FF31CDD0076642F /* EmergencyContactsView.swift in Sources */,
+				29B76C55301AAC7F00D1D295 /* MondayPostcardProvider.swift in Sources */,
+				29B76C43301AA87500D1D295 /* PostcardScreen.swift in Sources */,
+				29B76C74301BD1F300D1D295 /* SelectedPostcard.swift in Sources */,
+				29B76C7C301BDF9800D1D295 /* FebruaryPostcardProvider.swift in Sources */,
 				29CA8E3C3004435500F59ECA /* IntroVideoView.swift in Sources */,
 				29BDC65C30082B5D00EEA736 /* CheckInNotificationManager.swift in Sources */,
+				29B76C5D301B704500D1D295 /* ShareSheet.swift in Sources */,
+				29B76C80301BF9E100D1D295 /* InternationalHolidayProvider.swift in Sources */,
 				29BDC65E30082BA800EEA736 /* NotificationDelegate..swift in Sources */,
 				29CA8E2D300197C900F59ECA /* ProfileView.swift in Sources */,
 				29EC86F33006AABE00E16D51 /* MessageComposerView.swift in Sources */,
+				29B76C5B301B6DA500D1D295 /* BirthdayGreetingView.swift in Sources */,
+				29B76C7E301BF11200D1D295 /* DecemberPostcardProvider.swift in Sources */,
 				29CA8E2B2FFEF94500F59ECA /* HolidaySettingsView.swift in Sources */,
+				29B76C59301B582A00D1D295 /* HanukkahPostcardProvider.swift in Sources */,
 				292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */,
-				2901FEA8300EC7E600CB306F /* BackendModels.swift.swift in Sources */,
+				2901FEA8300EC7E600CB306F /* BackendModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
