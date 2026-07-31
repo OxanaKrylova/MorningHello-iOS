@@ -273,7 +273,7 @@ struct HolidaySettingsView: View {
             holidaySectionCard(
                 group: .jewish,
                 title: "Еврейские",
-                systemImage: "star.of.david",
+                systemImage: "sparkles",
                 holidays: jewishHolidays
             )
         }
@@ -456,8 +456,8 @@ struct HolidaySettingsView: View {
     private let jewishHolidays = [
         "Рош ха-Шана — Еврейский Новый год",
         "Йом-Кипур — Судный день",
-        "Суккот — Праздник Кущей",
-        "Ханука",
+        "Неделя Суккота",
+        "Ханукальная неделя",
         "Пурим",
         "Песах",
         "Шавуот",

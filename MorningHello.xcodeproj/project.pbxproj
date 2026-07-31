@@ -21,6 +21,8 @@
 		29B76C7C301BDF9800D1D295 /* FebruaryPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C7B301BDF9800D1D295 /* FebruaryPostcardProvider.swift */; };
 		29B76C7E301BF11200D1D295 /* DecemberPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C7D301BF11200D1D295 /* DecemberPostcardProvider.swift */; };
 		29B76C80301BF9E100D1D295 /* InternationalHolidayProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C7F301BF9E100D1D295 /* InternationalHolidayProvider.swift */; };
+		29B76C82301D418000D1D295 /* OrthodoxHolidayProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C81301D418000D1D295 /* OrthodoxHolidayProvider.swift */; };
+		29B76C84301D4D8500D1D295 /* SukkotPostcardProvider..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C83301D4D8500D1D295 /* SukkotPostcardProvider..swift */; };
 		29BDC65C30082B5D00EEA736 /* CheckInNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */; };
 		29BDC65E30082BA800EEA736 /* NotificationDelegate..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */; };
 		29CA8E2B2FFEF94500F59ECA /* HolidaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */; };
@@ -45,6 +47,8 @@
 		29B76C7B301BDF9800D1D295 /* FebruaryPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FebruaryPostcardProvider.swift; sourceTree = "<group>"; };
 		29B76C7D301BF11200D1D295 /* DecemberPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecemberPostcardProvider.swift; sourceTree = "<group>"; };
 		29B76C7F301BF9E100D1D295 /* InternationalHolidayProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternationalHolidayProvider.swift; sourceTree = "<group>"; };
+		29B76C81301D418000D1D295 /* OrthodoxHolidayProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrthodoxHolidayProvider.swift; sourceTree = "<group>"; };
+		29B76C83301D4D8500D1D295 /* SukkotPostcardProvider..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SukkotPostcardProvider..swift; sourceTree = "<group>"; };
 		29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInNotificationManager.swift; sourceTree = "<group>"; };
 		29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate..swift; sourceTree = "<group>"; };
 		29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidaySettingsView.swift; sourceTree = "<group>"; };
@@ -132,6 +136,7 @@
 		29B76C47301AABBF00D1D295 /* Orthodox */ = {
 			isa = PBXGroup;
 			children = (
+				29B76C81301D418000D1D295 /* OrthodoxHolidayProvider.swift */,
 			);
 			path = Orthodox;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				29B76C58301B582500D1D295 /* HanukkahPostcardProvider.swift */,
+				29B76C83301D4D8500D1D295 /* SukkotPostcardProvider..swift */,
 			);
 			path = Jewish;
 			sourceTree = "<group>";
@@ -324,8 +330,10 @@
 			files = (
 				29B76C7A301BD94C00D1D295 /* SundayPostcardProvider.swift in Sources */,
 				29B76C72301BD0B000D1D295 /* HolidayContent.swift in Sources */,
+				29B76C84301D4D8500D1D295 /* SukkotPostcardProvider..swift in Sources */,
 				293388A62FF31CDD0076642F /* EmergencyContactsView.swift in Sources */,
 				29B76C55301AAC7F00D1D295 /* MondayPostcardProvider.swift in Sources */,
+				29B76C82301D418000D1D295 /* OrthodoxHolidayProvider.swift in Sources */,
 				29B76C43301AA87500D1D295 /* PostcardScreen.swift in Sources */,
 				29B76C74301BD1F300D1D295 /* SelectedPostcard.swift in Sources */,
 				29B76C7C301BDF9800D1D295 /* FebruaryPostcardProvider.swift in Sources */,
