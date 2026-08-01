@@ -114,7 +114,7 @@ struct HolidaySettingsView: View {
 
             holidayToggle(
                 title: "Еврейские",
-                systemImage: "star.of.david",
+                systemImage: "sparks",
                 isOn: $showJewishHolidays
             )
         }
@@ -164,7 +164,7 @@ struct HolidaySettingsView: View {
             )
 
             informationRow(
-                systemImage: "star.of.david",
+                systemImage: "sparks",
                 text: "При выборе еврейских праздников с 18 ч. пятницы по 18 ч. субботы будет показана открытка к Шабату."
             )
 

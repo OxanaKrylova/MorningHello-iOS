@@ -8,16 +8,58 @@
 import Foundation
 import SwiftUI
 import StoreKit
-import SwiftUI
-import StoreKit
 import Combine
 
-struct ProfileView: View {
-    @State private var showFeedback = false
-    @Environment(\.dismiss) private var dismiss
-    @StateObject private var subscriptionManager = SubscriptionManager()
+// MARK: - Форма обращения
 
-    // Сохраняются локально после каждого изменения.
+enum ProfileSalutation: String, CaseIterable, Identifiable {
+    case masculine = "Уважаемый"
+    case feminine = "Уважаемая"
+
+    var id: String {
+        rawValue
+    }
+
+    var missedCheckInText: String {
+        switch self {
+        case .masculine:
+            return "не отметился"
+
+        case .feminine:
+            return "не отметилась"
+        }
+    }
+
+    var contactPronoun: String {
+        switch self {
+        case .masculine:
+            return "с ним"
+
+        case .feminine:
+            return "с ней"
+        }
+    }
+}
+
+
+// MARK: - Экран профиля
+
+struct ProfileView: View {
+
+    @Environment(\.dismiss)
+    private var dismiss
+
+    @StateObject
+    private var subscriptionManager = SubscriptionManager()
+
+    @State
+    private var showFeedback = false
+
+    @State
+    private var showRequiredFieldAlert = false
+
+    // MARK: Сохранённые данные
+
     @AppStorage("profile_display_name")
     private var displayName = ""
 
@@ -27,77 +69,166 @@ struct ProfileView: View {
     @AppStorage("profile_birth_month")
     private var birthMonth = 0
 
-    // Временный текст полей даты.
-    @State private var dayText = ""
-    @State private var monthText = ""
+    @AppStorage("profile_salutation")
+    private var savedSalutation = ""
 
-    @FocusState private var focusedField: ProfileField?
-    
+    // MARK: Временные значения полей даты
+
+    @State
+    private var dayText = ""
+
+    @State
+    private var monthText = ""
+
+    @FocusState
+    private var focusedField: ProfileField?
+
     private var trimmedName: String {
-        displayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        displayName.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
     }
 
     private var isBirthdayComplete: Bool {
         birthDay > 0 && birthMonth > 0
     }
 
+    private var canCloseProfile: Bool {
+        !savedSalutation.isEmpty
+    }
+
+    // MARK: Основной экран
+
     var body: some View {
-        ZStack {
-            Color(
-                red: 1.0,
-                green: 0.95,
-                blue: 0.88
-            )
-            .ignoresSafeArea()
+        NavigationStack {
+            ZStack {
+                profileBackground
 
-            ScrollView {
-                VStack(spacing: 5) {
+                ScrollView {
+                    VStack(spacing: 20) {
+                        closeButton
 
-                    closeButton
+                        profileHeader
 
-                    Image(systemName: "person.crop.circle.fill")
-                        .font(.system(size: 38, weight: .medium))
-                        .foregroundColor(.orange)
-                        .padding(.top, -4)
+                        nameSection
 
-                    Text("Профиль")
+                        birthdaySection
+
+                        subscriptionSection
+
+                        feedbackSection
+
+                        Text(
+                            "Данные профиля сохраняются только на этом устройстве."
+                        )
                         .font(
                             .system(
-                                size: 32,
-                                weight: .bold,
+                                .caption,
                                 design: .rounded
                             )
                         )
-                        .foregroundColor(.brown)
+                        .foregroundColor(.brown.opacity(0.6))
                         .multilineTextAlignment(.center)
-
-                    nameSection
-
-                    birthdaySection
-
-                    subscriptionSection
-
-                    feedbackSection
-
-                    Spacer(minLength: 30)
+                        .padding(.horizontal, 36)
+                        .padding(.bottom, 30)
+                    }
+                    .padding(.top, 4)
                 }
-                .padding(.bottom, 30)
+                .scrollDismissesKeyboard(.interactively)
             }
-            .scrollIndicators(.hidden)
-            .scrollDismissesKeyboard(.interactively)
+            .toolbar(.hidden, for: .navigationBar)
         }
+        .interactiveDismissDisabled(!canCloseProfile)
         .onAppear {
             loadBirthdayFields()
         }
         .task {
-            await subscriptionManager.refreshSubscriptionStatus()
+            await subscriptionManager
+                .refreshSubscriptionStatus()
         }
-        .onTapGesture {
-            focusedField = nil
-        }
-        .sheet(isPresented: $showFeedback) {
+        .sheet(
+            isPresented: $showFeedback
+        ) {
             FeedbackView()
         }
+        .alert(
+            "Заполните профиль",
+            isPresented: $showRequiredFieldAlert
+        ) {
+            Button(
+                "Хорошо",
+                role: .cancel
+            ) {
+            }
+        } message: {
+            Text(
+                "Пожалуйста, выберите форму обращения: «Уважаемый» или «Уважаемая»."
+            )
+        }
+    }
+
+    // MARK: - Фон
+
+    private var profileBackground: some View {
+        LinearGradient(
+            colors: [
+                Color(
+                    red: 1.00,
+                    green: 0.96,
+                    blue: 0.92
+                ),
+                Color(
+                    red: 1.00,
+                    green: 0.91,
+                    blue: 0.88
+                ),
+                Color(
+                    red: 0.98,
+                    green: 0.95,
+                    blue: 0.89
+                )
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .ignoresSafeArea()
+    }
+
+    // MARK: - Заголовок
+
+    private var profileHeader: some View {
+        VStack(spacing: 8) {
+            Image(systemName: "person.crop.circle.fill")
+                .font(.system(size: 58))
+                .foregroundStyle(
+                    .orange.opacity(0.78),
+                    .brown.opacity(0.62)
+                )
+
+            Text("Профиль")
+                .font(
+                    .system(
+                        size: 34,
+                        weight: .bold,
+                        design: .rounded
+                    )
+                )
+                .foregroundColor(.brown)
+
+            Text(
+                "Эти данные помогут персонализировать открытки и тревожные сообщения."
+            )
+            .font(
+                .system(
+                    .subheadline,
+                    design: .rounded
+                )
+            )
+            .foregroundColor(.brown.opacity(0.7))
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, 42)
+        }
+        .padding(.bottom, 4)
     }
 
     // MARK: - Кнопка закрытия
@@ -107,82 +238,201 @@ struct ProfileView: View {
             Spacer()
 
             Button {
-                dismiss()
+                closeProfile()
             } label: {
                 Image(systemName: "xmark")
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundColor(.brown.opacity(0.8))
-                    .frame(width: 46, height: 46)
-                    .background(.white.opacity(0.65))
+                    .font(
+                        .system(
+                            size: 19,
+                            weight: .bold
+                        )
+                    )
+                    .foregroundColor(.brown.opacity(0.82))
+                    .frame(
+                        width: 46,
+                        height: 46
+                    )
+                    .background(.white.opacity(0.72))
                     .clipShape(Circle())
+                    .shadow(
+                        color: .brown.opacity(0.08),
+                        radius: 7,
+                        x: 0,
+                        y: 3
+                    )
             }
+            .accessibilityLabel("Закрыть профиль")
         }
         .padding(.horizontal, 24)
         .padding(.top, 6)
     }
 
-    // MARK: - Имя
+    private func closeProfile() {
+        focusedField = nil
+
+        guard !savedSalutation.isEmpty else {
+            showRequiredFieldAlert = true
+            return
+        }
+
+        dismiss()
+    }
+
+    // MARK: - Имя и форма обращения
 
     private var nameSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 18) {
 
-            Label {
-                Text("Как нам к вам обращаться?")
-            } icon: {
-                Image(systemName: "person.fill")
-                    .foregroundColor(.orange)
-            }
-            .font(
-                .system(
-                    .title3,
-                    design: .rounded
-                )
-                .weight(.semibold)
-            )
-            .foregroundColor(.brown)
-
-            TextField(
-                "Например, Анна или Анна Петрова",
-                text: $displayName
-            )
-            .focused($focusedField, equals: .name)
-            .textInputAutocapitalization(.words)
-            .autocorrectionDisabled()
-            .submitLabel(.done)
-            .onSubmit {
-                focusedField = nil
-            }
-            .onChange(of: displayName) { _, newValue in
-                limitNameLength(newValue)
-            }
-            .font(.system(.body, design: .rounded))
-            .foregroundColor(.primary)
-            .padding(.horizontal, 16)
-            .frame(height: 52)
-            .background(.white.opacity(0.82))
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: 16,
-                    style: .continuous
-                )
-            )
-
-            HStack {
-                Text(
-                    "Напишите своё имя так, чтобы в тревожном сообщении ваши близкие могли понять, что оно от вас."
-                )
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-                Text("\(displayName.count)/50")
-                    .monospacedDigit()
-                    .foregroundColor(
-                        displayName.count == 50
-                        ? .orange
-                        : .brown.opacity(0.5)
+            VStack(alignment: .leading, spacing: 12) {
+                Label {
+                    Text("Как нам к вам обращаться?")
+                } icon: {
+                    Image(systemName: "person.fill")
+                        .foregroundColor(.orange)
+                }
+                .font(
+                    .system(
+                        .title3,
+                        design: .rounded
                     )
+                    .weight(.semibold)
+                )
+                .foregroundColor(.brown)
+
+                TextField(
+                    "Например, Анна или Анна Петрова",
+                    text: $displayName
+                )
+                .focused(
+                    $focusedField,
+                    equals: .name
+                )
+                .textInputAutocapitalization(.words)
+                .autocorrectionDisabled()
+                .submitLabel(.done)
+                .onSubmit {
+                    focusedField = nil
+                }
+                .onChange(of: displayName) { _, newValue in
+                    limitNameLength(newValue)
+                }
+                .font(
+                    .system(
+                        .body,
+                        design: .rounded
+                    )
+                )
+                .foregroundColor(.primary)
+                .padding(.horizontal, 16)
+                .frame(height: 52)
+                .background(.white.opacity(0.86))
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: 16,
+                        style: .continuous
+                    )
+                )
+
+                HStack(alignment: .top) {
+                    Text(
+                        "Напишите имя так, чтобы близкие поняли, от кого пришло тревожное сообщение."
+                    )
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .leading
+                    )
+
+                    Text("\(displayName.count)/50")
+                        .monospacedDigit()
+                        .foregroundColor(
+                            displayName.count == 50
+                            ? .orange
+                            : .brown.opacity(0.5)
+                        )
+                }
+                .font(
+                    .system(
+                        .caption,
+                        design: .rounded
+                    )
+                )
+                .foregroundColor(.brown.opacity(0.68))
             }
-            .font(.system(.caption, design: .rounded))
-            .foregroundColor(.brown.opacity(0.68))
+
+            Divider()
+                .overlay(.brown.opacity(0.18))
+
+            VStack(alignment: .leading, spacing: 11) {
+                HStack(spacing: 4) {
+                    Label {
+                        Text("Как обращаться в сообщении?")
+                    } icon: {
+                        Image(systemName: "text.bubble.fill")
+                            .foregroundColor(.orange)
+                    }
+                    .font(
+                        .system(
+                            .headline,
+                            design: .rounded
+                        )
+                    )
+
+                    Text("*")
+                        .fontWeight(.bold)
+                        .foregroundColor(.red.opacity(0.8))
+                }
+                .foregroundColor(.brown)
+
+                Text(
+                    "Это обязательное поле. Оно нужно для правильного текста тревожного сообщения."
+                )
+                .font(
+                    .system(
+                        .caption,
+                        design: .rounded
+                    )
+                )
+                .foregroundColor(.brown.opacity(0.68))
+
+                Picker(
+                    "Форма обращения",
+                    selection: $savedSalutation
+                ) {
+                    ForEach(
+                        ProfileSalutation.allCases
+                    ) { option in
+                        Text(option.rawValue)
+                            .tag(option.rawValue)
+                    }
+                }
+                .pickerStyle(.segmented)
+
+                if savedSalutation.isEmpty {
+                    Label(
+                        "Выберите один из двух вариантов",
+                        systemImage: "exclamationmark.circle.fill"
+                    )
+                    .font(
+                        .system(
+                            .caption,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundColor(.red.opacity(0.75))
+                } else {
+                    Label(
+                        "Форма обращения сохранена",
+                        systemImage: "checkmark.circle.fill"
+                    )
+                    .font(
+                        .system(
+                            .caption,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundColor(.green)
+                }
+            }
         }
         .profileCard()
     }
@@ -191,7 +441,6 @@ struct ProfileView: View {
 
     private var birthdaySection: some View {
         VStack(alignment: .leading, spacing: 14) {
-
             Label {
                 Text("Дата рождения для персональной открытки")
             } icon: {
@@ -208,7 +457,6 @@ struct ProfileView: View {
             .foregroundColor(.brown)
 
             HStack(spacing: 12) {
-
                 numberField(
                     title: "Дата",
                     placeholder: "1–31",
@@ -230,16 +478,30 @@ struct ProfileView: View {
                 Label {
                     Text(birthdayMessage.text)
                 } icon: {
-                    Image(systemName: birthdayMessage.icon)
+                    Image(
+                        systemName: birthdayMessage.icon
+                    )
                 }
-                .font(.system(.caption, design: .rounded))
-                .foregroundColor(birthdayMessage.color)
+                .font(
+                    .system(
+                        .caption,
+                        design: .rounded
+                    )
+                )
+                .foregroundColor(
+                    birthdayMessage.color
+                )
             }
 
             Text(
                 "Год рождения не требуется. Приложение использует только день и месяц."
             )
-            .font(.system(.caption, design: .rounded))
+            .font(
+                .system(
+                    .caption,
+                    design: .rounded
+                )
+            )
             .foregroundColor(.brown.opacity(0.68))
         }
         .profileCard()
@@ -253,7 +515,6 @@ struct ProfileView: View {
         maximumLength: Int
     ) -> some View {
         VStack(alignment: .leading, spacing: 7) {
-
             Text(title)
                 .font(
                     .system(
@@ -264,33 +525,41 @@ struct ProfileView: View {
                 )
                 .foregroundColor(.brown.opacity(0.8))
 
-            TextField(placeholder, text: text)
-                .focused($focusedField, equals: field)
-                .keyboardType(.numberPad)
-                .multilineTextAlignment(.center)
-                .font(
-                    .system(
-                        .title3,
-                        design: .rounded
-                    )
-                    .weight(.semibold)
+            TextField(
+                placeholder,
+                text: text
+            )
+            .focused(
+                $focusedField,
+                equals: field
+            )
+            .keyboardType(.numberPad)
+            .multilineTextAlignment(.center)
+            .font(
+                .system(
+                    .title3,
+                    design: .rounded
                 )
-                .padding(.horizontal, 12)
-                .frame(height: 52)
-                .background(.white.opacity(0.82))
-                .clipShape(
-                    RoundedRectangle(
-                        cornerRadius: 16,
-                        style: .continuous
-                    )
+                .weight(.semibold)
+            )
+            .padding(.horizontal, 12)
+            .frame(height: 52)
+            .background(.white.opacity(0.86))
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: 16,
+                    style: .continuous
                 )
-                .onChange(of: text.wrappedValue) { _, newValue in
-                    updateNumberField(
-                        newValue,
-                        for: field,
-                        maximumLength: maximumLength
-                    )
-                }
+            )
+            .onChange(
+                of: text.wrappedValue
+            ) { _, newValue in
+                updateNumberField(
+                    newValue,
+                    for: field,
+                    maximumLength: maximumLength
+                )
+            }
         }
         .frame(maxWidth: .infinity)
     }
@@ -299,7 +568,6 @@ struct ProfileView: View {
 
     private var subscriptionSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-
             Label {
                 Text("Статус вашей подписки")
             } icon: {
@@ -316,30 +584,50 @@ struct ProfileView: View {
             .foregroundColor(.brown)
 
             HStack(spacing: 14) {
+                Image(
+                    systemName:
+                        subscriptionManager.status.icon
+                )
+                .font(
+                    .system(
+                        size: 27,
+                        weight: .semibold
+                    )
+                )
+                .foregroundColor(
+                    subscriptionManager.status.color
+                )
+                .frame(width: 40)
 
-                Image(systemName: subscriptionManager.status.icon)
-                    .font(.system(size: 27, weight: .semibold))
-                    .foregroundColor(subscriptionManager.status.color)
-                    .frame(width: 40)
-
-                VStack(alignment: .leading, spacing: 5) {
-                    Text(subscriptionManager.status.title)
-                        .font(
-                            .system(
-                                .headline,
-                                design: .rounded
-                            )
+                VStack(
+                    alignment: .leading,
+                    spacing: 5
+                ) {
+                    Text(
+                        subscriptionManager.status.title
+                    )
+                    .font(
+                        .system(
+                            .headline,
+                            design: .rounded
                         )
-                        .foregroundColor(.brown)
+                    )
+                    .foregroundColor(.brown)
 
-                    Text(subscriptionManager.status.description)
-                        .font(
-                            .system(
-                                .caption,
-                                design: .rounded
-                            )
+                    Text(
+                        subscriptionManager
+                            .status
+                            .description
+                    )
+                    .font(
+                        .system(
+                            .caption,
+                            design: .rounded
                         )
-                        .foregroundColor(.brown.opacity(0.65))
+                    )
+                    .foregroundColor(
+                        .brown.opacity(0.65)
+                    )
                 }
 
                 Spacer()
@@ -350,7 +638,7 @@ struct ProfileView: View {
                 }
             }
             .padding(16)
-            .background(.white.opacity(0.82))
+            .background(.white.opacity(0.86))
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: 18,
@@ -360,7 +648,8 @@ struct ProfileView: View {
 
             Button {
                 Task {
-                    await subscriptionManager.refreshSubscriptionStatus()
+                    await subscriptionManager
+                        .refreshSubscriptionStatus()
                 }
             } label: {
                 Label(
@@ -377,30 +666,38 @@ struct ProfileView: View {
                 .foregroundColor(.brown)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 13)
-                .background(.white.opacity(0.68))
+                .background(.white.opacity(0.72))
                 .clipShape(Capsule())
             }
             .disabled(subscriptionManager.isLoading)
-            .opacity(subscriptionManager.isLoading ? 0.55 : 1)
+            .opacity(
+                subscriptionManager.isLoading
+                ? 0.55
+                : 1
+            )
 
             Text(
-                "Информация о покупке будет получаться непосредственно из App Store."
+                "Информация о покупке получается непосредственно из App Store."
             )
-            .font(.system(.caption, design: .rounded))
+            .font(
+                .system(
+                    .caption,
+                    design: .rounded
+                )
+            )
             .foregroundColor(.brown.opacity(0.68))
         }
         .profileCard()
     }
-    // MARK: - Feedback Форма// MARK: - Обратная связь
-    
+
+    // MARK: - Обратная связь
+
     private var feedbackSection: some View {
         VStack(spacing: 8) {
-
             Button {
                 showFeedback = true
             } label: {
                 HStack(spacing: 12) {
-
                     Image(systemName: "envelope.fill")
                         .foregroundColor(.orange)
 
@@ -433,7 +730,7 @@ struct ProfileView: View {
                 )
                 .padding(.horizontal, 20)
                 .frame(height: 62)
-                .background(.white.opacity(0.78))
+                .background(.white.opacity(0.82))
                 .clipShape(
                     RoundedRectangle(
                         cornerRadius: 18,
@@ -455,20 +752,29 @@ struct ProfileView: View {
         }
         .profileCard()
     }
-    
+
     // MARK: - Проверка имени
 
-    private func limitNameLength(_ newValue: String) {
+    private func limitNameLength(
+        _ newValue: String
+    ) {
         if newValue.count > 50 {
-            displayName = String(newValue.prefix(50))
+            displayName = String(
+                newValue.prefix(50)
+            )
         }
     }
 
-    // MARK: - Проверка даты
+    // MARK: - Работа с датой рождения
 
     private func loadBirthdayFields() {
-        dayText = birthDay == 0 ? "" : String(birthDay)
-        monthText = birthMonth == 0 ? "" : String(birthMonth)
+        dayText = birthDay == 0
+            ? ""
+            : String(birthDay)
+
+        monthText = birthMonth == 0
+            ? ""
+            : String(birthMonth)
     }
 
     private func updateNumberField(
@@ -491,7 +797,8 @@ struct ProfileView: View {
                 dayText = filtered
             }
 
-            if let value = Int(filtered), (1...31).contains(value) {
+            if let value = Int(filtered),
+               (1...31).contains(value) {
                 birthDay = value
             } else {
                 birthDay = 0
@@ -502,7 +809,8 @@ struct ProfileView: View {
                 monthText = filtered
             }
 
-            if let value = Int(filtered), (1...12).contains(value) {
+            if let value = Int(filtered),
+               (1...12).contains(value) {
                 birthMonth = value
             } else {
                 birthMonth = 0
@@ -511,7 +819,8 @@ struct ProfileView: View {
     }
 
     private var birthdayMessage: BirthdayMessage? {
-        if dayText.isEmpty && monthText.isEmpty {
+        if dayText.isEmpty &&
+            monthText.isEmpty {
             return nil
         }
 
@@ -522,32 +831,47 @@ struct ProfileView: View {
             (1...12).contains(month)
         else {
             return BirthdayMessage(
-                text: "Введите дату от 1 до 31 и месяц от 1 до 12.",
-                icon: "exclamationmark.circle.fill",
-                color: .red.opacity(0.72)
+                text:
+                    "Введите дату от 1 до 31 и месяц от 1 до 12.",
+                icon:
+                    "exclamationmark.circle.fill",
+                color:
+                    .red.opacity(0.72)
             )
         }
 
-        guard isPossibleBirthday(day: day, month: month) else {
+        guard isPossibleBirthday(
+            day: day,
+            month: month
+        ) else {
             return BirthdayMessage(
-                text: "Такой календарной даты не существует.",
-                icon: "exclamationmark.circle.fill",
-                color: .red.opacity(0.72)
+                text:
+                    "Такой календарной даты не существует.",
+                icon:
+                    "exclamationmark.circle.fill",
+                color:
+                    .red.opacity(0.72)
             )
         }
 
         return BirthdayMessage(
-            text: "Дата сохранена: \(formattedBirthday(day: day, month: month)).",
-            icon: "checkmark.circle.fill",
-            color: .green
+            text:
+                "Дата сохранена: \(formattedBirthday(day: day, month: month)).",
+            icon:
+                "checkmark.circle.fill",
+            color:
+                .green
         )
     }
 
-    private func isPossibleBirthday(day: Int, month: Int) -> Bool {
+    private func isPossibleBirthday(
+        day: Int,
+        month: Int
+    ) -> Bool {
         var components = DateComponents()
         components.calendar = Calendar.current
 
-        // Используем високосный год, чтобы разрешить 29 февраля.
+        // Високосный год разрешает 29 февраля.
         components.year = 2028
         components.month = month
         components.day = day
@@ -556,13 +880,13 @@ struct ProfileView: View {
             return false
         }
 
-        let resultingComponents = Calendar.current.dateComponents(
+        let result = Calendar.current.dateComponents(
             [.day, .month],
             from: date
         )
 
-        return resultingComponents.day == day &&
-               resultingComponents.month == month
+        return result.day == day &&
+            result.month == month
     }
 
     private func formattedBirthday(
@@ -580,16 +904,22 @@ struct ProfileView: View {
         }
 
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.locale = Locale(
+            identifier: "ru_RU"
+        )
         formatter.dateFormat = "d MMMM"
 
-        return formatter.string(from: date)
+        return formatter.string(
+            from: date
+        )
     }
 }
+
 
 // MARK: - Оформление карточек
 
 private extension View {
+
     func profileCard() -> some View {
         self
             .padding(.horizontal, 20)
@@ -601,9 +931,16 @@ private extension View {
                     style: .continuous
                 )
             )
-            .padding(.horizontal, 28)
+            .shadow(
+                color: .brown.opacity(0.06),
+                radius: 8,
+                x: 0,
+                y: 4
+            )
+            .padding(.horizontal, 22)
     }
 }
+
 
 // MARK: - Вспомогательные типы
 
@@ -618,18 +955,24 @@ private struct BirthdayMessage {
     let icon: String
     let color: Color
 }
+
+
 // MARK: - Менеджер подписки
 
 @MainActor
 final class SubscriptionManager: ObservableObject {
 
-    @Published private(set) var status: SubscriptionDisplayStatus = .checking
-    @Published private(set) var isLoading = false
+    @Published
+    private(set) var status:
+        SubscriptionDisplayStatus = .checking
+
+    @Published
+    private(set) var isLoading = false
 
     /*
-     Позже здесь будет настоящий идентификатор подписки
-     из App Store Connect.
-    */
+     Позже здесь будет настоящий идентификатор
+     подписки из App Store Connect.
+     */
     private let subscriptionProductIDs: Set<String> = [
         "com.morninghello.premium.monthly"
     ]
@@ -640,12 +983,19 @@ final class SubscriptionManager: ObservableObject {
 
         var hasActiveSubscription = false
 
-        for await entitlement in Transaction.currentEntitlements {
-            guard case .verified(let transaction) = entitlement else {
+        for await entitlement
+            in Transaction.currentEntitlements {
+
+            guard case .verified(
+                let transaction
+            ) = entitlement else {
                 continue
             }
 
-            guard subscriptionProductIDs.contains(transaction.productID) else {
+            guard subscriptionProductIDs
+                .contains(
+                    transaction.productID
+                ) else {
                 continue
             }
 
@@ -653,21 +1003,28 @@ final class SubscriptionManager: ObservableObject {
                 continue
             }
 
-            if let expirationDate = transaction.expirationDate {
+            if let expirationDate =
+                transaction.expirationDate {
+
                 if expirationDate > Date() {
                     hasActiveSubscription = true
                     break
                 }
+
             } else {
                 hasActiveSubscription = true
                 break
             }
         }
 
-        status = hasActiveSubscription ? .active : .inactive
+        status = hasActiveSubscription
+            ? .active
+            : .inactive
+
         isLoading = false
     }
 }
+
 
 // MARK: - Состояние подписки
 

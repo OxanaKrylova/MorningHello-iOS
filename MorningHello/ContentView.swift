@@ -377,95 +377,11 @@ struct ContentView: View {
         return savedName
     }
 
-    func birthdayContent(for date: Date = Date()) -> HolidayContent? {
-        let defaults = UserDefaults.standard
-        
-        guard let birthday = defaults.object(
-            forKey: "profile_birthday"
-        ) as? Date else {
-            return nil
-        }
-        
-        let calendar = Calendar.current
-        
-        let todayComponents = calendar.dateComponents(
-            [.month, .day],
-            from: date
-        )
-        
-        let birthdayComponents = calendar.dateComponents(
-            [.month, .day],
-            from: birthday
-        )
-        
-        guard todayComponents.month == birthdayComponents.month,
-              todayComponents.day == birthdayComponents.day else {
-            return nil
-        }
-        
-        return HolidayContent(
-            images: [
-                "holiday_birthday"
-            ],
-            phrases: [
-                "С днём рождения! Пусть этот день будет наполнен теплом, радостью и заботой близких."
-            ],
-            category: "День рождения"
-        )
-    }
-
-    func birthdayContent() -> HolidayContent? {
-        let savedDay = UserDefaults.standard.integer(
-            forKey: "profile_birth_day"
-        )
-        
-        let savedMonth = UserDefaults.standard.integer(
-            forKey: "profile_birth_month"
-        )
-        
-        guard savedDay > 0, savedMonth > 0 else {
-            return nil
-        }
-        
-        let calendar = Calendar.current
-        let today = Date()
-        
-        let currentDay = calendar.component(.day, from: today)
-        let currentMonth = calendar.component(.month, from: today)
-        
-        guard currentDay == savedDay,
-              currentMonth == savedMonth else {
-            return nil
-        }
-        
-        let savedName = UserDefaults.standard
-            .string(forKey: "profile_display_name")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        let greeting: String
-        
-        if let savedName, !savedName.isEmpty {
-            greeting = """
-    \(savedName), с днём рождения!
-    
-    Этот день — не про возраст, а про опыт, чувства, прожитые мгновения. Пусть он напомнит, как много уже пройдено и как много ещё впереди.
-    
-    Желаю, чтобы жизнь не уставала удивлять и радовать, чтобы были силы, вдохновение и желания. Чтобы всё хорошее, что ты даришь миру, возвращалось обратно.
-    """
-        } else {
-            greeting = """
-    С днём рождения!
-    
-    Этот день — не про возраст, а про опыт, чувства, прожитые мгновения. Пусть он напомнит, как много уже пройдено и как много ещё впереди.
-    
-    Желаю, чтобы жизнь не уставала удивлять и радовать, чтобы были силы, вдохновение и желания. Чтобы всё хорошее, что ты даришь миру, возвращалось обратно.
-    """
-        }
-        
-        return HolidayContent(
-            images: ["holiday_birthday"],
-            phrases: [greeting],
-            category: "Нейтральный"
+    func birthdayContent(
+        for date: Date = Date()
+    ) -> HolidayContent? {
+        BirthdayPostcardProvider.content(
+            for: date
         )
     }
     func currentShabbatContent(
@@ -607,231 +523,9 @@ struct ContentView: View {
         default: return "winter"
         }
     }
-    private func catholicEasterDate(
-        for year: Int
-    ) -> Date? {
-        
-        let easterDates: [Int: (day: Int, month: Int)] = [
-            2026: (5, 4),
-            2027: (28, 3),
-            2028: (16, 4)
-        ]
-        
-        guard let easter = easterDates[year] else {
-            return nil
-        }
-        
-        var components = DateComponents()
-        components.year = year
-        components.month = easter.month
-        components.day = easter.day
-        components.hour = 12
-        
-        return Calendar.current.date(
-            from: components
-        )
-    }
-    private func catholicHolyWeekContent(
-        date: Date = Date()
-    ) -> HolidayContent? {
-        
-        let calendar = Calendar.current
-        
-        let year = calendar.component(
-            .year,
-            from: date
-        )
-        
-        guard let easterDate =
-                catholicEasterDate(for: year) else {
-            return nil
-        }
-        
-        let currentDay = calendar.startOfDay(
-            for: date
-        )
-        
-        let easterDay = calendar.startOfDay(
-            for: easterDate
-        )
-        
-        guard let difference = calendar.dateComponents(
-            [.day],
-            from: currentDay,
-            to: easterDay
-        ).day else {
-            return nil
-        }
-        
-        let commonPhrases = [
-            "Пусть эти святые дни принесут душевный покой, надежду и внутренний свет.",
-            "Желаю мира в сердце, добрых мыслей и тихой радости в ожидании Пасхи.",
-            "Пусть вера, любовь и надежда поддерживают вас и ваших близких.",
-            "Пусть этот день наполнится молитвой, спокойствием и добрыми поступками.",
-            "Желаю душевного равновесия, мира в доме и Божьего благословения."
-        ]
-        
-        let phraseIndex = stableDailyIndex(
-            count: commonPhrases.count,
-            salt: 1300,
-            date: date
-        )
-        
-        let phrase = commonPhrases[phraseIndex]
-        
-        switch difference {
-            
-            // Понедельник перед Пасхой
-        case 6:
-            return HolidayContent(
-                images: [
-                    "Catholic_Holy_Monday"
-                ],
-                phrases: [
-                    phrase
-                ],
-                category: "Католический"
-            )
-            
-            // Вторник перед Пасхой
-        case 5:
-            return HolidayContent(
-                images: [
-                    "Catholic_Holy_Tuesday"
-                ],
-                phrases: [
-                    phrase
-                ],
-                category: "Католический"
-            )
-            
-            // Среда перед Пасхой
-        case 4:
-            return HolidayContent(
-                images: [
-                    "Catholic_Holy_Wednesday"
-                ],
-                phrases: [
-                    phrase
-                ],
-                category: "Католический"
-            )
-            
-            // Великий четверг
-        case 3:
-            return HolidayContent(
-                images: [
-                    "Catholic_Holy_Thursday"
-                ],
-                phrases: [
-                    phrase
-                ],
-                category: "Католический"
-            )
-            
-            // Страстная пятница
-        case 2:
-            return HolidayContent(
-                images: [
-                    "Catholic_Good_Friday"
-                ],
-                phrases: [
-                    phrase
-                ],
-                category: "Католический"
-            )
-            
-            // Великая суббота
-        case 1:
-            return HolidayContent(
-                images: [
-                    "Catholic_Holy_Saturday"
-                ],
-                phrases: [
-                    phrase
-                ],
-                category: "Католический"
-            )
-            
-            // Католическая Пасха
-        case 0:
-            let easterPhrases = [
-                "Христос воскрес! Пусть Пасха наполнит ваш дом светом, любовью и надеждой.",
-                "Со Светлой Пасхой! Желаю мира, здоровья и благополучия вашей семье.",
-                "С Пасхой Христовой! Пусть радость Воскресения согревает сердца ваших близких."
-            ]
-            
-            let easterPhraseIndex = stableDailyIndex(
-                count: easterPhrases.count,
-                salt: 1310,
-                date: date
-            )
-            
-            return HolidayContent(
-                images: [
-                    "holiday_catholic_passover"
-                ],
-                phrases: [
-                    easterPhrases[easterPhraseIndex]
-                ],
-                category: "Католический"
-            )
-            
-        default:
-            return nil
-        }
-    }
-    private func pancakeDayContent(
-        date: Date = Date()
-    ) -> HolidayContent? {
-        
-        let calendar = Calendar.current
-        let year = calendar.component(
-            .year,
-            from: date
-        )
-        
-        guard let easterDate = catholicEasterDate(
-            for: year
-        ),
-              let pancakeDayDate = calendar.date(
-                byAdding: .day,
-                value: -47,
-                to: easterDate
-              ) else {
-            return nil
-        }
-        
-        guard calendar.isDate(
-            date,
-            inSameDayAs: pancakeDayDate
-        ) else {
-            return nil
-        }
-        
-        return HolidayContent(
-            images: [
-                "Holiday_PancakeDay"
-            ],
-            phrases: [
-                "С Блинным днём! Пусть этот день будет тёплым, вкусным и наполненным радостью.",
-                "С Pancake Day! Желаю уютного дня, добрых встреч и самых вкусных блинов.",
-                "Пусть Блинный день подарит хорошее настроение, домашнее тепло и приятные моменты.",
-                "С Блинным днём! Пусть в доме пахнет блинами, а рядом будут любимые люди."
-            ],
-            category: "Католический"
-        )
-    }
 
     func holidayContent() -> HolidayContent? {
-        let calendar = Calendar.current
         let today = Date()
-        
-        let day = calendar.component(.day, from: today)
-        let month = calendar.component(.month, from: today)
-        let weekday = calendar.component(.weekday, from: today)
-        let weekOfMonth = calendar.component(.weekOfMonth, from: today)
-        let year = calendar.component(.year, from: today)
         
         // Страстная неделя и православная Пасха.
         if let holyWeekContent =
@@ -844,8 +538,10 @@ struct ContentView: View {
         
         // Католическая Страстная неделя и Пасха.
         if let catholicHolyWeek =
-            catholicHolyWeekContent(date: today) {
-            
+            CatholicHolidayProvider.holyWeekContent(
+                for: today
+            ) {
+
             return catholicHolyWeek
         }
         // Прощёное воскресенье.
@@ -858,8 +554,10 @@ struct ContentView: View {
         }
         // Pancake Day — за 47 дней до католической Пасхи.
         if let pancakeDay =
-            pancakeDayContent(date: today) {
-            
+            CatholicHolidayProvider.pancakeDayContent(
+                for: today
+            ) {
+
             return pancakeDay
         }
         if let internationalHoliday =
@@ -869,12 +567,12 @@ struct ContentView: View {
 
             return internationalHoliday
         }
-        if let sukkotContent =
-            SukkotPostcardProvider.content(
+        if let jewishHoliday =
+            JewishHolidayProvider.content(
                 for: today
             ) {
 
-            return sukkotContent
+            return jewishHoliday
         }
         if let orthodoxHoliday =
             OrthodoxHolidayProvider.fixedContent(
@@ -883,157 +581,14 @@ struct ContentView: View {
 
             return orthodoxHoliday
         }
-        
-        if day == 17 && month == 3 {
-            return HolidayContent(images: ["holiday_Patrick"], phrases: ["С Днём святого Патрика!", "Пусть удача, радость и добро будут рядом!"], category: "Католический")
-        }
-
-        // 24 июня — Рождество святого Иоанна Крестителя.
-        if day == 24 && month == 6 {
-            return HolidayContent(
-                images: [
-                    "Holiday_LaSaint_Jean"
-                ],
-                phrases: [
-                    "С днём святого Иоанна Крестителя! Пусть вера, надежда и внутренний свет всегда помогают идти правильной дорогой."
-                ],
-                category: "Католический"
-            )
-        }
-        // Преображение Господне (католическое)
-        if month == 8 && day == 6 {
-            return HolidayContent(
-                images: [
-                    "Holiday_Tranfiguration"
-                ],
-                phrases: [
-                    "С праздником Преображения Господня! Пусть свет Христов озаряет ваш путь, наполняя сердце миром, надеждой и любовью.",
-                    "В день Преображения Господня желаю духовной радости, крепкой веры и Божьего благословения.",
-                    "Пусть праздник Преображения напоминает о силе света, добра и любви, преображающих нашу жизнь."
-                ],
-                category: "Католический"
-            )
-        }
-        
-        if day == 31 && month == 10 {
-            return HolidayContent(images: ["holiday_halloween"], phrases: ["С Хеллоуином!", "Пусть этот вечер будет добрым и волшебным!"], category: "Католический")
-        }
-        
-        if day == 6 && month == 1 {
-            return HolidayContent(
-                images: ["holiday_epithany"],
-                phrases: [
-                    "С праздником Богоявления!"
-                ],
-                category: "Католический"
-            )
-        }
-        
-        if (year == 2026 && day == 14 && month == 5) ||
-            (year == 2027 && day == 6 && month == 5) ||
-            (year == 2028 && day == 25 && month == 5) {
+        if let catholicHoliday =
+            CatholicHolidayProvider.fixedContent(
+                for: today
+            ) {
             
-            return HolidayContent(
-                images: ["holiday_Ascension"],
-                phrases: [
-                    "С Вознесением Господним!"
-                ],
-                category: "Католический"
-            )
+            return catholicHoliday
         }
-        
-        if (year == 2026 && day == 24 && month == 5) ||
-            (year == 2027 && day == 16 && month == 5) ||
-            (year == 2028 && day == 4 && month == 6) {
-            
-            return HolidayContent(
-                images: ["holiday_trinity"],
-                phrases: [
-                    "С праздником Святой Троицы!"
-                ],
-                category: "Католический"
-            )
-        }
-        
-        if day == 1 && month == 11 {
-            
-            return HolidayContent(
-                images: ["holiday_AllSaints"],
-                phrases: [
-                    "С Днем всех святых!"
-                ],
-                category: "Католический"
-            )
-        }
-        
-        if day == 8 && month == 12 {
-            
-            return HolidayContent(
-                images: ["holiday_Conception"],
-                phrases: [
-                    "С праздником Непорочного зачатия Пресвятой Богородицы!"
-                ],
-                category: "Католический"
-            )
-        }
-        
-        if month == 11 && weekday == 5 && weekOfMonth == 4 {
-            return HolidayContent(images: ["holiday_thanksgiving"], phrases: ["С Днём Благодарения!", "Пусть ваш дом будет наполнен семейным счастьем и благодарностью за каждый новый день."], category: "Католический")
-        }
-        
-        if (day == 24 && month == 12) || (day == 25 && month == 12) {
-            return HolidayContent(images: ["holiday_christmas", "holiday_christmas_2", "holiday_christmas_3"], phrases: ["С Рождеством!", "Пусть Рождество принесёт тепло и свет!"], category: "Католический")
-        }
-        
-        // Еврейские праздники 2026–2028
-        if (year == 2026 && day == 3 && month == 3) || (year == 2027 && day == 23 && month == 3) || (year == 2028 && day == 12 && month == 3) {
-            return HolidayContent(images: ["holiday_purim"], phrases: ["С Пуримом! Пусть радость, свет и добро наполнят этот день!"], category: "Еврейский")
-        }
-        
-        if (year == 2026 && month == 4 && day >= 2 && day <= 9) || (year == 2027 && month == 4 && day >= 22 && day <= 29) || (year == 2028 && month == 4 && day >= 11 && day <= 18) {
-            return HolidayContent(images: ["holiday_Passover"], phrases: ["С Песахом! Пусть в доме будут свобода, мир и благословение!"], category: "Еврейский")
-        }
-        
-        if (year == 2026 && day == 5 && month == 5) || (year == 2027 && day == 25 && month == 5) || (year == 2028 && day == 14 && month == 5) {
-            return HolidayContent(images: ["holiday_lagbaomer"], phrases: ["С Лаг ба-Омером! Пусть в сердце горит добрый свет!"], category: "Еврейский")
-        }
-        
-        if (year == 2026 && month == 9 && day >= 12 && day <= 13) || (year == 2027 && month == 10 && day >= 2 && day <= 3) || (year == 2028 && month == 9 && day >= 21 && day <= 22) {
-            return HolidayContent(images: ["holiday_rosh"], phrases: ["С Рош ха-Шана! Сладкого, доброго и счастливого года!"], category: "Еврейский")
-        }
-        
-        if (year == 2026 && day == 21 && month == 9) || (year == 2027 && day == 11 && month == 10) || (year == 2028 && day == 30 && month == 9) {
-            return HolidayContent(images: ["holiday_yom_kippor"], phrases: ["С Йом-Кипуром. Пусть этот день принесёт очищение, мир и свет душе."], category: "Еврейский")
-        }
-        
-        // Симха Тора
-        if (year == 2026 && day == 4 && month == 10) ||
-            (year == 2027 && day == 24 && month == 10) ||
-            (year == 2028 && day == 13 && month == 10) {
-            return HolidayContent(
-                images: ["holiday_Simha_Tora"],
-                phrases: ["С Симхат-Тора! Пусть радость Торы освещает каждый день!"],
-                category: "Еврейский"
-            )
-        }
-        
-        // Тиша бе-Ав
-        if (year == 2026 && day == 23 && month == 7) ||
-            (year == 2027 && day == 12 && month == 8) ||
-            (year == 2028 && day == 1 && month == 8) {
-            return HolidayContent(
-                images: ["holiday_TishaBAv"],
-                phrases: [
-                    "Пусть память о прошлом вдохновляет на надежду, мир и созидание."
-                ],
-                category: "Еврейский"
-            )
-        }
-        
-        if (year == 2026 && month == 12 && day >= 5 && day <= 12) || (year == 2027 && ((month == 12 && day >= 25) || (month == 1 && day == 1))) || (year == 2028 && month == 12 && day >= 13 && day <= 20) {
-            return HolidayContent(images: ["holiday_hanuka"], phrases: ["С Ханукой! Пусть свет, тепло и чудо наполняют ваш дом!"], category: "Еврейский")
-        }
-        return nil
+            return nil
     }
     func shabbatStartDate(for date: Date = Date()) -> Date? {
         var calendar = Calendar(identifier: .gregorian)
