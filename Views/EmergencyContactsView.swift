@@ -12,6 +12,43 @@ struct EmergencyContact: Identifiable, Codable {
     var surname: String
     var phoneDigits: String
     var email: String
+    var salutation: String
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case surname
+        case phoneDigits
+        case email
+        case salutation
+    }
+
+    init(
+        id: UUID = UUID(),
+        name: String,
+        surname: String,
+        phoneDigits: String,
+        email: String,
+        salutation: String = "Уважаемый"
+    ) {
+        self.id = id
+        self.name = name
+        self.surname = surname
+        self.phoneDigits = phoneDigits
+        self.email = email
+        self.salutation = salutation
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
+        self.name = try container.decode(String.self, forKey: .name)
+        self.surname = try container.decode(String.self, forKey: .surname)
+        self.phoneDigits = try container.decode(String.self, forKey: .phoneDigits)
+        self.email = try container.decode(String.self, forKey: .email)
+        self.salutation = try container.decodeIfPresent(String.self, forKey: .salutation) ?? "Уважаемый"
+    }
 }
 
 struct EmergencyContactsView: View {
@@ -22,7 +59,7 @@ struct EmergencyContactsView: View {
     @State private var surname = ""
     @State private var phoneDigits = ""
     @State private var email = ""
-
+    @State private var salutation = "Уважаемый"
     @State private var contacts: [EmergencyContact] = []
 
     @State private var showPhoneError = false
@@ -186,7 +223,11 @@ struct EmergencyContactsView: View {
                     // MARK: - Поля ввода
 
                     VStack(spacing: 14) {
-
+                        Picker("Обращение", selection: $salutation) {
+                            Text("Уважаемый").tag("Уважаемый")
+                            Text("Уважаемая").tag("Уважаемая")
+                        }
+                        .pickerStyle(.segmented)
                         TextField(
                             "",
                             text: $name,
@@ -394,7 +435,8 @@ struct EmergencyContactsView: View {
                             name: trimmedName,
                             surname: trimmedSurname,
                             phoneDigits: normalizedPhone,
-                            email: trimmedEmail
+                            email: trimmedEmail,
+                            salutation: salutation
                         )
 
                         if let editingIndex {

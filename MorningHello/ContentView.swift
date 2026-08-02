@@ -1150,6 +1150,20 @@ struct ContentView: View {
                 phrase: phrase
             )
         }
+        
+        // 8. Август
+        if let august = AugustPostcardProvider.content(
+            for: Date()
+        ),
+        let image = august.images.first,
+        let phrase = august.phrases.first {
+
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
+        }
+            
         // Ханука
         if let hanukkah = hanukkahContent(),
            let image = hanukkah.images.first,

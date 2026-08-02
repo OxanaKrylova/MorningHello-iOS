@@ -89,6 +89,34 @@ struct InternationalHolidayProvider {
             )
         }
 
+        // Международный день дружбы.
+        if day == 30 && month == 7 {
+
+            return HolidayContent(
+                images: [
+                    "holiday_friendship"
+                ],
+                phrases: [
+                    "В Международный день дружбы желаю верных друзей, душевного тепла и радостных встреч!"
+                ],
+                category: "Нейтральный"
+            )
+        }
+
+        // День рождения Гарри Поттера.
+        if day == 31 && month == 7 {
+
+            return HolidayContent(
+                images: [
+                    "holiday_Potter"
+                ],
+                phrases: [
+                    "Пусть этот день будет наполнен волшебством, чудесами и добрыми приключениями!"
+                ],
+                category: "Нейтральный"
+            )
+        }
+        
         // Международный день стоматолога.
         if day == 9 && month == 2 {
 
