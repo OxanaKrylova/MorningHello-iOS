@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2901FEA8300EC7E600CB306F /* BackendModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2901FEA7300EC7E600CB306F /* BackendModels.swift */; };
 		292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B3D5430126C50005F4183 /* FeedbackView.swift */; };
 		293388A62FF31CDD0076642F /* EmergencyContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293388A52FF31CDD0076642F /* EmergencyContactsView.swift */; };
 		29B76C43301AA87500D1D295 /* PostcardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C42301AA86B00D1D295 /* PostcardScreen.swift */; };
@@ -27,6 +26,10 @@
 		29B76C88301D523900D1D295 /* CatholicHolidayProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C87301D523900D1D295 /* CatholicHolidayProvider.swift */; };
 		29B76C8A301E91C000D1D295 /*  BirthdayPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C89301E91C000D1D295 /*  BirthdayPostcardProvider.swift */; };
 		29B76C8F301E9DB300D1D295 /* AugustPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C8E301E9DB300D1D295 /* AugustPostcardProvider.swift */; };
+		29B76CA330212FD700D1D295 /* HeartbeatModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76CA230212FD700D1D295 /* HeartbeatModels.swift */; };
+		29B76CA53021301A00D1D295 /* HeartbeatRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76CA43021301A00D1D295 /* HeartbeatRequestBuilder.swift */; };
+		29B76CA73021304700D1D295 /* HeartbeatAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76CA63021304700D1D295 /* HeartbeatAPIClient.swift */; };
+		29B76CAC302144C000D1D295 /* SeptemberPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76CAB302144C000D1D295 /* SeptemberPostcardProvider.swift */; };
 		29BDC65C30082B5D00EEA736 /* CheckInNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */; };
 		29BDC65E30082BA800EEA736 /* NotificationDelegate..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */; };
 		29CA8E2B2FFEF94500F59ECA /* HolidaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */; };
@@ -36,7 +39,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2901FEA7300EC7E600CB306F /* BackendModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendModels.swift; sourceTree = "<group>"; };
 		292B3D5430126C50005F4183 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		293388A52FF31CDD0076642F /* EmergencyContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContactsView.swift; sourceTree = "<group>"; };
 		29B441A22F3BE23E00A4F417 /* MorningHello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MorningHello.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,6 +59,10 @@
 		29B76C87301D523900D1D295 /* CatholicHolidayProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatholicHolidayProvider.swift; sourceTree = "<group>"; };
 		29B76C89301E91C000D1D295 /*  BirthdayPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " BirthdayPostcardProvider.swift"; sourceTree = "<group>"; };
 		29B76C8E301E9DB300D1D295 /* AugustPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AugustPostcardProvider.swift; sourceTree = "<group>"; };
+		29B76CA230212FD700D1D295 /* HeartbeatModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartbeatModels.swift; sourceTree = "<group>"; };
+		29B76CA43021301A00D1D295 /* HeartbeatRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartbeatRequestBuilder.swift; sourceTree = "<group>"; };
+		29B76CA63021304700D1D295 /* HeartbeatAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartbeatAPIClient.swift; sourceTree = "<group>"; };
+		29B76CAB302144C000D1D295 /* SeptemberPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeptemberPostcardProvider.swift; sourceTree = "<group>"; };
 		29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInNotificationManager.swift; sourceTree = "<group>"; };
 		29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate..swift; sourceTree = "<group>"; };
 		29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidaySettingsView.swift; sourceTree = "<group>"; };
@@ -111,7 +117,7 @@
 				29B76C75301BD25100D1D295 /* Sharing */,
 				29B76C70301BCFEC00D1D295 /* Models */,
 				29B76C44301AAB9900D1D295 /* HolidayProvider */,
-				2901FEA7300EC7E600CB306F /* BackendModels.swift */,
+				29B76CA63021304700D1D295 /* HeartbeatAPIClient.swift */,
 				29B441A42F3BE23E00A4F417 /* MorningHello */,
 				29B441A32F3BE23E00A4F417 /* Products */,
 			);
@@ -128,6 +134,7 @@
 		29B76C44301AAB9900D1D295 /* HolidayProvider */ = {
 			isa = PBXGroup;
 			children = (
+				29B76CAA302144B200D1D295 /* September */,
 				29B76C8D301E9D9600D1D295 /* August */,
 				29B76C53301AAC4200D1D295 /* February */,
 				29B76C50301AAC2B00D1D295 /* December */,
@@ -213,6 +220,7 @@
 			children = (
 				29B76C71301BD0B000D1D295 /* HolidayContent.swift */,
 				29B76C73301BD1F300D1D295 /* SelectedPostcard.swift */,
+				29B76CA230212FD700D1D295 /* HeartbeatModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -222,6 +230,7 @@
 			children = (
 				29EC86F23006AABE00E16D51 /* MessageComposerView.swift */,
 				29B76C5C301B704500D1D295 /* ShareSheet.swift */,
+				29B76CA43021301A00D1D295 /* HeartbeatRequestBuilder.swift */,
 			);
 			path = Sharing;
 			sourceTree = "<group>";
@@ -263,6 +272,14 @@
 				29B76C8E301E9DB300D1D295 /* AugustPostcardProvider.swift */,
 			);
 			path = August;
+			sourceTree = "<group>";
+		};
+		29B76CAA302144B200D1D295 /* September */ = {
+			isa = PBXGroup;
+			children = (
+				29B76CAB302144C000D1D295 /* SeptemberPostcardProvider.swift */,
+			);
+			path = September;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -340,6 +357,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29B76CA53021301A00D1D295 /* HeartbeatRequestBuilder.swift in Sources */,
 				29B76C7A301BD94C00D1D295 /* SundayPostcardProvider.swift in Sources */,
 				29B76C72301BD0B000D1D295 /* HolidayContent.swift in Sources */,
 				29B76C84301D4D8500D1D295 /* SukkotPostcardProvider..swift in Sources */,
@@ -349,6 +367,7 @@
 				29B76C82301D418000D1D295 /* OrthodoxHolidayProvider.swift in Sources */,
 				29B76C43301AA87500D1D295 /* PostcardScreen.swift in Sources */,
 				29B76C74301BD1F300D1D295 /* SelectedPostcard.swift in Sources */,
+				29B76CAC302144C000D1D295 /* SeptemberPostcardProvider.swift in Sources */,
 				29B76C7C301BDF9800D1D295 /* FebruaryPostcardProvider.swift in Sources */,
 				29CA8E3C3004435500F59ECA /* IntroVideoView.swift in Sources */,
 				29BDC65C30082B5D00EEA736 /* CheckInNotificationManager.swift in Sources */,
@@ -364,8 +383,9 @@
 				29B76C7E301BF11200D1D295 /* DecemberPostcardProvider.swift in Sources */,
 				29CA8E2B2FFEF94500F59ECA /* HolidaySettingsView.swift in Sources */,
 				29B76C59301B582A00D1D295 /* HanukkahPostcardProvider.swift in Sources */,
+				29B76CA330212FD700D1D295 /* HeartbeatModels.swift in Sources */,
+				29B76CA73021304700D1D295 /* HeartbeatAPIClient.swift in Sources */,
 				292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */,
-				2901FEA8300EC7E600CB306F /* BackendModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +518,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MorningHello/Info.plist;
@@ -511,7 +532,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = personal.MorningHello;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oxana.morninghello;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -530,6 +551,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MorningHello/Info.plist;
@@ -543,7 +565,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = personal.MorningHello;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oxana.morninghello;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;

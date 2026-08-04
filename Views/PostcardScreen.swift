@@ -44,20 +44,6 @@ struct PostcardScreen: View {
                 )
 
                 VStack(spacing: 1) {
-                    if !profileDisplayName.isEmpty {
-                        Text("\(profileDisplayName) желает:")
-                            .font(
-                                .system(
-                                    .headline,
-                                    design: .rounded
-                                )
-                            )
-                            .fontWeight(.semibold)
-                            .foregroundColor(
-                                .white.opacity(0.95)
-                            )
-                    }
-
                     Text(phrase)
                         .font(
                             .system(

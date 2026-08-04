@@ -94,6 +94,7 @@ struct ProfileView: View {
     }
 
     private var canCloseProfile: Bool {
+        !trimmedName.isEmpty &&
         !savedSalutation.isEmpty
     }
 
@@ -162,7 +163,7 @@ struct ProfileView: View {
             }
         } message: {
             Text(
-                "Пожалуйста, выберите форму обращения: «Уважаемый» или «Уважаемая»."
+                "Пожалуйста, укажите имя и выберите форму обращения: «Уважаемый» или «Уважаемая»."
             )
         }
     }
@@ -270,7 +271,9 @@ struct ProfileView: View {
     private func closeProfile() {
         focusedField = nil
 
-        guard !savedSalutation.isEmpty else {
+        displayName = trimmedName
+
+        guard canCloseProfile else {
             showRequiredFieldAlert = true
             return
         }

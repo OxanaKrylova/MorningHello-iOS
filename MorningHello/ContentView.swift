@@ -54,6 +54,7 @@ struct ContentView: View {
     @State private var showEmergencyContactSelection = false
     @State private var showSystemShareSheet = false
     @State private var showBirthdayGreeting = false
+    @State private var shareItems: [Any] = []
     
     @AppStorage("showOrthodoxHolidays") private var showOrthodoxHolidays = true
     @AppStorage("showCatholicHolidays") private var showCatholicHolidays = true
@@ -64,6 +65,10 @@ struct ContentView: View {
     private var checkInIntervalHours: Int = 48
     
     private let lastCheckInKey = "lastCheckInDate"
+    
+    @AppStorage("profile_display_name")
+    private var displayName = ""
+    @State private var hasCheckedProfileOnLaunch = false
     
     struct SundayContent {
         let images: [String]
@@ -257,73 +262,87 @@ struct ContentView: View {
         
         hasEmergencyContacts = !savedContacts.isEmpty
     }
+    // MARK: - Формирование heartbeat
+
     private func createBackendPayload(
         checkInDate: Date
-    ) -> UserStatusPayload {
-        
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [
-            .withInternetDateTime,
-            .withFractionalSeconds
-        ]
-        
-        let contactPayloads = loadContactsForSharing().map { contact in
-            EmergencyContactPayload(
-                firstName: contact.name,
-                lastName: contact.surname,
-                phone: contact.phoneDigits,
-                email: contact.email
+    ) -> HeartbeatRequest {
+
+        let contacts = loadContactsForSharing()
+
+        let backendContacts = contacts.map { contact in
+
+            let firstName = contact.name
+                .trimmingCharacters(
+                    in: .whitespacesAndNewlines
+                )
+
+            let lastName = contact.surname
+                .trimmingCharacters(
+                    in: .whitespacesAndNewlines
+                )
+
+            let phone = contact.phoneDigits
+                .trimmingCharacters(
+                    in: .whitespacesAndNewlines
+                )
+
+            let email = contact.email
+                .trimmingCharacters(
+                    in: .whitespacesAndNewlines
+                )
+
+            return HeartbeatEmergencyContact(
+                firstName: firstName,
+                lastName: lastName.isEmpty
+                    ? nil
+                    : lastName,
+                phone: phone.isEmpty
+                    ? nil
+                    : phone,
+                email: email
             )
         }
-        
-        let lastCheckInPayload = LastCheckInPayload(
-            timestamp: formatter.string(from: checkInDate),
-            timezone: TimeZone.current.identifier
-        )
-        
-        let appVersion =
-        Bundle.main.object(
-            forInfoDictionaryKey: "CFBundleShortVersionString"
-        ) as? String ?? "1.0.0"
-        
-        let userPayload = UserProfilePayload(
-            name: profileDisplayName
-        )
-        
-        return UserStatusPayload(
-            appInstanceId: appInstanceId,
-            appVersion: appVersion,
-            status: "alive",
-            user: userPayload,
-            lastCheckIn: lastCheckInPayload,
-            checkInIntervalHours: checkInIntervalHours,
-            emergencyContacts: contactPayloads
+
+        return HeartbeatRequestBuilder.makeRequest(
+            contacts: backendContacts,
+            checkInDate: checkInDate,
+            intervalHours: checkInIntervalHours
         )
     }
+
+
+    // MARK: - JSON для проверки в консоли
+
     private func createBackendJSON(
         checkInDate: Date
     ) -> Data? {
-        
+
         let payload = createBackendPayload(
             checkInDate: checkInDate
         )
-        
+
         let encoder = JSONEncoder()
-        
+
+        encoder.dateEncodingStrategy = .iso8601
+
         encoder.outputFormatting = [
             .prettyPrinted,
             .sortedKeys,
             .withoutEscapingSlashes
         ]
-        
+
         do {
-            return try encoder.encode(payload)
+            return try encoder.encode(
+                payload
+            )
+
         } catch {
             print(
                 "Ошибка формирования JSON:",
                 error.localizedDescription
             )
-            
+
             return nil
         }
     }
@@ -346,15 +365,7 @@ struct ContentView: View {
         phone.filter { $0.isNumber }
     }
     private var postcardShareText: String {
-        let greeting: String
-        
-        if profileDisplayName.isEmpty {
-            greeting = "Желаю вам доброго утра!"
-        } else {
-            greeting = "\(profileDisplayName) желает вам доброго утра!"
-        }
-        
-        return greeting + "\n\n" + smartPhrase
+        smartPhrase
     }
     
     func openMessages() {
@@ -898,13 +909,31 @@ struct ContentView: View {
                                 )
                                 .weight(.bold)
                             )
-                            .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.28))                            .multilineTextAlignment(.center)
-                        
+                            .foregroundColor(
+                                Color(
+                                    red: 0.55,
+                                    green: 0.30,
+                                    blue: 0.14
+                                )
+                            )
+                            .multilineTextAlignment(.center)
+
                         Text(
                             "Без тревожного контакта приложение не сможет сообщить близким, если вы не отметитесь в течение 48 часов."
                         )
-                        .font(.system(.footnote, design: .rounded))
-                        .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.28))
+                        .font(
+                            .system(
+                                .footnote,
+                                design: .rounded
+                            )
+                        )
+                        .foregroundColor(
+                            Color(
+                                red: 0.55,
+                                green: 0.30,
+                                blue: 0.14
+                            )
+                        )
                         .multilineTextAlignment(.center)
                         .lineSpacing(3)
                         .frame(maxWidth: 330)
@@ -1164,6 +1193,19 @@ struct ContentView: View {
             )
         }
             
+        // 9. Сентябрь
+        if let september = SeptemberPostcardProvider.content(
+            for: Date()
+        ),
+        let image = september.images.first,
+        let phrase = september.phrases.first {
+
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
+        }
+        
         // Ханука
         if let hanukkah = hanukkahContent(),
            let image = hanukkah.images.first,
@@ -1238,15 +1280,30 @@ struct ContentView: View {
                 Button(
                     "WhatsApp: \(contact.name) \(contact.surname)"
                 ) {
-                    openWhatsApp(
-                        for: contact,
-                        message: postcardShareText
-                    )
+                    showContactForWhatsApp = false
+
+                    DispatchQueue.main.asyncAfter(
+                        deadline: .now() + 0.4
+                    ) {
+                        preparePostcardForSharing(
+                            imageName: smartImage,
+                            phrase: postcardShareText
+                        )
+                    }
                 }
             }
 
             Button("Поделиться с любым контактом") {
-                showShareSheet = true
+                showContactForWhatsApp = false
+
+                DispatchQueue.main.asyncAfter(
+                    deadline: .now() + 0.4
+                ) {
+                    preparePostcardForSharing(
+                        imageName: smartImage,
+                        phrase: postcardShareText
+                    )
+                }
             }
 
             Button("Отправить всем через iMessage") {
@@ -1260,22 +1317,7 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showShareSheet) {
-            if let postcardImage = UIImage(
-                named: smartImage
-            ) {
-                ShareSheet(
-                    items: [
-                        postcardImage,
-                        postcardShareText
-                    ]
-                )
-            } else {
-                ShareSheet(
-                    items: [
-                        postcardShareText
-                    ]
-                )
-            }
+            ShareSheet(items: shareItems)
         }
         .sheet(isPresented: $showMessageComposer) {
             let contacts = loadContactsForSharing()
@@ -1320,8 +1362,7 @@ struct ContentView: View {
                         isPresented: $showBirthdayGreeting
                     ) {
                         BirthdayGreetingView(
-                            emergencyContacts:
-                                loadContactsForSharing()
+                            emergencyContacts: loadContactsForSharing()
                         )
                     }
                     .onChange(of: showContacts) { _, isShowing in
@@ -1329,6 +1370,10 @@ struct ContentView: View {
                             checkEmergencyContacts()
                         }
                     }
+                    .onAppear {
+                        openProfileIfNeeded()
+                    }
+                    
                     .sheet(isPresented: $showHolidaySettings) {
                         HolidaySettingsView()
                     }
@@ -1391,4 +1436,35 @@ struct ContentView: View {
                 }
             }
         }
+    private func openProfileIfNeeded() {
+        guard !hasCheckedProfileOnLaunch else {
+            return
+        }
+
+        hasCheckedProfileOnLaunch = true
+
+        let trimmedName = displayName.trimmingCharacters(
+            in: CharacterSet.whitespacesAndNewlines
+        )
+
+        if trimmedName.isEmpty {
+            showProfile = true
+        }
+    }
+    private func preparePostcardForSharing(
+        imageName: String,
+        phrase: String
+    ) {
+        guard let image = UIImage(named: imageName) else {
+            print("Не удалось найти изображение \(imageName)")
+            return
+        }
+
+        shareItems = [
+            image,
+            phrase
+        ]
+
+        showShareSheet = true
+    }
     }

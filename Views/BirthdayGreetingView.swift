@@ -11,11 +11,13 @@ import UIKit
 
 struct BirthdayGreetingView: View {
 
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismiss)
+    private var dismiss
 
     let emergencyContacts: [EmergencyContact]
 
-    @State private var selectedIndex = 0
+    @State private var selectedImageIndex = 0
+    @State private var selectedPhraseIndex = 0
     @State private var showShareSheet = false
     @State private var showMessageComposer = false
     @State private var showRecipientDialog = false
@@ -48,11 +50,11 @@ struct BirthdayGreetingView: View {
     ]
 
     private var selectedImageName: String {
-        imageNames[selectedIndex]
+        imageNames[selectedImageIndex]
     }
 
     private var selectedPhrase: String {
-        phrases[selectedIndex]
+        phrases[selectedPhraseIndex]
     }
 
     private var firstEmergencyContact: EmergencyContact? {
@@ -103,7 +105,43 @@ struct BirthdayGreetingView: View {
                     postcardPreview
 
                     postcardNavigation
+                    Text(
+                        "\(selectedImageIndex + 1) из \(imageNames.count)"
+                    )
+                    .font(
+                        .system(
+                            .subheadline,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundColor(darkBrown.opacity(0.65))
 
+                    Text("Выберите пожелание")
+                        .font(
+                            .system(
+                                .title3,
+                                design: .rounded
+                            )
+                            .weight(.bold)
+                        )
+                        .foregroundColor(darkBrown)
+                        .padding(.top, 8)
+
+                    phrasePreview
+
+                    phraseNavigation
+
+                    Text(
+                        "\(selectedPhraseIndex + 1) из \(phrases.count)"
+                    )
+                    .font(
+                        .system(
+                            .subheadline,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundColor(darkBrown.opacity(0.65))
+                    
                     Button {
                         showRecipientDialog = true
 
@@ -133,10 +171,6 @@ struct BirthdayGreetingView: View {
                     }
                     .padding(.horizontal, 16)
                     .padding(.top, 2)
-
-                    Text(
-                        "\(selectedIndex + 1) из \(imageNames.count)"
-                    )
                     .font(
                         .system(
                             .subheadline,
@@ -265,43 +299,6 @@ struct BirthdayGreetingView: View {
                     startPoint: .top,
                     endPoint: .bottom
                 )
-
-                Text(selectedPhrase)
-                    .font(
-                        .system(
-                            .subheadline,
-                            design: .rounded
-                        )
-                        .weight(.semibold)
-                    )
-                    .foregroundColor(darkBrown)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(3)
-                    .minimumScaleFactor(0.78)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 13)
-                    .frame(
-                        width: geometry.size.width * 0.70
-                    )
-                    .background(
-                        Color.white.opacity(0.72)
-                    )
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 16,
-                            style: .continuous
-                        )
-                    )
-                    .shadow(
-                        color: .black.opacity(0.10),
-                        radius: 5,
-                        x: 0,
-                        y: 3
-                    )
-                    .position(
-                        x: geometry.size.width / 2,
-                        y: geometry.size.height * 0.32
-                    )
             }
             .frame(
                 width: geometry.size.width,
@@ -322,7 +319,47 @@ struct BirthdayGreetingView: View {
         }
         .frame(height: 520)
     }
-
+    private var phrasePreview: some View {
+        Text(selectedPhrase)
+            .font(
+                .system(
+                    .body,
+                    design: .rounded
+                )
+                .weight(.semibold)
+            )
+            .foregroundColor(darkBrown)
+            .multilineTextAlignment(.center)
+            .lineSpacing(4)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 20)
+            .background(
+                Color.white.opacity(0.78)
+            )
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: 18,
+                    style: .continuous
+                )
+            )
+            .overlay {
+                RoundedRectangle(
+                    cornerRadius: 18,
+                    style: .continuous
+                )
+                .stroke(
+                    lightBrown.opacity(0.35),
+                    lineWidth: 1
+                )
+            }
+            .shadow(
+                color: .black.opacity(0.08),
+                radius: 6,
+                x: 0,
+                y: 3
+            )
+    }
     private var postcardNavigation: some View {
         HStack(spacing: 34) {
             Button {
@@ -347,7 +384,7 @@ struct BirthdayGreetingView: View {
             }
 
             Button {
-                selectedIndex = Int.random(
+                selectedImageIndex = Int.random(
                     in: imageNames.indices
                 )
             } label: {
@@ -394,7 +431,78 @@ struct BirthdayGreetingView: View {
         }
         .frame(maxWidth: .infinity)
     }
+    private var phraseNavigation: some View {
+        HStack(spacing: 34) {
+            Button {
+                showPreviousPhrase()
+            } label: {
+                Image(
+                    systemName: "chevron.left"
+                )
+                .font(
+                    .system(
+                        size: 22,
+                        weight: .bold
+                    )
+                )
+                .foregroundColor(.white)
+                .frame(
+                    width: 52,
+                    height: 52
+                )
+                .background(darkBrown)
+                .clipShape(Circle())
+            }
 
+            Button {
+                selectedPhraseIndex = Int.random(
+                    in: phrases.indices
+                )
+            } label: {
+                Label(
+                    "Случайное",
+                    systemImage: "shuffle"
+                )
+                .font(
+                    .system(
+                        .subheadline,
+                        design: .rounded
+                    )
+                    .weight(.semibold)
+                )
+                .foregroundColor(darkBrown)
+                .padding(.horizontal, 20)
+                .frame(height: 52)
+                .background(
+                    lightBrown.opacity(0.20)
+                )
+                .clipShape(Capsule())
+            }
+
+            Button {
+                showNextPhrase()
+            } label: {
+                Image(
+                    systemName: "chevron.right"
+                )
+                .font(
+                    .system(
+                        size: 22,
+                        weight: .bold
+                    )
+                )
+                .foregroundColor(.white)
+                .frame(
+                    width: 52,
+                    height: 52
+                )
+                .background(darkBrown)
+                .clipShape(Circle())
+            }
+        }
+        .frame(maxWidth: .infinity)
+    }
+    
     private var birthdayShareSheet: some View {
         Group {
             if let image = UIImage(
@@ -449,18 +557,34 @@ struct BirthdayGreetingView: View {
     }
 
     private func showPreviousPostcard() {
-        if selectedIndex == 0 {
-            selectedIndex = imageNames.count - 1
+        if selectedImageIndex == 0 {
+            selectedImageIndex = imageNames.count - 1
         } else {
-            selectedIndex -= 1
+            selectedImageIndex -= 1
         }
     }
 
     private func showNextPostcard() {
-        if selectedIndex == imageNames.count - 1 {
-            selectedIndex = 0
+        if selectedImageIndex == imageNames.count - 1 {
+            selectedImageIndex = 0
         } else {
-            selectedIndex += 1
+            selectedImageIndex += 1
+        }
+    }
+    
+    private func showPreviousPhrase() {
+        if selectedPhraseIndex == 0 {
+            selectedPhraseIndex = phrases.count - 1
+        } else {
+            selectedPhraseIndex -= 1
+        }
+    }
+
+    private func showNextPhrase() {
+        if selectedPhraseIndex == phrases.count - 1 {
+            selectedPhraseIndex = 0
+        } else {
+            selectedPhraseIndex += 1
         }
     }
 }
