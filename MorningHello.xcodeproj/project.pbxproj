@@ -35,6 +35,7 @@
 		29CA8E2B2FFEF94500F59ECA /* HolidaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */; };
 		29CA8E2D300197C900F59ECA /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA8E2C300197C800F59ECA /* ProfileView.swift */; };
 		29CA8E3C3004435500F59ECA /* IntroVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA8E3B3004435500F59ECA /* IntroVideoView.swift */; };
+		29CD29F63023DBB800C72D5D /* PostcardRenderer..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */; };
 		29EC86F33006AABE00E16D51 /* MessageComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC86F23006AABE00E16D51 /* MessageComposerView.swift */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,7 @@
 		29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidaySettingsView.swift; sourceTree = "<group>"; };
 		29CA8E2C300197C800F59ECA /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		29CA8E3B3004435500F59ECA /* IntroVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVideoView.swift; sourceTree = "<group>"; };
+		29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostcardRenderer..swift; sourceTree = "<group>"; };
 		29EC86F23006AABE00E16D51 /* MessageComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -221,6 +223,7 @@
 				29B76C71301BD0B000D1D295 /* HolidayContent.swift */,
 				29B76C73301BD1F300D1D295 /* SelectedPostcard.swift */,
 				29B76CA230212FD700D1D295 /* HeartbeatModels.swift */,
+				29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 				29CA8E2D300197C900F59ECA /* ProfileView.swift in Sources */,
 				29B76C8F301E9DB300D1D295 /* AugustPostcardProvider.swift in Sources */,
 				29EC86F33006AABE00E16D51 /* MessageComposerView.swift in Sources */,
+				29CD29F63023DBB800C72D5D /* PostcardRenderer..swift in Sources */,
 				29B76C8A301E91C000D1D295 /*  BirthdayPostcardProvider.swift in Sources */,
 				29B76C5B301B6DA500D1D295 /* BirthdayGreetingView.swift in Sources */,
 				29B76C7E301BF11200D1D295 /* DecemberPostcardProvider.swift in Sources */,

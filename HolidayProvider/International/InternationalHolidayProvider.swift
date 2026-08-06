@@ -116,7 +116,47 @@ struct InternationalHolidayProvider {
                 category: "Нейтральный"
             )
         }
-        
+        // Международный день благотворительности.
+        if day == 5 && month == 9 {
+
+            return HolidayContent(
+                images: [
+                    "Holiday_Charity"
+                ],
+                phrases: [
+                    "В Международный день благотворительности желаю, чтобы доброта, забота и искреннее участие всегда возвращались теплом!"
+                ],
+                category: "Нейтральный"
+            )
+        }
+
+        // День рождения Агаты Кристи.
+        if day == 15 && month == 9 {
+
+            return HolidayContent(
+                images: [
+                    "holiday_AgathaChristie"
+                ],
+                phrases: [
+                    "С Днем рождения Агаты Кристи!"
+                ],
+                category: "Нейтральный"
+            )
+        }
+
+        // День плюшевого мишки.
+        if day == 27 && month == 10 {
+
+            return HolidayContent(
+                images: [
+                    "Holiday_teddybear"
+                ],
+                phrases: [
+                    "В День плюшевого мишки желаю добрых воспоминаний детства!"
+                ],
+                category: "Нейтральный"
+            )
+        }
         // Международный день стоматолога.
         if day == 9 && month == 2 {
 

@@ -10,19 +10,20 @@ import SwiftUI
 import UIKit
 
 struct BirthdayGreetingView: View {
-
+    
     @Environment(\.dismiss)
     private var dismiss
-
+    
     let emergencyContacts: [EmergencyContact]
-
+    
     @State private var selectedImageIndex = 0
     @State private var selectedPhraseIndex = 0
     @State private var showShareSheet = false
     @State private var showMessageComposer = false
     @State private var showRecipientDialog = false
     @State private var selectedRecipients: [String] = []
-
+    @State private var renderedBirthdayImage: UIImage?
+    
     private let imageNames: [String] = [
         "holiday_birthday_1",
         "holiday_birthday_2",
@@ -35,7 +36,7 @@ struct BirthdayGreetingView: View {
         "holiday_birthday_9",
         "holiday_birthday_10"
     ]
-
+    
     private let phrases: [String] = [
         "С днём рождения! Пусть каждый новый день приносит радость, тепло и приятные события.",
         "Желаю здоровья, счастья, душевного спокойствия и исполнения самых добрых желаний!",
@@ -48,27 +49,27 @@ struct BirthdayGreetingView: View {
         "Пусть впереди ждут интересные события, приятные открытия и множество счастливых дней.",
         "С днём рождения! Пусть каждый год жизни становится ещё ярче, добрее и счастливее."
     ]
-
+    
     private var selectedImageName: String {
         imageNames[selectedImageIndex]
     }
-
+    
     private var selectedPhrase: String {
         phrases[selectedPhraseIndex]
     }
-
+    
     private var firstEmergencyContact: EmergencyContact? {
         emergencyContacts.indices.contains(0)
-            ? emergencyContacts[0]
-            : nil
+        ? emergencyContacts[0]
+        : nil
     }
-
+    
     private let darkBrown = Color(
         red: 0.29,
         green: 0.15,
         blue: 0.09
     )
-
+    
     private let lightBrown = Color(
         red: 0.76,
         green: 0.60,
@@ -77,15 +78,16 @@ struct BirthdayGreetingView: View {
     
     private var secondEmergencyContact: EmergencyContact? {
         emergencyContacts.indices.contains(1)
-            ? emergencyContacts[1]
-            : nil
+        ? emergencyContacts[1]
+        : nil
     }
-
+    
+    
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 14) {
-
+                VStack(spacing: 9) {
+                    
                     Text("Выберите открытку")
                         .font(
                             .system(
@@ -101,9 +103,9 @@ struct BirthdayGreetingView: View {
                                 blue: 0.28
                             )
                         )
-
+                    
                     postcardPreview
-
+                    
                     postcardNavigation
                     Text(
                         "\(selectedImageIndex + 1) из \(imageNames.count)"
@@ -115,7 +117,7 @@ struct BirthdayGreetingView: View {
                         )
                     )
                     .foregroundColor(darkBrown.opacity(0.65))
-
+                    
                     Text("Выберите пожелание")
                         .font(
                             .system(
@@ -125,12 +127,12 @@ struct BirthdayGreetingView: View {
                             .weight(.bold)
                         )
                         .foregroundColor(darkBrown)
-                        .padding(.top, 8)
-
+                        .padding(.top, 2)
+                    
                     phrasePreview
-
+                    
                     phraseNavigation
-
+                    
                     Text(
                         "\(selectedPhraseIndex + 1) из \(phrases.count)"
                     )
@@ -144,7 +146,6 @@ struct BirthdayGreetingView: View {
                     
                     Button {
                         showRecipientDialog = true
-
                     } label: {
                         Label(
                             "Отправить открытку",
@@ -159,7 +160,7 @@ struct BirthdayGreetingView: View {
                         )
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 15)
+                        .padding(.vertical, 12)
                         .background(darkBrown)
                         .clipShape(Capsule())
                         .shadow(
@@ -178,11 +179,11 @@ struct BirthdayGreetingView: View {
                         )
                     )
                     .foregroundColor(darkBrown.opacity(0.65))
-    
+                    
                 }
                 .padding(.horizontal, 20)
-                .padding(.top, 18)
-                .padding(.bottom, 40)
+                .padding(.top, 10)
+                .padding(.bottom, 20)
             }
             .background(
                 LinearGradient(
@@ -199,85 +200,73 @@ struct BirthdayGreetingView: View {
             .navigationTitle("С днём рождения")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                    ToolbarItem(
-                        placement: .topBarTrailing
-                    ) {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "xmark")
-                                .font(
-                                    .system(
-                                        size: 17,
-                                        weight: .semibold
-                                    )
+                ToolbarItem(
+                    placement: .topBarTrailing
+                ) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(
+                                .system(
+                                    size: 17,
+                                    weight: .semibold
                                 )
-                                .foregroundColor(darkBrown)
-                                .frame(
-                                    width: 38,
-                                    height: 38
-                                )
-                                .background(
-                                    lightBrown.opacity(0.18)
-                                )
-                                .clipShape(Circle())
-                        }
-                        .accessibilityLabel("Закрыть")
+                            )
+                            .foregroundColor(darkBrown)
+                            .frame(
+                                width: 38,
+                                height: 38
+                            )
+                            .background(
+                                lightBrown.opacity(0.18)
+                            )
+                            .clipShape(Circle())
                     }
+                    .accessibilityLabel("Закрыть")
                 }
+            }
             .sheet(isPresented: $showShareSheet) {
-                birthdayShareSheet
+                if let renderedBirthdayImage {
+                    ShareSheet(
+                        items: [
+                            renderedBirthdayImage
+                        ]
+                    )
+                }
             }
             .confirmationDialog(
-                "Кому отправить открытку?",
+                "Как отправить открытку?",
                 isPresented: $showRecipientDialog,
                 titleVisibility: .visible
             ) {
-                if let firstEmergencyContact {
+                ForEach(emergencyContacts) { contact in
                     Button(
-                        contactTitle(
-                            number: 1,
-                            contact: firstEmergencyContact
-                        )
+                        "iMessage: \(contact.name) \(contact.surname)"
                     ) {
-                        sendToEmergencyContact(
-                            firstEmergencyContact
+                        openBirthdayMessage(
+                            for: contact
                         )
                     }
                 }
-
-                if let secondEmergencyContact {
-                    Button(
-                        contactTitle(
-                            number: 2,
-                            contact: secondEmergencyContact
-                        )
-                    ) {
-                        sendToEmergencyContact(
-                            secondEmergencyContact
-                        )
-                    }
+                
+                Button("Выбрать мессенджер") {
+                    openBirthdayShareSheet()
                 }
-
-                Button("Выбрать любого получателя") {
-                    showShareSheet = true
-                }
-
+                
                 Button("Отмена", role: .cancel) {
                 }
             }
             .sheet(isPresented: $showMessageComposer) {
                 MessageComposerView(
                     recipients: selectedRecipients,
-                    message: selectedPhrase,
-                    image: UIImage(
-                        named: selectedImageName
-                    )
+                    message: "",
+                    image: renderedBirthdayImage
                 )
             }
         }
     }
-
+    
     private var postcardPreview: some View {
         GeometryReader { geometry in
             ZStack {
@@ -289,7 +278,7 @@ struct BirthdayGreetingView: View {
                         height: geometry.size.height
                     )
                     .clipped()
-
+                
                 LinearGradient(
                     colors: [
                         .black.opacity(0.10),
@@ -300,24 +289,14 @@ struct BirthdayGreetingView: View {
                     endPoint: .bottom
                 )
             }
-            .frame(
-                width: geometry.size.width,
-                height: geometry.size.height
-            )
             .clipShape(
                 RoundedRectangle(
-                    cornerRadius: 22,
+                    cornerRadius: 24,
                     style: .continuous
                 )
             )
-            .shadow(
-                color: .black.opacity(0.18),
-                radius: 12,
-                x: 0,
-                y: 6
-            )
         }
-        .frame(height: 520)
+        .frame(height: 220)
     }
     private var phrasePreview: some View {
         Text(selectedPhrase)
@@ -382,7 +361,7 @@ struct BirthdayGreetingView: View {
                 .background(darkBrown)
                 .clipShape(Circle())
             }
-
+            
             Button {
                 selectedImageIndex = Int.random(
                     in: imageNames.indices
@@ -407,7 +386,7 @@ struct BirthdayGreetingView: View {
                 )
                 .clipShape(Capsule())
             }
-
+            
             Button {
                 showNextPostcard()
             } label: {
@@ -431,6 +410,17 @@ struct BirthdayGreetingView: View {
         }
         .frame(maxWidth: .infinity)
     }
+    private func makeBirthdayPostcardImage() -> UIImage? {
+        let renderer = PostcardRenderer()
+        
+        return renderer.render(
+            input: PostcardRenderInput(
+                imageName: selectedImageName,
+                baseText: selectedPhrase,
+                customText: nil
+            )
+        )
+    }
     private var phraseNavigation: some View {
         HStack(spacing: 34) {
             Button {
@@ -453,7 +443,7 @@ struct BirthdayGreetingView: View {
                 .background(darkBrown)
                 .clipShape(Circle())
             }
-
+            
             Button {
                 selectedPhraseIndex = Int.random(
                     in: phrases.indices
@@ -478,7 +468,7 @@ struct BirthdayGreetingView: View {
                 )
                 .clipShape(Capsule())
             }
-
+            
             Button {
                 showNextPhrase()
             } label: {
@@ -503,37 +493,16 @@ struct BirthdayGreetingView: View {
         .frame(maxWidth: .infinity)
     }
     
-    private var birthdayShareSheet: some View {
-        Group {
-            if let image = UIImage(
-                named: selectedImageName
-            ) {
-                ShareSheet(
-                    items: [
-                        image,
-                        selectedPhrase
-                    ]
-                )
-            } else {
-                ShareSheet(
-                    items: [
-                        selectedPhrase
-                    ]
-                )
-            }
-        }
-    }
-
     private func sendToEmergencyContact(
         _ contact: EmergencyContact
     ) {
         selectedRecipients = [
             contact.phoneDigits
         ]
-
+        
         showMessageComposer = true
     }
-
+    
     private func contactTitle(
         number: Int,
         contact: EmergencyContact
@@ -542,20 +511,20 @@ struct BirthdayGreetingView: View {
             contact.name,
             contact.surname
         ]
-        .filter {
-            !$0.trimmingCharacters(
-                in: .whitespacesAndNewlines
-            ).isEmpty
-        }
-        .joined(separator: " ")
-
+            .filter {
+                !$0.trimmingCharacters(
+                    in: .whitespacesAndNewlines
+                ).isEmpty
+            }
+            .joined(separator: " ")
+        
         if fullName.isEmpty {
             return "Тревожный контакт №\(number)"
         }
-
+        
         return "Контакт №\(number): \(fullName)"
     }
-
+    
     private func showPreviousPostcard() {
         if selectedImageIndex == 0 {
             selectedImageIndex = imageNames.count - 1
@@ -563,7 +532,7 @@ struct BirthdayGreetingView: View {
             selectedImageIndex -= 1
         }
     }
-
+    
     private func showNextPostcard() {
         if selectedImageIndex == imageNames.count - 1 {
             selectedImageIndex = 0
@@ -579,12 +548,55 @@ struct BirthdayGreetingView: View {
             selectedPhraseIndex -= 1
         }
     }
-
+    
     private func showNextPhrase() {
         if selectedPhraseIndex == phrases.count - 1 {
             selectedPhraseIndex = 0
         } else {
             selectedPhraseIndex += 1
+        }
+    }
+    private func openBirthdayMessage(
+        for contact: EmergencyContact
+    ) {
+        guard let finalImage =
+                makeBirthdayPostcardImage() else {
+            print(
+                "Не удалось создать открытку ко дню рождения"
+            )
+            return
+        }
+        
+        renderedBirthdayImage = finalImage
+        
+        selectedRecipients = [
+            contact.phoneDigits
+        ]
+        
+        showRecipientDialog = false
+        
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + 0.4
+        ) {
+            showMessageComposer = true
+        }
+    }
+    private func openBirthdayShareSheet() {
+        guard let finalImage =
+                makeBirthdayPostcardImage() else {
+            print(
+                "Не удалось создать открытку ко дню рождения"
+            )
+            return
+        }
+        
+        renderedBirthdayImage = finalImage
+        showRecipientDialog = false
+        
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + 0.4
+        ) {
+            showShareSheet = true
         }
     }
 }

@@ -82,6 +82,23 @@ struct HeartbeatAPIClient {
                 message: serverMessage
             )
         }
+#if DEBUG
+print("===== HEARTBEAT RESPONSE =====")
+print("Status code: \(httpResponse.statusCode)")
+
+if data.isEmpty {
+    print("Тело ответа отсутствует")
+} else {
+    print(
+        String(
+            data: data,
+            encoding: .utf8
+        ) ?? "Не удалось прочитать ответ"
+    )
+}
+
+print("==============================")
+#endif
     }
 
     #if DEBUG
