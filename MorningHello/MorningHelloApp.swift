@@ -23,13 +23,7 @@ struct MorningHelloApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                ContentView()
-                    .task {
-                        _ = await CheckInNotificationManager.shared
-                            .requestPermission()
-                    }
-
+            Group {
                 if isShowingIntro {
                     IntroVideoView {
                         withAnimation(
@@ -38,7 +32,12 @@ struct MorningHelloApp: App {
                             isShowingIntro = false
                         }
                     }
-                    .zIndex(1)
+                } else {
+                    AppEntryView()
+                        .task {
+                            _ = await CheckInNotificationManager.shared
+                                .requestPermission()
+                        }
                 }
             }
         }

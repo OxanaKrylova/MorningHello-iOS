@@ -53,6 +53,9 @@ struct EmergencyContact: Identifiable, Codable {
 
 struct EmergencyContactsView: View {
     
+    var isOnboarding: Bool = false
+    var onOnboardingComplete: (() -> Void)? = nil
+    
     @Environment(\.dismiss) private var dismiss
     
     @State private var name = ""
@@ -68,6 +71,8 @@ struct EmergencyContactsView: View {
 
     @State private var editingIndex: Int?
 
+    @State private var showSecondContactSuggestion = false
+    
     @AppStorage("checkInIntervalHours")
     private var checkInIntervalHours = 48
     
@@ -447,12 +452,21 @@ struct EmergencyContactsView: View {
                         }
 
                         saveContacts()
+                        if contacts.count == 1 {
+                            showSecondContactSuggestion = true
+                        }
 
+                        if contacts.count == 2,
+                           isOnboarding {
+                            onOnboardingComplete?()
+                        }
+                        
                         name = ""
                         surname = ""
                         phoneDigits = ""
                         email = ""
 
+                     
                     } label: {
                         Text(
                             editingIndex == nil
@@ -606,6 +620,36 @@ struct EmergencyContactsView: View {
             }
         } message: {
             Text(phoneErrorMessage)
+        }
+        .confirmationDialog(
+            "Добавить второй тревожный контакт?",
+            isPresented: $showSecondContactSuggestion,
+            titleVisibility: .visible
+        ) {
+            Button("Добавить второй контакт") {
+            }
+
+            Button("Продолжить с одним контактом") {
+                if isOnboarding {
+                    onOnboardingComplete?()
+                }
+            }
+
+            Button(
+                "Отмена",
+                role: .cancel
+            ) {
+            }
+        } message: {
+            Text(
+                """
+                Первый тревожный контакт сохранён.
+
+                Для большей надёжности мы рекомендуем добавить второго близкого человека.
+
+                MorningHello поддерживает до двух тревожных контактов.
+                """
+            )
         }
     }
 

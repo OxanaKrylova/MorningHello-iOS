@@ -45,6 +45,11 @@ enum ProfileSalutation: String, CaseIterable, Identifiable {
 // MARK: - Экран профиля
 
 struct ProfileView: View {
+    @AppStorage("check_in_interval_hours")
+    private var checkInIntervalHours = 0
+
+    @AppStorage("check_in_interval_confirmed")
+    private var checkInIntervalConfirmed = false
 
     @Environment(\.dismiss)
     private var dismiss
@@ -71,7 +76,7 @@ struct ProfileView: View {
 
     @AppStorage("profile_salutation")
     private var savedSalutation = ""
-
+    
     // MARK: Временные значения полей даты
 
     @State
@@ -95,7 +100,11 @@ struct ProfileView: View {
 
     private var canCloseProfile: Bool {
         !trimmedName.isEmpty &&
-        !savedSalutation.isEmpty
+        !savedSalutation.isEmpty &&
+        birthDay > 0 &&
+        birthMonth > 0 &&
+        checkInIntervalHours > 0 &&
+        checkInIntervalConfirmed
     }
 
     // MARK: Основной экран
@@ -114,6 +123,8 @@ struct ProfileView: View {
                         nameSection
 
                         birthdaySection
+                        
+                        checkInIntervalSection
 
                         subscriptionSection
 
@@ -163,7 +174,7 @@ struct ProfileView: View {
             }
         } message: {
             Text(
-                "Пожалуйста, укажите имя и выберите форму обращения: «Уважаемый» или «Уважаемая»."
+                "Пожалуйста, заполните имя, форму обращения, день и месяц рождения и выберите интервал тревожного оповещения."
             )
         }
     }
@@ -439,7 +450,62 @@ struct ProfileView: View {
         }
         .profileCard()
     }
+    
+    // MARK: - Интервал тревожного оповещения
 
+    private var checkInIntervalSection: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 12
+        ) {
+            Text("Интервал тревожного оповещения")
+                .font(
+                    .system(
+                        .headline,
+                        design: .rounded
+                    )
+                )
+
+            Text(
+                "Выберите, через сколько часов без новой отметки «Я в порядке» нужно предупредить тревожные контакты."
+            )
+            .font(.subheadline)
+            .foregroundColor(.secondary)
+
+            Picker(
+                "Интервал",
+                selection: $checkInIntervalHours
+            ) {
+                Text("Выберите интервал")
+                    .tag(0)
+
+                Text("24 часа")
+                    .tag(24)
+
+                Text("48 часов")
+                    .tag(48)
+
+                Text("72 часа")
+                    .tag(72)
+            }
+            .pickerStyle(.menu)
+            .onChange(
+                of: checkInIntervalHours
+            ) { _, newValue in
+                if newValue == 24 ||
+                   newValue == 48 ||
+                   newValue == 72 {
+                    checkInIntervalConfirmed = true
+                }
+            }
+        }
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+        .profileCard()
+    }
+    
     // MARK: - День рождения
 
     private var birthdaySection: some View {

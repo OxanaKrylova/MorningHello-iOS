@@ -46,20 +46,39 @@ struct PostcardRenderer {
             // 3. Базовый текст
             let baseTextRect = CGRect(
                 x: horizontalInset,
-                y: size.height * 0.28,
+                y: size.height * 0.06,
                 width: size.width - horizontalInset * 2,
                 height: size.height * 0.18
             )
 
+            let baseFont = UIFont.systemFont(
+                ofSize: size.width * 0.052,
+                weight: .medium
+            )
+
+            let italicDescriptor =
+                baseFont.fontDescriptor.withSymbolicTraits(
+                    .traitItalic
+                )
+
+            let artisticFont = italicDescriptor.map {
+                UIFont(
+                    descriptor: $0,
+                    size: size.width * 0.052
+                )
+            } ?? baseFont
+
             drawTextBubble(
                 text: input.baseText,
                 in: baseTextRect,
-                font: UIFont.systemFont(
-                    ofSize: size.width * 0.05,
-                    weight: .semibold
-                ),
+                font: artisticFont,
                 textColor: .white,
-                bubbleColor: UIColor.black.withAlphaComponent(0.24)
+                bubbleColor: UIColor(
+                    red: 0.47,
+                    green: 0.35,
+                    blue: 0.15,
+                    alpha: 0.82
+                )
             )
 
             // 4. Пользовательский текст
@@ -71,7 +90,7 @@ struct PostcardRenderer {
 
                 let customTextRect = CGRect(
                     x: horizontalInset,
-                    y: size.height * 0.72,
+                    y: size.height * 0.70,
                     width: size.width - horizontalInset * 2,
                     height: size.height * 0.15
                 )
@@ -79,9 +98,8 @@ struct PostcardRenderer {
                 drawTextBubble(
                     text: customText,
                     in: customTextRect,
-                    font: UIFont.systemFont(
-                        ofSize: size.width * 0.042,
-                        weight: .regular
+                    font: UIFont.italicSystemFont(
+                        ofSize: size.width * 0.05
                     ),
                     textColor: .white,
                     bubbleColor: UIColor.black.withAlphaComponent(0.28)

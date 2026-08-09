@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B3D5430126C50005F4183 /* FeedbackView.swift */; };
 		293388A62FF31CDD0076642F /* EmergencyContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293388A52FF31CDD0076642F /* EmergencyContactsView.swift */; };
+		2976EF0E3027D60C00C0E8B1 /* TermsOfUseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976EF0D3027D60C00C0E8B1 /* TermsOfUseView.swift */; };
+		2976EF113027D66000C0E8B1 /* TermsOfUseText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */; };
+		2976EF133027D69B00C0E8B1 /* AppEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976EF123027D69B00C0E8B1 /* AppEntryView.swift */; };
 		29B76C43301AA87500D1D295 /* PostcardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C42301AA86B00D1D295 /* PostcardScreen.swift */; };
 		29B76C55301AAC7F00D1D295 /* MondayPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C54301AAC7F00D1D295 /* MondayPostcardProvider.swift */; };
 		29B76C59301B582A00D1D295 /* HanukkahPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C58301B582500D1D295 /* HanukkahPostcardProvider.swift */; };
@@ -42,6 +45,9 @@
 /* Begin PBXFileReference section */
 		292B3D5430126C50005F4183 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		293388A52FF31CDD0076642F /* EmergencyContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContactsView.swift; sourceTree = "<group>"; };
+		2976EF0D3027D60C00C0E8B1 /* TermsOfUseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseView.swift; sourceTree = "<group>"; };
+		2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseText.swift; sourceTree = "<group>"; };
+		2976EF123027D69B00C0E8B1 /* AppEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntryView.swift; sourceTree = "<group>"; };
 		29B441A22F3BE23E00A4F417 /* MorningHello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MorningHello.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B76C42301AA86B00D1D295 /* PostcardScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostcardScreen.swift; sourceTree = "<group>"; };
 		29B76C54301AAC7F00D1D295 /* MondayPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondayPostcardProvider.swift; sourceTree = "<group>"; };
@@ -110,9 +116,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2976EF0F3027D63C00C0E8B1 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				2976EF0D3027D60C00C0E8B1 /* TermsOfUseView.swift */,
+				2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */,
+				2976EF123027D69B00C0E8B1 /* AppEntryView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		29B441992F3BE23E00A4F417 = {
 			isa = PBXGroup;
 			children = (
+				2976EF0F3027D63C00C0E8B1 /* Onboarding */,
 				29B76C78301BD31700D1D295 /* Intro */,
 				29B76C77301BD2AB00D1D295 /* Views */,
 				29B76C76301BD28400D1D295 /* Notifications */,
@@ -362,8 +379,10 @@
 			files = (
 				29B76CA53021301A00D1D295 /* HeartbeatRequestBuilder.swift in Sources */,
 				29B76C7A301BD94C00D1D295 /* SundayPostcardProvider.swift in Sources */,
+				2976EF133027D69B00C0E8B1 /* AppEntryView.swift in Sources */,
 				29B76C72301BD0B000D1D295 /* HolidayContent.swift in Sources */,
 				29B76C84301D4D8500D1D295 /* SukkotPostcardProvider..swift in Sources */,
+				2976EF0E3027D60C00C0E8B1 /* TermsOfUseView.swift in Sources */,
 				293388A62FF31CDD0076642F /* EmergencyContactsView.swift in Sources */,
 				29B76C86301D4EB900D1D295 /* JewishHolidayProvider.swift in Sources */,
 				29B76C55301AAC7F00D1D295 /* MondayPostcardProvider.swift in Sources */,
@@ -388,6 +407,7 @@
 				29CA8E2B2FFEF94500F59ECA /* HolidaySettingsView.swift in Sources */,
 				29B76C59301B582A00D1D295 /* HanukkahPostcardProvider.swift in Sources */,
 				29B76CA330212FD700D1D295 /* HeartbeatModels.swift in Sources */,
+				2976EF113027D66000C0E8B1 /* TermsOfUseText.swift in Sources */,
 				29B76CA73021304700D1D295 /* HeartbeatAPIClient.swift in Sources */,
 				292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */,
 			);

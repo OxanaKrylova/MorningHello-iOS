@@ -24,6 +24,10 @@ struct BirthdayGreetingView: View {
     @State private var selectedRecipients: [String] = []
     @State private var renderedBirthdayImage: UIImage?
     
+    @State private var customBirthdayMessage = ""
+    @State private var showCustomMessageEditor = false
+    @State private var useCustomBirthdayMessage = false
+    
     private let imageNames: [String] = [
         "holiday_birthday_1",
         "holiday_birthday_2",
@@ -34,7 +38,22 @@ struct BirthdayGreetingView: View {
         "holiday_birthday_7",
         "holiday_birthday_8",
         "holiday_birthday_9",
-        "holiday_birthday_10"
+        "holiday_birthday_10",
+        "holiday_birthday_11",
+        "holiday_birthday_12",
+        "holiday_birthday_13",
+        "holiday_birthday_14",
+        "holiday_birthday_15",
+        "holiday_birthday_16",
+        "holiday_birthday_17",
+        "holiday_birthday_18",
+        "holiday_birthday_19",
+        "holiday_birthday_20",
+        "holiday_birthday_21",
+        "holiday_birthday_22",
+        "holiday_birthday_23",
+        "holiday_birthday_24",
+        "holiday_birthday_25"
     ]
     
     private let phrases: [String] = [
@@ -57,7 +76,19 @@ struct BirthdayGreetingView: View {
     private var selectedPhrase: String {
         phrases[selectedPhraseIndex]
     }
-    
+    private var birthdayMessage: String {
+        let trimmed = customBirthdayMessage
+            .trimmingCharacters(
+                in: .whitespacesAndNewlines
+            )
+
+        if useCustomBirthdayMessage,
+           !trimmed.isEmpty {
+            return trimmed
+        }
+
+        return selectedPhrase
+    }
     private var firstEmergencyContact: EmergencyContact? {
         emergencyContacts.indices.contains(0)
         ? emergencyContacts[0]
@@ -118,16 +149,36 @@ struct BirthdayGreetingView: View {
                     )
                     .foregroundColor(darkBrown.opacity(0.65))
                     
-                    Text("Выберите пожелание")
-                        .font(
-                            .system(
-                                .title3,
-                                design: .rounded
+                    HStack {
+                        Text("Выберите пожелание")
+                            .font(
+                                .system(
+                                    .title3,
+                                    design: .rounded
+                                )
+                                .weight(.bold)
                             )
-                            .weight(.bold)
-                        )
-                        .foregroundColor(darkBrown)
-                        .padding(.top, 2)
+                            .foregroundColor(darkBrown)
+
+                        Spacer()
+
+                        Button {
+                            showCustomMessageEditor = true
+                        } label: {
+                            Label(
+                                "Своё",
+                                systemImage: "pencil"
+                            )
+                            .foregroundColor(darkBrown)
+                            .padding(.horizontal, 14)
+                            .frame(height: 38)
+                            .background(
+                                lightBrown.opacity(0.20)
+                            )
+                            .clipShape(Capsule())
+                        }
+                    }
+                    .padding(.top, 2)
                     
                     phrasePreview
                     
@@ -264,6 +315,18 @@ struct BirthdayGreetingView: View {
                     image: renderedBirthdayImage
                 )
             }
+            .sheet(
+                isPresented: $showCustomMessageEditor
+            ) {
+                BirthdayCustomMessageView(
+                    text: $customBirthdayMessage,
+                    isUsingCustomMessage:
+                        $useCustomBirthdayMessage
+                )
+                .presentationDetents([
+                    .height(300)
+                ])
+            }
         }
     }
     
@@ -272,12 +335,11 @@ struct BirthdayGreetingView: View {
             ZStack {
                 Image(selectedImageName)
                     .resizable()
-                    .scaledToFill()
+                    .scaledToFit()
                     .frame(
                         width: geometry.size.width,
                         height: geometry.size.height
                     )
-                    .clipped()
                 
                 LinearGradient(
                     colors: [
@@ -296,10 +358,10 @@ struct BirthdayGreetingView: View {
                 )
             )
         }
-        .frame(height: 220)
+        .frame(height: 150)
     }
     private var phrasePreview: some View {
-        Text(selectedPhrase)
+        Text(birthdayMessage)
             .font(
                 .system(
                     .body,
@@ -416,7 +478,7 @@ struct BirthdayGreetingView: View {
         return renderer.render(
             input: PostcardRenderInput(
                 imageName: selectedImageName,
-                baseText: selectedPhrase,
+                baseText: birthdayMessage,
                 customText: nil
             )
         )
@@ -424,6 +486,7 @@ struct BirthdayGreetingView: View {
     private var phraseNavigation: some View {
         HStack(spacing: 34) {
             Button {
+                useCustomBirthdayMessage = false
                 showPreviousPhrase()
             } label: {
                 Image(
@@ -445,6 +508,8 @@ struct BirthdayGreetingView: View {
             }
             
             Button {
+                useCustomBirthdayMessage = false
+
                 selectedPhraseIndex = Int.random(
                     in: phrases.indices
                 )
@@ -470,8 +535,9 @@ struct BirthdayGreetingView: View {
             }
             
             Button {
+                useCustomBirthdayMessage = false
                 showNextPhrase()
-            } label: {
+            }label: {
                 Image(
                     systemName: "chevron.right"
                 )
@@ -597,6 +663,128 @@ struct BirthdayGreetingView: View {
             deadline: .now() + 0.4
         ) {
             showShareSheet = true
+        }
+    }
+}
+private struct BirthdayCustomMessageView: View {
+
+    @Environment(\.dismiss)
+    private var dismiss
+
+    @Binding var text: String
+    @Binding var isUsingCustomMessage: Bool
+
+    @FocusState
+    private var isFocused: Bool
+
+    private let limit = 50
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 16) {
+
+                Text("Добавьте своё пожелание")
+                    .font(
+                        .system(
+                            .title3,
+                            design: .rounded
+                        )
+                        .weight(.bold)
+                    )
+
+                ZStack(alignment: .topLeading) {
+
+                    if text.isEmpty {
+                        Text(
+                            "Напишите несколько тёплых слов..."
+                        )
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 14)
+                    }
+
+                    TextEditor(text: $text)
+                        .focused($isFocused)
+                        .scrollContentBackground(
+                            .hidden
+                        )
+                        .padding(6)
+                        .onChange(
+                            of: text
+                        ) { _, newValue in
+                            if newValue.count > limit {
+                                text = String(
+                                    newValue.prefix(
+                                        limit
+                                    )
+                                )
+                            }
+                        }
+                }
+                .frame(height: 100)
+                .background(
+                    Color.secondary.opacity(0.08)
+                )
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: 16
+                    )
+                )
+
+                Text(
+                    "\(text.count)/\(limit)"
+                )
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .trailing
+                )
+
+                Button("Использовать пожелание") {
+                    let trimmed =
+                        text.trimmingCharacters(
+                            in: .whitespacesAndNewlines
+                        )
+
+                    guard !trimmed.isEmpty else {
+                        return
+                    }
+
+                    text = trimmed
+                    isUsingCustomMessage = true
+                    dismiss()
+                }
+                .buttonStyle(.borderedProminent)
+                .disabled(
+                    text.trimmingCharacters(
+                        in: .whitespacesAndNewlines
+                    ).isEmpty
+                )
+            }
+            .padding(20)
+            .toolbar {
+                ToolbarItem(
+                    placement: .topBarTrailing
+                ) {
+                    Button("Отмена") {
+                        dismiss()
+                    }
+                }
+
+                ToolbarItemGroup(
+                    placement: .keyboard
+                ) {
+                    Spacer()
+
+                    Button("Готово") {
+                        isFocused = false
+                    }
+                }
+            }
+            .onAppear {
+                isFocused = true
+            }
         }
     }
 }

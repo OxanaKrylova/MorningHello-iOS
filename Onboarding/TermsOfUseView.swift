@@ -29,7 +29,6 @@ struct TermsOfUseView: View {
                         alignment: .leading,
                         spacing: 18
                     ) {
-
                         Text("Условия использования MorningHello")
                             .font(
                                 .system(
@@ -62,8 +61,23 @@ struct TermsOfUseView: View {
                             .foregroundColor(.primary)
                             .lineSpacing(5)
                             .textSelection(.enabled)
+
+                        Link(
+                            "Открыть полную версию Условий использования",
+                            destination: URL(
+                                string:
+                                    "https://www.morninghelloapp.com/terms-and-conditions"
+                            )!
+                        )
+                        .font(.headline)
+                        .foregroundColor(darkBrown)
                     }
-                    .padding(.horizontal, 22)
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .leading
+                    )
+                    .padding(.leading, 30)
+                    .padding(.trailing, 24)
                     .padding(.top, 24)
                     .padding(.bottom, 30)
                 }
@@ -106,7 +120,7 @@ struct TermsOfUseView: View {
                             )
                             .foregroundColor(.primary)
                             .multilineTextAlignment(.leading)
-
+                            
                             Spacer()
                         }
                     }
