@@ -47,40 +47,45 @@ struct PostcardScreen: View {
                 )
                 .ignoresSafeArea()
 
-                // Основной текст открытки
-                Text(phrase)
-                    .font(
-                        .system(
-                            .title2,
-                            design: .rounded
+                let trimmedPhrase = phrase.trimmingCharacters(
+                    in: .whitespacesAndNewlines
+                )
+
+                if !trimmedPhrase.isEmpty {
+                    Text(phrase)
+                        .font(
+                            .system(
+                                .title2,
+                                design: .rounded
+                            )
                         )
-                    )
-                    .fontWeight(.semibold)
-                    .lineSpacing(6)
-                    .foregroundColor(.white)
-                    .multilineTextAlignment(.center)
-                    .minimumScaleFactor(0.75)
-                    .padding(.horizontal, 22)
-                    .padding(.vertical, 16)
-                    .frame(
-                        width: min(
-                            geometry.size.width - 40,
-                            360
+                        .fontWeight(.semibold)
+                        .lineSpacing(6)
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.75)
+                        .padding(.horizontal, 22)
+                        .padding(.vertical, 16)
+                        .frame(
+                            width: min(
+                                geometry.size.width - 40,
+                                360
+                            )
                         )
-                    )
-                    .background(
-                        .black.opacity(0.24)
-                    )
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 18,
-                            style: .continuous
+                        .background(
+                            .black.opacity(0.24)
                         )
-                    )
-                    .position(
-                        x: geometry.size.width / 2,
-                        y: geometry.size.height * 0.25
-                    )
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: 18,
+                                style: .continuous
+                            )
+                        )
+                        .position(
+                            x: geometry.size.width / 2,
+                            y: geometry.size.height * 0.15
+                        )
+                }
 
                 // Поле собственного пожелания
                 customMessageEditor
@@ -92,7 +97,7 @@ struct PostcardScreen: View {
                     )
                     .position(
                         x: geometry.size.width / 2,
-                        y: geometry.size.height * 0.58
+                        y: geometry.size.height * 0.78
                     )
 
                 // Нижние кнопки

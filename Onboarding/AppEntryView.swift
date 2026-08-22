@@ -36,6 +36,9 @@ struct AppEntryView: View {
     @AppStorage("contacts_onboarding_completed")
     private var contactsOnboardingCompleted = false
     
+    @AppStorage("holiday_onboarding_completed")
+    private var holidayOnboardingCompleted = false
+    
     @State private var hasEmergencyContacts = false
         
         var body: some View {
@@ -56,6 +59,7 @@ struct AppEntryView: View {
                     
                     // Шаг 3 — Тревожные контакты
                 } else if !contactsOnboardingCompleted {
+
                     EmergencyContactsView(
                         isOnboarding: true,
                         onOnboardingComplete: {
@@ -63,7 +67,18 @@ struct AppEntryView: View {
                             refreshEmergencyContacts()
                         }
                     )
+
+                } else if !holidayOnboardingCompleted {
+
+                    HolidaySettingsView(
+                        isOnboarding: true,
+                        onOnboardingComplete: {
+                            holidayOnboardingCompleted = true
+                        }
+                    )
+
                 } else {
+
                     ContentView()
                 }
                 // Онбординг закончен

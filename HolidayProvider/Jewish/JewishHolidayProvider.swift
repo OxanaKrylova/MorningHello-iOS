@@ -191,4 +191,177 @@ struct JewishHolidayProvider {
 
         return nil
     }
+    // MARK: - Еврейские посты
+
+    static func fastContent(
+        for date: Date = Date()
+    ) -> HolidayContent? {
+
+        var hebrewCalendar = Calendar(
+            identifier: .hebrew
+        )
+
+        hebrewCalendar.timeZone = .current
+
+        let components = hebrewCalendar.dateComponents(
+            [
+                .year,
+                .month,
+                .day,
+                .weekday
+            ],
+            from: date
+        )
+
+        guard let month = components.month,
+              let day = components.day else {
+            return nil
+        }
+
+        /*
+         В Foundation Calendar(.hebrew):
+
+         1  = Tishrei
+         4  = Tevet
+         7  = Adar / Adar II
+         11 = Tammuz
+
+         Это НЕ традиционная нумерация,
+         где Nisan считается первым месяцем.
+         */
+
+
+        // 1. Пост Гедальи
+        // 3 тишрея.
+        //
+        // Если 3 тишрея выпадает на Шаббат,
+        // пост переносится на 4 тишрея.
+
+        if month == 1 {
+
+            if day == 3 {
+                return HolidayContent(
+                    images: [
+                        "Judaism_FastGedaliah"
+                    ],
+                    phrases: [
+                        "Пост Гедальи. Пусть этот день станет временем памяти, спокойных размышлений и внутреннего сосредоточения."
+                    ],
+                    category: "Еврейский"
+                )
+            }
+
+            // Перенос с Шаббата:
+            // если сегодня 4 тишрея и воскресенье.
+            if day == 4,
+               components.weekday == 1 {
+
+                return HolidayContent(
+                    images: [
+                        "Judaism_FastGedaliah"
+                    ],
+                    phrases: [
+                        "Пост Гедальи. Пусть этот день станет временем памяти, спокойных размышлений и внутреннего сосредоточения."
+                    ],
+                    category: "Еврейский"
+                )
+            }
+        }
+
+
+        // 2. Десятое тевета
+        // 10 тевета
+
+        if month == 4 &&
+           day == 10 {
+
+            return HolidayContent(
+                images: [
+                    "Judaism_TenthTevet"
+                ],
+                phrases: [
+                    "Десятое тевета. Пусть этот день памяти и поста принесёт спокойствие, осмысленность и мир в сердце."
+                ],
+                category: "Еврейский"
+            )
+        }
+
+
+        // 3. Семнадцатое тамуза
+        // 17 тамуза.
+        //
+        // Если 17 тамуза приходится на Шаббат,
+        // пост переносится на 18 тамуза.
+
+        if month == 11 {
+
+            if day == 17 {
+                return HolidayContent(
+                    images: [
+                        "Judaism_SeventeenthTammuz"
+                    ],
+                    phrases: [
+                        "Семнадцатое тамуза. Пусть этот день памяти станет временем тихих размышлений, терпения и внутренней силы."
+                    ],
+                    category: "Еврейский"
+                )
+            }
+
+            // Перенос на воскресенье
+            if day == 18,
+               components.weekday == 1 {
+
+                return HolidayContent(
+                    images: [
+                        "Judaism_SeventeenthTammuz"
+                    ],
+                    phrases: [
+                        "Семнадцатое тамуза. Пусть этот день памяти станет временем тихих размышлений, терпения и внутренней силы."
+                    ],
+                    category: "Еврейский"
+                )
+            }
+        }
+
+
+        // 4. Пост Эстер
+        // Обычно 13 адара.
+        //
+        // Если 13 адара приходится на Шаббат,
+        // пост проводится заранее —
+        // в четверг, 11 адара.
+
+        if month == 7 {
+
+            if day == 13 {
+                return HolidayContent(
+                    images: [
+                        "Judaism_FastEsther"
+                    ],
+                    phrases: [
+                        "Пост Эстер. Пусть этот день напомнит о силе веры, мужестве и надежде даже в непростые времена."
+                    ],
+                    category: "Еврейский"
+                )
+            }
+
+            // Перенос на четверг перед Шаббатом
+            if day == 11,
+               components.weekday == 5 {
+
+                return HolidayContent(
+                    images: [
+                        "Judaism_FastEsther"
+                    ],
+                    phrases: [
+                        "Пост Эстер. Пусть этот день напомнит о силе веры, мужестве и надежде даже в непростые времена."
+                    ],
+                    category: "Еврейский"
+                )
+            }
+        }
+
+
+        return nil
+    }
 }

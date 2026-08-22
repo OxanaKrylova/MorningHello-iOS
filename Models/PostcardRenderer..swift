@@ -44,42 +44,30 @@ struct PostcardRenderer {
             let horizontalInset: CGFloat = size.width * 0.20
 
             // 3. Базовый текст
-            let baseTextRect = CGRect(
-                x: horizontalInset,
-                y: size.height * 0.06,
-                width: size.width - horizontalInset * 2,
-                height: size.height * 0.18
+            let trimmedBaseText = input.baseText.trimmingCharacters(
+                in: .whitespacesAndNewlines
             )
 
-            let baseFont = UIFont.systemFont(
-                ofSize: size.width * 0.052,
-                weight: .medium
-            )
+            if !trimmedBaseText.isEmpty {
 
-            let italicDescriptor =
-                baseFont.fontDescriptor.withSymbolicTraits(
-                    .traitItalic
+                let baseTextRect = CGRect(
+                    x: horizontalInset,
+                    y: size.height * 0.11,
+                    width: size.width - horizontalInset * 2,
+                    height: size.height * 0.22
                 )
 
-            let artisticFont = italicDescriptor.map {
-                UIFont(
-                    descriptor: $0,
-                    size: size.width * 0.052
+                drawTextBubble(
+                    text: trimmedBaseText,
+                    in: baseTextRect,
+                    font: UIFont.systemFont(
+                        ofSize: size.width * 0.055,
+                        weight: .semibold
+                    ),
+                    textColor: .white,
+                    bubbleColor: UIColor.black.withAlphaComponent(0.24)
                 )
-            } ?? baseFont
-
-            drawTextBubble(
-                text: input.baseText,
-                in: baseTextRect,
-                font: artisticFont,
-                textColor: .white,
-                bubbleColor: UIColor(
-                    red: 0.47,
-                    green: 0.35,
-                    blue: 0.15,
-                    alpha: 0.82
-                )
-            )
+            }
 
             // 4. Пользовательский текст
             let trimmedCustomText = input.customText?

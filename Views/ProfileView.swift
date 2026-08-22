@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import StoreKit
 import Combine
+import StoreKit
 
 // MARK: - Форма обращения
 
@@ -45,59 +46,63 @@ enum ProfileSalutation: String, CaseIterable, Identifiable {
 // MARK: - Экран профиля
 
 struct ProfileView: View {
+    @State private var showSubscription = false
+    
     @AppStorage("check_in_interval_hours")
     private var checkInIntervalHours = 0
-
+    
     @AppStorage("check_in_interval_confirmed")
     private var checkInIntervalConfirmed = false
-
+    
     @Environment(\.dismiss)
     private var dismiss
-
+    
+    @State private var showManageSubscriptions = false
+    
     @StateObject
-    private var subscriptionManager = SubscriptionManager()
-
+    private var subscriptionManager = SubscriptionManager.shared
+    
     @State
     private var showFeedback = false
-
+    
     @State
     private var showRequiredFieldAlert = false
-
+    
     // MARK: Сохранённые данные
-
+    
     @AppStorage("profile_display_name")
     private var displayName = ""
-
+    
     @AppStorage("profile_birth_day")
     private var birthDay = 0
-
+    
     @AppStorage("profile_birth_month")
     private var birthMonth = 0
-
+    
     @AppStorage("profile_salutation")
     private var savedSalutation = ""
     
     // MARK: Временные значения полей даты
-
+    
     @State
     private var dayText = ""
-
+    
     @State
     private var monthText = ""
-
+    
     @FocusState
     private var focusedField: ProfileField?
-
+    
     private var trimmedName: String {
         displayName.trimmingCharacters(
             in: .whitespacesAndNewlines
         )
     }
-
+    
     private var isBirthdayComplete: Bool {
         birthDay > 0 && birthMonth > 0
     }
-
+    
     private var canCloseProfile: Bool {
         !trimmedName.isEmpty &&
         !savedSalutation.isEmpty &&
@@ -106,30 +111,30 @@ struct ProfileView: View {
         checkInIntervalHours > 0 &&
         checkInIntervalConfirmed
     }
-
+    
     // MARK: Основной экран
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 profileBackground
-
+                
                 ScrollView {
                     VStack(spacing: 20) {
                         closeButton
-
+                        
                         profileHeader
-
+                        
                         nameSection
-
+                        
                         birthdaySection
                         
                         checkInIntervalSection
-
+                        
                         subscriptionSection
-
+                                                
                         feedbackSection
-
+                        
                         Text(
                             "Данные профиля сохраняются только на этом устройстве."
                         )
@@ -163,6 +168,13 @@ struct ProfileView: View {
         ) {
             FeedbackView()
         }
+        .sheet(
+            isPresented:
+                $showSubscription
+        ) {
+            
+            SubscriptionView()
+        }
         .alert(
             "Заполните профиль",
             isPresented: $showRequiredFieldAlert
@@ -177,10 +189,13 @@ struct ProfileView: View {
                 "Пожалуйста, заполните имя, форму обращения, день и месяц рождения и выберите интервал тревожного оповещения."
             )
         }
+        .manageSubscriptionsSheet(
+            isPresented: $showManageSubscriptions
+        )
     }
-
+    
     // MARK: - Фон
-
+    
     private var profileBackground: some View {
         LinearGradient(
             colors: [
@@ -205,9 +220,9 @@ struct ProfileView: View {
         )
         .ignoresSafeArea()
     }
-
+    
     // MARK: - Заголовок
-
+    
     private var profileHeader: some View {
         VStack(spacing: 8) {
             Image(systemName: "person.crop.circle.fill")
@@ -216,7 +231,7 @@ struct ProfileView: View {
                     .orange.opacity(0.78),
                     .brown.opacity(0.62)
                 )
-
+            
             Text("Профиль")
                 .font(
                     .system(
@@ -226,7 +241,7 @@ struct ProfileView: View {
                     )
                 )
                 .foregroundColor(.brown)
-
+            
             Text(
                 "Эти данные помогут персонализировать открытки и тревожные сообщения."
             )
@@ -242,13 +257,13 @@ struct ProfileView: View {
         }
         .padding(.bottom, 4)
     }
-
+    
     // MARK: - Кнопка закрытия
-
+    
     private var closeButton: some View {
         HStack {
             Spacer()
-
+            
             Button {
                 closeProfile()
             } label: {
@@ -278,25 +293,25 @@ struct ProfileView: View {
         .padding(.horizontal, 24)
         .padding(.top, 6)
     }
-
+    
     private func closeProfile() {
         focusedField = nil
-
+        
         displayName = trimmedName
-
+        
         guard canCloseProfile else {
             showRequiredFieldAlert = true
             return
         }
-
+        
         dismiss()
     }
-
+    
     // MARK: - Имя и форма обращения
-
+    
     private var nameSection: some View {
         VStack(alignment: .leading, spacing: 18) {
-
+            
             VStack(alignment: .leading, spacing: 12) {
                 Label {
                     Text("Как нам к вам обращаться?")
@@ -312,7 +327,7 @@ struct ProfileView: View {
                     .weight(.semibold)
                 )
                 .foregroundColor(.brown)
-
+                
                 TextField(
                     "Например, Анна или Анна Петрова",
                     text: $displayName
@@ -346,7 +361,7 @@ struct ProfileView: View {
                         style: .continuous
                     )
                 )
-
+                
                 HStack(alignment: .top) {
                     Text(
                         "Напишите имя так, чтобы близкие поняли, от кого пришло тревожное сообщение."
@@ -355,7 +370,7 @@ struct ProfileView: View {
                         maxWidth: .infinity,
                         alignment: .leading
                     )
-
+                    
                     Text("\(displayName.count)/50")
                         .monospacedDigit()
                         .foregroundColor(
@@ -372,10 +387,10 @@ struct ProfileView: View {
                 )
                 .foregroundColor(.brown.opacity(0.68))
             }
-
+            
             Divider()
                 .overlay(.brown.opacity(0.18))
-
+            
             VStack(alignment: .leading, spacing: 11) {
                 HStack(spacing: 4) {
                     Label {
@@ -390,13 +405,13 @@ struct ProfileView: View {
                             design: .rounded
                         )
                     )
-
+                    
                     Text("*")
                         .fontWeight(.bold)
                         .foregroundColor(.red.opacity(0.8))
                 }
                 .foregroundColor(.brown)
-
+                
                 Text(
                     "Это обязательное поле. Оно нужно для правильного текста тревожного сообщения."
                 )
@@ -407,7 +422,7 @@ struct ProfileView: View {
                     )
                 )
                 .foregroundColor(.brown.opacity(0.68))
-
+                
                 Picker(
                     "Форма обращения",
                     selection: $savedSalutation
@@ -420,7 +435,7 @@ struct ProfileView: View {
                     }
                 }
                 .pickerStyle(.segmented)
-
+                
                 if savedSalutation.isEmpty {
                     Label(
                         "Выберите один из двух вариантов",
@@ -452,7 +467,7 @@ struct ProfileView: View {
     }
     
     // MARK: - Интервал тревожного оповещения
-
+    
     private var checkInIntervalSection: some View {
         VStack(
             alignment: .leading,
@@ -465,26 +480,26 @@ struct ProfileView: View {
                         design: .rounded
                     )
                 )
-
+            
             Text(
                 "Выберите, через сколько часов без новой отметки «Я в порядке» нужно предупредить тревожные контакты."
             )
             .font(.subheadline)
             .foregroundColor(.secondary)
-
+            
             Picker(
                 "Интервал",
                 selection: $checkInIntervalHours
             ) {
                 Text("Выберите интервал")
                     .tag(0)
-
+                
                 Text("24 часа")
                     .tag(24)
-
+                
                 Text("48 часов")
                     .tag(48)
-
+                
                 Text("72 часа")
                     .tag(72)
             }
@@ -493,8 +508,8 @@ struct ProfileView: View {
                 of: checkInIntervalHours
             ) { _, newValue in
                 if newValue == 24 ||
-                   newValue == 48 ||
-                   newValue == 72 {
+                    newValue == 48 ||
+                    newValue == 72 {
                     checkInIntervalConfirmed = true
                 }
             }
@@ -507,7 +522,7 @@ struct ProfileView: View {
     }
     
     // MARK: - День рождения
-
+    
     private var birthdaySection: some View {
         VStack(alignment: .leading, spacing: 14) {
             Label {
@@ -524,7 +539,7 @@ struct ProfileView: View {
                 .weight(.semibold)
             )
             .foregroundColor(.brown)
-
+            
             HStack(spacing: 12) {
                 numberField(
                     title: "Дата",
@@ -533,7 +548,7 @@ struct ProfileView: View {
                     field: .day,
                     maximumLength: 2
                 )
-
+                
                 numberField(
                     title: "Месяц",
                     placeholder: "1–12",
@@ -542,7 +557,7 @@ struct ProfileView: View {
                     maximumLength: 2
                 )
             }
-
+            
             if let birthdayMessage {
                 Label {
                     Text(birthdayMessage.text)
@@ -561,7 +576,7 @@ struct ProfileView: View {
                     birthdayMessage.color
                 )
             }
-
+            
             Text(
                 "Год рождения не требуется. Приложение использует только день и месяц."
             )
@@ -575,7 +590,7 @@ struct ProfileView: View {
         }
         .profileCard()
     }
-
+    
     private func numberField(
         title: String,
         placeholder: String,
@@ -593,7 +608,7 @@ struct ProfileView: View {
                     .weight(.semibold)
                 )
                 .foregroundColor(.brown.opacity(0.8))
-
+            
             TextField(
                 placeholder,
                 text: text
@@ -632,141 +647,19 @@ struct ProfileView: View {
         }
         .frame(maxWidth: .infinity)
     }
-
-    // MARK: - Подписка
-
-    private var subscriptionSection: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Label {
-                Text("Статус вашей подписки")
-            } icon: {
-                Image(systemName: "star.circle.fill")
-                    .foregroundColor(.orange)
-            }
-            .font(
-                .system(
-                    .title3,
-                    design: .rounded
-                )
-                .weight(.semibold)
-            )
-            .foregroundColor(.brown)
-
-            HStack(spacing: 14) {
-                Image(
-                    systemName:
-                        subscriptionManager.status.icon
-                )
-                .font(
-                    .system(
-                        size: 27,
-                        weight: .semibold
-                    )
-                )
-                .foregroundColor(
-                    subscriptionManager.status.color
-                )
-                .frame(width: 40)
-
-                VStack(
-                    alignment: .leading,
-                    spacing: 5
-                ) {
-                    Text(
-                        subscriptionManager.status.title
-                    )
-                    .font(
-                        .system(
-                            .headline,
-                            design: .rounded
-                        )
-                    )
-                    .foregroundColor(.brown)
-
-                    Text(
-                        subscriptionManager
-                            .status
-                            .description
-                    )
-                    .font(
-                        .system(
-                            .caption,
-                            design: .rounded
-                        )
-                    )
-                    .foregroundColor(
-                        .brown.opacity(0.65)
-                    )
-                }
-
-                Spacer()
-
-                if subscriptionManager.isLoading {
-                    ProgressView()
-                        .tint(.orange)
-                }
-            }
-            .padding(16)
-            .background(.white.opacity(0.86))
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: 18,
-                    style: .continuous
-                )
-            )
-
-            Button {
-                Task {
-                    await subscriptionManager
-                        .refreshSubscriptionStatus()
-                }
-            } label: {
-                Label(
-                    "Обновить статус",
-                    systemImage: "arrow.clockwise"
-                )
-                .font(
-                    .system(
-                        .subheadline,
-                        design: .rounded
-                    )
-                    .weight(.semibold)
-                )
-                .foregroundColor(.brown)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 13)
-                .background(.white.opacity(0.72))
-                .clipShape(Capsule())
-            }
-            .disabled(subscriptionManager.isLoading)
-            .opacity(
-                subscriptionManager.isLoading
-                ? 0.55
-                : 1
-            )
-
-            Text(
-                "Информация о покупке получается непосредственно из App Store."
-            )
-            .font(
-                .system(
-                    .caption,
-                    design: .rounded
-                )
-            )
-            .foregroundColor(.brown.opacity(0.68))
-        }
-        .profileCard()
-    }
-
+    
     // MARK: - Обратная связь
 
     private var feedbackSection: some View {
+
         VStack(spacing: 8) {
+
             Button {
                 showFeedback = true
             } label: {
+
                 HStack(spacing: 12) {
+
                     Image(systemName: "envelope.fill")
                         .foregroundColor(.orange)
 
@@ -821,336 +714,264 @@ struct ProfileView: View {
         }
         .profileCard()
     }
+        
+    // MARK: - Подписка
 
-    // MARK: - Проверка имени
+    private var subscriptionSection: some View {
 
-    private func limitNameLength(
-        _ newValue: String
-    ) {
-        if newValue.count > 50 {
-            displayName = String(
-                newValue.prefix(50)
-            )
-        }
-    }
+        Button {
+            showSubscription = true
+        } label: {
 
-    // MARK: - Работа с датой рождения
+            HStack(spacing: 14) {
 
-    private func loadBirthdayFields() {
-        dayText = birthDay == 0
-            ? ""
-            : String(birthDay)
+                Image(systemName: "creditcard.fill")
+                    .font(.title3)
+                    .foregroundColor(.orange)
 
-        monthText = birthMonth == 0
-            ? ""
-            : String(birthMonth)
-    }
+                VStack(
+                    alignment: .leading,
+                    spacing: 3
+                ) {
+                    Text("Подписка")
+                        .font(
+                            .system(
+                                .headline,
+                                design: .rounded
+                            )
+                        )
 
-    private func updateNumberField(
-        _ newValue: String,
-        for field: ProfileField,
-        maximumLength: Int
-    ) {
-        let filtered = String(
-            newValue
-                .filter(\.isNumber)
-                .prefix(maximumLength)
-        )
-
-        switch field {
-        case .name:
-            break
-
-        case .day:
-            if dayText != filtered {
-                dayText = filtered
-            }
-
-            if let value = Int(filtered),
-               (1...31).contains(value) {
-                birthDay = value
-            } else {
-                birthDay = 0
-            }
-
-        case .month:
-            if monthText != filtered {
-                monthText = filtered
-            }
-
-            if let value = Int(filtered),
-               (1...12).contains(value) {
-                birthMonth = value
-            } else {
-                birthMonth = 0
-            }
-        }
-    }
-
-    private var birthdayMessage: BirthdayMessage? {
-        if dayText.isEmpty &&
-            monthText.isEmpty {
-            return nil
-        }
-
-        guard
-            let day = Int(dayText),
-            let month = Int(monthText),
-            (1...31).contains(day),
-            (1...12).contains(month)
-        else {
-            return BirthdayMessage(
-                text:
-                    "Введите дату от 1 до 31 и месяц от 1 до 12.",
-                icon:
-                    "exclamationmark.circle.fill",
-                color:
-                    .red.opacity(0.72)
-            )
-        }
-
-        guard isPossibleBirthday(
-            day: day,
-            month: month
-        ) else {
-            return BirthdayMessage(
-                text:
-                    "Такой календарной даты не существует.",
-                icon:
-                    "exclamationmark.circle.fill",
-                color:
-                    .red.opacity(0.72)
-            )
-        }
-
-        return BirthdayMessage(
-            text:
-                "Дата сохранена: \(formattedBirthday(day: day, month: month)).",
-            icon:
-                "checkmark.circle.fill",
-            color:
-                .green
-        )
-    }
-
-    private func isPossibleBirthday(
-        day: Int,
-        month: Int
-    ) -> Bool {
-        var components = DateComponents()
-        components.calendar = Calendar.current
-
-        // Високосный год разрешает 29 февраля.
-        components.year = 2028
-        components.month = month
-        components.day = day
-
-        guard let date = components.date else {
-            return false
-        }
-
-        let result = Calendar.current.dateComponents(
-            [.day, .month],
-            from: date
-        )
-
-        return result.day == day &&
-            result.month == month
-    }
-
-    private func formattedBirthday(
-        day: Int,
-        month: Int
-    ) -> String {
-        var components = DateComponents()
-        components.calendar = Calendar.current
-        components.year = 2028
-        components.month = month
-        components.day = day
-
-        guard let date = components.date else {
-            return "\(day).\(month)"
-        }
-
-        let formatter = DateFormatter()
-        formatter.locale = Locale(
-            identifier: "ru_RU"
-        )
-        formatter.dateFormat = "d MMMM"
-
-        return formatter.string(
-            from: date
-        )
-    }
-}
-
-
-// MARK: - Оформление карточек
-
-private extension View {
-
-    func profileCard() -> some View {
-        self
-            .padding(.horizontal, 20)
-            .padding(.vertical, 20)
-            .background(.white.opacity(0.72))
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: 28,
-                    style: .continuous
-                )
-            )
-            .shadow(
-                color: .brown.opacity(0.06),
-                radius: 8,
-                x: 0,
-                y: 4
-            )
-            .padding(.horizontal, 22)
-    }
-}
-
-
-// MARK: - Вспомогательные типы
-
-private enum ProfileField: Hashable {
-    case name
-    case day
-    case month
-}
-
-private struct BirthdayMessage {
-    let text: String
-    let icon: String
-    let color: Color
-}
-
-
-// MARK: - Менеджер подписки
-
-@MainActor
-final class SubscriptionManager: ObservableObject {
-
-    @Published
-    private(set) var status:
-        SubscriptionDisplayStatus = .checking
-
-    @Published
-    private(set) var isLoading = false
-
-    /*
-     Позже здесь будет настоящий идентификатор
-     подписки из App Store Connect.
-     */
-    private let subscriptionProductIDs: Set<String> = [
-        "com.morninghello.premium.monthly"
-    ]
-
-    func refreshSubscriptionStatus() async {
-        isLoading = true
-        status = .checking
-
-        var hasActiveSubscription = false
-
-        for await entitlement
-            in Transaction.currentEntitlements {
-
-            guard case .verified(
-                let transaction
-            ) = entitlement else {
-                continue
-            }
-
-            guard subscriptionProductIDs
-                .contains(
-                    transaction.productID
-                ) else {
-                continue
-            }
-
-            guard transaction.revocationDate == nil else {
-                continue
-            }
-
-            if let expirationDate =
-                transaction.expirationDate {
-
-                if expirationDate > Date() {
-                    hasActiveSubscription = true
-                    break
+                    Text("Годовая · Активна")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
                 }
 
-            } else {
-                hasActiveSubscription = true
-                break
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(
+                        .system(
+                            size: 17,
+                            weight: .semibold
+                        )
+                    )
+                    .foregroundColor(.secondary)
+            }
+            .frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            )
+            .contentShape(Rectangle())
+            .frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            )
+        }
+        .buttonStyle(.plain)
+        .profileCard()
+    }
+        
+        // MARK: - Проверка имени
+        
+        private func limitNameLength(
+            _ newValue: String
+        ) {
+            if newValue.count > 50 {
+                displayName = String(
+                    newValue.prefix(50)
+                )
             }
         }
-
-        status = hasActiveSubscription
-            ? .active
-            : .inactive
-
-        isLoading = false
-    }
-}
-
-
-// MARK: - Состояние подписки
-
-enum SubscriptionDisplayStatus {
-    case checking
-    case active
-    case inactive
-
-    var title: String {
-        switch self {
-        case .checking:
-            return "Проверяем подписку"
-
-        case .active:
-            return "Подписка активна"
-
-        case .inactive:
-            return "Подписка не активна"
+        
+        // MARK: - Работа с датой рождения
+        
+        private func loadBirthdayFields() {
+            dayText = birthDay == 0
+            ? ""
+            : String(birthDay)
+            
+            monthText = birthMonth == 0
+            ? ""
+            : String(birthMonth)
+        }
+        
+        private func updateNumberField(
+            _ newValue: String,
+            for field: ProfileField,
+            maximumLength: Int
+        ) {
+            let filtered = String(
+                newValue
+                    .filter(\.isNumber)
+                    .prefix(maximumLength)
+            )
+            
+            switch field {
+            case .name:
+                break
+                
+            case .day:
+                if dayText != filtered {
+                    dayText = filtered
+                }
+                
+                if let value = Int(filtered),
+                   (1...31).contains(value) {
+                    birthDay = value
+                } else {
+                    birthDay = 0
+                }
+                
+            case .month:
+                if monthText != filtered {
+                    monthText = filtered
+                }
+                
+                if let value = Int(filtered),
+                   (1...12).contains(value) {
+                    birthMonth = value
+                } else {
+                    birthMonth = 0
+                }
+            }
+        }
+        
+        private var birthdayMessage: BirthdayMessage? {
+            if dayText.isEmpty &&
+                monthText.isEmpty {
+                return nil
+            }
+            
+            guard
+                let day = Int(dayText),
+                let month = Int(monthText),
+                (1...31).contains(day),
+                (1...12).contains(month)
+            else {
+                return BirthdayMessage(
+                    text:
+                        "Введите дату от 1 до 31 и месяц от 1 до 12.",
+                    icon:
+                        "exclamationmark.circle.fill",
+                    color:
+                            .red.opacity(0.72)
+                )
+            }
+            
+            guard isPossibleBirthday(
+                day: day,
+                month: month
+            ) else {
+                return BirthdayMessage(
+                    text:
+                        "Такой календарной даты не существует.",
+                    icon:
+                        "exclamationmark.circle.fill",
+                    color:
+                            .red.opacity(0.72)
+                )
+            }
+            
+            return BirthdayMessage(
+                text:
+                    "Дата сохранена: \(formattedBirthday(day: day, month: month)).",
+                icon:
+                    "checkmark.circle.fill",
+                color:
+                        .green
+            )
+        }
+        
+        private func isPossibleBirthday(
+            day: Int,
+            month: Int
+        ) -> Bool {
+            var components = DateComponents()
+            components.calendar = Calendar.current
+            
+            // Високосный год разрешает 29 февраля.
+            components.year = 2028
+            components.month = month
+            components.day = day
+            
+            guard let date = components.date else {
+                return false
+            }
+            
+            let result = Calendar.current.dateComponents(
+                [.day, .month],
+                from: date
+            )
+            
+            return result.day == day &&
+            result.month == month
+        }
+        
+        private func formattedBirthday(
+            day: Int,
+            month: Int
+        ) -> String {
+            var components = DateComponents()
+            components.calendar = Calendar.current
+            components.year = 2028
+            components.month = month
+            components.day = day
+            
+            guard let date = components.date else {
+                return "\(day).\(month)"
+            }
+            
+            let formatter = DateFormatter()
+            formatter.locale = Locale(
+                identifier: "ru_RU"
+            )
+            formatter.dateFormat = "d MMMM"
+            
+            return formatter.string(
+                from: date
+            )
         }
     }
-
-    var description: String {
-        switch self {
-        case .checking:
-            return "Получаем информацию из App Store."
-
-        case .active:
-            return "Вам доступны функции MorningHello Premium."
-
-        case .inactive:
-            return "Сейчас используется бесплатная версия приложения."
+    
+    
+    // MARK: - Оформление карточек
+    
+    private extension View {
+        
+        func profileCard() -> some View {
+            self
+                .padding(.horizontal, 20)
+                .padding(.vertical, 20)
+                .background(.white.opacity(0.72))
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: 28,
+                        style: .continuous
+                    )
+                )
+                .shadow(
+                    color: .brown.opacity(0.06),
+                    radius: 8,
+                    x: 0,
+                    y: 4
+                )
+                .padding(.horizontal, 22)
         }
     }
-
-    var icon: String {
-        switch self {
-        case .checking:
-            return "hourglass"
-
-        case .active:
-            return "checkmark.seal.fill"
-
-        case .inactive:
-            return "person.crop.circle"
-        }
+    
+    
+    // MARK: - Вспомогательные типы
+    
+    private enum ProfileField: Hashable {
+        case name
+        case day
+        case month
     }
-
-    var color: Color {
-        switch self {
-        case .checking:
-            return .orange
-
-        case .active:
-            return .green
-
-        case .inactive:
-            return .gray
-        }
+    
+    private struct BirthdayMessage {
+        let text: String
+        let icon: String
+        let color: Color
     }
-}
+    
+

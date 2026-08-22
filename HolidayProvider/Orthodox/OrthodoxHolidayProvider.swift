@@ -43,7 +43,62 @@ struct OrthodoxHolidayProvider {
         }
 
         switch difference {
+                // MARK: - Великий пост
 
+                // Чистый понедельник
+                // 48 дней до Пасхи
+                case 48:
+                    return HolidayContent(
+                        images: [
+                            "Orthodox_Clean_Monday"
+                        ],
+                        phrases: [
+                            "Чистый понедельник. Пусть начало Великого поста принесёт душевную тишину, ясность мыслей и укрепит добрые намерения."
+                        ],
+                        category: "Православный"
+                    )
+
+                // Следующий понедельник Великого поста
+                //
+                // Чистый понедельник уже является первым
+                // понедельником Великого поста.
+                // Поэтому вторую созданную открытку
+                // показываем через неделю.
+                case 41:
+                    return HolidayContent(
+                        images: [
+                            "Orthodox_FirstMondayGreatLent"
+                        ],
+                        phrases: [
+                            "Пусть новый понедельник Великого поста станет днём спокойствия, добрых мыслей и духовного сосредоточения."
+                        ],
+                        category: "Православный"
+                    )
+
+                // Первая пятница после Чистого понедельника
+                case 44:
+                    return HolidayContent(
+                        images: [
+                            "Orthodox_FirstFridayafterCleanMonday"
+                        ],
+                        phrases: [
+                            "Первая пятница Великого поста. Пусть этот день станет временем молитвы, внутренней тишины и добрых размышлений."
+                        ],
+                        category: "Православный"
+                    )
+
+                // Лазарева суббота
+                // 8 дней до Пасхи
+                case 8:
+                    return HolidayContent(
+                        images: [
+                            "Orthodox_LazarusSaturday"
+                        ],
+                        phrases: [
+                            "Лазарева суббота. Пусть надежда, вера и свет этого дня наполнят сердце миром и добром."
+                        ],
+                        category: "Православный"
+                    )
         // Понедельник перед Пасхой
         case 6:
             return HolidayContent(
@@ -393,6 +448,263 @@ struct OrthodoxHolidayProvider {
         )
     }
 
+    // MARK: - Православные посты и связанные праздники
+
+    private static func fastingAndMovableFeastImage(
+        for date: Date
+    ) -> String? {
+
+        let calendar = Calendar.current
+        let currentDay = calendar.startOfDay(for: date)
+
+        let year = calendar.component(
+            .year,
+            from: currentDay
+        )
+
+        guard let easter = orthodoxEasterDate(
+            for: year
+        ) else {
+            return fixedOrthodoxFastImage(
+                for: currentDay,
+                calendar: calendar
+            )
+        }
+
+        let easterDay =
+            calendar.startOfDay(for: easter)
+
+
+        // MARK: 1. Чистый понедельник
+        // 48 дней до Пасхи
+
+        if let cleanMonday =
+            calendar.date(
+                byAdding: .day,
+                value: -48,
+                to: easterDay
+            ),
+           calendar.isDate(
+                currentDay,
+                inSameDayAs: cleanMonday
+           ) {
+
+            return "Orthodox_Clean_Monday"
+        }
+
+
+        // MARK: 2. Следующий понедельник Великого поста
+        //
+        // Чистый понедельник уже является первым
+        // понедельником поста.
+        // Поэтому отдельную открытку показываем
+        // через неделю после него.
+
+        if let firstMondayGreatLent =
+            calendar.date(
+                byAdding: .day,
+                value: -41,
+                to: easterDay
+            ),
+           calendar.isDate(
+                currentDay,
+                inSameDayAs: firstMondayGreatLent
+           ) {
+
+            return "Orthodox_FirstMondayGreatLent"
+        }
+
+
+        // MARK: 3. Первая пятница
+        // после Чистого понедельника
+        //
+        // Чистый понедельник = Пасха - 48
+        // пятница = ещё через 4 дня
+
+        if let firstFriday =
+            calendar.date(
+                byAdding: .day,
+                value: -44,
+                to: easterDay
+            ),
+           calendar.isDate(
+                currentDay,
+                inSameDayAs: firstFriday
+           ) {
+
+            return "Orthodox_FirstFridayafterCleanMonday"
+        }
+
+
+        // MARK: 4. Лазарева суббота
+        // 8 дней до Пасхи
+
+        if let lazarusSaturday =
+            calendar.date(
+                byAdding: .day,
+                value: -8,
+                to: easterDay
+            ),
+           calendar.isDate(
+                currentDay,
+                inSameDayAs: lazarusSaturday
+           ) {
+
+            return "Orthodox_LazarusSaturday"
+        }
+
+
+        // MARK: 5. Пятидесятница
+        //
+        // Пасха считается первым днём,
+        // поэтому 50-й день = Пасха + 49 дней.
+
+        if let pentecost =
+            calendar.date(
+                byAdding: .day,
+                value: 49,
+                to: easterDay
+            ),
+           calendar.isDate(
+                currentDay,
+                inSameDayAs: pentecost
+           ) {
+
+            return "Orthodox_Pentecost"
+        }
+
+
+        // MARK: 6. Начало Петрова поста
+        //
+        // Понедельник после Недели всех святых:
+        // Пасха + 57 дней.
+
+        if let apostlesFastStart =
+            calendar.date(
+                byAdding: .day,
+                value: 57,
+                to: easterDay
+            ),
+           calendar.isDate(
+                currentDay,
+                inSameDayAs: apostlesFastStart
+           ) {
+
+            return "Orthodox_MondayafterAllSaints"
+        }
+
+
+        // Фиксированные даты:
+        // Петров пост, Успенский пост,
+        // Рождественский пост и сочельник.
+
+        return fixedOrthodoxFastImage(
+            for: currentDay,
+            calendar: calendar
+        )
+    }
+    
+    // MARK: - Фиксированные даты православных постов
+
+    private static func fixedOrthodoxFastImage(
+        for date: Date,
+        calendar: Calendar
+    ) -> String? {
+
+        let components =
+            calendar.dateComponents(
+                [.month, .day],
+                from: date
+            )
+
+        guard
+            let month = components.month,
+            let day = components.day
+        else {
+            return nil
+        }
+
+
+        // MARK: 7. Последний день Петрова поста
+        // 11 июля
+
+        if month == 7 &&
+           day == 11 {
+
+            return "Orthodox_FinalDayApostlesFast"
+        }
+
+
+        // MARK: 8. Святые апостолы Пётр и Павел
+        // 12 июля
+
+        if month == 7 &&
+           day == 12 {
+
+            return "Orthodox_FeastSaintsPeterPaul"
+        }
+
+
+        // MARK: 9. Начало Успенского поста
+        // 14 августа
+
+        if month == 8 &&
+           day == 14 {
+
+            return "Orthodox_BeginningDormitionFast"
+        }
+
+
+        // MARK: 10. Канун Успения
+        // последний день Успенского поста
+        // 27 августа
+
+        if month == 8 &&
+           day == 27 {
+
+            return "Orthodox_EveDormition"
+        }
+
+
+        // MARK: 11. Начало Рождественского поста
+        // 28 ноября
+
+        if month == 11 &&
+           day == 28 {
+
+            return "Orthodox_BeginningNativityFast"
+        }
+
+
+        // MARK: 12. Рождественский сочельник
+        // 6 января
+
+        if month == 1 &&
+           day == 6 {
+
+            return "Orthodox_ChristmasEve"
+        }
+
+
+        return nil
+    }
+    
+    // MARK: - Выбор православной открытки
+
+    static func imageName(
+        for date: Date
+    ) -> String? {
+
+        if let specialImage =
+            fastingAndMovableFeastImage(
+                for: date
+            ) {
+            return specialImage
+        }
+
+        return nil
+    }
+    
     // MARK: - Стабильный индекс фразы
 
     private static func stableDailyIndex(

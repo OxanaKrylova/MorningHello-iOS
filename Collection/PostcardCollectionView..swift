@@ -14,11 +14,11 @@ struct PostcardCollectionView: View {
     private let columns = [
         GridItem(
             .flexible(),
-            spacing: 12
+            spacing: 14
         ),
         GridItem(
             .flexible(),
-            spacing: 12
+            spacing: 14
         )
     ]
 
@@ -67,7 +67,7 @@ struct PostcardCollectionView: View {
 
                     LazyVGrid(
                         columns: columns,
-                        spacing: 12
+                        spacing: 14
                     ) {
 
                         ForEach(
@@ -87,24 +87,22 @@ struct PostcardCollectionView: View {
                                 Image(imageName)
                                     .resizable()
                                     .scaledToFill()
-                                    .frame(height: 250)
+                                    .frame(height: 120)
                                     .frame(
-                                        maxWidth:
-                                            .infinity
+                                        maxWidth: .infinity
                                     )
                                     .clipped()
                                     .clipShape(
                                         RoundedRectangle(
-                                            cornerRadius: 20,
-                                            style:
-                                                .continuous
+                                            cornerRadius: 16,
+                                            style: .continuous
                                         )
                                     )
                             }
                             .buttonStyle(.plain)
                         }
                     }
-                    .padding(.horizontal, 16)
+                    .padding(.horizontal, 18)
                     .padding(.vertical, 20)
                 }
             }

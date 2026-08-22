@@ -20,19 +20,19 @@ enum AppBackground: String {
 
         switch hour {
         case 5..<12:
-            // 05:00–11:59
+            // 05:00–10:59
             return .morning
 
         case 12..<18:
-            // 12:00–17:59
+            // 11:00–16:59
             return .day
 
         case 18..<22:
-            // 18:00–21:59
+            // 17:00–19:59
             return .sunset
 
         default:
-            // 22:00–04:59
+            // 20:00–04:59
             return .night
         }
     }
@@ -55,6 +55,12 @@ struct ContentView: View {
     @State private var showSystemShareSheet = false
     @State private var showBirthdayGreeting = false
     @State private var customMessage = ""
+    @State private var showSubscription = false
+    
+    @State private var trialReminder: TrialReminderType?
+    @State private var showTrialReminder = false
+    
+    @State private var showPostcardCatalog = false
     
     @AppStorage("showOrthodoxHolidays") private var showOrthodoxHolidays = true
     @AppStorage("showCatholicHolidays") private var showCatholicHolidays = true
@@ -69,6 +75,17 @@ struct ContentView: View {
     @AppStorage("profile_display_name")
     private var displayName = ""
     @State private var hasCheckedProfileOnLaunch = false
+    // MARK: - Тест бесплатного периода
+
+    @State private var isTrialActive = true
+
+    @State private var trialEndDate: Date? =
+        Calendar.current.date(
+            byAdding: .day,
+            value: 3,
+            to: Date()
+        )
+
     
     struct SundayContent {
         let images: [String]
@@ -556,70 +573,117 @@ struct ContentView: View {
         }
     }
     
-    func holidayContent() -> HolidayContent? {
-        let today = Date()
-        
-        // Страстная неделя и православная Пасха.
-        if let holyWeekContent =
+    func holidayContent(
+        for date: Date = Date()
+    ) -> HolidayContent? {
+
+        let today = date
+
+        // 1. Православные подвижные праздники:
+        // Страстная неделя, Пасха, посты и т. д.
+        if showOrthodoxHolidays,
+           let orthodoxContent =
             OrthodoxHolidayProvider.holyWeekContent(
                 for: today
             ) {
-            
-            return holyWeekContent
+
+            return orthodoxContent
         }
-        
-        // Католическая Страстная неделя и Пасха.
-        if let catholicHolyWeek =
+
+        // 2. Католические подвижные праздники:
+        // Страстная неделя, Пасха и т. д.
+        if showCatholicHolidays,
+           let catholicHolyWeek =
             CatholicHolidayProvider.holyWeekContent(
                 for: today
             ) {
-            
+
             return catholicHolyWeek
         }
-        // Прощёное воскресенье.
-        if let forgivenSunday =
+        
+        // Католические дни Великого поста и Адвента.
+        if showCatholicHolidays,
+           let catholicSpecial =
+            CatholicHolidayProvider.specialContent(
+                for: today
+            ) {
+
+            return catholicSpecial
+        }
+        
+        // 3. Прощёное воскресенье
+        if showOrthodoxHolidays,
+           let forgivenSunday =
             OrthodoxHolidayProvider.forgivenSundayContent(
                 for: today
             ) {
-            
+
             return forgivenSunday
         }
-        // Pancake Day — за 47 дней до католической Пасхи.
-        if let pancakeDay =
+
+        // 4. Pancake Day
+        // за 47 дней до католической Пасхи
+        if showCatholicHolidays,
+           let pancakeDay =
             CatholicHolidayProvider.pancakeDayContent(
                 for: today
             ) {
-            
+
             return pancakeDay
         }
+
+        // 5. Нейтральные / международные праздники
+        // показываются всегда
         if let internationalHoliday =
             InternationalHolidayProvider.content(
                 for: today
             ) {
-            
+
             return internationalHoliday
         }
-        if let jewishHoliday =
+
+        // Еврейские посты
+        if showJewishHolidays,
+           let jewishFast =
+            JewishHolidayProvider.fastContent(
+                for: today
+            ) {
+
+            return jewishFast
+        }
+        
+        // 6. Еврейские праздники
+        if showJewishHolidays,
+           let jewishHoliday =
             JewishHolidayProvider.content(
                 for: today
             ) {
-            
+
             return jewishHoliday
         }
-        if let orthodoxHoliday =
+
+        // 7. Православные праздники
+        // с фиксированными датами
+        if showOrthodoxHolidays,
+           let orthodoxHoliday =
             OrthodoxHolidayProvider.fixedContent(
                 for: today
             ) {
-            
+
             return orthodoxHoliday
         }
-        if let catholicHoliday =
+
+        // 8. Католические праздники
+        // с фиксированными датами
+        if showCatholicHolidays,
+           let catholicHoliday =
             CatholicHolidayProvider.fixedContent(
                 for: today
             ) {
-            
+
             return catholicHoliday
         }
+
         return nil
     }
     func shabbatStartDate(for date: Date = Date()) -> Date? {
@@ -1112,7 +1176,28 @@ struct ContentView: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
-                
+                Button {
+                    showPostcardCatalog = true
+                    
+                } label: {
+                    Label(
+                        "Коллекция открыток",
+                        systemImage: "photo.on.rectangle.angled"
+                    )
+                    .font(
+                        .system(
+                            .subheadline,
+                            design: .rounded
+                        )
+                        .weight(.semibold)
+                    )
+                    .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.28))
+                    .padding(.horizontal, 18)
+                    .padding(.vertical, 12)
+                    .background(.white.opacity(0.55))
+                    .clipShape(Capsule())
+                }
+            .frame(maxWidth: .infinity, alignment: .center)
                 Button {
                     showProfile = true
                     
@@ -1165,152 +1250,254 @@ struct ContentView: View {
         }
     }
     private var currentPostcard: SelectedPostcard {
-        
+
         // 1. День рождения
         if let birthday = birthdayContent(),
            let image = birthday.images.first,
            let phrase = birthday.phrases.first {
-            
+
             return SelectedPostcard(
                 image: image,
                 phrase: phrase
             )
         }
-        
-        // 2. Праздник
+
+
+        // 2. Праздники
+        //
+        // holidayContent() должен учитывать:
+        // - православные только при showOrthodoxHolidays
+        // - католические только при showCatholicHolidays
+        // - еврейские только при showJewishHolidays
+        // - нейтральные всегда
+
         if let holiday = holidayContent() {
-            
+
             let availableCount = min(
                 holiday.images.count,
                 holiday.phrases.count
             )
-            
+
             if availableCount > 0 {
+
                 let index = stableDailyIndex(
                     count: availableCount,
                     salt: 500
                 )
-                
+
                 return SelectedPostcard(
                     image: holiday.images[index],
                     phrase: holiday.phrases[index]
                 )
             }
         }
-        
-        // 3. Понедельник
-        if let monday = mondayCoffeeContent(),
-           let image = monday.images.first,
-           let phrase = monday.phrases.first {
-            
+
+
+        // 3. Ханука
+        //
+        // Если Ханука пока не входит в holidayContent(),
+        // проверяем её здесь, ДО понедельника
+        // и ДО месячных открыток.
+
+        if showJewishHolidays,
+           let hanukkah = hanukkahContent(),
+           let image = hanukkah.images.first,
+           let phrase = hanukkah.phrases.first {
+
             return SelectedPostcard(
                 image: image,
                 phrase: phrase
             )
         }
-        
-        // 4. Шаббат
+
+
+        // 4. Понедельник
+
+        if let monday = mondayCoffeeContent(),
+           let image = monday.images.first,
+           let phrase = monday.phrases.first {
+
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
+        }
+
+
+        // 5. Шаббат
+
         if showJewishHolidays,
            let shabbat = currentShabbatContent() {
-            
+
             return SelectedPostcard(
                 image: shabbat.image,
                 phrase: shabbat.phrase
             )
         }
-        
-        // 5. Воскресенье
-        if showOrthodoxHolidays || showCatholicHolidays {
+
+
+        // 6. Воскресенье
+
+        if !showJewishHolidays ||
+           showOrthodoxHolidays ||
+           showCatholicHolidays {
+
             if let sunday = sundayContent(),
                let image = sunday.images.first,
                let phrase = sunday.phrases.first {
-                
+
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
         }
-        
-        // 6. Февраль
+
+
+        // 7. Февраль
+
         if let february = februaryContent(),
            let image = february.images.first,
            let phrase = february.phrases.first {
-            
+
             return SelectedPostcard(
                 image: image,
                 phrase: phrase
             )
         }
-        
-        // 7. Декабрь
+
+
+        // 8. Декабрь
+
         if let december = decemberContent(),
            let image = december.images.first,
            let phrase = december.phrases.first {
-            
+
             return SelectedPostcard(
                 image: image,
                 phrase: phrase
             )
         }
-        
-        // 8. Август
-        if let august = AugustPostcardProvider.content(
-            for: Date()
-        ),
+
+
+        // Август — обычные дни месяца
+
+        if let augustIndex =
+            augustOrdinaryDayIndex(
+                for: Date()
+            ),
+           let august =
+            AugustPostcardProvider.content(
+                index: augustIndex
+            ),
            let image = august.images.first,
            let phrase = august.phrases.first {
-            
+
             return SelectedPostcard(
                 image: image,
                 phrase: phrase
             )
         }
-        
-        // 9. Сентябрь
-        if let september = SeptemberPostcardProvider.content(
-            for: Date()
-        ),
+
+
+        // 10. Сентябрь
+
+        if let september =
+            SeptemberPostcardProvider.content(
+                for: Date()
+            ),
            let image = september.images.first,
            let phrase = september.phrases.first {
-            
+
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
+        }
+
+        // 11. Октябрь
+
+        if let october =
+            OctoberPostcardProvider.content(
+                for: Date()
+            ),
+           let image = october.images.first,
+           let phrase = october.phrases.first {
+
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
+        }
+
+        // 12. Ноябрь
+
+        if let november =
+            NovemberPostcardProvider.content(
+                for: Date()
+            ),
+           let image = november.images.first,
+           let phrase = november.phrases.first {
+
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
+        }
+
+        // Январь — обычные дни месяца
+
+        if let januaryIndex =
+            ordinaryDayIndex(
+                for: Date(),
+                month: 1
+            ),
+           let january =
+            JanuaryPostcardProvider.content(
+                index: januaryIndex
+            ),
+           let image = january.images.first,
+           let phrase = january.phrases.first {
+
             return SelectedPostcard(
                 image: image,
                 phrase: phrase
             )
         }
         
-        // Ханука
-        if let hanukkah = hanukkahContent(),
-           let image = hanukkah.images.first,
-           let phrase = hanukkah.phrases.first {
-            
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-        // 8. Обычная сезонная открытка
+        // 13. Обычная сезонная открытка
+
         let weekday = currentWeekday()
-        let seasonalImageName = "\(currentSeason())_\(weekday)"
-        
-        let fallbackImage = images.contains(seasonalImageName)
-        ? seasonalImageName
-        : "winter_monday"
-        
-        let fallbackPhrase: String
-        
-        if phrases.isEmpty {
-            fallbackPhrase = "Доброе утро!"
-        } else {
-            let phraseIndex = stableDailyIndex(
-                count: phrases.count,
-                salt: 900
+
+        let seasonalImageName =
+            "\(currentSeason())_\(weekday)"
+
+        let fallbackImage =
+            images.contains(
+                seasonalImageName
             )
-            
-            fallbackPhrase = phrases[phraseIndex]
+            ? seasonalImageName
+            : "winter_monday"
+
+        let fallbackPhrase: String
+
+        if phrases.isEmpty {
+
+            fallbackPhrase =
+                "Доброе утро!"
+
+        } else {
+
+            let phraseIndex =
+                stableDailyIndex(
+                    count: phrases.count,
+                    salt: 900
+                )
+
+            fallbackPhrase =
+                phrases[phraseIndex]
         }
-        
+
         return SelectedPostcard(
             image: fallbackImage,
             phrase: fallbackPhrase
@@ -1427,6 +1614,13 @@ struct ContentView: View {
                     EmergencyContactsView()
                 }
                 .sheet(
+                    isPresented:
+                        $showPostcardCatalog
+                ) {
+
+                    PostcardCatalogView()
+                }
+                .sheet(
                     isPresented: $showBirthdayGreeting
                 ) {
                     BirthdayGreetingView(
@@ -1485,6 +1679,32 @@ struct ContentView: View {
                         """
                     )
                 }
+                .alert(
+                    trialReminder?.title ?? "",
+                    isPresented: $showTrialReminder
+                ) {
+
+                    Button("Понятно") {
+
+                        if let reminder = trialReminder,
+                           let trialEndDate = trialEndDate {
+
+                            TrialReminderManager.shared
+                                .markAsShown(
+                                    type: reminder,
+                                    trialEndDate: trialEndDate
+                                )
+                        }
+
+                        trialReminder = nil
+                    }
+
+                } message: {
+
+                    Text(
+                        trialReminder?.message ?? ""
+                    )
+                }
                 .confirmationDialog(
                     "Кому открыть сообщение?",
                     isPresented: $showEmergencyContactSelection
@@ -1507,6 +1727,120 @@ struct ContentView: View {
                 }
             }
         }
+    }
+    private func augustOrdinaryDayIndex(
+        for date: Date
+    ) -> Int? {
+
+        let calendar = Calendar.current
+
+        guard calendar.component(
+            .month,
+            from: date
+        ) == 8 else {
+            return nil
+        }
+
+        let year = calendar.component(
+            .year,
+            from: date
+        )
+
+        guard let augustStart =
+            calendar.date(
+                from: DateComponents(
+                    year: year,
+                    month: 8,
+                    day: 1
+                )
+            )
+        else {
+            return nil
+        }
+
+        let today =
+            calendar.startOfDay(for: date)
+
+        var current =
+            calendar.startOfDay(
+                for: augustStart
+            )
+
+        var ordinaryIndex = 0
+
+        while current <= today {
+
+            if !isPriorityPostcardDay(
+                current
+            ) {
+
+                if calendar.isDate(
+                    current,
+                    inSameDayAs: today
+                ) {
+                    return ordinaryIndex
+                }
+
+                ordinaryIndex += 1
+            }
+
+            guard let nextDay =
+                calendar.date(
+                    byAdding: .day,
+                    value: 1,
+                    to: current
+                )
+            else {
+                break
+            }
+
+            current = nextDay
+        }
+
+        return nil
+    }
+    
+    private func isPriorityPostcardDay(
+        _ date: Date
+    ) -> Bool {
+
+        let calendar = Calendar.current
+
+        // Праздник
+        if holidayContent(
+            for: date
+        ) != nil {
+            return true
+        }
+
+        let weekday =
+            calendar.component(
+                .weekday,
+                from: date
+            )
+
+        // Понедельник
+        if weekday == 2 {
+            return true
+        }
+
+        // Суббота / Шаббат
+        if showJewishHolidays,
+           weekday == 7 {
+            return true
+        }
+        // Воскресенье
+        if (
+            !showJewishHolidays ||
+            showOrthodoxHolidays ||
+            showCatholicHolidays
+        ),
+           weekday == 1 {
+
+            return true
+        }
+
+        return false
     }
     private func openProfileIfNeeded() {
         guard !hasCheckedProfileOnLaunch else {
@@ -1637,5 +1971,99 @@ struct ContentView: View {
         }
 
         return controller
+    }
+    private func ordinaryDayIndex(
+        for date: Date,
+        month targetMonth: Int
+    ) -> Int? {
+
+        let calendar = Calendar.current
+
+        guard calendar.component(
+            .month,
+            from: date
+        ) == targetMonth else {
+            return nil
+        }
+
+        let year = calendar.component(
+            .year,
+            from: date
+        )
+
+        guard let monthStart =
+            calendar.date(
+                from: DateComponents(
+                    year: year,
+                    month: targetMonth,
+                    day: 1
+                )
+            )
+        else {
+            return nil
+        }
+
+        let today =
+            calendar.startOfDay(
+                for: date
+            )
+
+        var current =
+            calendar.startOfDay(
+                for: monthStart
+            )
+
+        var ordinaryIndex = 0
+
+        while current <= today {
+
+            if !isPriorityPostcardDay(
+                current
+            ) {
+
+                if calendar.isDate(
+                    current,
+                    inSameDayAs: today
+                ) {
+                    return ordinaryIndex
+                }
+
+                ordinaryIndex += 1
+            }
+
+            guard let nextDay =
+                calendar.date(
+                    byAdding: .day,
+                    value: 1,
+                    to: current
+                )
+            else {
+                break
+            }
+
+            current = nextDay
+        }
+
+        return nil
+    }
+    private func checkTrialReminder() {
+
+        guard isTrialActive,
+              let trialEndDate = trialEndDate
+        else {
+            return
+        }
+
+        guard let reminder =
+            TrialReminderManager.shared
+                .reminderToShow(
+                    trialEndDate: trialEndDate
+                )
+        else {
+            return
+        }
+
+        trialReminder = reminder
+        showTrialReminder = true
     }
 }

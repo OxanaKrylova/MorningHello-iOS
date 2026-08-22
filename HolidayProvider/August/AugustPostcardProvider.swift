@@ -10,22 +10,8 @@ import Foundation
 struct AugustPostcardProvider {
 
     static func content(
-        for date: Date = Date()
+        index: Int
     ) -> HolidayContent? {
-
-        let calendar = Calendar.current
-
-        let components = calendar.dateComponents(
-            [.month, .day],
-            from: date
-        )
-
-        guard let month = components.month,
-              let day = components.day,
-              month == 8,
-              (1...19).contains(day) else {
-            return nil
-        }
 
         let images = (1...19).map {
             "August_\($0)"
@@ -53,19 +39,25 @@ struct AugustPostcardProvider {
             "Пусть это утро станет началом чудесного дня, наполненного отдыхом и радостью."
         ]
 
-        let imageIndex = day - 1
+        let availableCount = min(
+            images.count,
+            phrases.count
+        )
 
-        guard images.indices.contains(imageIndex),
-              phrases.indices.contains(imageIndex) else {
+        guard availableCount > 0,
+              index >= 0 else {
             return nil
         }
 
+        let safeIndex =
+            index % availableCount
+
         return HolidayContent(
             images: [
-                images[imageIndex]
+                images[safeIndex]
             ],
             phrases: [
-                phrases[imageIndex]
+                phrases[safeIndex]
             ],
             category: "Август"
         )

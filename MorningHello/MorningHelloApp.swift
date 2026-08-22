@@ -11,6 +11,9 @@ import UserNotifications
 @main
 struct MorningHelloApp: App {
 
+    @Environment(\.scenePhase)
+    private var scenePhase
+    
     @State private var isShowingIntro = true
 
     init() {
@@ -37,6 +40,25 @@ struct MorningHelloApp: App {
                         .task {
                             _ = await CheckInNotificationManager.shared
                                 .requestPermission()
+                        }
+                        .task {
+
+                            await SubscriptionManager.shared
+                                .refreshAndSync()
+                        }
+                        .onChange(
+                            of: scenePhase
+                        ) { _, newPhase in
+
+                            guard newPhase == .active else {
+                                return
+                            }
+
+                            Task {
+
+                                await SubscriptionManager.shared
+                                    .refreshAndSync()
+                            }
                         }
                 }
             }

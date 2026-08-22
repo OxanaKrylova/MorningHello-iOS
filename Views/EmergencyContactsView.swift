@@ -6,51 +6,6 @@
 //
 import SwiftUI
 
-struct EmergencyContact: Identifiable, Codable {
-    var id = UUID()
-    var name: String
-    var surname: String
-    var phoneDigits: String
-    var email: String
-    var salutation: String
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case surname
-        case phoneDigits
-        case email
-        case salutation
-    }
-
-    init(
-        id: UUID = UUID(),
-        name: String,
-        surname: String,
-        phoneDigits: String,
-        email: String,
-        salutation: String = "Уважаемый"
-    ) {
-        self.id = id
-        self.name = name
-        self.surname = surname
-        self.phoneDigits = phoneDigits
-        self.email = email
-        self.salutation = salutation
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.id = try container.decodeIfPresent(UUID.self, forKey: .id) ?? UUID()
-        self.name = try container.decode(String.self, forKey: .name)
-        self.surname = try container.decode(String.self, forKey: .surname)
-        self.phoneDigits = try container.decode(String.self, forKey: .phoneDigits)
-        self.email = try container.decode(String.self, forKey: .email)
-        self.salutation = try container.decodeIfPresent(String.self, forKey: .salutation) ?? "Уважаемый"
-    }
-}
-
 struct EmergencyContactsView: View {
     
     var isOnboarding: Bool = false
@@ -72,6 +27,12 @@ struct EmergencyContactsView: View {
     @State private var editingIndex: Int?
 
     @State private var showSecondContactSuggestion = false
+    
+    @State private var isContactFormExpanded = false
+    @State private var originalEditingEmail = ""
+    
+    @AppStorage("profile_display_name")
+    private var displayName = ""
     
     @AppStorage("checkInIntervalHours")
     private var checkInIntervalHours = 48
@@ -190,116 +151,203 @@ struct EmergencyContactsView: View {
 
             ScrollView {
                 VStack(spacing: 20) {
-
-                    // MARK: - Кнопка закрытия
-
-                    HStack {
-                        Spacer()
-
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: "xmark")
-                                .font(.system(size: 18, weight: .bold))
-                                .foregroundColor(.brown)
-                                .frame(width: 48, height: 48)
-                                .background(.white.opacity(0.72))
-                                .clipShape(Circle())
-                        }
-                    }
-                    .padding(.horizontal, 24)
-                    .padding(.top, 14)
-
                     // MARK: - Заголовок
 
-                    Text("Тревожные контакты")
-                        .font(
-                            .system(
-                                size: 36,
-                                weight: .bold,
-                                design: .rounded
+                    ZStack {
+                        Text("Тревожные контакты")
+                            .font(
+                                .system(
+                                    size: 34,
+                                    weight: .bold,
+                                    design: .rounded
+                                )
                             )
-                        )
-                        .foregroundColor(.brown)
-                        .frame(maxWidth: .infinity)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 18)
+                            .foregroundColor(.brown)
+                            .frame(maxWidth: .infinity)
+                            .multilineTextAlignment(.center)
 
+                        HStack {
+                            Spacer()
+
+                            if !isOnboarding {
+                                Button {
+                                    dismiss()
+                                } label: {
+                                    Image(systemName: "xmark")
+                                        .font(
+                                            .system(
+                                                size: 17,
+                                                weight: .bold
+                                            )
+                                        )
+                                        .foregroundColor(.brown)
+                                        .frame(
+                                            width: 42,
+                                            height: 42
+                                        )
+                                        .background(
+                                            .white.opacity(0.72)
+                                        )
+                                        .clipShape(Circle())
+                                }
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 4)
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack(alignment: .top, spacing: 10) {
+                            Image(systemName: "envelope.badge.fill")
+                                .font(
+                                    .system(
+                                        size: 19,
+                                        weight: .semibold
+                                    )
+                                )
+                                .foregroundColor(.orange)
+
+                            Text(
+                                """
+                                После сохранения нового тревожного контакта MorningHello отправит ему письмо с просьбой подтвердить согласие.
+
+                                До подтверждения его статус будет Pending, и тревожные оповещения ему отправляться не будут.
+                                """
+                            )
+                            .font(
+                                .system(
+                                    .subheadline,
+                                    design: .rounded
+                                )
+                            )
+                            .foregroundColor(
+                                .brown.opacity(0.78)
+                            )
+                            .fixedSize(
+                                horizontal: false,
+                                vertical: true
+                            )
+                        }
+                    }
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .leading
+                    )
+                    .padding(.horizontal, 20)
+                    .padding(.top, -6)
+                    .padding(.bottom, 2)
+                    
                     // MARK: - Поля ввода
 
-                    VStack(spacing: 14) {
-                        Picker("Обращение", selection: $salutation) {
-                            Text("Уважаемый").tag("Уважаемый")
-                            Text("Уважаемая").tag("Уважаемая")
+                    Button {
+                        withAnimation(
+                            .easeInOut(duration: 0.22)
+                        ) {
+                            isContactFormExpanded.toggle()
+
+                            if !isContactFormExpanded {
+                                editingIndex = nil
+                                originalEditingEmail = ""
+
+                                name = ""
+                                surname = ""
+                                phoneDigits = ""
+                                email = ""
+                                salutation = "Уважаемый"
+                            }
                         }
-                        .pickerStyle(.segmented)
-                        TextField(
-                            "",
-                            text: $name,
-                            prompt: Text("Имя*")
-                                .foregroundColor(.brown.opacity(0.45))
+                    } label: {
+                        HStack(spacing: 10) {
+
+                            Image(
+                                systemName:
+                                    editingIndex == nil
+                                    ? "person.badge.plus"
+                                    : "person.crop.circle.badge.checkmark"
+                            )
+
+                            Text(
+                                editingIndex == nil
+                                ? "Добавить тревожный контакт"
+                                : "Редактировать тревожный контакт"
+                            )
+
+                            Spacer()
+
+                            Image(
+                                systemName:
+                                    isContactFormExpanded
+                                    ? "chevron.up"
+                                    : "chevron.down"
+                            )
+                        }
+                        .font(
+                            .system(
+                                .headline,
+                                design: .rounded
+                            )
+                            .weight(.semibold)
                         )
-                        .textContentType(.givenName)
-                        .padding(.horizontal, 16)
-                        .frame(height: 54)
-                        .background(.white)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(
-                                    .brown.opacity(0.16),
-                                    lineWidth: 1
-                                )
-                        }
+                        .foregroundColor(.brown)
+                        .padding(.horizontal, 18)
+                        .frame(height: 56)
+                        .background(
+                            .white.opacity(0.72)
+                        )
                         .clipShape(
                             RoundedRectangle(
-                                cornerRadius: 15,
+                                cornerRadius: 18,
                                 style: .continuous
                             )
                         )
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal, 28)
 
-                        TextField(
-                            "",
-                            text: $surname,
-                            prompt: Text("Фамилия*")
-                                .foregroundColor(.brown.opacity(0.45))
-                        )
-                        .textContentType(.familyName)
-                        .padding(.horizontal, 16)
-                        .frame(height: 54)
-                        .background(.white)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(
-                                    .brown.opacity(0.16),
-                                    lineWidth: 1
-                                )
-                        }
-                        .clipShape(
-                            RoundedRectangle(
-                                cornerRadius: 15,
-                                style: .continuous
-                            )
-                        )
 
-                        VStack(alignment: .leading, spacing: 8) {
+                    // MARK: - Раскрытая форма контакта
+
+                    if isContactFormExpanded {
+
+                        VStack(spacing: 14) {
+
+                            // Обращение
+
+                            Picker(
+                                "Обращение",
+                                selection: $salutation
+                            ) {
+                                Text("Уважаемый")
+                                    .tag("Уважаемый")
+
+                                Text("Уважаемая")
+                                    .tag("Уважаемая")
+                            }
+                            .pickerStyle(.segmented)
+
+
+                            // Имя
 
                             TextField(
                                 "",
-                                text: $phoneDigits,
-                                prompt: Text("Телефон*")
-                                    .foregroundColor(.brown.opacity(0.45))
+                                text: $name,
+                                prompt: Text("Имя*")
+                                    .foregroundColor(
+                                        .brown.opacity(0.45)
+                                    )
                             )
-                            .keyboardType(.phonePad)
-                            .textContentType(.telephoneNumber)
+                            .textContentType(.givenName)
                             .padding(.horizontal, 16)
                             .frame(height: 54)
                             .background(.white)
                             .overlay {
-                                RoundedRectangle(cornerRadius: 15)
-                                    .stroke(
-                                        .brown.opacity(0.16),
-                                        lineWidth: 1
-                                    )
+                                RoundedRectangle(
+                                    cornerRadius: 15
+                                )
+                                .stroke(
+                                    .brown.opacity(0.16),
+                                    lineWidth: 1
+                                )
                             }
                             .clipShape(
                                 RoundedRectangle(
@@ -308,17 +356,97 @@ struct EmergencyContactsView: View {
                                 )
                             )
 
-                            Text(
-                                """
-                                Введите номер в международном формате с кодом страны. \
-                                Можно использовать пробелы, тире и скобки.
-                                """
-                            )
-                            .font(.system(.caption, design: .rounded))
-                            .foregroundColor(.brown.opacity(0.58))
-                            .fixedSize(horizontal: false, vertical: true)
 
-                            Text("Например: +972501234567")
+                            // Фамилия
+
+                            TextField(
+                                "",
+                                text: $surname,
+                                prompt: Text("Фамилия*")
+                                    .foregroundColor(
+                                        .brown.opacity(0.45)
+                                    )
+                            )
+                            .textContentType(.familyName)
+                            .padding(.horizontal, 16)
+                            .frame(height: 54)
+                            .background(.white)
+                            .overlay {
+                                RoundedRectangle(
+                                    cornerRadius: 15
+                                )
+                                .stroke(
+                                    .brown.opacity(0.16),
+                                    lineWidth: 1
+                                )
+                            }
+                            .clipShape(
+                                RoundedRectangle(
+                                    cornerRadius: 15,
+                                    style: .continuous
+                                )
+                            )
+
+
+                            // Телефон
+
+                            VStack(
+                                alignment: .leading,
+                                spacing: 8
+                            ) {
+
+                                TextField(
+                                    "",
+                                    text: $phoneDigits,
+                                    prompt: Text("Телефон*")
+                                        .foregroundColor(
+                                            .brown.opacity(0.45)
+                                        )
+                                )
+                                .keyboardType(.phonePad)
+                                .textContentType(.telephoneNumber)
+                                .padding(.horizontal, 16)
+                                .frame(height: 54)
+                                .background(.white)
+                                .overlay {
+                                    RoundedRectangle(
+                                        cornerRadius: 15
+                                    )
+                                    .stroke(
+                                        .brown.opacity(0.16),
+                                        lineWidth: 1
+                                    )
+                                }
+                                .clipShape(
+                                    RoundedRectangle(
+                                        cornerRadius: 15,
+                                        style: .continuous
+                                    )
+                                )
+
+                                Text(
+                                    """
+                                    Введите номер в международном формате с кодом страны. \
+                                    Можно использовать пробелы, тире и скобки.
+                                    """
+                                )
+                                .font(
+                                    .system(
+                                        .caption,
+                                        design: .rounded
+                                    )
+                                )
+                                .foregroundColor(
+                                    .brown.opacity(0.58)
+                                )
+                                .fixedSize(
+                                    horizontal: false,
+                                    vertical: true
+                                )
+
+                                Text(
+                                    "Например: +972501234567"
+                                )
                                 .font(
                                     .system(
                                         .caption,
@@ -326,190 +454,366 @@ struct EmergencyContactsView: View {
                                     )
                                     .weight(.semibold)
                                 )
-                                .foregroundColor(.brown.opacity(0.72))
-                        }
+                                .foregroundColor(
+                                    .brown.opacity(0.72)
+                                )
+                            }
 
-                        TextField(
-                            "",
-                            text: $email,
-                            prompt: Text(
-                                "Емейл*"
+
+                            // Email
+
+                            TextField(
+                                "",
+                                text: $email,
+                                prompt: Text("Емейл*")
+                                    .foregroundColor(
+                                        .brown.opacity(0.45)
+                                    )
                             )
-                            .foregroundColor(.brown.opacity(0.45))
-                        )
-                        .keyboardType(.emailAddress)
-                        .textContentType(.emailAddress)
-                        .textInputAutocapitalization(.never)
-                        .autocorrectionDisabled()
-                        .padding(.horizontal, 16)
-                        .frame(height: 54)
-                        .background(.white)
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 15)
+                            .keyboardType(.emailAddress)
+                            .textContentType(.emailAddress)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
+                            .padding(.horizontal, 16)
+                            .frame(height: 54)
+                            .background(.white)
+                            .overlay {
+                                RoundedRectangle(
+                                    cornerRadius: 15
+                                )
                                 .stroke(
                                     .brown.opacity(0.16),
                                     lineWidth: 1
                                 )
+                            }
+                            .clipShape(
+                                RoundedRectangle(
+                                    cornerRadius: 15,
+                                    style: .continuous
+                                )
+                            )
                         }
+                        .font(
+                            .system(
+                                .title3,
+                                design: .rounded
+                            )
+                        )
+                        .padding(18)
+                        .background(
+                            .white.opacity(0.68)
+                        )
                         .clipShape(
                             RoundedRectangle(
-                                cornerRadius: 15,
+                                cornerRadius: 28,
                                 style: .continuous
                             )
                         )
-                    }
-                    .font(.system(.title3, design: .rounded))
-                    .padding(18)
-                    .background(.white.opacity(0.68))
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 28,
-                            style: .continuous
-                        )
-                    )
-                    .padding(.horizontal, 28)
+                        .padding(.horizontal, 28)
 
-                    // MARK: - Кнопка добавления
 
-                    Button {
-                        guard contacts.count < 2 ||
-                                editingIndex != nil else {
-                            return
-                        }
-                        guard !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                        // MARK: - Добавить / Сохранить контакт
 
-                            phoneErrorMessage = "Введите адрес электронной почты."
+                        Button {
 
-                            showPhoneError = true
-                            return
-                        }
-                        guard isValidEmail(email) else {
+                            guard
+                                contacts.count < 2 ||
+                                editingIndex != nil
+                            else {
+                                return
+                            }
 
-                            phoneErrorMessage = """
-                            Введите корректный адрес электронной почты.
+                            guard
+                                !email
+                                    .trimmingCharacters(
+                                        in: .whitespacesAndNewlines
+                                    )
+                                    .isEmpty
+                            else {
+                                formErrorTitle = "Не указан e-mail"
+                                phoneErrorMessage =
+                                    "Введите адрес электронной почты."
+                                showPhoneError = true
+                                return
+                            }
 
-                            Например:
+                            guard isValidEmail(email) else {
+                                formErrorTitle = "Неверный e-mail"
+                                phoneErrorMessage = """
+                                Введите корректный адрес электронной почты.
 
-                            name@gmail.com
-                            """
+                                Например: name@gmail.com
+                                """
+                                showPhoneError = true
+                                return
+                            }
 
-                            showPhoneError = true
-                            return
-                        }
-                        guard let normalizedPhone =
+                            guard let normalizedPhone =
                                 normalizedInternationalPhone(
                                     from: phoneDigits
-                                ) else {
-                            showPhoneError = true
-                            return
-                        }
+                                )
+                            else {
+                                showPhoneError = true
+                                return
+                            }
 
-                        let trimmedName =
-                            name.trimmingCharacters(
-                                in: .whitespacesAndNewlines
+                            let trimmedName =
+                                name.trimmingCharacters(
+                                    in: .whitespacesAndNewlines
+                                )
+
+                            let trimmedSurname =
+                                surname.trimmingCharacters(
+                                    in: .whitespacesAndNewlines
+                                )
+
+                            let trimmedEmail =
+                                email.trimmingCharacters(
+                                    in: .whitespacesAndNewlines
+                                )
+
+                            guard !trimmedEmail.isEmpty else {
+                                formErrorTitle = "Не указан e-mail"
+                                phoneErrorMessage =
+                                    "Введите адрес электронной почты."
+                                showPhoneError = true
+                                return
+                            }
+
+                            guard isValidEmail(trimmedEmail) else {
+                                formErrorTitle = "Неверный e-mail"
+                                phoneErrorMessage = """
+                                Введите корректный адрес электронной почты.
+
+                                Например: name@gmail.com
+                                """
+                                showPhoneError = true
+                                return
+                            }
+
+
+                            // MARK: Проверяем изменение email
+
+                            let normalizedNewEmail =
+                                trimmedEmail.lowercased()
+
+                            let normalizedOldEmail =
+                                originalEditingEmail
+                                    .trimmingCharacters(
+                                        in: .whitespacesAndNewlines
+                                    )
+                                    .lowercased()
+
+                            let shouldSendInvitation: Bool
+
+                            if editingIndex == nil {
+
+                                // Новый контакт:
+                                // приглашение отправляем всегда.
+
+                                shouldSendInvitation = true
+
+                            } else {
+
+                                // При редактировании повторное
+                                // приглашение отправляем только,
+                                // если изменился email.
+
+                                shouldSendInvitation =
+                                    normalizedNewEmail !=
+                                    normalizedOldEmail
+                            }
+
+
+                            // MARK: Сохраняем ID и статус
+
+                            let contactID: UUID
+                            let contactStatus:
+                                EmergencyContactStatus
+
+                            if let editingIndex {
+
+                                contactID =
+                                    contacts[editingIndex].id
+
+                                if shouldSendInvitation {
+
+                                    // Email изменился.
+                                    // Требуется новое согласие.
+
+                                    contactStatus = .pending
+
+                                } else {
+
+                                    // Email не изменился.
+                                    // Сохраняем прежний статус.
+
+                                    contactStatus =
+                                        contacts[editingIndex].status
+                                }
+
+                            } else {
+
+                                contactID = UUID()
+                                contactStatus = .pending
+                            }
+
+
+                            let contact =
+                                EmergencyContact(
+                                    id: contactID,
+                                    name: trimmedName,
+                                    surname: trimmedSurname,
+                                    phoneDigits: normalizedPhone,
+                                    email: trimmedEmail,
+                                    salutation: salutation,
+                                    status: contactStatus
+                                )
+
+
+                            // MARK: Сохраняем локально
+
+                            if let editingIndex {
+
+                                contacts[editingIndex] =
+                                    contact
+
+                                self.editingIndex = nil
+
+                            } else {
+
+                                contacts.append(contact)
+                            }
+
+                            saveContacts()
+
+
+                            // MARK: Отправляем invitation только при необходимости
+
+                            if shouldSendInvitation {
+
+                                Task {
+                                    do {
+                                        try await
+                                            EmergencyContactAPIClient
+                                            .shared
+                                            .sendInvitation(
+                                                contact: contact,
+                                                userName: displayName
+                                            )
+
+                    #if DEBUG
+                                        print(
+                                            "✅ Emergency contact invitation sent:",
+                                            contact.email
+                                        )
+                    #endif
+
+                                    } catch {
+
+                    #if DEBUG
+                                        print(
+                                            "❌ Emergency contact invitation failed:",
+                                            error
+                                        )
+                    #endif
+                                    }
+                                }
+                            }
+
+
+                            // MARK: Онбординг
+
+                            if contacts.count == 1 {
+                                showSecondContactSuggestion = true
+                            }
+
+                            if contacts.count == 2,
+                               isOnboarding {
+
+                                onOnboardingComplete?()
+                            }
+
+
+                            // MARK: Очищаем и сворачиваем форму
+
+                            name = ""
+                            surname = ""
+                            phoneDigits = ""
+                            email = ""
+                            salutation = "Уважаемый"
+
+                            originalEditingEmail = ""
+
+                            withAnimation(
+                                .easeInOut(duration: 0.22)
+                            ) {
+                                isContactFormExpanded = false
+                            }
+
+                        } label: {
+
+                            Text(
+                                editingIndex == nil
+                                ? "Добавить"
+                                : "Сохранить"
                             )
-
-                        let trimmedSurname =
-                            surname.trimmingCharacters(
-                                in: .whitespacesAndNewlines
+                            .font(
+                                .system(
+                                    .headline,
+                                    design: .rounded
+                                )
+                                .weight(.bold)
                             )
-
-                        let trimmedEmail = email.trimmingCharacters(
-                            in: .whitespacesAndNewlines
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 58)
+                            .background(
+                                contacts.count < 2 ||
+                                editingIndex != nil
+                                ? Color.orange.opacity(0.72)
+                                : Color.gray.opacity(0.42)
+                            )
+                            .clipShape(
+                                RoundedRectangle(
+                                    cornerRadius: 20,
+                                    style: .continuous
+                                )
+                            )
+                        }
+                        .disabled(
+                            !(contacts.count < 2 ||
+                              editingIndex != nil)
                         )
+                        .padding(.horizontal, 40)
+                        .padding(.top, 4)
 
-                        guard !trimmedEmail.isEmpty else {
-                            formErrorTitle = "Не указан e-mail"
-                            phoneErrorMessage = "Введите адрес электронной почты."
-                            showPhoneError = true
-                            return
-                        }
+                    } // Конец if isContactFormExpanded
 
-                        guard isValidEmail(trimmedEmail) else {
-                            formErrorTitle = "Неверный e-mail"
-                            phoneErrorMessage = """
-                            Введите корректный адрес электронной почты.
 
-                            Например: name@gmail.com
-                            """
-                            showPhoneError = true
-                            return
-                        }
+                    // MARK: - Ограничение количества контактов
 
-                        let contact = EmergencyContact(
-                            name: trimmedName,
-                            surname: trimmedSurname,
-                            phoneDigits: normalizedPhone,
-                            email: trimmedEmail,
-                            salutation: salutation
-                        )
+                    if contacts.count >= 2 &&
+                       editingIndex == nil {
 
-                        if let editingIndex {
-                            contacts[editingIndex] = contact
-                            self.editingIndex = nil
-                        } else {
-                            contacts.append(contact)
-                        }
-
-                        saveContacts()
-                        if contacts.count == 1 {
-                            showSecondContactSuggestion = true
-                        }
-
-                        if contacts.count == 2,
-                           isOnboarding {
-                            onOnboardingComplete?()
-                        }
-                        
-                        name = ""
-                        surname = ""
-                        phoneDigits = ""
-                        email = ""
-
-                     
-                    } label: {
                         Text(
-                            editingIndex == nil
-                            ? "Добавить"
-                            : "Сохранить"
+                            "Максимум можно сохранить 2 тревожных контакта."
                         )
                         .font(
                             .system(
-                                .headline,
+                                .footnote,
                                 design: .rounded
                             )
-                            .weight(.bold)
                         )
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 58)
-                        .background(
-                            contacts.count < 2 ||
-                            editingIndex != nil
-                            ? Color.orange.opacity(0.72)
-                            : Color.gray.opacity(0.42)
+                        .foregroundColor(
+                            .brown.opacity(0.75)
                         )
-                        .clipShape(
-                            RoundedRectangle(
-                                cornerRadius: 20,
-                                style: .continuous
-                            )
-                        )
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
                     }
-                    .disabled(
-                        !(contacts.count < 2 ||
-                          editingIndex != nil)
-                    )
-                    .padding(.horizontal, 40)
-                    .padding(.top, 4)
 
-                    if contacts.count >= 2 && editingIndex == nil {
-                        Text("Максимум можно сохранить 2 тревожных контакта.")
-                            .font(.system(.footnote, design: .rounded))
-                            .foregroundColor(.brown.opacity(0.75))
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                    }
+
+                    // MARK: - Период оповещения
                     // MARK: - Период оповещения
                     VStack(alignment: .leading, spacing: 12) {
 
@@ -550,7 +854,8 @@ struct EmergencyContactsView: View {
                         .padding(.top, 12)
 
                     ForEach(contacts) { contact in
-                        VStack(alignment: .leading, spacing: 6) {
+                        VStack(alignment: .leading, spacing: 8) {
+
                             Text(
                                 "\(contact.name) \(contact.surname)"
                             )
@@ -578,13 +883,42 @@ struct EmergencyContactsView: View {
                                     )
                                 )
                                 .foregroundColor(.gray)
+
+                            HStack(spacing: 6) {
+                                Image(
+                                    systemName: statusIcon(
+                                        for: contact.status
+                                    )
+                                )
+
+                                Text(
+                                    statusTitle(
+                                        for: contact.status
+                                    )
+                                )
+                            }
+                            .font(
+                                .system(
+                                    .caption,
+                                    design: .rounded
+                                )
+                                .weight(.semibold)
+                            )
+                            .foregroundColor(
+                                statusColor(
+                                    for: contact.status
+                                )
+                            )
+                            .padding(.top, 4)
                         }
                         .frame(
                             maxWidth: .infinity,
                             alignment: .leading
                         )
                         .padding(18)
-                        .background(.white.opacity(0.75))
+                        .background(
+                            .white.opacity(0.75)
+                        )
                         .clipShape(
                             RoundedRectangle(
                                 cornerRadius: 22,
@@ -598,20 +932,29 @@ struct EmergencyContactsView: View {
                                     $0.id == contact.id
                                 }
 
+                            originalEditingEmail = contact.email
+
                             name = contact.name
                             surname = contact.surname
                             phoneDigits = contact.phoneDigits
                             email = contact.email
+                            salutation = contact.salutation
+
+                            withAnimation(
+                                .easeInOut(duration: 0.22)
+                            ) {
+                                isContactFormExpanded = true
+                            }
                         }
                     }
 
                     Spacer(minLength: 30)
-                }
-            }
-        }
-        .onAppear {
-            loadContacts()
-        }
+                                    }
+                                }
+                            }
+                            .onAppear {
+                                loadContacts()
+                            }
         .alert(
             formErrorTitle,
             isPresented: $showPhoneError
@@ -627,6 +970,7 @@ struct EmergencyContactsView: View {
             titleVisibility: .visible
         ) {
             Button("Добавить второй контакт") {
+                // Остаёмся на форме
             }
 
             Button("Продолжить с одним контактом") {
@@ -640,6 +984,7 @@ struct EmergencyContactsView: View {
                 role: .cancel
             ) {
             }
+
         } message: {
             Text(
                 """
@@ -651,76 +996,159 @@ struct EmergencyContactsView: View {
                 """
             )
         }
-    }
-
-    
-    // MARK: - Форматирование телефона
-
-    private func formatPhone(
-        _ digits: String
-    ) -> String {
-        let numbers = Array(digits.prefix(15))
-        var result = "+"
-
-        for index in numbers.indices {
-            if index == 0 {
-                result += "("
-            }
-
-            if index == 3 {
-                result += ") "
-            }
-
-            if index == 6 {
-                result += " "
-            }
-
-            if index == 9 {
-                result += " "
-            }
-
-            result.append(numbers[index])
         }
 
-        return result
-    }
+        // MARK: - Форматирование телефона
 
-    // MARK: - Сохранение контактов
+        private func formatPhone(
+            _ digits: String
+        ) -> String {
 
-    private func saveContacts() {
-        if let data = try? JSONEncoder().encode(contacts) {
-            UserDefaults.standard.set(
-                data,
-                forKey: contactsKey
+            let numbers = Array(
+                digits.prefix(15)
             )
+
+            var result = "+"
+
+            for index in numbers.indices {
+
+                if index == 0 {
+                    result += "("
+                }
+
+                if index == 3 {
+                    result += ") "
+                }
+
+                if index == 6 {
+                    result += " "
+                }
+
+                if index == 9 {
+                    result += " "
+                }
+
+                result.append(
+                    numbers[index]
+                )
+            }
+
+            return result
         }
-    }
 
-    // MARK: - Загрузка контактов
+        // MARK: - Сохранение контактов
 
-    private func loadContacts() {
-        guard let data = UserDefaults.standard.data(
-            forKey: contactsKey
-        ) else {
-            contacts = []
-            return
+        private func saveContacts() {
+            if let data =
+                try? JSONEncoder().encode(
+                    contacts
+                ) {
+
+                UserDefaults.standard.set(
+                    data,
+                    forKey: contactsKey
+                )
+            }
         }
 
-        contacts = (
-            try? JSONDecoder().decode(
-                [EmergencyContact].self,
-                from: data
+        // MARK: - Загрузка контактов
+
+        private func loadContacts() {
+
+            guard let data =
+                UserDefaults.standard.data(
+                    forKey: contactsKey
+                )
+            else {
+                contacts = []
+                return
+            }
+
+            contacts =
+                (
+                    try? JSONDecoder().decode(
+                        [EmergencyContact].self,
+                        from: data
+                    )
+                ) ?? []
+        }
+
+        // MARK: - Проверка email
+
+        private func isValidEmail(
+            _ email: String
+        ) -> Bool {
+
+            let emailRegex =
+                #"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$"#
+
+            return NSPredicate(
+                format: "SELF MATCHES[c] %@",
+                emailRegex
             )
-        ) ?? []
-    }
-    private func isValidEmail(_ email: String) -> Bool {
+            .evaluate(with: email)
+        }
 
-        let emailRegex =
-        #"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$"#
+        // MARK: - Статус тревожного контакта
 
-        return NSPredicate(
-            format: "SELF MATCHES[c] %@",
-            emailRegex
-        ).evaluate(with: email)
-    }
-}
+        private func statusTitle(
+            for status: EmergencyContactStatus
+        ) -> String {
+
+            switch status {
+
+            case .pending:
+                return "Pending"
+
+            case .confirmed:
+                return "Confirmed"
+
+            case .declined:
+                return "Declined"
+
+            case .revoked:
+                return "Revoked"
+            }
+        }
+
+        private func statusIcon(
+            for status: EmergencyContactStatus
+        ) -> String {
+
+            switch status {
+
+            case .pending:
+                return "clock.fill"
+
+            case .confirmed:
+                return "checkmark.circle.fill"
+
+            case .declined:
+                return "xmark.circle.fill"
+
+            case .revoked:
+                return "minus.circle.fill"
+            }
+        }
+
+        private func statusColor(
+            for status: EmergencyContactStatus
+        ) -> Color {
+
+            switch status {
+
+            case .pending:
+                return .orange
+
+            case .confirmed:
+                return .green
+
+            case .declined:
+                return .red
+
+            case .revoked:
+                return .gray
+            }
+        }
+
+        }
