@@ -67,8 +67,8 @@ struct ContentView: View {
     @AppStorage("showJewishHolidays") private var showJewishHolidays = true
     @AppStorage("app_instance_id")
     private var appInstanceId: String = UUID().uuidString
-    @AppStorage("checkInIntervalHours")
-    private var checkInIntervalHours: Int = 48
+    @AppStorage("check_in_interval_hours")
+    private var checkInIntervalHours: Int = 0
     
     private let lastCheckInKey = "lastCheckInDate"
     
@@ -130,6 +130,11 @@ struct ContentView: View {
         }
         
         return Date().timeIntervalSince(lastCheckInDate) < 24 * 60 * 60
+    }
+    private var checkInIntervalText: String {
+        checkInIntervalHours == 24
+            ? "24 часа"
+            : "\(checkInIntervalHours) часов"
     }
     
     private let phrases = [
@@ -826,7 +831,9 @@ struct ContentView: View {
         // Перезапускаем локальный отсчёт 48 часов.
         Task {
             await CheckInNotificationManager.shared
-                .schedule48HourCheckInNotification()
+                .scheduleCheckInNotification(
+                    intervalHours: checkInIntervalHours
+                )
         }
 
         // Отправляем JSON на сервер.
@@ -880,7 +887,7 @@ struct ContentView: View {
                     : trimmedDisplayName,
                 gender: nil
             ),
-            checkInIntervalHours: 48,
+            checkInIntervalHours: checkInIntervalHours,
             lastCheckIn: HeartbeatLastCheckIn(
                 timestamp: checkInDate,
                 timezone: TimeZone.current.identifier
@@ -938,11 +945,7 @@ struct ContentView: View {
         }
         
         return """
-Внимание. \(userName) не подтвердил(а), что с ним или с ней всё хорошо, в течение последних 48 часов.
-
-Пожалуйста, попробуйте связаться с ним или с ней напрямую.
-
-Это автоматическое напоминание приложения MorningHello. Если существует непосредственная угроза жизни или здоровью, обратитесь в местные экстренные службы.
+Внимание. \(userName) не подтвердил(а), что с ним или с ней всё хорошо, в течение последних \(checkInIntervalText).
 """
     }
     var welcomeScreen: some View {
@@ -1017,7 +1020,7 @@ struct ContentView: View {
                     .opacity(isCheckInBlocked ? 0.65 : 1.0)
                     
                     Text(
-                        "Если ты не нажмёшь кнопку в течение 48 часов — мы сообщим близким"
+                        "Если ты не нажмёшь кнопку в течение \(checkInIntervalText) — мы сообщим близким"
                     )
                     .font(.system(.footnote, design: .rounded))
                     .foregroundColor(
@@ -1055,9 +1058,8 @@ struct ContentView: View {
                                 )
                             )
                             .multilineTextAlignment(.center)
-                        
                         Text(
-                            "Без тревожного контакта приложение не сможет сообщить близким, если вы не отметитесь в течение 48 часов."
+                            "Без тревожного контакта приложение не сможет сообщить близким, если вы не отметитесь в течение \(checkInIntervalText)."
                         )
                         .font(
                             .system(
@@ -1657,7 +1659,7 @@ struct ContentView: View {
                     showEmergencyMessageAlert = true
                 }
                 .alert(
-                    "Прошло 48 часов",
+                    "Прошло \(checkInIntervalText)",
                     isPresented: $showEmergencyMessageAlert
                 ) {
                     Button("Открыть WhatsApp") {
@@ -1673,9 +1675,7 @@ struct ContentView: View {
                 } message: {
                     Text(
                         """
-                        Пользователь не подтвердил, что с ним всё хорошо, в течение последних 48 часов.
-
-                        Подготовить сообщение тревожным контактам?
+                        Пользователь не подтвердил, что с ним всё хорошо, в течение последних \(checkInIntervalText).
                         """
                     )
                 }

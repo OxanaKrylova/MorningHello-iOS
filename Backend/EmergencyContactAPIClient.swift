@@ -157,6 +157,133 @@ struct EmergencyContactAPIClient {
         }
     }
 
+    func stopMonitoring(
+        contact: EmergencyContact,
+        userName: String
+    ) async throws {
+
+        let appInstanceID =
+            getOrCreateAppInstanceID()
+
+        let endpoint =
+            baseURL
+                .appendingPathComponent("users")
+                .appendingPathComponent(
+                    appInstanceID.uuidString
+                )
+                .appendingPathComponent(
+                    "emergency-contacts"
+                )
+                .appendingPathComponent(
+                    contact.id.uuidString
+                )
+                .appendingPathComponent(
+                    "stop-monitoring"
+                )
+
+        let body =
+            StopEmergencyContactMonitoringRequest(
+                user:
+                    StopEmergencyContactMonitoringUser(
+                        name: userName
+                    ),
+                contact:
+                    StopEmergencyContactMonitoringContact(
+                        firstName: contact.name,
+                        lastName: contact.surname,
+                        phone: contact.phoneDigits,
+                        email: contact.email,
+                        salutation: contact.salutation
+                    ),
+                reason: .removedByUser
+            )
+
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "POST"
+
+        request.setValue(
+            "application/json",
+            forHTTPHeaderField: "Content-Type"
+        )
+
+        request.setValue(
+            "application/json",
+            forHTTPHeaderField: "Accept"
+        )
+
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [
+            .prettyPrinted,
+            .sortedKeys
+        ]
+
+        request.httpBody =
+            try encoder.encode(body)
+
+    #if DEBUG
+
+        if let data = request.httpBody,
+           let json = String(
+               data: data,
+               encoding: .utf8
+           ) {
+
+            print(
+                """
+
+                STOP EMERGENCY CONTACT MONITORING REQUEST
+                \(request.httpMethod ?? "")
+                \(endpoint.absoluteString)
+
+                \(json)
+
+                """
+            )
+        }
+
+    #endif
+
+        let (data, response) =
+            try await URLSession.shared.data(
+                for: request
+            )
+
+        guard let httpResponse =
+            response as? HTTPURLResponse
+        else {
+            throw EmergencyContactAPIError
+                .invalidResponse
+        }
+
+    #if DEBUG
+
+        let responseBody =
+            String(
+                data: data,
+                encoding: .utf8
+            ) ?? ""
+
+        print(
+            """
+
+            STOP EMERGENCY CONTACT MONITORING RESPONSE
+            STATUS: \(httpResponse.statusCode)
+
+            \(responseBody)
+
+            """
+        )
+
+    #endif
+
+        guard 200...299 ~= httpResponse.statusCode else {
+            throw EmergencyContactAPIError
+                .serverError(
+                    httpResponse.statusCode
+                )
+        }
+    }
+    
     private func getOrCreateAppInstanceID()
         -> UUID {
 

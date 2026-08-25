@@ -31,11 +31,15 @@ struct EmergencyContactsView: View {
     @State private var isContactFormExpanded = false
     @State private var originalEditingEmail = ""
     
+    @State private var contactAwaitingDeletion: EmergencyContact?
+    @State private var deletingContactIDs: Set<UUID> = []
+    @State private var deletionErrorMessage: String?
+    
     @AppStorage("profile_display_name")
     private var displayName = ""
     
-    @AppStorage("checkInIntervalHours")
-    private var checkInIntervalHours = 48
+    @AppStorage("check_in_interval_hours")
+    private var checkInIntervalHours = 0
     
     private let contactsKey = "emergency_contacts"
     
@@ -885,17 +889,25 @@ struct EmergencyContactsView: View {
                                 .foregroundColor(.gray)
 
                             HStack(spacing: 6) {
-                                Image(
-                                    systemName: statusIcon(
-                                        for: contact.status
-                                    )
-                                )
+                                if deletingContactIDs.contains(
+                                    contact.id
+                                ) {
+                                    ProgressView()
 
-                                Text(
-                                    statusTitle(
-                                        for: contact.status
+                                    Text("Deleting")
+                                } else {
+                                    Image(
+                                        systemName: statusIcon(
+                                            for: contact.status
+                                        )
                                     )
-                                )
+
+                                    Text(
+                                        statusTitle(
+                                            for: contact.status
+                                        )
+                                    )
+                                }
                             }
                             .font(
                                 .system(
@@ -905,11 +917,37 @@ struct EmergencyContactsView: View {
                                 .weight(.semibold)
                             )
                             .foregroundColor(
-                                statusColor(
+                                deletingContactIDs.contains(
+                                    contact.id
+                                )
+                                ? .orange
+                                : statusColor(
                                     for: contact.status
                                 )
                             )
                             .padding(.top, 4)
+                            Button(role: .destructive) {
+                                contactAwaitingDeletion = contact
+                            } label: {
+                                Label(
+                                    "Прекратить мониторинг",
+                                    systemImage: "person.crop.circle.badge.minus"
+                                )
+                                .font(
+                                    .system(
+                                        .subheadline,
+                                        design: .rounded
+                                    )
+                                    .weight(.semibold)
+                                )
+                            }
+                            .buttonStyle(.borderless)
+                            .disabled(
+                                deletingContactIDs.contains(
+                                    contact.id
+                                )
+                            )
+                            .padding(.top, 8)
                         }
                         .frame(
                             maxWidth: .infinity,
@@ -927,6 +965,16 @@ struct EmergencyContactsView: View {
                         )
                         .padding(.horizontal, 28)
                         .onTapGesture {
+                            guard !deletingContactIDs.contains(
+                                contact.id
+                            ) else {
+                                return
+                            }
+
+                            editingIndex =
+                                contacts.firstIndex {
+                                    $0.id == contact.id
+                                }
                             editingIndex =
                                 contacts.firstIndex {
                                     $0.id == contact.id
@@ -963,6 +1011,63 @@ struct EmergencyContactsView: View {
             }
         } message: {
             Text(phoneErrorMessage)
+        }
+        .alert(
+            "Прекратить мониторинг?",
+            isPresented: Binding(
+                get: {
+                    contactAwaitingDeletion != nil
+                },
+                set: { isPresented in
+                    if !isPresented {
+                        contactAwaitingDeletion = nil
+                    }
+                }
+            ),
+            presenting: contactAwaitingDeletion
+        ) { contact in
+            Button(
+                "Отмена",
+                role: .cancel
+            ) {
+                contactAwaitingDeletion = nil
+            }
+
+            Button(
+                "Прекратить",
+                role: .destructive
+            ) {
+                contactAwaitingDeletion = nil
+
+                Task {
+                    await stopMonitoring(
+                        for: contact
+                    )
+                }
+            }
+        } message: { contact in
+            Text(
+                "MorningHello прекратит мониторинг и уведомит \(contact.name) \(contact.surname)."
+            )
+        }
+        .alert(
+            "Не удалось прекратить мониторинг",
+            isPresented: Binding(
+                get: {
+                    deletionErrorMessage != nil
+                },
+                set: { isPresented in
+                    if !isPresented {
+                        deletionErrorMessage = nil
+                    }
+                }
+            )
+        ) {
+            Button("Понятно", role: .cancel) {
+                deletionErrorMessage = nil
+            }
+        } message: {
+            Text(deletionErrorMessage ?? "")
         }
         .confirmationDialog(
             "Добавить второй тревожный контакт?",
@@ -1072,7 +1177,87 @@ struct EmergencyContactsView: View {
                     )
                 ) ?? []
         }
+    // MARK: - Прекращение мониторинга
 
+    @MainActor
+    private func stopMonitoring(
+        for contact: EmergencyContact
+    ) async {
+
+        guard !deletingContactIDs.contains(
+            contact.id
+        ) else {
+            return
+        }
+
+        deletingContactIDs.insert(contact.id)
+
+        defer {
+            deletingContactIDs.remove(contact.id)
+        }
+
+        do {
+            try await EmergencyContactAPIClient
+                .shared
+                .stopMonitoring(
+                    contact: contact,
+                    userName: displayName
+                )
+
+            let editingContactID =
+                editingIndex.flatMap { index in
+                    contacts.indices.contains(index)
+                        ? contacts[index].id
+                        : nil
+                }
+
+            contacts.removeAll {
+                $0.id == contact.id
+            }
+
+            saveContacts()
+
+            if editingContactID == contact.id {
+                self.editingIndex = nil
+                originalEditingEmail = ""
+
+                name = ""
+                surname = ""
+                phoneDigits = ""
+                email = ""
+                salutation = "Уважаемый"
+
+                isContactFormExpanded = false
+            } else if let editingContactID {
+                self.editingIndex =
+                    contacts.firstIndex {
+                        $0.id == editingContactID
+                    }
+            }
+
+    #if DEBUG
+
+            print(
+                "✅ Emergency contact monitoring stopped:",
+                contact.email
+            )
+
+    #endif
+
+        } catch {
+            deletionErrorMessage =
+                "Контакт не удалён. Проверьте подключение к интернету и попробуйте ещё раз."
+
+    #if DEBUG
+
+            print(
+                "❌ Failed to stop emergency contact monitoring:",
+                error
+            )
+
+    #endif
+        }
+    }
         // MARK: - Проверка email
 
         private func isValidEmail(
@@ -1110,7 +1295,7 @@ struct EmergencyContactsView: View {
                 return "Revoked"
             }
         }
-
+    
         private func statusIcon(
             for status: EmergencyContactStatus
         ) -> String {

@@ -24,3 +24,24 @@ struct EmergencyContactInviteContact: Encodable {
     let salutation: String
     let status: EmergencyContactStatus
 }
+struct StopEmergencyContactMonitoringRequest: Encodable {
+    let user: StopEmergencyContactMonitoringUser
+    let contact: StopEmergencyContactMonitoringContact
+    let reason: StopEmergencyContactMonitoringReason
+}
+
+struct StopEmergencyContactMonitoringUser: Encodable {
+    let name: String
+}
+
+struct StopEmergencyContactMonitoringContact: Encodable {
+    let firstName: String
+    let lastName: String
+    let phone: String
+    let email: String
+    let salutation: String
+}
+
+enum StopEmergencyContactMonitoringReason: String, Encodable {
+    case removedByUser = "removed_by_user"
+}

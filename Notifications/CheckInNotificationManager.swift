@@ -17,12 +17,6 @@ final class CheckInNotificationManager {
     static let categoryIdentifier = "MORNING_HELLO_TIMEOUT"
     static let openMessageActionIdentifier = "OPEN_EMERGENCY_MESSAGE"
     
-    // Для рабочего приложения:
-    static let timeout: TimeInterval = 48 * 60 * 60
-    
-    // Для тестирования можно временно поставить:
-    // static let timeout: TimeInterval = 60
-    
     func configureNotificationActions() {
         let openMessageAction = UNNotificationAction(
             identifier: Self.openMessageActionIdentifier,
@@ -59,38 +53,52 @@ final class CheckInNotificationManager {
         }
     }
     
-    func schedule48HourCheckInNotification() async {
+    func scheduleCheckInNotification(
+        intervalHours: Int
+    ) async {
         let center = UNUserNotificationCenter.current()
-        
-        // Удаляем предыдущий таймер, чтобы после каждого нового
-        // нажатия «Я живу» отсчёт начинался заново.
+
+        guard [24, 48, 72].contains(intervalHours) else {
+            print(
+                "Не удалось запланировать уведомление: " +
+                "некорректный интервал \(intervalHours)."
+            )
+            return
+        }
+
+        let intervalText = intervalHours == 24
+            ? "24 часа"
+            : "\(intervalHours) часов"
+
         center.removePendingNotificationRequests(
             withIdentifiers: [Self.notificationIdentifier]
         )
-        
+
         let content = UNMutableNotificationContent()
         content.title = "MorningHello"
         content.body = """
-        Прошло 48 часов с последней отметки. \
+        Прошло \(intervalText) с последней отметки. \
         Пожалуйста, подтвердите, что с вами всё хорошо.
         """
         content.sound = .default
         content.categoryIdentifier = Self.categoryIdentifier
-        
+
         let trigger = UNTimeIntervalNotificationTrigger(
-            timeInterval: Self.timeout,
+            timeInterval: TimeInterval(intervalHours) * 60 * 60,
             repeats: false
         )
-        
+
         let request = UNNotificationRequest(
             identifier: Self.notificationIdentifier,
             content: content,
             trigger: trigger
         )
-        
+
         do {
             try await center.add(request)
-            print("Уведомление на 48 часов запланировано.")
+            print(
+                "Уведомление на \(intervalText) запланировано."
+            )
         } catch {
             print(
                 "Не удалось запланировать уведомление:",
