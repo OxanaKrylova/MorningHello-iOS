@@ -150,7 +150,7 @@ struct EmergencyContactsView: View {
     }
     var body: some View {
         ZStack {
-            Color(red: 1.0, green: 0.96, blue: 0.87)
+            Color(red: 1.00, green: 0.96, blue: 0.87)
                 .ignoresSafeArea()
 
             ScrollView {

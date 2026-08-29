@@ -55,6 +55,8 @@
 		29DD590C30350B360067B04F /* OctoberPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DD590B30350B360067B04F /* OctoberPostcardProvider.swift */; };
 		29DD59203035DCCB0067B04F /* TrialNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DD591F3035DCCB0067B04F /* TrialNotificationManager.swift */; };
 		29EC86F33006AABE00E16D51 /* MessageComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC86F23006AABE00E16D51 /* MessageComposerView.swift */; };
+		29F44CBE303F95F10043E63A /* SubscriptionPaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F44CBD303F95F10043E63A /* SubscriptionPaywallView.swift */; };
+		29FAEAF23040DE51003CFA12 /* MarchPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FAEAF13040DE51003CFA12 /* MarchPostcardProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +109,8 @@
 		29DD590B30350B360067B04F /* OctoberPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OctoberPostcardProvider.swift; sourceTree = "<group>"; };
 		29DD591F3035DCCB0067B04F /* TrialNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationManager.swift; sourceTree = "<group>"; };
 		29EC86F23006AABE00E16D51 /* MessageComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerView.swift; sourceTree = "<group>"; };
+		29F44CBD303F95F10043E63A /* SubscriptionPaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPaywallView.swift; sourceTree = "<group>"; };
+		29FAEAF13040DE51003CFA12 /* MarchPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarchPostcardProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -203,6 +207,7 @@
 		29B76C44301AAB9900D1D295 /* HolidayProvider */ = {
 			isa = PBXGroup;
 			children = (
+				29FAEAF03040DE3B003CFA12 /* March */,
 				29AFFF9E3037B6E7007FE955 /* January */,
 				29BCCD29303053280027557C /* November */,
 				29B76CAA302144B200D1D295 /* September */,
@@ -333,6 +338,7 @@
 				293388A52FF31CDD0076642F /* EmergencyContactsView.swift */,
 				29CA8E2C300197C800F59ECA /* ProfileView.swift */,
 				29B5527430339B6600636AE9 /* SubscriptionView.swift */,
+				29F44CBD303F95F10043E63A /* SubscriptionPaywallView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -385,6 +391,14 @@
 				29DD590B30350B360067B04F /* OctoberPostcardProvider.swift */,
 			);
 			path = October;
+			sourceTree = "<group>";
+		};
+		29FAEAF03040DE3B003CFA12 /* March */ = {
+			isa = PBXGroup;
+			children = (
+				29FAEAF13040DE51003CFA12 /* MarchPostcardProvider.swift */,
+			);
+			path = March;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -470,6 +484,7 @@
 				29B76C72301BD0B000D1D295 /* HolidayContent.swift in Sources */,
 				29AFFFBE30390261007FE955 /* CatalogPostcardPreviewView.swift in Sources */,
 				29B76C84301D4D8500D1D295 /* SukkotPostcardProvider..swift in Sources */,
+				29FAEAF23040DE51003CFA12 /* MarchPostcardProvider.swift in Sources */,
 				29AFFFB8303901FA007FE955 /* PostcardCollection.swift in Sources */,
 				2976EF0E3027D60C00C0E8B1 /* TermsOfUseView.swift in Sources */,
 				293388A62FF31CDD0076642F /* EmergencyContactsView.swift in Sources */,
@@ -508,6 +523,7 @@
 				29B76CA330212FD700D1D295 /* HeartbeatModels.swift in Sources */,
 				2976EF113027D66000C0E8B1 /* TermsOfUseText.swift in Sources */,
 				29AFFF9B3037B456007FE955 /* SubscriptionSnapshot.swift in Sources */,
+				29F44CBE303F95F10043E63A /* SubscriptionPaywallView.swift in Sources */,
 				29B76CA73021304700D1D295 /* HeartbeatAPIClient.swift in Sources */,
 				292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */,
 			);
@@ -641,11 +657,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MorningHello/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Morning Hello";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -659,12 +677,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.oxana.morninghello;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -674,11 +696,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MorningHello/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Morning Hello";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -692,12 +716,16 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.oxana.morninghello;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

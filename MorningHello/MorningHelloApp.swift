@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 import UserNotifications
 
 @main
@@ -45,6 +46,17 @@ struct MorningHelloApp: App {
 
                             await SubscriptionManager.shared
                                 .refreshAndSync()
+                        }
+                        .task {
+                            for await update in Transaction.updates {
+                                guard case .verified(let transaction) = update else {
+                                    continue
+                                }
+
+                                await transaction.finish()
+                                await SubscriptionManager.shared
+                                    .refreshAndSync()
+                            }
                         }
                         .onChange(
                             of: scenePhase

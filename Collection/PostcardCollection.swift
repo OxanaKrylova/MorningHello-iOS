@@ -9,8 +9,6 @@ import Foundation
 
 enum PostcardCollection: String, CaseIterable, Identifiable {
 
-    case orthodox_church
-    case shabbat
     case foodTable
     case coffee
     case cats
@@ -18,8 +16,11 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
     case harvest
     case vacation
     case fairyAnimals
+    case flowers
     case sweetTable
     case dogs
+    case orthodox_church
+    case shabbat
     case catholic_church
 
     var id: String {
@@ -58,7 +59,10 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
 
         case .fairyAnimals:
             return "Сказка"
-
+       
+        case .flowers:
+            return "Цветы"
+        
         case .sweetTable:
             return "Десерты"
            
@@ -66,7 +70,7 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
             return "Собаки"
             
         case .catholic_church:
-            return "Католизм"
+            return "Католицизм"
         }
     }
 
@@ -104,6 +108,9 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
         case .fairyAnimals:
             return "wand.and.stars"
 
+        case .flowers:
+            return "camera.macro"
+            
         case .sweetTable:
             return "birthday.cake.fill"
             
@@ -121,56 +128,6 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
     var assetNames: [String] {
 
         switch self {
-
-        case .orthodox_church:
-
-            return [
-                "Orthodox_BeginningDormitionFast",
-                "Orthodox_BeginningNativityFast",
-                "Orthodox_ChristmasEve",
-                "Orthodox_Clean Monday",
-                "Orthodox_EveDormition",
-                "Orthodox_FeastSaintsPeterPaul",
-                "Orthodox_FinalDayApostlesFast",
-                "Orthodox_FirstFridayafterCleanMonday",
-                "Orthodox_FirstMondayGreatLent",
-                "Orthodox_Holy Friday",
-                "Orthodox_Holy Monday",
-                "Orthodox_Holy Saturday",
-                "Orthodox_Holy Thursday",
-                "Orthodox_Holy Tuesday",
-                "Orthodox_Holy Wednesday",
-                "Orthodox_LazarusSaturday",
-                "Orthodox_MondayafterAllSaints",
-                "Orthodox_Pentecost",
-                "Holiday_Apple"
-            ]
-
-
-        case .shabbat:
-
-            return [
-                "Shabbat_1",
-                "Shabbat_2",
-                "Shabbat_3",
-                "Shabbat_4",
-                "Shabbat_5",
-                "Shabbat_6",
-                "Shabbat_7",
-                "Shabbat_8",
-                "Shabbat_9",
-                "Shabbat_10",
-                "Shabbat_11",
-                "hanuka_lights_1",
-                "hanuka_lights_2",
-                "hanuka_lights_3",
-                "hanuka_lights_4",
-                "hanuka_lights_5",
-                "hanuka_lights_6",
-                "hanuka_lights_7",
-                "hanuka_lights_8"
-            ]
-
 
         case .foodTable:
             return (1...48).map {
@@ -225,6 +182,12 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
                 "December_\($0)"
             }
 
+        case .flowers:
+
+            return (1...18).map {
+                "March_\($0)"
+            }
+            
         case .sweetTable:
 
             return (1...18).map {
@@ -254,6 +217,55 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
                 "Catholic_Holy_Wednesday"
             ]
             
+        case .orthodox_church:
+
+            return [
+                "Orthodox_BeginningDormitionFast",
+                "Orthodox_BeginningNativityFast",
+                "Orthodox_ChristmasEve",
+                "Orthodox_Clean Monday",
+                "Orthodox_EveDormition",
+                "Orthodox_FeastSaintsPeterPaul",
+                "Orthodox_FinalDayApostlesFast",
+                "Orthodox_FirstFridayafterCleanMonday",
+                "Orthodox_FirstMondayGreatLent",
+                "Orthodox_Holy Friday",
+                "Orthodox_Holy Monday",
+                "Orthodox_Holy Saturday",
+                "Orthodox_Holy Thursday",
+                "Orthodox_Holy Tuesday",
+                "Orthodox_Holy Wednesday",
+                "Orthodox_LazarusSaturday",
+                "Orthodox_MondayafterAllSaints",
+                "Orthodox_Pentecost",
+                "Holiday_Apple"
+            ]
+
+
+        case .shabbat:
+
+            return [
+                "Shabbat_1",
+                "Shabbat_2",
+                "Shabbat_3",
+                "Shabbat_4",
+                "Shabbat_5",
+                "Shabbat_6",
+                "Shabbat_7",
+                "Shabbat_8",
+                "Shabbat_9",
+                "Shabbat_10",
+                "Shabbat_11",
+                "hanuka_lights_1",
+                "hanuka_lights_2",
+                "hanuka_lights_3",
+                "hanuka_lights_4",
+                "hanuka_lights_5",
+                "hanuka_lights_6",
+                "hanuka_lights_7",
+                "hanuka_lights_8"
+            ]
+
         case .dogs:
             
             return (1...20).map {

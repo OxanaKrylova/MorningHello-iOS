@@ -1368,6 +1368,25 @@ struct ContentView: View {
             )
         }
 
+        // 8. Март – обычные свободные дни месяца
+        
+        if let marchIndex =
+            ordinaryDayIndex(
+                for: Date(),
+                month: 3
+            ),
+           let march =
+            MarchPostcardProvider.content(
+                index: marchIndex
+            ),
+           let image = march.images.first,
+           let phrase = march.phrases.first {
+
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
+        }
 
         // 8. Декабрь
 

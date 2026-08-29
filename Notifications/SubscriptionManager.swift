@@ -26,9 +26,27 @@ final class SubscriptionManager: ObservableObject {
     private(set) var isLoading = false
 
     @Published
+    private(set) var hasLoadedSubscriptionStatus = false
+
+    @Published
     private(set) var lastError: String?
 
     private init() {}
+
+    var hasActiveSubscription: Bool {
+        switch snapshot.status {
+        case .trial, .active, .gracePeriod:
+            return true
+        case .none, .billingRetry, .expired, .revoked:
+            return false
+        }
+    }
+
+    enum PurchaseOutcome: Equatable {
+        case purchased
+        case pending
+        case cancelled
+    }
 
 
     // MARK: - Product IDs
@@ -43,6 +61,8 @@ final class SubscriptionManager: ObservableObject {
     // MARK: - Load Products
 
     func loadProducts() async {
+
+        lastError = nil
 
         do {
 
@@ -82,6 +102,7 @@ final class SubscriptionManager: ObservableObject {
 
         defer {
             isLoading = false
+            hasLoadedSubscriptionStatus = true
         }
 
         if products.isEmpty {
@@ -151,6 +172,38 @@ final class SubscriptionManager: ObservableObject {
                 error
             )
 #endif
+        }
+    }
+
+
+    // MARK: - Purchase
+
+    func purchase(
+        product: Product
+    ) async throws -> PurchaseOutcome {
+
+        lastError = nil
+
+        let result = try await product.purchase()
+
+        switch result {
+        case .success(let verificationResult):
+            guard case .verified(let transaction) = verificationResult else {
+                throw SubscriptionPurchaseError.failedVerification
+            }
+
+            await transaction.finish()
+            await refreshAndSync()
+            return .purchased
+
+        case .pending:
+            return .pending
+
+        case .userCancelled:
+            return .cancelled
+
+        @unknown default:
+            throw SubscriptionPurchaseError.unknownResult
         }
     }
 
@@ -310,6 +363,20 @@ final class SubscriptionManager: ObservableObject {
                 error
             )
 #endif
+        }
+    }
+}
+
+private enum SubscriptionPurchaseError: LocalizedError {
+    case failedVerification
+    case unknownResult
+
+    var errorDescription: String? {
+        switch self {
+        case .failedVerification:
+            return "App Store не удалось подтвердить покупку."
+        case .unknownResult:
+            return "App Store вернул неизвестный результат покупки."
         }
     }
 }
