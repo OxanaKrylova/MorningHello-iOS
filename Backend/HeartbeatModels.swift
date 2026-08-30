@@ -22,6 +22,8 @@ struct HeartbeatRequest: Encodable {
     let checkInIntervalHours: Int
     let lastCheckIn: HeartbeatLastCheckIn
     let emergencyContacts: [HeartbeatEmergencyContact]
+    let appVersion: String
+    let buildNumber: String
 }
 
 
@@ -40,6 +42,22 @@ struct HeartbeatLastCheckIn: Encodable {
     let timezone: String?
 }
 
+// MARK: - Версия приложения
+
+extension Bundle {
+
+    var appVersion: String {
+        object(
+            forInfoDictionaryKey: "CFBundleShortVersionString"
+        ) as? String ?? "unknown"
+    }
+
+    var buildNumber: String {
+        object(
+            forInfoDictionaryKey: "CFBundleVersion"
+        ) as? String ?? "unknown"
+    }
+}
 
 // MARK: - Тревожный контакт
 
