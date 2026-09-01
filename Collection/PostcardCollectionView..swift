@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct PostcardCollectionView: View {
-
+    
     let collection: PostcardCollection
-
+    
     private let columns = [
         GridItem(
             .flexible(),
@@ -21,11 +21,11 @@ struct PostcardCollectionView: View {
             spacing: 14
         )
     ]
-
+    
     var body: some View {
-
+        
         ZStack {
-
+            
             LinearGradient(
                 colors: [
                     Color(
@@ -48,9 +48,9 @@ struct PostcardCollectionView: View {
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
-
+            
             if collection.assetNames.isEmpty {
-
+                
                 ContentUnavailableView(
                     "Коллекция пока пуста",
                     systemImage:
@@ -60,30 +60,26 @@ struct PostcardCollectionView: View {
                             "Открытки будут добавлены позже."
                         )
                 )
-
+                
             } else {
-
+                
                 ScrollView {
-
+                    
                     LazyVGrid(
                         columns: columns,
                         spacing: 14
                     ) {
-
+                        
                         ForEach(
                             collection.assetNames,
                             id: \.self
                         ) { imageName in
-
+                            
                             NavigationLink {
-
                                 CatalogPostcardPreviewView(
-                                    imageName:
-                                        imageName
+                                    imageName: imageName
                                 )
-
                             } label: {
-
                                 Image(imageName)
                                     .resizable()
                                     .scaledToFill()
@@ -100,18 +96,18 @@ struct PostcardCollectionView: View {
                                     )
                             }
                             .buttonStyle(.plain)
+                            .simultaneousGesture(
+                                TapGesture()
+                                    .onEnded {
+                                        AppSoundPlayer.shared.play(
+                                            .openForm
+                                        )
+                                    }
+                            )
                         }
                     }
-                    .padding(.horizontal, 18)
-                    .padding(.vertical, 20)
                 }
             }
         }
-        .navigationTitle(
-            collection.title
-        )
-        .navigationBarTitleDisplayMode(
-            .inline
-        )
     }
 }

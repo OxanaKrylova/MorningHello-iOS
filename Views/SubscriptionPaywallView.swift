@@ -132,6 +132,10 @@ struct SubscriptionPaywallView: View {
                 title: "Контакты",
                 systemImage: "person.2.fill"
             ) {
+                AppSoundPlayer.shared.play(
+                    .openForm
+                )
+
                 showContacts = true
             }
 
@@ -139,6 +143,10 @@ struct SubscriptionPaywallView: View {
                 title: "Профиль",
                 systemImage: "person.crop.circle.fill"
             ) {
+                AppSoundPlayer.shared.play(
+                    .openForm
+                )
+
                 showProfile = true
             }
         }

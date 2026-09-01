@@ -41,7 +41,7 @@ struct ContentView: View {
     
     @State private var showContacts = false
     @State private var hasCheckedIn = false
-
+    
     @State private var showHolidaySettings = false
     @State private var showProfile = false
     @State private var showPostcard = false
@@ -56,11 +56,13 @@ struct ContentView: View {
     @State private var showBirthdayGreeting = false
     @State private var customMessage = ""
     @State private var showSubscription = false
-    
+    @State private var showSettings = false
     @State private var trialReminder: TrialReminderType?
     @State private var showTrialReminder = false
     
     @State private var showPostcardCatalog = false
+    @State private var isSendingHeartbeat = false
+    @State private var showHeartbeatError = false
     
     @AppStorage("showOrthodoxHolidays") private var showOrthodoxHolidays = true
     @AppStorage("showCatholicHolidays") private var showCatholicHolidays = true
@@ -76,16 +78,16 @@ struct ContentView: View {
     private var displayName = ""
     @State private var hasCheckedProfileOnLaunch = false
     // MARK: - Тест бесплатного периода
-
+    
     @State private var isTrialActive = true
-
+    
     @State private var trialEndDate: Date? =
-        Calendar.current.date(
-            byAdding: .day,
-            value: 3,
-            to: Date()
-        )
-
+    Calendar.current.date(
+        byAdding: .day,
+        value: 3,
+        to: Date()
+    )
+    
     
     struct SundayContent {
         let images: [String]
@@ -133,8 +135,8 @@ struct ContentView: View {
     }
     private var checkInIntervalText: String {
         checkInIntervalHours == 24
-            ? "24 часа"
-            : "\(checkInIntervalHours) часов"
+        ? "24 часа"
+        : "\(checkInIntervalHours) часов"
     }
     
     private let phrases = [
@@ -292,42 +294,8 @@ struct ContentView: View {
         
         let contacts = loadContactsForSharing()
         
-        let backendContacts = contacts.map { contact in
-            
-            let firstName = contact.name
-                .trimmingCharacters(
-                    in: .whitespacesAndNewlines
-                )
-            
-            let lastName = contact.surname
-                .trimmingCharacters(
-                    in: .whitespacesAndNewlines
-                )
-            
-            let phone = contact.phoneDigits
-                .trimmingCharacters(
-                    in: .whitespacesAndNewlines
-                )
-            
-            let email = contact.email
-                .trimmingCharacters(
-                    in: .whitespacesAndNewlines
-                )
-            
-            return HeartbeatEmergencyContact(
-                firstName: firstName,
-                lastName: lastName.isEmpty
-                ? nil
-                : lastName,
-                phone: phone.isEmpty
-                ? nil
-                : phone,
-                email: email
-            )
-        }
-        
         return HeartbeatRequestBuilder.makeRequest(
-            contacts: backendContacts,
+            contacts: contacts,
             checkInDate: checkInDate,
             intervalHours: checkInIntervalHours
         )
@@ -335,23 +303,23 @@ struct ContentView: View {
     
     private func getOrCreateAppInstanceID() -> UUID {
         let key = "app_instance_id"
-
+        
         if let savedString = UserDefaults.standard.string(
             forKey: key
         ),
-        let savedUUID = UUID(
+           let savedUUID = UUID(
             uuidString: savedString
-        ) {
+           ) {
             return savedUUID
         }
-
+        
         let newUUID = UUID()
-
+        
         UserDefaults.standard.set(
             newUUID.uuidString,
             forKey: key
         )
-
+        
         return newUUID
     }
     
@@ -406,9 +374,6 @@ struct ContentView: View {
     
     func normalizedPhone(_ phone: String) -> String {
         phone.filter { $0.isNumber }
-    }
-    private var postcardShareText: String {
-        smartPhrase
     }
     
     func openMessages() {
@@ -581,9 +546,9 @@ struct ContentView: View {
     func holidayContent(
         for date: Date = Date()
     ) -> HolidayContent? {
-
+        
         let today = date
-
+        
         // 1. Православные подвижные праздники:
         // Страстная неделя, Пасха, посты и т. д.
         if showOrthodoxHolidays,
@@ -591,10 +556,10 @@ struct ContentView: View {
             OrthodoxHolidayProvider.holyWeekContent(
                 for: today
             ) {
-
+            
             return orthodoxContent
         }
-
+        
         // 2. Католические подвижные праздники:
         // Страстная неделя, Пасха и т. д.
         if showCatholicHolidays,
@@ -602,7 +567,7 @@ struct ContentView: View {
             CatholicHolidayProvider.holyWeekContent(
                 for: today
             ) {
-
+            
             return catholicHolyWeek
         }
         
@@ -612,7 +577,7 @@ struct ContentView: View {
             CatholicHolidayProvider.specialContent(
                 for: today
             ) {
-
+            
             return catholicSpecial
         }
         
@@ -622,10 +587,10 @@ struct ContentView: View {
             OrthodoxHolidayProvider.forgivenSundayContent(
                 for: today
             ) {
-
+            
             return forgivenSunday
         }
-
+        
         // 4. Pancake Day
         // за 47 дней до католической Пасхи
         if showCatholicHolidays,
@@ -633,27 +598,27 @@ struct ContentView: View {
             CatholicHolidayProvider.pancakeDayContent(
                 for: today
             ) {
-
+            
             return pancakeDay
         }
-
+        
         // 5. Нейтральные / международные праздники
         // показываются всегда
         if let internationalHoliday =
             InternationalHolidayProvider.content(
                 for: today
             ) {
-
+            
             return internationalHoliday
         }
-
+        
         // Еврейские посты
         if showJewishHolidays,
            let jewishFast =
             JewishHolidayProvider.fastContent(
                 for: today
             ) {
-
+            
             return jewishFast
         }
         
@@ -663,10 +628,10 @@ struct ContentView: View {
             JewishHolidayProvider.content(
                 for: today
             ) {
-
+            
             return jewishHoliday
         }
-
+        
         // 7. Православные праздники
         // с фиксированными датами
         if showOrthodoxHolidays,
@@ -674,10 +639,10 @@ struct ContentView: View {
             OrthodoxHolidayProvider.fixedContent(
                 for: today
             ) {
-
+            
             return orthodoxHoliday
         }
-
+        
         // 8. Католические праздники
         // с фиксированными датами
         if showCatholicHolidays,
@@ -685,10 +650,10 @@ struct ContentView: View {
             CatholicHolidayProvider.fixedContent(
                 for: today
             ) {
-
+            
             return catholicHoliday
         }
-
+        
         return nil
     }
     func shabbatStartDate(for date: Date = Date()) -> Date? {
@@ -812,90 +777,105 @@ struct ContentView: View {
         }
     }
     
-    private func markAsAlive() {
+    @MainActor
+    private func markAsAlive() async {
+        guard !isSendingHeartbeat else {
+            return
+        }
+        
+        isSendingHeartbeat = true
+        
+        defer {
+            isSendingHeartbeat = false
+        }
+        
         let now = Date()
-
-        // Сохраняем отметку локально.
-        lastCheckInDate = now
-
-        UserDefaults.standard.set(
-            now,
-            forKey: lastCheckInKey
-        )
-
-        // Формируем запрос для сервера.
+        
         let heartbeatRequest = makeHeartbeatRequest(
             checkInDate: now
         )
-
-        // Перезапускаем локальный отсчёт 48 часов.
-        Task {
+        
+        do {
+            let appInstanceID =
+            getOrCreateAppInstanceID()
+            
+            try await HeartbeatAPIClient.shared
+                .sendHeartbeat(
+                    appInstanceID: appInstanceID,
+                    request: heartbeatRequest
+                )
+            
+            // Сервер принял отметку.
+            // Только теперь сохраняем её локально.
+            lastCheckInDate = now
+            hasCheckedIn = true
+            
+            UserDefaults.standard.set(
+                now,
+                forKey: lastCheckInKey
+            )
+            
+            // Перезапускаем локальное уведомление
+            // только после успешной передачи.
             await CheckInNotificationManager.shared
                 .scheduleCheckInNotification(
                     intervalHours: checkInIntervalHours
                 )
-        }
-
-        // Отправляем JSON на сервер.
-        Task {
-            do {
-                let appInstanceID =
-                    getOrCreateAppInstanceID()
-
-                try await HeartbeatAPIClient.shared
-                    .sendHeartbeat(
-                        appInstanceID: appInstanceID,
-                        request: heartbeatRequest
-                    )
-
-                print("✅ Heartbeat успешно отправлен")
-                print(
-                    "App Instance ID:",
-                    appInstanceID.uuidString
-                )
-
-            } catch {
-                print("❌ Heartbeat не отправлен")
-                print(
-                    "Ошибка:",
-                    error.localizedDescription
-                )
-            }
+            
+            // Подтверждаем успех звуком.
+            AppSoundPlayer.shared.play(
+                .checkInSuccess
+            )
+            
+            // Открываем ежедневную открытку.
+            customMessage = ""
+            showPostcard = true
+            
+#if DEBUG
+            
+            print(
+                "✅ Heartbeat успешно отправлен"
+            )
+            
+            print(
+                "App Instance ID:",
+                appInstanceID.uuidString
+            )
+            
+#endif
+            
+        } catch is CancellationError {
+            return
+            
+        } catch {
+            showHeartbeatError = true
+            
+#if DEBUG
+            
+            print(
+                "❌ Heartbeat не отправлен"
+            )
+            
+            print(
+                "Ошибка:",
+                error.localizedDescription
+            )
+            
+#endif
         }
     }
     private func makeHeartbeatRequest(
         checkInDate: Date
     ) -> HeartbeatRequest {
-
-        let trimmedDisplayName =
-            displayName.trimmingCharacters(
-                in: .whitespacesAndNewlines
-            )
-
+        
         let contacts = loadContactsForSharing()
-
-        let backendContacts = contacts.compactMap {
-            HeartbeatEmergencyContact(
-                from: $0
-            )
-        }
-
-        return HeartbeatRequest(
-            user: HeartbeatUser(
-                name: trimmedDisplayName.isEmpty
-                    ? nil
-                    : trimmedDisplayName,
-                gender: nil
-            ),
-            checkInIntervalHours: checkInIntervalHours,
-            lastCheckIn: HeartbeatLastCheckIn(
-                timestamp: checkInDate,
-                timezone: TimeZone.current.identifier
-            ),
-            emergencyContacts: backendContacts
+        
+        return HeartbeatRequestBuilder.makeRequest(
+            contacts: contacts,
+            checkInDate: checkInDate,
+            intervalHours: checkInIntervalHours
         )
     }
-    
     func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { _, error in
             if let error = error {
@@ -971,28 +951,26 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                 
                 if hasEmergencyContacts {
-                    
                     Button {
-                        print(
-                            "Нажата кнопка. isCheckInBlocked:",
-                            isCheckInBlocked
-                        )
-
-                        markAsAlive()
-
-                        customMessage = ""
-                        showPostcard = true
-                    }
-                        
-                   label: {
+                        Task {
+                            await markAsAlive()
+                        }
+                    } label: {
                         HStack(spacing: 10) {
-                            Image(systemName: "heart.fill")
-                            
-                            Text(
-                                isCheckInBlocked
-                                ? "Я в порядке"
-                                : "Я живу"
-                            )
+                            if isSendingHeartbeat {
+                                ProgressView()
+                                    .tint(.white)
+                                
+                                Text("Отправляем…")
+                            } else {
+                                Image(systemName: "heart.fill")
+                                
+                                Text(
+                                    isCheckInBlocked
+                                    ? "Я в порядке"
+                                    : "Я живу"
+                                )
+                            }
                         }
                     }
                     .font(
@@ -1017,12 +995,37 @@ struct ContentView: View {
                         x: 0,
                         y: 5
                     )
-                    .opacity(isCheckInBlocked ? 0.65 : 1.0)
+                    .opacity(
+                        isSendingHeartbeat
+                        ? 0.55
+                        : (isCheckInBlocked ? 0.65 : 1.0)
+                    )
+                    .disabled(isSendingHeartbeat)
+                    .alert(
+                        "Не удалось передать отметку",
+                        isPresented: $showHeartbeatError
+                    ) {
+                        Button(
+                            "Понятно",
+                            role: .cancel
+                        ) {
+                            showHeartbeatError = false
+                        }
+                    } message: {
+                        Text(
+                            "Проверьте интернет и повторите попытку"
+                        )
+                    }
                     
                     Text(
-                        "Если ты не нажмёшь кнопку в течение \(checkInIntervalText) — мы сообщим близким"
+                        "Если ты не нажмёшь кнопку в течение \(checkInIntervalText) – мы сообщим близким"
                     )
-                    .font(.system(.footnote, design: .rounded))
+                    .font(
+                        .system(
+                            .footnote,
+                            design: .rounded
+                        )
+                    )
                     .foregroundColor(
                         Color(
                             red: 0.55,
@@ -1032,15 +1035,19 @@ struct ContentView: View {
                     )
                     .multilineTextAlignment(.center)
                     .lineSpacing(3)
-                    .frame(maxWidth: 330, alignment: .center)
+                    .frame(
+                        maxWidth: 330,
+                        alignment: .center
+                    )
                     .padding(.horizontal, 16)
-                    
                 } else {
-                    
                     VStack(spacing: 14) {
-                        Image(systemName: "person.crop.circle.badge.plus")
-                            .font(.system(size: 32))
-                            .foregroundColor(.orange)
+                        Image(
+                            systemName:
+                                "person.crop.circle.badge.plus"
+                        )
+                        .font(.system(size: 32))
+                        .foregroundColor(.orange)
                         
                         Text("Добавьте тревожный контакт")
                             .font(
@@ -1058,6 +1065,7 @@ struct ContentView: View {
                                 )
                             )
                             .multilineTextAlignment(.center)
+                        
                         Text(
                             "Без тревожного контакта приложение не сможет сообщить близким, если вы не отметитесь в течение \(checkInIntervalText)."
                         )
@@ -1080,8 +1088,11 @@ struct ContentView: View {
                         .padding(.horizontal, 16)
                         
                         Button {
-                            showContacts = true
+                            AppSoundPlayer.shared.play(
+                                .openForm
+                            )
                             
+                            showContacts = true
                         } label: {
                             Label(
                                 "Добавить контакт",
@@ -1097,15 +1108,24 @@ struct ContentView: View {
                             .foregroundColor(.white)
                             .padding(.horizontal, 26)
                             .padding(.vertical, 14)
-                            .background(Color.orange.opacity(0.75))
+                            .background(
+                                Color.orange.opacity(0.75)
+                            )
                             .clipShape(Capsule())
                         }
                     }
-                    .frame(maxWidth: .infinity, alignment: .center)
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .center
+                    )
                 }
+                
                 Button {
-                    showBirthdayGreeting = true
+                    AppSoundPlayer.shared.play(
+                        .openForm
+                    )
                     
+                    showBirthdayGreeting = true
                 } label: {
                     Label(
                         "Поздравить с днём рождения",
@@ -1134,8 +1154,11 @@ struct ContentView: View {
                 
                 HStack(spacing: 14) {
                     Button {
-                        showContacts = true
+                        AppSoundPlayer.shared.play(
+                            .openForm
+                        )
                         
+                        showContacts = true
                     } label: {
                         Label(
                             "Контакты",
@@ -1156,8 +1179,11 @@ struct ContentView: View {
                     }
                     
                     Button {
-                        showHolidaySettings = true
+                        AppSoundPlayer.shared.play(
+                            .openForm
+                        )
                         
+                        showHolidaySettings = true
                     } label: {
                         Label(
                             "Праздники",
@@ -1179,8 +1205,11 @@ struct ContentView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 Button {
-                    showPostcardCatalog = true
+                    AppSoundPlayer.shared.play(
+                        .openForm
+                    )
                     
+                    showPostcardCatalog = true
                 } label: {
                     Label(
                         "Коллекция открыток",
@@ -1199,890 +1228,941 @@ struct ContentView: View {
                     .background(.white.opacity(0.55))
                     .clipShape(Capsule())
                 }
-            .frame(maxWidth: .infinity, alignment: .center)
-                Button {
-                    showProfile = true
-                    
-                } label: {
-                    Label(
-                        "Профиль",
-                        systemImage: "person.crop.circle.fill"
-                    )
-                    .font(
-                        .system(
-                            .subheadline,
-                            design: .rounded
-                        )
-                        .weight(.semibold)
-                    )
-                    .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.28))
-                    .padding(.horizontal, 28)
-                    .padding(.vertical, 12)
-                    .background(.white.opacity(0.55))
-                    .clipShape(Capsule())
-                }
                 .frame(maxWidth: .infinity, alignment: .center)
-                
-                Spacer()
+                HStack(spacing: 14) {
+                    Button {
+                        AppSoundPlayer.shared.play(
+                            .openForm
+                        )
+                        
+                        showProfile = true
+                    } label: {
+                        Label(
+                            "Профиль",
+                            systemImage: "person.crop.circle.fill"
+                        )
+                        .font(
+                            .system(
+                                .subheadline,
+                                design: .rounded
+                            )
+                            .weight(.semibold)
+                        )
+                        .foregroundColor(
+                            Color(
+                                red: 0.12,
+                                green: 0.16,
+                                blue: 0.28
+                            )
+                        )
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(
+                            Color.white.opacity(0.70)
+                        )
+                        .clipShape(Capsule())
+                    }
+                    
+                    Button {
+                        AppSoundPlayer.shared.play(
+                            .openForm
+                        )
+                        
+                        showSettings = true
+                    } label: {
+                        Label(
+                            "Настройки",
+                            systemImage: "gearshape.fill"
+                        )
+                        .font(
+                            .system(
+                                .subheadline,
+                                design: .rounded
+                            )
+                            .weight(.semibold)
+                        )
+                        .foregroundColor(
+                            Color(
+                                red: 0.12,
+                                green: 0.16,
+                                blue: 0.28
+                            )
+                        )
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(
+                            Color.white.opacity(0.70)
+                        )
+                        .clipShape(Capsule())
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, 18)
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity,
+                    alignment: .top
+                )
+                .padding(.horizontal, 20)
+                .safeAreaPadding(.top, 28)
             }
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity,
-                alignment: .top
-            )
-            .padding(.horizontal, 20)
-            .safeAreaPadding(.top, 28)
         }
-    }
-    var timeGreeting: String {
-        let hour = Calendar.current.component(.hour, from: Date())
+        }
         
-        switch hour {
-        case 5..<12:
-            return "Доброе утро"
+        var timeGreeting: String {
+            let hour = Calendar.current.component(.hour, from: Date())
             
-        case 12..<18:
-            return "Добрый день"
-            
-        case 18..<22:
-            return "Добрый вечер"
-            
-        default:
-            return "Доброй ночи"
-        }
-    }
-    private var currentPostcard: SelectedPostcard {
-
-        // 1. День рождения
-        if let birthday = birthdayContent(),
-           let image = birthday.images.first,
-           let phrase = birthday.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-
-        // 2. Праздники
-        //
-        // holidayContent() должен учитывать:
-        // - православные только при showOrthodoxHolidays
-        // - католические только при showCatholicHolidays
-        // - еврейские только при showJewishHolidays
-        // - нейтральные всегда
-
-        if let holiday = holidayContent() {
-
-            let availableCount = min(
-                holiday.images.count,
-                holiday.phrases.count
-            )
-
-            if availableCount > 0 {
-
-                let index = stableDailyIndex(
-                    count: availableCount,
-                    salt: 500
-                )
-
-                return SelectedPostcard(
-                    image: holiday.images[index],
-                    phrase: holiday.phrases[index]
-                )
+            switch hour {
+            case 5..<12:
+                return "Доброе утро"
+                
+            case 12..<18:
+                return "Добрый день"
+                
+            case 18..<22:
+                return "Добрый вечер"
+                
+            default:
+                return "Доброй ночи"
             }
         }
-
-
-        // 3. Ханука
-        //
-        // Если Ханука пока не входит в holidayContent(),
-        // проверяем её здесь, ДО понедельника
-        // и ДО месячных открыток.
-
-        if showJewishHolidays,
-           let hanukkah = hanukkahContent(),
-           let image = hanukkah.images.first,
-           let phrase = hanukkah.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-
-        // 4. Понедельник
-
-        if let monday = mondayCoffeeContent(),
-           let image = monday.images.first,
-           let phrase = monday.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-
-        // 5. Шаббат
-
-        if showJewishHolidays,
-           let shabbat = currentShabbatContent() {
-
-            return SelectedPostcard(
-                image: shabbat.image,
-                phrase: shabbat.phrase
-            )
-        }
-
-
-        // 6. Воскресенье
-
-        if !showJewishHolidays ||
-           showOrthodoxHolidays ||
-           showCatholicHolidays {
-
-            if let sunday = sundayContent(),
-               let image = sunday.images.first,
-               let phrase = sunday.phrases.first {
-
+        var currentPostcard: SelectedPostcard {
+            
+            // 1. День рождения
+            if let birthday = birthdayContent(),
+               let image = birthday.images.first,
+               let phrase = birthday.phrases.first {
+                
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
-        }
-
-
-        // 7. Февраль
-
-        if let february = februaryContent(),
-           let image = february.images.first,
-           let phrase = february.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-        // 8. Март – обычные свободные дни месяца
-        
-        if let marchIndex =
-            ordinaryDayIndex(
-                for: Date(),
-                month: 3
-            ),
-           let march =
-            MarchPostcardProvider.content(
-                index: marchIndex
-            ),
-           let image = march.images.first,
-           let phrase = march.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-        // 8. Декабрь
-
-        if let december = decemberContent(),
-           let image = december.images.first,
-           let phrase = december.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-
-        // Август — обычные дни месяца
-
-        if let augustIndex =
-            augustOrdinaryDayIndex(
-                for: Date()
-            ),
-           let august =
-            AugustPostcardProvider.content(
-                index: augustIndex
-            ),
-           let image = august.images.first,
-           let phrase = august.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-
-        // 10. Сентябрь
-
-        if let september =
-            SeptemberPostcardProvider.content(
-                for: Date()
-            ),
-           let image = september.images.first,
-           let phrase = september.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-        // 11. Октябрь
-
-        if let october =
-            OctoberPostcardProvider.content(
-                for: Date()
-            ),
-           let image = october.images.first,
-           let phrase = october.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-        // 12. Ноябрь
-
-        if let november =
-            NovemberPostcardProvider.content(
-                for: Date()
-            ),
-           let image = november.images.first,
-           let phrase = november.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-        // Январь — обычные дни месяца
-
-        if let januaryIndex =
-            ordinaryDayIndex(
-                for: Date(),
-                month: 1
-            ),
-           let january =
-            JanuaryPostcardProvider.content(
-                index: januaryIndex
-            ),
-           let image = january.images.first,
-           let phrase = january.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-        
-        // 13. Обычная сезонная открытка
-
-        let weekday = currentWeekday()
-
-        let seasonalImageName =
+            
+            
+            // 2. Праздники
+            //
+            // holidayContent() должен учитывать:
+            // - православные только при showOrthodoxHolidays
+            // - католические только при showCatholicHolidays
+            // - еврейские только при showJewishHolidays
+            // - нейтральные всегда
+            
+            if let holiday = holidayContent() {
+                
+                let availableCount = min(
+                    holiday.images.count,
+                    holiday.phrases.count
+                )
+                
+                if availableCount > 0 {
+                    
+                    let index = stableDailyIndex(
+                        count: availableCount,
+                        salt: 500
+                    )
+                    
+                    return SelectedPostcard(
+                        image: holiday.images[index],
+                        phrase: holiday.phrases[index]
+                    )
+                }
+            }
+            
+            
+            // 3. Ханука
+            //
+            // Если Ханука пока не входит в holidayContent(),
+            // проверяем её здесь, ДО понедельника
+            // и ДО месячных открыток.
+            
+            if showJewishHolidays,
+               let hanukkah = hanukkahContent(),
+               let image = hanukkah.images.first,
+               let phrase = hanukkah.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            
+            // 4. Понедельник
+            
+            if let monday = mondayCoffeeContent(),
+               let image = monday.images.first,
+               let phrase = monday.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            
+            // 5. Шаббат
+            
+            if showJewishHolidays,
+               let shabbat = currentShabbatContent() {
+                
+                return SelectedPostcard(
+                    image: shabbat.image,
+                    phrase: shabbat.phrase
+                )
+            }
+            
+            
+            // 6. Воскресенье
+            
+            if !showJewishHolidays ||
+                showOrthodoxHolidays ||
+                showCatholicHolidays {
+                
+                if let sunday = sundayContent(),
+                   let image = sunday.images.first,
+                   let phrase = sunday.phrases.first {
+                    
+                    return SelectedPostcard(
+                        image: image,
+                        phrase: phrase
+                    )
+                }
+            }
+            
+            
+            // 7. Февраль
+            
+            if let february = februaryContent(),
+               let image = february.images.first,
+               let phrase = february.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            // 8. Март – обычные свободные дни месяца
+            
+            if let marchIndex =
+                ordinaryDayIndex(
+                    for: Date(),
+                    month: 3
+                ),
+               let march =
+                MarchPostcardProvider.content(
+                    index: marchIndex
+                ),
+               let image = march.images.first,
+               let phrase = march.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            // 8. Декабрь
+            
+            if let december = decemberContent(),
+               let image = december.images.first,
+               let phrase = december.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            
+            // Август — обычные дни месяца
+            
+            if let augustIndex =
+                augustOrdinaryDayIndex(
+                    for: Date()
+                ),
+               let august =
+                AugustPostcardProvider.content(
+                    index: augustIndex
+                ),
+               let image = august.images.first,
+               let phrase = august.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            
+            // 10. Сентябрь
+            
+            if let september =
+                SeptemberPostcardProvider.content(
+                    for: Date()
+                ),
+               let image = september.images.first,
+               let phrase = september.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            // 11. Октябрь
+            
+            if let october =
+                OctoberPostcardProvider.content(
+                    for: Date()
+                ),
+               let image = october.images.first,
+               let phrase = october.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            // 12. Ноябрь
+            
+            if let november =
+                NovemberPostcardProvider.content(
+                    for: Date()
+                ),
+               let image = november.images.first,
+               let phrase = november.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            // Январь — обычные дни месяца
+            
+            if let januaryIndex =
+                ordinaryDayIndex(
+                    for: Date(),
+                    month: 1
+                ),
+               let january =
+                JanuaryPostcardProvider.content(
+                    index: januaryIndex
+                ),
+               let image = january.images.first,
+               let phrase = january.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            // 13. Обычная сезонная открытка
+            
+            let weekday = currentWeekday()
+            
+            let seasonalImageName =
             "\(currentSeason())_\(weekday)"
-
-        let fallbackImage =
+            
+            let fallbackImage =
             images.contains(
                 seasonalImageName
             )
             ? seasonalImageName
             : "winter_monday"
-
-        let fallbackPhrase: String
-
-        if phrases.isEmpty {
-
-            fallbackPhrase =
+            
+            let fallbackPhrase: String
+            
+            if phrases.isEmpty {
+                
+                fallbackPhrase =
                 "Доброе утро!"
-
-        } else {
-
-            let phraseIndex =
+                
+            } else {
+                
+                let phraseIndex =
                 stableDailyIndex(
                     count: phrases.count,
                     salt: 900
                 )
-
-            fallbackPhrase =
+                
+                fallbackPhrase =
                 phrases[phraseIndex]
-        }
-
-        return SelectedPostcard(
-            image: fallbackImage,
-            phrase: fallbackPhrase
-        )
-    }
-    
-    var smartImage: String {
-        currentPostcard.image
-    }
-    
-    var smartPhrase: String {
-        currentPostcard.phrase
-    }
-    var postcardScreen: some View {
-        PostcardScreen(
-            imageName: smartImage,
-            phrase: smartPhrase,
-            customMessage: $customMessage,
-            onHomeTap: {
-                showPostcard = false
-            },
-            onShareTap: {
-                emergencyContactsForSharing =
-                loadContactsForSharing()
-                
-                guard !emergencyContactsForSharing.isEmpty else {
-                    showContacts = true
-                    return
-                }
-                
-                showContactForWhatsApp = true
             }
-        )
-        .confirmationDialog(
-            "Как отправить открытку?",
-            isPresented: $showContactForWhatsApp,
-            titleVisibility: .visible
-        ) {
-            ForEach(loadContactsForSharing()) { contact in
-                Button(
-                    "iMessage: \(contact.name) \(contact.surname)"
-                ) {
-                    emergencyContactsForSharing = [contact]
-                    showContactForWhatsApp = false
-
-                    DispatchQueue.main.asyncAfter(
-                        deadline: .now() + 0.6
-                    ) {
-                        showMessageComposer = true
-                    }
-                }
-            }
-
-            Button("Выбрать мессенджер") {
-                DispatchQueue.main.asyncAfter(
-                    deadline: .now() + 0.5
-                ) {
-                    preparePostcardForSharing(
-                        imageName: smartImage,
-                        phrase: smartPhrase
-                    )
-                }
-            }
-
-            Button("Отмена", role: .cancel) {
-            }
-        }
-
-        .sheet(isPresented: $showMessageComposer) {
-            let contacts = emergencyContactsForSharing
             
-            let renderer = PostcardRenderer()
-            
-            let finalImage = renderer.render(
-                input: PostcardRenderInput(
-                    imageName: smartImage,
-                    baseText: smartPhrase,
-                    customText: customMessage
-                )
-            )
-            
-            MessageComposerView(
-                recipients: contacts.map {
-                    $0.phoneDigits
-                },
-                message: "",
-                image: finalImage
+            return SelectedPostcard(
+                image: fallbackImage,
+                phrase: fallbackPhrase
             )
         }
-    }
-    var body: some View {
-        NavigationStack {
-            ZStack {
-
-                TimelineView(.everyMinute) { context in
-                    Image(
-                        AppBackground
-                            .current(for: context.date)
-                            .rawValue
-                    )
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                }
-
-                Group {
-                    if showPostcard {
-                        postcardScreen
-                    } else {
-                        welcomeScreen
-                    }
-                }
-                .sheet(isPresented: $showContacts) {
-                    EmergencyContactsView()
-                }
-                .sheet(
-                    isPresented:
-                        $showPostcardCatalog
-                ) {
-
-                    PostcardCatalogView()
-                }
-                .sheet(
-                    isPresented: $showBirthdayGreeting
-                ) {
-                    BirthdayGreetingView(
-                        emergencyContacts:
-                            loadContactsForSharing()
-                    )
-                }
-                .onChange(of: showContacts) { _, isShowing in
-                    if !isShowing {
-                        checkEmergencyContacts()
-                    }
-                }
-                .onAppear {
-                    openProfileIfNeeded()
-                }
-                .sheet(isPresented: $showHolidaySettings) {
-                    HolidaySettingsView()
-                }
-                .sheet(isPresented: $showProfile) {
-                    ProfileView()
-                }
-                .onAppear {
+        
+        var smartImage: String {
+            currentPostcard.image
+        }
+        
+        var smartPhrase: String {
+            currentPostcard.phrase
+        }
+        var postcardScreen: some View {
+            PostcardScreen(
+                imageName: smartImage,
+                phrase: smartPhrase,
+                customMessage: $customMessage,
+                onHomeTap: {
                     showPostcard = false
-                    loadCheckIn()
-                    checkEmergencyContacts()
-                    requestNotificationPermission()
+                },
+                onShareTap: {
+                    emergencyContactsForSharing =
+                    loadContactsForSharing()
+                    
+                    guard !emergencyContactsForSharing.isEmpty else {
+                        showContacts = true
+                        return
+                    }
+                    
+                    showContactForWhatsApp = true
                 }
-                .onReceive(
-                    NotificationCenter.default.publisher(
-                        for: .openEmergencyMessage
+            )
+            .confirmationDialog(
+                "Как отправить открытку?",
+                isPresented: $showContactForWhatsApp,
+                titleVisibility: .visible
+            ) {
+                ForEach(loadContactsForSharing()) { contact in
+                    Button(
+                        "iMessage: \(contact.name) \(contact.surname)"
+                    ) {
+                        emergencyContactsForSharing = [contact]
+                        showContactForWhatsApp = false
+                        
+                        DispatchQueue.main.asyncAfter(
+                            deadline: .now() + 0.6
+                        ) {
+                            showMessageComposer = true
+                        }
+                    }
+                }
+                
+                Button("Выбрать мессенджер") {
+                    DispatchQueue.main.asyncAfter(
+                        deadline: .now() + 0.5
+                    ) {
+                        preparePostcardForSharing(
+                            imageName: smartImage,
+                            phrase: smartPhrase
+                        )
+                    }
+                }
+                
+                Button("Отмена", role: .cancel) {
+                }
+            }
+            
+            .sheet(isPresented: $showMessageComposer) {
+                let contacts = emergencyContactsForSharing
+                
+                let renderer = PostcardRenderer()
+                
+                let finalImage = renderer.render(
+                    input: PostcardRenderInput(
+                        imageName: smartImage,
+                        baseText: smartPhrase,
+                        customText: customMessage
                     )
-                ) { _ in
-                    shouldOpenEmergencyMessage = true
-                    showEmergencyMessageAlert = true
-                }
-                .alert(
-                    "Прошло \(checkInIntervalText)",
-                    isPresented: $showEmergencyMessageAlert
-                ) {
-                    Button("Открыть WhatsApp") {
-                        showEmergencyContactSelection = true
+                )
+                
+                MessageComposerView(
+                    recipients: contacts.map {
+                        $0.phoneDigits
+                    },
+                    message: "",
+                    image: finalImage
+                )
+            }
+        }
+        var body: some View {
+            NavigationStack {
+                ZStack {
+                    
+                    TimelineView(.everyMinute) { context in
+                        Image(
+                            AppBackground
+                                .current(for: context.date)
+                                .rawValue
+                        )
+                        .resizable()
+                        .scaledToFill()
+                        .ignoresSafeArea()
                     }
-
-                    Button("Открыть Сообщения") {
-                        showMessageComposer = true
+                    
+                    Group {
+                        if showPostcard {
+                            postcardScreen
+                        } else {
+                            welcomeScreen
+                        }
                     }
-
-                    Button("Отмена", role: .cancel) {
+                    .sheet(isPresented: $showContacts) {
+                        EmergencyContactsView()
                     }
-                } message: {
-                    Text(
+                    .sheet(
+                        isPresented:
+                            $showPostcardCatalog
+                    ) {
+                        
+                        PostcardCatalogView()
+                    }
+                    .sheet(
+                        isPresented: $showSettings
+                    ) {
+                        SettingsView()
+                    }
+                    .sheet(
+                        isPresented: $showBirthdayGreeting
+                    ) {
+                        BirthdayGreetingView(
+                            emergencyContacts:
+                                loadContactsForSharing()
+                        )
+                    }
+                    .onChange(of: showContacts) { _, isShowing in
+                        if !isShowing {
+                            checkEmergencyContacts()
+                        }
+                    }
+                    .onAppear {
+                        openProfileIfNeeded()
+                    }
+                    .sheet(isPresented: $showHolidaySettings) {
+                        HolidaySettingsView()
+                    }
+                    .sheet(isPresented: $showProfile) {
+                        ProfileView()
+                    }
+                    .onAppear {
+                        showPostcard = false
+                        loadCheckIn()
+                        checkEmergencyContacts()
+                        requestNotificationPermission()
+                    }
+                    .onReceive(
+                        NotificationCenter.default.publisher(
+                            for: .openEmergencyMessage
+                        )
+                    ) { _ in
+                        shouldOpenEmergencyMessage = true
+                        showEmergencyMessageAlert = true
+                    }
+                    .alert(
+                        "Прошло \(checkInIntervalText)",
+                        isPresented: $showEmergencyMessageAlert
+                    ) {
+                        Button("Открыть WhatsApp") {
+                            showEmergencyContactSelection = true
+                        }
+                        
+                        Button("Открыть Сообщения") {
+                            showMessageComposer = true
+                        }
+                        
+                        Button("Отмена", role: .cancel) {
+                        }
+                    } message: {
+                        Text(
                         """
                         Пользователь не подтвердил, что с ним всё хорошо, в течение последних \(checkInIntervalText).
                         """
-                    )
-                }
-                .alert(
-                    trialReminder?.title ?? "",
-                    isPresented: $showTrialReminder
-                ) {
-
-                    Button("Понятно") {
-
-                        if let reminder = trialReminder,
-                           let trialEndDate = trialEndDate {
-
-                            TrialReminderManager.shared
-                                .markAsShown(
-                                    type: reminder,
-                                    trialEndDate: trialEndDate
+                        )
+                    }
+                    .alert(
+                        trialReminder?.title ?? "",
+                        isPresented: $showTrialReminder
+                    ) {
+                        
+                        Button("Понятно") {
+                            
+                            if let reminder = trialReminder,
+                               let trialEndDate = trialEndDate {
+                                
+                                TrialReminderManager.shared
+                                    .markAsShown(
+                                        type: reminder,
+                                        trialEndDate: trialEndDate
+                                    )
+                            }
+                            
+                            trialReminder = nil
+                        }
+                        
+                    } message: {
+                        
+                        Text(
+                            trialReminder?.message ?? ""
+                        )
+                    }
+                    .confirmationDialog(
+                        "Кому открыть сообщение?",
+                        isPresented: $showEmergencyContactSelection
+                    ) {
+                        ForEach(
+                            loadContactsForSharing()
+                        ) { contact in
+                            Button(
+                                "\(contact.name) \(contact.surname)"
+                            ) {
+                                openWhatsApp(
+                                    for: contact,
+                                    message: emergencyAlertText
                                 )
+                            }
                         }
-
-                        trialReminder = nil
-                    }
-
-                } message: {
-
-                    Text(
-                        trialReminder?.message ?? ""
-                    )
-                }
-                .confirmationDialog(
-                    "Кому открыть сообщение?",
-                    isPresented: $showEmergencyContactSelection
-                ) {
-                    ForEach(
-                        loadContactsForSharing()
-                    ) { contact in
-                        Button(
-                            "\(contact.name) \(contact.surname)"
-                        ) {
-                            openWhatsApp(
-                                for: contact,
-                                message: emergencyAlertText
-                            )
+                        
+                        Button("Отмена", role: .cancel) {
                         }
-                    }
-
-                    Button("Отмена", role: .cancel) {
                     }
                 }
             }
         }
-    }
-    private func augustOrdinaryDayIndex(
-        for date: Date
-    ) -> Int? {
-
-        let calendar = Calendar.current
-
-        guard calendar.component(
-            .month,
-            from: date
-        ) == 8 else {
-            return nil
-        }
-
-        let year = calendar.component(
-            .year,
-            from: date
-        )
-
-        guard let augustStart =
-            calendar.date(
-                from: DateComponents(
-                    year: year,
-                    month: 8,
-                    day: 1
-                )
+        func augustOrdinaryDayIndex(
+            for date: Date
+        ) -> Int? {
+            
+            let calendar = Calendar.current
+            
+            guard calendar.component(
+                .month,
+                from: date
+            ) == 8 else {
+                return nil
+            }
+            
+            let year = calendar.component(
+                .year,
+                from: date
             )
-        else {
-            return nil
-        }
-
-        let today =
+            
+            guard let augustStart =
+                    calendar.date(
+                        from: DateComponents(
+                            year: year,
+                            month: 8,
+                            day: 1
+                        )
+                    )
+            else {
+                return nil
+            }
+            
+            let today =
             calendar.startOfDay(for: date)
-
-        var current =
+            
+            var current =
             calendar.startOfDay(
                 for: augustStart
             )
-
-        var ordinaryIndex = 0
-
-        while current <= today {
-
-            if !isPriorityPostcardDay(
-                current
-            ) {
-
-                if calendar.isDate(
-                    current,
-                    inSameDayAs: today
+            
+            var ordinaryIndex = 0
+            
+            while current <= today {
+                
+                if !isPriorityPostcardDay(
+                    current
                 ) {
-                    return ordinaryIndex
+                    
+                    if calendar.isDate(
+                        current,
+                        inSameDayAs: today
+                    ) {
+                        return ordinaryIndex
+                    }
+                    
+                    ordinaryIndex += 1
                 }
-
-                ordinaryIndex += 1
+                
+                guard let nextDay =
+                        calendar.date(
+                            byAdding: .day,
+                            value: 1,
+                            to: current
+                        )
+                else {
+                    break
+                }
+                
+                current = nextDay
             }
-
-            guard let nextDay =
-                calendar.date(
-                    byAdding: .day,
-                    value: 1,
-                    to: current
-                )
-            else {
-                break
+            
+            return nil
+        }
+        
+        func isPriorityPostcardDay(
+            _ date: Date
+        ) -> Bool {
+            
+            let calendar = Calendar.current
+            
+            // Праздник
+            if holidayContent(
+                for: date
+            ) != nil {
+                return true
             }
-
-            current = nextDay
-        }
-
-        return nil
-    }
-    
-    private func isPriorityPostcardDay(
-        _ date: Date
-    ) -> Bool {
-
-        let calendar = Calendar.current
-
-        // Праздник
-        if holidayContent(
-            for: date
-        ) != nil {
-            return true
-        }
-
-        let weekday =
+            
+            let weekday =
             calendar.component(
                 .weekday,
                 from: date
             )
-
-        // Понедельник
-        if weekday == 2 {
-            return true
+            
+            // Понедельник
+            if weekday == 2 {
+                return true
+            }
+            
+            // Суббота / Шаббат
+            if showJewishHolidays,
+               weekday == 7 {
+                return true
+            }
+            // Воскресенье
+            if (
+                !showJewishHolidays ||
+                showOrthodoxHolidays ||
+                showCatholicHolidays
+            ),
+               weekday == 1 {
+                
+                return true
+            }
+            
+            return false
         }
-
-        // Суббота / Шаббат
-        if showJewishHolidays,
-           weekday == 7 {
-            return true
-        }
-        // Воскресенье
-        if (
-            !showJewishHolidays ||
-            showOrthodoxHolidays ||
-            showCatholicHolidays
-        ),
-           weekday == 1 {
-
-            return true
-        }
-
-        return false
-    }
-    private func openProfileIfNeeded() {
-        guard !hasCheckedProfileOnLaunch else {
-            return
-        }
-
-        hasCheckedProfileOnLaunch = true
-
-        let trimmedName = displayName.trimmingCharacters(
-            in: CharacterSet.whitespacesAndNewlines
-        )
-
-        if trimmedName.isEmpty {
-            showProfile = true
-        }
-    }
-    
-    @MainActor
-    private func preparePostcardForSharing(
-        imageName: String,
-        phrase: String
-    ) {
-        let renderer = PostcardRenderer()
-
-        guard let finalImage = renderer.render(
-            input: PostcardRenderInput(
-                imageName: imageName,
-                baseText: phrase,
-                customText: customMessage
+        func openProfileIfNeeded() {
+            guard !hasCheckedProfileOnLaunch else {
+                return
+            }
+            
+            hasCheckedProfileOnLaunch = true
+            
+            let trimmedName = displayName.trimmingCharacters(
+                in: CharacterSet.whitespacesAndNewlines
             )
-        ) else {
-            print(
-                "Не удалось создать открытку: \(imageName)"
+            
+            if trimmedName.isEmpty {
+                showProfile = true
+            }
+        }
+        
+        @MainActor
+        func preparePostcardForSharing(
+            imageName: String,
+            phrase: String
+        ) {
+            let renderer = PostcardRenderer()
+            
+            guard let finalImage = renderer.render(
+                input: PostcardRenderInput(
+                    imageName: imageName,
+                    baseText: phrase,
+                    customText: customMessage
+                )
+            ) else {
+                print(
+                    "Не удалось создать открытку: \(imageName)"
+                )
+                return
+            }
+            
+            presentActivityViewController(
+                items: [
+                    finalImage
+                ]
             )
-            return
         }
-
-        presentActivityViewController(
-            items: [
-                finalImage
-            ]
-        )
-    }
-    @MainActor
-    private func presentActivityViewController(
-        items: [Any]
-    ) {
-        guard !items.isEmpty else {
-            return
-        }
-
-        guard let windowScene =
-            UIApplication.shared.connectedScenes
+        @MainActor
+        func presentActivityViewController(
+            items: [Any]
+        ) {
+            guard !items.isEmpty else {
+                return
+            }
+            
+            guard let windowScene =
+                    UIApplication.shared.connectedScenes
                 .compactMap({
                     $0 as? UIWindowScene
                 })
-                .first(where: {
-                    $0.activationState == .foregroundActive
-                })
-        else {
-            print("Не удалось найти активную сцену")
-            return
-        }
-
-        guard let window =
-            windowScene.windows.first(where: {
-                $0.isKeyWindow
-            })
-        else {
-            print("Не удалось найти активное окно")
-            return
-        }
-
-        guard let presenter =
-            topViewController(
-                from: window.rootViewController
-            )
-        else {
-            print("Не удалось найти контроллер")
-            return
-        }
-
-        let activityController =
+                    .first(where: {
+                        $0.activationState == .foregroundActive
+                    })
+            else {
+                print("Не удалось найти активную сцену")
+                return
+            }
+            
+            guard let window =
+                    windowScene.windows.first(where: {
+                        $0.isKeyWindow
+                    })
+            else {
+                print("Не удалось найти активное окно")
+                return
+            }
+            
+            guard let presenter =
+                    topViewController(
+                        from: window.rootViewController
+                    )
+            else {
+                print("Не удалось найти контроллер")
+                return
+            }
+            
+            let activityController =
             UIActivityViewController(
                 activityItems: items,
                 applicationActivities: nil
             )
-
-        if let popover =
-            activityController.popoverPresentationController {
-            popover.sourceView = presenter.view
-            popover.sourceRect = CGRect(
-                x: presenter.view.bounds.midX,
-                y: presenter.view.bounds.midY,
-                width: 1,
-                height: 1
-            )
-            popover.permittedArrowDirections = []
-        }
-
-        presenter.present(
-            activityController,
-            animated: true
-        )
-    }
-    private func topViewController(
-        from controller: UIViewController?
-    ) -> UIViewController? {
-        if let presented =
-            controller?.presentedViewController {
-            return topViewController(
-                from: presented
-            )
-        }
-
-        if let navigation =
-            controller as? UINavigationController {
-            return topViewController(
-                from: navigation.visibleViewController
-            )
-        }
-
-        if let tabBar =
-            controller as? UITabBarController {
-            return topViewController(
-                from: tabBar.selectedViewController
-            )
-        }
-
-        return controller
-    }
-    private func ordinaryDayIndex(
-        for date: Date,
-        month targetMonth: Int
-    ) -> Int? {
-
-        let calendar = Calendar.current
-
-        guard calendar.component(
-            .month,
-            from: date
-        ) == targetMonth else {
-            return nil
-        }
-
-        let year = calendar.component(
-            .year,
-            from: date
-        )
-
-        guard let monthStart =
-            calendar.date(
-                from: DateComponents(
-                    year: year,
-                    month: targetMonth,
-                    day: 1
+            
+            if let popover =
+                activityController.popoverPresentationController {
+                popover.sourceView = presenter.view
+                popover.sourceRect = CGRect(
+                    x: presenter.view.bounds.midX,
+                    y: presenter.view.bounds.midY,
+                    width: 1,
+                    height: 1
                 )
+                popover.permittedArrowDirections = []
+            }
+            
+            presenter.present(
+                activityController,
+                animated: true
             )
-        else {
-            return nil
         }
-
-        let today =
+        func topViewController(
+            from controller: UIViewController?
+        ) -> UIViewController? {
+            if let presented =
+                controller?.presentedViewController {
+                return topViewController(
+                    from: presented
+                )
+            }
+            
+            if let navigation =
+                controller as? UINavigationController {
+                return topViewController(
+                    from: navigation.visibleViewController
+                )
+            }
+            
+            if let tabBar =
+                controller as? UITabBarController {
+                return topViewController(
+                    from: tabBar.selectedViewController
+                )
+            }
+            
+            return controller
+        }
+        func ordinaryDayIndex(
+            for date: Date,
+            month targetMonth: Int
+        ) -> Int? {
+            
+            let calendar = Calendar.current
+            
+            guard calendar.component(
+                .month,
+                from: date
+            ) == targetMonth else {
+                return nil
+            }
+            
+            let year = calendar.component(
+                .year,
+                from: date
+            )
+            
+            guard let monthStart =
+                    calendar.date(
+                        from: DateComponents(
+                            year: year,
+                            month: targetMonth,
+                            day: 1
+                        )
+                    )
+            else {
+                return nil
+            }
+            
+            let today =
             calendar.startOfDay(
                 for: date
             )
-
-        var current =
+            
+            var current =
             calendar.startOfDay(
                 for: monthStart
             )
-
-        var ordinaryIndex = 0
-
-        while current <= today {
-
-            if !isPriorityPostcardDay(
-                current
-            ) {
-
-                if calendar.isDate(
-                    current,
-                    inSameDayAs: today
+            
+            var ordinaryIndex = 0
+            
+            while current <= today {
+                
+                if !isPriorityPostcardDay(
+                    current
                 ) {
-                    return ordinaryIndex
+                    
+                    if calendar.isDate(
+                        current,
+                        inSameDayAs: today
+                    ) {
+                        return ordinaryIndex
+                    }
+                    
+                    ordinaryIndex += 1
                 }
-
-                ordinaryIndex += 1
+                
+                guard let nextDay =
+                        calendar.date(
+                            byAdding: .day,
+                            value: 1,
+                            to: current
+                        )
+                else {
+                    break
+                }
+                
+                current = nextDay
             }
-
-            guard let nextDay =
-                calendar.date(
-                    byAdding: .day,
-                    value: 1,
-                    to: current
-                )
+            
+            return nil
+        }
+        func checkTrialReminder() {
+            
+            guard isTrialActive,
+                  let trialEndDate = trialEndDate
             else {
-                break
+                return
             }
-
-            current = nextDay
-        }
-
-        return nil
-    }
-    private func checkTrialReminder() {
-
-        guard isTrialActive,
-              let trialEndDate = trialEndDate
-        else {
-            return
-        }
-
-        guard let reminder =
-            TrialReminderManager.shared
+            
+            guard let reminder =
+                    TrialReminderManager.shared
                 .reminderToShow(
                     trialEndDate: trialEndDate
                 )
-        else {
-            return
+            else {
+                return
+            }
+            
+            trialReminder = reminder
+            showTrialReminder = true
         }
-
-        trialReminder = reminder
-        showTrialReminder = true
     }
-}

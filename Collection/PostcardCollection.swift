@@ -49,7 +49,7 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
             return "Коты"
 
         case .autumn:
-            return "Осень"
+            return "Сезоны"
 
         case .harvest:
             return "Урожай"
@@ -128,71 +128,140 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
     var assetNames: [String] {
 
         switch self {
-
+            
         case .foodTable:
             return (1...48).map {
                 "Sunday_\($0)"
             }
-
-
+            
+            
         case .coffee:
-
+            
             return
-                    (1...25).map {
-                        "MondayWarm_\($0)"
-                    }
-                    +
-                    (1...24).map {
-                        "MondayCold_\($0)"
-                    }
-
-
+            (1...25).map {
+                "MondayWarm_\($0)"
+            }
+            +
+            (1...24).map {
+                "MondayCold_\($0)"
+            }
+            +
+            ["autumn_wednesday"]
+            +
+            ["winter_saturday"]
+            +
+            ["winter_tuesday"]
+            
         case .cats:
-
+            
             return (1...21).map {
                 "November_cat\($0)"}
             +
             ["holiday_cat"]
-
+            +
+            ["autumn_thursday"]
+            +
+            ["autumn_tuesday"]
+            +
+            ["spring_tuesday"]
+                        
         case .autumn:
 
-            return (1...18).map {
+            var autumnCards: [String] = (1...18).map {
                 "September_\($0)"
             }
-+
-            ["holiday_autumnal_equinox"]
-            
-        case .harvest:
 
+            autumnCards.append(
+                "holiday_autumnal_equinox"
+            )
+
+            autumnCards.append(
+                "holiday_labor_day"
+            )
+
+            autumnCards.append(
+                "Holiday_Perceids_1"
+            )
+            
+            autumnCards.append(
+                "Holiday_Perceids_2"
+            )
+            autumnCards.append(
+                "Holiday_Perceids_3"
+            )
+            autumnCards.append(
+                "holiday_spring_beginning"
+            )
+            autumnCards.append(
+                "holiday_vernal_equinox"
+            )
+            autumnCards.append(
+                "spring_friday"
+            )
+            autumnCards.append(
+                "winter_friday"
+            )
+            autumnCards.append(
+                "holiday_elderly_day"
+            )
+            return autumnCards
+
+        case .harvest:
+            
             return (1...20).map {
                 "October_\($0)"
             }
-
-
+            
+            
         case .vacation:
-
+            
             return (1...19).map {
                 "August_\($0)"
             }
-
-
+            
+            
         case .fairyAnimals:
-
+            
             return (1...26).map {
                 "December_\($0)"
             }
-
+            +
+            ["holiday_children"]
+            +
+            ["holiday_cosmonautics"]
+            +
+            ["holiday_Potter"]
+            +
+            ["Holiday_teddybear"]
+            
         case .flowers:
-
+            
             return (1...18).map {
                 "March_\($0)"
             }
+            +
+            ["holiday_school_year"]
+            +
+            ["holiday_womens_day"]
+            +
+            ["summer_friday"]
+            +
+            ["summer_saturday"]
+            +
+            ["summer_thursday"]
+            
             
         case .sweetTable:
-
+            
             return (1...18).map {
                 "February_\($0)"
             }
+            +
+            ["holiday_friendship"]
+            +
+            ["Holiday_PancakeDay"]
+            +
+            ["holiday_valentine"]
             
         case .catholic_church:
             
@@ -214,11 +283,21 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
                 "Catholic_Holy_Saturday",
                 "Catholic_Holy_Thursday",
                 "Catholic_Holy_Tuesday",
-                "Catholic_Holy_Wednesday"
+                "Catholic_Holy_Wednesday",
+                "holiday_ Ascension",
+                "holiday_AllSaints",
+                "holiday_annunciation",
+                "holiday_Conception",
+                "holiday_epithany",
+                "Holiday_LaSaint_Jean",
+                "holiday_Passover",
+                "holiday_thanksgiving",
+                "Holiday_Tranfiguration",
+                "holiday_trinity"
             ]
             
         case .orthodox_church:
-
+            
             return [
                 "Orthodox_BeginningDormitionFast",
                 "Orthodox_BeginningNativityFast",
@@ -238,7 +317,15 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
                 "Orthodox_LazarusSaturday",
                 "Orthodox_MondayafterAllSaints",
                 "Orthodox_Pentecost",
-                "Holiday_Apple"
+                "Holiday_Apple",
+                "holiday_baptism",
+                "holiday_dormition",
+                "holiday_easter",
+                "holiday_epiphany",
+                "Holiday_ForgivenSunday",
+                "holiday_meeting",
+                "holiday_orthodox_christmas",
+                "holiday_palm_sunday"
             ]
 
 
@@ -263,7 +350,24 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
                 "hanuka_lights_5",
                 "hanuka_lights_6",
                 "hanuka_lights_7",
-                "hanuka_lights_8"
+                "hanuka_lights_8",
+                "holiday_lagbaomer",
+                "holiday_purim",
+                "holiday_rosh",
+                "holiday_Simha_Tora",
+                "holiday_TishaBAv",
+                "holiday_yom_kippor",
+                "Judaism_FastEsther",
+                "Judaism_FastGedaliah",
+                "Judaism_SeventeenthTammuz",
+                "Judaism_TenthTevet",
+                "Sukkot_1",
+                "Sukkot_2",
+                "Sukkot_3",
+                "Sukkot_4",
+                "Sukkot_5",
+                "Sukkot_6",
+                "Sukkot_7"
             ]
 
         case .dogs:
@@ -272,6 +376,12 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
                 "January_\($0)"}
                 +
                 ["holiday_dog"]
+            +
+            ["spring_saturday"]
+            +
+            ["spring_thursday"]
+            +
+            ["spring_wednesday"]
         }
     }
 }

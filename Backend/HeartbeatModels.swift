@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Пол пользователя для бэкенда
+// MARK: - Пол пользователя для backend
 
 enum BackendGender: String, Codable {
     case male
@@ -27,11 +27,14 @@ struct HeartbeatRequest: Encodable {
 }
 
 
-// MARK: - Пользователь
+// MARK: - Профиль пользователя
 
 struct HeartbeatUser: Encodable {
     let name: String?
     let gender: BackendGender?
+    let salutation: String?
+    let birthDay: Int?
+    let birthMonth: Int?
 }
 
 
@@ -42,37 +45,22 @@ struct HeartbeatLastCheckIn: Encodable {
     let timezone: String?
 }
 
-// MARK: - Версия приложения
-
-extension Bundle {
-
-    var appVersion: String {
-        object(
-            forInfoDictionaryKey: "CFBundleShortVersionString"
-        ) as? String ?? "unknown"
-    }
-
-    var buildNumber: String {
-        object(
-            forInfoDictionaryKey: "CFBundleVersion"
-        ) as? String ?? "unknown"
-    }
-}
 
 // MARK: - Тревожный контакт
 
 struct HeartbeatEmergencyContact: Encodable {
+    let id: UUID
     let firstName: String
     let lastName: String?
     let phone: String?
     let email: String
+    let salutation: String
+    let status: EmergencyContactStatus
 }
 
 extension HeartbeatEmergencyContact {
 
-    init?(
-        from contact: EmergencyContact
-    ) {
+    init(from contact: EmergencyContact) {
         let firstName = contact.name
             .trimmingCharacters(
                 in: .whitespacesAndNewlines
@@ -93,17 +81,13 @@ extension HeartbeatEmergencyContact {
                 in: .whitespacesAndNewlines
             )
 
-        // Backend требует непустое имя.
-        guard !firstName.isEmpty else {
-            return nil
-        }
-
-        // Backend требует корректно заполненный email.
-        guard !email.isEmpty else {
-            return nil
-        }
+        let salutation = contact.salutation
+            .trimmingCharacters(
+                in: .whitespacesAndNewlines
+            )
 
         self.init(
+            id: contact.id,
             firstName: firstName,
             lastName: lastName.isEmpty
                 ? nil
@@ -111,8 +95,29 @@ extension HeartbeatEmergencyContact {
             phone: phone.isEmpty
                 ? nil
                 : phone,
-            email: email
+            email: email,
+            salutation: salutation,
+            status: contact.status
         )
+    }
+}
+
+// MARK: - Версия приложения
+
+extension Bundle {
+
+    var appVersion: String {
+        object(
+            forInfoDictionaryKey:
+                "CFBundleShortVersionString"
+        ) as? String ?? "unknown"
+    }
+
+    var buildNumber: String {
+        object(
+            forInfoDictionaryKey:
+                "CFBundleVersion"
+        ) as? String ?? "unknown"
     }
 }
 enum HeartbeatContactValidationError:

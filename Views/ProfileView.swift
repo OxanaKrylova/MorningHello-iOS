@@ -716,7 +716,58 @@ struct ProfileView: View {
     }
         
     // MARK: - Подписка
+    private var subscriptionProfileText: String {
+        let snapshot =
+            subscriptionManager.snapshot
 
+        let planName: String
+
+        switch snapshot.productId {
+        case "com.morninghello.subscription.monthly":
+            planName = "Ежемесячная"
+
+        case "com.morninghello.subscription.quarterly":
+            planName = "На 3 месяца"
+
+        case "com.morninghello.subscription.annual":
+            planName = "Годовая"
+
+        default:
+            planName = "Подписка не оформлена"
+        }
+
+        let statusName: String
+
+        switch snapshot.status {
+        case .none:
+            statusName = "Не активна"
+
+        case .trial:
+            statusName = "Бесплатный период"
+
+        case .active:
+            statusName = "Активна"
+
+        case .gracePeriod:
+            statusName = "Льготный период"
+
+        case .billingRetry:
+            statusName = "Ошибка оплаты"
+
+        case .expired:
+            statusName = "Истекла"
+
+        case .revoked:
+            statusName = "Отменена"
+        }
+
+        if snapshot.productId == nil {
+            return statusName
+        }
+
+        return "\(planName) · \(statusName)"
+    }
+    
     private var subscriptionSection: some View {
 
         Button {
@@ -741,7 +792,7 @@ struct ProfileView: View {
                             )
                         )
 
-                    Text("Годовая · Активна")
+                    Text(subscriptionProfileText)
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }

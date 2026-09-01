@@ -107,6 +107,11 @@ struct PostcardScreen: View {
                     HStack(spacing: 32) {
                         Button {
                             isCustomMessageFocused = false
+
+                            AppSoundPlayer.shared.play(
+                                .checkInSuccess
+                            )
+
                             onHomeTap()
                         } label: {
                             Image(systemName: "house.fill")

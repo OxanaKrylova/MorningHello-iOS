@@ -14,18 +14,77 @@ struct SubscriptionView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    // MARK: - Временные тестовые данные
+    // MARK: - Подписка
     
-    private let planName = "Годовая"
-    private let statusText = "Активна"
-    private let autoRenewText = "Включено"
+    @StateObject
+    private var subscriptionManager =
+    SubscriptionManager.shared
     
-    private var nextRenewalDate: Date {
-        Calendar.current.date(
-            byAdding: .year,
-            value: 1,
-            to: Date()
-        ) ?? Date()
+    @State private var isRestoring = false
+    @State private var subscriptionMessage: String?
+    
+    private var snapshot: SubscriptionSnapshot {
+        subscriptionManager.snapshot
+    }
+    
+    private var planName: String {
+        switch snapshot.productId {
+        case "com.morninghello.subscription.monthly":
+            return "Ежемесячная"
+            
+        case "com.morninghello.subscription.quarterly":
+            return "На 3 месяца"
+            
+        case "com.morninghello.subscription.annual":
+            return "Годовая"
+            
+        default:
+            return "Нет активной подписки"
+        }
+    }
+    
+    private var statusText: String {
+        switch snapshot.status {
+        case .none:
+            return "Не оформлена"
+            
+        case .trial:
+            return "Бесплатный период"
+            
+        case .active:
+            return "Активна"
+            
+        case .gracePeriod:
+            return "Льготный период"
+            
+        case .billingRetry:
+            return "Ошибка оплаты"
+            
+        case .expired:
+            return "Истекла"
+            
+        case .revoked:
+            return "Отменена"
+        }
+    }
+    
+    private var autoRenewText: String {
+        snapshot.autoRenewEnabled
+        ? "Включено"
+        : "Отключено"
+    }
+    
+    private var statusColor: Color {
+        switch snapshot.status {
+        case .trial, .active, .gracePeriod:
+            return .green
+            
+        case .billingRetry:
+            return .orange
+            
+        case .none, .expired, .revoked:
+            return .gray
+        }
     }
     
     
@@ -61,24 +120,24 @@ struct SubscriptionView: View {
     // MARK: - Body
     
     var body: some View {
-
+        
         NavigationStack {
-
+            
             ZStack {
-
+                
                 subscriptionBackground
-
+                
                 ScrollView {
-
+                    
                     VStack(
                         alignment: .leading,
                         spacing: 20
                     ) {
-
+                        
                         currentSubscriptionCard
-
+                        
                         actionsSection
-
+                        
                         legalSection
                     }
                     .padding(.horizontal, 20)
@@ -89,15 +148,15 @@ struct SubscriptionView: View {
             .navigationTitle("Подписка")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-
+                
                 ToolbarItem(
                     placement: .topBarTrailing
                 ) {
-
+                    
                     Button {
                         dismiss()
                     } label: {
-
+                        
                         Image(
                             systemName: "xmark"
                         )
@@ -108,24 +167,46 @@ struct SubscriptionView: View {
         .manageSubscriptionsSheet(
             isPresented: $showManageSubscriptions
         )
+        .task {
+            await subscriptionManager
+                .refreshSubscriptionStatus()
+        }
+        .alert(
+            "Подписка",
+            isPresented: Binding(
+                get: {
+                    subscriptionMessage != nil
+                },
+                set: { isPresented in
+                    if !isPresented {
+                        subscriptionMessage = nil
+                    }
+                }
+            )
+        ) {
+            Button(
+                "Понятно",
+                role: .cancel
+            ) {
+                subscriptionMessage = nil
+            }
+        } message: {
+            Text(subscriptionMessage ?? "")
+        }
     }
     
     // MARK: - Текущая подписка
     
     private var currentSubscriptionCard: some View {
-        
         VStack(
             alignment: .leading,
             spacing: 16
         ) {
-            
             HStack {
-                
                 VStack(
                     alignment: .leading,
                     spacing: 5
                 ) {
-                    
                     Text("Текущая подписка")
                         .font(
                             .system(
@@ -154,43 +235,53 @@ struct SubscriptionView: View {
                         )
                         .weight(.semibold)
                     )
-                    .padding(
-                        .horizontal,
-                        12
-                    )
-                    .padding(
-                        .vertical,
-                        7
-                    )
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 7)
                     .background(
-                        Color.green.opacity(0.15)
+                        statusColor.opacity(0.15)
                     )
-                    .foregroundColor(.green)
+                    .foregroundColor(statusColor)
                     .clipShape(Capsule())
             }
             
             Divider()
             
-            HStack {
+            if let expirationDate =
+                snapshot.expiresAt {
                 
-                Text("Действует до")
+                HStack {
+                    Text(
+                        snapshot.autoRenewEnabled
+                        ? "Следующее продление"
+                        : "Действует до"
+                    )
                     .foregroundColor(.secondary)
-                
-                Spacer()
-                
-                Text(
-                    nextRenewalDate,
-                    format:
-                            .dateTime
-                        .day()
-                        .month(.wide)
-                        .year()
-                )
-                .fontWeight(.semibold)
+                    
+                    Spacer()
+                    
+                    Text(
+                        expirationDate,
+                        format:
+                                .dateTime
+                            .day()
+                            .month(.wide)
+                            .year()
+                    )
+                    .fontWeight(.semibold)
+                }
+            } else {
+                HStack {
+                    Text("Срок действия")
+                        .foregroundColor(.secondary)
+                    
+                    Spacer()
+                    
+                    Text("Нет данных")
+                        .fontWeight(.semibold)
+                }
             }
             
             HStack {
-                
                 Text("Автопродление")
                     .foregroundColor(.secondary)
                 
@@ -200,25 +291,44 @@ struct SubscriptionView: View {
                     .fontWeight(.semibold)
             }
         }
-        .subscriptionCard()
+        .padding(18)
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+        .background(
+            .white.opacity(0.72)
+        )
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: 28,
+                style: .continuous
+            )
+        )
+        .shadow(
+            color: .brown.opacity(0.06),
+            radius: 8,
+            x: 0,
+            y: 4
+        )
     }
     
     // MARK: - Действия
-
+    
     private var actionsSection: some View {
-
+        
         VStack(spacing: 12) {
-
+            
             // Управлять подпиской
             Button {
                 showManageSubscriptions = true
             } label: {
-
+                
                 HStack(spacing: 14) {
-
+                    
                     Image(systemName: "gearshape")
                         .font(.title3)
-
+                    
                     Text("Управлять подпиской")
                         .font(
                             .system(
@@ -226,9 +336,9 @@ struct SubscriptionView: View {
                                 design: .rounded
                             )
                         )
-
+                    
                     Spacer()
-
+                    
                     Image(systemName: "chevron.right")
                         .font(
                             .system(
@@ -247,26 +357,32 @@ struct SubscriptionView: View {
             .buttonStyle(
                 SubscriptionActionButtonStyle()
             )
-
-
+            
+            
             // Восстановить покупки
             Button {
-                restorePurchases()
+                Task {
+                    await restorePurchases()
+                }
             } label: {
-
+                
                 HStack(spacing: 14) {
-
+                    
                     Image(systemName: "arrow.clockwise")
                         .font(.title3)
-
-                    Text("Восстановить покупки")
-                        .font(
-                            .system(
-                                .headline,
-                                design: .rounded
-                            )
+                    
+                    Text(
+                        isRestoring
+                        ? "Восстанавливаем…"
+                        : "Восстановить покупки"
+                    )
+                    .font(
+                        .system(
+                            .headline,
+                            design: .rounded
                         )
-
+                    )
+                    
                     Spacer()
                 }
                 .frame(
@@ -278,19 +394,19 @@ struct SubscriptionView: View {
             .buttonStyle(
                 SubscriptionActionButtonStyle()
             )
-
-
+            .disabled(isRestoring)
+            
             // Отмена подписки
             Button {
                 showManageSubscriptions = true
             } label: {
-
+                
                 HStack(spacing: 14) {
-
+                    
                     Image(systemName: "xmark.circle.fill")
                         .font(.title3)
                         .foregroundColor(.gray)
-
+                    
                     Text("Отмена подписки")
                         .font(
                             .system(
@@ -299,9 +415,9 @@ struct SubscriptionView: View {
                             )
                         )
                         .foregroundColor(.gray)
-
+                    
                     Spacer()
-
+                    
                     Image(systemName: "chevron.right")
                         .font(
                             .system(
@@ -344,20 +460,42 @@ struct SubscriptionView: View {
         .foregroundColor(.secondary)
         .padding(.horizontal, 4)
     }
-    // MARK: - Временное восстановление покупок
+    // MARK: - восстановление покупок
     
-    private func restorePurchases() {
+    @MainActor
+    private func restorePurchases() async {
+        guard !isRestoring else {
+            return
+        }
         
-#if DEBUG
-        print("🔄 Restore purchases tapped")
-#endif
+        isRestoring = true
+        
+        defer {
+            isRestoring = false
+        }
+        
+        do {
+            try await AppStore.sync()
+            
+            await subscriptionManager
+                .refreshAndSync()
+            
+            if subscriptionManager
+                .hasActiveSubscription {
+                
+                subscriptionMessage =
+                "Покупки восстановлены. Подписка активна."
+            } else {
+                subscriptionMessage =
+                "Активная подписка для этого Apple ID не найдена."
+            }
+        } catch {
+            subscriptionMessage =
+            "Не удалось восстановить покупки: \(error.localizedDescription)"
+        }
     }
-}
-
     // MARK: - Card Style
-    
-    private extension View {
-        
+            
         func subscriptionCard() -> some View {
             
             self
