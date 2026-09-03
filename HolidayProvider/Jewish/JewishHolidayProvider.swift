@@ -189,8 +189,33 @@ struct JewishHolidayProvider {
             )
         }
 
+        // MARK: - День Алии
+        // 7 хешвана:
+        // 7 ноября 2027 года
+        // 27 октября 2028 года
+        // 16 октября 2029 года
+
+        if
+            (year == 2027 && month == 11 && day == 7) ||
+            (year == 2028 && month == 10 && day == 27) ||
+            (year == 2029 && month == 10 && day == 16) {
+
+            return HolidayContent(
+                images: [
+                    "holiday_Aliyah"
+                ],
+                phrases: [
+                    "С Днём Алии! Пусть Израиль станет тёплым домом, где встречаются надежда, поддержка и новые возможности."
+                ],
+                category: "Еврейский"
+            )
+        }
+
         return nil
     }
+
+    // MARK: - Еврейские посты
+  
     // MARK: - Еврейские посты
 
     static func fastContent(

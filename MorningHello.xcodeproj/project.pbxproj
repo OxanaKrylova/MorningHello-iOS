@@ -16,6 +16,7 @@
 		2976EF0E3027D60C00C0E8B1 /* TermsOfUseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976EF0D3027D60C00C0E8B1 /* TermsOfUseView.swift */; };
 		2976EF113027D66000C0E8B1 /* TermsOfUseText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */; };
 		2976EF133027D69B00C0E8B1 /* AppEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976EF123027D69B00C0E8B1 /* AppEntryView.swift */; };
+		2992CC2D304A2C29003301E9 /* AprilPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992CC2C304A2C29003301E9 /* AprilPostcardProvider.swift */; };
 		29AFFF9B3037B456007FE955 /* SubscriptionSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFFF9A3037B456007FE955 /* SubscriptionSnapshot.swift */; };
 		29AFFF9D3037B4BC007FE955 /* SubscriptionLifecycleAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFFF9C3037B4BC007FE955 /* SubscriptionLifecycleAPIClient.swift */; };
 		29AFFFA03037B6F9007FE955 /* JanuaryPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFFF9F3037B6F9007FE955 /* JanuaryPostcardProvider.swift */; };
@@ -73,6 +74,7 @@
 		2976EF0D3027D60C00C0E8B1 /* TermsOfUseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseView.swift; sourceTree = "<group>"; };
 		2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseText.swift; sourceTree = "<group>"; };
 		2976EF123027D69B00C0E8B1 /* AppEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntryView.swift; sourceTree = "<group>"; };
+		2992CC2C304A2C29003301E9 /* AprilPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AprilPostcardProvider.swift; sourceTree = "<group>"; };
 		29AFFF9A3037B456007FE955 /* SubscriptionSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionSnapshot.swift; sourceTree = "<group>"; };
 		29AFFF9C3037B4BC007FE955 /* SubscriptionLifecycleAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionLifecycleAPIClient.swift; sourceTree = "<group>"; };
 		29AFFF9F3037B6F9007FE955 /* JanuaryPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JanuaryPostcardProvider.swift; sourceTree = "<group>"; };
@@ -178,6 +180,14 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		2992CC2B304A2C15003301E9 /* April */ = {
+			isa = PBXGroup;
+			children = (
+				2992CC2C304A2C29003301E9 /* AprilPostcardProvider.swift */,
+			);
+			path = April;
+			sourceTree = "<group>";
+		};
 		29AFFF9E3037B6E7007FE955 /* January */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +236,7 @@
 		29B76C44301AAB9900D1D295 /* HolidayProvider */ = {
 			isa = PBXGroup;
 			children = (
+				2992CC2B304A2C15003301E9 /* April */,
 				29FAEAF03040DE3B003CFA12 /* March */,
 				29AFFF9E3037B6E7007FE955 /* January */,
 				29BCCD29303053280027557C /* November */,
@@ -504,6 +515,7 @@
 				29BCCD2B3030533A0027557C /* NovemberPostcardProvider.swift in Sources */,
 				2976EF133027D69B00C0E8B1 /* AppEntryView.swift in Sources */,
 				29B76C72301BD0B000D1D295 /* HolidayContent.swift in Sources */,
+				2992CC2D304A2C29003301E9 /* AprilPostcardProvider.swift in Sources */,
 				29AFFFBE30390261007FE955 /* CatalogPostcardPreviewView.swift in Sources */,
 				29B76C84301D4D8500D1D295 /* SukkotPostcardProvider..swift in Sources */,
 				296D4CDB3046B1AC000248AD /* SettingsView..swift in Sources */,
@@ -681,7 +693,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -720,7 +732,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

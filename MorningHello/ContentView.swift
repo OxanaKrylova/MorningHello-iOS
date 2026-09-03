@@ -1459,8 +1459,27 @@ struct ContentView: View {
                     phrase: phrase
                 )
             }
+            // 9. Апрель – обычные дни месяца
+
+            if let aprilIndex =
+                ordinaryDayIndex(
+                    for: Date(),
+                    month: 4
+                ),
+               let april =
+                AprilPostcardProvider.content(
+                    index: aprilIndex
+                ),
+               let image = april.images.first,
+               let phrase = april.phrases.first {
+
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
             
-            // 8. Декабрь
+            // 10. Декабрь
             
             if let december = decemberContent(),
                let image = december.images.first,
@@ -1473,7 +1492,7 @@ struct ContentView: View {
             }
             
             
-            // Август — обычные дни месяца
+            // 11. Август — обычные дни месяца
             
             if let augustIndex =
                 augustOrdinaryDayIndex(
@@ -1493,7 +1512,7 @@ struct ContentView: View {
             }
             
             
-            // 10. Сентябрь
+            // 12. Сентябрь
             
             if let september =
                 SeptemberPostcardProvider.content(
@@ -1508,7 +1527,7 @@ struct ContentView: View {
                 )
             }
             
-            // 11. Октябрь
+            // 13. Октябрь
             
             if let october =
                 OctoberPostcardProvider.content(
@@ -1523,7 +1542,7 @@ struct ContentView: View {
                 )
             }
             
-            // 12. Ноябрь
+            // 14. Ноябрь
             
             if let november =
                 NovemberPostcardProvider.content(
@@ -1538,7 +1557,7 @@ struct ContentView: View {
                 )
             }
             
-            // Январь — обычные дни месяца
+            // 15. Январь — обычные дни месяца
             
             if let januaryIndex =
                 ordinaryDayIndex(
