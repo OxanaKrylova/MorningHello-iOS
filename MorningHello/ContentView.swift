@@ -1296,18 +1296,17 @@ struct ContentView: View {
                         .clipShape(Capsule())
                     }
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal, 18)
-                .frame(
-                    maxWidth: .infinity,
-                    maxHeight: .infinity,
-                    alignment: .top
-                )
-                .padding(.horizontal, 20)
-                .safeAreaPadding(.top, 28)
+                .frame(maxWidth: 300)
             }
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .top
+            )
+            .padding(.horizontal, 20)
+            .safeAreaPadding(.top, 28)
         }
-        }
+    }
         
         var timeGreeting: String {
             let hour = Calendar.current.component(.hour, from: Date())

@@ -19,6 +19,9 @@ struct PostcardScreen: View {
     @FocusState
     private var isCustomMessageFocused: Bool
 
+    @State
+    private var isCustomMessageEditorPresented = false
+    
     private let customMessageLimit = 50
 
     var body: some View {
@@ -182,25 +185,43 @@ struct PostcardScreen: View {
     }
 
     private var customMessageEditor: some View {
-        VStack(alignment: .leading, spacing: 8) {
-
-            Text("Добавь своё пожелание")
-                .font(
-                    .system(
-                        .headline,
-                        design: .rounded
+        VStack(
+            alignment: .leading,
+            spacing: 10
+        ) {
+            HStack {
+                Text("Добавьте своё пожелание")
+                    .font(
+                        .system(
+                            .headline,
+                            design: .rounded
+                        )
                     )
-                )
-                .foregroundColor(.white)
-                .frame(
-                    maxWidth: .infinity,
-                    alignment: .center
-                )
+                    .foregroundColor(.white)
+
+                Spacer()
+
+                Button {
+                    isCustomMessageFocused = false
+
+                    withAnimation(
+                        .easeInOut(duration: 0.25)
+                    ) {
+                        isCustomMessageEditorPresented = false
+                    }
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title3)
+                        .foregroundColor(
+                            .white.opacity(0.85)
+                        )
+                }
+                .buttonStyle(.plain)
+            }
 
             ZStack(alignment: .topLeading) {
-
                 if customMessage.isEmpty {
-                    Text("Напиши пару тёплых слов...")
+                    Text("Напишите пару тёплых слов...")
                         .font(
                             .system(
                                 .body,
@@ -231,7 +252,7 @@ struct PostcardScreen: View {
                     )
                 )
                 .multilineTextAlignment(.center)
-                .frame(height: 80)
+                .frame(height: 90)
                 .padding(.horizontal, 4)
                 .onChange(
                     of: customMessage
@@ -257,15 +278,21 @@ struct PostcardScreen: View {
                 alignment: .trailing
             )
         }
-        .padding(14)
+        .padding(16)
         .background(
-            .black.opacity(0.30)
+            .black.opacity(0.48)
         )
         .clipShape(
             RoundedRectangle(
-                cornerRadius: 18,
+                cornerRadius: 20,
                 style: .continuous
             )
+        )
+        .shadow(
+            color: .black.opacity(0.24),
+            radius: 14,
+            x: 0,
+            y: 6
         )
     }
 
