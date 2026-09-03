@@ -5,21 +5,12 @@
 //  Created by Oxana Krylova on 09/08/2026.
 //
 
-//
-//  AppEntryView.swift
-//  MorningHello
-//
-//  Created by Oxana Krylova on 09/08/2026.
-//
-
 import Foundation
 import SwiftUI
 
 struct AppEntryView: View {
-
-    private let trialDuration: TimeInterval = 30 * 24 * 60 * 60
     
-    private let currentTermsVersion = "1.0"
+    private let currentTermsVersion = "1.1"
     
     @AppStorage("accepted_terms_version")
     private var acceptedTermsVersion = ""
@@ -47,9 +38,6 @@ struct AppEntryView: View {
     
     @AppStorage("holiday_onboarding_completed")
     private var holidayOnboardingCompleted = false
-
-    @AppStorage("free_trial_started_at")
-    private var freeTrialStartedAt = 0.0
 
     @StateObject
     private var subscriptionManager = SubscriptionManager.shared
@@ -89,13 +77,8 @@ struct AppEntryView: View {
                         isOnboarding: true,
                         onOnboardingComplete: {
                             holidayOnboardingCompleted = true
-                            startFreeTrialIfNeeded()
                         }
                     )
-
-                } else if isFreeTrialActive {
-
-                    ContentView()
 
                 } else if !subscriptionManager.hasLoadedSubscriptionStatus {
 
@@ -113,7 +96,6 @@ struct AppEntryView: View {
             }
             .onAppear {
                 refreshEmergencyContacts()
-                startFreeTrialIfNeeded()
             }
             .onReceive(
                 NotificationCenter.default.publisher(
@@ -124,28 +106,6 @@ struct AppEntryView: View {
             }
         }
 
-        private var isFreeTrialActive: Bool {
-            guard freeTrialStartedAt > 0 else {
-                return true
-            }
-
-            return Date().timeIntervalSince1970 <
-                freeTrialStartedAt + trialDuration
-        }
-
-        private func startFreeTrialIfNeeded() {
-            guard acceptedTermsVersion == currentTermsVersion,
-                  isProfileComplete,
-                  contactsOnboardingCompleted,
-                  holidayOnboardingCompleted,
-                  freeTrialStartedAt == 0
-            else {
-                return
-            }
-
-            freeTrialStartedAt = Date().timeIntervalSince1970
-        }
-        
         private var isProfileComplete: Bool {
             let trimmedName =
             displayName.trimmingCharacters(

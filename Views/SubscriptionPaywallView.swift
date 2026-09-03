@@ -1,10 +1,9 @@
 //
-//  SubscriptionPaywallView.swift
+//  SubscriptionView.swift
 //  MorningHello
 //
-//  Created by Oxana Krylova on 27/08/2026.
+//  Created by Oxana Krylova on 17/08/2026.
 //
-
 import StoreKit
 import SwiftUI
 
@@ -46,15 +45,11 @@ struct SubscriptionPaywallView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(
-                    red: 1.00,
-                    green: 0.97,
-                    blue: 0.91
-                )
-                .ignoresSafeArea()
+                Color(red: 1.00, green: 0.97, blue: 0.91)
+                    .ignoresSafeArea()
 
                 GeometryReader { geometry in
-                    Image("Background_WithoutSubscription")
+                    Image("Background_Tarifs plans")
                         .resizable()
                         .scaledToFit()
                         .frame(
@@ -75,10 +70,7 @@ struct SubscriptionPaywallView: View {
                             .frame(height: 255)
                             .accessibilityElement()
                             .accessibilityLabel(
-                                """
-                                Бесплатный период завершён. \
-                                Мониторинг остановлен.
-                                """
+                                "Для продолжения оформите подписку. Условия бесплатного периода определяются App Store."
                             )
 
                         navigationButtons
@@ -99,20 +91,11 @@ struct SubscriptionPaywallView: View {
             .alert(
                 "Подписка",
                 isPresented: Binding(
-                    get: {
-                        purchaseMessage != nil
-                    },
-                    set: { isPresented in
-                        if !isPresented {
-                            purchaseMessage = nil
-                        }
-                    }
+                    get: { purchaseMessage != nil },
+                    set: { if !$0 { purchaseMessage = nil } }
                 )
             ) {
-                Button(
-                    "Понятно",
-                    role: .cancel
-                ) {
+                Button("Понятно", role: .cancel) {
                     purchaseMessage = nil
                 }
             } message: {
@@ -127,94 +110,35 @@ struct SubscriptionPaywallView: View {
     }
 
     private var navigationButtons: some View {
-        HStack(spacing: 16) {
-            navigationButton(
-                title: "Контакты",
-                systemImage: "person.2.fill"
-            ) {
+        HStack(spacing: 58) {
+            Button("Контакты") {
                 AppSoundPlayer.shared.play(
                     .openForm
                 )
-
                 showContacts = true
             }
 
-            navigationButton(
-                title: "Профиль",
-                systemImage: "person.crop.circle.fill"
-            ) {
+            Button("Профиль") {
                 AppSoundPlayer.shared.play(
                     .openForm
                 )
-
                 showProfile = true
             }
         }
+        .font(
+            .system(
+                .headline,
+                design: .rounded
+            )
+            .weight(.bold)
+        )
+        .foregroundStyle(
+            Color(red: 0.55, green: 0.26, blue: 0.18)
+        )
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 6)
+        .padding(.vertical, 10)
     }
 
-    private func navigationButton(
-        title: String,
-        systemImage: String,
-        action: @escaping () -> Void
-    ) -> some View {
-        Button(action: action) {
-            HStack(spacing: 8) {
-                Image(systemName: systemImage)
-
-                Text(title)
-            }
-            .font(
-                .system(
-                    .headline,
-                    design: .rounded
-                )
-                .weight(.bold)
-            )
-            .foregroundStyle(
-                Color(
-                    red: 0.55,
-                    green: 0.26,
-                    blue: 0.18
-                )
-            )
-            .frame(maxWidth: .infinity)
-            .frame(height: 50)
-            .background(
-                Color.white.opacity(0.78)
-            )
-            .clipShape(
-                RoundedRectangle(
-                    cornerRadius: 17,
-                    style: .continuous
-                )
-            )
-            .overlay {
-                RoundedRectangle(
-                    cornerRadius: 17,
-                    style: .continuous
-                )
-                .stroke(
-                    Color(
-                        red: 0.69,
-                        green: 0.34,
-                        blue: 0.24
-                    )
-                    .opacity(0.35),
-                    lineWidth: 1
-                )
-            }
-            .shadow(
-                color: Color.black.opacity(0.08),
-                radius: 5,
-                x: 0,
-                y: 2
-            )
-        }
-        .buttonStyle(.plain)
-    }
-    
     private var paywallCard: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("Продолжите пользоваться MorningHello, чтобы:")
@@ -338,54 +262,28 @@ struct SubscriptionPaywallView: View {
 
     @MainActor
     private func purchaseSelectedPlan() async {
-        isPurchasing = true
-
-        defer {
-            isPurchasing = false
-        }
-
         if selectedProduct == nil {
             await subscriptionManager.loadProducts()
         }
 
         guard let productToPurchase = selectedProduct else {
-            purchaseMessage =
-                """
-                Выбранная подписка пока недоступна в App Store. \
-                Проверьте настройки подписок в App Store Connect \
-                и попробуйте ещё раз.
-                """
+            purchaseMessage = "Тариф пока недоступен в App Store. Попробуйте ещё раз позднее."
             return
         }
 
+        isPurchasing = true
+        defer { isPurchasing = false }
+
         do {
-            let outcome =
-                try await subscriptionManager.purchase(
-                    product: productToPurchase
-                )
+            let outcome = try await subscriptionManager.purchase(
+                product: productToPurchase
+            )
 
-            switch outcome {
-            case .purchased:
-                break
-
-            case .pending:
-                purchaseMessage =
-                    """
-                    Покупка ожидает подтверждения. \
-                    Доступ включится автоматически после \
-                    подтверждения App Store.
-                    """
-
-            case .cancelled:
-                break
+            if outcome == .pending {
+                purchaseMessage = "Покупка ожидает подтверждения. Доступ включится автоматически после одобрения App Store."
             }
         } catch {
-            purchaseMessage =
-                """
-                Не удалось открыть покупку App Store.
-
-                \(error.localizedDescription)
-                """
+            purchaseMessage = error.localizedDescription
         }
     }
 }

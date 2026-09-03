@@ -57,8 +57,6 @@ struct ContentView: View {
     @State private var customMessage = ""
     @State private var showSubscription = false
     @State private var showSettings = false
-    @State private var trialReminder: TrialReminderType?
-    @State private var showTrialReminder = false
     
     @State private var showPostcardCatalog = false
     @State private var isSendingHeartbeat = false
@@ -1777,32 +1775,7 @@ struct ContentView: View {
                         """
                         )
                     }
-                    .alert(
-                        trialReminder?.title ?? "",
-                        isPresented: $showTrialReminder
-                    ) {
-                        
-                        Button("Понятно") {
-                            
-                            if let reminder = trialReminder,
-                               let trialEndDate = trialEndDate {
-                                
-                                TrialReminderManager.shared
-                                    .markAsShown(
-                                        type: reminder,
-                                        trialEndDate: trialEndDate
-                                    )
-                            }
-                            
-                            trialReminder = nil
-                        }
-                        
-                    } message: {
-                        
-                        Text(
-                            trialReminder?.message ?? ""
-                        )
-                    }
+                    
                     .confirmationDialog(
                         "Кому открыть сообщение?",
                         isPresented: $showEmergencyContactSelection
@@ -2143,25 +2116,5 @@ struct ContentView: View {
             }
             
             return nil
-        }
-        func checkTrialReminder() {
-            
-            guard isTrialActive,
-                  let trialEndDate = trialEndDate
-            else {
-                return
-            }
-            
-            guard let reminder =
-                    TrialReminderManager.shared
-                .reminderToShow(
-                    trialEndDate: trialEndDate
-                )
-            else {
-                return
-            }
-            
-            trialReminder = reminder
-            showTrialReminder = true
         }
     }
