@@ -388,6 +388,31 @@ struct SubscriptionView: View {
             Text(
                 "Удаление приложения MorningHello не отменяет подписку и не останавливает серверный мониторинг."
             )
+
+            Divider()
+                .padding(.vertical, 2)
+
+            Link(
+                destination: URL(
+                    string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+                )!
+            ) {
+                Label(
+                    "Условия использования",
+                    systemImage: "doc.text"
+                )
+            }
+
+            Link(
+                destination: URL(
+                    string: "https://www.morninghelloapp.com/privacy-policy"
+                )!
+            ) {
+                Label(
+                    "Политика конфиденциальности",
+                    systemImage: "hand.raised"
+                )
+            }
         }
         .font(.footnote)
         .foregroundColor(.secondary)

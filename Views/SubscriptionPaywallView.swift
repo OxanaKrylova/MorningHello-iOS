@@ -180,7 +180,9 @@ struct SubscriptionPaywallView: View {
             .buttonStyle(.borderedProminent)
             .tint(Color(red: 0.69, green: 0.34, blue: 0.24))
             .disabled(isPurchasing)
-
+            
+            legalLinksSection
+            
             if subscriptionManager.products.isEmpty,
                subscriptionManager.lastError != nil {
                 Text("Не удалось загрузить тарифы App Store. Проверьте интернет и попробуйте ещё раз.")
@@ -194,6 +196,44 @@ struct SubscriptionPaywallView: View {
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26))
     }
 
+    private var legalLinksSection: some View {
+        VStack(spacing: 10) {
+            Text(
+                "Подписка продлевается автоматически, если её не отменить в настройках Apple Account."
+            )
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+
+            Link(
+                destination: URL(
+                    string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+                )!
+            ) {
+                Label(
+                    "Условия использования (EULA)",
+                    systemImage: "doc.text"
+                )
+            }
+
+            Link(
+                destination: URL(
+                    string: "https://www.morninghelloapp.com/privacy-policy"
+                )!
+            ) {
+                Label(
+                    "Политика конфиденциальности",
+                    systemImage: "hand.raised"
+                )
+            }
+        }
+        .font(.footnote)
+        .foregroundStyle(.blue)
+        .frame(maxWidth: .infinity)
+        .padding(.top, 2)
+    }
+    
     private func benefit(_ text: String) -> some View {
         HStack(alignment: .top, spacing: 9) {
             Text("•")

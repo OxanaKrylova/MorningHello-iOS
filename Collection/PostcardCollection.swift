@@ -171,6 +171,9 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
                 "September_\($0)"
             }
 
+            return (1...20).map {
+                "April\($0)"}
+            
             autumnCards.append(
                 "holiday_autumnal_equinox"
             )
