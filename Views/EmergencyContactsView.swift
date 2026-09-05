@@ -1,4 +1,12 @@
 //
+//  EmergencyContactsView 2.swift
+//  MorningHello
+//
+//  Created by Oxana Krylova on 05/09/2026.
+//
+
+
+//
 //  EmergencyContactsView.swift
 //  MorningHello
 //
@@ -30,10 +38,11 @@ struct EmergencyContactsView: View {
     
     @State private var isContactFormExpanded = false
     @State private var originalEditingEmail = ""
-    
     @State private var contactAwaitingDeletion: EmergencyContact?
     @State private var deletingContactIDs: Set<UUID> = []
     @State private var deletionErrorMessage: String?
+    @State private var isRefreshingContactStatuses = false
+    @State private var statusRefreshErrorMessage: String?
     
     @AppStorage("profile_display_name")
     private var displayName = ""
@@ -150,7 +159,7 @@ struct EmergencyContactsView: View {
     }
     var body: some View {
         ZStack {
-            Color(red: 1.00, green: 0.96, blue: 0.87)
+            Color(red: 1.0, green: 0.96, blue: 0.87)
                 .ignoresSafeArea()
 
             ScrollView {
@@ -691,37 +700,37 @@ struct EmergencyContactsView: View {
 
                             saveContacts()
 
+                            // MARK: Синхронизируем полный список с сервером
 
-                            // MARK: Отправляем invitation только при необходимости
+                            let contactsToUpload = contacts
 
-                            if shouldSendInvitation {
-
-                                Task {
-                                    do {
-                                        try await
-                                            EmergencyContactAPIClient
-                                            .shared
-                                            .sendInvitation(
-                                                contact: contact,
-                                                userName: displayName
-                                            )
-
-                    #if DEBUG
-                                        print(
-                                            "✅ Emergency contact invitation sent:",
-                                            contact.email
+                            Task {
+                                do {
+                                    try await EmergencyContactAPIClient
+                                        .shared
+                                        .replaceContacts(
+                                            contactsToUpload
                                         )
-                    #endif
 
-                                    } catch {
+                                    await refreshContactStatuses()
 
-                    #if DEBUG
-                                        print(
-                                            "❌ Emergency contact invitation failed:",
-                                            error
-                                        )
-                    #endif
+#if DEBUG
+                                    print(
+                                        "✅ Emergency contacts synchronized"
+                                    )
+#endif
+                                } catch {
+                                    await MainActor.run {
+                                        statusRefreshErrorMessage =
+                                            "Контакт сохранён на телефоне, но не отправлен на сервер. Проверьте интернет и повторите сохранение."
                                     }
+
+#if DEBUG
+                                    print(
+                                        "❌ Emergency contacts synchronization failed:",
+                                        error
+                                    )
+#endif
                                 }
                             }
 
@@ -857,6 +866,55 @@ struct EmergencyContactsView: View {
                         .padding(.horizontal, 32)
                         .padding(.top, 12)
 
+                    HStack(spacing: 8) {
+                        if isRefreshingContactStatuses {
+                            ProgressView()
+
+                            Text("Обновляем статусы…")
+                        } else {
+                            Button {
+                                Task {
+                                    await refreshContactStatuses()
+                                }
+                            } label: {
+                                Label(
+                                    "Обновить статусы",
+                                    systemImage: "arrow.clockwise"
+                                )
+                            }
+                            .buttonStyle(.borderless)
+                        }
+                    }
+                    .font(
+                        .system(
+                            .footnote,
+                            design: .rounded
+                        )
+                        .weight(.semibold)
+                    )
+                    .foregroundColor(.brown)
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .leading
+                    )
+                    .padding(.horizontal, 32)
+
+                    if let statusRefreshErrorMessage {
+                        Text(statusRefreshErrorMessage)
+                            .font(
+                                .system(
+                                    .caption,
+                                    design: .rounded
+                                )
+                            )
+                            .foregroundColor(.red)
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .leading
+                            )
+                            .padding(.horizontal, 32)
+                    }
+
                     ForEach(contacts) { contact in
                         VStack(alignment: .leading, spacing: 8) {
 
@@ -926,6 +984,7 @@ struct EmergencyContactsView: View {
                                 )
                             )
                             .padding(.top, 4)
+
                             Button(role: .destructive) {
                                 contactAwaitingDeletion = contact
                             } label: {
@@ -975,10 +1034,6 @@ struct EmergencyContactsView: View {
                                 contacts.firstIndex {
                                     $0.id == contact.id
                                 }
-                            editingIndex =
-                                contacts.firstIndex {
-                                    $0.id == contact.id
-                                }
 
                             originalEditingEmail = contact.email
 
@@ -1000,8 +1055,9 @@ struct EmergencyContactsView: View {
                                     }
                                 }
                             }
-                            .onAppear {
+                            .task {
                                 loadContacts()
+                                await refreshContactStatuses()
                             }
         .alert(
             formErrorTitle,
@@ -1012,7 +1068,7 @@ struct EmergencyContactsView: View {
         } message: {
             Text(phoneErrorMessage)
         }
-        .alert(
+        .confirmationDialog(
             "Прекратить мониторинг?",
             isPresented: Binding(
                 get: {
@@ -1024,17 +1080,11 @@ struct EmergencyContactsView: View {
                     }
                 }
             ),
+            titleVisibility: .visible,
             presenting: contactAwaitingDeletion
         ) { contact in
             Button(
-                "Отмена",
-                role: .cancel
-            ) {
-                contactAwaitingDeletion = nil
-            }
-
-            Button(
-                "Прекратить",
+                "Прекратить мониторинг",
                 role: .destructive
             ) {
                 contactAwaitingDeletion = nil
@@ -1045,9 +1095,13 @@ struct EmergencyContactsView: View {
                     )
                 }
             }
+
+            Button("Отмена", role: .cancel) {
+                contactAwaitingDeletion = nil
+            }
         } message: { contact in
             Text(
-                "MorningHello прекратит мониторинг и уведомит \(contact.name) \(contact.surname)."
+                "MorningHello удалит \(contact.name) \(contact.surname) из списка тревожных контактов."
             )
         }
         .alert(
@@ -1177,87 +1231,150 @@ struct EmergencyContactsView: View {
                     )
                 ) ?? []
         }
-    // MARK: - Прекращение мониторинга
 
-    @MainActor
-    private func stopMonitoring(
-        for contact: EmergencyContact
-    ) async {
+        // MARK: - Актуальные статусы согласия с сервера
 
-        guard !deletingContactIDs.contains(
-            contact.id
-        ) else {
-            return
-        }
+        @MainActor
+        private func refreshContactStatuses() async {
+            guard !contacts.isEmpty,
+                  !isRefreshingContactStatuses
+            else {
+                return
+            }
 
-        deletingContactIDs.insert(contact.id)
+            isRefreshingContactStatuses = true
+            statusRefreshErrorMessage = nil
 
-        defer {
-            deletingContactIDs.remove(contact.id)
-        }
+            defer {
+                isRefreshingContactStatuses = false
+            }
 
-        do {
-            try await EmergencyContactAPIClient
-                .shared
-                .stopMonitoring(
-                    contact: contact,
-                    userName: displayName
-                )
+            do {
+                let serverStatuses =
+                    try await EmergencyContactAPIClient
+                        .shared
+                        .fetchConsentStatuses()
 
-            let editingContactID =
-                editingIndex.flatMap { index in
-                    contacts.indices.contains(index)
-                        ? contacts[index].id
-                        : nil
+                var statusWasChanged = false
+
+                for index in contacts.indices {
+                    let normalizedEmail =
+                        contacts[index].email
+                            .trimmingCharacters(
+                                in: .whitespacesAndNewlines
+                            )
+                            .lowercased()
+
+                    guard let serverStatus =
+                        serverStatuses[normalizedEmail]
+                    else {
+                        continue
+                    }
+
+                    if contacts[index].status != serverStatus {
+                        contacts[index].status = serverStatus
+                        statusWasChanged = true
+                    }
                 }
 
-            contacts.removeAll {
-                $0.id == contact.id
+                if statusWasChanged {
+                    saveContacts()
+                }
+
+#if DEBUG
+                print(
+                    "✅ Emergency contact statuses refreshed"
+                )
+#endif
+            } catch {
+                statusRefreshErrorMessage =
+                    "Не удалось получить актуальные статусы. Проверьте интернет и повторите попытку."
+
+#if DEBUG
+                print(
+                    "❌ Failed to refresh emergency contact statuses:",
+                    error
+                )
+#endif
             }
-
-            saveContacts()
-
-            if editingContactID == contact.id {
-                self.editingIndex = nil
-                originalEditingEmail = ""
-
-                name = ""
-                surname = ""
-                phoneDigits = ""
-                email = ""
-                salutation = "Уважаемый"
-
-                isContactFormExpanded = false
-            } else if let editingContactID {
-                self.editingIndex =
-                    contacts.firstIndex {
-                        $0.id == editingContactID
-                    }
-            }
-
-    #if DEBUG
-
-            print(
-                "✅ Emergency contact monitoring stopped:",
-                contact.email
-            )
-
-    #endif
-
-        } catch {
-            deletionErrorMessage =
-                "Контакт не удалён. Проверьте подключение к интернету и попробуйте ещё раз."
-
-    #if DEBUG
-
-            print(
-                "❌ Failed to stop emergency contact monitoring:",
-                error
-            )
-
-    #endif
         }
-    }
+
+        // MARK: - Прекращение мониторинга
+
+        @MainActor
+        private func stopMonitoring(
+            for contact: EmergencyContact
+        ) async {
+
+            guard !deletingContactIDs.contains(
+                contact.id
+            ) else {
+                return
+            }
+
+            deletingContactIDs.insert(contact.id)
+
+            defer {
+                deletingContactIDs.remove(contact.id)
+            }
+
+            do {
+                let remainingContacts =
+                    contacts.filter {
+                        $0.id != contact.id
+                    }
+
+                try await EmergencyContactAPIClient
+                    .shared
+                    .replaceContacts(
+                        remainingContacts
+                    )
+
+                let editingContactID =
+                    editingIndex.flatMap { index in
+                        contacts.indices.contains(index)
+                            ? contacts[index].id
+                            : nil
+                    }
+
+                contacts = remainingContacts
+                saveContacts()
+
+                if editingContactID == contact.id {
+                    self.editingIndex = nil
+                    originalEditingEmail = ""
+                    name = ""
+                    surname = ""
+                    phoneDigits = ""
+                    email = ""
+                    salutation = "Уважаемый"
+                    isContactFormExpanded = false
+                } else if let editingContactID {
+                    self.editingIndex =
+                        contacts.firstIndex {
+                            $0.id == editingContactID
+                        }
+                }
+
+#if DEBUG
+                print(
+                    "✅ Emergency contact monitoring stopped:",
+                    contact.email
+                )
+#endif
+            } catch {
+                deletionErrorMessage =
+                    "Контакт не удалён. Проверьте подключение к интернету и попробуйте ещё раз."
+
+#if DEBUG
+                print(
+                    "❌ Failed to stop emergency contact monitoring:",
+                    error
+                )
+#endif
+            }
+        }
+
         // MARK: - Проверка email
 
         private func isValidEmail(
@@ -1283,19 +1400,19 @@ struct EmergencyContactsView: View {
             switch status {
 
             case .pending:
-                return "Pending"
+                return "Ожидает подтверждения"
 
             case .confirmed:
-                return "Confirmed"
+                return "Подтверждён"
 
             case .declined:
-                return "Declined"
+                return "Отклонён"
 
             case .revoked:
-                return "Revoked"
+                return "Доступ отозван"
             }
         }
-    
+
         private func statusIcon(
             for status: EmergencyContactStatus
         ) -> String {
