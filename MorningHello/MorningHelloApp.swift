@@ -8,6 +8,7 @@
 import SwiftUI
 import StoreKit
 import UserNotifications
+import SwiftData
 
 @main
 struct MorningHelloApp: App {
@@ -75,5 +76,6 @@ struct MorningHelloApp: App {
                 }
             }
         }
+        .modelContainer(for: MoodEntry.self)
     }
 }

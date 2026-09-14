@@ -1,6 +1,6 @@
 import Foundation
+import SwiftData
 
-@MainActor
 protocol MoodRepository {
     func entry(for localDay: String) throws -> MoodEntry?
     func entries(from startDate: Date, to endDate: Date) throws -> [MoodEntry]

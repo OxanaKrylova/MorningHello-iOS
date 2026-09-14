@@ -12,10 +12,13 @@ struct SettingsView: View {
     @Environment(\.dismiss)
     private var dismiss
 
-    @AppStorage(
-        AppSettingsKeys.soundsEnabled
-    )
+    @AppStorage("app_sounds_enabled")
     private var areSoundsEnabled = true
+
+    @State private var showProfile = false
+    @State private var showContacts = false
+    @State private var showHolidaySettings = false
+    @State private var showFeedback = false
 
     private let backgroundColor = Color(
         red: 1.00,
@@ -29,6 +32,12 @@ struct SettingsView: View {
         blue: 0.14
     )
 
+    private let textColor = Color(
+        red: 0.12,
+        green: 0.16,
+        blue: 0.28
+    )
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -37,17 +46,17 @@ struct SettingsView: View {
 
                 ScrollView {
                     VStack(spacing: 24) {
+                        monitoringSection
                         soundSection
                         languageSection
+                        feedbackSection
                         applicationSection
                     }
                     .padding(.vertical, 24)
                 }
             }
             .navigationTitle("Настройки")
-            .navigationBarTitleDisplayMode(
-                .inline
-            )
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(
                     placement: .confirmationAction
@@ -59,14 +68,79 @@ struct SettingsView: View {
                     .fontWeight(.semibold)
                 }
             }
-            .onChange(
-                of: areSoundsEnabled
-            ) { _, newValue in
-                if !newValue {
-                    AppSoundPlayer.shared
-                        .stopAllSounds()
+        }
+        .sheet(isPresented: $showProfile) {
+            ProfileView()
+        }
+        .sheet(isPresented: $showContacts) {
+            EmergencyContactsView()
+        }
+        .sheet(isPresented: $showHolidaySettings) {
+            HolidaySettingsView()
+        }
+        .sheet(isPresented: $showFeedback) {
+            FeedbackView()
+        }
+        .onChange(of: areSoundsEnabled) { _, newValue in
+            if !newValue {
+                AppSoundPlayer.shared.stopAllSounds()
+            }
+        }
+        .onChange(of: showProfile) { _, isShowing in
+            playOpeningSound(if: isShowing)
+        }
+        .onChange(of: showContacts) { _, isShowing in
+            playOpeningSound(if: isShowing)
+        }
+        .onChange(of: showHolidaySettings) { _, isShowing in
+            playOpeningSound(if: isShowing)
+        }
+        .onChange(of: showFeedback) { _, isShowing in
+            playOpeningSound(if: isShowing)
+        }
+    }
+
+    // MARK: - Данные и мониторинг
+
+    private var monitoringSection: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 12
+        ) {
+            sectionTitle("Данные и мониторинг")
+
+            VStack(spacing: 0) {
+                settingsRow(
+                    title: "Профиль",
+                    subtitle: "Имя, дата рождения и интервал отметки",
+                    systemImage: "person.crop.circle.fill"
+                ) {
+                    showProfile = true
+                }
+
+                Divider()
+                    .padding(.leading, 46)
+
+                settingsRow(
+                    title: "Тревожные контакты",
+                    subtitle: "Кому сообщить, если отметки не будет",
+                    systemImage: "person.2.fill"
+                ) {
+                    showContacts = true
+                }
+
+                Divider()
+                    .padding(.leading, 46)
+
+                settingsRow(
+                    title: "Праздники",
+                    subtitle: "Какие праздничные открытки показывать",
+                    systemImage: "calendar"
+                ) {
+                    showHolidaySettings = true
                 }
             }
+            .settingsCard()
         }
     }
 
@@ -90,13 +164,7 @@ struct SettingsView: View {
                             ? "speaker.wave.2.fill"
                             : "speaker.slash.fill"
                     )
-                    .foregroundStyle(
-                        Color(
-                            red: 0.12,
-                            green: 0.16,
-                            blue: 0.28
-                        )
-                    )
+                    .foregroundStyle(textColor)
                 }
                 .tint(.orange)
 
@@ -129,13 +197,7 @@ struct SettingsView: View {
                         "Язык приложения",
                         systemImage: "globe"
                     )
-                    .foregroundStyle(
-                        Color(
-                            red: 0.12,
-                            green: 0.16,
-                            blue: 0.28
-                        )
-                    )
+                    .foregroundStyle(textColor)
 
                     Spacer()
 
@@ -144,7 +206,7 @@ struct SettingsView: View {
                 }
 
                 Text(
-                    "Возможность выбора языка будет добавлена после подготовки английской версии приложения."
+                    "Выбор языка появится после подготовки английской версии приложения."
                 )
                 .font(.footnote)
                 .foregroundStyle(.secondary)
@@ -152,6 +214,43 @@ struct SettingsView: View {
                     maxWidth: .infinity,
                     alignment: .leading
                 )
+            }
+            .settingsCard()
+        }
+    }
+
+    // MARK: - Связь
+
+    private var feedbackSection: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 12
+        ) {
+            sectionTitle("Связь")
+
+            VStack(spacing: 8) {
+                settingsRow(
+                    title: "Написать разработчику",
+                    subtitle: "Предложить праздник или сообщить о проблеме",
+                    systemImage: "envelope.fill"
+                ) {
+                    showFeedback = true
+                }
+
+                Text("Я читаю все сообщения лично")
+                    .font(
+                        .system(
+                            .footnote,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(.secondary)
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .leading
+                    )
+                    .padding(.leading, 46)
+                    .padding(.bottom, 4)
             }
             .settingsCard()
         }
@@ -169,40 +268,79 @@ struct SettingsView: View {
             VStack(spacing: 16) {
                 HStack {
                     Text("Версия")
-
                     Spacer()
-
-                    Text(
-                        Bundle.main.appVersion
-                    )
-                    .foregroundStyle(.secondary)
+                    Text(Bundle.main.appVersion)
+                        .foregroundStyle(.secondary)
                 }
 
                 Divider()
 
                 HStack {
                     Text("Номер сборки")
-
                     Spacer()
-
-                    Text(
-                        Bundle.main.buildNumber
-                    )
-                    .foregroundStyle(.secondary)
+                    Text(Bundle.main.buildNumber)
+                        .foregroundStyle(.secondary)
                 }
             }
-            .foregroundStyle(
-                Color(
-                    red: 0.12,
-                    green: 0.16,
-                    blue: 0.28
-                )
-            )
+            .foregroundStyle(textColor)
             .settingsCard()
         }
     }
 
-    // MARK: - Заголовок раздела
+    // MARK: - Элементы интерфейса
+
+    private func settingsRow(
+        title: String,
+        subtitle: String,
+        systemImage: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            HStack(spacing: 14) {
+                Image(systemName: systemImage)
+                    .font(.title3)
+                    .foregroundStyle(.orange)
+                    .frame(width: 30)
+
+                VStack(
+                    alignment: .leading,
+                    spacing: 3
+                ) {
+                    Text(title)
+                        .font(
+                            .system(
+                                .headline,
+                                design: .rounded
+                            )
+                        )
+                        .foregroundStyle(textColor)
+
+                    Text(subtitle)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.leading)
+                }
+
+                Spacer(minLength: 8)
+
+                Image(systemName: "chevron.right")
+                    .font(
+                        .system(
+                            size: 14,
+                            weight: .semibold
+                        )
+                    )
+                    .foregroundStyle(.secondary)
+            }
+            .frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            )
+            .contentShape(Rectangle())
+            .padding(.vertical, 6)
+        }
+        .buttonStyle(.plain)
+    }
 
     private func sectionTitle(
         _ title: String
@@ -218,19 +356,25 @@ struct SettingsView: View {
             .foregroundStyle(titleColor)
             .padding(.horizontal, 28)
     }
-}
 
-// MARK: - Оформление карточек
+    private func playOpeningSound(
+        if isShowing: Bool
+    ) {
+        guard isShowing else {
+            return
+        }
+
+        AppSoundPlayer.shared.play(.openForm)
+    }
+}
 
 private extension View {
 
     func settingsCard() -> some View {
         self
             .padding(.horizontal, 20)
-            .padding(.vertical, 20)
-            .background(
-                .white.opacity(0.72)
-            )
+            .padding(.vertical, 18)
+            .background(.white.opacity(0.72))
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: 28,

@@ -1,12 +1,57 @@
 import Foundation
 import SwiftData
 
-@MainActor
 final class SwiftDataMoodRepository: MoodRepository {
     private let modelContext: ModelContext
+    private static let calmnessScaleMigrationKey =
+        "mood_scale_migrated_to_calmness_0_4"
 
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
+        migrateLegacyMoodScaleIfNeeded()
+    }
+
+    private func migrateLegacyMoodScaleIfNeeded() {
+        let defaults = UserDefaults.standard
+        guard !defaults.bool(
+            forKey: Self.calmnessScaleMigrationKey
+        ) else {
+            return
+        }
+
+        do {
+            let entries = try modelContext.fetch(
+                FetchDescriptor<MoodEntry>()
+            )
+
+            for entry in entries {
+                switch entry.level {
+                case 1:
+                    entry.level = MoodLevel.panic.rawValue
+                case 2:
+                    entry.level = MoodLevel.worried.rawValue
+                case 3:
+                    entry.level = MoodLevel.calm.rawValue
+                case 4:
+                    entry.level = MoodLevel.zen.rawValue
+                default:
+                    break
+                }
+            }
+
+            try modelContext.save()
+            defaults.set(
+                true,
+                forKey: Self.calmnessScaleMigrationKey
+            )
+        } catch {
+#if DEBUG
+            print(
+                "Не удалось преобразовать старую шкалу состояния:",
+                error.localizedDescription
+            )
+#endif
+        }
     }
 
     func entry(for localDay: String) throws -> MoodEntry? {

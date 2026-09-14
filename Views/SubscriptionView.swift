@@ -7,6 +7,7 @@
 
 import SwiftUI
 import StoreKit
+import SwiftData
 
 struct SubscriptionView: View {
 
@@ -139,8 +140,9 @@ struct SubscriptionView: View {
             isPresented: $showSubscriptionPlans,
             onDismiss: refreshAfterPlanSelection
         ) {
-            SubscriptionPaywallView()
-        }
+            SubscriptionPaywallView(
+                mode: paywallMode
+            )        }
         .task {
             await subscriptionManager
                 .refreshSubscriptionStatus()
@@ -169,10 +171,41 @@ struct SubscriptionView: View {
         }
     }
 
+    private func russianDateString(
+        from date: Date
+    ) -> String {
+        let formatter = DateFormatter()
+
+        formatter.locale = Locale(
+            identifier: "ru_RU"
+        )
+
+        formatter.calendar = Calendar(
+            identifier: .gregorian
+        )
+
+        formatter.dateFormat =
+            "d MMMM yyyy"
+
+        return formatter.string(
+            from: date
+        )
+    }
+    
+    private var paywallMode: SubscriptionPaywallMode {
+        switch snapshot.status {
+        case .expired, .revoked, .billingRetry:
+            return .accessEnded
+
+        case .none, .trial, .active, .gracePeriod:
+            return .initialOffer
+        }
+    }
+    
     private var currentSubscriptionCard: some View {
         VStack(
             alignment: .leading,
-            spacing: 16
+            spacing: 12
         ) {
             HStack {
                 VStack(
@@ -190,11 +223,15 @@ struct SubscriptionView: View {
                     Text(planName)
                         .font(
                             .system(
-                                size: 30,
+                                size: 24,
                                 weight: .bold,
                                 design: .rounded
                             )
                         )
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                        .allowsTightening(true)
+                        .layoutPriority(1)
                 }
 
                 Spacer()
@@ -214,6 +251,10 @@ struct SubscriptionView: View {
                     )
                     .foregroundColor(statusColor)
                     .clipShape(Capsule())
+                    .fixedSize(
+                        horizontal: true,
+                        vertical: false
+                    )
             }
 
             Divider()
@@ -230,13 +271,12 @@ struct SubscriptionView: View {
                     Spacer()
 
                     Text(
-                        expirationDate,
-                        format: .dateTime
-                            .day()
-                            .month(.wide)
-                            .year()
+                        russianDateString(
+                            from: expirationDate
+                        )
                     )
                     .fontWeight(.semibold)
+                    .multilineTextAlignment(.trailing)
                 }
             } else {
                 HStack {

@@ -6,9 +6,37 @@
 //
 import StoreKit
 import SwiftUI
+import SwiftData
+
+enum SubscriptionPaywallMode: Equatable {
+
+    case initialOffer
+    case accessEnded
+
+    var backgroundImageName: String {
+        switch self {
+        case .initialOffer:
+            return "Background_Tarifs plans"
+
+        case .accessEnded:
+            return "Background_WithoutSubscription"
+        }
+    }
+
+    var accessibilityHeader: String {
+        switch self {
+        case .initialOffer:
+            return "Тарифные планы. Выберите подходящую подписку MorningHello."
+
+        case .accessEnded:
+            return "Подписка закончилась. Мониторинг остановлен."
+        }
+    }
+}
 
 struct SubscriptionPaywallView: View {
-
+    let mode: SubscriptionPaywallMode
+    
     private enum Plan: String, CaseIterable, Identifiable {
         case monthly = "com.morninghello.subscription.monthly"
         case quarterly = "com.morninghello.subscription.quarterly"
@@ -26,9 +54,14 @@ struct SubscriptionPaywallView: View {
 
         var subtitle: String {
             switch self {
-            case .monthly: "Оплата каждый месяц"
-            case .quarterly: "Оплата каждые три месяца"
-            case .annual: "Самый выгодный вариант"
+            case .monthly:
+                return "Оплата каждый месяц"
+
+            case .quarterly:
+                return "Оплата каждые три месяца. По сравнению с помесячной оплатой вы экономите $2 за каждые три месяца"
+
+            case .annual:
+                return "Самый выгодный вариант"
             }
         }
     }
@@ -36,7 +69,7 @@ struct SubscriptionPaywallView: View {
     @StateObject
     private var subscriptionManager = SubscriptionManager.shared
 
-    @State private var selectedPlan: Plan = .annual
+    @State private var selectedPlan: Plan = .quarterly
     @State private var showProfile = false
     @State private var showContacts = false
     @State private var isPurchasing = false
@@ -49,7 +82,9 @@ struct SubscriptionPaywallView: View {
                     .ignoresSafeArea()
 
                 GeometryReader { geometry in
-                    Image("Background_Tarifs plans")
+                    Image(
+                        mode.backgroundImageName
+                    )
                         .resizable()
                         .scaledToFit()
                         .frame(
@@ -67,13 +102,19 @@ struct SubscriptionPaywallView: View {
                 ScrollView {
                     VStack(spacing: 18) {
                         Color.clear
-                            .frame(height: 255)
+                            .frame(
+                                height: mode == .initialOffer
+                                    ? 175
+                                    : 185
+                            )
                             .accessibilityElement()
                             .accessibilityLabel(
-                                "Для продолжения оформите подписку. Условия бесплатного периода определяются App Store."
+                                mode.accessibilityHeader
                             )
 
-                        navigationButtons
+                        if mode == .accessEnded {
+                            navigationButtons
+                        }
 
                         paywallCard
                     }
@@ -140,18 +181,127 @@ struct SubscriptionPaywallView: View {
     }
 
     private var paywallCard: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            Text("Продолжите пользоваться MorningHello, чтобы:")
-                .font(.system(.headline, design: .rounded))
+        VStack(
+            alignment: .leading,
+            spacing: 16
+        ) {
+            Text(paywallIntroText)
+                .font(
+                    .system(
+                        .title3,
+                        design: .rounded
+                    )
+                    .weight(.bold)
+                )
+                .fixedSize(
+                    horizontal: false,
+                    vertical: true
+                )
 
-            VStack(alignment: .leading, spacing: 9) {
-                benefit("отмечаться «Я в порядке» каждые 24, 48 или 72 часа;")
-                benefit("автоматически предупреждать подтверждённых контактов, если отметки нет;")
-                benefit("отправлять близким открытки с добрыми пожеланиями.")
+            if mode == .initialOffer {
+                (
+                    Text("Первый месяц ")
+                    +
+                    Text("бесплатный")
+                        .bold()
+                    +
+                    Text(
+                        ". Вы можете отменить оформленную подписку в любой момент в разделе «Профиль → Подписка → Управлять подпиской» и продолжить пользоваться MorningHello до окончания бесплатного периода."
+                    )
+                )
+                .font(
+                    .system(
+                        .title3,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(
+                    Color(
+                        red: 0.45,
+                        green: 0.22,
+                        blue: 0.16
+                    )
+                )
+                .lineSpacing(5)
+                .fixedSize(
+                    horizontal: false,
+                    vertical: true
+                )
+                .padding(16)
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .leading
+                )
+                .background(
+                    Color.white.opacity(0.70),
+                    in: RoundedRectangle(
+                        cornerRadius: 18,
+                        style: .continuous
+                    )
+                )
+            }
+
+            VStack(
+                alignment: .leading,
+                spacing: 9
+            ) {
+                if mode == .initialOffer {
+                    benefit(
+                        "простую отметку «Я в порядке» раз в 24, 48 или 72 часа;"
+                    )
+
+                    benefit(
+                        "автоматическое письмо близким, если отметка не сделана вовремя;"
+                    )
+
+                    benefit(
+                        "религиозные, сезонные и праздничные открытки с личными пожеланиями;"
+                    )
+                    
+                    benefit(
+                        "простые дыхательные техники (дыхание по квадрату) при тревоге."
+                    )
+                    
+                } else {
+                    benefit(
+                        "отмечаться «Я в порядке» каждые 24, 48 или 72 часа;"
+                    )
+
+                    benefit(
+                        "автоматически предупреждать подтверждённых контактов, если отметки нет;"
+                    )
+
+                    benefit(
+                        "отправлять близким открытки с добрыми пожеланиями."
+                    )
+                }
+            }
+
+            if mode == .initialOffer {
+                Text(
+                    "Первый месяц является бесплатным. Подписку можно отменить в период бесплатного использования на форме Профиля."
+                )
+                .font(
+                    .system(
+                        .footnote,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(.secondary)
+                .fixedSize(
+                    horizontal: false,
+                    vertical: true
+                )
             }
 
             Text("Выберите подписку")
-                .font(.system(.title3, design: .rounded).weight(.bold))
+                .font(
+                    .system(
+                        .title3,
+                        design: .rounded
+                    )
+                    .weight(.bold)
+                )
                 .padding(.top, 2)
 
             VStack(spacing: 10) {
@@ -159,7 +309,27 @@ struct SubscriptionPaywallView: View {
                     planButton(plan)
                 }
             }
-
+            if mode == .initialOffer {
+                Text(
+                    "После окончания бесплатного периода подписка продлевается автоматически."
+                )
+                .font(
+                    .system(
+                        .footnote,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .fixedSize(
+                    horizontal: false,
+                    vertical: true
+                )
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .center
+                )
+            }
             Button {
                 Task {
                     await purchaseSelectedPlan()
@@ -171,31 +341,62 @@ struct SubscriptionPaywallView: View {
                             .tint(.white)
                     }
 
-                    Text(isPurchasing ? "Открываем App Store…" : "Подписка")
-                        .font(.system(.headline, design: .rounded))
+                    Text(
+                        isPurchasing
+                            ? "Открываем App Store…"
+                            : "Продолжить"
+                    )
+                    .font(
+                        .system(
+                            .headline,
+                            design: .rounded
+                        )
+                    )
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 52)
             }
             .buttonStyle(.borderedProminent)
-            .tint(Color(red: 0.69, green: 0.34, blue: 0.24))
+            .tint(
+                Color(
+                    red: 0.69,
+                    green: 0.34,
+                    blue: 0.24
+                )
+            )
             .disabled(isPurchasing)
-            
-            legalLinksSection
-            
+
             if subscriptionManager.products.isEmpty,
                subscriptionManager.lastError != nil {
-                Text("Не удалось загрузить тарифы App Store. Проверьте интернет и попробуйте ещё раз.")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity)
+
+                Text(
+                    "Не удалось загрузить тарифы App Store. Проверьте интернет и попробуйте ещё раз."
+                )
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
             }
         }
         .padding(20)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26))
+        .background(
+            .ultraThinMaterial,
+            in: RoundedRectangle(
+                cornerRadius: 26
+            )
+        )
     }
+ 
+    private var paywallIntroText: String {
+        switch mode {
+        case .initialOffer:
+            return "Спокойная связь с близкими начинается здесь"
 
+        case .accessEnded:
+            return "Продолжите пользоваться MorningHello, чтобы:"
+        }
+    }
+    
     private var legalLinksSection: some View {
         VStack(spacing: 10) {
             Text(
@@ -260,8 +461,18 @@ struct SubscriptionPaywallView: View {
                     Text(plan.title)
                         .font(.system(.headline, design: .rounded))
                     Text(plan.subtitle)
-                        .font(.system(.footnote, design: .rounded))
+                        .font(
+                            .system(
+                                .footnote,
+                                design: .rounded
+                            )
+                        )
                         .foregroundStyle(.secondary)
+                        .fixedSize(
+                            horizontal: false,
+                            vertical: true
+                        )
+                        .layoutPriority(1)
                 }
 
                 Spacer()
@@ -329,5 +540,7 @@ struct SubscriptionPaywallView: View {
 }
 
 #Preview {
-    SubscriptionPaywallView()
+    SubscriptionPaywallView(
+        mode: .initialOffer
+    )
 }

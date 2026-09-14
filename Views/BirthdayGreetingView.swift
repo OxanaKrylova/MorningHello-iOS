@@ -166,7 +166,7 @@ struct BirthdayGreetingView: View {
                             showCustomMessageEditor = true
                         } label: {
                             Label(
-                                "Своё",
+                                "Напиши",
                                 systemImage: "pencil"
                             )
                             .foregroundColor(darkBrown)
@@ -180,7 +180,9 @@ struct BirthdayGreetingView: View {
                     }
                     .padding(.top, 2)
                     
-                    phrasePreview
+                    if !useCustomBirthdayMessage {
+                        phrasePreview
+                    }
                     
                     phraseNavigation
                     
@@ -350,6 +352,49 @@ struct BirthdayGreetingView: View {
                     startPoint: .top,
                     endPoint: .bottom
                 )
+
+                if useCustomBirthdayMessage {
+                    let trimmedMessage = customBirthdayMessage
+                        .trimmingCharacters(
+                            in: .whitespacesAndNewlines
+                        )
+
+                    if !trimmedMessage.isEmpty {
+                        Text(trimmedMessage)
+                            .font(
+                                .system(
+                                    size: 17,
+                                    weight: .semibold,
+                                    design: .rounded
+                                )
+                            )
+                            .foregroundColor(.white)
+                            .multilineTextAlignment(.center)
+                            .lineSpacing(3)
+                            .minimumScaleFactor(0.72)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 10)
+                            .frame(
+                                width: min(
+                                    geometry.size.width - 90,
+                                    220
+                                )
+                            )
+                            .background(
+                                .black.opacity(0.28)
+                            )
+                            .clipShape(
+                                RoundedRectangle(
+                                    cornerRadius: 16,
+                                    style: .continuous
+                                )
+                            )
+                            .position(
+                                x: geometry.size.width / 2,
+                                y: geometry.size.height * 0.20
+                            )
+                    }
+                }
             }
             .clipShape(
                 RoundedRectangle(
@@ -358,7 +403,7 @@ struct BirthdayGreetingView: View {
                 )
             )
         }
-        .frame(height: 150)
+        .frame(height: 300)
     }
     private var phrasePreview: some View {
         Text(birthdayMessage)
@@ -719,6 +764,12 @@ private struct BirthdayCustomMessageView: View {
                                     )
                                 )
                             }
+
+                            isUsingCustomMessage = !text
+                                .trimmingCharacters(
+                                    in: .whitespacesAndNewlines
+                                )
+                                .isEmpty
                         }
                 }
                 .frame(height: 100)
@@ -741,50 +792,32 @@ private struct BirthdayCustomMessageView: View {
                     alignment: .trailing
                 )
 
-                Button("Использовать пожелание") {
-                    let trimmed =
-                        text.trimmingCharacters(
-                            in: .whitespacesAndNewlines
-                        )
-
-                    guard !trimmed.isEmpty else {
-                        return
-                    }
-
-                    text = trimmed
-                    isUsingCustomMessage = true
-                    dismiss()
-                }
-                .buttonStyle(.borderedProminent)
-                .disabled(
-                    text.trimmingCharacters(
-                        in: .whitespacesAndNewlines
-                    ).isEmpty
-                )
             }
             .padding(20)
             .toolbar {
                 ToolbarItem(
                     placement: .topBarTrailing
                 ) {
-                    Button("Отмена") {
-                        dismiss()
-                    }
-                }
-
-                ToolbarItemGroup(
-                    placement: .keyboard
-                ) {
-                    Spacer()
-
                     Button("Готово") {
-                        isFocused = false
+                        finishEditing()
                     }
+                    .fontWeight(.semibold)
                 }
             }
             .onAppear {
                 isFocused = true
             }
         }
+    }
+
+    private func finishEditing() {
+        let trimmed = text.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+
+        text = trimmed
+        isUsingCustomMessage = !trimmed.isEmpty
+        isFocused = false
+        dismiss()
     }
 }

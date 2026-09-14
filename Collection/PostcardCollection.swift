@@ -12,7 +12,7 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
     case foodTable
     case coffee
     case cats
-    case autumn
+    case seasonal
     case harvest
     case vacation
     case fairyAnimals
@@ -48,7 +48,7 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
         case .cats:
             return "Коты"
 
-        case .autumn:
+        case .seasonal:
             return "Сезоны"
 
         case .harvest:
@@ -96,7 +96,7 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
         case .cats:
             return "pawprint.fill"
 
-        case .autumn:
+        case .seasonal:
             return "leaf.fill"
 
         case .harvest:
@@ -130,90 +130,95 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
         switch self {
             
         case .foodTable:
-            return (1...48).map {
+
+            var foodCards = (1...48).map {
                 "Sunday_\($0)"
             }
+
+            foodCards.append(
+                "holiday_octoberfest"
+            )
+
+            return foodCards
             
             
         case .coffee:
-            
-            return
-            (1...25).map {
+
+            var coffeeCards = (1...25).map {
                 "MondayWarm_\($0)"
             }
-            +
-            (1...24).map {
-                "MondayCold_\($0)"
-            }
-            +
-            ["autumn_wednesday"]
-            +
-            ["winter_saturday"]
-            +
-            ["winter_tuesday"]
+
+            coffeeCards.append(
+                contentsOf: (1...24).map {
+                    "MondayCold_\($0)"
+                }
+            )
+
+            coffeeCards.append(
+                contentsOf: [
+                    "autumn_wednesday",
+                    "winter_saturday",
+                    "winter_tuesday"
+                ]
+            )
+
+            return coffeeCards
             
         case .cats:
             
-            return (1...21).map {
-                "November_cat\($0)"}
+            return
+            (1...21).map {
+                "November_cat\($0)"
+            }
             +
-            ["holiday_cat"]
-            +
-            ["autumn_thursday"]
-            +
-            ["autumn_tuesday"]
-            +
-            ["spring_tuesday"]
-                        
-        case .autumn:
-
-            var autumnCards: [String] = (1...18).map {
+            [
+                "holiday_cat",
+                "autumn_thursday",
+                "autumn_tuesday",
+                "spring_tuesday"
+            ]
+        case .seasonal:
+            
+            var seasonalCards: [String] =
+            (1...18).map {
                 "September_\($0)"
             }
-
-            return (1...20).map {
-                "April\($0)"}
             
-            autumnCards.append(
-                "holiday_autumnal_equinox"
-            )
-
-            autumnCards.append(
-                "holiday_labor_day"
-            )
-
-            autumnCards.append(
-                "Holiday_Perceids_1"
+            seasonalCards.append(
+                contentsOf:
+                    (1...20).map {
+                        "April_\($0)"
+                    }
             )
             
-            autumnCards.append(
-                "Holiday_Perceids_2"
+            seasonalCards.append(
+                contentsOf: [
+                    "holiday_autumnal_equinox",
+                    "holiday_labor_day",
+                    "holiday_elderly_day",
+                    "Holiday_Perceids_1",
+                    "Holiday_Perceids_2",
+                    "Holiday_Perceids_3",
+                    "holiday_spring_beginning",
+                    "holiday_vernal_equinox",
+                    "spring_friday",
+                    "winter_friday",
+                    "holiday_fishman"
+                ]
             )
-            autumnCards.append(
-                "Holiday_Perceids_3"
-            )
-            autumnCards.append(
-                "holiday_spring_beginning"
-            )
-            autumnCards.append(
-                "holiday_vernal_equinox"
-            )
-            autumnCards.append(
-                "spring_friday"
-            )
-            autumnCards.append(
-                "winter_friday"
-            )
-            autumnCards.append(
-                "holiday_elderly_day"
-            )
-            return autumnCards
+
+            return seasonalCards
 
         case .harvest:
-            
             return (1...20).map {
                 "October_\($0)"
             }
+            +
+            ["holiday_mashrooms"]
+            +
+            ["holiday_orange"]
+            +
+            ["holiday_strawberry"]
             
             
         case .vacation:
@@ -225,34 +230,48 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
             
         case .fairyAnimals:
             
-            return (1...26).map {
+            var fairyCards = (1...26).map {
                 "December_\($0)"
             }
-            +
-            ["holiday_children"]
-            +
-            ["holiday_cosmonautics"]
-            +
-            ["holiday_Potter"]
-            +
-            ["Holiday_teddybear"]
+
+            fairyCards.append(
+                contentsOf: [
+                    "holiday_children",
+                    "holiday_cosmonautics",
+                    "holiday_Potter",
+                    "Holiday_teddybear"
+                ]
+            )
+
+            return fairyCards
             
         case .flowers:
-            
-            return (1...18).map {
+            var flowerCards = (1...18).map {
                 "March_\($0)"
             }
-            +
-            ["holiday_school_year"]
-            +
-            ["holiday_womens_day"]
-            +
-            ["summer_friday"]
-            +
-            ["summer_saturday"]
-            +
-            ["summer_thursday"]
-            
+
+            flowerCards.append(
+                contentsOf: (1...19).map {
+                    String(
+                        format: "May_%02d",
+                        $0
+                    )
+                }
+            )
+
+            flowerCards.append(
+                contentsOf: [
+                    "holiday_school_year",
+                    "holiday_womens_day",
+                    "summer_friday",
+                    "summer_saturday",
+                    "summer_thursday",
+                    "holiday_mimosa",
+                    "holiday_rose"
+                ]
+            )
+
+            return flowerCards
             
         case .sweetTable:
             

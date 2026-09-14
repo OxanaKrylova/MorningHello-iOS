@@ -20,8 +20,11 @@ struct PostcardScreen: View {
     private var isCustomMessageFocused: Bool
 
     @State
-    private var isCustomMessageEditorPresented = false
-    
+    private var showBreathingSquare = false
+
+    @State
+    private var showCustomMessageEditor = false
+
     private let customMessageLimit = 50
 
     var body: some View {
@@ -90,31 +93,52 @@ struct PostcardScreen: View {
                         )
                 }
 
-                // Поле собственного пожелания
-                customMessageEditor
-                    .frame(
-                        width: min(
-                            geometry.size.width - 48,
-                            200
+                let trimmedCustomMessage = customMessage
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+
+                if !trimmedCustomMessage.isEmpty {
+                    Text(trimmedCustomMessage)
+                        .font(
+                            .system(
+                                .title3,
+                                design: .rounded
+                            )
                         )
-                    )
-                    .position(
-                        x: geometry.size.width / 2,
-                        y: geometry.size.height * 0.78
-                    )
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(5)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 14)
+                        .frame(
+                            width: min(
+                                geometry.size.width - 48,
+                                340
+                            )
+                        )
+                        .background(.black.opacity(0.30))
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: 18,
+                                style: .continuous
+                            )
+                        )
+                        .position(
+                            x: geometry.size.width / 2,
+                            y: geometry.size.height * 0.68
+                        )
+                }
 
                 // Нижние кнопки
                 VStack {
                     Spacer()
 
-                    HStack(spacing: 32) {
+                    HStack(spacing: 14) {
                         Button {
                             isCustomMessageFocused = false
-
                             AppSoundPlayer.shared.play(
                                 .checkInSuccess
                             )
-
                             onHomeTap()
                         } label: {
                             Image(systemName: "house.fill")
@@ -129,6 +153,60 @@ struct PostcardScreen: View {
                                 )
                                 .clipShape(Circle())
                         }
+
+                        Button {
+                            AppSoundPlayer.shared.play(
+                                .openForm
+                            )
+                            showCustomMessageEditor = true
+                        } label: {
+                            VStack(spacing: 3) {
+                                Image(systemName: "pencil")
+                                    .font(.title3)
+
+                                Text("Напиши")
+                                    .font(
+                                        .system(
+                                            size: 11,
+                                            weight: .semibold,
+                                            design: .rounded
+                                        )
+                                    )
+                            }
+                            .foregroundColor(.white)
+                            .frame(
+                                width: 64,
+                                height: 64
+                            )
+                            .background(.ultraThinMaterial)
+                            .clipShape(Circle())
+                        }
+                        .accessibilityLabel(
+                            "Написать текст на открытке"
+                        )
+
+                        Button {
+                            isCustomMessageFocused = false
+                            AppSoundPlayer.shared.play(
+                                .openForm
+                            )
+                            showBreathingSquare = true
+                        } label: {
+                            Image(systemName: "wind")
+                                .font(.title2)
+                                .foregroundColor(.white)
+                                .frame(
+                                    width: 64,
+                                    height: 64
+                                )
+                                .background(
+                                    .ultraThinMaterial
+                                )
+                                .clipShape(Circle())
+                        }
+                        .accessibilityLabel(
+                            "Квадрат дыхания"
+                        )
 
                         Button {
                             isCustomMessageFocused = false
@@ -171,129 +249,115 @@ struct PostcardScreen: View {
             .keyboard,
             edges: .bottom
         )
-        .toolbar {
-            ToolbarItemGroup(
-                placement: .keyboard
-            ) {
-                Spacer()
-
-                Button("Готово") {
-                    isCustomMessageFocused = false
-                }
-            }
+        .fullScreenCover(
+            isPresented: $showBreathingSquare
+        ) {
+            BreathingSquareView()
+        }
+        .sheet(
+            isPresented: $showCustomMessageEditor
+        ) {
+            customMessageEditor
+                .presentationDetents([.medium])
+                .presentationDragIndicator(.visible)
         }
     }
 
     private var customMessageEditor: some View {
-        VStack(
-            alignment: .leading,
-            spacing: 10
-        ) {
-            HStack {
-                Text("Добавьте своё пожелание")
+        NavigationStack {
+            VStack(alignment: .leading, spacing: 12) {
+
+                Text("Напиши текст для открытки")
                     .font(
                         .system(
                             .headline,
                             design: .rounded
                         )
                     )
-                    .foregroundColor(.white)
+                    .foregroundStyle(.primary)
 
-                Spacer()
+                ZStack(alignment: .topLeading) {
 
-                Button {
-                    isCustomMessageFocused = false
-
-                    withAnimation(
-                        .easeInOut(duration: 0.25)
-                    ) {
-                        isCustomMessageEditorPresented = false
-                    }
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.title3)
-                        .foregroundColor(
-                            .white.opacity(0.85)
-                        )
-                }
-                .buttonStyle(.plain)
-            }
-
-            ZStack(alignment: .topLeading) {
-                if customMessage.isEmpty {
-                    Text("Напишите пару тёплых слов...")
-                        .font(
-                            .system(
-                                .body,
-                                design: .rounded
+                    if customMessage.isEmpty {
+                        Text("Напиши пару тёплых слов...")
+                            .font(
+                                .system(
+                                    .body,
+                                    design: .rounded
+                                )
                             )
-                        )
-                        .foregroundColor(
-                            .white.opacity(0.68)
-                        )
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 13)
-                        .allowsHitTesting(false)
-                }
+                            .foregroundStyle(.secondary)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 13)
+                            .allowsHitTesting(false)
+                    }
 
-                TextEditor(
-                    text: $customMessage
+                    TextEditor(
+                        text: $customMessage
+                    )
+                    .focused(
+                        $isCustomMessageFocused
+                    )
+                    .scrollContentBackground(.hidden)
+                    .background(Color.clear)
+                    .foregroundStyle(.primary)
+                    .font(
+                        .system(
+                            .body,
+                            design: .rounded
+                        )
+                    )
+                    .frame(height: 130)
+                    .padding(.horizontal, 4)
+                    .onChange(
+                        of: customMessage
+                    ) { _, newValue in
+                        limitCustomMessage(newValue)
+                    }
+                }
+                .background(Color.secondary.opacity(0.10))
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: 16,
+                        style: .continuous
+                    )
                 )
-                .focused(
-                    $isCustomMessageFocused
+
+                Text(
+                    "\(customMessage.count)/\(customMessageLimit)"
                 )
-                .scrollContentBackground(.hidden)
-                .background(Color.clear)
-                .foregroundColor(.white)
                 .font(
                     .system(
-                        .body,
+                        .caption,
                         design: .rounded
                     )
                 )
-                .multilineTextAlignment(.center)
-                .frame(height: 90)
-                .padding(.horizontal, 4)
-                .onChange(
-                    of: customMessage
-                ) { _, newValue in
-                    limitCustomMessage(newValue)
+                .foregroundStyle(.secondary)
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .trailing
+                )
+
+                Spacer()
+            }
+            .padding(20)
+            .navigationTitle("Текст открытки")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(
+                    placement: .topBarTrailing
+                ) {
+                    Button("Готово") {
+                        isCustomMessageFocused = false
+                        showCustomMessageEditor = false
+                    }
+                    .fontWeight(.semibold)
                 }
             }
-
-            Text(
-                "\(customMessage.count)/\(customMessageLimit)"
-            )
-            .font(
-                .system(
-                    .caption,
-                    design: .rounded
-                )
-            )
-            .foregroundColor(
-                .white.opacity(0.75)
-            )
-            .frame(
-                maxWidth: .infinity,
-                alignment: .trailing
-            )
+            .onAppear {
+                isCustomMessageFocused = true
+            }
         }
-        .padding(16)
-        .background(
-            .black.opacity(0.48)
-        )
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: 20,
-                style: .continuous
-            )
-        )
-        .shadow(
-            color: .black.opacity(0.24),
-            radius: 14,
-            x: 0,
-            y: 6
-        )
     }
 
     private func limitCustomMessage(

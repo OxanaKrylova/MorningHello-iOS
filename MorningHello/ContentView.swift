@@ -9,6 +9,8 @@ import SwiftUI
 import UIKit
 import UserNotifications
 import MessageUI
+import SwiftData
+
 enum AppBackground: String {
     case morning = "Primary_background_Morning"
     case day = "Primary_Background_Day"
@@ -42,7 +44,6 @@ struct ContentView: View {
     @State private var showContacts = false
     @State private var hasCheckedIn = false
     
-    @State private var showHolidaySettings = false
     @State private var showProfile = false
     @State private var showPostcard = false
     @State private var hasEmergencyContacts = false
@@ -53,10 +54,9 @@ struct ContentView: View {
     @State private var showEmergencyMessageAlert = false
     @State private var showEmergencyContactSelection = false
     @State private var showSystemShareSheet = false
-    @State private var showBirthdayGreeting = false
     @State private var customMessage = ""
-    @State private var showSubscription = false
     @State private var showSettings = false
+    @State private var showMoodCheckIn = false
     
     @State private var showPostcardCatalog = false
     @State private var isSendingHeartbeat = false
@@ -75,18 +75,7 @@ struct ContentView: View {
     @AppStorage("profile_display_name")
     private var displayName = ""
     @State private var hasCheckedProfileOnLaunch = false
-    // MARK: - Тест бесплатного периода
-    
-    @State private var isTrialActive = true
-    
-    @State private var trialEndDate: Date? =
-    Calendar.current.date(
-        byAdding: .day,
-        value: 3,
-        to: Date()
-    )
-    
-    
+
     struct SundayContent {
         let images: [String]
         let phrases: [String]
@@ -963,11 +952,7 @@ struct ContentView: View {
                             } else {
                                 Image(systemName: "heart.fill")
                                 
-                                Text(
-                                    isCheckInBlocked
-                                    ? "Я в порядке"
-                                    : "Я живу"
-                                )
+                                Text("Я в порядке")
                             }
                         }
                     }
@@ -1014,6 +999,39 @@ struct ContentView: View {
                             "Проверьте интернет и повторите попытку"
                         )
                     }
+
+                    HStack(spacing: 12) {
+                        Button {
+                            AppSoundPlayer.shared.play(
+                                .openForm
+                            )
+
+                            showPostcardCatalog = true
+                        } label: {
+                            mainActionLabel(
+                                title: "Открытки",
+                                subtitle: "Выбрать и отправить",
+                                systemImage: "photo.on.rectangle.angled"
+                            )
+                        }
+                        .buttonStyle(.plain)
+
+                        Button {
+                            AppSoundPlayer.shared.play(
+                                .openForm
+                            )
+
+                            showMoodCheckIn = true
+                        } label: {
+                            mainActionLabel(
+                                title: "Оценка",
+                                subtitle: "Уровень спокойствия",
+                                systemImage: "face.smiling"
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .frame(maxWidth: 340)
                     
                     Text(
                         "Если ты не нажмёшь кнопку в течение \(checkInIntervalText) – мы сообщим близким"
@@ -1118,183 +1136,6 @@ struct ContentView: View {
                     )
                 }
                 
-                Button {
-                    AppSoundPlayer.shared.play(
-                        .openForm
-                    )
-                    
-                    showBirthdayGreeting = true
-                } label: {
-                    Label(
-                        "Поздравить с днём рождения",
-                        systemImage: "birthday.cake.fill"
-                    )
-                    .font(
-                        .system(
-                            .subheadline,
-                            design: .rounded
-                        )
-                        .weight(.semibold)
-                    )
-                    .foregroundColor(
-                        Color(
-                            red: 0.12,
-                            green: 0.16,
-                            blue: 0.28
-                        )
-                    )
-                    .padding(.horizontal, 18)
-                    .padding(.vertical, 12)
-                    .background(.white.opacity(0.55))
-                    .clipShape(Capsule())
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                
-                HStack(spacing: 14) {
-                    Button {
-                        AppSoundPlayer.shared.play(
-                            .openForm
-                        )
-                        
-                        showContacts = true
-                    } label: {
-                        Label(
-                            "Контакты",
-                            systemImage: "person.2.fill"
-                        )
-                        .font(
-                            .system(
-                                .subheadline,
-                                design: .rounded
-                            )
-                            .weight(.semibold)
-                        )
-                        .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.28))
-                        .padding(.horizontal, 18)
-                        .padding(.vertical, 12)
-                        .background(.white.opacity(0.55))
-                        .clipShape(Capsule())
-                    }
-                    
-                    Button {
-                        AppSoundPlayer.shared.play(
-                            .openForm
-                        )
-                        
-                        showHolidaySettings = true
-                    } label: {
-                        Label(
-                            "Праздники",
-                            systemImage: "calendar"
-                        )
-                        .font(
-                            .system(
-                                .subheadline,
-                                design: .rounded
-                            )
-                            .weight(.semibold)
-                        )
-                        .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.28))
-                        .padding(.horizontal, 18)
-                        .padding(.vertical, 12)
-                        .background(.white.opacity(0.55))
-                        .clipShape(Capsule())
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                Button {
-                    AppSoundPlayer.shared.play(
-                        .openForm
-                    )
-                    
-                    showPostcardCatalog = true
-                } label: {
-                    Label(
-                        "Коллекция открыток",
-                        systemImage: "photo.on.rectangle.angled"
-                    )
-                    .font(
-                        .system(
-                            .subheadline,
-                            design: .rounded
-                        )
-                        .weight(.semibold)
-                    )
-                    .foregroundColor(Color(red: 0.12, green: 0.16, blue: 0.28))
-                    .padding(.horizontal, 18)
-                    .padding(.vertical, 12)
-                    .background(.white.opacity(0.55))
-                    .clipShape(Capsule())
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                HStack(spacing: 14) {
-                    Button {
-                        AppSoundPlayer.shared.play(
-                            .openForm
-                        )
-                        
-                        showProfile = true
-                    } label: {
-                        Label(
-                            "Профиль",
-                            systemImage: "person.crop.circle.fill"
-                        )
-                        .font(
-                            .system(
-                                .subheadline,
-                                design: .rounded
-                            )
-                            .weight(.semibold)
-                        )
-                        .foregroundColor(
-                            Color(
-                                red: 0.12,
-                                green: 0.16,
-                                blue: 0.28
-                            )
-                        )
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(
-                            Color.white.opacity(0.70)
-                        )
-                        .clipShape(Capsule())
-                    }
-                    
-                    Button {
-                        AppSoundPlayer.shared.play(
-                            .openForm
-                        )
-                        
-                        showSettings = true
-                    } label: {
-                        Label(
-                            "Настройки",
-                            systemImage: "gearshape.fill"
-                        )
-                        .font(
-                            .system(
-                                .subheadline,
-                                design: .rounded
-                            )
-                            .weight(.semibold)
-                        )
-                        .foregroundColor(
-                            Color(
-                                red: 0.12,
-                                green: 0.16,
-                                blue: 0.28
-                            )
-                        )
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(
-                            Color.white.opacity(0.70)
-                        )
-                        .clipShape(Capsule())
-                    }
-                }
-                .frame(maxWidth: 300)
             }
             .frame(
                 maxWidth: .infinity,
@@ -1303,7 +1144,100 @@ struct ContentView: View {
             )
             .padding(.horizontal, 20)
             .safeAreaPadding(.top, 28)
+
+            HStack {
+                Spacer()
+
+                Button {
+                    AppSoundPlayer.shared.play(
+                        .openForm
+                    )
+
+                    showSettings = true
+                } label: {
+                    Image(systemName: "gearshape.fill")
+                        .font(
+                            .system(
+                                size: 20,
+                                weight: .semibold
+                            )
+                        )
+                        .foregroundStyle(
+                            Color(
+                                red: 0.12,
+                                green: 0.16,
+                                blue: 0.28
+                            )
+                        )
+                        .frame(
+                            width: 48,
+                            height: 48
+                        )
+                        .background(
+                            .white.opacity(0.72)
+                        )
+                        .clipShape(Circle())
+                }
+                .accessibilityLabel("Настройки")
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.trailing, 58)
+            .safeAreaPadding(.top, 8)
         }
+    }
+
+    private func mainActionLabel(
+        title: String,
+        subtitle: String,
+        systemImage: String
+    ) -> some View {
+        VStack(spacing: 7) {
+            Image(systemName: systemImage)
+                .font(
+                    .system(
+                        size: 25,
+                        weight: .semibold
+                    )
+                )
+
+            Text(title)
+                .font(
+                    .system(
+                        .headline,
+                        design: .rounded
+                    )
+                    .weight(.semibold)
+                )
+
+            Text(subtitle)
+                .font(
+                    .system(
+                        .caption2,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+        .foregroundStyle(
+            Color(
+                red: 0.12,
+                green: 0.16,
+                blue: 0.28
+            )
+        )
+        .frame(
+            maxWidth: .infinity,
+            minHeight: 78
+        )
+        .background(.white.opacity(0.68))
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: 25,
+                style: .continuous
+            )
+        )
     }
         
         var timeGreeting: String {
@@ -1478,8 +1412,33 @@ struct ContentView: View {
                     phrase: phrase
                 )
             }
+            // 10. Май — обычные свободные дни месяца
+
+            if let mayIndex = ordinaryDayIndex(
+                for: Date(),
+                month: 5
+            ) {
+                let imageNumber = (mayIndex % 19) + 1
+                let imageName = String(
+                    format: "May_%02d",
+                    imageNumber
+                )
+
+                let phrase: String
+
+                if phrases.isEmpty {
+                    phrase = "Пусть этот майский день будет светлым и спокойным."
+                } else {
+                    phrase = phrases[mayIndex % phrases.count]
+                }
+
+                return SelectedPostcard(
+                    image: imageName,
+                    phrase: phrase
+                )
+            }
             
-            // 10. Декабрь
+            // 11. Декабрь
             
             if let december = decemberContent(),
                let image = december.images.first,
@@ -1492,7 +1451,7 @@ struct ContentView: View {
             }
             
             
-            // 11. Август — обычные дни месяца
+            // 12. Август — обычные дни месяца
             
             if let augustIndex =
                 augustOrdinaryDayIndex(
@@ -1738,12 +1697,9 @@ struct ContentView: View {
                         SettingsView()
                     }
                     .sheet(
-                        isPresented: $showBirthdayGreeting
+                        isPresented: $showMoodCheckIn
                     ) {
-                        BirthdayGreetingView(
-                            emergencyContacts:
-                                loadContactsForSharing()
-                        )
+                        MoodCheckInView()
                     }
                     .onChange(of: showContacts) { _, isShowing in
                         if !isShowing {
@@ -1753,11 +1709,13 @@ struct ContentView: View {
                     .onAppear {
                         openProfileIfNeeded()
                     }
-                    .sheet(isPresented: $showHolidaySettings) {
-                        HolidaySettingsView()
-                    }
                     .sheet(isPresented: $showProfile) {
                         ProfileView()
+                    }
+                    .onChange(of: showSettings) { _, isShowing in
+                        if !isShowing {
+                            checkEmergencyContacts()
+                        }
                     }
                     .onAppear {
                         showPostcard = false

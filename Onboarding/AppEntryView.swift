@@ -90,8 +90,9 @@ struct AppEntryView: View {
 
                 } else {
 
-                    SubscriptionPaywallView()
-                }
+                    SubscriptionPaywallView(
+                        mode: paywallMode
+                    )                }
                 // Онбординг закончен
             }
             .onAppear {
@@ -125,7 +126,17 @@ struct AppEntryView: View {
             checkInIntervalHours > 0 &&
             checkInIntervalConfirmed
         }
-        
+    
+    private var paywallMode: SubscriptionPaywallMode {
+        switch subscriptionManager.snapshot.status {
+        case .expired, .revoked, .billingRetry:
+            return .accessEnded
+
+        case .none, .trial, .active, .gracePeriod:
+            return .initialOffer
+        }
+    }
+    
         private func refreshEmergencyContacts() {
             guard let data =
                     UserDefaults.standard.data(

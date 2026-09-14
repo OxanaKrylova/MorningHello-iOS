@@ -8,6 +8,7 @@
 import Foundation
 import StoreKit
 import Combine
+import SwiftData
 
 @MainActor
 final class SubscriptionManager: ObservableObject {
@@ -34,12 +35,18 @@ final class SubscriptionManager: ObservableObject {
     private init() {}
 
     var hasActiveSubscription: Bool {
+
+    #if DEBUG
+        return true
+    #else
         switch snapshot.status {
         case .trial, .active, .gracePeriod:
             return true
+
         case .none, .billingRetry, .expired, .revoked:
             return false
         }
+    #endif
     }
 
     enum PurchaseOutcome: Equatable {

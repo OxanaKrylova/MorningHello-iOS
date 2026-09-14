@@ -7,20 +7,28 @@
 
 import AVFoundation
 import Foundation
+import SwiftData
+
 
 // MARK: - Ключи настроек приложения
-
-enum AppSettingsKeys {
-    static let soundsEnabled =
-        "app_sounds_enabled"
-}
-
-// MARK: - Звуки приложения
 
 enum AppSound: String, Hashable {
     case checkInSuccess = "checkin_success"
     case openForm = "open_form"
+
+    case breathingSquare1 =
+        "Breathing_Square_1"
+
+    case breathingSquare2 =
+        "Breathing_Square_2"
+
+    case breathingSquare3 =
+        "Breathing_Square_3"
+
+    case breathingSquare4 =
+        "Breathing_Square_4"
 }
+
 
 // MARK: - Проигрыватель звуков
 
@@ -53,19 +61,20 @@ final class AppSoundPlayer {
     // MARK: - Проверка настройки
 
     private var areSoundsEnabled: Bool {
-        let defaults = UserDefaults.standard
+        let defaults =
+            UserDefaults.standard
 
         guard defaults.object(
-            forKey: AppSettingsKeys.soundsEnabled
+            forKey: "app_sounds_enabled"
         ) != nil else {
             return true
         }
 
         return defaults.bool(
-            forKey: AppSettingsKeys.soundsEnabled
+            forKey: "app_sounds_enabled"
         )
     }
-
+    
     // MARK: - Воспроизведение
 
     func play(_ sound: AppSound) {

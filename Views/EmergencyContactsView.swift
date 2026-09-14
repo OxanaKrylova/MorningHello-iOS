@@ -1,5 +1,5 @@
 //
-//  EmergencyContactsView 2.swift
+//  EmergencyContactsView.swift
 //  MorningHello
 //
 //  Created by Oxana Krylova on 05/09/2026.
@@ -13,6 +13,7 @@
 //  Created by Oxana Krylova on 14/07/2026.
 //
 import SwiftUI
+import SwiftData
 
 struct EmergencyContactsView: View {
     

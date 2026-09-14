@@ -63,9 +63,6 @@ struct ProfileView: View {
     private var subscriptionManager = SubscriptionManager.shared
     
     @State
-    private var showFeedback = false
-    
-    @State
     private var showRequiredFieldAlert = false
     
     // MARK: Сохранённые данные
@@ -132,8 +129,6 @@ struct ProfileView: View {
                         checkInIntervalSection
                         
                         subscriptionSection
-                                                
-                        feedbackSection
                         
                         Text(
                             "Данные профиля сохраняются только на этом устройстве."
@@ -162,11 +157,6 @@ struct ProfileView: View {
         .task {
             await subscriptionManager
                 .refreshSubscriptionStatus()
-        }
-        .sheet(
-            isPresented: $showFeedback
-        ) {
-            FeedbackView()
         }
         .sheet(
             isPresented:
@@ -648,73 +638,6 @@ struct ProfileView: View {
         .frame(maxWidth: .infinity)
     }
     
-    // MARK: - Обратная связь
-
-    private var feedbackSection: some View {
-
-        VStack(spacing: 8) {
-
-            Button {
-                showFeedback = true
-            } label: {
-
-                HStack(spacing: 12) {
-
-                    Image(systemName: "envelope.fill")
-                        .foregroundColor(.orange)
-
-                    Text("Обратная связь")
-                        .fontWeight(.semibold)
-
-                    Spacer()
-
-                    Image(systemName: "chevron.right")
-                        .font(
-                            .system(
-                                size: 14,
-                                weight: .semibold
-                            )
-                        )
-                        .foregroundColor(.brown)
-                }
-                .font(
-                    .system(
-                        .title3,
-                        design: .rounded
-                    )
-                )
-                .foregroundColor(
-                    Color(
-                        red: 0.12,
-                        green: 0.16,
-                        blue: 0.28
-                    )
-                )
-                .padding(.horizontal, 20)
-                .frame(height: 62)
-                .background(.white.opacity(0.82))
-                .clipShape(
-                    RoundedRectangle(
-                        cornerRadius: 18,
-                        style: .continuous
-                    )
-                )
-            }
-            .buttonStyle(.plain)
-
-            Text("Я читаю все сообщения лично")
-                .font(
-                    .system(
-                        .footnote,
-                        design: .rounded
-                    )
-                )
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-        }
-        .profileCard()
-    }
-        
     // MARK: - Подписка
     private var subscriptionProfileText: String {
         let snapshot =
@@ -1025,4 +948,3 @@ struct ProfileView: View {
         let color: Color
     }
     
-

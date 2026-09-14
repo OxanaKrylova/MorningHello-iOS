@@ -13,6 +13,8 @@ struct PostcardCatalogView: View {
     @Environment(\.dismiss)
     private var dismiss
 
+    @State private var showBirthdayGreeting = false
+
     private let columns = [
         GridItem(
             .flexible()
@@ -33,6 +35,17 @@ struct PostcardCatalogView: View {
                         columns: columns,
                         spacing: 16
                     ) {
+
+                        Button {
+                            AppSoundPlayer.shared.play(
+                                .openForm
+                            )
+
+                            showBirthdayGreeting = true
+                        } label: {
+                            birthdayCollectionCard
+                        }
+                        .buttonStyle(.plain)
 
                         ForEach(
                             PostcardCollection.allCases
@@ -81,6 +94,79 @@ struct PostcardCatalogView: View {
                 }
             }
         }
+        .sheet(
+            isPresented: $showBirthdayGreeting
+        ) {
+            BirthdayGreetingView(
+                emergencyContacts:
+                    loadEmergencyContacts()
+            )
+        }
+    }
+
+    // MARK: - День рождения
+
+    private var birthdayCollectionCard: some View {
+        HStack(spacing: 16) {
+            Image("holiday_birthday_1")
+                .resizable()
+                .scaledToFill()
+                .frame(
+                    width: 120,
+                    height: 120
+                )
+                .clipped()
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: 18,
+                        style: .continuous
+                    )
+                )
+
+            VStack(
+                alignment: .leading,
+                spacing: 10
+            ) {
+                HStack(spacing: 8) {
+                    Image(
+                        systemName:
+                            "birthday.cake.fill"
+                    )
+                    .foregroundStyle(.orange)
+
+                    Text("День рождения")
+                        .font(
+                            .system(
+                                .title3,
+                                design: .rounded
+                            )
+                            .weight(.semibold)
+                        )
+                }
+
+                Text("25 открыток")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+
+                Spacer()
+            }
+            .padding(.vertical, 8)
+
+            Spacer()
+        }
+        .padding(12)
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+        .frame(height: 144)
+        .background(.white.opacity(0.70))
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: 22,
+                style: .continuous
+            )
+        )
     }
 
 
@@ -218,5 +304,29 @@ struct PostcardCatalogView: View {
             endPoint: .bottomTrailing
         )
         .ignoresSafeArea()
+    }
+
+    private func loadEmergencyContacts()
+        -> [EmergencyContact] {
+
+        guard let data = UserDefaults.standard.data(
+            forKey: "emergency_contacts"
+        ) else {
+            return []
+        }
+
+        do {
+            return try JSONDecoder().decode(
+                [EmergencyContact].self,
+                from: data
+            )
+        } catch {
+            print(
+                "Не удалось загрузить тревожные контакты:",
+                error.localizedDescription
+            )
+
+            return []
+        }
     }
 }
