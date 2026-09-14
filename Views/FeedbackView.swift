@@ -4,10 +4,10 @@
 //
 //  Created by Oxana Krylova on 23/07/2026.
 //
-
 import Foundation
 import SwiftUI
 import MessageUI
+import UIKit
 
 // MARK: - Тип обращения
 
@@ -55,7 +55,7 @@ private enum FeedbackType: String, Identifiable {
             return "Ошибка в приложении"
 
         case .message:
-            return "Сообщение разработчику"
+            return "От пользователя Morning Hello."
         }
     }
 
@@ -120,6 +120,7 @@ struct FeedbackView: View {
     @State private var unavailableMessage = ""
 
     private let developerEmail = "krylov.oxana@gmail.com"
+    private let developerWhatsAppNumber = "972537084224"
 
     var body: some View {
         ZStack {
@@ -195,8 +196,8 @@ struct FeedbackView: View {
                 openMailComposer()
             }
 
-            Button("Отправить через Сообщения") {
-                openMessageComposer()
+            Button("Отправить через WhatsApp") {
+                openWhatsApp()
             }
 
             Button("Отмена", role: .cancel) {
@@ -339,6 +340,44 @@ struct FeedbackView: View {
         }
 
         showMessageComposer = true
+    }
+    private func openWhatsApp() {
+        guard let feedback = selectedFeedback else {
+            return
+        }
+
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "wa.me"
+        components.path = "/\(developerWhatsAppNumber)"
+        components.queryItems = [
+            URLQueryItem(
+                name: "text",
+                value: feedback.textMessageBody
+            )
+        ]
+
+        guard let url = components.url else {
+            unavailableMessage =
+                "Не удалось сформировать сообщение для WhatsApp."
+            showUnavailableAlert = true
+            return
+        }
+
+        UIApplication.shared.open(
+            url,
+            options: [:]
+        ) { wasOpened in
+            guard !wasOpened else {
+                return
+            }
+
+            DispatchQueue.main.async {
+                unavailableMessage =
+                    "Не удалось открыть WhatsApp."
+                showUnavailableAlert = true
+            }
+        }
     }
 }
 
