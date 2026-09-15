@@ -47,6 +47,9 @@ enum ProfileSalutation: String, CaseIterable, Identifiable {
 
 struct ProfileView: View {
     @State private var showSubscription = false
+
+    @AppStorage("morninghello_usage_mode")
+    private var morningHelloUsageMode = ""
     
     @AppStorage("check_in_interval_hours")
     private var checkInIntervalHours = 0
@@ -61,6 +64,9 @@ struct ProfileView: View {
     
     @StateObject
     private var subscriptionManager = SubscriptionManager.shared
+    
+    @State
+    private var showFeedback = false
     
     @State
     private var showRequiredFieldAlert = false
@@ -129,6 +135,12 @@ struct ProfileView: View {
                         checkInIntervalSection
                         
                         subscriptionSection
+
+                        if SponsorshipFeatureConfiguration.isEnabled {
+                            sponsorshipSection
+                        }
+                                                
+                        feedbackSection
                         
                         Text(
                             "Данные профиля сохраняются только на этом устройстве."
@@ -157,6 +169,11 @@ struct ProfileView: View {
         .task {
             await subscriptionManager
                 .refreshSubscriptionStatus()
+        }
+        .sheet(
+            isPresented: $showFeedback
+        ) {
+            FeedbackView()
         }
         .sheet(
             isPresented:
@@ -638,59 +655,75 @@ struct ProfileView: View {
         .frame(maxWidth: .infinity)
     }
     
-    // MARK: - Подписка
-    private var subscriptionProfileText: String {
-        let snapshot =
-            subscriptionManager.snapshot
+    // MARK: - Обратная связь
 
-        let planName: String
+    private var feedbackSection: some View {
 
-        switch snapshot.productId {
-        case "com.morninghello.subscription.monthly":
-            planName = "Ежемесячная"
+        VStack(spacing: 8) {
 
-        case "com.morninghello.subscription.quarterly":
-            planName = "На 3 месяца"
+            Button {
+                showFeedback = true
+            } label: {
 
-        case "com.morninghello.subscription.annual":
-            planName = "Годовая"
+                HStack(spacing: 12) {
 
-        default:
-            planName = "Подписка не оформлена"
+                    Image(systemName: "envelope.fill")
+                        .foregroundColor(.orange)
+
+                    Text("Обратная связь")
+                        .fontWeight(.semibold)
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .font(
+                            .system(
+                                size: 14,
+                                weight: .semibold
+                            )
+                        )
+                        .foregroundColor(.brown)
+                }
+                .font(
+                    .system(
+                        .title3,
+                        design: .rounded
+                    )
+                )
+                .foregroundColor(
+                    Color(
+                        red: 0.12,
+                        green: 0.16,
+                        blue: 0.28
+                    )
+                )
+                .padding(.horizontal, 20)
+                .frame(height: 62)
+                .background(.white.opacity(0.82))
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: 18,
+                        style: .continuous
+                    )
+                )
+            }
+            .buttonStyle(.plain)
+
+            Text("Я читаю все сообщения лично")
+                .font(
+                    .system(
+                        .footnote,
+                        design: .rounded
+                    )
+                )
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
         }
-
-        let statusName: String
-
-        switch snapshot.status {
-        case .none:
-            statusName = "Не активна"
-
-        case .trial:
-            statusName = "Бесплатный период"
-
-        case .active:
-            statusName = "Активна"
-
-        case .gracePeriod:
-            statusName = "Льготный период"
-
-        case .billingRetry:
-            statusName = "Ошибка оплаты"
-
-        case .expired:
-            statusName = "Истекла"
-
-        case .revoked:
-            statusName = "Отменена"
-        }
-
-        if snapshot.productId == nil {
-            return statusName
-        }
-
-        return "\(planName) · \(statusName)"
+        .profileCard()
     }
-    
+        
+    // MARK: - Подписка
+
     private var subscriptionSection: some View {
 
         Button {
@@ -715,7 +748,7 @@ struct ProfileView: View {
                             )
                         )
 
-                    Text(subscriptionProfileText)
+                    Text("Годовая · Активна")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
@@ -740,6 +773,49 @@ struct ProfileView: View {
                 maxWidth: .infinity,
                 alignment: .leading
             )
+        }
+        .buttonStyle(.plain)
+        .profileCard()
+    }
+
+    private var sponsorshipSection: some View {
+        Button {
+            morningHelloUsageMode =
+                MorningHelloUsageMode.sponsor.rawValue
+            dismiss()
+        } label: {
+            HStack(spacing: 14) {
+                Image(systemName: "heart.fill")
+                    .font(.title3)
+                    .foregroundColor(.orange)
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Оплатить для близкого")
+                        .font(
+                            .system(
+                                .headline,
+                                design: .rounded
+                            )
+                        )
+
+                    Text("Приглашение и отдельная подписка")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(
+                        .system(
+                            size: 17,
+                            weight: .semibold
+                        )
+                    )
+                    .foregroundColor(.secondary)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .profileCard()

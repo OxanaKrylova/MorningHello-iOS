@@ -16,11 +16,12 @@ struct InternationalHolidayProvider {
         let calendar = Calendar.current
 
         let components = calendar.dateComponents(
-            [.month, .day],
+            [.year, .month, .day],
             from: date
         )
 
-        guard let month = components.month,
+        guard let year = components.year,
+              let month = components.month,
               let day = components.day else {
             return nil
         }
@@ -60,6 +61,20 @@ struct InternationalHolidayProvider {
             )
         }
 
+        // Открытие Венецианского карнавала 2027.
+        if year == 2027 && day == 23 && month == 1 {
+
+            return HolidayContent(
+                images: [
+                    "holiday_Venice"
+                ],
+                phrases: [
+                    "Пусть Венецианский карнавал добавит этому дню красоты, лёгкости и немного волшебства!"
+                ],
+                category: "Нейтральный"
+            )
+        }
+
         // День студента.
         if day == 25 && month == 1 {
 
@@ -84,6 +99,20 @@ struct InternationalHolidayProvider {
                 ],
                 phrases: [
                     "Во Всемирный день борьбы против рака желаю крепкого здоровья!"
+                ],
+                category: "Нейтральный"
+            )
+        }
+
+        // Открытие карнавальных парадов в Рио-де-Жанейро 2027.
+        if year == 2027 && day == 5 && month == 2 {
+
+            return HolidayContent(
+                images: [
+                    "holiday_Rio"
+                ],
+                phrases: [
+                    "Пусть карнавал в Рио наполнит этот день энергией, радостью и яркими красками!"
                 ],
                 category: "Нейтральный"
             )
@@ -144,97 +173,6 @@ struct InternationalHolidayProvider {
             )
         }
 
-        // День мимозы.
-        if day == 14 && month == 3 {
-            return HolidayContent(
-                images: [
-                    "holiday_mimosa"
-                ],
-                phrases: [
-                    "С Днём мимозы! Пусть этот день будет солнечным, тёплым и наполненным весенним настроением."
-                ],
-                category: "Нейтральный"
-            )
-        }
-
-        // День апельсина и лимона.
-        if day == 31 && month == 3 {
-            return HolidayContent(
-                images: [
-                    "holiday_orange"
-                ],
-                phrases: [
-                    "С Днём апельсина и лимона! Желаю яркого настроения, свежих впечатлений и приятных моментов."
-                ],
-                category: "Нейтральный"
-            )
-        }
-
-        // День розы.
-        if day == 21 && month == 5 {
-            return HolidayContent(
-                images: [
-                    "holiday_rose"
-                ],
-                phrases: [
-                    "С Днём розы! Пусть жизнь радует красотой, добрыми словами и приятными знаками внимания."
-                ],
-                category: "Нейтральный"
-            )
-        }
-
-        // День клубники.
-        if day == 27 && month == 5 {
-            return HolidayContent(
-                images: [
-                    "holiday_strawberry"
-                ],
-                phrases: [
-                    "С Днём клубники! Желаю сладкого настроения, солнечного дня и побольше радостных моментов."
-                ],
-                category: "Нейтральный"
-            )
-        }
-        
-        // День рыбака.
-        if day == 27 && month == 6 {
-            return HolidayContent(
-                images: [
-                    "holiday_fishman"
-                ],
-                phrases: [
-                    "С Днём рыбака! Желаю спокойного отдыха, хорошего клёва и приятных мгновений у воды."
-                ],
-                category: "Нейтральный"
-            )
-        }
-        
-        // Открытие Октоберфеста.
-        if day == 19 && month == 9 {
-            return HolidayContent(
-                images: [
-                    "holiday_octoberfest"
-                ],
-                phrases: [
-                    "С открытием Октоберфеста! Желаю праздничного настроения, тёплых встреч и весёлого дня."
-                ],
-                category: "Нейтральный"
-            )
-        }
-
-        // День грибника.
-        if day == 3 && month == 10 {
-            return HolidayContent(
-                images: [
-                    "holiday_mashrooms"
-                ],
-                phrases: [
-                    "С Днём грибника! Желаю тёплой осени, приятных прогулок и полной корзины хороших находок."
-                ],
-                category: "Нейтральный"
-            )
-        }
-        
         // День плюшевого мишки.
         if day == 27 && month == 10 {
 
@@ -315,6 +253,22 @@ struct InternationalHolidayProvider {
                 phrases: [
                     "С 8 Марта!",
                     "С Днем Весны и улыбок!"
+                ],
+                category: "Нейтральный"
+            )
+        }
+
+        // Церемония вручения премии «Оскар» 2027.
+        // В Калифорнии церемония начинается 14 марта,
+        // а в Израиле в это время уже наступает 15 марта.
+        if year == 2027 && day == 15 && month == 3 {
+
+            return HolidayContent(
+                images: [
+                    "holiday_Oscar"
+                ],
+                phrases: [
+                    "Пусть сегодняшний день подарит яркие впечатления и свой маленький повод для аплодисментов!"
                 ],
                 category: "Нейтральный"
             )

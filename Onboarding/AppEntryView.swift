@@ -41,6 +41,12 @@ struct AppEntryView: View {
 
     @StateObject
     private var subscriptionManager = SubscriptionManager.shared
+
+    @StateObject
+    private var accountSession = AccountSession.shared
+
+    @StateObject
+    private var sponsorshipStore = SponsorshipStore.shared
     
     @State private var hasEmergencyContacts = false
         
@@ -80,23 +86,45 @@ struct AppEntryView: View {
                         }
                     )
 
-                } else if !subscriptionManager.hasLoadedSubscriptionStatus {
+                } else if !subscriptionManager.hasLoadedSubscriptionStatus ||
+                            isLoadingSponsoredEntitlement {
 
                     ProgressView("Проверяем подписку…")
 
-                } else if subscriptionManager.hasActiveSubscription {
+                } else if subscriptionManager.hasActiveSubscription ||
+                            sponsorshipStore.sponsoredAccessIsActive {
 
                     ContentView()
+
+                } else if SponsorshipFeatureConfiguration.isEnabled &&
+                            sponsorshipStore.isWaitingForSponsorPurchase {
+
+                    SponsoredAccessWaitingView(
+                        session: accountSession,
+                        store: sponsorshipStore
+                    )
 
                 } else {
 
                     SubscriptionPaywallView(
                         mode: paywallMode
-                    )                }
+                    )
+                }
                 // Онбординг закончен
             }
             .onAppear {
                 refreshEmergencyContacts()
+            }
+            .task {
+                guard SponsorshipFeatureConfiguration.isEnabled,
+                      accountSession.account != nil
+                else {
+                    return
+                }
+
+                await sponsorshipStore.refresh(
+                    using: accountSession
+                )
             }
             .onReceive(
                 NotificationCenter.default.publisher(
@@ -105,6 +133,13 @@ struct AppEntryView: View {
             ) { _ in
                 refreshEmergencyContacts()
             }
+        }
+
+        private var isLoadingSponsoredEntitlement: Bool {
+            SponsorshipFeatureConfiguration.isEnabled &&
+            accountSession.account != nil &&
+            sponsorshipStore.isLoading &&
+            sponsorshipStore.entitlement == nil
         }
 
         private var isProfileComplete: Bool {
@@ -126,17 +161,16 @@ struct AppEntryView: View {
             checkInIntervalHours > 0 &&
             checkInIntervalConfirmed
         }
-    
-    private var paywallMode: SubscriptionPaywallMode {
-        switch subscriptionManager.snapshot.status {
-        case .expired, .revoked, .billingRetry:
-            return .accessEnded
 
-        case .none, .trial, .active, .gracePeriod:
-            return .initialOffer
+        private var paywallMode: SubscriptionPaywallMode {
+            switch subscriptionManager.snapshot.status {
+            case .expired, .revoked, .billingRetry:
+                return .accessEnded
+            case .none, .trial, .active, .gracePeriod:
+                return .initialOffer
+            }
         }
-    }
-    
+        
         private func refreshEmergencyContacts() {
             guard let data =
                     UserDefaults.standard.data(
