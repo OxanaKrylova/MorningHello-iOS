@@ -18,9 +18,7 @@ struct HeartbeatRequestBuilder {
         let defaults = UserDefaults.standard
 
         let savedName = defaults
-            .string(
-                forKey: "profile_display_name"
-            )?
+            .string(forKey: "profile_display_name")?
             .trimmingCharacters(
                 in: .whitespacesAndNewlines
             )
@@ -33,13 +31,7 @@ struct HeartbeatRequestBuilder {
                 in: .whitespacesAndNewlines
             )
 
-        let savedBirthDay = defaults.integer(
-            forKey: "profile_birth_day"
-        )
-
-        let savedBirthMonth = defaults.integer(
-            forKey: "profile_birth_month"
-        )
+        let gender: BackendGender?
 
         let validName: String?
 
@@ -59,8 +51,6 @@ struct HeartbeatRequestBuilder {
             validSalutation = nil
         }
 
-        let gender: BackendGender?
-
         switch validSalutation {
         case "Уважаемый":
             gender = .male
@@ -72,16 +62,6 @@ struct HeartbeatRequestBuilder {
             gender = nil
         }
 
-        let validBirthDay: Int? =
-            savedBirthDay > 0
-                ? savedBirthDay
-                : nil
-
-        let validBirthMonth: Int? =
-            savedBirthMonth > 0
-                ? savedBirthMonth
-                : nil
-
         let backendContacts = contacts.map {
             HeartbeatEmergencyContact(
                 from: $0
@@ -92,9 +72,7 @@ struct HeartbeatRequestBuilder {
             user: HeartbeatUser(
                 name: validName,
                 gender: gender,
-                salutation: validSalutation,
-                birthDay: validBirthDay,
-                birthMonth: validBirthMonth
+                salutation: validSalutation
             ),
             checkInIntervalHours: intervalHours,
             lastCheckIn: HeartbeatLastCheckIn(

@@ -21,6 +21,7 @@ struct SubscriptionView: View {
     @State private var showSubscriptionPlans = false
     @State private var isRestoring = false
     @State private var subscriptionMessage: String?
+    @State private var didCompletePurchase = false
 
     private var snapshot: SubscriptionSnapshot {
         subscriptionManager.snapshot
@@ -142,7 +143,11 @@ struct SubscriptionView: View {
         ) {
             SubscriptionPaywallView(
                 mode: paywallMode
-            )        }
+            ) {
+                didCompletePurchase = true
+                showSubscriptionPlans = false
+            }
+        }
         .task {
             await subscriptionManager
                 .refreshSubscriptionStatus()
@@ -470,6 +475,18 @@ struct SubscriptionView: View {
     private func refreshAfterPlanSelection() {
         Task {
             await subscriptionManager.refreshAndSync()
+
+            if didCompletePurchase {
+                if subscriptionManager.hasActiveSubscription {
+                    subscriptionMessage =
+                        "Подписка оформлена. Доступ к MorningHello активирован."
+                } else {
+                    subscriptionMessage =
+                        "Покупка завершена, но статус подписки ещё обновляется. Закройте и снова откройте раздел «Подписка»."
+                }
+
+                didCompletePurchase = false
+            }
         }
     }
 

@@ -15,6 +15,13 @@
 		290E2545304F655D000D4A2D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 290E2544304F655C000D4A2D /* StoreKit.framework */; };
 		291B30BD3050AD70002C3689 /* open_form.wav in Resources */ = {isa = PBXBuildFile; fileRef = 291B30BC3050AD70002C3689 /* open_form.wav */; };
 		292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B3D5430126C50005F4183 /* FeedbackView.swift */; };
+		293CF91F30594601002DACBD /* SponsorshipViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91D30594601002DACBD /* SponsorshipViews.swift */; };
+		293CF92030594601002DACBD /* SponsorshipAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91930594601002DACBD /* SponsorshipAPIClient.swift */; };
+		293CF92130594601002DACBD /* SponsoredPurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91830594601002DACBD /* SponsoredPurchaseManager.swift */; };
+		293CF92230594601002DACBD /* AccountSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91730594601002DACBD /* AccountSession.swift */; };
+		293CF92330594601002DACBD /* SponsorshipRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91B30594601002DACBD /* SponsorshipRootView.swift */; };
+		293CF92430594601002DACBD /* SponsorshipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91C30594601002DACBD /* SponsorshipStore.swift */; };
+		293CF92530594601002DACBD /* SponsorshipModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91A30594601002DACBD /* SponsorshipModels.swift */; };
 		296D4CC43046275F000248AD /* checkin_success.wav in Resources */ = {isa = PBXBuildFile; fileRef = 296D4CC23046210D000248AD /* checkin_success.wav */; };
 		296D4CC730462788000248AD /* AppSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D4CC630462788000248AD /* AppSoundPlayer.swift */; };
 		296D4CDB3046B1AC000248AD /* SettingsView..swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D4CDA3046B1AC000248AD /* SettingsView..swift */; };
@@ -87,6 +94,13 @@
 		290E2544304F655C000D4A2D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		291B30BC3050AD70002C3689 /* open_form.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = open_form.wav; sourceTree = "<group>"; };
 		292B3D5430126C50005F4183 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
+		293CF91730594601002DACBD /* AccountSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSession.swift; sourceTree = "<group>"; };
+		293CF91830594601002DACBD /* SponsoredPurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredPurchaseManager.swift; sourceTree = "<group>"; };
+		293CF91930594601002DACBD /* SponsorshipAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipAPIClient.swift; sourceTree = "<group>"; };
+		293CF91A30594601002DACBD /* SponsorshipModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipModels.swift; sourceTree = "<group>"; };
+		293CF91B30594601002DACBD /* SponsorshipRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipRootView.swift; sourceTree = "<group>"; };
+		293CF91C30594601002DACBD /* SponsorshipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipStore.swift; sourceTree = "<group>"; };
+		293CF91D30594601002DACBD /* SponsorshipViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipViews.swift; sourceTree = "<group>"; };
 		296D4CC23046210D000248AD /* checkin_success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = checkin_success.wav; sourceTree = "<group>"; };
 		296D4CC630462788000248AD /* AppSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSoundPlayer.swift; sourceTree = "<group>"; };
 		296D4CDA3046B1AC000248AD /* SettingsView..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView..swift; sourceTree = "<group>"; };
@@ -197,6 +211,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		293CF91E30594601002DACBD /* Sponsorship */ = {
+			isa = PBXGroup;
+			children = (
+				293CF91730594601002DACBD /* AccountSession.swift */,
+				293CF91830594601002DACBD /* SponsoredPurchaseManager.swift */,
+				293CF91930594601002DACBD /* SponsorshipAPIClient.swift */,
+				293CF91A30594601002DACBD /* SponsorshipModels.swift */,
+				293CF91B30594601002DACBD /* SponsorshipRootView.swift */,
+				293CF91C30594601002DACBD /* SponsorshipStore.swift */,
+				293CF91D30594601002DACBD /* SponsorshipViews.swift */,
+			);
+			path = Sponsorship;
+			sourceTree = "<group>";
+		};
 		296D4CC03046206C000248AD /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
@@ -251,6 +279,7 @@
 		29B441992F3BE23E00A4F417 = {
 			isa = PBXGroup;
 			children = (
+				293CF91E30594601002DACBD /* Sponsorship */,
 				296D4CC03046206C000248AD /* Sounds */,
 				29AFFFBF30390273007FE955 /* Collection */,
 				2976EF0F3027D63C00C0E8B1 /* Onboarding */,
@@ -609,6 +638,13 @@
 				29B76C80301BF9E100D1D295 /* InternationalHolidayProvider.swift in Sources */,
 				29EC92473053143A00D9BD71 /* MoodHistoryView.swift in Sources */,
 				29EC92483053143A00D9BD71 /* MoodCheckInView.swift in Sources */,
+				293CF91F30594601002DACBD /* SponsorshipViews.swift in Sources */,
+				293CF92030594601002DACBD /* SponsorshipAPIClient.swift in Sources */,
+				293CF92130594601002DACBD /* SponsoredPurchaseManager.swift in Sources */,
+				293CF92230594601002DACBD /* AccountSession.swift in Sources */,
+				293CF92330594601002DACBD /* SponsorshipRootView.swift in Sources */,
+				293CF92430594601002DACBD /* SponsorshipStore.swift in Sources */,
+				293CF92530594601002DACBD /* SponsorshipModels.swift in Sources */,
 				29EC92493053143A00D9BD71 /* MoodStore.swift in Sources */,
 				29EC924A3053143A00D9BD71 /* MoodLevel.swift in Sources */,
 				29EC924B3053143A00D9BD71 /* MoodEntry.swift in Sources */,
@@ -766,7 +802,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -782,7 +818,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oxana.morninghello;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -806,7 +842,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 23;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -822,7 +858,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oxana.morninghello;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

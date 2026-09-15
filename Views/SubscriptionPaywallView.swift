@@ -36,6 +36,10 @@ enum SubscriptionPaywallMode: Equatable {
 
 struct SubscriptionPaywallView: View {
     let mode: SubscriptionPaywallMode
+    var onPurchaseCompleted: () -> Void = {}
+
+    @Environment(\.dismiss)
+    private var dismiss
     
     private enum Plan: String, CaseIterable, Identifiable {
         case monthly = "com.morninghello.subscription.monthly"
@@ -530,8 +534,16 @@ struct SubscriptionPaywallView: View {
                 product: productToPurchase
             )
 
-            if outcome == .pending {
+            switch outcome {
+            case .purchased:
+                onPurchaseCompleted()
+                dismiss()
+
+            case .pending:
                 purchaseMessage = "Покупка ожидает подтверждения. Доступ включится автоматически после одобрения App Store."
+
+            case .cancelled:
+                break
             }
         } catch {
             purchaseMessage = error.localizedDescription

@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Пол пользователя для backend
+// MARK: - Пол пользователя для бэкенда
 
 enum BackendGender: String, Codable {
     case male
@@ -27,14 +27,12 @@ struct HeartbeatRequest: Encodable {
 }
 
 
-// MARK: - Профиль пользователя
+// MARK: - Пользователь
 
 struct HeartbeatUser: Encodable {
     let name: String?
     let gender: BackendGender?
     let salutation: String?
-    let birthDay: Int?
-    let birthMonth: Int?
 }
 
 
@@ -60,7 +58,9 @@ struct HeartbeatEmergencyContact: Encodable {
 
 extension HeartbeatEmergencyContact {
 
-    init(from contact: EmergencyContact) {
+    init(
+        from contact: EmergencyContact
+    ) {
         let firstName = contact.name
             .trimmingCharacters(
                 in: .whitespacesAndNewlines
