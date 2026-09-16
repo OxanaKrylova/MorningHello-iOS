@@ -1,7 +1,6 @@
 import Foundation
 import SwiftData
 import Combine
-import SwiftData
 
 final class MoodStore: ObservableObject {
     @Published private(set) var todayEntry: MoodEntry?
@@ -28,7 +27,9 @@ final class MoodStore: ObservableObject {
             )
             errorMessage = nil
         } catch {
-            errorMessage = "Не удалось загрузить сегодняшнюю отметку."
+            errorMessage = L10n.text(
+                "Не удалось загрузить сегодняшнюю отметку."
+            )
         }
     }
 
@@ -39,7 +40,9 @@ final class MoodStore: ObservableObject {
         at date: Date = Date()
     ) -> Bool {
         guard let repository else {
-            errorMessage = "Хранилище состояний ещё не готово."
+            errorMessage = L10n.text(
+                "Хранилище состояний ещё не готово."
+            )
             return false
         }
 
@@ -53,7 +56,9 @@ final class MoodStore: ObservableObject {
             showSaveConfirmation()
             return true
         } catch {
-            errorMessage = "Не удалось сохранить состояние. Попробуйте ещё раз."
+            errorMessage = L10n.text(
+                "Не удалось сохранить состояние. Попробуйте ещё раз."
+            )
             return false
         }
     }
@@ -78,7 +83,9 @@ final class MoodStore: ObservableObject {
             value: 1,
             to: startOfToday
         ) else {
-            errorMessage = "Не удалось определить период истории."
+            errorMessage = L10n.text(
+                "Не удалось определить период истории."
+            )
             return
         }
 
@@ -89,7 +96,9 @@ final class MoodStore: ObservableObject {
             )
             errorMessage = nil
         } catch {
-            errorMessage = "Не удалось загрузить историю состояний."
+            errorMessage = L10n.text(
+                "Не удалось загрузить историю состояний."
+            )
         }
     }
 
@@ -102,7 +111,9 @@ final class MoodStore: ObservableObject {
             history = []
             errorMessage = nil
         } catch {
-            errorMessage = "Не удалось удалить историю состояний."
+            errorMessage = L10n.text(
+                "Не удалось удалить историю состояний."
+            )
         }
     }
 

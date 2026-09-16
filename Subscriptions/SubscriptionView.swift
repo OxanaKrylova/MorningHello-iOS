@@ -7,7 +7,6 @@
 
 import SwiftUI
 import StoreKit
-import SwiftData
 
 struct SubscriptionView: View {
 
@@ -21,7 +20,6 @@ struct SubscriptionView: View {
     @State private var showSubscriptionPlans = false
     @State private var isRestoring = false
     @State private var subscriptionMessage: String?
-    @State private var didCompletePurchase = false
 
     private var snapshot: SubscriptionSnapshot {
         subscriptionManager.snapshot
@@ -79,21 +77,9 @@ struct SubscriptionView: View {
     private var subscriptionBackground: some View {
         LinearGradient(
             colors: [
-                Color(
-                    red: 1.00,
-                    green: 0.96,
-                    blue: 0.92
-                ),
-                Color(
-                    red: 1.00,
-                    green: 0.91,
-                    blue: 0.88
-                ),
-                Color(
-                    red: 0.98,
-                    green: 0.95,
-                    blue: 0.89
-                )
+                AppAdaptiveColor.background,
+                AppAdaptiveColor.secondaryBackground,
+                AppAdaptiveColor.groupedBackground
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -137,25 +123,13 @@ struct SubscriptionView: View {
         .manageSubscriptionsSheet(
             isPresented: $showManageSubscriptions
         )
-        .onChange(of: showManageSubscriptions) { oldValue, newValue in
-            guard oldValue, !newValue else {
-                return
-            }
-
-            Task {
-                await subscriptionManager.refreshAndSync()
-            }
-        }
         .sheet(
             isPresented: $showSubscriptionPlans,
             onDismiss: refreshAfterPlanSelection
         ) {
             SubscriptionPaywallView(
                 mode: paywallMode
-            ) {
-                didCompletePurchase = true
-                showSubscriptionPlans = false
-            }
+            )
         }
         .task {
             await subscriptionManager
@@ -181,45 +155,14 @@ struct SubscriptionView: View {
                 subscriptionMessage = nil
             }
         } message: {
-            Text(subscriptionMessage ?? "")
+            Text(L10n.text(subscriptionMessage ?? ""))
         }
     }
 
-    private func russianDateString(
-        from date: Date
-    ) -> String {
-        let formatter = DateFormatter()
-
-        formatter.locale = Locale(
-            identifier: "ru_RU"
-        )
-
-        formatter.calendar = Calendar(
-            identifier: .gregorian
-        )
-
-        formatter.dateFormat =
-            "d MMMM yyyy"
-
-        return formatter.string(
-            from: date
-        )
-    }
-    
-    private var paywallMode: SubscriptionPaywallMode {
-        switch snapshot.status {
-        case .expired, .revoked, .billingRetry:
-            return .accessEnded
-
-        case .none, .trial, .active, .gracePeriod:
-            return .initialOffer
-        }
-    }
-    
     private var currentSubscriptionCard: some View {
         VStack(
             alignment: .leading,
-            spacing: 12
+            spacing: 16
         ) {
             HStack {
                 VStack(
@@ -234,23 +177,19 @@ struct SubscriptionView: View {
                             )
                         )
 
-                    Text(planName)
+                    Text(L10n.text(planName))
                         .font(
                             .system(
-                                size: 24,
+                                size: 30,
                                 weight: .bold,
                                 design: .rounded
                             )
                         )
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.75)
-                        .allowsTightening(true)
-                        .layoutPriority(1)
                 }
 
                 Spacer()
 
-                Text(statusText)
+                Text(L10n.text(statusText))
                     .font(
                         .system(
                             .subheadline,
@@ -265,10 +204,6 @@ struct SubscriptionView: View {
                     )
                     .foregroundColor(statusColor)
                     .clipShape(Capsule())
-                    .fixedSize(
-                        horizontal: true,
-                        vertical: false
-                    )
             }
 
             Divider()
@@ -285,12 +220,13 @@ struct SubscriptionView: View {
                     Spacer()
 
                     Text(
-                        russianDateString(
-                            from: expirationDate
-                        )
+                        expirationDate,
+                        format: .dateTime
+                            .day()
+                            .month(.wide)
+                            .year()
                     )
                     .fontWeight(.semibold)
-                    .multilineTextAlignment(.trailing)
                 }
             } else {
                 HStack {
@@ -310,7 +246,7 @@ struct SubscriptionView: View {
 
                 Spacer()
 
-                Text(autoRenewText)
+                Text(L10n.text(autoRenewText))
                     .fontWeight(.semibold)
             }
         }
@@ -319,9 +255,7 @@ struct SubscriptionView: View {
             maxWidth: .infinity,
             alignment: .leading
         )
-        .background(
-            .white.opacity(0.72)
-        )
+        .background(AppAdaptiveColor.secondaryBackground)
         .clipShape(
             RoundedRectangle(
                 cornerRadius: 28,
@@ -334,6 +268,15 @@ struct SubscriptionView: View {
             x: 0,
             y: 4
         )
+    }
+
+    private var paywallMode: SubscriptionPaywallMode {
+        switch snapshot.status {
+        case .expired, .revoked, .billingRetry:
+            return .accessEnded
+        case .none, .trial, .active, .gracePeriod:
+            return .initialOffer
+        }
     }
 
     private var actionsSection: some View {
@@ -402,7 +345,7 @@ struct SubscriptionView: View {
                 .font(.title3)
                 .foregroundColor(imageColor)
 
-            Text(title)
+            Text(L10n.text(title))
                 .font(
                     .system(
                         .headline,
@@ -442,31 +385,6 @@ struct SubscriptionView: View {
             Text(
                 "Удаление приложения MorningHello не отменяет подписку и не останавливает серверный мониторинг."
             )
-
-            Divider()
-                .padding(.vertical, 2)
-
-            Link(
-                destination: URL(
-                    string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
-                )!
-            ) {
-                Label(
-                    "Условия использования",
-                    systemImage: "doc.text"
-                )
-            }
-
-            Link(
-                destination: URL(
-                    string: "https://www.morninghelloapp.com/privacy-policy"
-                )!
-            ) {
-                Label(
-                    "Политика конфиденциальности",
-                    systemImage: "hand.raised"
-                )
-            }
         }
         .font(.footnote)
         .foregroundColor(.secondary)
@@ -484,18 +402,6 @@ struct SubscriptionView: View {
     private func refreshAfterPlanSelection() {
         Task {
             await subscriptionManager.refreshAndSync()
-
-            if didCompletePurchase {
-                if subscriptionManager.hasActiveSubscription {
-                    subscriptionMessage =
-                        "Подписка оформлена. Доступ к MorningHello активирован."
-                } else {
-                    subscriptionMessage =
-                        "Покупка завершена, но статус подписки ещё обновляется. Закройте и снова откройте раздел «Подписка»."
-                }
-
-                didCompletePurchase = false
-            }
         }
     }
 

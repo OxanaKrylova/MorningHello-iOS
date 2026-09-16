@@ -70,11 +70,7 @@ struct MoodHistoryView: View {
                 .padding(20)
             }
             .background(
-                Color(
-                    red: 1.00,
-                    green: 0.96,
-                    blue: 0.88
-                )
+                AppAdaptiveColor.groupedBackground
                 .ignoresSafeArea()
             )
             .navigationTitle("История спокойствия")
@@ -135,7 +131,7 @@ struct MoodHistoryView: View {
                             .accessibilityHidden(true)
                     }
                     .padding(14)
-                    .background(.white.opacity(0.78))
+                    .background(AppAdaptiveColor.secondaryBackground)
                     .clipShape(
                         RoundedRectangle(
                             cornerRadius: 16,
@@ -144,7 +140,11 @@ struct MoodHistoryView: View {
                     )
                     .accessibilityElement(children: .ignore)
                     .accessibilityLabel(
-                        "\(formattedDate(entry.recordedAt)), состояние «\(level.title)»"
+                        L10n.format(
+                            "%@, состояние «%@»",
+                            formattedDate(entry.recordedAt),
+                            level.title
+                        )
                     )
                 }
             }
@@ -153,7 +153,7 @@ struct MoodHistoryView: View {
 
     private func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.locale = AppLanguage.selected.locale
         formatter.timeZone = .current
         formatter.dateStyle = .long
         formatter.timeStyle = .none

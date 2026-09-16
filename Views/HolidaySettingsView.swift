@@ -29,11 +29,7 @@ struct HolidaySettingsView: View {
 
     var body: some View {
         ZStack {
-            Color(
-                red: 1.0,
-                green: 0.95,
-                blue: 0.88
-            )
+            AppAdaptiveColor.warmFormBackground
             .ignoresSafeArea()
 
             ScrollViewReader { proxy in
@@ -61,7 +57,7 @@ struct HolidaySettingsView: View {
                                     design: .rounded
                                 )
                             )
-                            .foregroundColor(.brown)
+                            .foregroundColor(AppAdaptiveColor.text)
                             .multilineTextAlignment(.center)
 
                         categorySelectionCard
@@ -107,14 +103,12 @@ struct HolidaySettingsView: View {
                                 weight: .semibold
                             )
                         )
-                        .foregroundColor(.brown)
+                        .foregroundColor(AppAdaptiveColor.text)
                         .frame(
                             width: 38,
                             height: 38
                         )
-                        .background(
-                            .white.opacity(0.7)
-                        )
+            .background(AppAdaptiveColor.warmCardBackground)
                         .clipShape(Circle())
                 }
             }
@@ -140,11 +134,7 @@ struct HolidaySettingsView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
                 .background(
-                    Color(
-                        red: 0.55,
-                        green: 0.30,
-                        blue: 0.14
-                    )
+                    Color(uiColor: .systemBrown)
                 )
                 .clipShape(
                     RoundedRectangle(
@@ -183,9 +173,7 @@ struct HolidaySettingsView: View {
         }
         .padding(.horizontal, 22)
         .padding(.vertical, 18)
-        .background(
-            .white.opacity(0.72)
-        )
+        .background(AppAdaptiveColor.warmCardBackground)
         .clipShape(
             RoundedRectangle(
                 cornerRadius: 28,
@@ -204,7 +192,7 @@ struct HolidaySettingsView: View {
             isOn: isOn
         ) {
             Label(
-                title,
+                L10n.text(title),
                 systemImage: systemImage
             )
             .font(
@@ -214,7 +202,7 @@ struct HolidaySettingsView: View {
                 )
                 .weight(.semibold)
             )
-            .foregroundColor(.brown)
+            .foregroundColor(AppAdaptiveColor.text)
         }
         .tint(.green)
     }
@@ -252,9 +240,7 @@ struct HolidaySettingsView: View {
                 design: .rounded
             )
         )
-        .foregroundColor(
-            .brown.opacity(0.68)
-        )
+        .foregroundColor(AppAdaptiveColor.secondaryText)
         .multilineTextAlignment(.center)
         .padding(.horizontal, 34)
     }
@@ -277,7 +263,7 @@ struct HolidaySettingsView: View {
                 .orange.opacity(0.85)
             )
 
-            Text(text)
+            Text(L10n.text(text))
         }
     }
 
@@ -317,9 +303,11 @@ struct HolidaySettingsView: View {
                 )
 
                 Text(
-                    showDetails
-                    ? "Скрыть список праздников"
-                    : "Полный список праздников"
+                    L10n.text(
+                        showDetails
+                        ? "Скрыть список праздников"
+                        : "Полный список праздников"
+                    )
                 )
 
                 Image(
@@ -336,14 +324,12 @@ struct HolidaySettingsView: View {
                 )
                 .weight(.semibold)
             )
-            .foregroundColor(.brown)
+            .foregroundColor(AppAdaptiveColor.text)
             .frame(
                 maxWidth: .infinity
             )
             .padding(.vertical, 15)
-            .background(
-                .white.opacity(0.68)
-            )
+            .background(AppAdaptiveColor.warmCardBackground)
             .clipShape(Capsule())
         }
         .padding(.horizontal, 38)
@@ -426,14 +412,14 @@ struct HolidaySettingsView: View {
                     )
                     .foregroundColor(.orange)
 
-                    Text(title)
+                    Text(L10n.text(title))
                         .font(
                             .system(
                                 .headline,
                                 design: .rounded
                             )
                         )
-                        .foregroundColor(.brown)
+                        .foregroundColor(AppAdaptiveColor.text)
 
                     Text("\(holidays.count)")
                         .font(
@@ -443,9 +429,7 @@ struct HolidaySettingsView: View {
                             )
                             .weight(.bold)
                         )
-                        .foregroundColor(
-                            .brown.opacity(0.65)
-                        )
+                        .foregroundColor(AppAdaptiveColor.secondaryText)
                         .padding(
                             .horizontal,
                             9
@@ -475,9 +459,7 @@ struct HolidaySettingsView: View {
                             weight: .bold
                         )
                     )
-                    .foregroundColor(
-                        .brown.opacity(0.65)
-                    )
+                    .foregroundColor(AppAdaptiveColor.secondaryText)
                 }
                 .padding(
                     .horizontal,
@@ -530,10 +512,8 @@ struct HolidaySettingsView: View {
                                 alignment: .trailing
                             )
 
-                            Text(holiday)
-                                .foregroundColor(
-                                    .brown.opacity(0.82)
-                                )
+                            Text(L10n.text(holiday))
+                                .foregroundColor(AppAdaptiveColor.text)
                                 .frame(
                                     maxWidth:
                                         .infinity,
@@ -571,9 +551,7 @@ struct HolidaySettingsView: View {
                 )
             }
         }
-        .background(
-            .white.opacity(0.72)
-        )
+        .background(AppAdaptiveColor.warmCardBackground)
         .clipShape(
             RoundedRectangle(
                 cornerRadius: 24,
@@ -611,19 +589,19 @@ struct HolidaySettingsView: View {
         "2 июля — Международный день собак",
         "4 июля — День независимости США",
         "14 июля — День взятия Бастилии",
-        "30 июля — Международный день дружбы",
-        "31 июля — День рождения Гарри Поттера",
+        "30 июля - международный день дружбы",
+        "31 июля - день рождения Гарри Поттера",
         "8 августа — Всемирный день кошек",
-        "11–13 августа — поток Персеид",
+        "11-13 августа - персеиды",
         "1 сентября — День знаний",
         "5 сентября — Международный день благотворительности",
-        "15 сентября — день рождения Агаты Кристи",
-        "22 сентября — Осеннее равноденствие",
+        "15 сентября - день рождения Агаты Кристи",
         "19 сентября - Открытие Октоберфеста",
+        "22 сентября — Осеннее равноденствие",
         "1 октября — День пожилых людей",
         "3 октября - День грибника",
-        "27 октября — День плюшевого мишки",
-        "11 ноября — Всемирный День шопинга",
+        "27 октября - день плюшевого мишки",
+        "11 ноября — Всемирный день шопинга",
         "1 декабря — Начало календарной зимы"
     ]
 
@@ -693,7 +671,6 @@ struct HolidaySettingsView: View {
         "Ту би-Шват — Новый год деревьев",
         "Тиша бе-Ав",
         "Симха Тора",
-        "День Алии",
         "Пост Гедальи",
         "Пост Десятое тевета",
         "Пост Семнадцатое тамуза",

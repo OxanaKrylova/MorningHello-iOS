@@ -9,17 +9,8 @@ struct MoodCheckInView: View {
     @State private var showHistory = false
     @State private var showBreathingSquare = false
 
-    private let backgroundColor = Color(
-        red: 1.00,
-        green: 0.96,
-        blue: 0.88
-    )
-
-    private let textColor = Color(
-        red: 0.12,
-        green: 0.16,
-        blue: 0.28
-    )
+    private let backgroundColor = AppAdaptiveColor.warmFormBackground
+    private let textColor = AppAdaptiveColor.text
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -49,7 +40,9 @@ struct MoodCheckInView: View {
                         }
 
                         if let selectedLevel = store.todayEntry?.moodLevel {
-                            Text("\(selectedLevel.rawValue) – \(selectedLevel.title)")
+                            Text(
+                                "\(selectedLevel.rawValue) – \(selectedLevel.title)"
+                            )
                                 .font(
                                     .system(
                                         size: 22,
@@ -97,7 +90,10 @@ struct MoodCheckInView: View {
                                 .foregroundStyle(.red)
                                 .multilineTextAlignment(.center)
                                 .accessibilityLabel(
-                                    "Ошибка. \(errorMessage)"
+                                    L10n.format(
+                                        "Ошибка. %@",
+                                        errorMessage
+                                    )
                                 )
                         }
 
@@ -184,15 +180,15 @@ struct MoodCheckInView: View {
                             weight: .bold
                         )
                     )
-                    .foregroundStyle(Color.brown.opacity(0.82))
+                    .foregroundStyle(AppAdaptiveColor.text)
                     .frame(
                         width: 46,
                         height: 46
                     )
-                    .background(.white.opacity(0.72))
+                    .background(AppAdaptiveColor.secondaryBackground)
                     .clipShape(Circle())
                     .shadow(
-                        color: .brown.opacity(0.08),
+                        color: AppAdaptiveColor.separator.opacity(0.20),
                         radius: 7,
                         x: 0,
                         y: 3
@@ -214,7 +210,7 @@ struct MoodCheckInView: View {
                     .font(.system(size: 24, weight: .semibold))
                     .foregroundStyle(.orange)
 
-                Text(title)
+                Text(L10n.text(title))
                     .font(
                         .system(
                             .headline,
@@ -232,7 +228,7 @@ struct MoodCheckInView: View {
                 minHeight: 82
             )
             .padding(.horizontal, 8)
-            .background(.white.opacity(0.72))
+            .background(AppAdaptiveColor.secondaryBackground)
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: 22,
@@ -240,7 +236,7 @@ struct MoodCheckInView: View {
                 )
             )
             .shadow(
-                color: .brown.opacity(0.06),
+                color: AppAdaptiveColor.separator.opacity(0.20),
                 radius: 8,
                 x: 0,
                 y: 4
@@ -290,7 +286,7 @@ struct MoodCheckInView: View {
         .background {
             LinearGradient(
                 colors: [
-                    .white.opacity(0.92),
+                    AppAdaptiveColor.secondaryBackground,
                     level.color.opacity(0.24)
                 ],
                 startPoint: .topLeading,
@@ -350,8 +346,16 @@ struct MoodCheckInView: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(level.accessibilityText)
-        .accessibilityValue(isSelected ? "Выбрано" : "Не выбрано")
-        .accessibilityHint("Дважды коснитесь, чтобы сохранить уровень спокойствия на сегодня")
+        .accessibilityValue(
+            isSelected
+                ? L10n.text("Выбрано")
+                : L10n.text("Не выбрано")
+        )
+        .accessibilityHint(
+            L10n.text(
+                "Дважды коснитесь, чтобы сохранить уровень спокойствия на сегодня"
+            )
+        )
     }
 }
 
@@ -455,6 +459,6 @@ private enum CalmnessAdvice {
             daySeed + level.rawValue * 17
         ) % texts.count
 
-        return texts[index]
+        return L10n.text(texts[index])
     }
 }

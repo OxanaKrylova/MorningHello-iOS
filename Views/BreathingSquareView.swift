@@ -5,29 +5,15 @@
 
 import Foundation
 import SwiftUI
-import SwiftData
 
 struct BreathingSquareView: View {
 
     @Environment(\.dismiss)
     private var dismiss
 
-    @State private var cycleStartDate = Date()
-
-    @AppStorage(
-        "breathing_square_sound_enabled"
-    )
-    private var isBreathingSoundEnabled = false
-
-    @AppStorage(
-        "breathing_square_sound_variant"
-    )
-    private var breathingSoundVariant = 1
-
     @State
-    private var breathingSoundTask:
-        Task<Void, Never>?
-    
+    private var cycleStartDate = Date()
+
     private let phaseDuration: TimeInterval = 4
     private let cycleDuration: TimeInterval = 16
 
@@ -48,18 +34,14 @@ struct BreathingSquareView: View {
                             design: .rounded
                         )
                     )
-                    .foregroundColor(
-                        .brown.opacity(0.82)
-                    )
+                    .foregroundColor(AppAdaptiveColor.text)
                     .multilineTextAlignment(.center)
                     .fixedSize(
                         horizontal: false,
                         vertical: true
                     )
                     .padding(18)
-                    .background(
-                        .white.opacity(0.72)
-                    )
+                    .background(AppAdaptiveColor.secondaryBackground)
                     .clipShape(
                         RoundedRectangle(
                             cornerRadius: 22,
@@ -68,8 +50,6 @@ struct BreathingSquareView: View {
                     )
                     .padding(.horizontal, 22)
 
-                    soundSettingsCard
-                    
                     TimelineView(
                         .animation(
                             minimumInterval: 1.0 / 30.0
@@ -100,9 +80,7 @@ struct BreathingSquareView: View {
                             design: .rounded
                         )
                     )
-                    .foregroundColor(
-                        .brown.opacity(0.72)
-                    )
+                    .foregroundColor(AppAdaptiveColor.secondaryText)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 30)
                     .padding(.bottom, 30)
@@ -111,178 +89,16 @@ struct BreathingSquareView: View {
             }
         }
         .onAppear {
-            restartBreathingCycle()
-        }
-        .onDisappear {
-            stopBreathingSoundSequence()
-        }
-        .onChange(
-            of: isBreathingSoundEnabled
-        ) { _, isEnabled in
-            if isEnabled {
-                restartBreathingCycle()
-            } else {
-                stopBreathingSoundSequence()
-            }
-        }
-        .onChange(
-            of: breathingSoundVariant
-        ) { _, _ in
-            guard isBreathingSoundEnabled else {
-                return
-            }
-
-            restartBreathingCycle()
+            cycleStartDate = Date()
         }
     }
 
-    private var soundSettingsCard: some View {
-        VStack(spacing: 14) {
-            Toggle(
-                isOn: $isBreathingSoundEnabled
-            ) {
-                HStack(spacing: 10) {
-                    Image(
-                        systemName:
-                            isBreathingSoundEnabled
-                                ? "speaker.wave.2.fill"
-                                : "speaker.slash.fill"
-                    )
-                    .foregroundStyle(
-                        .orange.opacity(0.90)
-                    )
-
-                    Text("Звук дыхания")
-                        .font(
-                            .system(
-                                .body,
-                                design: .rounded
-                            )
-                        )
-                        .fontWeight(.semibold)
-                        .foregroundStyle(
-                            .brown.opacity(0.85)
-                        )
-                }
-            }
-            .tint(
-                .orange
-            )
-
-            Divider()
-                .overlay(
-                    .brown.opacity(0.15)
-                )
-
-            HStack(spacing: 12) {
-                Text("Мелодия")
-                    .font(
-                        .system(
-                            .body,
-                            design: .rounded
-                        )
-                    )
-                    .foregroundStyle(
-                        .brown.opacity(0.80)
-                    )
-
-                Spacer()
-
-                Picker(
-                    "Вариант звука",
-                    selection:
-                        $breathingSoundVariant
-                ) {
-                    Text("Вариант 1")
-                        .tag(1)
-
-                    Text("Вариант 2")
-                        .tag(2)
-
-                    Text("Вариант 3")
-                        .tag(3)
-
-                    Text("Вариант 4")
-                        .tag(4)
-                }
-                .pickerStyle(
-                    .menu
-                )
-                .tint(
-                    .orange
-                )
-                .disabled(
-                    !isBreathingSoundEnabled
-                )
-                .opacity(
-                    isBreathingSoundEnabled
-                        ? 1
-                        : 0.45
-                )
-            }
-        }
-        .padding(
-            .horizontal,
-            18
-        )
-        .padding(
-            .vertical,
-            14
-        )
-        .background(
-            .white.opacity(0.70)
-        )
-        .clipShape(
-            RoundedRectangle(
-                cornerRadius: 20,
-                style: .continuous
-            )
-        )
-        .padding(
-            .horizontal,
-            22
-        )
-    }
-    
-    private var selectedBreathingSound:
-        AppSound {
-
-        switch breathingSoundVariant {
-        case 1:
-            return .breathingSquare1
-
-        case 2:
-            return .breathingSquare2
-
-        case 3:
-            return .breathingSquare3
-
-        case 4:
-            return .breathingSquare4
-
-        default:
-            return .breathingSquare1
-        }
-    }
-    
     private var breathingBackground: some View {
         LinearGradient(
             colors: [
-                Color(
-                    red: 1.00,
-                    green: 0.96,
-                    blue: 0.92
-                ),
-                Color(
-                    red: 1.00,
-                    green: 0.91,
-                    blue: 0.88
-                ),
-                Color(
-                    red: 0.98,
-                    green: 0.95,
-                    blue: 0.89
-                )
+                AppAdaptiveColor.background,
+                AppAdaptiveColor.secondaryBackground,
+                AppAdaptiveColor.groupedBackground
             ],
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -290,63 +106,6 @@ struct BreathingSquareView: View {
         .ignoresSafeArea()
     }
 
-    private func restartBreathingCycle() {
-        cycleStartDate = Date()
-
-        startBreathingSoundSequence()
-    }
-
-    private func startBreathingSoundSequence() {
-        breathingSoundTask?.cancel()
-        breathingSoundTask = nil
-
-        guard isBreathingSoundEnabled else {
-            return
-        }
-
-        let sound =
-            selectedBreathingSound
-
-        breathingSoundTask = Task {
-            await playBreathingSound(
-                sound
-            )
-
-            while !Task.isCancelled {
-                do {
-                    try await Task.sleep(
-                        nanoseconds:
-                            4_000_000_000
-                    )
-                } catch {
-                    return
-                }
-
-                guard !Task.isCancelled else {
-                    return
-                }
-
-                await playBreathingSound(
-                    sound
-                )
-            }
-        }
-    }
-
-    @MainActor
-    private func playBreathingSound(
-        _ sound: AppSound
-    ) {
-        AppSoundPlayer.shared.play(
-            sound
-        )
-    }
-
-    private func stopBreathingSoundSequence() {
-        breathingSoundTask?.cancel()
-        breathingSoundTask = nil
-    }
-    
     private var header: some View {
         ZStack {
             Text("Квадрат дыхания")
@@ -357,7 +116,7 @@ struct BreathingSquareView: View {
                         design: .rounded
                     )
                 )
-                .foregroundColor(.brown)
+                .foregroundColor(AppAdaptiveColor.text)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 54)
 
@@ -374,14 +133,12 @@ struct BreathingSquareView: View {
                                 weight: .bold
                             )
                         )
-                        .foregroundColor(.brown)
+                        .foregroundColor(AppAdaptiveColor.text)
                         .frame(
                             width: 42,
                             height: 42
                         )
-                        .background(
-                            .white.opacity(0.72)
-                        )
+                        .background(AppAdaptiveColor.secondaryBackground)
                         .clipShape(Circle())
                 }
                 .accessibilityLabel("Закрыть")
@@ -629,7 +386,7 @@ private struct BreathingSquareDiagram: View {
                     )
 
                 VStack(spacing: 3) {
-                    Text(phase.title)
+                    Text(L10n.text(phase.title))
                         .font(
                             .system(
                                 .headline,
@@ -647,9 +404,7 @@ private struct BreathingSquareDiagram: View {
                             )
                         )
                 }
-                .foregroundColor(
-                    .brown.opacity(0.88)
-                )
+                .foregroundColor(AppAdaptiveColor.text)
                 .position(
                     x: squareRect.midX,
                     y: squareRect.midY
@@ -663,7 +418,7 @@ private struct BreathingSquareDiagram: View {
                 children: .ignore
             )
             .accessibilityLabel(
-                "\(phase.title), \(secondsRemaining)"
+                "\(L10n.text(phase.title)), \(secondsRemaining)"
             )
         }
     }

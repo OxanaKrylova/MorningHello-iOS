@@ -58,7 +58,7 @@ struct PostcardScreen: View {
                 )
 
                 if !trimmedPhrase.isEmpty {
-                    Text(phrase)
+                    Text(L10n.postcard(phrase))
                         .font(
                             .system(
                                 .title2,

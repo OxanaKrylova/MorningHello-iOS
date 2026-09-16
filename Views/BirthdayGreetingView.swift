@@ -74,7 +74,10 @@ struct BirthdayGreetingView: View {
     }
     
     private var selectedPhrase: String {
-        phrases[selectedPhraseIndex]
+        L10n.postcard(
+            phrases[selectedPhraseIndex],
+            category: "birthday"
+        )
     }
     private var birthdayMessage: String {
         let trimmed = customBirthdayMessage
@@ -95,17 +98,10 @@ struct BirthdayGreetingView: View {
         : nil
     }
     
-    private let darkBrown = Color(
-        red: 0.29,
-        green: 0.15,
-        blue: 0.09
-    )
+    private let darkBrown = AppAdaptiveColor.text
+    private let actionBrown = Color(uiColor: .systemBrown)
     
-    private let lightBrown = Color(
-        red: 0.76,
-        green: 0.60,
-        blue: 0.48
-    )
+    private let lightBrown = Color(uiColor: .systemBrown)
     
     private var secondEmergencyContact: EmergencyContact? {
         emergencyContacts.indices.contains(1)
@@ -128,18 +124,18 @@ struct BirthdayGreetingView: View {
                             .weight(.bold)
                         )
                         .foregroundColor(
-                            Color(
-                                red: 0.12,
-                                green: 0.16,
-                                blue: 0.28
-                            )
+                            AppAdaptiveColor.text
                         )
                     
                     postcardPreview
                     
                     postcardNavigation
                     Text(
-                        "\(selectedImageIndex + 1) из \(imageNames.count)"
+                        L10n.format(
+                            "%d из %d",
+                            selectedImageIndex + 1,
+                            imageNames.count
+                        )
                     )
                     .font(
                         .system(
@@ -187,7 +183,11 @@ struct BirthdayGreetingView: View {
                     phraseNavigation
                     
                     Text(
-                        "\(selectedPhraseIndex + 1) из \(phrases.count)"
+                        L10n.format(
+                            "%d из %d",
+                            selectedPhraseIndex + 1,
+                            phrases.count
+                        )
                     )
                     .font(
                         .system(
@@ -214,10 +214,10 @@ struct BirthdayGreetingView: View {
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 12)
-                        .background(darkBrown)
+                        .background(actionBrown)
                         .clipShape(Capsule())
                         .shadow(
-                            color: darkBrown.opacity(0.28),
+                        color: actionBrown.opacity(0.28),
                             radius: 8,
                             x: 0,
                             y: 5
@@ -241,9 +241,9 @@ struct BirthdayGreetingView: View {
             .background(
                 LinearGradient(
                     colors: [
-                        Color.pink.opacity(0.12),
-                        Color.orange.opacity(0.10),
-                        Color.white
+                        AppAdaptiveColor.background,
+                        AppAdaptiveColor.systemOrangeBackground,
+                        AppAdaptiveColor.groupedBackground
                     ],
                     startPoint: .top,
                     endPoint: .bottom
@@ -421,7 +421,7 @@ struct BirthdayGreetingView: View {
             .padding(.horizontal, 20)
             .padding(.vertical, 20)
             .background(
-                Color.white.opacity(0.78)
+                AppAdaptiveColor.secondaryBackground
             )
             .clipShape(
                 RoundedRectangle(
@@ -465,7 +465,7 @@ struct BirthdayGreetingView: View {
                     width: 56,
                     height: 56
                 )
-                .background(darkBrown)
+                .background(actionBrown)
                 .clipShape(Circle())
             }
             
@@ -511,7 +511,7 @@ struct BirthdayGreetingView: View {
                     width: 56,
                     height: 56
                 )
-                .background(darkBrown)
+                .background(actionBrown)
                 .clipShape(Circle())
             }
         }
@@ -548,7 +548,7 @@ struct BirthdayGreetingView: View {
                     width: 52,
                     height: 52
                 )
-                .background(darkBrown)
+                .background(actionBrown)
                 .clipShape(Circle())
             }
             
@@ -597,7 +597,7 @@ struct BirthdayGreetingView: View {
                     width: 52,
                     height: 52
                 )
-                .background(darkBrown)
+                .background(actionBrown)
                 .clipShape(Circle())
             }
         }
@@ -630,10 +630,17 @@ struct BirthdayGreetingView: View {
             .joined(separator: " ")
         
         if fullName.isEmpty {
-            return "Тревожный контакт №\(number)"
+            return L10n.format(
+                "Тревожный контакт №%d",
+                number
+            )
         }
         
-        return "Контакт №\(number): \(fullName)"
+        return L10n.format(
+            "Контакт №%d: %@",
+            number,
+            fullName
+        )
     }
     
     private func showPreviousPostcard() {

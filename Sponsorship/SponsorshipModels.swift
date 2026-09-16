@@ -191,22 +191,37 @@ enum SponsorshipAPIError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "Не удалось сформировать адрес запроса."
+            return L10n.text("Не удалось сформировать адрес запроса.")
         case .invalidResponse:
-            return "Сервер вернул неизвестный ответ."
+            return L10n.text("Сервер вернул неизвестный ответ.")
         case .unauthorized:
-            return "Сеанс завершён. Войдите через Apple ещё раз."
+            return L10n.text(
+                "Сеанс завершён. Войдите через Apple ещё раз."
+            )
         case let .server(statusCode, message):
             if let message, !message.isEmpty {
-                return "Ошибка сервера \(statusCode): \(message)"
+                return L10n.format(
+                    "Ошибка сервера %d: %@",
+                    statusCode,
+                    message
+                )
             }
-            return "Ошибка сервера \(statusCode)."
+            return L10n.format(
+                "Ошибка сервера %d.",
+                statusCode
+            )
         case .missingAppleCredential:
-            return "Apple не передал данные, необходимые для входа."
+            return L10n.text(
+                "Apple не передал данные, необходимые для входа."
+            )
         case .invalidTransaction:
-            return "App Store не удалось подтвердить покупку."
+            return L10n.text(
+                "App Store не удалось подтвердить покупку."
+            )
         case .missingPendingSponsorship:
-            return "Не найдено принятое приглашение для этой покупки."
+            return L10n.text(
+                "Не найдено принятое приглашение для этой покупки."
+            )
         }
     }
 }

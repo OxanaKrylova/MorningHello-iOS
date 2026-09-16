@@ -2,18 +2,9 @@
 //  EmergencyContactsView.swift
 //  MorningHello
 //
-//  Created by Oxana Krylova on 05/09/2026.
-//
-
-
-//
-//  EmergencyContactsView.swift
-//  MorningHello
-//
 //  Created by Oxana Krylova on 14/07/2026.
 //
 import SwiftUI
-import SwiftData
 
 struct EmergencyContactsView: View {
     
@@ -160,7 +151,7 @@ struct EmergencyContactsView: View {
     }
     var body: some View {
         ZStack {
-            Color(red: 1.0, green: 0.96, blue: 0.87)
+            AppAdaptiveColor.warmFormBackground
                 .ignoresSafeArea()
 
             ScrollView {
@@ -176,7 +167,7 @@ struct EmergencyContactsView: View {
                                     design: .rounded
                                 )
                             )
-                            .foregroundColor(.brown)
+                            .foregroundColor(AppAdaptiveColor.text)
                             .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.center)
 
@@ -194,14 +185,12 @@ struct EmergencyContactsView: View {
                                                 weight: .bold
                                             )
                                         )
-                                        .foregroundColor(.brown)
+                                        .foregroundColor(AppAdaptiveColor.text)
                                         .frame(
                                             width: 42,
                                             height: 42
                                         )
-                                        .background(
-                                            .white.opacity(0.72)
-                                        )
+                                        .background(AppAdaptiveColor.warmCardBackground)
                                         .clipShape(Circle())
                                 }
                             }
@@ -234,9 +223,7 @@ struct EmergencyContactsView: View {
                                     design: .rounded
                                 )
                             )
-                            .foregroundColor(
-                                .brown.opacity(0.78)
-                            )
+                            .foregroundColor(AppAdaptiveColor.secondaryText)
                             .fixedSize(
                                 horizontal: false,
                                 vertical: true
@@ -302,12 +289,10 @@ struct EmergencyContactsView: View {
                             )
                             .weight(.semibold)
                         )
-                        .foregroundColor(.brown)
+                        .foregroundColor(AppAdaptiveColor.text)
                         .padding(.horizontal, 18)
                         .frame(height: 56)
-                        .background(
-                            .white.opacity(0.72)
-                        )
+                        .background(AppAdaptiveColor.warmCardBackground)
                         .clipShape(
                             RoundedRectangle(
                                 cornerRadius: 18,
@@ -346,14 +331,12 @@ struct EmergencyContactsView: View {
                                 "",
                                 text: $name,
                                 prompt: Text("Имя*")
-                                    .foregroundColor(
-                                        .brown.opacity(0.45)
-                                    )
+                                    .foregroundColor(AppAdaptiveColor.tertiaryText)
                             )
                             .textContentType(.givenName)
                             .padding(.horizontal, 16)
                             .frame(height: 54)
-                            .background(.white)
+                            .background(AppAdaptiveColor.warmCardBackground)
                             .overlay {
                                 RoundedRectangle(
                                     cornerRadius: 15
@@ -377,14 +360,12 @@ struct EmergencyContactsView: View {
                                 "",
                                 text: $surname,
                                 prompt: Text("Фамилия*")
-                                    .foregroundColor(
-                                        .brown.opacity(0.45)
-                                    )
+                                    .foregroundColor(AppAdaptiveColor.tertiaryText)
                             )
                             .textContentType(.familyName)
                             .padding(.horizontal, 16)
                             .frame(height: 54)
-                            .background(.white)
+                            .background(AppAdaptiveColor.warmCardBackground)
                             .overlay {
                                 RoundedRectangle(
                                     cornerRadius: 15
@@ -413,15 +394,13 @@ struct EmergencyContactsView: View {
                                     "",
                                     text: $phoneDigits,
                                     prompt: Text("Телефон*")
-                                        .foregroundColor(
-                                            .brown.opacity(0.45)
-                                        )
+                                        .foregroundColor(AppAdaptiveColor.tertiaryText)
                                 )
                                 .keyboardType(.phonePad)
                                 .textContentType(.telephoneNumber)
                                 .padding(.horizontal, 16)
                                 .frame(height: 54)
-                                .background(.white)
+                                .background(AppAdaptiveColor.warmCardBackground)
                                 .overlay {
                                     RoundedRectangle(
                                         cornerRadius: 15
@@ -450,9 +429,7 @@ struct EmergencyContactsView: View {
                                         design: .rounded
                                     )
                                 )
-                                .foregroundColor(
-                                    .brown.opacity(0.58)
-                                )
+                                .foregroundColor(AppAdaptiveColor.secondaryText)
                                 .fixedSize(
                                     horizontal: false,
                                     vertical: true
@@ -468,9 +445,7 @@ struct EmergencyContactsView: View {
                                     )
                                     .weight(.semibold)
                                 )
-                                .foregroundColor(
-                                    .brown.opacity(0.72)
-                                )
+                                .foregroundColor(AppAdaptiveColor.secondaryText)
                             }
 
 
@@ -480,9 +455,7 @@ struct EmergencyContactsView: View {
                                 "",
                                 text: $email,
                                 prompt: Text("Емейл*")
-                                    .foregroundColor(
-                                        .brown.opacity(0.45)
-                                    )
+                                    .foregroundColor(AppAdaptiveColor.tertiaryText)
                             )
                             .keyboardType(.emailAddress)
                             .textContentType(.emailAddress)
@@ -490,7 +463,7 @@ struct EmergencyContactsView: View {
                             .autocorrectionDisabled()
                             .padding(.horizontal, 16)
                             .frame(height: 54)
-                            .background(.white)
+                            .background(AppAdaptiveColor.warmCardBackground)
                             .overlay {
                                 RoundedRectangle(
                                     cornerRadius: 15
@@ -514,9 +487,7 @@ struct EmergencyContactsView: View {
                             )
                         )
                         .padding(18)
-                        .background(
-                            .white.opacity(0.68)
-                        )
+                        .background(AppAdaptiveColor.warmCardBackground)
                         .clipShape(
                             RoundedRectangle(
                                 cornerRadius: 28,
@@ -819,9 +790,7 @@ struct EmergencyContactsView: View {
                                 design: .rounded
                             )
                         )
-                        .foregroundColor(
-                            .brown.opacity(0.75)
-                        )
+                        .foregroundColor(AppAdaptiveColor.secondaryText)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
                     }
@@ -851,7 +820,12 @@ struct EmergencyContactsView: View {
                     .cornerRadius(16)
                     // MARK: - Список контактов
 
-                    Text("Контакты \(contacts.count)/2")
+                    Text(
+                        L10n.format(
+                            "Контакты %d/2",
+                            contacts.count
+                        )
+                    )
                         .font(
                             .system(
                                 .title3,
@@ -859,7 +833,7 @@ struct EmergencyContactsView: View {
                             )
                             .weight(.bold)
                         )
-                        .foregroundColor(.brown)
+                        .foregroundColor(AppAdaptiveColor.text)
                         .frame(
                             maxWidth: .infinity,
                             alignment: .leading
@@ -893,7 +867,7 @@ struct EmergencyContactsView: View {
                         )
                         .weight(.semibold)
                     )
-                    .foregroundColor(.brown)
+                    .foregroundColor(AppAdaptiveColor.text)
                     .frame(
                         maxWidth: .infinity,
                         alignment: .leading
@@ -901,7 +875,7 @@ struct EmergencyContactsView: View {
                     .padding(.horizontal, 32)
 
                     if let statusRefreshErrorMessage {
-                        Text(statusRefreshErrorMessage)
+                        Text(L10n.text(statusRefreshErrorMessage))
                             .font(
                                 .system(
                                     .caption,
@@ -1014,9 +988,7 @@ struct EmergencyContactsView: View {
                             alignment: .leading
                         )
                         .padding(18)
-                        .background(
-                            .white.opacity(0.75)
-                        )
+                        .background(AppAdaptiveColor.warmCardBackground)
                         .clipShape(
                             RoundedRectangle(
                                 cornerRadius: 22,
@@ -1061,13 +1033,13 @@ struct EmergencyContactsView: View {
                                 await refreshContactStatuses()
                             }
         .alert(
-            formErrorTitle,
+            L10n.text(formErrorTitle),
             isPresented: $showPhoneError
         ) {
             Button("Понятно", role: .cancel) {
             }
         } message: {
-            Text(phoneErrorMessage)
+            Text(L10n.text(phoneErrorMessage))
         }
         .confirmationDialog(
             "Прекратить мониторинг?",
@@ -1102,7 +1074,11 @@ struct EmergencyContactsView: View {
             }
         } message: { contact in
             Text(
-                "MorningHello удалит \(contact.name) \(contact.surname) из списка тревожных контактов."
+                L10n.format(
+                    "MorningHello удалит %@ %@ из списка тревожных контактов.",
+                    contact.name,
+                    contact.surname
+                )
             )
         }
         .alert(
@@ -1122,7 +1098,7 @@ struct EmergencyContactsView: View {
                 deletionErrorMessage = nil
             }
         } message: {
-            Text(deletionErrorMessage ?? "")
+            Text(L10n.text(deletionErrorMessage ?? ""))
         }
         .confirmationDialog(
             "Добавить второй тревожный контакт?",

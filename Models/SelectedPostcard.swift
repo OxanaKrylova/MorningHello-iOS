@@ -9,4 +9,12 @@ import Foundation
 struct SelectedPostcard {
     let image: String
     let phrase: String
+
+    init(
+        image: String,
+        phrase: String
+    ) {
+        self.image = image
+        self.phrase = L10n.postcard(phrase)
+    }
 }

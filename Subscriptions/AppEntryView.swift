@@ -39,9 +39,6 @@ struct AppEntryView: View {
     @AppStorage("holiday_onboarding_completed")
     private var holidayOnboardingCompleted = false
 
-    @AppStorage("initial_subscription_flow_pending")
-    private var initialSubscriptionFlowPending = false
-
     @StateObject
     private var subscriptionManager = SubscriptionManager.shared
 
@@ -52,91 +49,10 @@ struct AppEntryView: View {
     private var sponsorshipStore = SponsorshipStore.shared
     
     @State private var hasEmergencyContacts = false
-
     @State private var subscriptionMessage: String?
-        
-        var body: some View {
-            Group {
-                
-                // Шаг 1 — Условия использования
-                if acceptedTermsVersion != currentTermsVersion {
-                    
-                    TermsOfUseView {
-                        acceptedTermsVersion =
-                        currentTermsVersion
-                    }
-                    
-                    // Шаг 2 — Профиль
-                } else if !isProfileComplete {
-                    
-                    ProfileView()
-                    
-                    // Шаг 3 — Тревожные контакты
-                } else if !contactsOnboardingCompleted {
 
-                    EmergencyContactsView(
-                        isOnboarding: true,
-                        onOnboardingComplete: {
-                            contactsOnboardingCompleted = true
-                            refreshEmergencyContacts()
-                        }
-                    )
-
-                } else if !holidayOnboardingCompleted {
-
-                    HolidaySettingsView(
-                        isOnboarding: true,
-                        onOnboardingComplete: {
-                            holidayOnboardingCompleted = true
-                            initialSubscriptionFlowPending = true
-                        }
-                    )
-
-                } else if !subscriptionManager.hasLoadedSubscriptionStatus ||
-                            isLoadingSponsoredEntitlement {
-
-                    ProgressView("Проверяем подписку…")
-
-                } else if SponsorshipFeatureConfiguration.isEnabled &&
-                            sponsorshipStore.isWaitingForSponsorPurchase {
-
-                    SponsoredAccessWaitingView(
-                        session: accountSession,
-                        store: sponsorshipStore
-                    )
-
-                } else if initialSubscriptionFlowPending {
-
-                    ContentView(
-                        isCompletingInitialOnboarding: true,
-                        hasSponsoredAccess:
-                            sponsorshipStore.sponsoredAccessIsActive,
-                        onInitialOnboardingCompleted: { didPurchase in
-                            initialSubscriptionFlowPending = false
-
-                            if didPurchase {
-                                subscriptionMessage =
-                                    "Подписка оформлена. Доступ к MorningHello активирован."
-                            }
-                        }
-                    )
-
-                } else if subscriptionManager.hasActiveSubscription ||
-                            sponsorshipStore.sponsoredAccessIsActive {
-
-                    ContentView()
-
-                } else {
-
-                    SubscriptionPaywallView(
-                        mode: paywallMode
-                    ) {
-                        subscriptionMessage =
-                            "Подписка оформлена. Доступ к MorningHello активирован."
-                    }
-                }
-                // Онбординг закончен
-            }
+    var body: some View {
+        routedContent
             .onAppear {
                 refreshEmergencyContacts()
             }
@@ -162,73 +78,133 @@ struct AppEntryView: View {
                 "Подписка",
                 isPresented: Binding(
                     get: { subscriptionMessage != nil },
-                    set: { isPresented in
-                        if !isPresented {
-                            subscriptionMessage = nil
-                        }
-                    }
+                    set: { if !$0 { subscriptionMessage = nil } }
                 )
             ) {
                 Button("Понятно", role: .cancel) {
                     subscriptionMessage = nil
                 }
             } message: {
-                Text(subscriptionMessage ?? "")
+                Text(L10n.text(subscriptionMessage ?? ""))
             }
-        }
+    }
 
-        private var isLoadingSponsoredEntitlement: Bool {
-            SponsorshipFeatureConfiguration.isEnabled &&
-            accountSession.account != nil &&
-            sponsorshipStore.isLoading &&
-            sponsorshipStore.entitlement == nil
+    @ViewBuilder
+    private var routedContent: some View {
+        if acceptedTermsVersion != currentTermsVersion {
+            TermsOfUseView(onAccept: acceptCurrentTerms)
+        } else if !isProfileComplete {
+            ProfileView()
+        } else if !contactsOnboardingCompleted {
+            EmergencyContactsView(
+                isOnboarding: true,
+                onOnboardingComplete: completeContactsOnboarding
+            )
+        } else if !holidayOnboardingCompleted {
+            HolidaySettingsView(
+                isOnboarding: true,
+                onOnboardingComplete: completeHolidayOnboarding
+            )
+        } else if isLoadingAccessStatus {
+            ProgressView(L10n.text("Проверяем подписку…"))
+                .tint(.accentColor)
+                .foregroundStyle(AppAdaptiveColor.text)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(AppAdaptiveColor.background)
+        } else if hasAccess {
+            ContentView()
+        } else if shouldShowSponsoredWaitingScreen {
+            SponsoredAccessWaitingView(
+                session: accountSession,
+                store: sponsorshipStore
+            )
+        } else {
+            SubscriptionPaywallView(
+                mode: paywallMode,
+                onPurchaseCompleted: {
+                    subscriptionMessage =
+                        "Подписка оформлена. Доступ к MorningHello активирован."
+                }
+            )
         }
+    }
 
-        private var isProfileComplete: Bool {
-            let trimmedName =
+    private var isLoadingAccessStatus: Bool {
+        !subscriptionManager.hasLoadedSubscriptionStatus ||
+        isLoadingSponsoredEntitlement
+    }
+
+    private var hasAccess: Bool {
+        subscriptionManager.hasActiveSubscription ||
+        sponsorshipStore.sponsoredAccessIsActive
+    }
+
+    private var shouldShowSponsoredWaitingScreen: Bool {
+        SponsorshipFeatureConfiguration.isEnabled &&
+        sponsorshipStore.isWaitingForSponsorPurchase
+    }
+
+    private var isLoadingSponsoredEntitlement: Bool {
+        SponsorshipFeatureConfiguration.isEnabled &&
+        accountSession.account != nil &&
+        sponsorshipStore.isLoading &&
+        sponsorshipStore.entitlement == nil
+    }
+
+    private var isProfileComplete: Bool {
+        let trimmedName =
             displayName.trimmingCharacters(
                 in: .whitespacesAndNewlines
             )
             
-            let trimmedSalutation =
+        let trimmedSalutation =
             savedSalutation.trimmingCharacters(
                 in: .whitespacesAndNewlines
             )
-            
-            return
+
+        return
             !trimmedName.isEmpty &&
             !trimmedSalutation.isEmpty &&
             birthDay > 0 &&
             birthMonth > 0 &&
             checkInIntervalHours > 0 &&
             checkInIntervalConfirmed
-        }
+    }
 
-        private var paywallMode: SubscriptionPaywallMode {
-            switch subscriptionManager.snapshot.status {
-            case .expired, .revoked, .billingRetry:
-                return .accessEnded
-            case .none, .trial, .active, .gracePeriod:
-                return .initialOffer
-            }
-        }
-        
-        private func refreshEmergencyContacts() {
-            guard let data =
-                    UserDefaults.standard.data(
-                        forKey: "emergency_contacts"
-                    ),
-                  let contacts =
-                    try? JSONDecoder().decode(
-                        [EmergencyContact].self,
-                        from: data
-                    )
-            else {
-                hasEmergencyContacts = false
-                return
-            }
-            
-            hasEmergencyContacts =
-            !contacts.isEmpty
+    private var paywallMode: SubscriptionPaywallMode {
+        switch subscriptionManager.snapshot.status {
+        case .expired, .revoked, .billingRetry:
+            return .accessEnded
+        case .none, .trial, .active, .gracePeriod:
+            return .initialOffer
         }
     }
+
+    private func acceptCurrentTerms() {
+        acceptedTermsVersion = currentTermsVersion
+    }
+
+    private func completeContactsOnboarding() {
+        contactsOnboardingCompleted = true
+        refreshEmergencyContacts()
+    }
+
+    private func completeHolidayOnboarding() {
+        holidayOnboardingCompleted = true
+    }
+
+    private func refreshEmergencyContacts() {
+        guard let data = UserDefaults.standard.data(
+            forKey: "emergency_contacts"
+        ),
+        let contacts = try? JSONDecoder().decode(
+            [EmergencyContact].self,
+            from: data
+        ) else {
+            hasEmergencyContacts = false
+            return
+        }
+
+        hasEmergencyContacts = !contacts.isEmpty
+    }
+}

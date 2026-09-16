@@ -38,7 +38,7 @@ struct MorningHelloApp: App {
                         }
                     }
                 } else {
-                    AppEntryView()
+                    SponsorshipRootView()
                         .task {
                             _ = await CheckInNotificationManager.shared
                                 .requestPermission()
@@ -51,6 +51,28 @@ struct MorningHelloApp: App {
                         .task {
                             for await update in Transaction.updates {
                                 guard case .verified(let transaction) = update else {
+                                    continue
+                                }
+
+                                if SponsoredPurchaseManager
+                                    .isSponsoredProduct(
+                                        transaction.productID
+                                    ) {
+                                    do {
+                                        try await SponsoredPurchaseManager
+                                            .shared
+                                            .handleTransactionUpdate(
+                                                update,
+                                                using: AccountSession.shared
+                                            )
+                                    } catch {
+#if DEBUG
+                                        print(
+                                            "Sponsored transaction sync failed:",
+                                            error
+                                        )
+#endif
+                                    }
                                     continue
                                 }
 
@@ -71,9 +93,31 @@ struct MorningHelloApp: App {
 
                                 await SubscriptionManager.shared
                                     .refreshAndSync()
+
+                                guard SponsorshipFeatureConfiguration.isEnabled,
+                                      AccountSession.shared.account != nil
+                                else {
+                                    return
+                                }
+
+                                await SponsorshipStore.shared.refresh(
+                                    using: AccountSession.shared
+                                )
+
+                                await SponsoredPurchaseManager.shared
+                                    .recoverUnfinishedPurchase(
+                                        using: AccountSession.shared
+                                    )
                             }
                         }
                 }
+            }
+            .onOpenURL { url in
+                guard SponsorshipFeatureConfiguration.isEnabled else {
+                    return
+                }
+
+                _ = SponsorshipLinkRouter.shared.handle(url: url)
             }
         }
         .modelContainer(for: MoodEntry.self)

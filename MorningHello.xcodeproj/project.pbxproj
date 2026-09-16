@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		290CA89D3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA89C3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift */; };
+		290CA89F305A5CF7008BA815 /* AdaptiveColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA89E305A5CF7008BA815 /* AdaptiveColors.swift */; };
 		290E2525304D97FB000D4A2D /* BreathingSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290E2524304D97FB000D4A2D /* BreathingSquareView.swift */; };
 		290E252A304E13A6000D4A2D /* Breathing_Square_2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 290E2527304E13A6000D4A2D /* Breathing_Square_2.wav */; };
 		290E252B304E13A6000D4A2D /* Breathing_Square_3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 290E2528304E13A6000D4A2D /* Breathing_Square_3.wav */; };
@@ -86,6 +88,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		290CA89C3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MorningHello:EnglishPostcardLocalizer.swift"; sourceTree = "<group>"; };
+		290CA89E305A5CF7008BA815 /* AdaptiveColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveColors.swift; sourceTree = "<group>"; };
 		290E2524304D97FB000D4A2D /* BreathingSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingSquareView.swift; sourceTree = "<group>"; };
 		290E2526304E13A6000D4A2D /* Breathing_Square_1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Breathing_Square_1.wav; sourceTree = "<group>"; };
 		290E2527304E13A6000D4A2D /* Breathing_Square_2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Breathing_Square_2.wav; sourceTree = "<group>"; };
@@ -203,6 +207,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		290CA8953059E4A6008BA815 /* Subscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				29AFFF9C3037B4BC007FE955 /* SubscriptionLifecycleAPIClient.swift */,
+				2976EF123027D69B00C0E8B1 /* AppEntryView.swift */,
+				29F44CBD303F95F10043E63A /* SubscriptionPaywallView.swift */,
+				29AFFF9A3037B456007FE955 /* SubscriptionSnapshot.swift */,
+				29B5527430339B6600636AE9 /* SubscriptionView.swift */,
+				29AFFFA13037B82C007FE955 /* SubscriptionManager.swift */,
+			);
+			path = Subscriptions;
+			sourceTree = "<group>";
+		};
 		290E2543304F655C000D4A2D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,7 +261,6 @@
 			children = (
 				2976EF0D3027D60C00C0E8B1 /* TermsOfUseView.swift */,
 				2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */,
-				2976EF123027D69B00C0E8B1 /* AppEntryView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -279,7 +295,9 @@
 		29B441992F3BE23E00A4F417 = {
 			isa = PBXGroup;
 			children = (
+				290CA89C3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift */,
 				293CF91E30594601002DACBD /* Sponsorship */,
+				290CA8953059E4A6008BA815 /* Subscriptions */,
 				296D4CC03046206C000248AD /* Sounds */,
 				29AFFFBF30390273007FE955 /* Collection */,
 				2976EF0F3027D63C00C0E8B1 /* Onboarding */,
@@ -421,9 +439,6 @@
 				29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */,
 				29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */,
 				29DD591F3035DCCB0067B04F /* TrialNotificationManager.swift */,
-				29AFFF9A3037B456007FE955 /* SubscriptionSnapshot.swift */,
-				29AFFFA13037B82C007FE955 /* SubscriptionManager.swift */,
-				29AFFF9C3037B4BC007FE955 /* SubscriptionLifecycleAPIClient.swift */,
 			);
 			path = Notifications;
 			sourceTree = "<group>";
@@ -437,8 +452,6 @@
 				29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */,
 				29D0C196304CAC8C0061569D /* EmergencyContactsView.swift */,
 				29CA8E2C300197C800F59ECA /* ProfileView.swift */,
-				29B5527430339B6600636AE9 /* SubscriptionView.swift */,
-				29F44CBD303F95F10043E63A /* SubscriptionPaywallView.swift */,
 				296D4CDA3046B1AC000248AD /* SettingsView..swift */,
 				290E2524304D97FB000D4A2D /* BreathingSquareView.swift */,
 			);
@@ -450,6 +463,7 @@
 			children = (
 				29CA8E3B3004435500F59ECA /* IntroVideoView.swift */,
 				29CA8E2E30043ECB00F59ECA /* Videos */,
+				290CA89E305A5CF7008BA815 /* AdaptiveColors.swift */,
 			);
 			path = Intro;
 			sourceTree = "<group>";
@@ -567,6 +581,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 29B441992F3BE23E00A4F417;
 			minimizedProjectReferenceProxies = 1;
@@ -624,6 +639,7 @@
 				29B76C82301D418000D1D295 /* OrthodoxHolidayProvider.swift in Sources */,
 				29B76C43301AA87500D1D295 /* PostcardScreen.swift in Sources */,
 				29BCCD04302D9F260027557C /* EmergencyContactAPIClient.swift in Sources */,
+				290CA89F305A5CF7008BA815 /* AdaptiveColors.swift in Sources */,
 				29B76C74301BD1F300D1D295 /* SelectedPostcard.swift in Sources */,
 				29B76CAC302144C000D1D295 /* SeptemberPostcardProvider.swift in Sources */,
 				29AFFF9D3037B4BC007FE955 /* SubscriptionLifecycleAPIClient.swift in Sources */,
@@ -636,6 +652,7 @@
 				29AFFFBC30390243007FE955 /* PostcardCollectionView..swift in Sources */,
 				29BCCCED302A68140027557C /* EmergencyContact.swift in Sources */,
 				29B76C80301BF9E100D1D295 /* InternationalHolidayProvider.swift in Sources */,
+				290CA89D3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift in Sources */,
 				29EC92473053143A00D9BD71 /* MoodHistoryView.swift in Sources */,
 				29EC92483053143A00D9BD71 /* MoodCheckInView.swift in Sources */,
 				293CF91F30594601002DACBD /* SponsorshipViews.swift in Sources */,
@@ -802,7 +819,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -818,7 +835,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oxana.morninghello;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -842,7 +859,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -858,7 +875,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oxana.morninghello;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

@@ -24,9 +24,15 @@ struct MoodChartView: View {
             ForEach(segments) { segment in
                 ForEach(segment.points) { point in
                     LineMark(
-                        x: .value("Дата", point.date),
-                        y: .value("Состояние", point.level.rawValue),
-                        series: .value("Отрезок", segment.id)
+                        x: .value(L10n.text("Дата отметки"), point.date),
+                        y: .value(
+                            L10n.text("Состояние"),
+                            point.level.rawValue
+                        ),
+                        series: .value(
+                            L10n.text("Отрезок"),
+                            segment.id
+                        )
                     )
                     .foregroundStyle(Color.brown)
                     .lineStyle(StrokeStyle(lineWidth: 3, lineCap: .round))
@@ -35,13 +41,20 @@ struct MoodChartView: View {
 
             ForEach(points) { point in
                 PointMark(
-                    x: .value("Дата", point.date),
-                    y: .value("Состояние", point.level.rawValue)
+                    x: .value(L10n.text("Дата отметки"), point.date),
+                    y: .value(
+                        L10n.text("Состояние"),
+                        point.level.rawValue
+                    )
                 )
                 .foregroundStyle(point.level.color)
                 .symbolSize(95)
                 .accessibilityLabel(
-                    "\(formattedDate(point.date)), состояние «\(point.level.title)»"
+                    L10n.format(
+                        "%@, состояние «%@»",
+                        formattedDate(point.date),
+                        point.level.title
+                    )
                 )
             }
         }
@@ -68,7 +81,12 @@ struct MoodChartView: View {
             }
         }
         .frame(height: 270)
-        .accessibilityLabel("График истории состояний за \(days) дней")
+        .accessibilityLabel(
+            L10n.format(
+                "График истории состояний за %lld дней",
+                days
+            )
+        )
     }
 
     private var points: [MoodChartPoint] {
@@ -128,7 +146,7 @@ struct MoodChartView: View {
 
     private func formattedDate(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.locale = AppLanguage.selected.locale
         formatter.timeZone = .current
         formatter.dateStyle = .long
         formatter.timeStyle = .none

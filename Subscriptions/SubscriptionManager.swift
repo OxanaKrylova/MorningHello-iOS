@@ -8,7 +8,6 @@
 import Foundation
 import StoreKit
 import Combine
-import SwiftData
 
 @MainActor
 final class SubscriptionManager: ObservableObject {
@@ -38,7 +37,6 @@ final class SubscriptionManager: ObservableObject {
         switch snapshot.status {
         case .trial, .active, .gracePeriod:
             return true
-
         case .none, .billingRetry, .expired, .revoked:
             return false
         }
@@ -180,13 +178,11 @@ final class SubscriptionManager: ObservableObject {
 
     // MARK: - Purchase
 
-    func purchase(
-        product: Product
+    func processPurchaseResult(
+        _ result: Product.PurchaseResult
     ) async throws -> PurchaseOutcome {
 
         lastError = nil
-
-        let result = try await product.purchase()
 
         switch result {
         case .success(let verificationResult):
@@ -376,9 +372,13 @@ private enum SubscriptionPurchaseError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .failedVerification:
-            return "App Store не удалось подтвердить покупку."
+            return L10n.text(
+                "App Store не удалось подтвердить покупку."
+            )
         case .unknownResult:
-            return "App Store вернул неизвестный результат покупки."
+            return L10n.text(
+                "App Store вернул неизвестный результат покупки."
+            )
         }
     }
 }

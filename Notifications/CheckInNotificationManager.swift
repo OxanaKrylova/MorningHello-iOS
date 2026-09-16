@@ -20,7 +20,7 @@ final class CheckInNotificationManager {
     func configureNotificationActions() {
         let openMessageAction = UNNotificationAction(
             identifier: Self.openMessageActionIdentifier,
-            title: "Подготовить сообщение близким",
+            title: L10n.text("Подготовить сообщение близким"),
             options: [.foreground]
         )
         
@@ -66,34 +66,42 @@ final class CheckInNotificationManager {
             return
         }
 
-        let intervalText = intervalHours == 24
-            ? "24 часа"
-            : "\(intervalHours) часов"
+        let intervalText: String
 
+        if AppLanguage.selected == .englishUS {
+            intervalText = "\(intervalHours) hours"
+        } else {
+            intervalText = intervalHours == 24
+                ? "24 часа"
+                : "\(intervalHours) часов"
+        }
+        
+        // Удаляем предыдущий таймер, чтобы после каждого нового
+        // нажатия «Я живу» отсчёт начинался заново.
         center.removePendingNotificationRequests(
             withIdentifiers: [Self.notificationIdentifier]
         )
-
+        
         let content = UNMutableNotificationContent()
         content.title = "MorningHello"
-        content.body = """
-        Прошло \(intervalText) с последней отметки. \
-        Пожалуйста, подтвердите, что с вами всё хорошо.
-        """
+        content.body = L10n.format(
+            "Прошло %@ с последней отметки. Пожалуйста, подтвердите, что с вами всё хорошо.",
+            intervalText
+        )
         content.sound = .default
         content.categoryIdentifier = Self.categoryIdentifier
-
+        
         let trigger = UNTimeIntervalNotificationTrigger(
             timeInterval: TimeInterval(intervalHours) * 60 * 60,
             repeats: false
         )
-
+        
         let request = UNNotificationRequest(
             identifier: Self.notificationIdentifier,
             content: content,
             trigger: trigger
         )
-
+        
         do {
             try await center.add(request)
             print(

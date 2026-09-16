@@ -4,10 +4,10 @@
 //
 //  Created by Oxana Krylova on 23/07/2026.
 //
+
 import Foundation
 import SwiftUI
 import MessageUI
-import UIKit
 
 // MARK: - Тип обращения
 
@@ -21,16 +21,18 @@ private enum FeedbackType: String, Identifiable {
     }
 
     var title: String {
-        switch self {
+        let key: String = switch self {
         case .holiday:
-            return "Предложить праздник"
+            "Предложить праздник"
 
         case .problem:
-            return "Сообщить о проблеме"
+            "Сообщить о проблеме"
 
         case .message:
-            return "Просто написать"
+            "Просто написать"
         }
+
+        return L10n.text(key)
     }
 
     var icon: String {
@@ -47,19 +49,50 @@ private enum FeedbackType: String, Identifiable {
     }
 
     var emailSubject: String {
-        switch self {
+        let key: String = switch self {
         case .holiday:
-            return "Предложение праздника"
+            "Предложение праздника"
 
         case .problem:
-            return "Ошибка в приложении"
+            "Ошибка в приложении"
 
         case .message:
-            return "От пользователя Morning Hello."
+            "Сообщение разработчику"
         }
+
+        return L10n.text(key)
     }
 
     var messageBody: String {
+        if AppLanguage.selected == .englishUS {
+            switch self {
+            case .holiday:
+                return """
+                I'd like to suggest a holiday.
+
+                Name:
+
+                Date:
+
+                Why it matters:
+
+                """
+
+            case .problem:
+                return """
+                Please describe the issue:
+
+                What happened:
+
+                Which screen were you on?
+
+                """
+
+            case .message:
+                return "Hello!\n\n"
+            }
+        }
+
         switch self {
         case .holiday:
             return """
@@ -110,6 +143,9 @@ struct FeedbackView: View {
     @Environment(\.dismiss)
     private var dismiss
 
+    @Environment(\.openURL)
+    private var openURL
+
     @State private var selectedFeedback: FeedbackType?
 
     @State private var showSendingOptions = false
@@ -120,15 +156,13 @@ struct FeedbackView: View {
     @State private var unavailableMessage = ""
 
     private let developerEmail = "krylov.oxana@gmail.com"
-    private let developerWhatsAppNumber = "972537084224"
+    private let supportWhatsAppURL = URL(
+        string: "https://wa.me/972537084224"
+    )!
 
     var body: some View {
         ZStack {
-            Color(
-                red: 1.0,
-                green: 0.96,
-                blue: 0.87
-            )
+            AppAdaptiveColor.groupedBackground
             .ignoresSafeArea()
 
             ScrollView {
@@ -145,13 +179,7 @@ struct FeedbackView: View {
                                     design: .rounded
                                 )
                             )
-                            .foregroundColor(
-                                Color(
-                                    red: 0.12,
-                                    green: 0.16,
-                                    blue: 0.28
-                                )
-                            )
+                            .foregroundColor(AppAdaptiveColor.text)
                             .multilineTextAlignment(.center)
 
                         Text("Выбери тему сообщения")
@@ -192,12 +220,16 @@ struct FeedbackView: View {
             isPresented: $showSendingOptions,
             titleVisibility: .visible
         ) {
+            Button("Написать в WhatsApp") {
+                openWhatsApp()
+            }
+
             Button("Отправить по электронной почте") {
                 openMailComposer()
             }
 
-            Button("Отправить через WhatsApp") {
-                openWhatsApp()
+            Button("Отправить через Сообщения") {
+                openMessageComposer()
             }
 
             Button("Отмена", role: .cancel) {
@@ -226,7 +258,7 @@ struct FeedbackView: View {
             Button("Понятно", role: .cancel) {
             }
         } message: {
-            Text(unavailableMessage)
+            Text(L10n.text(unavailableMessage))
         }
     }
 
@@ -246,15 +278,9 @@ struct FeedbackView: View {
                             weight: .bold
                         )
                     )
-                    .foregroundColor(
-                        Color(
-                            red: 0.12,
-                            green: 0.16,
-                            blue: 0.28
-                        )
-                    )
+                    .foregroundColor(AppAdaptiveColor.text)
                     .frame(width: 48, height: 48)
-                    .background(.white.opacity(0.75))
+                    .background(AppAdaptiveColor.secondaryBackground)
                     .clipShape(Circle())
             }
         }
@@ -290,16 +316,10 @@ struct FeedbackView: View {
                     .font(.system(size: 15, weight: .semibold))
                     .foregroundColor(.secondary)
             }
-            .foregroundColor(
-                Color(
-                    red: 0.12,
-                    green: 0.16,
-                    blue: 0.28
-                )
-            )
+            .foregroundColor(AppAdaptiveColor.text)
             .padding(.horizontal, 20)
             .frame(height: 70)
-            .background(.white.opacity(0.78))
+            .background(AppAdaptiveColor.secondaryBackground)
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: 20,
@@ -311,6 +331,22 @@ struct FeedbackView: View {
     }
 
     // MARK: - Отправка
+
+    private func openWhatsApp() {
+        openURL(supportWhatsAppURL) { accepted in
+            guard !accepted else {
+                return
+            }
+
+            unavailableMessage = """
+            Не удалось открыть WhatsApp.
+
+            Убедитесь, что WhatsApp установлен, или выберите другой способ отправки.
+            """
+
+            showUnavailableAlert = true
+        }
+    }
 
     private func openMailComposer() {
         guard MFMailComposeViewController.canSendMail() else {
@@ -340,44 +376,6 @@ struct FeedbackView: View {
         }
 
         showMessageComposer = true
-    }
-    private func openWhatsApp() {
-        guard let feedback = selectedFeedback else {
-            return
-        }
-
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = "wa.me"
-        components.path = "/\(developerWhatsAppNumber)"
-        components.queryItems = [
-            URLQueryItem(
-                name: "text",
-                value: feedback.textMessageBody
-            )
-        ]
-
-        guard let url = components.url else {
-            unavailableMessage =
-                "Не удалось сформировать сообщение для WhatsApp."
-            showUnavailableAlert = true
-            return
-        }
-
-        UIApplication.shared.open(
-            url,
-            options: [:]
-        ) { wasOpened in
-            guard !wasOpened else {
-                return
-            }
-
-            DispatchQueue.main.async {
-                unavailableMessage =
-                    "Не удалось открыть WhatsApp."
-                showUnavailableAlert = true
-            }
-        }
     }
 }
 
