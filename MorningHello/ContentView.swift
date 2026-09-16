@@ -595,6 +595,13 @@ struct ContentView: View {
             return pancakeDay
         }
 
+        if showJewishHolidays,
+           let roshHashanah = JewishHolidayProvider.content(for: today),
+           roshHashanah.images.contains("holiday_rosh") ||
+           roshHashanah.images.contains("holiday_rosh2Day") {
+            return roshHashanah
+        }
+        
         // 5. Нейтральные / международные праздники
         // показываются всегда
         if let internationalHoliday =
@@ -1109,7 +1116,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
         .foregroundStyle(AppAdaptiveColor.text)
         .frame(maxWidth: .infinity, minHeight: 78)
         .background(
-            AppAdaptiveColor.warmCardBackground,
+            Color.orange.opacity(0.60),
             in: RoundedRectangle(cornerRadius: 25, style: .continuous)
         )
     }

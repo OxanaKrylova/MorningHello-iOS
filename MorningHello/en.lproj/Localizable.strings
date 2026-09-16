@@ -523,67 +523,151 @@
 "Не удалось удалить историю состояний." = "We couldn't delete your calmness history.";
 
 /* Advice for slight anxiety */
-"Начните утро без спешки и дайте себе несколько спокойных минут." = "Start your morning without rushing, and give yourself a few quiet minutes.";
-"Сделайте длинный выдох и почувствуйте, как немного расслабляются плечи." = "Take a long exhale and notice your shoulders relaxing a little.";
-"Подумайте об одном приятном деле, которое ждёт вас сегодня." = "Think of one pleasant thing you have to look forward to today.";
-"Выпейте любимый напиток не торопясь и побудьте немного в настоящем моменте." = "Enjoy your favorite drink slowly and spend a moment in the present.";
-"Небольшая прогулка может помочь мыслям стать спокойнее." = "A short walk may help your thoughts feel calmer.";
-"Откройте окно и обратите внимание на воздух, свет и звуки вокруг." = "Open a window and notice the air, the light, and the sounds around you.";
-"Сегодня необязательно успеть всё. Выберите главное." = "You don't have to do everything today. Choose what matters most.";
-"Начните с самого простого дела и двигайтесь дальше постепенно." = "Start with the easiest task and move forward one step at a time.";
-"Если мысли забегают вперёд, мягко возвращайтесь к сегодняшнему дню." = "If your thoughts race ahead, gently bring them back to today.";
-"Найдите несколько минут для того, что обычно приносит вам удовольствие." = "Take a few minutes for something you usually enjoy.";
-"Позвоните тому, с кем вам приятно поговорить." = "Call someone you enjoy talking with.";
-"Включите музыку, которая создаёт у вас ощущение спокойствия." = "Play music that helps you feel calm.";
-"Заметьте три хорошие вещи, которые уже есть вокруг вас." = "Notice three good things that are already around you.";
-"Разрешите себе сегодня идти в своём темпе." = "Give yourself permission to move at your own pace today.";
-"Иногда телу нужна простая забота: вода, еда, движение или отдых." = "Sometimes your body needs simple care: water, food, movement, or rest.";
-"Не спорьте с тревожной мыслью. Заметьте её и вернитесь к своим делам." = "Don't argue with an anxious thought. Notice it, then return to what you were doing.";
-"Сделайте небольшую паузу от телефона и новостей." = "Take a short break from your phone and the news.";
-"Подумайте, что сегодня может подарить вам хотя бы немного радости." = "Think about what might bring you even a little joy today.";
-"Поблагодарите себя за то, что заметили своё состояние и позаботились о себе." = "Thank yourself for noticing how you feel and taking care of yourself.";
-"Если небольшая тревога становится частой или начинает мешать жизни, обсудите её со специалистом." = "If mild anxiety becomes frequent or starts interfering with your life, talk with a healthcare professional.";
+"Начните утро немного медленнее обычного и дайте себе несколько минут без дел и новостей. Небольшое снижение темпа помогает нервной системе понять, что прямо сейчас не нужно никуда спешить." = "Start your morning a little more slowly than usual, and give yourself a few minutes without tasks or news. Slowing down can help signal to your nervous system that you do not need to rush right now.";
+
+"Сделайте спокойный вдох и немного более длинный выдох, затем расслабьте плечи. Удлинённый выдох может помочь телу постепенно перейти из напряжения в более спокойное состояние." = "Breathe in gently and let your exhale last a little longer, then relax your shoulders. A longer exhale may help your body gradually move from tension toward a calmer state.";
+
+"Подумайте только об одном приятном или важном деле, которое ждёт вас сегодня. Когда мы возвращаем внимание к ближайшему шагу, тревожные мысли о будущем обычно становятся менее настойчивыми." = "Think of just one enjoyable or important thing you plan to do today. Focusing on your next step can make anxious thoughts about the future feel less persistent.";
+
+"Выпейте чай, кофе или воду не торопясь и обратите внимание на вкус, тепло и запах. Такое простое внимание к ощущениям помогает вернуться из тревожных мыслей в настоящий момент." = "Take your time drinking tea, coffee, or water, and notice its taste, temperature, and smell. Paying attention to these simple sensations can bring your focus back from anxious thoughts to the present moment.";
+
+"Если вам позволяет самочувствие, немного прогуляйтесь в привычном темпе. Спокойное движение помогает снять часть телесного напряжения и переключить внимание." = "If you feel well enough, take a short walk at a comfortable pace. Gentle movement may ease some physical tension and help shift your attention.";
+
+"Подойдите к окну или выйдите на балкон и несколько минут замечайте свет, воздух, звуки и движение вокруг. Наблюдение за реальным окружением помогает мыслям меньше кружиться вокруг тревоги." = "Go to a window or step onto a balcony, and spend a few minutes noticing the light, air, sounds, and movement around you. Observing your surroundings can help your thoughts move away from worry.";
+
+"Сегодня необязательно решить все задачи сразу, поэтому выберите одну или две самые важные. Чёткий и небольшой план часто снижает ощущение перегруженности." = "You do not have to take care of everything at once today. Choose one or two things that matter most. A short, clear plan can make the day feel less overwhelming.";
+
+"Начните с самого простого дела, которое можно закончить за несколько минут. Небольшое завершённое действие возвращает ощущение порядка и способности справляться." = "Start with the easiest task you can finish in a few minutes. Completing one small thing can help you feel more organized and capable.";
+
+"Если мысли снова убегают в неприятное будущее, мягко спросите себя, что происходит со мной именно сейчас. Это помогает отделить реальные события от предположений и страхов." = "If your thoughts race toward an upsetting future, gently ask yourself what is happening right now. This can help you distinguish what is actually happening from fears and assumptions.";
+
+"Выделите хотя бы десять минут на занятие, которое обычно приносит вам удовольствие. Приятные привычные действия напоминают нервной системе, что день состоит не только из тревоги." = "Set aside at least ten minutes for something you usually enjoy. Familiar, pleasant activities can remind your nervous system that there is more to your day than anxiety.";
+
+"Позвоните человеку, разговор с которым обычно даёт вам чувство тепла и спокойствия. Контакт с близким человеком часто помогает уменьшить внутреннее напряжение." = "Call someone whose voice usually makes you feel warm and at ease. Connecting with someone close to you may help ease some of your tension.";
+
+"Включите знакомую музыку, которая ассоциируется у вас с хорошими и спокойными моментами. Знакомые звуки могут стать для нервной системы сигналом безопасности и устойчивости." = "Play familiar music that reminds you of good, peaceful moments. Familiar sounds can offer your nervous system a sense of comfort and steadiness.";
+
+"Оглянитесь вокруг и найдите три вещи, которые вам сейчас приятны или за которые вы благодарны. Это не отменяет тревогу, но помогает вниманию увидеть рядом с ней и что-то хорошее." = "Look around and find three things you appreciate or feel grateful for right now. This does not erase anxiety, but it can help you notice something good alongside it.";
+
+"Разрешите себе сегодня двигаться в собственном темпе, даже если обычно вы требуете от себя большего. Снижение лишних требований к себе уменьшает дополнительное напряжение." = "Give yourself permission to move at your own pace today, even if you usually expect more of yourself. Letting go of unnecessary demands can reduce added stress.";
+
+"Проверьте простые потребности тела: давно ли вы ели, пили воду, отдыхали или двигались. Иногда усталость, голод или недостаток сна усиливают ощущение тревоги." = "Check in with your basic needs: When did you last eat, drink water, rest, or move around? Fatigue, hunger, and lack of sleep can sometimes make anxiety feel stronger.";
+
+"Не пытайтесь силой выгнать тревожную мысль, а просто отметьте, что она появилась. Затем мягко верните внимание к тому, чем вы занимались до неё." = "You do not have to force an anxious thought away. Simply notice that it has appeared, then gently return your attention to what you were doing.";
+
+"Если новости или телефон усиливают напряжение, устройте себе небольшой перерыв от информационного потока. Мозгу бывает легче успокоиться, когда ему не приходится постоянно реагировать на новые тревожные сигналы." = "If the news or your phone increases your tension, take a short break from the stream of information. It may be easier to settle when your mind is not constantly responding to new upsetting updates.";
+
+"Спросите себя, что могло бы сделать сегодняшний день хотя бы немного приятнее. Даже небольшой выбор в свою пользу возвращает ощущение влияния на собственную жизнь." = "Ask yourself what might make today a little more pleasant. Even a small choice that supports your well-being can help you feel more in control of your day.";
+
+"То, что вы заметили свою тревогу, уже является полезным шагом. Теперь можно не бороться с собой, а выбрать одно простое действие, которое поможет почувствовать больше спокойствия." = "Noticing your anxiety is already a helpful step. Instead of fighting yourself, choose one simple action that may help you feel a little calmer.";
+
+"Если лёгкая тревога повторяется почти каждый день, усиливается или начинает мешать сну и обычным делам, не оставайтесь с ней один на один. Обсудите своё состояние с врачом или специалистом по психическому здоровью." = "If mild anxiety returns almost every day, grows stronger, or begins to affect your sleep or daily activities, you do not have to handle it alone. Talk with a doctor or mental health professional.";
 
 /* Advice for worry */
-"Поставьте обе стопы на пол и почувствуйте опору под ногами." = "Place both feet on the floor and feel the support beneath them.";
-"Сделайте спокойный вдох и чуть более длинный выдох." = "Take a gentle breath in and a slightly longer breath out.";
-"Посмотрите вокруг и назовите пять предметов, которые вы видите." = "Look around and name five things you can see.";
-"Сейчас не нужно решать всё сразу. Выберите только одно небольшое дело." = "You don't have to solve everything right now. Choose just one small task.";
-"Выпейте немного воды и дайте себе несколько спокойных минут." = "Drink some water and give yourself a few quiet minutes.";
-"Если мысли торопятся, верните внимание к тому, что происходит прямо сейчас." = "If your thoughts are racing, bring your attention back to what is happening right now.";
-"Подойдите к окну и несколько минут спокойно посмотрите вдаль." = "Go to a window and look into the distance quietly for a few minutes.";
-"Положите ладонь на грудь и почувствуйте ритм своего дыхания." = "Place a hand on your chest and notice the rhythm of your breathing.";
-"Попробуйте немного замедлиться. Сегодня можно делать всё не спеша." = "Try slowing down a little. It's okay to take your time today.";
-"Назовите про себя три вещи, которые сейчас находятся под вашим контролем." = "Name three things that are within your control right now.";
-"Если есть возможность, немного пройдитесь в комфортном для вас темпе." = "If you can, take a short walk at a comfortable pace.";
-"Тревожная мысль – это ещё не событие. Дайте ей просто пройти." = "An anxious thought is not an event. Let it pass.";
-"Вспомните место, где вам обычно спокойно и уютно." = "Think of a place where you usually feel calm and comfortable.";
-"Сделайте паузу от новостей и другой информации, которая усиливает тревогу." = "Take a break from news and other information that increases your anxiety.";
-"Позвоните человеку, рядом с которым вам обычно становится спокойнее." = "Call someone who usually helps you feel calmer.";
-"Спросите себя: что поможет мне почувствовать себя немного спокойнее прямо сейчас?" = "Ask yourself: What would help me feel a little calmer right now?";
-"Выберите знакомое занятие: чай, музыка, книга или спокойная прогулка." = "Choose a familiar activity: tea, music, a book, or a quiet walk.";
-"Расслабьте плечи и челюсть. Иногда тело удерживает тревогу незаметно для нас." = "Relax your shoulders and jaw. Sometimes the body holds anxiety without us noticing.";
-"Не требуйте от себя идеального дня. Достаточно прожить его бережно." = "Don't expect a perfect day from yourself. Treat yourself gently as you move through it.";
-"Если тревога долго не проходит или усиливается, расскажите об этом врачу или близкому человеку." = "If your anxiety lasts a long time or gets worse, tell a doctor or someone you trust.";
+"Поставьте обе стопы на пол и несколько секунд почувствуйте твёрдую поверхность под ними. Ощущение физической опоры помогает вернуть внимание от тревожных мыслей к тому, что происходит прямо сейчас." = "Place both feet on the floor and notice the firm surface beneath them for a few seconds. Feeling that physical support can bring your attention away from anxious thoughts and back to the present moment.";
+
+"Дышите спокойно, не стараясь набрать как можно больше воздуха, а выдох делайте немного длиннее вдоха. Такой ритм может постепенно уменьшить телесное возбуждение, которое сопровождает тревогу." = "Breathe gently without trying to take in as much air as possible, and let your exhale last a little longer than your inhale. This rhythm may gradually ease some of the physical arousal that comes with anxiety.";
+
+"Посмотрите вокруг и медленно назовите пять предметов, которые вы видите. Это простое упражнение возвращает внимание к окружающей реальности и помогает прервать поток тревожных мыслей." = "Look around and slowly name five things you can see. This simple exercise brings your attention back to your surroundings and may interrupt the flow of anxious thoughts.";
+
+"Сейчас не нужно решать все проблемы, которые возникают у вас в голове. Выберите только одно действие, которое действительно необходимо сделать в ближайшее время." = "You do not need to solve every problem that comes to mind right now. Choose just one action that truly needs your attention soon.";
+
+"Сядьте удобно, сделайте несколько глотков воды и дайте себе несколько минут без спешки. Когда телу становится немного комфортнее, эмоциональное напряжение часто тоже начинает снижаться." = "Sit comfortably, take a few sips of water, and give yourself a few unhurried minutes. As your body becomes a little more comfortable, emotional tension may begin to ease as well.";
+
+"Если мысли быстро сменяют одна другую, спросите себя, что вы видите, слышите и чувствуете прямо сейчас. Возвращение к непосредственным ощущениям помогает не следовать за каждой тревожной мыслью." = "If your thoughts are racing, ask yourself what you can see, hear, and feel right now. Returning to your immediate senses can help you avoid following every anxious thought.";
+
+"Посмотрите несколько минут вдаль или спокойно понаблюдайте за тем, что происходит за окном. Переключение внимания на внешнее пространство может уменьшить внутреннюю сосредоточенность на тревоге." = "Look into the distance for a few minutes, or quietly watch what is happening outside a window. Turning your attention outward may reduce your focus on anxious feelings.";
+
+"Положите ладонь на живот или грудь и просто почувствуйте движение дыхания, не пытаясь его исправить. Спокойное наблюдение за телом помогает постепенно восстановить ощущение устойчивости." = "Place a hand on your stomach or chest and simply notice the movement of your breath without trying to change it. Gently observing your body may help you regain a sense of steadiness.";
+
+"Когда тревога высока, разрешите себе делать обычные дела медленнее и с паузами. Вашей нервной системе сейчас важнее чувство безопасности, чем скорость и продуктивность." = "When anxiety is high, allow yourself to do everyday tasks more slowly and take breaks. Right now, feeling secure matters more than speed or productivity.";
+
+"Назовите три вещи, на которые вы действительно можете повлиять сегодня. Это помогает отделить реальные действия от событий, которые сейчас находятся вне вашего контроля." = "Name three things you can genuinely influence today. This can help you separate actions you can take from events that are currently beyond your control.";
+
+"Если здоровье позволяет, несколько минут спокойно походите по комнате или на улице. Ритмичное движение может помочь телу расходовать часть накопившегося напряжения." = "If your health allows, walk gently around the room or outside for a few minutes. Rhythmic movement may help your body release some built-up tension.";
+
+"Напомните себе, что тревожная мысль является мыслью, а не доказательством того, что плохое обязательно произойдёт. Попробуйте проверить, какие факты есть у вас прямо сейчас." = "Remind yourself that an anxious thought is a thought, not proof that something bad will happen. Consider what facts you actually have right now.";
+
+"Вспомните место, человека или ситуацию, рядом с которыми вы обычно чувствуете себя спокойно. Несколько минут удерживайте в памяти детали этого ощущения, позволяя телу немного расслабиться." = "Think of a place, person, or situation that usually helps you feel at ease. Spend a few minutes remembering its details and allow your body to relax a little.";
+
+"На время отложите новости, социальные сети и разговоры, которые усиливают ваше напряжение. При сильной тревоге уменьшение количества тревожной информации даёт нервной системе возможность восстановиться." = "Step away for a while from news, social media, and conversations that increase your tension. When anxiety is strong, reducing distressing information can give your nervous system a chance to settle.";
+
+"Свяжитесь с человеком, рядом с которым вам обычно спокойнее, и прямо скажите, что сегодня вы тревожитесь. Иногда несколько минут спокойного человеческого контакта оказываются полезнее попыток справиться со всем в одиночку." = "Contact someone who usually helps you feel calmer, and tell them directly that you feel anxious today. A few minutes of supportive contact may help more than trying to manage everything alone.";
+
+"Спросите себя не о том, как полностью избавиться от тревоги, а о том, что может уменьшить её хотя бы немного. Маленькая достижимая цель обычно полезнее требования немедленно почувствовать себя хорошо." = "Instead of asking how to get rid of anxiety completely, ask what might ease it a little. A small, achievable goal is often more helpful than expecting yourself to feel better immediately.";
+
+"Выберите знакомое и предсказуемое занятие: приготовьте чай, послушайте музыку, почитайте или немного прогуляйтесь. Привычные действия помогают вернуть ощущение нормального течения дня." = "Choose a familiar, predictable activity: make tea, listen to music, read, or take a short walk. Familiar routines can help restore a sense of normalcy to your day.";
+
+"Обратите внимание, не напряжены ли сейчас челюсть, плечи, руки или живот, и мягко расслабьте их. Когда мышцы постепенно отпускают напряжение, мозг получает меньше телесных сигналов опасности." = "Notice whether your jaw, shoulders, hands, or stomach feel tense, and gently let them relax. As your muscles release tension, your brain may receive fewer physical signals of distress.";
+
+"Не требуйте от себя сегодня идеального настроения или высокой продуктивности. В тревожный день достаточно бережно пройти через необходимые дела и дать себе больше отдыха." = "Do not demand a perfect mood or high productivity from yourself today. On an anxious day, it is enough to approach necessary tasks gently and give yourself more rest.";
+
+"Если тревога не уменьшается, становится сильнее, мешает спать или выполнять обычные дела, расскажите об этом врачу или специалисту. Постоянную тревогу не обязательно терпеть, и с ней можно работать." = "If your anxiety does not ease, gets stronger, or interferes with sleep or everyday activities, tell a doctor or mental health professional. You do not have to simply endure ongoing anxiety; support is available.";
 
 /* Advice for panic */
-"Остановитесь и почувствуйте опору под ногами." = "Pause and feel the support beneath your feet.";
-"Не торопите дыхание. Сделайте мягкий вдох и медленный длинный выдох." = "Don't force your breathing. Breathe in gently, then take a slow, long breath out.";
-"Посмотрите вокруг. Выберите один предмет и внимательно рассмотрите его." = "Look around. Choose one object and study it closely.";
-"Назовите вслух, где вы сейчас находитесь и какой сегодня день." = "Say out loud where you are and what day it is.";
-"Положите ладони на колени и почувствуйте их тепло и давление." = "Place your hands on your knees and notice their warmth and pressure.";
-"Не пытайтесь сделать очень глубокий вдох. Просто дышите немного медленнее." = "Don't try to take a very deep breath. Just breathe a little more slowly.";
-"Если можете, сядьте в устойчивое и удобное положение." = "If you can, sit in a stable, comfortable position.";
-"Назовите четыре вещи, которых вы можете коснуться прямо сейчас." = "Name four things you can touch right now.";
-"Сосредоточьтесь только на ближайшей минуте. Остальное может подождать." = "Focus only on the next minute. Everything else can wait.";
-"Сделайте несколько глотков воды, если вам это комфортно." = "Take a few sips of water if that feels comfortable.";
-"Ослабьте тесную одежду и устройтесь удобнее." = "Loosen any tight clothing and make yourself more comfortable.";
-"Попросите близкого человека несколько минут побыть рядом с вами." = "Ask someone you trust to stay with you for a few minutes.";
-"Не оставайтесь один на один с сильным страхом, если вам нужна поддержка." = "If you need support, don't face intense fear alone.";
-"Слушайте знакомый спокойный голос или тихую музыку." = "Listen to a familiar, calming voice or quiet music.";
-"Почувствуйте спинку стула, пол под ногами и поверхность под ладонями." = "Notice the chair behind you, the floor beneath your feet, and the surface under your hands.";
-"Не боритесь со всеми ощущениями сразу. Просто замечайте их одно за другим." = "Don't fight every sensation at once. Notice them one at a time.";
-"Если это уже случалось раньше, вспомните, что обычно помогало вам успокоиться." = "If this has happened before, remember what usually helped you calm down.";
-"Если вам становится хуже, позвоните близкому человеку или врачу." = "If you feel worse, call someone you trust or a doctor.";
-"При новой или сильной боли в груди, выраженной одышке, обмороке или внезапной слабости нужна срочная медицинская помощь." = "Seek emergency medical care for new or severe chest pain, significant shortness of breath, fainting, or sudden weakness.";
-"Если вы сомневаетесь, паника ли это, безопаснее обратиться за медицинской помощью." = "If you're not sure whether this is a panic attack, it is safer to seek medical care.";
+"Сядьте или встаньте так, чтобы хорошо чувствовать опору под ногами и устойчивость своего тела. Сейчас ваша задача не победить все ощущения, а помочь телу почувствовать, что оно находится здесь, в настоящем моменте." = "Sit or stand so you can clearly feel the support beneath your feet and the steadiness of your body. You do not need to overcome every sensation right now; focus on helping your body connect with the present moment.";
+
+"Не пытайтесь делать очень глубокие вдохи, потому что это иногда усиливает головокружение и неприятные ощущения. Дышите обычно, стараясь лишь сделать выдох немного медленнее и длиннее." = "Do not force very deep breaths, which can sometimes increase dizziness or discomfort. Breathe naturally and, if comfortable, let your exhale be a little slower and longer.";
+
+"Выберите один предмет рядом с собой и внимательно рассмотрите его форму, цвет и детали. Такое сосредоточение помогает мозгу переключить внимание с внутренних ощущений на безопасное окружение." = "Choose an object near you and look closely at its shape, color, and details. Focusing on it can help shift your attention from internal sensations to your surroundings.";
+
+"Спокойно произнесите своё имя, место, где вы находитесь, сегодняшний день и время суток. Ориентация в настоящем помогает вернуть чувство связи с происходящим вокруг." = "Calmly say your name, where you are, what day it is, and the time of day. Orienting yourself to the present can help you reconnect with what is happening around you.";
+
+"Положите ладони на колени или на подлокотники и почувствуйте давление и температуру поверхности. Ясные телесные ощущения могут стать точкой опоры, пока сильная волна тревоги постепенно проходит." = "Rest your hands on your knees or the arms of a chair, and notice the pressure and temperature of the surface. These clear physical sensations can give you something to focus on as the intense wave of anxiety passes.";
+
+"Если кажется, что воздуха не хватает, не заставляйте себя вдыхать глубже и чаще. Частое глубокое дыхание может усиливать симптомы, поэтому постарайтесь дышать мягко и естественно." = "If it feels as though you cannot get enough air, do not force yourself to breathe deeper or faster. Frequent deep breaths can worsen symptoms, so try to breathe gently and naturally.";
+
+"Если можете, сядьте в устойчивое положение и обопритесь спиной на спинку стула. Чем меньше телу приходится удерживать равновесие и напряжение, тем легче сосредоточиться на успокоении." = "If you can, sit in a stable position with your back supported by a chair. With less effort spent holding yourself steady, it may be easier to focus on calming down.";
+
+"Найдите четыре предмета рядом с собой и по очереди прикоснитесь к ним. Обратите внимание, какие они на ощупь: гладкие, холодные, мягкие или твёрдые." = "Find four objects near you and touch them one at a time. Notice how each feels: smooth, cool, soft, or firm.";
+
+"Не пытайтесь сейчас разобраться со всем будущим, сосредоточьтесь только на ближайшей минуте. Когда эта минута закончится, займитесь следующей, не требуя от себя большего." = "You do not need to figure out the entire future right now. Focus only on the next minute. When it passes, take the next one without asking more of yourself.";
+
+"Если вам комфортно и вы можете безопасно глотать, сделайте несколько небольших глотков воды. Выполняйте это медленно, обращая внимание на само ощущение воды и движение глотка." = "If you feel comfortable and can swallow safely, take a few small sips of water. Go slowly and notice the sensation of the water and the movement of swallowing.";
+
+"Ослабьте тесный воротник или другую одежду, которая мешает вам чувствовать себя свободно, и устройтесь удобнее. Уменьшение физического дискомфорта может помочь снизить дополнительное напряжение." = "Loosen a tight collar or any clothing that makes you uncomfortable, and find a more comfortable position. Reducing physical discomfort may help ease added tension.";
+
+"Если рядом есть человек, которому вы доверяете, скажите ему, что вам сейчас страшно, и попросите немного побыть с вами. Ему необязательно что-то исправлять, иногда достаточно спокойного присутствия." = "If someone you trust is nearby, tell them you feel frightened and ask them to stay with you for a while. They do not need to fix anything; a calm presence may be enough.";
+
+"Если страх очень сильный, не заставляйте себя обязательно справляться в одиночку. Позвоните близкому человеку и попросите его оставаться с вами на связи, пока состояние не станет спокойнее." = "If the fear feels overwhelming, do not force yourself to handle it alone. Call someone close to you and ask them to stay on the line until you feel calmer.";
+
+"Если знакомый спокойный голос или музыка обычно помогают вам, включите их негромко. Предсказуемый и привычный звук может стать дополнительной опорой для внимания." = "If a familiar, calming voice or music usually helps you, play it softly. A familiar, predictable sound can give your attention another place to rest.";
+
+"Одновременно почувствуйте стопы на полу, спину на стуле и ладони на поверхности рядом. Несколько устойчивых ощущений помогают мозгу получать информацию не только от страха, но и от реального окружающего пространства." = "Notice your feet on the floor, your back against the chair, and your hands resting on a surface. These steady sensations help your mind take in information from your surroundings as well as from fear.";
+
+"Не пытайтесь оценивать каждое сердцебиение, вдох или другое ощущение в теле. Заметьте его и затем снова переведите внимание на предметы, звуки и пространство вокруг." = "Try not to analyze every heartbeat, breath, or other physical sensation. Notice it, then turn your attention back to objects, sounds, and the space around you.";
+
+"Если подобное состояние уже случалось и врач объяснял вам, что это паническая реакция, вспомните, какие способы помогали вам раньше. Используйте знакомые действия по одному, не пытаясь выполнить всё сразу." = "If you have experienced this before and a doctor has explained that it was a panic reaction, recall what helped you then. Try those familiar steps one at a time rather than all at once.";
+
+"Если состояние продолжает усиливаться или вам трудно оставаться одному, свяжитесь с близким человеком, врачом или службой медицинской помощи. Просить о помощи при сильных симптомах является разумным действием." = "If your symptoms continue to intensify or it is hard to be alone, contact someone close to you, a doctor, or a medical service. Seeking help for severe symptoms is a sensible step.";
+
+"Новая или сильная боль в груди, выраженная одышка, потеря сознания, внезапная слабость, нарушение речи или необычные для вас симптомы требуют срочной медицинской оценки. Особенно в старшем возрасте не стоит автоматически считать такие признаки проявлением паники." = "New or severe chest pain, significant shortness of breath, fainting, sudden weakness, difficulty speaking, or symptoms that are unusual for you require urgent medical evaluation. Especially for older adults, these signs should not automatically be assumed to be caused by panic.";
+
+"Если вы не уверены, что происходящее связано именно с паникой, лучше отнестись к новым или необычным физическим симптомам серьёзно. Обратитесь за медицинской помощью, чтобы исключить причину, требующую лечения." = "If you are unsure whether what you are experiencing is panic, take new or unusual physical symptoms seriously. Seek medical care to rule out a condition that needs treatment.";
+
+/* Birthday Greetings */
+"С днём рождения! Пусть каждый новый день приносит радость, тепло и приятные события." = "Happy birthday! May each new day bring joy, warmth, and happy moments.";
+"Желаю здоровья, счастья, душевного спокойствия и исполнения самых добрых желаний!" = "Wishing you good health, happiness, peace of mind, and all that your heart hopes for!";
+"Пусть этот день рождения станет началом прекрасного года, полного радости и успехов." = "May this birthday mark the beginning of a wonderful year filled with joy and success.";
+"Желаю, чтобы рядом всегда были любящие люди, верные друзья и множество поводов для улыбки." = "May you always have loving people, loyal friends, and plenty of reasons to smile by your side.";
+"Пусть жизнь будет наполнена светом, уютом, добрыми встречами и счастливыми мгновениями." = "May your life be filled with light, comfort, warm reunions, and happy moments.";
+"С днём рождения! Желаю прекрасного настроения, крепкого здоровья и благополучия." = "Happy birthday! Wishing you a wonderful day, good health, and well-being.";
+"Пусть мечты исполняются, удача сопровождает во всех делах, а сердце остаётся молодым." = "May your dreams come true, good fortune follow you, and your heart stay young.";
+"Желаю тепла в душе, мира в доме, радости в сердце и только хороших новостей." = "Wishing you warmth in your soul, peace at home, joy in your heart, and only good news.";
+"Пусть впереди ждут интересные события, приятные открытия и множество счастливых дней." = "May the days ahead bring interesting experiences, delightful discoveries, and much happiness.";
+"С днём рождения! Пусть каждый год жизни становится ещё ярче, добрее и счастливее." = "Happy birthday! May every year grow brighter, kinder, and happier.";
+"Пусть в день рождения тебя окружают забота, тепло и любимые люди." = "May you be surrounded by care, warmth, and the people you love on your birthday.";
+"Желаю хорошего самочувствия, спокойных дней и радостных встреч." = "Wishing you good health, peaceful days, and joyful reunions.";
+"Пусть каждый новый день дарит повод улыбнуться и почувствовать себя счастливым." = "May each new day give you a reason to smile and feel happy.";
+"Желаю уютного дома, добрых разговоров и приятных сюрпризов." = "Wishing you a cozy home, heartfelt conversations, and pleasant surprises.";
+"Пусть впереди будет много светлых дней и маленьких поводов для радости." = "May many bright days and little moments of joy lie ahead.";
+"Желаю сил для любимых дел и времени для того, что приносит удовольствие." = "Wishing you energy for the things you love and time to enjoy them.";
+"Пусть рядом будут люди, с которыми легко смеяться и хорошо молчать." = "May you have people by your side who make laughter easy and quiet moments comfortable.";
+"Желаю мира в душе, тепла в сердце и добрых новостей." = "Wishing you peace of mind, warmth in your heart, and good news.";
+"Пусть этот год подарит новые впечатления и исполнение заветных желаний." = "May this year bring new experiences and make your dearest wishes come true.";
+"Желаю приятных прогулок, тёплых встреч и красивых моментов каждый день." = "Wishing you pleasant walks, warm reunions, and beautiful moments every day.";
+"Пусть день рождения будет наполнен заботой, улыбками и любимыми голосами." = "May your birthday be filled with care, smiles, and the voices of people you love.";
+"Желаю крепкого здоровья, душевного равновесия и уверенности в завтрашнем дне." = "Wishing you good health, peace of mind, and confidence in the days ahead.";
+"Пусть в жизни всегда найдётся место чуду, надежде и хорошему настроению." = "May your life always have room for wonder, hope, and good cheer.";
+"Желаю радоваться простым вещам и находить красоту в каждом дне." = "May you enjoy life's simple pleasures and find beauty in every day.";
+"Пусть впереди ждут добрые перемены, счастливые встречи и много поводов для улыбки." = "May kind changes, happy reunions, and many reasons to smile lie ahead.";

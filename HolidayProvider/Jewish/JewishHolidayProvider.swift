@@ -129,22 +129,22 @@ struct JewishHolidayProvider {
 
         // MARK: - Рош ха-Шана
 
-        if
-            (year == 2026 &&
-             month == 9 &&
-             (12...13).contains(day)) ||
+        let isFirstDayOfRoshHashanah =
+            (year == 2026 && month == 9 && day == 12) ||
+            (year == 2027 && month == 10 && day == 2) ||
+            (year == 2028 && month == 9 && day == 21)
 
-            (year == 2027 &&
-             month == 10 &&
-             (2...3).contains(day)) ||
+        let isSecondDayOfRoshHashanah =
+            (year == 2026 && month == 9 && day == 13) ||
+            (year == 2027 && month == 10 && day == 3) ||
+            (year == 2028 && month == 9 && day == 22)
 
-            (year == 2028 &&
-             month == 9 &&
-             (21...22).contains(day)) {
-
+        if isFirstDayOfRoshHashanah || isSecondDayOfRoshHashanah {
             return HolidayContent(
                 images: [
-                    "holiday_rosh"
+                    isFirstDayOfRoshHashanah
+                        ? "holiday_rosh"
+                        : "holiday_rosh2Day"
                 ],
                 phrases: [
                     "С Рош ха-Шана! Сладкого, доброго и счастливого года!"

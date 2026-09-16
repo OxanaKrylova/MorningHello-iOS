@@ -70,8 +70,8 @@ struct MoodHistoryView: View {
                 .padding(20)
             }
             .background(
-                AppAdaptiveColor.groupedBackground
-                .ignoresSafeArea()
+                AppAdaptiveColor.warmFormBackground
+                    .ignoresSafeArea()
             )
             .navigationTitle("История спокойствия")
             .navigationBarTitleDisplayMode(.inline)

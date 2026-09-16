@@ -162,7 +162,7 @@ struct EmergencyContactsView: View {
                         Text("Тревожные контакты")
                             .font(
                                 .system(
-                                    size: 34,
+                                    size: 30,
                                     weight: .bold,
                                     design: .rounded
                                 )
@@ -170,7 +170,11 @@ struct EmergencyContactsView: View {
                             .foregroundColor(AppAdaptiveColor.text)
                             .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.center)
-
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.75)
+                            .padding(.trailing, 54)
+                            .padding(.top, 12)
+                        
                         HStack {
                             Spacer()
 

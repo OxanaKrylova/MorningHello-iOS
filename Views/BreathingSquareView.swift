@@ -94,16 +94,8 @@ struct BreathingSquareView: View {
     }
 
     private var breathingBackground: some View {
-        LinearGradient(
-            colors: [
-                AppAdaptiveColor.background,
-                AppAdaptiveColor.secondaryBackground,
-                AppAdaptiveColor.groupedBackground
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
+        AppAdaptiveColor.warmFormBackground
+            .ignoresSafeArea()
     }
 
     private var header: some View {

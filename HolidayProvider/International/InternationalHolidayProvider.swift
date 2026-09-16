@@ -501,7 +501,61 @@ struct InternationalHolidayProvider {
                 category: "Нейтральный"
             )
         }
+        if day == 14 && month == 3 {
+            return HolidayContent(
+                images: ["holiday_mimosa"],
+                phrases: ["Пусть День мимозы принесёт тепло, улыбки и весеннее настроение!"],
+                category: "Нейтральный"
+            )
+        }
 
+        if day == 31 && month == 3 {
+            return HolidayContent(
+                images: ["holiday_orange"],
+                phrases: ["Пусть День апельсина и лимона будет ярким и солнечным!"],
+                category: "Нейтральный"
+            )
+        }
+
+        if day == 21 && month == 5 {
+            return HolidayContent(
+                images: ["holiday_rose"],
+                phrases: ["Пусть День розы подарит красоту и приятные мгновения!"],
+                category: "Нейтральный"
+            )
+        }
+
+        if day == 27 && month == 5 {
+            return HolidayContent(
+                images: ["holiday_strawberry"],
+                phrases: ["Пусть День клубники будет сладким и радостным!"],
+                category: "Нейтральный"
+            )
+        }
+
+        if day == 27 && month == 6 {
+            return HolidayContent(
+                images: ["holiday_fishman"],
+                phrases: ["Пусть День рыбака подарит спокойствие и хороший улов!"],
+                category: "Нейтральный"
+            )
+        }
+
+        if day == 19 && month == 9 {
+            return HolidayContent(
+                images: ["holiday_octoberfest"],
+                phrases: ["Пусть открытие Октоберфеста подарит весёлые встречи!"],
+                category: "Нейтральный"
+            )
+        }
+
+        if day == 3 && month == 10 {
+            return HolidayContent(
+                images: ["holiday_mashrooms"],
+                phrases: ["Пусть День грибника принесёт радость осенней прогулки!"],
+                category: "Нейтральный"
+            )
+        }
         return nil
     }
 }

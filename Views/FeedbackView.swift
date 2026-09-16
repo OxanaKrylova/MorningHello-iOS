@@ -162,8 +162,8 @@ struct FeedbackView: View {
 
     var body: some View {
         ZStack {
-            AppAdaptiveColor.groupedBackground
-            .ignoresSafeArea()
+            AppAdaptiveColor.warmFormBackground
+                .ignoresSafeArea()
 
             ScrollView {
                 VStack(spacing: 24) {
