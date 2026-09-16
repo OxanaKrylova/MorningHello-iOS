@@ -137,6 +137,15 @@ struct SubscriptionView: View {
         .manageSubscriptionsSheet(
             isPresented: $showManageSubscriptions
         )
+        .onChange(of: showManageSubscriptions) { oldValue, newValue in
+            guard oldValue, !newValue else {
+                return
+            }
+
+            Task {
+                await subscriptionManager.refreshAndSync()
+            }
+        }
         .sheet(
             isPresented: $showSubscriptionPlans,
             onDismiss: refreshAfterPlanSelection

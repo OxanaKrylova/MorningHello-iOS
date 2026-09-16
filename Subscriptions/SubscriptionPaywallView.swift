@@ -78,6 +78,7 @@ struct SubscriptionPaywallView: View {
     @State private var showContacts = false
     @State private var isPurchasing = false
     @State private var purchaseMessage: String?
+    @State private var isEligibleForIntroOffer: Bool?
 
     var body: some View {
         NavigationStack {
@@ -151,6 +152,13 @@ struct SubscriptionPaywallView: View {
             if subscriptionManager.products.isEmpty {
                 await subscriptionManager.loadProducts()
             }
+
+            await refreshIntroOfferEligibility()
+        }
+        .onChange(of: selectedPlan) { _, _ in
+            Task {
+                await refreshIntroOfferEligibility()
+            }
         }
     }
 
@@ -202,7 +210,8 @@ struct SubscriptionPaywallView: View {
                     vertical: true
                 )
 
-            if mode == .initialOffer {
+            if mode == .initialOffer,
+               isEligibleForIntroOffer == true {
                 (
                     Text("Первый месяц ")
                     +
@@ -236,6 +245,71 @@ struct SubscriptionPaywallView: View {
                     maxWidth: .infinity,
                     alignment: .leading
                 )
+                .background(
+                    Color.white.opacity(0.70),
+                    in: RoundedRectangle(
+                        cornerRadius: 18,
+                        style: .continuous
+                    )
+                )
+            }
+
+            if mode == .initialOffer,
+               isEligibleForIntroOffer == false {
+                Text(
+                    "Для этого Apple ID бесплатный период уже использован. Оплата выбранного тарифа начнётся сразу после подтверждения покупки."
+                )
+                .font(
+                    .system(
+                        .body,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(
+                    Color(
+                        red: 0.45,
+                        green: 0.22,
+                        blue: 0.16
+                    )
+                )
+                .lineSpacing(4)
+                .fixedSize(
+                    horizontal: false,
+                    vertical: true
+                )
+                .padding(16)
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .leading
+                )
+                .background(
+                    Color.white.opacity(0.70),
+                    in: RoundedRectangle(
+                        cornerRadius: 18,
+                        style: .continuous
+                    )
+                )
+            }
+
+            if mode == .initialOffer,
+               isEligibleForIntroOffer == nil,
+               subscriptionManager.lastError == nil {
+                HStack(spacing: 10) {
+                    ProgressView()
+                    Text("Проверяем право на бесплатный период…")
+                }
+                .font(
+                    .system(
+                        .body,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(.secondary)
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .leading
+                )
+                .padding(16)
                 .background(
                     Color.white.opacity(0.70),
                     in: RoundedRectangle(
@@ -281,7 +355,8 @@ struct SubscriptionPaywallView: View {
                 }
             }
 
-            if mode == .initialOffer {
+            if mode == .initialOffer,
+               isEligibleForIntroOffer == true {
                 Text(
                     "Первый месяц является бесплатным. Подписку можно отменить в период бесплатного использования на форме Профиля."
                 )
@@ -313,7 +388,8 @@ struct SubscriptionPaywallView: View {
                     planButton(plan)
                 }
             }
-            if mode == .initialOffer {
+            if mode == .initialOffer,
+               isEligibleForIntroOffer == true {
                 Text(
                     "После окончания бесплатного периода подписка продлевается автоматически."
                 )
@@ -513,6 +589,22 @@ struct SubscriptionPaywallView: View {
 
     private func product(for plan: Plan) -> Product? {
         subscriptionManager.products.first { $0.id == plan.rawValue }
+    }
+
+    @MainActor
+    private func refreshIntroOfferEligibility() async {
+        guard mode == .initialOffer else {
+            isEligibleForIntroOffer = false
+            return
+        }
+
+        guard let subscription = selectedProduct?.subscription else {
+            isEligibleForIntroOffer = nil
+            return
+        }
+
+        isEligibleForIntroOffer =
+            await subscription.isEligibleForIntroOffer
     }
 
     @MainActor
