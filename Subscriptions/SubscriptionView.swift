@@ -75,16 +75,7 @@ struct SubscriptionView: View {
     }
 
     private var subscriptionBackground: some View {
-        LinearGradient(
-            colors: [
-                AppAdaptiveColor.background,
-                AppAdaptiveColor.secondaryBackground,
-                AppAdaptiveColor.groupedBackground
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
+        AppAdaptiveColor.warmFormBackground.ignoresSafeArea()
     }
 
     var body: some View {
@@ -106,7 +97,7 @@ struct SubscriptionView: View {
                     .padding(.bottom, 40)
                 }
             }
-            .navigationTitle("Подписка")
+            .navigationTitle(L10n.text("Подписка"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(
@@ -136,7 +127,7 @@ struct SubscriptionView: View {
                 .refreshSubscriptionStatus()
         }
         .alert(
-            "Подписка",
+            L10n.text("Подписка"),
             isPresented: Binding(
                 get: {
                     subscriptionMessage != nil
@@ -169,7 +160,7 @@ struct SubscriptionView: View {
                     alignment: .leading,
                     spacing: 5
                 ) {
-                    Text("Текущая подписка")
+                    Text(L10n.text("Текущая подписка"))
                         .font(
                             .system(
                                 .headline,
@@ -255,7 +246,7 @@ struct SubscriptionView: View {
             maxWidth: .infinity,
             alignment: .leading
         )
-        .background(AppAdaptiveColor.secondaryBackground)
+        .background(AppAdaptiveColor.warmCardBackground)
         .clipShape(
             RoundedRectangle(
                 cornerRadius: 28,
@@ -450,9 +441,7 @@ private struct SubscriptionActionButtonStyle: ButtonStyle {
             )
             .padding(16)
             .background(
-                Color(
-                    .secondarySystemGroupedBackground
-                )
+                AppAdaptiveColor.warmCardBackground
             )
             .clipShape(
                 RoundedRectangle(

@@ -906,19 +906,28 @@ This is an automated MorningHello message. If there is an immediate threat to li
         return ZStack(alignment: .top) {
             VStack(spacing: 22) {
                 
-                Text(timeGreeting)
-                    .font(
-                        .system(
-                            size: 36,
-                            weight: .bold,
-                            design: .rounded
-                        )
-                    )
-                    .foregroundColor(AppAdaptiveColor.text)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                HStack(spacing: 8) {
+                    Text(timeGreeting)
+                        .font(.system(size: 36, weight: .bold, design: .rounded))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .foregroundColor(AppAdaptiveColor.text)
+
+                    Button {
+                        AppSoundPlayer.shared.play(.openForm)
+                        showSettings = true
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundStyle(AppAdaptiveColor.text)
+                            .frame(width: 44, height: 44)
+                            .background(AppAdaptiveColor.warmCardBackground, in: Circle())
+                    }
+                    .accessibilityLabel(L10n.text("Настройки"))
+                }
+                .frame(maxWidth: .infinity)
                 
-                Text("Как ты сегодня?")
+                Text(L10n.text("Как ты сегодня?"))
                     .font(.system(.title3, design: .rounded))
                     .foregroundColor(AppAdaptiveColor.secondaryText)
                     .multilineTextAlignment(.center)
@@ -946,7 +955,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         HStack(spacing: 10) {
                             Image(systemName: "heart.fill")
                             
-                            Text("Я в порядке")
+                            Text(L10n.text("Я в порядке"))
                         }
                     }
                     .font(
@@ -1076,25 +1085,6 @@ This is an automated MorningHello message. If there is an immediate threat to li
             .padding(.horizontal, 20)
             .safeAreaPadding(.top, 28)
 
-            HStack {
-                Spacer()
-                Button {
-                    AppSoundPlayer.shared.play(.openForm)
-                    showSettings = true
-                } label: {
-                    Image(systemName: "gearshape.fill")
-                        .font(.system(size: 20, weight: .semibold))
-                        .foregroundStyle(AppAdaptiveColor.text)
-                        .frame(width: 48, height: 48)
-                        .background(
-                            AppAdaptiveColor.warmCardBackground,
-                            in: Circle()
-                        )
-                }
-                .accessibilityLabel("Настройки")
-            }
-            .padding(.trailing, 28)
-            .safeAreaPadding(.top, 8)
         }
     }
 

@@ -40,6 +40,10 @@
 "Я в порядке" = "I'm OK";
 "Открытки" = "Cards";
 "Оценка" = "Check In With Yourself";
+"Отметки" = "Check-Ins";
+"Выбрать и отправить" = "Choose and Send";
+"Уровень спокойствия" = "How You Feel";
+"Выбрать открытку ко дню рождения" = "Choose a Birthday Card";
 "Квадрат дыхания" = "Box Breathing";
 "История" = "History";
 "Доброе утро" = "Good Morning";
@@ -50,6 +54,7 @@
 /* Subscription */
 "Подписка" = "Subscription";
 "Текущая подписка" = "Current Subscription";
+"Тариф, срок действия и управление" = "Plan, Expiration, and Management";
 "Ежемесячная" = "Monthly";
 "На 3 месяца" = "Every 3 Months";
 "Годовая" = "Annual";

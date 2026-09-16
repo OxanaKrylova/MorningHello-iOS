@@ -15,28 +15,19 @@ struct SettingsView: View {
     @AppStorage("app_sounds_enabled")
     private var areSoundsEnabled = true
 
+    @AppStorage(AppLanguage.storageKey)
+    private var selectedLanguageCode = AppLanguage.initial.rawValue
+
     @State private var showProfile = false
     @State private var showContacts = false
     @State private var showHolidaySettings = false
+    @State private var showSubscription = false
     @State private var showFeedback = false
+    @State private var showBirthdayGreeting = false
 
-    private let backgroundColor = Color(
-        red: 1.00,
-        green: 0.96,
-        blue: 0.88
-    )
-
-    private let titleColor = Color(
-        red: 0.55,
-        green: 0.30,
-        blue: 0.14
-    )
-
-    private let textColor = Color(
-        red: 0.12,
-        green: 0.16,
-        blue: 0.28
-    )
+    private let backgroundColor = AppAdaptiveColor.warmFormBackground
+    private let titleColor = AppAdaptiveColor.text
+    private let textColor = AppAdaptiveColor.text
 
     var body: some View {
         NavigationStack {
@@ -47,6 +38,8 @@ struct SettingsView: View {
                 ScrollView {
                     VStack(spacing: 24) {
                         monitoringSection
+                        subscriptionSection
+                        postcardsSection
                         soundSection
                         languageSection
                         feedbackSection
@@ -55,13 +48,13 @@ struct SettingsView: View {
                     .padding(.vertical, 24)
                 }
             }
-            .navigationTitle("Настройки")
+            .navigationTitle(L10n.text("Настройки"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(
                     placement: .confirmationAction
                 ) {
-                    Button("Готово") {
+                    Button(L10n.text("Готово")) {
                         dismiss()
                     }
                     .foregroundStyle(titleColor)
@@ -78,8 +71,16 @@ struct SettingsView: View {
         .sheet(isPresented: $showHolidaySettings) {
             HolidaySettingsView()
         }
+        .sheet(isPresented: $showSubscription) {
+            SubscriptionView()
+        }
         .sheet(isPresented: $showFeedback) {
             FeedbackView()
+        }
+        .sheet(isPresented: $showBirthdayGreeting) {
+            BirthdayGreetingView(
+                emergencyContacts: birthdayGreetingContacts
+            )
         }
         .onChange(of: areSoundsEnabled) { _, newValue in
             if !newValue {
@@ -93,6 +94,9 @@ struct SettingsView: View {
             playOpeningSound(if: isShowing)
         }
         .onChange(of: showHolidaySettings) { _, isShowing in
+            playOpeningSound(if: isShowing)
+        }
+        .onChange(of: showSubscription) { _, isShowing in
             playOpeningSound(if: isShowing)
         }
         .onChange(of: showFeedback) { _, isShowing in
@@ -144,6 +148,54 @@ struct SettingsView: View {
         }
     }
 
+    // MARK: - Подписка
+
+    private var subscriptionSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionTitle("Подписка")
+
+            settingsRow(
+                title: "Текущая подписка",
+                subtitle: "Тариф, срок действия и управление",
+                systemImage: "creditcard.fill"
+            ) {
+                showSubscription = true
+            }
+            .settingsCard()
+        }
+    }
+
+    // MARK: - Открытки
+
+    private var postcardsSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionTitle("Открытки")
+
+            settingsRow(
+                title: "Поздравить с днём рождения",
+                subtitle: "Выбрать открытку ко дню рождения",
+                systemImage: "birthday.cake.fill"
+            ) {
+                AppSoundPlayer.shared.play(.openForm)
+                showBirthdayGreeting = true
+            }
+            .settingsCard()
+        }
+    }
+
+    private var birthdayGreetingContacts: [EmergencyContact] {
+        guard let data = UserDefaults.standard.data(
+            forKey: "emergency_contacts"
+        ) else {
+            return []
+        }
+
+        return (try? JSONDecoder().decode(
+            [EmergencyContact].self,
+            from: data
+        )) ?? []
+    }
+
     // MARK: - Звук
 
     private var soundSection: some View {
@@ -158,7 +210,7 @@ struct SettingsView: View {
                     isOn: $areSoundsEnabled
                 ) {
                     Label(
-                        "Звуки приложения",
+                        L10n.text("Звуки приложения"),
                         systemImage:
                             areSoundsEnabled
                             ? "speaker.wave.2.fill"
@@ -169,7 +221,7 @@ struct SettingsView: View {
                 .tint(.orange)
 
                 Text(
-                    "Звуки сопровождают отметку «Я в порядке» и открытие экранов приложения."
+                    L10n.text("Звуки сопровождают отметку «Я в порядке» и открытие экранов приложения.")
                 )
                 .font(.footnote)
                 .foregroundStyle(.secondary)
@@ -191,30 +243,15 @@ struct SettingsView: View {
         ) {
             sectionTitle("Язык")
 
-            VStack(spacing: 12) {
-                HStack {
-                    Label(
-                        "Язык приложения",
-                        systemImage: "globe"
-                    )
+            Picker(selection: $selectedLanguageCode) {
+                Text(verbatim: "Русский").tag(AppLanguage.russian.rawValue)
+                Text(verbatim: "English").tag(AppLanguage.englishUS.rawValue)
+            } label: {
+                Label(L10n.text("Язык приложения"), systemImage: "globe")
                     .foregroundStyle(textColor)
-
-                    Spacer()
-
-                    Text("Русский")
-                        .foregroundStyle(.secondary)
-                }
-
-                Text(
-                    "Выбор языка появится после подготовки английской версии приложения."
-                )
-                .font(.footnote)
-                .foregroundStyle(.secondary)
-                .frame(
-                    maxWidth: .infinity,
-                    alignment: .leading
-                )
             }
+            .pickerStyle(.menu)
+            .tint(titleColor)
             .settingsCard()
         }
     }
@@ -237,7 +274,7 @@ struct SettingsView: View {
                     showFeedback = true
                 }
 
-                Text("Я читаю все сообщения лично")
+                Text(L10n.text("Я читаю все сообщения лично"))
                     .font(
                         .system(
                             .footnote,
@@ -267,7 +304,7 @@ struct SettingsView: View {
 
             VStack(spacing: 16) {
                 HStack {
-                    Text("Версия")
+                    Text(L10n.text("Версия"))
                     Spacer()
                     Text(Bundle.main.appVersion)
                         .foregroundStyle(.secondary)
@@ -276,7 +313,7 @@ struct SettingsView: View {
                 Divider()
 
                 HStack {
-                    Text("Номер сборки")
+                    Text(L10n.text("Номер сборки"))
                     Spacer()
                     Text(Bundle.main.buildNumber)
                         .foregroundStyle(.secondary)
@@ -306,7 +343,7 @@ struct SettingsView: View {
                     alignment: .leading,
                     spacing: 3
                 ) {
-                    Text(title)
+                    Text(L10n.text(title))
                         .font(
                             .system(
                                 .headline,
@@ -315,7 +352,7 @@ struct SettingsView: View {
                         )
                         .foregroundStyle(textColor)
 
-                    Text(subtitle)
+                    Text(L10n.text(subtitle))
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.leading)
@@ -345,7 +382,7 @@ struct SettingsView: View {
     private func sectionTitle(
         _ title: String
     ) -> some View {
-        Text(title)
+        Text(L10n.text(title))
             .font(
                 .system(
                     .headline,
@@ -374,7 +411,7 @@ private extension View {
         self
             .padding(.horizontal, 20)
             .padding(.vertical, 18)
-            .background(.white.opacity(0.72))
+            .background(AppAdaptiveColor.secondaryBackground)
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: 28,
@@ -382,7 +419,7 @@ private extension View {
                 )
             )
             .shadow(
-                color: .brown.opacity(0.06),
+                color: AppAdaptiveColor.separator.opacity(0.20),
                 radius: 8,
                 x: 0,
                 y: 4
@@ -394,4 +431,3 @@ private extension View {
 #Preview {
     SettingsView()
 }
-

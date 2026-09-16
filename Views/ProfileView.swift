@@ -7,9 +7,6 @@
 
 import Foundation
 import SwiftUI
-import StoreKit
-import Combine
-import StoreKit
 
 // MARK: - Форма обращения
 
@@ -46,8 +43,6 @@ enum ProfileSalutation: String, CaseIterable, Identifiable {
 // MARK: - Экран профиля
 
 struct ProfileView: View {
-    @State private var showSubscription = false
-
     @AppStorage("morninghello_usage_mode")
     private var morningHelloUsageMode = ""
     
@@ -59,11 +54,6 @@ struct ProfileView: View {
     
     @Environment(\.dismiss)
     private var dismiss
-    
-    @State private var showManageSubscriptions = false
-    
-    @StateObject
-    private var subscriptionManager = SubscriptionManager.shared
     
     @State
     private var showFeedback = false
@@ -134,8 +124,6 @@ struct ProfileView: View {
                         
                         checkInIntervalSection
                         
-                        subscriptionSection
-
                         if SponsorshipFeatureConfiguration.isEnabled {
                             sponsorshipSection
                         }
@@ -151,7 +139,7 @@ struct ProfileView: View {
                                 design: .rounded
                             )
                         )
-                        .foregroundColor(.brown.opacity(0.6))
+                        .foregroundColor(AppAdaptiveColor.secondaryText)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 36)
                         .padding(.bottom, 30)
@@ -166,21 +154,10 @@ struct ProfileView: View {
         .onAppear {
             loadBirthdayFields()
         }
-        .task {
-            await subscriptionManager
-                .refreshSubscriptionStatus()
-        }
         .sheet(
             isPresented: $showFeedback
         ) {
             FeedbackView()
-        }
-        .sheet(
-            isPresented:
-                $showSubscription
-        ) {
-            
-            SubscriptionView()
         }
         .alert(
             "Заполните профиль",
@@ -196,36 +173,13 @@ struct ProfileView: View {
                 "Пожалуйста, заполните имя, форму обращения, день и месяц рождения и выберите интервал тревожного оповещения."
             )
         }
-        .manageSubscriptionsSheet(
-            isPresented: $showManageSubscriptions
-        )
     }
     
     // MARK: - Фон
     
     private var profileBackground: some View {
-        LinearGradient(
-            colors: [
-                Color(
-                    red: 1.00,
-                    green: 0.96,
-                    blue: 0.92
-                ),
-                Color(
-                    red: 1.00,
-                    green: 0.91,
-                    blue: 0.88
-                ),
-                Color(
-                    red: 0.98,
-                    green: 0.95,
-                    blue: 0.89
-                )
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
+        AppAdaptiveColor.warmFormBackground
+            .ignoresSafeArea()
     }
     
     // MARK: - Заголовок
@@ -247,7 +201,7 @@ struct ProfileView: View {
                         design: .rounded
                     )
                 )
-                .foregroundColor(.brown)
+                .foregroundColor(AppAdaptiveColor.text)
             
             Text(
                 "Эти данные помогут персонализировать открытки и тревожные сообщения."
@@ -258,7 +212,7 @@ struct ProfileView: View {
                     design: .rounded
                 )
             )
-            .foregroundColor(.brown.opacity(0.7))
+            .foregroundColor(AppAdaptiveColor.secondaryText)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 42)
         }
@@ -281,12 +235,12 @@ struct ProfileView: View {
                             weight: .bold
                         )
                     )
-                    .foregroundColor(.brown.opacity(0.82))
+                    .foregroundColor(AppAdaptiveColor.secondaryText)
                     .frame(
                         width: 46,
                         height: 46
                     )
-                    .background(.white.opacity(0.72))
+                    .background(AppAdaptiveColor.warmCardBackground)
                     .clipShape(Circle())
                     .shadow(
                         color: .brown.opacity(0.08),
@@ -333,7 +287,7 @@ struct ProfileView: View {
                     )
                     .weight(.semibold)
                 )
-                .foregroundColor(.brown)
+                .foregroundColor(AppAdaptiveColor.text)
                 
                 TextField(
                     "Например, Анна или Анна Петрова",
@@ -361,7 +315,7 @@ struct ProfileView: View {
                 .foregroundColor(.primary)
                 .padding(.horizontal, 16)
                 .frame(height: 52)
-                .background(.white.opacity(0.86))
+                .background(AppAdaptiveColor.warmCardBackground)
                 .clipShape(
                     RoundedRectangle(
                         cornerRadius: 16,
@@ -383,7 +337,7 @@ struct ProfileView: View {
                         .foregroundColor(
                             displayName.count == 50
                             ? .orange
-                            : .brown.opacity(0.5)
+                            : AppAdaptiveColor.tertiaryText
                         )
                 }
                 .font(
@@ -392,7 +346,7 @@ struct ProfileView: View {
                         design: .rounded
                     )
                 )
-                .foregroundColor(.brown.opacity(0.68))
+                .foregroundColor(AppAdaptiveColor.secondaryText)
             }
             
             Divider()
@@ -417,7 +371,7 @@ struct ProfileView: View {
                         .fontWeight(.bold)
                         .foregroundColor(.red.opacity(0.8))
                 }
-                .foregroundColor(.brown)
+                .foregroundColor(AppAdaptiveColor.text)
                 
                 Text(
                     "Это обязательное поле. Оно нужно для правильного текста тревожного сообщения."
@@ -428,7 +382,7 @@ struct ProfileView: View {
                         design: .rounded
                     )
                 )
-                .foregroundColor(.brown.opacity(0.68))
+                .foregroundColor(AppAdaptiveColor.secondaryText)
                 
                 Picker(
                     "Форма обращения",
@@ -437,7 +391,7 @@ struct ProfileView: View {
                     ForEach(
                         ProfileSalutation.allCases
                     ) { option in
-                        Text(option.rawValue)
+                        Text(L10n.text(option.rawValue))
                             .tag(option.rawValue)
                     }
                 }
@@ -545,7 +499,7 @@ struct ProfileView: View {
                 )
                 .weight(.semibold)
             )
-            .foregroundColor(.brown)
+            .foregroundColor(AppAdaptiveColor.text)
             
             HStack(spacing: 12) {
                 numberField(
@@ -567,7 +521,7 @@ struct ProfileView: View {
             
             if let birthdayMessage {
                 Label {
-                    Text(birthdayMessage.text)
+                    Text(L10n.text(birthdayMessage.text))
                 } icon: {
                     Image(
                         systemName: birthdayMessage.icon
@@ -593,7 +547,7 @@ struct ProfileView: View {
                     design: .rounded
                 )
             )
-            .foregroundColor(.brown.opacity(0.68))
+            .foregroundColor(AppAdaptiveColor.secondaryText)
         }
         .profileCard()
     }
@@ -606,7 +560,7 @@ struct ProfileView: View {
         maximumLength: Int
     ) -> some View {
         VStack(alignment: .leading, spacing: 7) {
-            Text(title)
+            Text(L10n.text(title))
                 .font(
                     .system(
                         .subheadline,
@@ -614,7 +568,7 @@ struct ProfileView: View {
                     )
                     .weight(.semibold)
                 )
-                .foregroundColor(.brown.opacity(0.8))
+                .foregroundColor(AppAdaptiveColor.secondaryText)
             
             TextField(
                 placeholder,
@@ -635,7 +589,7 @@ struct ProfileView: View {
             )
             .padding(.horizontal, 12)
             .frame(height: 52)
-            .background(.white.opacity(0.86))
+            .background(AppAdaptiveColor.warmCardBackground)
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: 16,
@@ -682,7 +636,7 @@ struct ProfileView: View {
                                 weight: .semibold
                             )
                         )
-                        .foregroundColor(.brown)
+                        .foregroundColor(AppAdaptiveColor.text)
                 }
                 .font(
                     .system(
@@ -690,16 +644,10 @@ struct ProfileView: View {
                         design: .rounded
                     )
                 )
-                .foregroundColor(
-                    Color(
-                        red: 0.12,
-                        green: 0.16,
-                        blue: 0.28
-                    )
-                )
+                .foregroundColor(AppAdaptiveColor.text)
                 .padding(.horizontal, 20)
                 .frame(height: 62)
-                .background(.white.opacity(0.82))
+                .background(AppAdaptiveColor.warmCardBackground)
                 .clipShape(
                     RoundedRectangle(
                         cornerRadius: 18,
@@ -722,62 +670,6 @@ struct ProfileView: View {
         .profileCard()
     }
         
-    // MARK: - Подписка
-
-    private var subscriptionSection: some View {
-
-        Button {
-            showSubscription = true
-        } label: {
-
-            HStack(spacing: 14) {
-
-                Image(systemName: "creditcard.fill")
-                    .font(.title3)
-                    .foregroundColor(.orange)
-
-                VStack(
-                    alignment: .leading,
-                    spacing: 3
-                ) {
-                    Text("Подписка")
-                        .font(
-                            .system(
-                                .headline,
-                                design: .rounded
-                            )
-                        )
-
-                    Text("Годовая · Активна")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .font(
-                        .system(
-                            size: 17,
-                            weight: .semibold
-                        )
-                    )
-                    .foregroundColor(.secondary)
-            }
-            .frame(
-                maxWidth: .infinity,
-                alignment: .leading
-            )
-            .contentShape(Rectangle())
-            .frame(
-                maxWidth: .infinity,
-                alignment: .leading
-            )
-        }
-        .buttonStyle(.plain)
-        .profileCard()
-    }
-
     private var sponsorshipSection: some View {
         Button {
             morningHelloUsageMode =
@@ -923,8 +815,10 @@ struct ProfileView: View {
             }
             
             return BirthdayMessage(
-                text:
-                    "Дата сохранена: \(formattedBirthday(day: day, month: month)).",
+                text: L10n.format(
+                    "Дата сохранена: %@.",
+                    formattedBirthday(day: day, month: month)
+                ),
                 icon:
                     "checkmark.circle.fill",
                 color:
@@ -972,10 +866,8 @@ struct ProfileView: View {
             }
             
             let formatter = DateFormatter()
-            formatter.locale = Locale(
-                identifier: "ru_RU"
-            )
-            formatter.dateFormat = "d MMMM"
+            formatter.locale = AppLanguage.selected.locale
+            formatter.setLocalizedDateFormatFromTemplate("MMMMd")
             
             return formatter.string(
                 from: date
@@ -992,7 +884,7 @@ struct ProfileView: View {
             self
                 .padding(.horizontal, 20)
                 .padding(.vertical, 20)
-                .background(.white.opacity(0.72))
+                .background(AppAdaptiveColor.warmCardBackground)
                 .clipShape(
                     RoundedRectangle(
                         cornerRadius: 28,
