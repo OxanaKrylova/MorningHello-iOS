@@ -266,7 +266,7 @@ struct MoodCheckInView: View {
             Text(text)
                 .font(
                     .system(
-                        size: 32,
+                        size: 16,
                         weight: .semibold,
                         design: .rounded
                     )
@@ -489,7 +489,6 @@ private enum CalmnessAdvice {
 
         "Если вы не уверены, что происходящее связано именно с паникой, лучше отнестись к новым или необычным физическим симптомам серьёзно. Обратитесь за медицинской помощью, чтобы исключить причину, требующую лечения."
     ]
-}
     static func text(
         for level: MoodLevel,
         localDay: String

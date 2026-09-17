@@ -67,12 +67,21 @@ struct HeartbeatRequestBuilder {
                 from: $0
             )
         }
+        let backendLanguage: BackendLanguage
 
+        switch AppLanguage.selected {
+        case .russian:
+            backendLanguage = .ru
+        case .englishUS:
+            backendLanguage = .en
+        }
+        
         return HeartbeatRequest(
             user: HeartbeatUser(
                 name: validName,
                 gender: gender,
-                salutation: validSalutation
+                salutation: validSalutation,
+                language: backendLanguage
             ),
             checkInIntervalHours: intervalHours,
             lastCheckIn: HeartbeatLastCheckIn(

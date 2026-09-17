@@ -130,4 +130,11 @@ final class AppSoundPlayer {
             player.currentTime = 0
         }
     }
+    func stop(_ sound: AppSound) {
+        players[sound]?.stop()
+        players[sound]?.currentTime = 0
+    }
+
+
 }
+

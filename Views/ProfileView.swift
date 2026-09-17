@@ -128,7 +128,6 @@ struct ProfileView: View {
                             sponsorshipSection
                         }
                                                 
-                        feedbackSection
                         
                         Text(
                             "Данные профиля сохраняются только на этом устройстве."
@@ -607,67 +606,6 @@ struct ProfileView: View {
             }
         }
         .frame(maxWidth: .infinity)
-    }
-    
-    // MARK: - Обратная связь
-
-    private var feedbackSection: some View {
-
-        VStack(spacing: 8) {
-
-            Button {
-                showFeedback = true
-            } label: {
-
-                HStack(spacing: 12) {
-
-                    Image(systemName: "envelope.fill")
-                        .foregroundColor(.orange)
-
-                    Text("Обратная связь")
-                        .fontWeight(.semibold)
-
-                    Spacer()
-
-                    Image(systemName: "chevron.right")
-                        .font(
-                            .system(
-                                size: 14,
-                                weight: .semibold
-                            )
-                        )
-                        .foregroundColor(AppAdaptiveColor.text)
-                }
-                .font(
-                    .system(
-                        .title3,
-                        design: .rounded
-                    )
-                )
-                .foregroundColor(AppAdaptiveColor.text)
-                .padding(.horizontal, 20)
-                .frame(height: 62)
-                .background(AppAdaptiveColor.warmCardBackground)
-                .clipShape(
-                    RoundedRectangle(
-                        cornerRadius: 18,
-                        style: .continuous
-                    )
-                )
-            }
-            .buttonStyle(.plain)
-
-            Text("Я читаю все сообщения лично")
-                .font(
-                    .system(
-                        .footnote,
-                        design: .rounded
-                    )
-                )
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-        }
-        .profileCard()
     }
         
     private var sponsorshipSection: some View {

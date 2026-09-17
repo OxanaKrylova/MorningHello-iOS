@@ -485,13 +485,7 @@ struct ContentView: View {
             for: date
         )
     }
-    private func februaryContent(
-        date: Date = Date()
-    ) -> HolidayContent? {
-        FebruaryPostcardProvider.content(
-            for: date
-        )
-    }
+    
     private func mondayCoffeeContent(
         date: Date = Date()
     ) -> HolidayContent? {
@@ -918,7 +912,11 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         .font(.system(size: 36, weight: .bold, design: .rounded))
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
-                        .foregroundColor(AppAdaptiveColor.text)
+                        .foregroundColor(
+                            AppBackground.current() == .night
+                                ? .white
+                                : AppAdaptiveColor.text
+                        )
 
                     Button {
                         AppSoundPlayer.shared.play(.openForm)
@@ -936,7 +934,11 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 
                 Text(L10n.text("Как ты сегодня?"))
                     .font(.system(.title3, design: .rounded))
-                    .foregroundColor(AppAdaptiveColor.secondaryText)
+                    .foregroundColor(
+                        AppBackground.current() == .night
+                            ? .white.opacity(0.9)
+                            : AppAdaptiveColor.secondaryText
+                    )
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity, alignment: .center)
                 
@@ -1226,25 +1228,28 @@ This is an automated MorningHello message. If there is an immediate threat to li
 
         // 6. Воскресенье
 
-        if !showJewishHolidays ||
-           showOrthodoxHolidays ||
-           showCatholicHolidays {
+        if let sunday = sundayContent(),
+           let image = sunday.images.first,
+           let phrase = sunday.phrases.first {
 
-            if let sunday = sundayContent(),
-               let image = sunday.images.first,
-               let phrase = sunday.phrases.first {
-
-                return SelectedPostcard(
-                    image: image,
-                    phrase: phrase
-                )
-            }
+            return SelectedPostcard(
+                image: image,
+                phrase: phrase
+            )
         }
 
 
-        // 7. Февраль
+        // 7. Февраль – обычные дни месяца
 
-        if let february = februaryContent(),
+        if let februaryIndex =
+            ordinaryDayIndex(
+                for: Date(),
+                month: 2
+            ),
+           let february =
+            FebruaryPostcardProvider.content(
+                index: februaryIndex
+            ),
            let image = february.images.first,
            let phrase = february.phrases.first {
 
@@ -1288,11 +1293,16 @@ This is an automated MorningHello message. If there is an immediate threat to li
         }
 
 
-        // 10. Сентябрь
+        // 10. Сентябрь – обычные дни месяца
 
-        if let september =
+        if let septemberIndex =
+            ordinaryDayIndex(
+                for: Date(),
+                month: 9
+            ),
+           let september =
             SeptemberPostcardProvider.content(
-                for: Date()
+                index: septemberIndex
             ),
            let image = september.images.first,
            let phrase = september.phrases.first {
@@ -1303,11 +1313,16 @@ This is an automated MorningHello message. If there is an immediate threat to li
             )
         }
 
-        // 11. Октябрь
+        // 11. Октябрь – обычные дни месяца
 
-        if let october =
+        if let octoberIndex =
+            ordinaryDayIndex(
+                for: Date(),
+                month: 10
+            ),
+           let october =
             OctoberPostcardProvider.content(
-                for: Date()
+                index: octoberIndex
             ),
            let image = october.images.first,
            let phrase = october.phrases.first {
@@ -1318,11 +1333,16 @@ This is an automated MorningHello message. If there is an immediate threat to li
             )
         }
 
-        // 12. Ноябрь
+        // 12. Ноябрь – обычные дни месяца
 
-        if let november =
+        if let novemberIndex =
+            ordinaryDayIndex(
+                for: Date(),
+                month: 11
+            ),
+           let november =
             NovemberPostcardProvider.content(
-                for: Date()
+                index: novemberIndex
             ),
            let image = november.images.first,
            let phrase = november.phrases.first {
@@ -1703,7 +1723,10 @@ This is an automated MorningHello message. If there is an immediate threat to li
     ) -> Bool {
 
         let calendar = Calendar.current
-
+        if birthdayContent(for: date) != nil {
+            return true
+        }
+        
         // Праздник
         if holidayContent(
             for: date

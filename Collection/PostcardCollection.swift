@@ -30,47 +30,35 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
     // MARK: - Название коллекции
 
     var title: String {
+        let isEnglish = AppLanguage.selected == .englishUS
 
         switch self {
-
         case .orthodox_church:
-            return "Православие"
-
+            return isEnglish ? "Orthodox Christianity" : "Православие"
         case .shabbat:
-            return "Иудаизм"
-
+            return isEnglish ? "Judaism" : "Иудаизм"
         case .foodTable:
-            return "Вкусный стол"
-
+            return isEnglish ? "Food and Gatherings" : "Вкусный стол"
         case .coffee:
-            return "Утренний кофе"
-
+            return isEnglish ? "Morning Coffee" : "Утренний кофе"
         case .cats:
-            return "Коты"
-
+            return isEnglish ? "Cats" : "Коты"
         case .seasonal:
-            return "Сезоны"
-
+            return isEnglish ? "Season" : "Сезон"
         case .harvest:
-            return "Урожай"
-
+            return isEnglish ? "Harvest" : "Урожай"
         case .vacation:
-            return "Отпуск"
-
+            return isEnglish ? "Vacation" : "Отпуск"
         case .fairyAnimals:
-            return "Сказка"
-       
+            return isEnglish ? "Fairy Tales" : "Сказка"
         case .flowers:
-            return "Цветы"
-        
+            return isEnglish ? "Flowers" : "Цветы"
         case .sweetTable:
-            return "Десерты"
-           
+            return isEnglish ? "Desserts" : "Десерты"
         case .dogs:
-            return "Собаки"
-            
+            return isEnglish ? "Dogs" : "Собаки"
         case .catholic_church:
-            return "Католицизм"
+            return isEnglish ? "Catholic Christianity" : "Католизм"
         }
     }
 

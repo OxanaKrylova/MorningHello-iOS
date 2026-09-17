@@ -80,6 +80,11 @@ struct PostcardCatalogView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 22))
                         }
                         .buttonStyle(.plain)
+                        .fullScreenCover(isPresented: $showBirthdayGreeting) {
+                            BirthdayGreetingView(
+                                emergencyContacts: loadEmergencyContacts()
+                            )
+                        }
                         
                         ForEach(
                             PostcardCollection.allCases
@@ -244,5 +249,18 @@ struct PostcardCatalogView: View {
     private var catalogBackground: some View {
         AppAdaptiveColor.warmFormBackground
             .ignoresSafeArea()
+    }
+    
+    private func loadEmergencyContacts() -> [EmergencyContact] {
+        guard let data = UserDefaults.standard.data(
+            forKey: "emergency_contacts"
+        ) else {
+            return []
+        }
+
+        return (try? JSONDecoder().decode(
+            [EmergencyContact].self,
+            from: data
+        )) ?? []
     }
 }

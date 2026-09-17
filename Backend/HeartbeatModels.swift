@@ -26,6 +26,10 @@ struct HeartbeatRequest: Encodable {
     let buildNumber: String
 }
 
+enum BackendLanguage: String, Encodable {
+    case ru = "RU"
+    case en = "EN"
+}
 
 // MARK: - Пользователь
 
@@ -33,6 +37,7 @@ struct HeartbeatUser: Encodable {
     let name: String?
     let gender: BackendGender?
     let salutation: String?
+    let language: BackendLanguage
 }
 
 

@@ -10,20 +10,10 @@ import Foundation
 struct SeptemberPostcardProvider {
 
     static func content(
-        for date: Date = Date()
+        index: Int
     ) -> HolidayContent? {
 
-        let calendar = Calendar.current
-
-        let components = calendar.dateComponents(
-            [.month, .day],
-            from: date
-        )
-
-        guard let month = components.month,
-              let day = components.day,
-              month == 9,
-              (1...18).contains(day) else {
+        guard index >= 0 else {
             return nil
         }
 
@@ -50,19 +40,20 @@ struct SeptemberPostcardProvider {
             "Желаю сохранить летнее тепло в сердце и с радостью встретить осенние перемены."
         ]
 
-        let imageIndex = day - 1
-
-        guard images.indices.contains(imageIndex),
-              phrases.indices.contains(imageIndex) else {
+        guard !images.isEmpty,
+              !phrases.isEmpty else {
             return nil
         }
+
+        let imageIndex = index % images.count
+        let phraseIndex = index % phrases.count
 
         return HolidayContent(
             images: [
                 images[imageIndex]
             ],
             phrases: [
-                phrases[imageIndex]
+                phrases[phraseIndex]
             ],
             category: "Сентябрь"
         )

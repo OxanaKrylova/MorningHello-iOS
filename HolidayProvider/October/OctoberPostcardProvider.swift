@@ -10,17 +10,10 @@ import Foundation
 struct OctoberPostcardProvider {
 
     static func content(
-        for date: Date = Date()
+        index: Int
     ) -> HolidayContent? {
 
-        let calendar = Calendar.current
-
-        let month = calendar.component(
-            .month,
-            from: date
-        )
-
-        guard month == 10 else {
+        guard index >= 0 else {
             return nil
         }
 
@@ -60,18 +53,18 @@ struct OctoberPostcardProvider {
             return nil
         }
 
-        let index = stableDailyIndex(
-            count: availableCount,
-            salt: 1000,
-            date: date
-        )
+        guard availableCount > 0 else {
+            return nil
+        }
 
+        let safeIndex = index % availableCount
+           
         return HolidayContent(
             images: [
-                images[index]
+                images[safeIndex]
             ],
             phrases: [
-                phrases[index]
+                phrases[safeIndex]
             ],
             category: "Октябрь"
         )

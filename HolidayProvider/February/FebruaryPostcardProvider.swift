@@ -7,27 +7,19 @@
 
 import Foundation
 
+import Foundation
+
 struct FebruaryPostcardProvider {
 
     static func content(
-        for date: Date = Date()
+        index: Int
     ) -> HolidayContent? {
 
-        let calendar = Calendar.current
-
-        let components = calendar.dateComponents(
-            [.month, .day],
-            from: date
-        )
-
-        guard let month = components.month,
-              let day = components.day,
-              month == 2,
-              (1...29).contains(day) else {
+        guard index >= 0 else {
             return nil
         }
 
-        let images = (1...29).map {
+        let images = (1...18).map {
             "February_\($0)"
         }
 
@@ -52,23 +44,12 @@ struct FebruaryPostcardProvider {
             "Пусть сегодняшний день подарит вам уют, заботу и искреннюю радость."
         ]
 
-        let imageIndex = day - 1
-
-        guard images.indices.contains(imageIndex),
-              !phrases.isEmpty else {
-            return nil
-        }
-
-        // Пока фраз 18, после 18 февраля они повторяются.
-        let phraseIndex = imageIndex % phrases.count
+        let imageIndex = index % images.count
+        let phraseIndex = index % phrases.count
 
         return HolidayContent(
-            images: [
-                images[imageIndex]
-            ],
-            phrases: [
-                phrases[phraseIndex]
-            ],
+            images: [images[imageIndex]],
+            phrases: [phrases[phraseIndex]],
             category: "Февраль"
         )
     }

@@ -14,6 +14,14 @@ struct BreathingSquareView: View {
     @State
     private var cycleStartDate = Date()
 
+    @AppStorage("breathing_square_sound_enabled")
+    private var isBreathingSoundEnabled = true
+
+    @AppStorage("breathing_square_sound_variant")
+    private var breathingSoundVariant = 1
+
+    @State private var breathingSoundTask: Task<Void, Never>?
+    
     private let phaseDuration: TimeInterval = 4
     private let cycleDuration: TimeInterval = 16
 
@@ -50,6 +58,28 @@ struct BreathingSquareView: View {
                     )
                     .padding(.horizontal, 22)
 
+                    VStack(spacing: 12) {
+                        Toggle(
+                            L10n.text("Звук дыхания"),
+                            isOn: $isBreathingSoundEnabled
+                        )
+
+                        Picker(
+                            L10n.text("Мелодия"),
+                            selection: $breathingSoundVariant
+                        ) {
+                            Text(L10n.text("Вариант 1")).tag(1)
+                            Text(L10n.text("Вариант 2")).tag(2)
+                            Text(L10n.text("Вариант 3")).tag(3)
+                            Text(L10n.text("Вариант 4")).tag(4)
+                        }
+                        .disabled(!isBreathingSoundEnabled)
+                    }
+                    .padding(18)
+                    .background(AppAdaptiveColor.secondaryBackground)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .padding(.horizontal, 22)
+                    
                     TimelineView(
                         .animation(
                             minimumInterval: 1.0 / 30.0
@@ -89,10 +119,61 @@ struct BreathingSquareView: View {
             }
         }
         .onAppear {
-            cycleStartDate = Date()
+            restartBreathingCycle()
+        }
+        .onDisappear {
+            stopBreathingSoundSequence()
+        }
+        .onChange(of: isBreathingSoundEnabled) { _, isEnabled in
+            if isEnabled {
+                restartBreathingCycle()
+            } else {
+                stopBreathingSoundSequence()
+            }
+        }
+        .onChange(of: breathingSoundVariant) { oldValue, _ in
+            AppSoundPlayer.shared.stop(soundForVariant(oldValue))
+            restartBreathingCycle()
         }
     }
 
+    private func soundForVariant(_ variant: Int) -> AppSound {
+        switch variant {
+        case 2: return .breathingSquare2
+        case 3: return .breathingSquare3
+        case 4: return .breathingSquare4
+        default: return .breathingSquare1
+        }
+    }
+
+    private func restartBreathingCycle() {
+        cycleStartDate = Date()
+        breathingSoundTask?.cancel()
+        breathingSoundTask = nil
+
+        guard isBreathingSoundEnabled else { return }
+
+        let sound = soundForVariant(breathingSoundVariant)
+
+        breathingSoundTask = Task { @MainActor in
+            while !Task.isCancelled {
+                AppSoundPlayer.shared.play(sound)
+
+                do {
+                    try await Task.sleep(nanoseconds: 4_000_000_000)
+                } catch {
+                    return
+                }
+            }
+        }
+    }
+
+    private func stopBreathingSoundSequence() {
+        breathingSoundTask?.cancel()
+        breathingSoundTask = nil
+        AppSoundPlayer.shared.stop(soundForVariant(breathingSoundVariant))
+    }
+    
     private var breathingBackground: some View {
         AppAdaptiveColor.warmFormBackground
             .ignoresSafeArea()

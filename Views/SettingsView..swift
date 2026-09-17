@@ -23,7 +23,6 @@ struct SettingsView: View {
     @State private var showHolidaySettings = false
     @State private var showSubscription = false
     @State private var showFeedback = false
-    @State private var showBirthdayGreeting = false
 
     private let backgroundColor = AppAdaptiveColor.warmFormBackground
     private let titleColor = AppAdaptiveColor.text
@@ -39,7 +38,6 @@ struct SettingsView: View {
                     VStack(spacing: 24) {
                         monitoringSection
                         subscriptionSection
-                        postcardsSection
                         soundSection
                         languageSection
                         feedbackSection
@@ -76,11 +74,6 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $showFeedback) {
             FeedbackView()
-        }
-        .sheet(isPresented: $showBirthdayGreeting) {
-            BirthdayGreetingView(
-                emergencyContacts: birthdayGreetingContacts
-            )
         }
         .onChange(of: areSoundsEnabled) { _, newValue in
             if !newValue {
@@ -165,37 +158,6 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - Открытки
-
-    private var postcardsSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            sectionTitle("Открытки")
-
-            settingsRow(
-                title: "Поздравить с днём рождения",
-                subtitle: "Выбрать открытку ко дню рождения",
-                systemImage: "birthday.cake.fill"
-            ) {
-                AppSoundPlayer.shared.play(.openForm)
-                showBirthdayGreeting = true
-            }
-            .settingsCard()
-        }
-    }
-
-    private var birthdayGreetingContacts: [EmergencyContact] {
-        guard let data = UserDefaults.standard.data(
-            forKey: "emergency_contacts"
-        ) else {
-            return []
-        }
-
-        return (try? JSONDecoder().decode(
-            [EmergencyContact].self,
-            from: data
-        )) ?? []
-    }
-
     // MARK: - Звук
 
     private var soundSection: some View {
@@ -243,15 +205,30 @@ struct SettingsView: View {
         ) {
             sectionTitle("Язык")
 
-            Picker(selection: $selectedLanguageCode) {
-                Text(verbatim: "Русский").tag(AppLanguage.russian.rawValue)
-                Text(verbatim: "English").tag(AppLanguage.englishUS.rawValue)
-            } label: {
-                Label(L10n.text("Язык приложения"), systemImage: "globe")
+            VStack(alignment: .leading, spacing: 8) {
+                Picker(selection: $selectedLanguageCode) {
+                    Text(verbatim: "Русский")
+                        .tag(AppLanguage.russian.rawValue)
+                    Text(verbatim: "English")
+                        .tag(AppLanguage.englishUS.rawValue)
+                } label: {
+                    Label(
+                        L10n.text("Язык приложения"),
+                        systemImage: "globe"
+                    )
                     .foregroundStyle(textColor)
+                }
+                .pickerStyle(.menu)
+                .tint(titleColor)
+
+                Text(
+                    L10n.text(
+                        "Выберите язык интерфейса приложения. Мониторинг будет вестись на выбранном языке."
+                    )
+                )
+                .font(.footnote)
+                .foregroundStyle(.secondary)
             }
-            .pickerStyle(.menu)
-            .tint(titleColor)
             .settingsCard()
         }
     }
