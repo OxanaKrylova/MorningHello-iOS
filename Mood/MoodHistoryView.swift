@@ -14,8 +14,8 @@ struct MoodHistoryView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     Picker("Период", selection: $selectedPeriod) {
-                        Text("7 дней").tag(7)
-                        Text("30 дней").tag(30)
+                        Text(L10n.text("7 дней")).tag(7)
+                        Text(L10n.text("30 дней")).tag(30)
                     }
                     .pickerStyle(.segmented)
                     .accessibilityHint("Выберите период отображения истории")
@@ -49,7 +49,7 @@ struct MoodHistoryView: View {
                         showDeleteConfirmation = true
                     } label: {
                         Label(
-                            "Удалить историю состояний",
+                            L10n.text("Удалить историю состояний"),
                             systemImage: "trash"
                         )
                         .font(.system(.body, design: .rounded).weight(.semibold))
@@ -73,11 +73,11 @@ struct MoodHistoryView: View {
                 AppAdaptiveColor.warmFormBackground
                     .ignoresSafeArea()
             )
-            .navigationTitle("История спокойствия")
+            .navigationTitle(L10n.text("История спокойствия"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Готово") {
+                    Button(L10n.text("Готово")) {
                         dismiss()
                     }
                 }

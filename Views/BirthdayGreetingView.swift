@@ -131,7 +131,7 @@ struct BirthdayGreetingView: View {
             ScrollView {
                 VStack(spacing: 9) {
                     
-                    Text("Выберите открытку")
+                    Text(L10n.text("Выберите открытку"))
                         .font(
                             .system(
                                 .title2,
@@ -162,7 +162,7 @@ struct BirthdayGreetingView: View {
                     .foregroundColor(darkBrown.opacity(0.65))
                     
                     HStack {
-                        Text("Выберите пожелание")
+                        Text(L10n.text("Выберите пожелание"))
                             .font(
                                 .system(
                                     .title3,
@@ -177,10 +177,7 @@ struct BirthdayGreetingView: View {
                         Button {
                             showCustomMessageEditor = true
                         } label: {
-                            Label(
-                                "Напиши",
-                                systemImage: "pencil"
-                            )
+                            Label(L10n.text("Напиши"), systemImage: "pencil")
                             .foregroundColor(darkBrown)
                             .padding(.horizontal, 14)
                             .frame(height: 38)
@@ -217,7 +214,7 @@ struct BirthdayGreetingView: View {
                         showRecipientDialog = true
                     } label: {
                         Label(
-                            "Отправить открытку",
+                            L10n.text("Отправить открытку"),
                             systemImage: "square.and.arrow.up.fill"
                         )
                         .font(
@@ -258,7 +255,7 @@ struct BirthdayGreetingView: View {
                 AppAdaptiveColor.warmFormBackground
                     .ignoresSafeArea()
             )
-            .navigationTitle("С днём рождения")
+            .navigationTitle(L10n.text("С днём рождения"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(
@@ -482,10 +479,7 @@ struct BirthdayGreetingView: View {
                     in: imageNames.indices
                 )
             } label: {
-                Label(
-                    "Случайная",
-                    systemImage: "shuffle"
-                )
+                Label(L10n.text("Случайная"), systemImage: "shuffle")
                 .font(
                     .system(
                         .subheadline,
@@ -567,10 +561,7 @@ struct BirthdayGreetingView: View {
                     in: phrases.indices
                 )
             } label: {
-                Label(
-                    "Случайное",
-                    systemImage: "shuffle"
-                )
+                Label(L10n.text("Случайное"), systemImage: "shuffle")
                 .font(
                     .system(
                         .subheadline,

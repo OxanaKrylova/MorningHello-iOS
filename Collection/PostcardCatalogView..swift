@@ -80,12 +80,7 @@ struct PostcardCatalogView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 22))
                         }
                         .buttonStyle(.plain)
-                        .fullScreenCover(isPresented: $showBirthdayGreeting) {
-                            BirthdayGreetingView(
-                                emergencyContacts: loadEmergencyContacts()
-                            )
-                        }
-                        
+
                         ForEach(
                             PostcardCollection.allCases
                         ) { collection in
@@ -133,10 +128,14 @@ struct PostcardCatalogView: View {
                 }
             }
         }
-    }
-    
-    
-    // MARK: - Карточка коллекции
+                .fullScreenCover(isPresented: $showBirthdayGreeting) {
+                    BirthdayGreetingView(
+                        emergencyContacts: loadEmergencyContacts()
+                    )
+                }
+            }
+
+            // MARK: - Карточка коллекции
     
     private func collectionCard(
         _ collection: PostcardCollection

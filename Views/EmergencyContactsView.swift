@@ -1374,25 +1374,20 @@ struct EmergencyContactsView: View {
 
         // MARK: - Статус тревожного контакта
 
-        private func statusTitle(
-            for status: EmergencyContactStatus
-        ) -> String {
-
-            switch status {
-
-            case .pending:
-                return "Ожидает подтверждения"
-
-            case .confirmed:
-                return "Подтверждён"
-
-            case .declined:
-                return "Отклонён"
-
-            case .revoked:
-                return "Доступ отозван"
-            }
+    private func statusTitle(
+        for status: EmergencyContactStatus
+    ) -> String {
+        switch status {
+        case .pending:
+            return L10n.text("Ожидает подтверждения")
+        case .confirmed:
+            return L10n.text("Подтверждён")
+        case .declined:
+            return L10n.text("Отклонён")
+        case .revoked:
+            return L10n.text("Доступ отозван")
         }
+    }
 
         private func statusIcon(
             for status: EmergencyContactStatus

@@ -33,9 +33,9 @@ struct BreathingSquareView: View {
                 VStack(spacing: 20) {
                     header
 
-                    Text(
+                    Text(L10n.text(
                         "Квадратное дыхание — это простая техника контроля дыхания из четырёх равных фаз по 4 секунды каждая, которая помогает быстро снять стресс и успокоить нервную систему."
-                    )
+                    ))
                     .font(
                         .system(
                             .body,
@@ -101,9 +101,9 @@ struct BreathingSquareView: View {
                     .frame(height: 350)
                     .padding(.horizontal, 14)
 
-                    Text(
+                    Text(L10n.text(
                         "Следуйте за стрелкой и дышите спокойно, без усилия."
-                    )
+                    ))
                     .font(
                         .system(
                             .subheadline,
@@ -181,7 +181,7 @@ struct BreathingSquareView: View {
 
     private var header: some View {
         ZStack {
-            Text("Квадрат дыхания")
+            Text(L10n.text("Квадрат дыхания"))
                 .font(
                     .system(
                         size: 32,

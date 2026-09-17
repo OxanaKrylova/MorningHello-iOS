@@ -22,7 +22,7 @@ struct MoodCheckInView: View {
 
                 ScrollView {
                     VStack(spacing: 18) {
-                        Text("Насколько вы спокойны сейчас?")
+                        Text(L10n.text("Насколько вы спокойны сейчас?"))
                             .font(
                                 .system(
                                     .title2,
@@ -251,7 +251,7 @@ struct MoodCheckInView: View {
     ) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Label(
-                "Что можно сделать сейчас",
+                L10n.text("Что можно сделать сейчас"),
                 systemImage: "heart.text.square.fill"
             )
             .font(

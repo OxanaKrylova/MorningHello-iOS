@@ -992,7 +992,10 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     .opacity(isCheckInBlocked ? 0.65 : 1.0)
                     
                     Text(
-                        "Если ты не нажмёшь кнопку в течение \(checkInIntervalText) — мы сообщим близким"
+                        L10n.format(
+                            "Если ты не нажмёшь кнопку в течение %@ — мы сообщим близким",
+                            checkInIntervalText
+                        )
                     )
                     .font(.system(.footnote, design: .rounded))
                     .foregroundColor(AppAdaptiveColor.secondaryText)
@@ -1020,7 +1023,10 @@ This is an automated MorningHello message. If there is an immediate threat to li
                             .multilineTextAlignment(.center)
                         
                         Text(
-                            "Без тревожного контакта приложение не сможет сообщить близким, если вы не отметитесь в течение \(checkInIntervalText)."
+                            L10n.format(
+                                "Без тревожного контакта приложение не сможет сообщить близким, если вы не отметитесь в течение %@.",
+                                checkInIntervalText
+                            )
                         )
                         .font(
                             .system(

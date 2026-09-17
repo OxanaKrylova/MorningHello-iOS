@@ -161,7 +161,7 @@ struct PostcardScreen: View {
                                 Image(systemName: "pencil")
                                     .font(.title3)
 
-                                Text("Напиши")
+                                Text(L10n.text("Напиши"))
                                     .font(
                                         .system(
                                             size: 11,
