@@ -39,10 +39,10 @@ enum AppBackground: String {
     }
 }
 struct ContentView: View {
-    
+
     @State private var showContacts = false
     @State private var hasCheckedIn = false
-    
+
     @State private var showHolidaySettings = false
     @State private var showProfile = false
     @State private var showPostcard = false
@@ -57,30 +57,30 @@ struct ContentView: View {
     @State private var showBirthdayGreeting = false
     @State private var customMessage = ""
     @State private var showSubscription = false
-    
+
     @State private var showPostcardCatalog = false
     @State private var showSettings = false
     @State private var showMoodCheckIn = false
-    
+
     @AppStorage("showProtestantHolidays")
     private var showProtestantHolidays = false
-    
+
     @AppStorage("showOrthodoxHolidays")
     private var showOrthodoxHolidays = false
-    
+
     @AppStorage("showCatholicHolidays")
     private var showCatholicHolidays = false
-    
+
     @AppStorage("showJewishHolidays")
     private var showJewishHolidays = false
-    
+
     @AppStorage("app_instance_id")
     private var appInstanceId: String = UUID().uuidString
     @AppStorage("check_in_interval_hours")
     private var checkInIntervalHours: Int = 0
-    
+
     private let lastCheckInKey = "lastCheckInDate"
-    
+
     @AppStorage("profile_display_name")
     private var displayName = ""
     @State private var hasCheckedProfileOnLaunch = false
@@ -88,30 +88,29 @@ struct ContentView: View {
         let images: [String]
         let phrases: [String]
     }
-    
+
     struct ShabbatContent {
         let image: String
         let phrase: String
     }
-    
+
     @State private var lastCheckInDate: Date?
-    
-    
+
+
     @Environment(\.scenePhase)
     private var scenePhase
-    
+
     @State private var monitoringSnapshot: MonitoringSnapshot?
     @State private var isSendingCheckIn = false
     @State private var isRefreshingMonitoring = false
     @State private var monitoringRequestFailed = false
     @State private var checkInRequestFailed = false
     @State private var serverClockOffset: TimeInterval = 0
-    @State private var checkedExpiredDueAt: Date?
-    
-    private let isMonitoringCountdownEnabled = false
-    
+    @State private var lastExpiredStatusRefreshAt: Date?
+
     private let monitoringSnapshotKey = "monitoring_snapshot"
-    
+    private let serverClockOffsetKey = "monitoring_server_clock_offset"
+
     func stableDailyIndex(
         count: Int,
         salt: Int = 0,
@@ -120,42 +119,42 @@ struct ContentView: View {
         guard count > 0 else {
             return 0
         }
-        
+
         let components = Calendar.current.dateComponents(
             [.year, .month, .day],
             from: date
         )
-        
+
         let year = components.year ?? 0
         let month = components.month ?? 0
         let day = components.day ?? 0
-        
+
         let dailyNumber =
         year * 10_000 +
         month * 100 +
         day +
         salt
-        
+
         return abs(dailyNumber) % count
     }
     var isCheckInBlocked: Bool {
         guard let lastCheckInDate else {
             return false
         }
-        
+
         return Date().timeIntervalSince(lastCheckInDate) < 24 * 60 * 60
     }
-    
+
     private var checkInIntervalText: String {
         if AppLanguage.selected == .englishUS {
             return "\(checkInIntervalHours) hours"
         }
-        
+
         return checkInIntervalHours == 24
         ? "24 часа"
         : "\(checkInIntervalHours) часов"
     }
-    
+
     private let phrases = [
         "Доброе утро! Пусть день будет светлым и спокойным.",
         "С новым днём! Пусть сегодня всё сложится наилучшим образом.",
@@ -278,7 +277,7 @@ struct ContentView: View {
         "Доброе утро! Пусть каждый момент сегодня будет особенным.",
         "Пусть сегодняшний день принесёт мир, тепло и счастье."
     ]
-    
+
     private let images = [
         "autumn_friday", "autumn_monday", "autumn_saturday", "autumn_thursday", "autumn_tuesday", "autumn_wednesday",
         "spring_friday", "spring_monday", "spring_saturday", "spring_thursday", "spring_tuesday", "spring_wednesday",
@@ -292,7 +291,7 @@ struct ContentView: View {
             hasEmergencyContacts = false
             return
         }
-        
+
         guard let savedContacts = try? JSONDecoder().decode(
             [EmergencyContact].self,
             from: data
@@ -300,27 +299,27 @@ struct ContentView: View {
             hasEmergencyContacts = false
             return
         }
-        
+
         hasEmergencyContacts = !savedContacts.isEmpty
     }
     // MARK: - Формирование heartbeat
-    
+
     private func createBackendPayload(
         checkInDate: Date
     ) -> HeartbeatRequest {
-        
+
         let contacts = loadContactsForSharing()
-        
+
         return HeartbeatRequestBuilder.makeRequest(
             contacts: contacts,
             checkInDate: checkInDate,
             intervalHours: checkInIntervalHours
         )
     }
-    
+
     private func getOrCreateAppInstanceID() -> UUID {
         let key = "app_instance_id"
-        
+
         if let savedString = UserDefaults.standard.string(
             forKey: key
         ),
@@ -329,52 +328,52 @@ struct ContentView: View {
            ) {
             return savedUUID
         }
-        
+
         let newUUID = UUID()
-        
+
         UserDefaults.standard.set(
             newUUID.uuidString,
             forKey: key
         )
-        
+
         return newUUID
     }
-    
+
     // MARK: - JSON для проверки в консоли
-    
+
     private func createBackendJSON(
         checkInDate: Date
     ) -> Data? {
-        
+
         let payload = createBackendPayload(
             checkInDate: checkInDate
         )
-        
+
         let encoder = JSONEncoder()
-        
+
         encoder.dateEncodingStrategy = .iso8601
-        
+
         encoder.outputFormatting = [
             .prettyPrinted,
             .sortedKeys,
             .withoutEscapingSlashes
         ]
-        
+
         do {
             return try encoder.encode(
                 payload
             )
-            
+
         } catch {
             print(
                 "Ошибка формирования JSON:",
                 error.localizedDescription
             )
-            
+
             return nil
         }
     }
-    
+
     func loadContactsForSharing() -> [EmergencyContact] {
         guard let data = UserDefaults.standard.data(
             forKey: "emergency_contacts"
@@ -385,22 +384,22 @@ struct ContentView: View {
               ) else {
             return []
         }
-        
+
         return contacts
     }
-    
+
     func normalizedPhone(_ phone: String) -> String {
         phone.filter { $0.isNumber }
     }
     private var postcardShareText: String {
         smartPhrase
     }
-    
+
     func openMessages() {
         guard MFMessageComposeViewController.canSendText() else {
             return
         }
-        
+
         showMessageComposer = true
     }
     var profileDisplayName: String {
@@ -408,14 +407,14 @@ struct ContentView: View {
             forKey: "profile_display_name"
         )?
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        
+
         guard let savedName, !savedName.isEmpty else {
             return ""
         }
-        
+
         return savedName
     }
-    
+
     func birthdayContent(
         for date: Date = Date()
     ) -> HolidayContent? {
@@ -426,17 +425,17 @@ struct ContentView: View {
     func currentShabbatContent(
         for date: Date = Date()
     ) -> ShabbatContent? {
-        
+
         // Шабатные открытки показываются только тогда,
         // когда пользователь включил еврейские праздники.
         guard showJewishHolidays else {
             return nil
         }
-        
+
         guard let shabbatStart = shabbatStartDate(for: date) else {
             return nil
         }
-        
+
         let shabbatImages = [
             "Shabbat_1",
             "Shabbat_2",
@@ -450,40 +449,40 @@ struct ContentView: View {
             "Shabbat_10",
             "Shabbat_11"
         ]
-        
+
         let shabbatPhrases = [
             "Шабат Шалом! Пусть этот святой день наполнит ваш дом миром, сердца — покоем, а душу — светлой радостью.",
-            
+
             "Пусть огонь субботних свечей принесёт в ваш дом тепло, любовь, взаимопонимание и Божье благословение.",
-            
+
             "Мир вашему дому! Пусть шабат станет временем отдыха, добрых разговоров, любви и внутренней гармонии.",
-            
+
             "Шабат Шалом! Пусть в этот день каждый найдёт покой для души, радость для сердца и силы для новой недели.",
-            
+
             "Пусть субботние свечи освещают не только ваш дом, но и каждый следующий день вашей жизни. Мирного шабата!",
-            
+
             "Пусть этот святой день принесёт покой мыслям, тепло душе и радость каждому, кто вам дорог.",
-            
+
             "Желаю светлого шабата! Пусть в доме всегда царят согласие, достаток, здоровье и семейное счастье.",
-            
+
             "Пусть субботний вечер наполнится теплом свечей, ароматом праздничного стола и искренними улыбками родных.",
-            
+
             "Шабат Шалом! Пусть всё добро, которое вы дарите другим, возвращается к вам сторицей.",
-            
+
             "Желаю провести этот шабат в мире, любви и благодарности. Пусть сердце отдыхает, а душа наполняется светом.",
-            
+
             "Желаю спокойного шабата. Пусть этот день станет маленьким островком света, добра и душевного равновесия."
         ]
-        
+
         let availableCount = min(
             shabbatImages.count,
             shabbatPhrases.count
         )
-        
+
         guard availableCount > 0 else {
             return nil
         }
-        
+
         // Расчёт выполняется от пятницы 18:00.
         // Поэтому в пятницу и субботу индекс будет одинаковым.
         let index = stableDailyIndex(
@@ -491,7 +490,7 @@ struct ContentView: View {
             salt: 900,
             date: shabbatStart
         )
-        
+
         return ShabbatContent(
             image: shabbatImages[index],
             phrase: shabbatPhrases[index]
@@ -504,7 +503,7 @@ struct ContentView: View {
             for: date
         )
     }
-    
+
     func decemberContent(
         date: Date = Date()
     ) -> HolidayContent? {
@@ -512,7 +511,7 @@ struct ContentView: View {
             for: date
         )
     }
-    
+
     private func mondayCoffeeContent(
         date: Date = Date()
     ) -> HolidayContent? {
@@ -523,11 +522,11 @@ struct ContentView: View {
     private func hanukkahContent(
         date: Date = Date()
     ) -> HolidayContent? {
-        
+
         guard showJewishHolidays else {
             return nil
         }
-        
+
         return HanukkahPostcardProvider.content(
             for: date
         )
@@ -545,7 +544,7 @@ struct ContentView: View {
         default: return "monday"
         }
     }
-    
+
     func currentSeason() -> String {
         let month = Calendar.current.component(.month, from: Date())
         switch month {
@@ -556,17 +555,17 @@ struct ContentView: View {
         default: return "winter"
         }
     }
-    
+
     func holidayContent(
         for date: Date = Date()
     ) -> HolidayContent? {
-        
+
         let today = date
         if showProtestantHolidays,
            let protestant = ProtestantHolidayProvider.content(for: today) {
             return protestant
         }
-        
+
         // 1. Православные подвижные праздники:
         // Страстная неделя, Пасха, посты и т. д.
         if showOrthodoxHolidays,
@@ -574,10 +573,10 @@ struct ContentView: View {
             OrthodoxHolidayProvider.holyWeekContent(
                 for: today
             ) {
-            
+
             return orthodoxContent
         }
-        
+
         // 2. Католические подвижные праздники:
         // Страстная неделя, Пасха и т. д.
         if showCatholicHolidays,
@@ -585,30 +584,30 @@ struct ContentView: View {
             CatholicHolidayProvider.holyWeekContent(
                 for: today
             ) {
-            
+
             return catholicHolyWeek
         }
-        
+
         // Католические дни Великого поста и Адвента.
         if showCatholicHolidays,
            let catholicSpecial =
             CatholicHolidayProvider.specialContent(
                 for: today
             ) {
-            
+
             return catholicSpecial
         }
-        
+
         // 3. Прощёное воскресенье
         if showOrthodoxHolidays,
            let forgivenSunday =
             OrthodoxHolidayProvider.forgivenSundayContent(
                 for: today
             ) {
-            
+
             return forgivenSunday
         }
-        
+
         // 4. Pancake Day
         // за 47 дней до католической Пасхи
         if showCatholicHolidays,
@@ -616,47 +615,47 @@ struct ContentView: View {
             CatholicHolidayProvider.pancakeDayContent(
                 for: today
             ) {
-            
+
             return pancakeDay
         }
-        
+
         if showJewishHolidays,
            let roshHashanah = JewishHolidayProvider.content(for: today),
            roshHashanah.images.contains("holiday_rosh") ||
             roshHashanah.images.contains("holiday_rosh2Day") {
             return roshHashanah
         }
-        
+
         // 5. Нейтральные / международные праздники
         // показываются всегда
         if let internationalHoliday =
             InternationalHolidayProvider.content(
                 for: today
             ) {
-            
+
             return internationalHoliday
         }
-        
+
         // Еврейские посты
         if showJewishHolidays,
            let jewishFast =
             JewishHolidayProvider.fastContent(
                 for: today
             ) {
-            
+
             return jewishFast
         }
-        
+
         // 6. Еврейские праздники
         if showJewishHolidays,
            let jewishHoliday =
             JewishHolidayProvider.content(
                 for: today
             ) {
-            
+
             return jewishHoliday
         }
-        
+
         // 7. Православные праздники
         // с фиксированными датами
         if showOrthodoxHolidays,
@@ -664,10 +663,10 @@ struct ContentView: View {
             OrthodoxHolidayProvider.fixedContent(
                 for: today
             ) {
-            
+
             return orthodoxHoliday
         }
-        
+
         // 8. Католические праздники
         // с фиксированными датами
         if showCatholicHolidays,
@@ -675,30 +674,30 @@ struct ContentView: View {
             CatholicHolidayProvider.fixedContent(
                 for: today
             ) {
-            
+
             return catholicHoliday
         }
-        
+
         return nil
     }
     func shabbatStartDate(for date: Date = Date()) -> Date? {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = .current
-        
+
         let weekday = calendar.component(.weekday, from: date)
         let hour = calendar.component(.hour, from: date)
-        
+
         // Пятница после 18:00
         if weekday == 6 && hour >= 18 {
             let startOfFriday = calendar.startOfDay(for: date)
-            
+
             return calendar.date(
                 byAdding: .hour,
                 value: 18,
                 to: startOfFriday
             )
         }
-        
+
         // Суббота до 18:00
         if weekday == 7 && hour < 18 {
             guard let friday = calendar.date(
@@ -708,26 +707,26 @@ struct ContentView: View {
             ) else {
                 return nil
             }
-            
+
             let startOfFriday = calendar.startOfDay(for: friday)
-            
+
             return calendar.date(
                 byAdding: .hour,
                 value: 18,
                 to: startOfFriday
             )
         }
-        
+
         return nil
     }
     func openEmergencyWhatsAppMessages() {
         let contacts = loadEmergencyContacts()
-        
+
         guard let firstContact = contacts.first else {
             showContacts = true
             return
         }
-        
+
         openWhatsApp(
             for: firstContact,
             message: emergencyAlertText
@@ -735,13 +734,13 @@ struct ContentView: View {
     }
     func loadEmergencyContacts() -> [EmergencyContact] {
         let contactsKey = "emergency_contacts"
-        
+
         guard let data = UserDefaults.standard.data(
             forKey: contactsKey
         ) else {
             return []
         }
-        
+
         return (
             try? JSONDecoder().decode(
                 [EmergencyContact].self,
@@ -754,31 +753,31 @@ struct ContentView: View {
         message: String
     ) {
         let phone = contact.phoneDigits.filter(\.isNumber)
-        
+
         guard !phone.isEmpty else {
             showMessageComposer = true
             return
         }
-        
+
         guard let encodedMessage = message.addingPercentEncoding(
             withAllowedCharacters: .urlQueryAllowed
         ) else {
             showMessageComposer = true
             return
         }
-        
+
         guard let url = URL(
             string: "whatsapp://send?phone=\(phone)&text=\(encodedMessage)"
         ) else {
             showMessageComposer = true
             return
         }
-        
+
         guard UIApplication.shared.canOpenURL(url) else {
             showMessageComposer = true
             return
         }
-        
+
         UIApplication.shared.open(
             url,
             options: [:]
@@ -788,7 +787,7 @@ struct ContentView: View {
             }
         }
     }
-    
+
     func loadCheckIn() {
         if let savedDate = UserDefaults.standard.object(
             forKey: lastCheckInKey
@@ -801,7 +800,7 @@ struct ContentView: View {
             hasCheckedIn = false
         }
     }
-    
+
     // @MainActor
     //private func markAsAlive() async {
     //    guard !isSendingCheckIn else { return }
@@ -844,46 +843,52 @@ struct ContentView: View {
     @MainActor
     private func markAsAlive() async {
         guard !isSendingCheckIn else { return }
-        
+
         isSendingCheckIn = true
         checkInRequestFailed = false
+        monitoringRequestFailed = false
         defer { isSendingCheckIn = false }
-        
+
         let request = makeHeartbeatRequest(
             checkInDate: Date()
         )
-        
+
         do {
-            if isMonitoringCountdownEnabled {
-                let response = try await HeartbeatAPIClient.shared
-                    .sendHeartbeat(
-                        appInstanceID: getOrCreateAppInstanceID(),
-                        request: request
-                    )
-                
-                acceptMonitoringSnapshot(response)
-                monitoringRequestFailed = false
-                
-                if let acceptedAt = response.lastAcceptedCheckInAt {
-                    lastCheckInDate = acceptedAt
-                    UserDefaults.standard.set(
-                        acceptedAt,
-                        forKey: lastCheckInKey
-                    )
-                }
-            } else {
-                try await HeartbeatAPIClient.shared
-                    .sendHeartbeatWithoutSnapshot(
-                        appInstanceID: getOrCreateAppInstanceID(),
-                        request: request
-                    )
+            let response = try await HeartbeatAPIClient.shared
+                .sendHeartbeat(
+                    appInstanceID: getOrCreateAppInstanceID(),
+                    request: request
+                )
+
+            acceptMonitoringSnapshot(response)
+            monitoringRequestFailed = false
+
+            if let acceptedAt = response.lastCheckInAt {
+                lastCheckInDate = acceptedAt
+                UserDefaults.standard.set(
+                    acceptedAt,
+                    forKey: lastCheckInKey
+                )
             }
-            
+
             AppSoundPlayer.shared.play(.checkInSuccess)
             customMessage = ""
             showPostcard = true
-            
+
         } catch {
+            if let serverError = heartbeatServerError(from: error) {
+                if serverError.statusCode == 409 {
+                    isSendingCheckIn = false
+                    await refreshMonitoringStatus()
+                    return
+                }
+
+                if serverError.statusCode == 404,
+                   isDeletedUserMessage(serverError.message) {
+                    resetDeletedAppInstance()
+                }
+            }
+
             checkInRequestFailed = true
             print(
                 "Heartbeat не принят:",
@@ -891,23 +896,28 @@ struct ContentView: View {
             )
         }
     }
-    
+
     @MainActor
     private func acceptMonitoringSnapshot(
         _ response: MonitoringSnapshot
     ) {
         if monitoringSnapshot?.nextCheckInDueAt
             != response.nextCheckInDueAt {
-            checkedExpiredDueAt = nil
+            lastExpiredStatusRefreshAt = nil
         }
-        
+
         monitoringSnapshot = response
         serverClockOffset = response.serverNow
             .timeIntervalSince(Date())
-        
+
+        UserDefaults.standard.set(
+            serverClockOffset,
+            forKey: serverClockOffsetKey
+        )
+
         let encoder = JSONEncoder()
         encoder.dateEncodingStrategy = .iso8601
-        
+
         if let data = try? encoder.encode(response) {
             UserDefaults.standard.set(
                 data,
@@ -915,7 +925,7 @@ struct ContentView: View {
             )
         }
     }
-    
+
     @MainActor
     private func loadSavedMonitoringSnapshot() {
         guard let data = UserDefaults.standard.data(
@@ -923,37 +933,61 @@ struct ContentView: View {
         ) else {
             return
         }
-        
+
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        
-        monitoringSnapshot = try? decoder.decode(
+
+        if let snapshot = try? decoder.decode(
             MonitoringSnapshot.self,
             from: data
-        )
+        ) {
+            monitoringSnapshot = snapshot
+            serverClockOffset = UserDefaults.standard.double(
+                forKey: serverClockOffsetKey
+            )
+        } else {
+            UserDefaults.standard.removeObject(
+                forKey: monitoringSnapshotKey
+            )
+            UserDefaults.standard.removeObject(
+                forKey: serverClockOffsetKey
+            )
+        }
     }
-    
+
     @MainActor
     private func refreshMonitoringStatus() async {
-        guard isMonitoringCountdownEnabled else { return }
         guard !isRefreshingMonitoring,
               !isSendingCheckIn else {
             return
         }
-        
+
         isRefreshingMonitoring = true
         defer { isRefreshingMonitoring = false }
-        
+
         do {
             let response = try await HeartbeatAPIClient.shared
                 .getMonitoringStatus(
                     appInstanceID: getOrCreateAppInstanceID()
                 )
-            
+
             acceptMonitoringSnapshot(response)
             monitoringRequestFailed = false
-            
+
         } catch {
+            if let serverError = heartbeatServerError(from: error),
+               serverError.statusCode == 404 {
+                if isDeletedUserMessage(serverError.message) {
+                    resetDeletedAppInstance()
+                }
+
+                // До первой успешной отметки пользователь может ещё
+                // отсутствовать на Backend. Это не ошибка соединения.
+                monitoringSnapshot = nil
+                monitoringRequestFailed = false
+                return
+            }
+
             monitoringRequestFailed = true
             print(
                 "Не удалось обновить статус мониторинга:",
@@ -961,39 +995,79 @@ struct ContentView: View {
             )
         }
     }
-    
+
+    private func heartbeatServerError(
+        from error: Error
+    ) -> (statusCode: Int, message: String?)? {
+        guard case let HeartbeatAPIError.serverError(
+            statusCode,
+            message
+        ) = error else {
+            return nil
+        }
+
+        return (statusCode, message)
+    }
+
+    private func isDeletedUserMessage(
+        _ message: String?
+    ) -> Bool {
+        message?.contains("USER_DELETED") == true
+    }
+
+    @MainActor
+    private func resetDeletedAppInstance() {
+        let newID = UUID().uuidString
+        appInstanceId = newID
+        monitoringSnapshot = nil
+        serverClockOffset = 0
+        lastExpiredStatusRefreshAt = nil
+
+        UserDefaults.standard.removeObject(
+            forKey: monitoringSnapshotKey
+        )
+        UserDefaults.standard.removeObject(
+            forKey: serverClockOffsetKey
+        )
+    }
+
     @MainActor
     private func refreshIfDueDatePassed() {
         guard let snapshot = monitoringSnapshot,
-              snapshot.isActive,
+              snapshot.status == .active,
               let dueAt = snapshot.nextCheckInDueAt,
               dueAt <= Date().addingTimeInterval(
                 serverClockOffset
-              ),
-              checkedExpiredDueAt != dueAt else {
+              ) else {
+            lastExpiredStatusRefreshAt = nil
             return
         }
-        
-        checkedExpiredDueAt = dueAt
-        
+
+        if let lastRefresh = lastExpiredStatusRefreshAt,
+           Date().timeIntervalSince(lastRefresh) < 55 {
+            return
+        }
+
+        lastExpiredStatusRefreshAt = Date()
+
         Task {
             await refreshMonitoringStatus()
         }
     }
-    
+
     private func makeHeartbeatRequest(
         checkInDate: Date
     ) -> HeartbeatRequest {
-        
+
         let contacts = loadContactsForSharing()
-        
+
         return HeartbeatRequestBuilder.makeRequest(
             contacts: contacts,
             checkInDate: checkInDate,
             intervalHours: checkInIntervalHours
         )
     }
-    
+
     func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { _, error in
             if let error = error {
@@ -1001,8 +1075,8 @@ struct ContentView: View {
             }
         }
     }
-    
-    
+
+
     func scheduleCheckInReminder() {
         let content = UNMutableNotificationContent()
         content.title = L10n.text("Мы волнуемся за вас!")
@@ -1010,19 +1084,19 @@ struct ContentView: View {
             "Пожалуйста, подтвердите, что с вами всё хорошо"
         )
         content.sound = .default
-        
+
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 36 * 60 * 60, repeats: false)
-        
+
         let request = UNNotificationRequest(
             identifier: "check_in_reminder",
             content: content,
             trigger: trigger
         )
-        
+
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["check_in_reminder"])
         UNUserNotificationCenter.current().add(request)
     }
-    
+
     func isHolidayAllowed(_ category: String) -> Bool {
         if category == "Нейтральный" { return true }
         if category == "Протестантский" {
@@ -1038,15 +1112,15 @@ struct ContentView: View {
             forKey: "profile_display_name"
         )?
             .trimmingCharacters(in: .whitespacesAndNewlines)
-        
+
         let userName: String
-        
+
         if let savedName, !savedName.isEmpty {
             userName = savedName
         } else {
             userName = L10n.text("Пользователь MorningHello")
         }
-        
+
         if AppLanguage.selected == .englishUS {
             return """
 Important: \(userName) hasn't confirmed that they're OK within the last \(checkInIntervalText).
@@ -1056,7 +1130,7 @@ Please try to contact them directly.
 This is an automated MorningHello message. If there is an immediate threat to life or health, contact local emergency services.
 """
         }
-        
+
         return """
 Внимание. \(userName) не подтвердил(а), что с ним или с ней всё хорошо, в течение последних \(checkInIntervalText).
 
@@ -1169,48 +1243,17 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         isCheckInBlocked ? 0.65 : 1.0
                     )
 
-                    if isMonitoringCountdownEnabled {
-                        TimelineView(
-                            .periodic(
-                                from: .now,
-                                by: 60
-                            )
-                        ) { context in
-                            monitoringCard(
-                                now: context.date
-                            )
-                        }
-                        .frame(maxWidth: 340)
-                    } else {
-                        Text(
-                            L10n.format(
-                                "Если ты не нажмёшь кнопку в течение %@, мы сообщим близким.",
-                                checkInIntervalText
-                            )
+                    TimelineView(
+                        .periodic(
+                            from: .now,
+                            by: 60
                         )
-                        .font(
-                            .system(
-                                .subheadline,
-                                design: .rounded
-                            )
+                    ) { context in
+                        countdownCard(
+                            now: context.date
                         )
-                        .foregroundStyle(
-                            AppAdaptiveColor.secondaryText
-                        )
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(3)
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal, 18)
-                        .padding(.vertical, 14)
-                        .background(
-                            AppAdaptiveColor.warmCardBackground,
-                            in: RoundedRectangle(
-                                cornerRadius: 20,
-                                style: .continuous
-                            )
-                        )
-                        .frame(maxWidth: 340)
                     }
+                    .frame(maxWidth: 340)
                 } else {
                     VStack(spacing: 14) {
                         Image(
@@ -1313,6 +1356,11 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 }
                 .frame(maxWidth: 340)
 
+                if hasEmergencyContacts {
+                    monitoringTechnicalStatus
+                        .frame(maxWidth: 340)
+                }
+
                 Spacer()
             }
             .frame(
@@ -1327,252 +1375,283 @@ This is an automated MorningHello message. If there is an immediate threat to li
         var usesEnglishMonitoringText: Bool {
             AppLanguage.selected == .englishUS
         }
-        
-        func monitoringUnit(
-            _ value: Int,
-            russianForms: (String, String, String),
-            english: String
-        ) -> String {
-            if usesEnglishMonitoringText {
-                return "\(value) \(english)"
-            }
-            
-            let lastTwo = value % 100
-            let lastOne = value % 10
-            
-            let word: String
-            
-            if (11...14).contains(lastTwo) {
-                word = russianForms.2
-            } else if lastOne == 1 {
-                word = russianForms.0
-            } else if (2...4).contains(lastOne) {
-                word = russianForms.1
-            } else {
-                word = russianForms.2
-            }
-            
-            return "\(value) \(word)"
-        }
-        
-        func remainingTimeText(
-            until dueAt: Date,
-            now: Date
-        ) -> String {
-            let adjustedNow = now.addingTimeInterval(
+
+        func estimatedServerNow(
+            from localDate: Date
+        ) -> Date {
+            localDate.addingTimeInterval(
                 serverClockOffset
             )
-            
-            let minutes = max(
-                0,
-                Int(
-                    ceil(
-                        dueAt.timeIntervalSince(adjustedNow) / 60
-                    )
-                )
-            )
-            
-            if minutes >= 24 * 60 {
-                let days = minutes / (24 * 60)
-                let hours = (minutes % (24 * 60)) / 60
-                
-                let dayText = monitoringUnit(
-                    days,
-                    russianForms: ("день", "дня", "дней"),
-                    english: days == 1 ? "day" : "days"
-                )
-                
-                let hourText = monitoringUnit(
-                    hours,
-                    russianForms: ("час", "часа", "часов"),
-                    english: hours == 1 ? "hour" : "hours"
-                )
-                
-                return usesEnglishMonitoringText
-                ? "About \(dayText) \(hourText) left"
-                : "Осталось примерно \(dayText) \(hourText)"
-            }
-            
-            let hours = minutes / 60
-            let remainingMinutes = minutes % 60
-            
-            let hourText = monitoringUnit(
-                hours,
-                russianForms: ("час", "часа", "часов"),
-                english: hours == 1 ? "hour" : "hours"
-            )
-            
-            let minuteText = monitoringUnit(
-                remainingMinutes,
-                russianForms: ("минута", "минуты", "минут"),
-                english: remainingMinutes == 1
-                ? "minute"
-                : "minutes"
-            )
-            
-            return usesEnglishMonitoringText
-            ? "About \(hourText) \(minuteText) left"
-            : "Осталось примерно \(hourText) \(minuteText)"
         }
-        
-        @ViewBuilder
-        func monitoringCard(now: Date) -> some View {
-            VStack(spacing: 7) {
-                if isSendingCheckIn {
-                    Text(
-                        usesEnglishMonitoringText
-                        ? "Sending your check-in…"
-                        : "Передаём отметку…"
+
+        func countdownValueText(
+            seconds: TimeInterval
+        ) -> String {
+            let totalMinutes = Int(
+                ceil(abs(seconds) / 60)
+            )
+
+            let hours = totalMinutes / 60
+            let minutes = totalMinutes % 60
+            let minuteText = String(
+                format: "%02d",
+                minutes
+            )
+
+            if usesEnglishMonitoringText {
+                return "\(hours)h \(minuteText)m"
+            }
+
+            return "\(hours) ч \(minuteText) мин"
+        }
+
+        func countdownHeading(
+            isOverdue: Bool
+        ) -> String {
+            if isOverdue {
+                return usesEnglishMonitoringText
+                    ? "Check-in overdue by"
+                    : "Отметка просрочена на"
+            }
+
+            return usesEnglishMonitoringText
+                ? "Until your next check-in"
+                : "До следующей отметки"
+        }
+
+        func deadlineHasPassed(
+            in snapshot: MonitoringSnapshot,
+            at localDate: Date = Date()
+        ) -> Bool {
+            guard let dueAt = snapshot.nextCheckInDueAt else {
+                return false
+            }
+
+            return dueAt <= estimatedServerNow(
+                from: localDate
+            )
+        }
+
+        func safeCountdownColor(
+            for date: Date
+        ) -> Color {
+            if AppBackground.current(for: date) == .night {
+                return Color(
+                    red: 0.52,
+                    green: 0.76,
+                    blue: 1.00
+                )
+            }
+
+            return Color(
+                red: 0.12,
+                green: 0.34,
+                blue: 0.62
+            )
+        }
+
+        func countdownColor(
+            seconds: TimeInterval,
+            status: MonitoringStatus,
+            date: Date
+        ) -> Color {
+            if status == .overdue || seconds <= 0 {
+                return Color(
+                    red: 0.88,
+                    green: 0.22,
+                    blue: 0.20
+                )
+            }
+
+            if seconds <= 2 * 60 * 60 {
+                return .orange
+            }
+
+            return safeCountdownColor(
+                for: date
+            )
+        }
+
+        func formattedDueDate(
+            _ dueAt: Date
+        ) -> String {
+            dueAt.formatted(
+                Date.FormatStyle()
+                    .day()
+                    .month(.wide)
+                    .hour()
+                    .minute()
+                    .locale(
+                        AppLanguage.selected.locale
                     )
-                    .fontWeight(.semibold)
-                }
-                
+            )
+        }
+
+        @ViewBuilder
+        func countdownCard(now: Date) -> some View {
+            VStack(spacing: 8) {
                 if let snapshot = monitoringSnapshot {
-                    switch snapshot.monitoringStatus {
-                    case "active":
+                    switch snapshot.status {
+                    case .active, .overdue:
                         if let dueAt = snapshot.nextCheckInDueAt {
-                            let adjustedNow = now.addingTimeInterval(
-                                serverClockOffset
+                            let serverNow = estimatedServerNow(
+                                from: now
                             )
-                            
-                            if dueAt > adjustedNow {
-                                let dueText = dueAt.formatted(
-                                    Date.FormatStyle()
-                                        .day()
-                                        .month(.wide)
-                                        .hour()
-                                        .minute()
-                                        .locale(
-                                            AppLanguage.selected.locale
-                                        )
+                            let remainingSeconds = dueAt
+                                .timeIntervalSince(serverNow)
+                            let isOverdue =
+                                snapshot.status == .overdue ||
+                                remainingSeconds <= 0
+
+                            Text(
+                                countdownHeading(
+                                    isOverdue: isOverdue
                                 )
-                                
-                                Text(
-                                    usesEnglishMonitoringText
-                                    ? "Next check-in – by \(dueText)"
-                                    : "Следующая отметка – до \(dueText)"
+                            )
+                            .font(
+                                .system(
+                                    .subheadline,
+                                    design: .rounded
                                 )
-                                .fontWeight(.semibold)
-                                
-                                Text(
-                                    remainingTimeText(
-                                        until: dueAt,
-                                        now: now
-                                    )
+                                .weight(.semibold)
+                            )
+                            .foregroundStyle(
+                                AppAdaptiveColor.text
+                            )
+
+                            Text(
+                                countdownValueText(
+                                    seconds: remainingSeconds
                                 )
-                                .foregroundStyle(
-                                    AppAdaptiveColor.secondaryText
+                            )
+                            .font(
+                                .system(
+                                    size: 44,
+                                    weight: .bold,
+                                    design: .rounded
                                 )
-                            } else {
-                                Text(
-                                    usesEnglishMonitoringText
-                                    ? "Check-in time has passed. Checking status…"
-                                    : "Срок отметки прошёл. Проверяем состояние…"
+                            )
+                            .monospacedDigit()
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.7)
+                            .foregroundStyle(
+                                countdownColor(
+                                    seconds: remainingSeconds,
+                                    status: snapshot.status,
+                                    date: now
                                 )
-                                .fontWeight(.semibold)
-                            }
-                            
-                            if snapshot.lastAcceptedCheckInAt != nil {
-                                Text(
-                                    usesEnglishMonitoringText
-                                    ? "✓ Check-in accepted by the server"
-                                    : "✓ Отметка принята сервером"
+                            )
+
+                            Text(
+                                usesEnglishMonitoringText
+                                    ? "Due by \(formattedDueDate(dueAt))"
+                                    : "Срок – \(formattedDueDate(dueAt))"
+                            )
+                            .font(
+                                .system(
+                                    .footnote,
+                                    design: .rounded
                                 )
-                                .font(.footnote)
-                            }
+                            )
+                            .foregroundStyle(
+                                AppAdaptiveColor.secondaryText
+                            )
                         }
-                        
-                    case "awaiting_contact_consent":
+
+                    case .needsCheckIn:
                         Text(
                             usesEnglishMonitoringText
-                            ? "Waiting for contact confirmation. Monitoring is not active yet."
-                            : "Ожидаем подтверждения контакта. Мониторинг пока не активен."
+                                ? "Tap “I’m OK” to start monitoring"
+                                : "Нажмите «Я в порядке», чтобы запустить мониторинг"
                         )
-                        
-                    case "needs_check_in":
-                        Text(
-                            usesEnglishMonitoringText
-                            ? "Tap “I’m OK” to start monitoring."
-                            : "Чтобы запустить мониторинг, нажмите «Я в порядке»."
+                        .font(
+                            .system(
+                                .headline,
+                                design: .rounded
+                            )
+                            .weight(.semibold)
                         )
-                        
-                    case "stopped", "subscription_expired":
-                        Text(
-                            usesEnglishMonitoringText
-                            ? "Monitoring is paused. Check your subscription and settings."
-                            : "Мониторинг остановлен. Проверьте подписку и настройки."
+                        .foregroundStyle(
+                            AppAdaptiveColor.text
                         )
-                        
-                    default:
+
+                    case .paused:
                         Text(
                             usesEnglishMonitoringText
-                            ? "Checking monitoring status…"
-                            : "Проверяем состояние мониторинга…"
+                                ? "Monitoring is paused"
+                                : "Мониторинг приостановлен"
+                        )
+                        .font(
+                            .system(
+                                .headline,
+                                design: .rounded
+                            )
+                            .weight(.semibold)
+                        )
+                        .foregroundStyle(
+                            AppAdaptiveColor.text
+                        )
+
+                    case .subscriptionEnded:
+                        Text(
+                            usesEnglishMonitoringText
+                                ? "Monitoring has stopped"
+                                : "Мониторинг остановлен"
+                        )
+                        .font(
+                            .system(
+                                .headline,
+                                design: .rounded
+                            )
+                            .weight(.semibold)
+                        )
+                        .foregroundStyle(
+                            AppAdaptiveColor.text
                         )
                     }
                 } else if isRefreshingMonitoring {
+                    ProgressView()
+                        .tint(.orange)
+
                     Text(
                         usesEnglishMonitoringText
-                        ? "Getting monitoring status…"
-                        : "Получаем состояние мониторинга…"
+                            ? "Getting monitoring status…"
+                            : "Получаем состояние мониторинга…"
+                    )
+                    .font(
+                        .system(
+                            .subheadline,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        AppAdaptiveColor.secondaryText
                     )
                 } else {
                     Text(
                         usesEnglishMonitoringText
-                        ? "Check in to get your next due date."
-                        : "Отметьтесь, чтобы узнать срок следующей отметки."
+                            ? "Tap “I’m OK” to get your next due time"
+                            : "Нажмите «Я в порядке», чтобы получить время следующей отметки"
                     )
-                }
-                
-                if monitoringRequestFailed {
-                    Text(
-                        usesEnglishMonitoringText
-                        ? "No connection to the server. Showing the last known status."
-                        : "Нет связи с сервером. Показано последнее известное состояние."
+                    .font(
+                        .system(
+                            .headline,
+                            design: .rounded
+                        )
+                        .weight(.semibold)
                     )
-                    .font(.footnote)
                     .foregroundStyle(
-                        AppAdaptiveColor.secondaryText
+                        AppAdaptiveColor.text
                     )
-                    
-                    Button(
-                        usesEnglishMonitoringText
-                        ? "Refresh status"
-                        : "Обновить статус"
-                    ) {
-                        Task {
-                            await refreshMonitoringStatus()
-                        }
-                    }
-                    .font(.footnote)
-                }
-                
-                if checkInRequestFailed {
-                    Text(
-                        usesEnglishMonitoringText
-                        ? "Couldn’t send the check-in. The due date hasn’t changed."
-                        : "Не удалось передать отметку. Срок мониторинга не обновлён."
-                    )
-                    .font(.footnote)
-                    
-                    Button(
-                        usesEnglishMonitoringText
-                        ? "Try again"
-                        : "Повторить"
-                    ) {
-                        Task {
-                            await markAsAlive()
-                        }
-                    }
-                    .font(.footnote)
                 }
             }
-            .font(.system(.subheadline, design: .rounded))
-            .foregroundStyle(AppAdaptiveColor.text)
             .multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity)
+            .frame(
+                maxWidth: .infinity,
+                minHeight: 122
+            )
             .padding(.horizontal, 18)
-            .padding(.vertical, 14)
+            .padding(.vertical, 12)
             .background(
                 AppAdaptiveColor.warmCardBackground,
                 in: RoundedRectangle(
@@ -1581,7 +1660,143 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 )
             )
         }
-        
+
+        @ViewBuilder
+        var monitoringTechnicalStatus: some View {
+            VStack(spacing: 5) {
+                if checkInRequestFailed {
+                    Text(
+                        usesEnglishMonitoringText
+                            ? "Couldn’t send the check-in. The due time hasn’t changed."
+                            : "Не удалось передать отметку. Срок не изменён."
+                    )
+
+                    Button(
+                        usesEnglishMonitoringText
+                            ? "Try again"
+                            : "Повторить"
+                    ) {
+                        Task {
+                            await markAsAlive()
+                        }
+                    }
+                    .foregroundStyle(.orange)
+                    .fontWeight(.semibold)
+                    .buttonStyle(.plain)
+                } else if monitoringRequestFailed {
+                    Text(
+                        usesEnglishMonitoringText
+                            ? "No connection to the server. Showing the last known data."
+                            : "Нет связи с сервером. Показаны последние данные."
+                    )
+
+                    Button(
+                        usesEnglishMonitoringText
+                            ? "Refresh"
+                            : "Обновить"
+                    ) {
+                        Task {
+                            await refreshMonitoringStatus()
+                        }
+                    }
+                    .foregroundStyle(.orange)
+                    .fontWeight(.semibold)
+                    .buttonStyle(.plain)
+                } else if isSendingCheckIn {
+                    Text(
+                        usesEnglishMonitoringText
+                            ? "Sending your check-in…"
+                            : "Передаём отметку…"
+                    )
+                } else if let snapshot = monitoringSnapshot {
+                    switch snapshot.status {
+                    case .active:
+                        if deadlineHasPassed(in: snapshot) {
+                            Text(
+                                usesEnglishMonitoringText
+                                    ? "The due time has passed. Checking the server status…"
+                                    : "Срок отметки прошёл. Проверяем состояние на сервере…"
+                            )
+                        } else if snapshot.lastCheckInAt == nil {
+                            Text(
+                                usesEnglishMonitoringText
+                                    ? "Monitoring is active"
+                                    : "Мониторинг активен"
+                            )
+                        } else {
+                            Text(
+                                usesEnglishMonitoringText
+                                    ? "✓ Monitoring is active · Check-in accepted by the server"
+                                    : "✓ Мониторинг активен · Отметка принята сервером"
+                            )
+                        }
+
+                    case .overdue:
+                        Text(
+                            usesEnglishMonitoringText
+                                ? "The server recorded a missed check-in"
+                                : "Сервер зафиксировал пропущенную отметку"
+                        )
+
+                    case .needsCheckIn:
+                        Text(
+                            usesEnglishMonitoringText
+                                ? "Monitoring is waiting for your first check-in"
+                                : "Для запуска мониторинга нужна первая отметка"
+                        )
+
+                    case .paused:
+                        Text(
+                            usesEnglishMonitoringText
+                                ? "Monitoring is paused"
+                                : "Мониторинг приостановлен"
+                        )
+
+                    case .subscriptionEnded:
+                        Text(
+                            usesEnglishMonitoringText
+                                ? "Monitoring stopped because the subscription ended"
+                                : "Мониторинг остановлен: подписка завершена"
+                        )
+                    }
+                } else if isRefreshingMonitoring {
+                    Text(
+                        usesEnglishMonitoringText
+                            ? "Updating monitoring status…"
+                            : "Обновляем состояние мониторинга…"
+                    )
+                } else {
+                    Text(
+                        usesEnglishMonitoringText
+                            ? "Monitoring status is not available yet"
+                            : "Состояние мониторинга пока не получено"
+                    )
+                }
+            }
+            .font(
+                .system(
+                    .footnote,
+                    design: .rounded
+                )
+            )
+            .foregroundStyle(
+                AppBackground.current() == .night
+                    ? Color.white.opacity(0.78)
+                    : AppAdaptiveColor.secondaryText
+            )
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 9)
+            .background(
+                AppAdaptiveColor.warmCardBackground.opacity(0.72),
+                in: RoundedRectangle(
+                    cornerRadius: 16,
+                    style: .continuous
+                )
+            )
+        }
+
         func mainActionLabel(
             title: String,
             subtitle: String,
@@ -1592,7 +1807,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     Image(systemName: systemImage)
                         .font(.system(size: 25, weight: .semibold))
                         .fixedSize()
-                    
+
                     Text(L10n.text(title))
                         .font(
                             .system(
@@ -1606,7 +1821,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         .allowsTightening(true)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
-                
+
                 Text(L10n.text(subtitle))
                     .font(
                         .system(
@@ -1628,38 +1843,38 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 )
             )
         }
-        
+
         var timeGreeting: String {
             let hour = Calendar.current.component(.hour, from: Date())
-            
+
             switch hour {
             case 5..<12:
                 return L10n.text("Доброе утро")
-                
+
             case 12..<18:
                 return L10n.text("Добрый день")
-                
+
             case 18..<22:
                 return L10n.text("Добрый вечер")
-                
+
             default:
                 return L10n.text("Доброй ночи")
             }
         }
          var currentPostcard: SelectedPostcard {
-            
+
             // 1. День рождения
             if let birthday = birthdayContent(),
                let image = birthday.images.first,
                let phrase = birthday.phrases.first {
-                
+
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
-            
-            
+
+
             // 2. Праздники
             //
             // holidayContent() должен учитывать:
@@ -1667,87 +1882,87 @@ This is an automated MorningHello message. If there is an immediate threat to li
             // - католические только при showCatholicHolidays
             // - еврейские только при showJewishHolidays
             // - нейтральные всегда
-            
+
             if let holiday = holidayContent() {
-                
+
                 let availableCount = min(
                     holiday.images.count,
                     holiday.phrases.count
                 )
-                
+
                 if availableCount > 0 {
-                    
+
                     let index = stableDailyIndex(
                         count: availableCount,
                         salt: 500
                     )
-                    
+
                     return SelectedPostcard(
                         image: holiday.images[index],
                         phrase: holiday.phrases[index]
                     )
                 }
             }
-            
-            
+
+
             // 3. Ханука
             //
             // Если Ханука пока не входит в holidayContent(),
             // проверяем её здесь, ДО понедельника
             // и ДО месячных открыток.
-            
+
             if showJewishHolidays,
                let hanukkah = hanukkahContent(),
                let image = hanukkah.images.first,
                let phrase = hanukkah.phrases.first {
-                
+
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
-            
-            
+
+
             // 4. Понедельник
-            
+
             if let monday = mondayCoffeeContent(),
                let image = monday.images.first,
                let phrase = monday.phrases.first {
-                
+
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
-            
-            
+
+
             // 5. Шаббат
-            
+
             if showJewishHolidays,
                let shabbat = currentShabbatContent() {
-                
+
                 return SelectedPostcard(
                     image: shabbat.image,
                     phrase: shabbat.phrase
                 )
             }
-            
-            
+
+
             // 6. Воскресенье
-            
+
             if let sunday = sundayContent(),
                let image = sunday.images.first,
                let phrase = sunday.phrases.first {
-                
+
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
-            
-            
+
+
             // 7. Февраль – обычные дни месяца
-            
+
             if let februaryIndex =
                 ordinaryDayIndex(
                     for: Date(),
@@ -1759,29 +1974,29 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 ),
                let image = february.images.first,
                let phrase = february.phrases.first {
-                
+
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
-            
-            
+
+
             // 8. Декабрь
-            
+
             if let december = decemberContent(),
                let image = december.images.first,
                let phrase = december.phrases.first {
-                
+
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
-            
-            
+
+
             // Август — обычные дни месяца
-            
+
             if let augustIndex =
                 augustOrdinaryDayIndex(
                     for: Date()
@@ -1792,16 +2007,16 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 ),
                let image = august.images.first,
                let phrase = august.phrases.first {
-                
+
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
-            
-            
+
+
             // 10. Сентябрь – обычные дни месяца
-            
+
             if let septemberIndex =
                 ordinaryDayIndex(
                     for: Date(),
@@ -1813,15 +2028,15 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 ),
                let image = september.images.first,
                let phrase = september.phrases.first {
-                
+
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
-            
+
             // 11. Октябрь – обычные дни месяца
-            
+
             if let octoberIndex =
                 ordinaryDayIndex(
                     for: Date(),
@@ -1833,15 +2048,15 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 ),
                let image = october.images.first,
                let phrase = october.phrases.first {
-                
+
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
-            
+
             // 12. Ноябрь – обычные дни месяца
-            
+
             if let novemberIndex =
                 ordinaryDayIndex(
                     for: Date(),
@@ -1853,15 +2068,15 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 ),
                let image = november.images.first,
                let phrase = november.phrases.first {
-                
+
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
-            
+
             // Январь — обычные дни месяца
-            
+
             if let januaryIndex =
                 ordinaryDayIndex(
                     for: Date(),
@@ -1873,56 +2088,56 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 ),
                let image = january.images.first,
                let phrase = january.phrases.first {
-                
+
                 return SelectedPostcard(
                     image: image,
                     phrase: phrase
                 )
             }
-            
+
             // 13. Обычная сезонная открытка
-            
+
             let weekday = currentWeekday()
-            
+
             let seasonalImageName =
             "\(currentSeason())_\(weekday)"
-            
+
             let fallbackImage =
             images.contains(
                 seasonalImageName
             )
             ? seasonalImageName
             : "winter_monday"
-            
+
             let fallbackPhrase: String
-            
+
             if phrases.isEmpty {
-                
+
                 fallbackPhrase =
                 "Доброе утро!"
-                
+
             } else {
-                
+
                 let phraseIndex =
                 stableDailyIndex(
                     count: phrases.count,
                     salt: 900
                 )
-                
+
                 fallbackPhrase =
                 phrases[phraseIndex]
             }
-            
+
             return SelectedPostcard(
                 image: fallbackImage,
                 phrase: fallbackPhrase
             )
         }
-        
+
         var smartImage: String {
             currentPostcard.image
         }
-        
+
         var smartPhrase: String {
             L10n.postcard(currentPostcard.phrase)
         }
@@ -1937,12 +2152,12 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 onShareTap: {
                     emergencyContactsForSharing =
                     loadContactsForSharing()
-                    
+
                     guard !emergencyContactsForSharing.isEmpty else {
                         showContacts = true
                         return
                     }
-                    
+
                     showContactForWhatsApp = true
                 }
             )
@@ -1957,7 +2172,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     ) {
                         emergencyContactsForSharing = [contact]
                         showContactForWhatsApp = false
-                        
+
                         DispatchQueue.main.asyncAfter(
                             deadline: .now() + 0.6
                         ) {
@@ -1965,7 +2180,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         }
                     }
                 }
-                
+
                 Button("Выбрать мессенджер") {
                     DispatchQueue.main.asyncAfter(
                         deadline: .now() + 0.5
@@ -1976,16 +2191,16 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         )
                     }
                 }
-                
+
                 Button("Отмена", role: .cancel) {
                 }
             }
-            
+
             .sheet(isPresented: $showMessageComposer) {
                 let contacts = emergencyContactsForSharing
-                
+
                 let renderer = PostcardRenderer()
-                
+
                 let finalImage = renderer.render(
                     input: PostcardRenderInput(
                         imageName: smartImage,
@@ -1993,7 +2208,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         customText: customMessage
                     )
                 )
-                
+
                 MessageComposerView(
                     recipients: contacts.map {
                         $0.phoneDigits
@@ -2006,7 +2221,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
         var body: some View {
             NavigationStack {
                 ZStack {
-                    
+
                     TimelineView(.everyMinute) { context in
                         Image(
                             AppBackground
@@ -2017,7 +2232,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         .scaledToFill()
                         .ignoresSafeArea()
                     }
-                    
+
                     Group {
                         if showPostcard {
                             postcardScreen
@@ -2032,7 +2247,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         isPresented:
                             $showPostcardCatalog
                     ) {
-                        
+
                         PostcardCatalogView()
                     }
                     .sheet(isPresented: $showSettings) {
@@ -2097,14 +2312,14 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         loadSavedMonitoringSnapshot()
                         checkEmergencyContacts()
                         requestNotificationPermission()
-                        
+
                         Task {
                             await refreshMonitoringStatus()
                         }
                     }
                     .onChange(of: scenePhase) { _, newPhase in
                         guard newPhase == .active else { return }
-                        
+
                         Task {
                             await refreshMonitoringStatus()
                         }
@@ -2136,11 +2351,11 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         Button("Открыть WhatsApp") {
                             showEmergencyContactSelection = true
                         }
-                        
+
                         Button("Открыть Сообщения") {
                             showMessageComposer = true
                         }
-                        
+
                         Button("Отмена", role: .cancel) {
                         }
                     } message: {
@@ -2166,7 +2381,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                                 )
                             }
                         }
-                        
+
                         Button("Отмена", role: .cancel) {
                         }
                     }
@@ -2176,21 +2391,21 @@ This is an automated MorningHello message. If there is an immediate threat to li
         func augustOrdinaryDayIndex(
             for date: Date
         ) -> Int? {
-            
+
             let calendar = Calendar.current
-            
+
             guard calendar.component(
                 .month,
                 from: date
             ) == 8 else {
                 return nil
             }
-            
+
             let year = calendar.component(
                 .year,
                 from: date
             )
-            
+
             guard let augustStart =
                     calendar.date(
                         from: DateComponents(
@@ -2202,33 +2417,33 @@ This is an automated MorningHello message. If there is an immediate threat to li
             else {
                 return nil
             }
-            
+
             let today =
             calendar.startOfDay(for: date)
-            
+
             var current =
             calendar.startOfDay(
                 for: augustStart
             )
-            
+
             var ordinaryIndex = 0
-            
+
             while current <= today {
-                
+
                 if !isPriorityPostcardDay(
                     current
                 ) {
-                    
+
                     if calendar.isDate(
                         current,
                         inSameDayAs: today
                     ) {
                         return ordinaryIndex
                     }
-                    
+
                     ordinaryIndex += 1
                 }
-                
+
                 guard let nextDay =
                         calendar.date(
                             byAdding: .day,
@@ -2238,40 +2453,40 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 else {
                     break
                 }
-                
+
                 current = nextDay
             }
-            
+
             return nil
         }
-        
+
          func isPriorityPostcardDay(
             _ date: Date
         ) -> Bool {
-            
+
             let calendar = Calendar.current
             if birthdayContent(for: date) != nil {
                 return true
             }
-            
+
             // Праздник
             if holidayContent(
                 for: date
             ) != nil {
                 return true
             }
-            
+
             let weekday =
             calendar.component(
                 .weekday,
                 from: date
             )
-            
+
             // Понедельник
             if weekday == 2 {
                 return true
             }
-            
+
             // Суббота / Шаббат
             if showJewishHolidays,
                weekday == 7 {
@@ -2284,35 +2499,35 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 showCatholicHolidays
             ),
                weekday == 1 {
-                
+
                 return true
             }
-            
+
             return false
         }
         func openProfileIfNeeded() {
             guard !hasCheckedProfileOnLaunch else {
                 return
             }
-            
+
             hasCheckedProfileOnLaunch = true
-            
+
             let trimmedName = displayName.trimmingCharacters(
                 in: CharacterSet.whitespacesAndNewlines
             )
-            
+
             if trimmedName.isEmpty {
                 showProfile = true
             }
         }
-        
+
         @MainActor
         func preparePostcardForSharing(
             imageName: String,
             phrase: String
         ) {
             let renderer = PostcardRenderer()
-            
+
             guard let finalImage = renderer.render(
                 input: PostcardRenderInput(
                     imageName: imageName,
@@ -2325,7 +2540,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 )
                 return
             }
-            
+
             presentActivityViewController(
                 items: [
                     finalImage
@@ -2339,7 +2554,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
             guard !items.isEmpty else {
                 return
             }
-            
+
             guard let windowScene =
                     UIApplication.shared.connectedScenes
                 .compactMap({
@@ -2352,7 +2567,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 print("Не удалось найти активную сцену")
                 return
             }
-            
+
             guard let window =
                     windowScene.windows.first(where: {
                         $0.isKeyWindow
@@ -2361,7 +2576,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 print("Не удалось найти активное окно")
                 return
             }
-            
+
             guard let presenter =
                     topViewController(
                         from: window.rootViewController
@@ -2370,13 +2585,13 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 print("Не удалось найти контроллер")
                 return
             }
-            
+
             let activityController =
             UIActivityViewController(
                 activityItems: items,
                 applicationActivities: nil
             )
-            
+
             if let popover =
                 activityController.popoverPresentationController {
                 popover.sourceView = presenter.view
@@ -2388,7 +2603,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 )
                 popover.permittedArrowDirections = []
             }
-            
+
             presenter.present(
                 activityController,
                 animated: true
@@ -2403,42 +2618,42 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     from: presented
                 )
             }
-            
+
             if let navigation =
                 controller as? UINavigationController {
                 return topViewController(
                     from: navigation.visibleViewController
                 )
             }
-            
+
             if let tabBar =
                 controller as? UITabBarController {
                 return topViewController(
                     from: tabBar.selectedViewController
                 )
             }
-            
+
             return controller
         }
         func ordinaryDayIndex(
             for date: Date,
             month targetMonth: Int
         ) -> Int? {
-            
+
             let calendar = Calendar.current
-            
+
             guard calendar.component(
                 .month,
                 from: date
             ) == targetMonth else {
                 return nil
             }
-            
+
             let year = calendar.component(
                 .year,
                 from: date
             )
-            
+
             guard let monthStart =
                     calendar.date(
                         from: DateComponents(
@@ -2450,35 +2665,35 @@ This is an automated MorningHello message. If there is an immediate threat to li
             else {
                 return nil
             }
-            
+
             let today =
             calendar.startOfDay(
                 for: date
             )
-            
+
             var current =
             calendar.startOfDay(
                 for: monthStart
             )
-            
+
             var ordinaryIndex = 0
-            
+
             while current <= today {
-                
+
                 if !isPriorityPostcardDay(
                     current
                 ) {
-                    
+
                     if calendar.isDate(
                         current,
                         inSameDayAs: today
                     ) {
                         return ordinaryIndex
                     }
-                    
+
                     ordinaryIndex += 1
                 }
-                
+
                 guard let nextDay =
                         calendar.date(
                             byAdding: .day,
@@ -2488,10 +2703,10 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 else {
                     break
                 }
-                
+
                 current = nextDay
             }
-            
+
             return nil
         }
     }
