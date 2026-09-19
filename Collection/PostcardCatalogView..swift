@@ -80,7 +80,7 @@ struct PostcardCatalogView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 22))
                         }
                         .buttonStyle(.plain)
-
+                        
                         ForEach(
                             PostcardCollection.allCases
                         ) { collection in
@@ -105,9 +105,7 @@ struct PostcardCatalogView: View {
                     .padding(.bottom, 40)
                 }
             }
-            .navigationTitle(
-                "Категории открыток"
-            )
+            .navigationTitle(L10n.text("Категории открыток"))
             .navigationBarTitleDisplayMode(
                 .inline
             )
@@ -128,78 +126,45 @@ struct PostcardCatalogView: View {
                 }
             }
         }
-                .fullScreenCover(isPresented: $showBirthdayGreeting) {
-                    BirthdayGreetingView(
-                        emergencyContacts: loadEmergencyContacts()
-                    )
-                }
-            }
-
-            // MARK: - Карточка коллекции
+        .fullScreenCover(isPresented: $showBirthdayGreeting) {
+            BirthdayGreetingView(
+                emergencyContacts: birthdayGreetingContacts
+            )
+        }
+    }
     
+    // MARK: - Карточка коллекции
+
     private func collectionCard(
         _ collection: PostcardCollection
     ) -> some View {
-        
         HStack(spacing: 16) {
-            
             if let firstAsset = collection.assetNames.first {
-                
                 Image(firstAsset)
                     .resizable()
                     .scaledToFill()
-                    .frame(
-                        width: 120,
-                        height: 120
-                    )
+                    .frame(width: 120, height: 120)
                     .clipped()
                     .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 18,
-                            style: .continuous
-                        )
+                        RoundedRectangle(cornerRadius: 18)
                     )
-                
             } else {
-                
                 ZStack {
-                    
-                    RoundedRectangle(
-                        cornerRadius: 18,
-                        style: .continuous
-                    )
-                    .fill(
-                        .white.opacity(0.45)
-                    )
-                    
-                    Image(
-                        systemName:
-                            collection.systemImage
-                    )
-                    .font(
-                        .system(size: 34)
-                    )
-                    .foregroundColor(.orange)
+                    RoundedRectangle(cornerRadius: 18)
+                        .fill(.white.opacity(0.45))
+
+                    Image(systemName: collection.systemImage)
+                        .font(.system(size: 34))
+                        .foregroundStyle(.orange)
                 }
-                .frame(
-                    width: 120,
-                    height: 120
-                )
+                .frame(width: 120, height: 120)
             }
-            
-            VStack(
-                alignment: .leading,
-                spacing: 10
-            ) {
-                
+
+            VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 8) {
-                    
-                    Image(
-                        systemName:
-                            collection.systemImage
-                    )
-                    .foregroundColor(.orange)
-                    
+                    Image(systemName: collection.systemImage)
+                        .foregroundStyle(.orange)
+
                     Text(collection.title)
                         .font(
                             .system(
@@ -208,10 +173,11 @@ struct PostcardCatalogView: View {
                             )
                             .weight(.semibold)
                         )
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.65)
+                        .allowsTightening(true)
                 }
-                
+
                 Text(
                     L10n.format(
                         "%d открыток",
@@ -219,47 +185,113 @@ struct PostcardCatalogView: View {
                     )
                 )
                 .font(.subheadline)
-                .foregroundColor(.secondary)
-                
+                .foregroundStyle(.secondary)
+
                 Spacer()
             }
             .padding(.vertical, 8)
-            
+
             Spacer()
         }
         .padding(12)
-        .frame(
-            maxWidth: .infinity,
-            alignment: .leading
-        )
+        .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: 144)
         .background(AppAdaptiveColor.secondaryBackground)
         .clipShape(
-            RoundedRectangle(
-                cornerRadius: 22,
-                style: .continuous
-            )
+            RoundedRectangle(cornerRadius: 22)
         )
     }
-    
-    
-    // MARK: - Фон
-    
-    private var catalogBackground: some View {
-        AppAdaptiveColor.warmFormBackground
-            .ignoresSafeArea()
-    }
-    
-    private func loadEmergencyContacts() -> [EmergencyContact] {
-        guard let data = UserDefaults.standard.data(
-            forKey: "emergency_contacts"
-        ) else {
-            return []
-        }
 
-        return (try? JSONDecoder().decode(
-            [EmergencyContact].self,
-            from: data
-        )) ?? []
+    // MARK: - Карточка дня рождения
+
+    private var birthdayCollectionCard: some View {
+        HStack(spacing: 16) {
+            Image("holiday_birthday_1")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 120, height: 120)
+                .clipped()
+                .clipShape(
+                    RoundedRectangle(cornerRadius: 18)
+                )
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text(
+                    L10n.text(
+                        "Поздравить с днём рождения"
+                    )
+                )
+                .font(
+                    .system(
+                        .title3,
+                        design: .rounded
+                    )
+                    .weight(.semibold)
+                )
+                .foregroundStyle(AppAdaptiveColor.text)
+                .multilineTextAlignment(.leading)
+
+                Text(
+                    L10n.text(
+                        "Выбрать открытку ко дню рождения"
+                    )
+                )
+                .font(.subheadline)
+                .foregroundStyle(
+                    AppAdaptiveColor.secondaryText
+                )
+                .multilineTextAlignment(.leading)
+
+                Spacer(minLength: 0)
+            }
+            .padding(.vertical, 8)
+
+            Spacer(minLength: 0)
+        }
+        .padding(12)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(height: 144)
+        .background(
+            AppAdaptiveColor.warmCardBackground
+        )
+        .clipShape(
+            RoundedRectangle(cornerRadius: 22)
+        )
     }
-}
+
+    // MARK: - Фон
+
+    private var catalogBackground: some View {
+        LinearGradient(
+            colors: [
+                AppAdaptiveColor.background,
+                AppAdaptiveColor.secondaryBackground,
+                AppAdaptiveColor.groupedBackground
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .ignoresSafeArea()
+    }
+    }
+        
+        
+        // MARK: - Фон
+        
+        var catalogBackground: some View {
+            AppAdaptiveColor.warmFormBackground
+                .ignoresSafeArea()
+        }
+        
+        func loadEmergencyContacts() -> [EmergencyContact] {
+            guard let data = UserDefaults.standard.data(
+                forKey: "emergency_contacts"
+            ) else {
+                return []
+            }
+            
+            return (try? JSONDecoder().decode(
+                [EmergencyContact].self,
+                from: data
+            )) ?? []
+        }

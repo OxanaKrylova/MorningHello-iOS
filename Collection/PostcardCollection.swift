@@ -19,6 +19,7 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
     case flowers
     case sweetTable
     case dogs
+    case protestant_church
     case orthodox_church
     case shabbat
     case catholic_church
@@ -33,6 +34,8 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
         let isEnglish = AppLanguage.selected == .englishUS
 
         switch self {
+        case .protestant_church:
+            return L10n.text("Протестантизм")
         case .orthodox_church:
             return isEnglish ? "Orthodox Christianity" : "Православие"
         case .shabbat:
@@ -69,6 +72,9 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
 
         switch self {
 
+        case .protestant_church:
+            return "cross.fill"
+            
         case .orthodox_church:
             return "building.columns.fill"
 
@@ -272,6 +278,9 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
             ["Holiday_PancakeDay"]
             +
             ["holiday_valentine"]
+            
+        case .protestant_church:
+            return ProtestantHolidayProvider.assetNames
             
         case .catholic_church:
             

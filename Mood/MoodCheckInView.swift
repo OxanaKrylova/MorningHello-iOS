@@ -53,7 +53,7 @@ struct MoodCheckInView: View {
                                 .foregroundStyle(selectedLevel.color)
                                 .multilineTextAlignment(.center)
                         } else {
-                            Text("0 – дзен, 4 – в панике")
+                            Text(L10n.text("0 – дзен, 4 – в панике"))
                                 .font(
                                     .system(
                                         size: 22,

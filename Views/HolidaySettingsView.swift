@@ -15,14 +15,17 @@ struct HolidaySettingsView: View {
     @Environment(\.dismiss)
     private var dismiss
 
+    @AppStorage("showProtestantHolidays")
+    private var showProtestantHolidays = false
+
     @AppStorage("showOrthodoxHolidays")
-    private var showOrthodoxHolidays = true
+    private var showOrthodoxHolidays = false
 
     @AppStorage("showCatholicHolidays")
-    private var showCatholicHolidays = true
+    private var showCatholicHolidays = false
 
     @AppStorage("showJewishHolidays")
-    private var showJewishHolidays = true
+    private var showJewishHolidays = false
 
     @State private var showDetails = false
     @State private var expandedGroup: HolidayGroup?
@@ -152,7 +155,12 @@ struct HolidaySettingsView: View {
 
     private var categorySelectionCard: some View {
         VStack(spacing: 14) {
-
+            holidayToggle(
+                title: "Протестантские",
+                systemImage: "cross.fill",
+                isOn: $showProtestantHolidays
+            )
+            
             holidayToggle(
                 title: "Православные",
                 systemImage: "building.columns.fill",
@@ -231,7 +239,7 @@ struct HolidaySettingsView: View {
             informationRow(
                 systemImage: "sun.max.fill",
                 text:
-                    "При выборе католических или православных праздников по воскресеньям будет показана воскресная открытка."
+                    "При выборе протестантских, католических или православных праздников по воскресеньям будет показана воскресная открытка."
             )
         }
         .font(
@@ -347,7 +355,14 @@ struct HolidaySettingsView: View {
                     "globe.europe.africa.fill",
                 holidays: neutralHolidays
             )
-
+            
+            holidaySectionCard(
+                group: .protestant,
+                title: "Протестантские",
+                systemImage: "cross.fill",
+                holidays: protestantHolidays
+            )
+            
             holidaySectionCard(
                 group: .catholic,
                 title: "Католические",
@@ -604,7 +619,28 @@ struct HolidaySettingsView: View {
         "11 ноября — Всемирный день шопинга",
         "1 декабря — Начало календарной зимы"
     ]
-
+    // MARK: - Протестанские праздники
+    private let protestantHolidays = [
+        "25 декабря – Рождество Христово",
+        "6 января – Богоявление",
+        "16 января – День свободы вероисповедания",
+        "Страстная пятница – за два дня до Пасхи",
+        "Пасхальное воскресенье",
+        "Вознесение Господне – через 39 дней после Пасхи",
+        "Пятидесятница – через 49 дней после Пасхи",
+        "Пепельная среда – за 46 дней до Пасхи",
+        "Пальмовое воскресенье – за неделю до Пасхи",
+        "Великий четверг – за три дня до Пасхи",
+        "Преображенское воскресенье – перед Пепельной средой",
+        "День благодарения – четвёртый четверг ноября",
+        "Воскресенье Реформации – последнее воскресенье октября",
+        "День матери – второе воскресенье мая",
+        "День отца – третье воскресенье июня",
+        "Национальный день молитвы – первый четверг мая",
+        "31 октября – День Реформации",
+        "1 ноября – День всех святых"
+    ]
+    
     // MARK: - Католические праздники
 
     private let catholicHolidays = [
@@ -683,7 +719,7 @@ struct HolidaySettingsView: View {
 private enum HolidayGroup:
     String,
     Identifiable {
-
+    case protestant
     case neutral
     case catholic
     case orthodox

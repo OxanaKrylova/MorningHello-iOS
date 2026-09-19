@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 import UIKit
 import UserNotifications
 import MessageUI
@@ -41,7 +42,7 @@ struct ContentView: View {
     
     @State private var showContacts = false
     @State private var hasCheckedIn = false
-
+    
     @State private var showHolidaySettings = false
     @State private var showProfile = false
     @State private var showPostcard = false
@@ -61,9 +62,18 @@ struct ContentView: View {
     @State private var showSettings = false
     @State private var showMoodCheckIn = false
     
-    @AppStorage("showOrthodoxHolidays") private var showOrthodoxHolidays = true
-    @AppStorage("showCatholicHolidays") private var showCatholicHolidays = true
-    @AppStorage("showJewishHolidays") private var showJewishHolidays = true
+    @AppStorage("showProtestantHolidays")
+    private var showProtestantHolidays = false
+    
+    @AppStorage("showOrthodoxHolidays")
+    private var showOrthodoxHolidays = false
+    
+    @AppStorage("showCatholicHolidays")
+    private var showCatholicHolidays = false
+    
+    @AppStorage("showJewishHolidays")
+    private var showJewishHolidays = false
+    
     @AppStorage("app_instance_id")
     private var appInstanceId: String = UUID().uuidString
     @AppStorage("check_in_interval_hours")
@@ -85,6 +95,23 @@ struct ContentView: View {
     }
     
     @State private var lastCheckInDate: Date?
+    
+    
+    @Environment(\.scenePhase)
+    private var scenePhase
+    
+    @State private var monitoringSnapshot: MonitoringSnapshot?
+    @State private var isSendingCheckIn = false
+    @State private var isRefreshingMonitoring = false
+    @State private var monitoringRequestFailed = false
+    @State private var checkInRequestFailed = false
+    @State private var serverClockOffset: TimeInterval = 0
+    @State private var checkedExpiredDueAt: Date?
+    
+    private let isMonitoringCountdownEnabled = false
+    
+    private let monitoringSnapshotKey = "monitoring_snapshot"
+    
     func stableDailyIndex(
         count: Int,
         salt: Int = 0,
@@ -118,15 +145,15 @@ struct ContentView: View {
         
         return Date().timeIntervalSince(lastCheckInDate) < 24 * 60 * 60
     }
-
+    
     private var checkInIntervalText: String {
         if AppLanguage.selected == .englishUS {
             return "\(checkInIntervalHours) hours"
         }
-
+        
         return checkInIntervalHours == 24
-            ? "24 часа"
-            : "\(checkInIntervalHours) часов"
+        ? "24 часа"
+        : "\(checkInIntervalHours) часов"
     }
     
     private let phrases = [
@@ -293,23 +320,23 @@ struct ContentView: View {
     
     private func getOrCreateAppInstanceID() -> UUID {
         let key = "app_instance_id"
-
+        
         if let savedString = UserDefaults.standard.string(
             forKey: key
         ),
-        let savedUUID = UUID(
+           let savedUUID = UUID(
             uuidString: savedString
-        ) {
+           ) {
             return savedUUID
         }
-
+        
         let newUUID = UUID()
-
+        
         UserDefaults.standard.set(
             newUUID.uuidString,
             forKey: key
         )
-
+        
         return newUUID
     }
     
@@ -533,9 +560,13 @@ struct ContentView: View {
     func holidayContent(
         for date: Date = Date()
     ) -> HolidayContent? {
-
+        
         let today = date
-
+        if showProtestantHolidays,
+           let protestant = ProtestantHolidayProvider.content(for: today) {
+            return protestant
+        }
+        
         // 1. Православные подвижные праздники:
         // Страстная неделя, Пасха, посты и т. д.
         if showOrthodoxHolidays,
@@ -543,10 +574,10 @@ struct ContentView: View {
             OrthodoxHolidayProvider.holyWeekContent(
                 for: today
             ) {
-
+            
             return orthodoxContent
         }
-
+        
         // 2. Католические подвижные праздники:
         // Страстная неделя, Пасха и т. д.
         if showCatholicHolidays,
@@ -554,7 +585,7 @@ struct ContentView: View {
             CatholicHolidayProvider.holyWeekContent(
                 for: today
             ) {
-
+            
             return catholicHolyWeek
         }
         
@@ -564,7 +595,7 @@ struct ContentView: View {
             CatholicHolidayProvider.specialContent(
                 for: today
             ) {
-
+            
             return catholicSpecial
         }
         
@@ -574,10 +605,10 @@ struct ContentView: View {
             OrthodoxHolidayProvider.forgivenSundayContent(
                 for: today
             ) {
-
+            
             return forgivenSunday
         }
-
+        
         // 4. Pancake Day
         // за 47 дней до католической Пасхи
         if showCatholicHolidays,
@@ -585,14 +616,14 @@ struct ContentView: View {
             CatholicHolidayProvider.pancakeDayContent(
                 for: today
             ) {
-
+            
             return pancakeDay
         }
-
+        
         if showJewishHolidays,
            let roshHashanah = JewishHolidayProvider.content(for: today),
            roshHashanah.images.contains("holiday_rosh") ||
-           roshHashanah.images.contains("holiday_rosh2Day") {
+            roshHashanah.images.contains("holiday_rosh2Day") {
             return roshHashanah
         }
         
@@ -602,17 +633,17 @@ struct ContentView: View {
             InternationalHolidayProvider.content(
                 for: today
             ) {
-
+            
             return internationalHoliday
         }
-
+        
         // Еврейские посты
         if showJewishHolidays,
            let jewishFast =
             JewishHolidayProvider.fastContent(
                 for: today
             ) {
-
+            
             return jewishFast
         }
         
@@ -622,10 +653,10 @@ struct ContentView: View {
             JewishHolidayProvider.content(
                 for: today
             ) {
-
+            
             return jewishHoliday
         }
-
+        
         // 7. Православные праздники
         // с фиксированными датами
         if showOrthodoxHolidays,
@@ -633,10 +664,10 @@ struct ContentView: View {
             OrthodoxHolidayProvider.fixedContent(
                 for: today
             ) {
-
+            
             return orthodoxHoliday
         }
-
+        
         // 8. Католические праздники
         // с фиксированными датами
         if showCatholicHolidays,
@@ -644,10 +675,10 @@ struct ContentView: View {
             CatholicHolidayProvider.fixedContent(
                 for: today
             ) {
-
+            
             return catholicHoliday
         }
-
+        
         return nil
     }
     func shabbatStartDate(for date: Date = Date()) -> Date? {
@@ -771,63 +802,191 @@ struct ContentView: View {
         }
     }
     
-    private func markAsAlive() {
-        let now = Date()
-
-        // Сохраняем отметку локально.
-        lastCheckInDate = now
-
-        UserDefaults.standard.set(
-            now,
-            forKey: lastCheckInKey
+    // @MainActor
+    //private func markAsAlive() async {
+    //    guard !isSendingCheckIn else { return }
+    //
+    //isSendingCheckIn = true
+    //checkInRequestFailed = false
+    //defer { isSendingCheckIn = false }
+    //
+    //let request = makeHeartbeatRequest(
+    // checkInDate: Date()
+    //  )
+    //
+    //   do {
+    //        let response = try await HeartbeatAPIClient.shared
+    //            .sendHeartbeat(
+    //               appInstanceID: getOrCreateAppInstanceID(),
+    //               request: request
+    //          )
+    //
+    //       acceptMonitoringSnapshot(response)
+    //      monitoringRequestFailed = false
+    //
+    //       if let acceptedAt = response.lastAcceptedCheckInAt {
+    //           lastCheckInDate = acceptedAt
+    //            UserDefaults.standard.set(
+    //               acceptedAt,
+    //                forKey: lastCheckInKey
+    //           )
+    //       }
+    //
+    //        AppSoundPlayer.shared.play(.checkInSuccess)
+    //       customMessage = ""
+    //        showPostcard = true
+    //
+    //     } catch {
+    //          checkInRequestFailed = true
+    //         print("Heartbeat не принят:", error.localizedDescription)
+    //      }
+    //  }
+    @MainActor
+    private func markAsAlive() async {
+        guard !isSendingCheckIn else { return }
+        
+        isSendingCheckIn = true
+        checkInRequestFailed = false
+        defer { isSendingCheckIn = false }
+        
+        let request = makeHeartbeatRequest(
+            checkInDate: Date()
         )
-
-        // Формируем запрос для сервера.
-        let heartbeatRequest = makeHeartbeatRequest(
-            checkInDate: now
-        )
-
-        // Перезапускаем локальный отсчёт на выбранный интервал.
-        Task {
-            await CheckInNotificationManager.shared
-                .scheduleCheckInNotification(
-                    intervalHours: checkInIntervalHours
-                )
-        }
-
-        // Отправляем JSON на сервер.
-        Task {
-            do {
-                let appInstanceID =
-                    getOrCreateAppInstanceID()
-
-                try await HeartbeatAPIClient.shared
+        
+        do {
+            if isMonitoringCountdownEnabled {
+                let response = try await HeartbeatAPIClient.shared
                     .sendHeartbeat(
-                        appInstanceID: appInstanceID,
-                        request: heartbeatRequest
+                        appInstanceID: getOrCreateAppInstanceID(),
+                        request: request
                     )
-
-                print("✅ Heartbeat успешно отправлен")
-                print(
-                    "App Instance ID:",
-                    appInstanceID.uuidString
-                )
-
-            } catch {
-                print("❌ Heartbeat не отправлен")
-                print(
-                    "Ошибка:",
-                    error.localizedDescription
-                )
+                
+                acceptMonitoringSnapshot(response)
+                monitoringRequestFailed = false
+                
+                if let acceptedAt = response.lastAcceptedCheckInAt {
+                    lastCheckInDate = acceptedAt
+                    UserDefaults.standard.set(
+                        acceptedAt,
+                        forKey: lastCheckInKey
+                    )
+                }
+            } else {
+                try await HeartbeatAPIClient.shared
+                    .sendHeartbeatWithoutSnapshot(
+                        appInstanceID: getOrCreateAppInstanceID(),
+                        request: request
+                    )
             }
+            
+            AppSoundPlayer.shared.play(.checkInSuccess)
+            customMessage = ""
+            showPostcard = true
+            
+        } catch {
+            checkInRequestFailed = true
+            print(
+                "Heartbeat не принят:",
+                error.localizedDescription
+            )
         }
     }
+    
+    @MainActor
+    private func acceptMonitoringSnapshot(
+        _ response: MonitoringSnapshot
+    ) {
+        if monitoringSnapshot?.nextCheckInDueAt
+            != response.nextCheckInDueAt {
+            checkedExpiredDueAt = nil
+        }
+        
+        monitoringSnapshot = response
+        serverClockOffset = response.serverNow
+            .timeIntervalSince(Date())
+        
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        
+        if let data = try? encoder.encode(response) {
+            UserDefaults.standard.set(
+                data,
+                forKey: monitoringSnapshotKey
+            )
+        }
+    }
+    
+    @MainActor
+    private func loadSavedMonitoringSnapshot() {
+        guard let data = UserDefaults.standard.data(
+            forKey: monitoringSnapshotKey
+        ) else {
+            return
+        }
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        monitoringSnapshot = try? decoder.decode(
+            MonitoringSnapshot.self,
+            from: data
+        )
+    }
+    
+    @MainActor
+    private func refreshMonitoringStatus() async {
+        guard isMonitoringCountdownEnabled else { return }
+        guard !isRefreshingMonitoring,
+              !isSendingCheckIn else {
+            return
+        }
+        
+        isRefreshingMonitoring = true
+        defer { isRefreshingMonitoring = false }
+        
+        do {
+            let response = try await HeartbeatAPIClient.shared
+                .getMonitoringStatus(
+                    appInstanceID: getOrCreateAppInstanceID()
+                )
+            
+            acceptMonitoringSnapshot(response)
+            monitoringRequestFailed = false
+            
+        } catch {
+            monitoringRequestFailed = true
+            print(
+                "Не удалось обновить статус мониторинга:",
+                error.localizedDescription
+            )
+        }
+    }
+    
+    @MainActor
+    private func refreshIfDueDatePassed() {
+        guard let snapshot = monitoringSnapshot,
+              snapshot.isActive,
+              let dueAt = snapshot.nextCheckInDueAt,
+              dueAt <= Date().addingTimeInterval(
+                serverClockOffset
+              ),
+              checkedExpiredDueAt != dueAt else {
+            return
+        }
+        
+        checkedExpiredDueAt = dueAt
+        
+        Task {
+            await refreshMonitoringStatus()
+        }
+    }
+    
     private func makeHeartbeatRequest(
         checkInDate: Date
     ) -> HeartbeatRequest {
-
+        
         let contacts = loadContactsForSharing()
-
+        
         return HeartbeatRequestBuilder.makeRequest(
             contacts: contacts,
             checkInDate: checkInDate,
@@ -866,6 +1025,9 @@ struct ContentView: View {
     
     func isHolidayAllowed(_ category: String) -> Bool {
         if category == "Нейтральный" { return true }
+        if category == "Протестантский" {
+            return showProtestantHolidays
+        }
         if category == "Православный" { return showOrthodoxHolidays }
         if category == "Католический" { return showCatholicHolidays }
         if category == "Еврейский" || category == "Еврейский праздник" { return showJewishHolidays }
@@ -894,7 +1056,7 @@ Please try to contact them directly.
 This is an automated MorningHello message. If there is an immediate threat to life or health, contact local emergency services.
 """
         }
-
+        
         return """
 Внимание. \(userName) не подтвердил(а), что с ним или с ней всё хорошо, в течение последних \(checkInIntervalText).
 
@@ -904,12 +1066,18 @@ This is an automated MorningHello message. If there is an immediate threat to li
 """
     }
     var welcomeScreen: some View {
-        return ZStack(alignment: .top) {
+        ZStack(alignment: .top) {
             VStack(spacing: 22) {
-                
+
                 HStack(spacing: 8) {
                     Text(timeGreeting)
-                        .font(.system(size: 36, weight: .bold, design: .rounded))
+                        .font(
+                            .system(
+                                size: 36,
+                                weight: .bold,
+                                design: .rounded
+                            )
+                        )
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
                         .foregroundColor(
@@ -923,50 +1091,58 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         showSettings = true
                     } label: {
                         Image(systemName: "gearshape.fill")
-                            .font(.system(size: 20, weight: .semibold))
+                            .font(
+                                .system(
+                                    size: 20,
+                                    weight: .semibold
+                                )
+                            )
                             .foregroundStyle(AppAdaptiveColor.text)
                             .frame(width: 44, height: 44)
-                            .background(AppAdaptiveColor.warmCardBackground, in: Circle())
+                            .background(
+                                AppAdaptiveColor.warmCardBackground,
+                                in: Circle()
+                            )
                     }
-                    .accessibilityLabel(L10n.text("Настройки"))
+                    .accessibilityLabel(
+                        L10n.text("Настройки")
+                    )
                 }
                 .frame(maxWidth: .infinity)
-                
+
                 Text(L10n.text("Как ты сегодня?"))
-                    .font(.system(.title3, design: .rounded))
+                    .font(
+                        .system(
+                            .title3,
+                            design: .rounded
+                        )
+                    )
                     .foregroundColor(
                         AppBackground.current() == .night
                             ? .white.opacity(0.9)
                             : AppAdaptiveColor.secondaryText
                     )
                     .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .center
+                    )
+
                 if hasEmergencyContacts {
-                    
                     Button {
-                        print(
-                            "Нажата кнопка. isCheckInBlocked:",
-                            isCheckInBlocked
-                        )
-
-                        AppSoundPlayer.shared.play(
-                            .checkInSuccess
-                        )
-
-                        markAsAlive()
-
-                        customMessage = ""
-                        showPostcard = true
-                    }
-                        
-                   label: {
+                        Task {
+                            await markAsAlive()
+                        }
+                    } label: {
                         HStack(spacing: 10) {
                             Image(systemName: "heart.fill")
-                            
-                            Text(L10n.text("Я в порядке"))
+
+                            Text(
+                                L10n.text("Я в порядке")
+                            )
                         }
                     }
+                    .disabled(isSendingCheckIn)
                     .font(
                         .system(
                             .title3,
@@ -979,7 +1155,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     .padding(.vertical, 16)
                     .background(
                         Color.orange.opacity(
-                            isCheckInBlocked ? 0.45 : 0.75
+                            isSendingCheckIn ? 0.45 : 0.75
                         )
                     )
                     .clipShape(Capsule())
@@ -989,39 +1165,78 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         x: 0,
                         y: 5
                     )
-                    .opacity(isCheckInBlocked ? 0.65 : 1.0)
-                    
-                    Text(
-                        L10n.format(
-                            "Если ты не нажмёшь кнопку в течение %@ — мы сообщим близким",
-                            checkInIntervalText
-                        )
+                    .opacity(
+                        isCheckInBlocked ? 0.65 : 1.0
                     )
-                    .font(.system(.footnote, design: .rounded))
-                    .foregroundColor(AppAdaptiveColor.secondaryText)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(3)
-                    .frame(maxWidth: 330, alignment: .center)
-                    .padding(.horizontal, 16)
-                    
-                } else {
-                    
-                    VStack(spacing: 14) {
-                        Image(systemName: "person.crop.circle.badge.plus")
-                            .font(.system(size: 32))
-                            .foregroundColor(.orange)
-                        
-                        Text("Добавьте тревожный контакт")
-                            .font(
-                                .system(
-                                    .title3,
-                                    design: .rounded
-                                )
-                                .weight(.bold)
+
+                    if isMonitoringCountdownEnabled {
+                        TimelineView(
+                            .periodic(
+                                from: .now,
+                                by: 60
                             )
-                            .foregroundColor(AppAdaptiveColor.text)
-                            .multilineTextAlignment(.center)
-                        
+                        ) { context in
+                            monitoringCard(
+                                now: context.date
+                            )
+                        }
+                        .frame(maxWidth: 340)
+                    } else {
+                        Text(
+                            L10n.format(
+                                "Если ты не нажмёшь кнопку в течение %@, мы сообщим близким.",
+                                checkInIntervalText
+                            )
+                        )
+                        .font(
+                            .system(
+                                .subheadline,
+                                design: .rounded
+                            )
+                        )
+                        .foregroundStyle(
+                            AppAdaptiveColor.secondaryText
+                        )
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(3)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 18)
+                        .padding(.vertical, 14)
+                        .background(
+                            AppAdaptiveColor.warmCardBackground,
+                            in: RoundedRectangle(
+                                cornerRadius: 20,
+                                style: .continuous
+                            )
+                        )
+                        .frame(maxWidth: 340)
+                    }
+                } else {
+                    VStack(spacing: 14) {
+                        Image(
+                            systemName:
+                                "person.crop.circle.badge.plus"
+                        )
+                        .font(.system(size: 32))
+                        .foregroundColor(.orange)
+
+                        Text(
+                            L10n.text(
+                                "Добавьте тревожный контакт"
+                            )
+                        )
+                        .font(
+                            .system(
+                                .title3,
+                                design: .rounded
+                            )
+                            .weight(.bold)
+                        )
+                        .foregroundColor(
+                            AppAdaptiveColor.text
+                        )
+                        .multilineTextAlignment(.center)
+
                         Text(
                             L10n.format(
                                 "Без тревожного контакта приложение не сможет сообщить близким, если вы не отметитесь в течение %@.",
@@ -1034,18 +1249,19 @@ This is an automated MorningHello message. If there is an immediate threat to li
                                 design: .rounded
                             )
                         )
-                        .foregroundColor(AppAdaptiveColor.secondaryText)
+                        .foregroundColor(
+                            AppAdaptiveColor.secondaryText
+                        )
                         .multilineTextAlignment(.center)
                         .lineSpacing(3)
                         .frame(maxWidth: 330)
                         .padding(.horizontal, 16)
-                        
+
                         Button {
                             showContacts = true
-                            
                         } label: {
                             Label(
-                                "Добавить контакт",
+                                L10n.text("Добавить контакт"),
                                 systemImage: "person.badge.plus"
                             )
                             .font(
@@ -1058,20 +1274,27 @@ This is an automated MorningHello message. If there is an immediate threat to li
                             .foregroundColor(.white)
                             .padding(.horizontal, 26)
                             .padding(.vertical, 14)
-                            .background(Color.orange.opacity(0.75))
+                            .background(
+                                Color.orange.opacity(0.75)
+                            )
                             .clipShape(Capsule())
                         }
                     }
-                    .frame(maxWidth: .infinity, alignment: .center)
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .center
+                    )
                 }
-                HStack(spacing: 12) {
+
+                HStack(spacing: 24) {
                     Button {
                         showPostcardCatalog = true
                     } label: {
                         mainActionLabel(
                             title: "Открытки",
                             subtitle: "Выбрать и отправить",
-                            systemImage: "photo.on.rectangle.angled"
+                            systemImage:
+                                "photo.on.rectangle.angled"
                         )
                     }
                     .buttonStyle(.plain)
@@ -1089,7 +1312,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     .buttonStyle(.plain)
                 }
                 .frame(maxWidth: 340)
-                
+
                 Spacer()
             }
             .frame(
@@ -1099,878 +1322,1176 @@ This is an automated MorningHello message. If there is an immediate threat to li
             )
             .padding(.horizontal, 20)
             .safeAreaPadding(.top, 28)
-
         }
     }
-
-    private func mainActionLabel(
-        title: String,
-        subtitle: String,
-        systemImage: String
-    ) -> some View {
-        VStack(spacing: 7) {
-            Image(systemName: systemImage)
-                .font(.system(size: 25, weight: .semibold))
-
-            Text(L10n.text(title))
-                .font(.system(.headline, design: .rounded).weight(.semibold))
-
-            Text(L10n.text(subtitle))
-                .font(.system(.caption2, design: .rounded))
-                .foregroundStyle(AppAdaptiveColor.secondaryText)
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
+        var usesEnglishMonitoringText: Bool {
+            AppLanguage.selected == .englishUS
         }
-        .foregroundStyle(AppAdaptiveColor.text)
-        .frame(maxWidth: .infinity, minHeight: 78)
-        .background(
-            Color.orange.opacity(0.60),
-            in: RoundedRectangle(cornerRadius: 25, style: .continuous)
-        )
-    }
-    var timeGreeting: String {
-        let hour = Calendar.current.component(.hour, from: Date())
         
-        switch hour {
-        case 5..<12:
-            return L10n.text("Доброе утро")
+        func monitoringUnit(
+            _ value: Int,
+            russianForms: (String, String, String),
+            english: String
+        ) -> String {
+            if usesEnglishMonitoringText {
+                return "\(value) \(english)"
+            }
             
-        case 12..<18:
-            return L10n.text("Добрый день")
+            let lastTwo = value % 100
+            let lastOne = value % 10
             
-        case 18..<22:
-            return L10n.text("Добрый вечер")
+            let word: String
             
-        default:
-            return L10n.text("Доброй ночи")
+            if (11...14).contains(lastTwo) {
+                word = russianForms.2
+            } else if lastOne == 1 {
+                word = russianForms.0
+            } else if (2...4).contains(lastOne) {
+                word = russianForms.1
+            } else {
+                word = russianForms.2
+            }
+            
+            return "\(value) \(word)"
         }
-    }
-    private var currentPostcard: SelectedPostcard {
-
-        // 1. День рождения
-        if let birthday = birthdayContent(),
-           let image = birthday.images.first,
-           let phrase = birthday.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
+        
+        func remainingTimeText(
+            until dueAt: Date,
+            now: Date
+        ) -> String {
+            let adjustedNow = now.addingTimeInterval(
+                serverClockOffset
+            )
+            
+            let minutes = max(
+                0,
+                Int(
+                    ceil(
+                        dueAt.timeIntervalSince(adjustedNow) / 60
+                    )
+                )
+            )
+            
+            if minutes >= 24 * 60 {
+                let days = minutes / (24 * 60)
+                let hours = (minutes % (24 * 60)) / 60
+                
+                let dayText = monitoringUnit(
+                    days,
+                    russianForms: ("день", "дня", "дней"),
+                    english: days == 1 ? "day" : "days"
+                )
+                
+                let hourText = monitoringUnit(
+                    hours,
+                    russianForms: ("час", "часа", "часов"),
+                    english: hours == 1 ? "hour" : "hours"
+                )
+                
+                return usesEnglishMonitoringText
+                ? "About \(dayText) \(hourText) left"
+                : "Осталось примерно \(dayText) \(hourText)"
+            }
+            
+            let hours = minutes / 60
+            let remainingMinutes = minutes % 60
+            
+            let hourText = monitoringUnit(
+                hours,
+                russianForms: ("час", "часа", "часов"),
+                english: hours == 1 ? "hour" : "hours"
+            )
+            
+            let minuteText = monitoringUnit(
+                remainingMinutes,
+                russianForms: ("минута", "минуты", "минут"),
+                english: remainingMinutes == 1
+                ? "minute"
+                : "minutes"
+            )
+            
+            return usesEnglishMonitoringText
+            ? "About \(hourText) \(minuteText) left"
+            : "Осталось примерно \(hourText) \(minuteText)"
+        }
+        
+        @ViewBuilder
+        func monitoringCard(now: Date) -> some View {
+            VStack(spacing: 7) {
+                if isSendingCheckIn {
+                    Text(
+                        usesEnglishMonitoringText
+                        ? "Sending your check-in…"
+                        : "Передаём отметку…"
+                    )
+                    .fontWeight(.semibold)
+                }
+                
+                if let snapshot = monitoringSnapshot {
+                    switch snapshot.monitoringStatus {
+                    case "active":
+                        if let dueAt = snapshot.nextCheckInDueAt {
+                            let adjustedNow = now.addingTimeInterval(
+                                serverClockOffset
+                            )
+                            
+                            if dueAt > adjustedNow {
+                                let dueText = dueAt.formatted(
+                                    Date.FormatStyle()
+                                        .day()
+                                        .month(.wide)
+                                        .hour()
+                                        .minute()
+                                        .locale(
+                                            AppLanguage.selected.locale
+                                        )
+                                )
+                                
+                                Text(
+                                    usesEnglishMonitoringText
+                                    ? "Next check-in – by \(dueText)"
+                                    : "Следующая отметка – до \(dueText)"
+                                )
+                                .fontWeight(.semibold)
+                                
+                                Text(
+                                    remainingTimeText(
+                                        until: dueAt,
+                                        now: now
+                                    )
+                                )
+                                .foregroundStyle(
+                                    AppAdaptiveColor.secondaryText
+                                )
+                            } else {
+                                Text(
+                                    usesEnglishMonitoringText
+                                    ? "Check-in time has passed. Checking status…"
+                                    : "Срок отметки прошёл. Проверяем состояние…"
+                                )
+                                .fontWeight(.semibold)
+                            }
+                            
+                            if snapshot.lastAcceptedCheckInAt != nil {
+                                Text(
+                                    usesEnglishMonitoringText
+                                    ? "✓ Check-in accepted by the server"
+                                    : "✓ Отметка принята сервером"
+                                )
+                                .font(.footnote)
+                            }
+                        }
+                        
+                    case "awaiting_contact_consent":
+                        Text(
+                            usesEnglishMonitoringText
+                            ? "Waiting for contact confirmation. Monitoring is not active yet."
+                            : "Ожидаем подтверждения контакта. Мониторинг пока не активен."
+                        )
+                        
+                    case "needs_check_in":
+                        Text(
+                            usesEnglishMonitoringText
+                            ? "Tap “I’m OK” to start monitoring."
+                            : "Чтобы запустить мониторинг, нажмите «Я в порядке»."
+                        )
+                        
+                    case "stopped", "subscription_expired":
+                        Text(
+                            usesEnglishMonitoringText
+                            ? "Monitoring is paused. Check your subscription and settings."
+                            : "Мониторинг остановлен. Проверьте подписку и настройки."
+                        )
+                        
+                    default:
+                        Text(
+                            usesEnglishMonitoringText
+                            ? "Checking monitoring status…"
+                            : "Проверяем состояние мониторинга…"
+                        )
+                    }
+                } else if isRefreshingMonitoring {
+                    Text(
+                        usesEnglishMonitoringText
+                        ? "Getting monitoring status…"
+                        : "Получаем состояние мониторинга…"
+                    )
+                } else {
+                    Text(
+                        usesEnglishMonitoringText
+                        ? "Check in to get your next due date."
+                        : "Отметьтесь, чтобы узнать срок следующей отметки."
+                    )
+                }
+                
+                if monitoringRequestFailed {
+                    Text(
+                        usesEnglishMonitoringText
+                        ? "No connection to the server. Showing the last known status."
+                        : "Нет связи с сервером. Показано последнее известное состояние."
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(
+                        AppAdaptiveColor.secondaryText
+                    )
+                    
+                    Button(
+                        usesEnglishMonitoringText
+                        ? "Refresh status"
+                        : "Обновить статус"
+                    ) {
+                        Task {
+                            await refreshMonitoringStatus()
+                        }
+                    }
+                    .font(.footnote)
+                }
+                
+                if checkInRequestFailed {
+                    Text(
+                        usesEnglishMonitoringText
+                        ? "Couldn’t send the check-in. The due date hasn’t changed."
+                        : "Не удалось передать отметку. Срок мониторинга не обновлён."
+                    )
+                    .font(.footnote)
+                    
+                    Button(
+                        usesEnglishMonitoringText
+                        ? "Try again"
+                        : "Повторить"
+                    ) {
+                        Task {
+                            await markAsAlive()
+                        }
+                    }
+                    .font(.footnote)
+                }
+            }
+            .font(.system(.subheadline, design: .rounded))
+            .foregroundStyle(AppAdaptiveColor.text)
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 18)
+            .padding(.vertical, 14)
+            .background(
+                AppAdaptiveColor.warmCardBackground,
+                in: RoundedRectangle(
+                    cornerRadius: 20,
+                    style: .continuous
+                )
             )
         }
-
-
-        // 2. Праздники
-        //
-        // holidayContent() должен учитывать:
-        // - православные только при showOrthodoxHolidays
-        // - католические только при showCatholicHolidays
-        // - еврейские только при showJewishHolidays
-        // - нейтральные всегда
-
-        if let holiday = holidayContent() {
-
-            let availableCount = min(
-                holiday.images.count,
-                holiday.phrases.count
+        
+        func mainActionLabel(
+            title: String,
+            subtitle: String,
+            systemImage: String
+        ) -> some View {
+            VStack(spacing: 7) {
+                HStack(spacing: 7) {
+                    Image(systemName: systemImage)
+                        .font(.system(size: 25, weight: .semibold))
+                        .fixedSize()
+                    
+                    Text(L10n.text(title))
+                        .font(
+                            .system(
+                                .headline,
+                                design: .rounded
+                            )
+                            .weight(.semibold)
+                        )
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                        .allowsTightening(true)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                
+                Text(L10n.text(subtitle))
+                    .font(
+                        .system(
+                            .caption2,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(AppAdaptiveColor.secondaryText)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+            .foregroundStyle(AppAdaptiveColor.text)
+            .frame(maxWidth: .infinity, minHeight: 78)
+            .background(
+                AppAdaptiveColor.warmCardBackground,
+                in: RoundedRectangle(
+                    cornerRadius: 25,
+                    style: .continuous
+                )
             )
-
-            if availableCount > 0 {
-
-                let index = stableDailyIndex(
-                    count: availableCount,
-                    salt: 500
-                )
-
-                return SelectedPostcard(
-                    image: holiday.images[index],
-                    phrase: holiday.phrases[index]
-                )
+        }
+        
+        var timeGreeting: String {
+            let hour = Calendar.current.component(.hour, from: Date())
+            
+            switch hour {
+            case 5..<12:
+                return L10n.text("Доброе утро")
+                
+            case 12..<18:
+                return L10n.text("Добрый день")
+                
+            case 18..<22:
+                return L10n.text("Добрый вечер")
+                
+            default:
+                return L10n.text("Доброй ночи")
             }
         }
-
-
-        // 3. Ханука
-        //
-        // Если Ханука пока не входит в holidayContent(),
-        // проверяем её здесь, ДО понедельника
-        // и ДО месячных открыток.
-
-        if showJewishHolidays,
-           let hanukkah = hanukkahContent(),
-           let image = hanukkah.images.first,
-           let phrase = hanukkah.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-
-        // 4. Понедельник
-
-        if let monday = mondayCoffeeContent(),
-           let image = monday.images.first,
-           let phrase = monday.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-
-        // 5. Шаббат
-
-        if showJewishHolidays,
-           let shabbat = currentShabbatContent() {
-
-            return SelectedPostcard(
-                image: shabbat.image,
-                phrase: shabbat.phrase
-            )
-        }
-
-
-        // 6. Воскресенье
-
-        if let sunday = sundayContent(),
-           let image = sunday.images.first,
-           let phrase = sunday.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-
-        // 7. Февраль – обычные дни месяца
-
-        if let februaryIndex =
-            ordinaryDayIndex(
-                for: Date(),
-                month: 2
-            ),
-           let february =
-            FebruaryPostcardProvider.content(
-                index: februaryIndex
-            ),
-           let image = february.images.first,
-           let phrase = february.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-
-        // 8. Декабрь
-
-        if let december = decemberContent(),
-           let image = december.images.first,
-           let phrase = december.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-
-        // Август — обычные дни месяца
-
-        if let augustIndex =
-            augustOrdinaryDayIndex(
-                for: Date()
-            ),
-           let august =
-            AugustPostcardProvider.content(
-                index: augustIndex
-            ),
-           let image = august.images.first,
-           let phrase = august.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-
-        // 10. Сентябрь – обычные дни месяца
-
-        if let septemberIndex =
-            ordinaryDayIndex(
-                for: Date(),
-                month: 9
-            ),
-           let september =
-            SeptemberPostcardProvider.content(
-                index: septemberIndex
-            ),
-           let image = september.images.first,
-           let phrase = september.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-        // 11. Октябрь – обычные дни месяца
-
-        if let octoberIndex =
-            ordinaryDayIndex(
-                for: Date(),
-                month: 10
-            ),
-           let october =
-            OctoberPostcardProvider.content(
-                index: octoberIndex
-            ),
-           let image = october.images.first,
-           let phrase = october.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-        // 12. Ноябрь – обычные дни месяца
-
-        if let novemberIndex =
-            ordinaryDayIndex(
-                for: Date(),
-                month: 11
-            ),
-           let november =
-            NovemberPostcardProvider.content(
-                index: novemberIndex
-            ),
-           let image = november.images.first,
-           let phrase = november.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-
-        // Январь — обычные дни месяца
-
-        if let januaryIndex =
-            ordinaryDayIndex(
-                for: Date(),
-                month: 1
-            ),
-           let january =
-            JanuaryPostcardProvider.content(
-                index: januaryIndex
-            ),
-           let image = january.images.first,
-           let phrase = january.phrases.first {
-
-            return SelectedPostcard(
-                image: image,
-                phrase: phrase
-            )
-        }
-        
-        // 13. Обычная сезонная открытка
-
-        let weekday = currentWeekday()
-
-        let seasonalImageName =
+         var currentPostcard: SelectedPostcard {
+            
+            // 1. День рождения
+            if let birthday = birthdayContent(),
+               let image = birthday.images.first,
+               let phrase = birthday.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            
+            // 2. Праздники
+            //
+            // holidayContent() должен учитывать:
+            // - православные только при showOrthodoxHolidays
+            // - католические только при showCatholicHolidays
+            // - еврейские только при showJewishHolidays
+            // - нейтральные всегда
+            
+            if let holiday = holidayContent() {
+                
+                let availableCount = min(
+                    holiday.images.count,
+                    holiday.phrases.count
+                )
+                
+                if availableCount > 0 {
+                    
+                    let index = stableDailyIndex(
+                        count: availableCount,
+                        salt: 500
+                    )
+                    
+                    return SelectedPostcard(
+                        image: holiday.images[index],
+                        phrase: holiday.phrases[index]
+                    )
+                }
+            }
+            
+            
+            // 3. Ханука
+            //
+            // Если Ханука пока не входит в holidayContent(),
+            // проверяем её здесь, ДО понедельника
+            // и ДО месячных открыток.
+            
+            if showJewishHolidays,
+               let hanukkah = hanukkahContent(),
+               let image = hanukkah.images.first,
+               let phrase = hanukkah.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            
+            // 4. Понедельник
+            
+            if let monday = mondayCoffeeContent(),
+               let image = monday.images.first,
+               let phrase = monday.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            
+            // 5. Шаббат
+            
+            if showJewishHolidays,
+               let shabbat = currentShabbatContent() {
+                
+                return SelectedPostcard(
+                    image: shabbat.image,
+                    phrase: shabbat.phrase
+                )
+            }
+            
+            
+            // 6. Воскресенье
+            
+            if let sunday = sundayContent(),
+               let image = sunday.images.first,
+               let phrase = sunday.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            
+            // 7. Февраль – обычные дни месяца
+            
+            if let februaryIndex =
+                ordinaryDayIndex(
+                    for: Date(),
+                    month: 2
+                ),
+               let february =
+                FebruaryPostcardProvider.content(
+                    index: februaryIndex
+                ),
+               let image = february.images.first,
+               let phrase = february.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            
+            // 8. Декабрь
+            
+            if let december = decemberContent(),
+               let image = december.images.first,
+               let phrase = december.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            
+            // Август — обычные дни месяца
+            
+            if let augustIndex =
+                augustOrdinaryDayIndex(
+                    for: Date()
+                ),
+               let august =
+                AugustPostcardProvider.content(
+                    index: augustIndex
+                ),
+               let image = august.images.first,
+               let phrase = august.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            
+            // 10. Сентябрь – обычные дни месяца
+            
+            if let septemberIndex =
+                ordinaryDayIndex(
+                    for: Date(),
+                    month: 9
+                ),
+               let september =
+                SeptemberPostcardProvider.content(
+                    index: septemberIndex
+                ),
+               let image = september.images.first,
+               let phrase = september.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            // 11. Октябрь – обычные дни месяца
+            
+            if let octoberIndex =
+                ordinaryDayIndex(
+                    for: Date(),
+                    month: 10
+                ),
+               let october =
+                OctoberPostcardProvider.content(
+                    index: octoberIndex
+                ),
+               let image = october.images.first,
+               let phrase = october.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            // 12. Ноябрь – обычные дни месяца
+            
+            if let novemberIndex =
+                ordinaryDayIndex(
+                    for: Date(),
+                    month: 11
+                ),
+               let november =
+                NovemberPostcardProvider.content(
+                    index: novemberIndex
+                ),
+               let image = november.images.first,
+               let phrase = november.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            // Январь — обычные дни месяца
+            
+            if let januaryIndex =
+                ordinaryDayIndex(
+                    for: Date(),
+                    month: 1
+                ),
+               let january =
+                JanuaryPostcardProvider.content(
+                    index: januaryIndex
+                ),
+               let image = january.images.first,
+               let phrase = january.phrases.first {
+                
+                return SelectedPostcard(
+                    image: image,
+                    phrase: phrase
+                )
+            }
+            
+            // 13. Обычная сезонная открытка
+            
+            let weekday = currentWeekday()
+            
+            let seasonalImageName =
             "\(currentSeason())_\(weekday)"
-
-        let fallbackImage =
+            
+            let fallbackImage =
             images.contains(
                 seasonalImageName
             )
             ? seasonalImageName
             : "winter_monday"
-
-        let fallbackPhrase: String
-
-        if phrases.isEmpty {
-
-            fallbackPhrase =
+            
+            let fallbackPhrase: String
+            
+            if phrases.isEmpty {
+                
+                fallbackPhrase =
                 "Доброе утро!"
-
-        } else {
-
-            let phraseIndex =
+                
+            } else {
+                
+                let phraseIndex =
                 stableDailyIndex(
                     count: phrases.count,
                     salt: 900
                 )
-
-            fallbackPhrase =
+                
+                fallbackPhrase =
                 phrases[phraseIndex]
-        }
-
-        return SelectedPostcard(
-            image: fallbackImage,
-            phrase: fallbackPhrase
-        )
-    }
-    
-    var smartImage: String {
-        currentPostcard.image
-    }
-    
-    var smartPhrase: String {
-        L10n.postcard(currentPostcard.phrase)
-    }
-    var postcardScreen: some View {
-        PostcardScreen(
-            imageName: smartImage,
-            phrase: smartPhrase,
-            customMessage: $customMessage,
-            onHomeTap: {
-                showPostcard = false
-            },
-            onShareTap: {
-                emergencyContactsForSharing =
-                loadContactsForSharing()
-                
-                guard !emergencyContactsForSharing.isEmpty else {
-                    showContacts = true
-                    return
-                }
-                
-                showContactForWhatsApp = true
             }
-        )
-        .confirmationDialog(
-            "Как отправить открытку?",
-            isPresented: $showContactForWhatsApp,
-            titleVisibility: .visible
-        ) {
-            ForEach(loadContactsForSharing()) { contact in
-                Button(
-                    "iMessage: \(contact.name) \(contact.surname)"
-                ) {
-                    emergencyContactsForSharing = [contact]
-                    showContactForWhatsApp = false
-
-                    DispatchQueue.main.asyncAfter(
-                        deadline: .now() + 0.6
-                    ) {
-                        showMessageComposer = true
-                    }
-                }
-            }
-
-            Button("Выбрать мессенджер") {
-                DispatchQueue.main.asyncAfter(
-                    deadline: .now() + 0.5
-                ) {
-                    preparePostcardForSharing(
-                        imageName: smartImage,
-                        phrase: smartPhrase
-                    )
-                }
-            }
-
-            Button("Отмена", role: .cancel) {
-            }
-        }
-
-        .sheet(isPresented: $showMessageComposer) {
-            let contacts = emergencyContactsForSharing
             
-            let renderer = PostcardRenderer()
-            
-            let finalImage = renderer.render(
-                input: PostcardRenderInput(
-                    imageName: smartImage,
-                    baseText: smartPhrase,
-                    customText: customMessage
-                )
-            )
-            
-            MessageComposerView(
-                recipients: contacts.map {
-                    $0.phoneDigits
-                },
-                message: "",
-                image: finalImage
+            return SelectedPostcard(
+                image: fallbackImage,
+                phrase: fallbackPhrase
             )
         }
-    }
-    var body: some View {
-        NavigationStack {
-            ZStack {
-
-                TimelineView(.everyMinute) { context in
-                    Image(
-                        AppBackground
-                            .current(for: context.date)
-                            .rawValue
-                    )
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
-                }
-
-                Group {
-                    if showPostcard {
-                        postcardScreen
-                    } else {
-                        welcomeScreen
-                    }
-                }
-                .sheet(isPresented: $showContacts) {
-                    EmergencyContactsView()
-                }
-                .sheet(
-                    isPresented:
-                        $showPostcardCatalog
-                ) {
-
-                    PostcardCatalogView()
-                }
-                .sheet(isPresented: $showSettings) {
-                    SettingsView()
-                }
-                .sheet(isPresented: $showMoodCheckIn) {
-                    MoodCheckInView()
-                }
-                .sheet(
-                    isPresented: $showBirthdayGreeting
-                ) {
-                    BirthdayGreetingView(
-                        emergencyContacts:
-                            loadContactsForSharing()
-                    )
-                }
-                .onChange(of: showContacts) { _, isShowing in
-                    if isShowing {
-                        AppSoundPlayer.shared.play(
-                            .openForm
-                        )
-                    } else {
-                        checkEmergencyContacts()
-                    }
-                }
-                .onAppear {
-                    openProfileIfNeeded()
-                }
-                .sheet(isPresented: $showHolidaySettings) {
-                    HolidaySettingsView()
-                }
-                .sheet(isPresented: $showProfile) {
-                    ProfileView()
-                }
-                .onChange(
-                    of: showHolidaySettings
-                ) { _, isShowing in
-                    if isShowing {
-                        AppSoundPlayer.shared.play(
-                            .openForm
-                        )
-                    }
-                }
-                .onChange(of: showProfile) { _, isShowing in
-                    if isShowing {
-                        AppSoundPlayer.shared.play(
-                            .openForm
-                        )
-                    }
-                }
-                .onChange(
-                    of: showPostcardCatalog
-                ) { _, isShowing in
-                    if isShowing {
-                        AppSoundPlayer.shared.play(
-                            .openForm
-                        )
-                    }
-                }
-                .onAppear {
+        
+        var smartImage: String {
+            currentPostcard.image
+        }
+        
+        var smartPhrase: String {
+            L10n.postcard(currentPostcard.phrase)
+        }
+        var postcardScreen: some View {
+            PostcardScreen(
+                imageName: smartImage,
+                phrase: smartPhrase,
+                customMessage: $customMessage,
+                onHomeTap: {
                     showPostcard = false
-                    loadCheckIn()
-                    checkEmergencyContacts()
-                    requestNotificationPermission()
-                }
-                .onReceive(
-                    NotificationCenter.default.publisher(
-                        for: .openEmergencyMessage
-                    )
-                ) { _ in
-                    shouldOpenEmergencyMessage = true
-                    showEmergencyMessageAlert = true
-                }
-                .alert(
-                    L10n.format(
-                        "Прошло %@",
-                        checkInIntervalText
-                    ),
-                    isPresented: $showEmergencyMessageAlert
-                ) {
-                    Button("Открыть WhatsApp") {
-                        showEmergencyContactSelection = true
+                },
+                onShareTap: {
+                    emergencyContactsForSharing =
+                    loadContactsForSharing()
+                    
+                    guard !emergencyContactsForSharing.isEmpty else {
+                        showContacts = true
+                        return
                     }
-
-                    Button("Открыть Сообщения") {
-                        showMessageComposer = true
-                    }
-
-                    Button("Отмена", role: .cancel) {
-                    }
-                } message: {
-                    Text(
-                        AppLanguage.selected == .englishUS
-                            ? "The user hasn't confirmed that they're OK within the last \(checkInIntervalText).\n\nPrepare a message for the emergency contacts?"
-                            : "Пользователь не подтвердил, что с ним всё хорошо, в течение последних \(checkInIntervalText).\n\nПодготовить сообщение тревожным контактам?"
-                    )
+                    
+                    showContactForWhatsApp = true
                 }
-                .confirmationDialog(
-                    "Кому открыть сообщение?",
-                    isPresented: $showEmergencyContactSelection
-                ) {
-                    ForEach(
-                        loadContactsForSharing()
-                    ) { contact in
-                        Button(
-                            "\(contact.name) \(contact.surname)"
+            )
+            .confirmationDialog(
+                "Как отправить открытку?",
+                isPresented: $showContactForWhatsApp,
+                titleVisibility: .visible
+            ) {
+                ForEach(loadContactsForSharing()) { contact in
+                    Button(
+                        "iMessage: \(contact.name) \(contact.surname)"
+                    ) {
+                        emergencyContactsForSharing = [contact]
+                        showContactForWhatsApp = false
+                        
+                        DispatchQueue.main.asyncAfter(
+                            deadline: .now() + 0.6
                         ) {
-                            openWhatsApp(
-                                for: contact,
-                                message: emergencyAlertText
+                            showMessageComposer = true
+                        }
+                    }
+                }
+                
+                Button("Выбрать мессенджер") {
+                    DispatchQueue.main.asyncAfter(
+                        deadline: .now() + 0.5
+                    ) {
+                        preparePostcardForSharing(
+                            imageName: smartImage,
+                            phrase: smartPhrase
+                        )
+                    }
+                }
+                
+                Button("Отмена", role: .cancel) {
+                }
+            }
+            
+            .sheet(isPresented: $showMessageComposer) {
+                let contacts = emergencyContactsForSharing
+                
+                let renderer = PostcardRenderer()
+                
+                let finalImage = renderer.render(
+                    input: PostcardRenderInput(
+                        imageName: smartImage,
+                        baseText: smartPhrase,
+                        customText: customMessage
+                    )
+                )
+                
+                MessageComposerView(
+                    recipients: contacts.map {
+                        $0.phoneDigits
+                    },
+                    message: "",
+                    image: finalImage
+                )
+            }
+        }
+        var body: some View {
+            NavigationStack {
+                ZStack {
+                    
+                    TimelineView(.everyMinute) { context in
+                        Image(
+                            AppBackground
+                                .current(for: context.date)
+                                .rawValue
+                        )
+                        .resizable()
+                        .scaledToFill()
+                        .ignoresSafeArea()
+                    }
+                    
+                    Group {
+                        if showPostcard {
+                            postcardScreen
+                        } else {
+                            welcomeScreen
+                        }
+                    }
+                    .sheet(isPresented: $showContacts) {
+                        EmergencyContactsView()
+                    }
+                    .sheet(
+                        isPresented:
+                            $showPostcardCatalog
+                    ) {
+                        
+                        PostcardCatalogView()
+                    }
+                    .sheet(isPresented: $showSettings) {
+                        SettingsView()
+                    }
+                    .sheet(isPresented: $showMoodCheckIn) {
+                        MoodCheckInView()
+                    }
+                    .sheet(
+                        isPresented: $showBirthdayGreeting
+                    ) {
+                        BirthdayGreetingView(
+                            emergencyContacts:
+                                loadContactsForSharing()
+                        )
+                    }
+                    .onChange(of: showContacts) { _, isShowing in
+                        if isShowing {
+                            AppSoundPlayer.shared.play(
+                                .openForm
+                            )
+                        } else {
+                            checkEmergencyContacts()
+                        }
+                    }
+                    .onAppear {
+                        openProfileIfNeeded()
+                    }
+                    .sheet(isPresented: $showHolidaySettings) {
+                        HolidaySettingsView()
+                    }
+                    .sheet(isPresented: $showProfile) {
+                        ProfileView()
+                    }
+                    .onChange(
+                        of: showHolidaySettings
+                    ) { _, isShowing in
+                        if isShowing {
+                            AppSoundPlayer.shared.play(
+                                .openForm
                             )
                         }
                     }
-
-                    Button("Отмена", role: .cancel) {
+                    .onChange(of: showProfile) { _, isShowing in
+                        if isShowing {
+                            AppSoundPlayer.shared.play(
+                                .openForm
+                            )
+                        }
+                    }
+                    .onChange(
+                        of: showPostcardCatalog
+                    ) { _, isShowing in
+                        if isShowing {
+                            AppSoundPlayer.shared.play(
+                                .openForm
+                            )
+                        }
+                    }
+                    .onAppear {
+                        showPostcard = false
+                        loadSavedMonitoringSnapshot()
+                        checkEmergencyContacts()
+                        requestNotificationPermission()
+                        
+                        Task {
+                            await refreshMonitoringStatus()
+                        }
+                    }
+                    .onChange(of: scenePhase) { _, newPhase in
+                        guard newPhase == .active else { return }
+                        
+                        Task {
+                            await refreshMonitoringStatus()
+                        }
+                    }
+                    .onReceive(
+                        Timer.publish(
+                            every: 60,
+                            on: .main,
+                            in: .common
+                        ).autoconnect()
+                    ) { _ in
+                        refreshIfDueDatePassed()
+                    }
+                    .onReceive(
+                        NotificationCenter.default.publisher(
+                            for: .openEmergencyMessage
+                        )
+                    ) { _ in
+                        shouldOpenEmergencyMessage = true
+                        showEmergencyMessageAlert = true
+                    }
+                    .alert(
+                        L10n.format(
+                            "Прошло %@",
+                            checkInIntervalText
+                        ),
+                        isPresented: $showEmergencyMessageAlert
+                    ) {
+                        Button("Открыть WhatsApp") {
+                            showEmergencyContactSelection = true
+                        }
+                        
+                        Button("Открыть Сообщения") {
+                            showMessageComposer = true
+                        }
+                        
+                        Button("Отмена", role: .cancel) {
+                        }
+                    } message: {
+                        Text(
+                            AppLanguage.selected == .englishUS
+                            ? "The user hasn't confirmed that they're OK within the last \(checkInIntervalText).\n\nPrepare a message for the emergency contacts?"
+                            : "Пользователь не подтвердил, что с ним всё хорошо, в течение последних \(checkInIntervalText).\n\nПодготовить сообщение тревожным контактам?"
+                        )
+                    }
+                    .confirmationDialog(
+                        "Кому открыть сообщение?",
+                        isPresented: $showEmergencyContactSelection
+                    ) {
+                        ForEach(
+                            loadContactsForSharing()
+                        ) { contact in
+                            Button(
+                                "\(contact.name) \(contact.surname)"
+                            ) {
+                                openWhatsApp(
+                                    for: contact,
+                                    message: emergencyAlertText
+                                )
+                            }
+                        }
+                        
+                        Button("Отмена", role: .cancel) {
+                        }
                     }
                 }
             }
         }
-    }
-    private func augustOrdinaryDayIndex(
-        for date: Date
-    ) -> Int? {
-
-        let calendar = Calendar.current
-
-        guard calendar.component(
-            .month,
-            from: date
-        ) == 8 else {
-            return nil
-        }
-
-        let year = calendar.component(
-            .year,
-            from: date
-        )
-
-        guard let augustStart =
-            calendar.date(
-                from: DateComponents(
-                    year: year,
-                    month: 8,
-                    day: 1
-                )
+        func augustOrdinaryDayIndex(
+            for date: Date
+        ) -> Int? {
+            
+            let calendar = Calendar.current
+            
+            guard calendar.component(
+                .month,
+                from: date
+            ) == 8 else {
+                return nil
+            }
+            
+            let year = calendar.component(
+                .year,
+                from: date
             )
-        else {
-            return nil
-        }
-
-        let today =
+            
+            guard let augustStart =
+                    calendar.date(
+                        from: DateComponents(
+                            year: year,
+                            month: 8,
+                            day: 1
+                        )
+                    )
+            else {
+                return nil
+            }
+            
+            let today =
             calendar.startOfDay(for: date)
-
-        var current =
+            
+            var current =
             calendar.startOfDay(
                 for: augustStart
             )
-
-        var ordinaryIndex = 0
-
-        while current <= today {
-
-            if !isPriorityPostcardDay(
-                current
-            ) {
-
-                if calendar.isDate(
-                    current,
-                    inSameDayAs: today
+            
+            var ordinaryIndex = 0
+            
+            while current <= today {
+                
+                if !isPriorityPostcardDay(
+                    current
                 ) {
-                    return ordinaryIndex
+                    
+                    if calendar.isDate(
+                        current,
+                        inSameDayAs: today
+                    ) {
+                        return ordinaryIndex
+                    }
+                    
+                    ordinaryIndex += 1
                 }
-
-                ordinaryIndex += 1
+                
+                guard let nextDay =
+                        calendar.date(
+                            byAdding: .day,
+                            value: 1,
+                            to: current
+                        )
+                else {
+                    break
+                }
+                
+                current = nextDay
             }
-
-            guard let nextDay =
-                calendar.date(
-                    byAdding: .day,
-                    value: 1,
-                    to: current
-                )
-            else {
-                break
-            }
-
-            current = nextDay
-        }
-
-        return nil
-    }
-    
-    private func isPriorityPostcardDay(
-        _ date: Date
-    ) -> Bool {
-
-        let calendar = Calendar.current
-        if birthdayContent(for: date) != nil {
-            return true
+            
+            return nil
         }
         
-        // Праздник
-        if holidayContent(
-            for: date
-        ) != nil {
-            return true
-        }
-
-        let weekday =
+         func isPriorityPostcardDay(
+            _ date: Date
+        ) -> Bool {
+            
+            let calendar = Calendar.current
+            if birthdayContent(for: date) != nil {
+                return true
+            }
+            
+            // Праздник
+            if holidayContent(
+                for: date
+            ) != nil {
+                return true
+            }
+            
+            let weekday =
             calendar.component(
                 .weekday,
                 from: date
             )
-
-        // Понедельник
-        if weekday == 2 {
-            return true
+            
+            // Понедельник
+            if weekday == 2 {
+                return true
+            }
+            
+            // Суббота / Шаббат
+            if showJewishHolidays,
+               weekday == 7 {
+                return true
+            }
+            // Воскресенье
+            if (
+                !showJewishHolidays ||
+                showOrthodoxHolidays ||
+                showCatholicHolidays
+            ),
+               weekday == 1 {
+                
+                return true
+            }
+            
+            return false
         }
-
-        // Суббота / Шаббат
-        if showJewishHolidays,
-           weekday == 7 {
-            return true
-        }
-        // Воскресенье
-        if (
-            !showJewishHolidays ||
-            showOrthodoxHolidays ||
-            showCatholicHolidays
-        ),
-           weekday == 1 {
-
-            return true
-        }
-
-        return false
-    }
-    private func openProfileIfNeeded() {
-        guard !hasCheckedProfileOnLaunch else {
-            return
-        }
-
-        hasCheckedProfileOnLaunch = true
-
-        let trimmedName = displayName.trimmingCharacters(
-            in: CharacterSet.whitespacesAndNewlines
-        )
-
-        if trimmedName.isEmpty {
-            showProfile = true
-        }
-    }
-    
-    @MainActor
-    private func preparePostcardForSharing(
-        imageName: String,
-        phrase: String
-    ) {
-        let renderer = PostcardRenderer()
-
-        guard let finalImage = renderer.render(
-            input: PostcardRenderInput(
-                imageName: imageName,
-                baseText: phrase,
-                customText: customMessage
+        func openProfileIfNeeded() {
+            guard !hasCheckedProfileOnLaunch else {
+                return
+            }
+            
+            hasCheckedProfileOnLaunch = true
+            
+            let trimmedName = displayName.trimmingCharacters(
+                in: CharacterSet.whitespacesAndNewlines
             )
-        ) else {
-            print(
-                "Не удалось создать открытку: \(imageName)"
+            
+            if trimmedName.isEmpty {
+                showProfile = true
+            }
+        }
+        
+        @MainActor
+        func preparePostcardForSharing(
+            imageName: String,
+            phrase: String
+        ) {
+            let renderer = PostcardRenderer()
+            
+            guard let finalImage = renderer.render(
+                input: PostcardRenderInput(
+                    imageName: imageName,
+                    baseText: phrase,
+                    customText: customMessage
+                )
+            ) else {
+                print(
+                    "Не удалось создать открытку: \(imageName)"
+                )
+                return
+            }
+            
+            presentActivityViewController(
+                items: [
+                    finalImage
+                ]
             )
-            return
         }
-
-        presentActivityViewController(
-            items: [
-                finalImage
-            ]
-        )
-    }
-    @MainActor
-    private func presentActivityViewController(
-        items: [Any]
-    ) {
-        guard !items.isEmpty else {
-            return
-        }
-
-        guard let windowScene =
-            UIApplication.shared.connectedScenes
+        @MainActor
+         func presentActivityViewController(
+            items: [Any]
+        ) {
+            guard !items.isEmpty else {
+                return
+            }
+            
+            guard let windowScene =
+                    UIApplication.shared.connectedScenes
                 .compactMap({
                     $0 as? UIWindowScene
                 })
-                .first(where: {
-                    $0.activationState == .foregroundActive
-                })
-        else {
-            print("Не удалось найти активную сцену")
-            return
-        }
-
-        guard let window =
-            windowScene.windows.first(where: {
-                $0.isKeyWindow
-            })
-        else {
-            print("Не удалось найти активное окно")
-            return
-        }
-
-        guard let presenter =
-            topViewController(
-                from: window.rootViewController
-            )
-        else {
-            print("Не удалось найти контроллер")
-            return
-        }
-
-        let activityController =
+                    .first(where: {
+                        $0.activationState == .foregroundActive
+                    })
+            else {
+                print("Не удалось найти активную сцену")
+                return
+            }
+            
+            guard let window =
+                    windowScene.windows.first(where: {
+                        $0.isKeyWindow
+                    })
+            else {
+                print("Не удалось найти активное окно")
+                return
+            }
+            
+            guard let presenter =
+                    topViewController(
+                        from: window.rootViewController
+                    )
+            else {
+                print("Не удалось найти контроллер")
+                return
+            }
+            
+            let activityController =
             UIActivityViewController(
                 activityItems: items,
                 applicationActivities: nil
             )
-
-        if let popover =
-            activityController.popoverPresentationController {
-            popover.sourceView = presenter.view
-            popover.sourceRect = CGRect(
-                x: presenter.view.bounds.midX,
-                y: presenter.view.bounds.midY,
-                width: 1,
-                height: 1
-            )
-            popover.permittedArrowDirections = []
-        }
-
-        presenter.present(
-            activityController,
-            animated: true
-        )
-    }
-    private func topViewController(
-        from controller: UIViewController?
-    ) -> UIViewController? {
-        if let presented =
-            controller?.presentedViewController {
-            return topViewController(
-                from: presented
-            )
-        }
-
-        if let navigation =
-            controller as? UINavigationController {
-            return topViewController(
-                from: navigation.visibleViewController
-            )
-        }
-
-        if let tabBar =
-            controller as? UITabBarController {
-            return topViewController(
-                from: tabBar.selectedViewController
-            )
-        }
-
-        return controller
-    }
-    private func ordinaryDayIndex(
-        for date: Date,
-        month targetMonth: Int
-    ) -> Int? {
-
-        let calendar = Calendar.current
-
-        guard calendar.component(
-            .month,
-            from: date
-        ) == targetMonth else {
-            return nil
-        }
-
-        let year = calendar.component(
-            .year,
-            from: date
-        )
-
-        guard let monthStart =
-            calendar.date(
-                from: DateComponents(
-                    year: year,
-                    month: targetMonth,
-                    day: 1
+            
+            if let popover =
+                activityController.popoverPresentationController {
+                popover.sourceView = presenter.view
+                popover.sourceRect = CGRect(
+                    x: presenter.view.bounds.midX,
+                    y: presenter.view.bounds.midY,
+                    width: 1,
+                    height: 1
                 )
+                popover.permittedArrowDirections = []
+            }
+            
+            presenter.present(
+                activityController,
+                animated: true
             )
-        else {
-            return nil
         }
-
-        let today =
+        func topViewController(
+            from controller: UIViewController?
+        ) -> UIViewController? {
+            if let presented =
+                controller?.presentedViewController {
+                return topViewController(
+                    from: presented
+                )
+            }
+            
+            if let navigation =
+                controller as? UINavigationController {
+                return topViewController(
+                    from: navigation.visibleViewController
+                )
+            }
+            
+            if let tabBar =
+                controller as? UITabBarController {
+                return topViewController(
+                    from: tabBar.selectedViewController
+                )
+            }
+            
+            return controller
+        }
+        func ordinaryDayIndex(
+            for date: Date,
+            month targetMonth: Int
+        ) -> Int? {
+            
+            let calendar = Calendar.current
+            
+            guard calendar.component(
+                .month,
+                from: date
+            ) == targetMonth else {
+                return nil
+            }
+            
+            let year = calendar.component(
+                .year,
+                from: date
+            )
+            
+            guard let monthStart =
+                    calendar.date(
+                        from: DateComponents(
+                            year: year,
+                            month: targetMonth,
+                            day: 1
+                        )
+                    )
+            else {
+                return nil
+            }
+            
+            let today =
             calendar.startOfDay(
                 for: date
             )
-
-        var current =
+            
+            var current =
             calendar.startOfDay(
                 for: monthStart
             )
-
-        var ordinaryIndex = 0
-
-        while current <= today {
-
-            if !isPriorityPostcardDay(
-                current
-            ) {
-
-                if calendar.isDate(
-                    current,
-                    inSameDayAs: today
+            
+            var ordinaryIndex = 0
+            
+            while current <= today {
+                
+                if !isPriorityPostcardDay(
+                    current
                 ) {
-                    return ordinaryIndex
+                    
+                    if calendar.isDate(
+                        current,
+                        inSameDayAs: today
+                    ) {
+                        return ordinaryIndex
+                    }
+                    
+                    ordinaryIndex += 1
                 }
-
-                ordinaryIndex += 1
+                
+                guard let nextDay =
+                        calendar.date(
+                            byAdding: .day,
+                            value: 1,
+                            to: current
+                        )
+                else {
+                    break
+                }
+                
+                current = nextDay
             }
-
-            guard let nextDay =
-                calendar.date(
-                    byAdding: .day,
-                    value: 1,
-                    to: current
-                )
-            else {
-                break
-            }
-
-            current = nextDay
+            
+            return nil
         }
-
-        return nil
     }
-}

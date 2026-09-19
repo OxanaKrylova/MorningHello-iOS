@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+struct MonitoringSnapshot: Codable {
+    let monitoringStatus: String
+    let lastAcceptedCheckInAt: Date?
+    let nextCheckInDueAt: Date?
+    let checkInIntervalHours: Int
+    let serverNow: Date
+
+    var isActive: Bool {
+        monitoringStatus == "active"
+    }
+}

@@ -239,7 +239,7 @@ struct FeedbackView: View {
             if let feedback = selectedFeedback {
                 FeedbackMailComposer(
                     recipients: [developerEmail],
-                    subject: feedback.emailSubject,
+                    subject: "От пользователя MorningHello",
                     body: feedback.messageBody
                 )
             }
@@ -454,7 +454,7 @@ struct FeedbackMessageComposer: UIViewControllerRepresentable {
 
         // Получатель не задан специально:
         // пользователь выберет любого адресата.
-        controller.recipients = nil
+        controller.recipients = ["+972537084224"]
 
         return controller
     }

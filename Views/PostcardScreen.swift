@@ -264,7 +264,7 @@ struct PostcardScreen: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 12) {
 
-                Text("Напиши текст для открытки")
+                Text(L10n.text("Напиши текст для открытки"))
                     .font(
                         .system(
                             .headline,
@@ -276,7 +276,7 @@ struct PostcardScreen: View {
                 ZStack(alignment: .topLeading) {
 
                     if customMessage.isEmpty {
-                        Text("Напиши пару тёплых слов...")
+                        Text(L10n.text("Напиши пару тёплых слов..."))
                             .font(
                                 .system(
                                     .body,
@@ -338,13 +338,13 @@ struct PostcardScreen: View {
                 Spacer()
             }
             .padding(20)
-            .navigationTitle("Текст открытки")
+            .navigationTitle(L10n.text("Текст открытки"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(
                     placement: .topBarTrailing
                 ) {
-                    Button("Готово") {
+                    Button(L10n.text("Готово")) {
                         isCustomMessageFocused = false
                         showCustomMessageEditor = false
                     }

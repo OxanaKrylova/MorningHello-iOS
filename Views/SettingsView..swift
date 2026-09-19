@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+private let titleColor = AppAdaptiveColor.text
+private let textColor = AppAdaptiveColor.text
+
 struct SettingsView: View {
 
     @Environment(\.dismiss)
@@ -199,38 +202,42 @@ struct SettingsView: View {
     // MARK: - Язык
 
     private var languageSection: some View {
-        VStack(
-            alignment: .leading,
-            spacing: 12
-        ) {
-            sectionTitle("Язык")
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 16) {
+                Label(
+                    L10n.text("Язык приложения"),
+                    systemImage: "globe"
+                )
+                .foregroundStyle(textColor)
 
-            VStack(alignment: .leading, spacing: 8) {
-                Picker(selection: $selectedLanguageCode) {
+                Spacer(minLength: 8)
+
+                Picker(
+                    L10n.text("Язык приложения"),
+                    selection: $selectedLanguageCode
+                ) {
                     Text(verbatim: "Русский")
                         .tag(AppLanguage.russian.rawValue)
+
                     Text(verbatim: "English")
                         .tag(AppLanguage.englishUS.rawValue)
-                } label: {
-                    Label(
-                        L10n.text("Язык приложения"),
-                        systemImage: "globe"
-                    )
-                    .foregroundStyle(textColor)
                 }
+                .labelsHidden()
                 .pickerStyle(.menu)
                 .tint(titleColor)
-
-                Text(
-                    L10n.text(
-                        "Выберите язык интерфейса приложения. Мониторинг будет вестись на выбранном языке."
-                    )
-                )
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: true, vertical: false)
+                .frame(minWidth: 120, alignment: .trailing)
             }
-            .settingsCard()
+
+            Text(
+                L10n.text(
+                    "Выберите язык интерфейса приложения. Мониторинг будет вестись на выбранном языке."
+                )
+            )
+            .font(.footnote)
+            .foregroundStyle(.secondary)
         }
+        .settingsCard()
     }
 
     // MARK: - Связь

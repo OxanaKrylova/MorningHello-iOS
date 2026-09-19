@@ -734,7 +734,7 @@ private struct BirthdayCustomMessageView: View {
         NavigationStack {
             VStack(spacing: 16) {
 
-                Text("Добавьте своё пожелание")
+                Text(L10n.text("Добавьте своё пожелание"))
                     .font(
                         .system(
                             .title3,
@@ -746,9 +746,7 @@ private struct BirthdayCustomMessageView: View {
                 ZStack(alignment: .topLeading) {
 
                     if text.isEmpty {
-                        Text(
-                            "Напишите несколько тёплых слов..."
-                        )
+                        Text(L10n.text("Напишите несколько тёплых слов..."))
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 14)
@@ -804,7 +802,7 @@ private struct BirthdayCustomMessageView: View {
                 ToolbarItem(
                     placement: .topBarTrailing
                 ) {
-                    Button("Готово") {
+                    Button(L10n.text("Готово")) {
                         finishEditing()
                     }
                     .fontWeight(.semibold)

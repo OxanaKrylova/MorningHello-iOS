@@ -257,7 +257,7 @@
 "1 апреля — День смеха" = "April 1 – April Fools' Day";
 "12 апреля — День космонавтики" = "April 12 – International Day of Human Space Flight";
 "1 мая — Праздник Весны и Труда" = "May 1 – International Workers' Day";
-"9 мая — День Победы" = "May 9 – Victory Day";
+"9 мая — День Победы" = "May 8 – Victory European Day";
 "1 июня — День защиты детей" = "June 1 – International Children's Day";
 "4 июля — День независимости США" = "July 4 – U.S. Independence Day";
 "14 июля — День взятия Бастилии" = "July 14 – Bastille Day";
@@ -680,3 +680,26 @@
 "Вариант 4" = "Option 4";
 "Отклонён" = "Declined";
 "Доступ отозван" = "Access Revoked";
+"Протестантские" = "Protestant";
+"Протестантизм" = "Protestant Christianity";
+"При выборе протестантских, католических или православных праздников по воскресеньям будет показана воскресная открытка." = "When Protestant, Catholic, or Orthodox holidays are selected, a Sunday card will be shown on Sundays.";
+
+"25 декабря – Рождество Христово" = "December 25 – Christmas";
+"6 января – Богоявление" = "January 6 – Epiphany";
+"16 января – День свободы вероисповедания" = "January 16 – Religious Freedom Day";
+"Страстная пятница – за два дня до Пасхи" = "Good Friday – two days before Easter";
+"Пасхальное воскресенье" = "Easter Sunday";
+"Вознесение Господне – через 39 дней после Пасхи" = "Ascension Day – 39 days after Easter";
+"Пятидесятница – через 49 дней после Пасхи" = "Pentecost – 49 days after Easter";
+"Пепельная среда – за 46 дней до Пасхи" = "Ash Wednesday – 46 days before Easter";
+"Пальмовое воскресенье – за неделю до Пасхи" = "Palm Sunday – one week before Easter";
+"Великий четверг – за три дня до Пасхи" = "Maundy Thursday – three days before Easter";
+"Преображенское воскресенье – перед Пепельной средой" = "Transfiguration Sunday – before Ash Wednesday";
+"День благодарения – четвёртый четверг ноября" = "Thanksgiving – fourth Thursday in November";
+"Воскресенье Реформации – последнее воскресенье октября" = "Reformation Sunday – last Sunday in October";
+"День матери – второе воскресенье мая" = "Mother's Day – second Sunday in May";
+"День отца – третье воскресенье июня" = "Father's Day – third Sunday in June";
+"Национальный день молитвы – первый четверг мая" = "National Day of Prayer – first Thursday in May";
+"31 октября – День Реформации" = "October 31 – Reformation Day";
+"1 ноября – День всех святых" = "November 1 – All Saints' Day";
+"Если ты не нажмёшь кнопку в течение %@, мы сообщим близким." = "If you don’t tap the button within %@, we’ll notify your loved ones.";

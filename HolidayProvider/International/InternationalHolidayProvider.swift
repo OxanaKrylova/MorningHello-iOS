@@ -331,8 +331,30 @@ struct InternationalHolidayProvider {
             )
         }
 
-        // День Победы.
-        if day == 9 && month == 5 {
+        // 8 мая — Victory in Europe Day.
+        // Показывается только при английском языке приложения.
+        if month == 5,
+           day == 8,
+           AppLanguage.selected == .englishUS {
+
+            return HolidayContent(
+                images: [
+                    "Holiday_VictoryEurope",
+                    "Holiday_V-E_Day"
+                ],
+                phrases: [
+                    "Today we remember the end of the war in Europe and honor all who helped bring peace.",
+                    "May the memory of this day remind us to value peace and stand together."
+                ],
+                category: "Нейтральный"
+            )
+        }
+        
+        // 9 мая — День Победы.
+        // Показывается только при русском языке приложения.
+        if month == 5,
+           day == 9,
+           AppLanguage.selected == .russian {
 
             return HolidayContent(
                 images: [
@@ -346,6 +368,24 @@ struct InternationalHolidayProvider {
             )
         }
 
+        // 2 сентября — Victory over Japan Day.
+        // Показывается только при английском языке приложения.
+        if month == 9,
+           day == 2,
+           AppLanguage.selected == .englishUS {
+
+            return HolidayContent(
+                images: [
+                    "Holiday_VictoryJapan"
+                ],
+                phrases: [
+                    "Today we remember the end of World War II and honor those who served and sacrificed.",
+                    "May this day inspire gratitude, remembrance, and a lasting hope for peace."
+                ],
+                category: "Нейтральный"
+            )
+        }
+        
         // День защиты детей.
         if day == 1 && month == 6 {
 
