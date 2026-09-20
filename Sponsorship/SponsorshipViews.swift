@@ -538,8 +538,7 @@ struct SponsorDashboardView: View {
             )
             informationRow(
                 "Мониторинг",
-                value: monitoringText(sponsorship.monitoringStatus)
-            )
+                value: monitoringText(sponsorship.monitoringStatus)            )
 
             if let expiresAt = sponsorship.expiresAt {
                 informationRow(
@@ -656,7 +655,7 @@ struct SponsorDashboardView: View {
         }
     }
 
-    private func monitoringText(_ status: MonitoringStatus) -> String {
+    private func monitoringText(_ status: SponsorshipMonitoringStatus) -> String {
         switch status {
         case .inactive: "Не подключён"
         case .awaitingContacts: "Ожидаются контакты"

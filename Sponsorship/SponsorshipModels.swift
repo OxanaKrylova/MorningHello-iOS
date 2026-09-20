@@ -50,7 +50,7 @@ enum SponsorshipStatus: String, Codable {
     case declined
 }
 
-enum MonitoringStatus: String, Codable {
+enum SponsorshipMonitoringStatus: String, Codable {
     case inactive
     case awaitingContacts = "awaiting_contacts"
     case awaitingFirstCheckIn = "awaiting_first_check_in"
@@ -108,7 +108,7 @@ struct Sponsorship: Codable, Equatable, Identifiable {
     let purchaseStatus: SubscriptionPurchaseStatus?
     let expiresAt: Date?
     let autoRenewEnabled: Bool?
-    let monitoringStatus: MonitoringStatus
+    let monitoringStatus: SponsorshipMonitoringStatus
     let acceptedAt: Date?
     let activatedAt: Date?
     let endedAt: Date?
@@ -127,7 +127,7 @@ struct ServiceEntitlement: Codable, Equatable {
     let status: ServiceEntitlementStatus
     let validUntil: Date?
     let sponsorshipStatus: SponsorshipStatus?
-    let monitoringStatus: MonitoringStatus
+    let monitoringStatus: SponsorshipMonitoringStatus
 
     var grantsAccess: Bool {
         guard status.grantsAccess else {

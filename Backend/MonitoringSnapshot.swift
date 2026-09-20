@@ -28,36 +28,21 @@ struct MonitoringSnapshot: Codable {
         }
 
         return status == .active ||
-            status == .overdue
+               status == .overdue
     }
 
+    // Временная совместимость с HeartbeatAPIClient.
     var isActive: Bool {
         status == .active
     }
 
-    // Временная совместимость со старым ContentView.
-    // Удалим после переделки интерфейса таймера.
-
+    // Временная совместимость со старым кодом.
     var lastAcceptedCheckInAt: Date? {
         lastCheckInAt
     }
 
+    // Временная совместимость со старым ContentView.
     var monitoringStatus: String {
-        switch status {
-        case .active:
-            return "active"
-
-        case .overdue:
-            return "overdue"
-
-        case .needsCheckIn:
-            return "needs_check_in"
-
-        case .paused:
-            return "stopped"
-
-        case .subscriptionEnded:
-            return "subscription_expired"
-        }
+        status.rawValue
     }
 }

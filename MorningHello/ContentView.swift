@@ -1356,12 +1356,12 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 }
                 .frame(maxWidth: 340)
 
+                Spacer(minLength: 12)
+
                 if hasEmergencyContacts {
                     monitoringTechnicalStatus
                         .frame(maxWidth: 340)
                 }
-
-                Spacer()
             }
             .frame(
                 maxWidth: .infinity,
@@ -1419,6 +1419,18 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 : "До следующей отметки"
         }
 
+    func overdueContactsWarning(
+        isOverdue: Bool
+    ) -> String? {
+        guard isOverdue else {
+            return nil
+        }
+
+        return usesEnglishMonitoringText
+            ? "Your emergency contacts may be notified"
+            : "Тревожные контакты могут получить уведомление"
+    }
+    
         func deadlineHasPassed(
             in snapshot: MonitoringSnapshot,
             at localDate: Date = Date()
@@ -1472,21 +1484,6 @@ This is an automated MorningHello message. If there is an immediate threat to li
             )
         }
 
-        func formattedDueDate(
-            _ dueAt: Date
-        ) -> String {
-            dueAt.formatted(
-                Date.FormatStyle()
-                    .day()
-                    .month(.wide)
-                    .hour()
-                    .minute()
-                    .locale(
-                        AppLanguage.selected.locale
-                    )
-            )
-        }
-
         @ViewBuilder
         func countdownCard(now: Date) -> some View {
             VStack(spacing: 8) {
@@ -1500,9 +1497,9 @@ This is an automated MorningHello message. If there is an immediate threat to li
                             let remainingSeconds = dueAt
                                 .timeIntervalSince(serverNow)
                             let isOverdue =
-                                snapshot.status == .overdue ||
-                                remainingSeconds <= 0
-
+                            snapshot.status == .overdue ||
+                            remainingSeconds <= 0
+                            
                             Text(
                                 countdownHeading(
                                     isOverdue: isOverdue
@@ -1518,7 +1515,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                             .foregroundStyle(
                                 AppAdaptiveColor.text
                             )
-
+                            
                             Text(
                                 countdownValueText(
                                     seconds: remainingSeconds
@@ -1541,23 +1538,29 @@ This is an automated MorningHello message. If there is an immediate threat to li
                                     date: now
                                 )
                             )
-
-                            Text(
-                                usesEnglishMonitoringText
-                                    ? "Due by \(formattedDueDate(dueAt))"
-                                    : "Срок – \(formattedDueDate(dueAt))"
-                            )
-                            .font(
-                                .system(
-                                    .footnote,
-                                    design: .rounded
-                                )
-                            )
-                            .foregroundStyle(
-                                AppAdaptiveColor.secondaryText
-                            )
+                            
+                            if let warning = overdueContactsWarning(
+                                isOverdue: isOverdue
+                            ) {
+                                Text(warning)
+                                    .font(
+                                        .system(
+                                            .subheadline,
+                                            design: .rounded
+                                        )
+                                        .weight(.semibold)
+                                    )
+                                    .foregroundStyle(
+                                        Color(
+                                            red: 0.88,
+                                            green: 0.22,
+                                            blue: 0.20
+                                        )
+                                    )
+                                    .multilineTextAlignment(.center)
+                                    .padding(.top, 2)
+                            }
                         }
-
                     case .needsCheckIn:
                         Text(
                             usesEnglishMonitoringText
@@ -2162,7 +2165,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 }
             )
             .confirmationDialog(
-                "Как отправить открытку?",
+                L10n.text("Как отправить открытку?"),
                 isPresented: $showContactForWhatsApp,
                 titleVisibility: .visible
             ) {
@@ -2181,7 +2184,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     }
                 }
 
-                Button("Выбрать мессенджер") {
+                Button(L10n.text("Выбрать мессенджер")) {
                     DispatchQueue.main.asyncAfter(
                         deadline: .now() + 0.5
                     ) {
@@ -2192,7 +2195,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     }
                 }
 
-                Button("Отмена", role: .cancel) {
+                Button(L10n.text("Отмена"), role: .cancel) {
                 }
             }
 
@@ -2348,15 +2351,15 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         ),
                         isPresented: $showEmergencyMessageAlert
                     ) {
-                        Button("Открыть WhatsApp") {
+                        Button(L10n.text("Открыть WhatsApp")) {
                             showEmergencyContactSelection = true
                         }
 
-                        Button("Открыть Сообщения") {
+                        Button(L10n.text("Открыть Сообщения")) {
                             showMessageComposer = true
                         }
 
-                        Button("Отмена", role: .cancel) {
+                        Button(L10n.text("Отмена"), role: .cancel) {
                         }
                     } message: {
                         Text(
@@ -2366,7 +2369,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         )
                     }
                     .confirmationDialog(
-                        "Кому открыть сообщение?",
+                        L10n.text("Кому открыть сообщение?"),
                         isPresented: $showEmergencyContactSelection
                     ) {
                         ForEach(
@@ -2382,7 +2385,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                             }
                         }
 
-                        Button("Отмена", role: .cancel) {
+                        Button(L10n.text("Отмена"), role: .cancel) {
                         }
                     }
                 }
