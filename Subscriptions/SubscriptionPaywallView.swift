@@ -1,3 +1,11 @@
+//
+//  SubscriptionPaywallView.swift
+//  MorningHello
+//
+//  Created by Oxana Krylova on 21/08/2026.
+//
+
+
 import StoreKit
 import SwiftUI
 
@@ -68,7 +76,28 @@ struct SubscriptionPaywallView: View {
     @State private var showProfile = false
     @State private var showContacts = false
     @State private var isPurchasing = false
+    @State private var isRestoring = false
     @State private var purchaseMessage: String?
+
+    private var isEnglish: Bool {
+        selectedLanguageCode ==
+            AppLanguage.englishUS.rawValue
+    }
+
+    private var termsOfUseURL: URL {
+        URL(
+            string:
+                "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+        )!
+    }
+
+    private var privacyPolicyURL: URL {
+        URL(
+            string: isEnglish
+                ? "https://www.morninghelloapp.com/privacy-policy"
+                : "https://www.morninghelloapp.com/ru/privacy-policy"
+        )!
+    }
 
     var body: some View {
         NavigationStack {
@@ -224,7 +253,9 @@ struct SubscriptionPaywallView: View {
             }
             .buttonStyle(.borderedProminent)
             .tint(Color(uiColor: .systemBrown))
-            .disabled(isPurchasing)
+            .disabled(isPurchasing || isRestoring)
+
+            legalAndRestoreSection
 
             if subscriptionManager.products.isEmpty,
                subscriptionManager.lastError != nil {
@@ -306,12 +337,139 @@ struct SubscriptionPaywallView: View {
         .accessibilityValue(selectedPlan == plan ? "Выбрано" : "")
     }
 
+    private var legalAndRestoreSection: some View {
+        VStack(spacing: 10) {
+            Button {
+                Task {
+                    await restorePurchases()
+                }
+            } label: {
+                HStack(spacing: 7) {
+                    if isRestoring {
+                        ProgressView()
+                            .controlSize(.small)
+                    }
+
+                    Text(
+                        isRestoring
+                            ? localizedText(
+                                ru: "Восстанавливаем покупки…",
+                                en: "Restoring Purchases…"
+                            )
+                            : localizedText(
+                                ru: "Восстановить покупки",
+                                en: "Restore Purchases"
+                            )
+                    )
+                }
+            }
+            .buttonStyle(.plain)
+            .fontWeight(.semibold)
+            .foregroundStyle(
+                Color(uiColor: .systemBrown)
+            )
+            .disabled(isRestoring || isPurchasing)
+
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 8) {
+                    termsOfUseLink
+
+                    Text("•")
+                        .foregroundStyle(.secondary)
+
+                    privacyPolicyLink
+                }
+                .fixedSize(
+                    horizontal: true,
+                    vertical: false
+                )
+
+                VStack(spacing: 6) {
+                    termsOfUseLink
+                    privacyPolicyLink
+                }
+            }
+            .font(
+                .system(
+                    .footnote,
+                    design: .rounded
+                )
+            )
+            .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 2)
+    }
+
+    private var termsOfUseLink: some View {
+        Link(
+            localizedText(
+                ru: "Условия использования",
+                en: "Terms of Use"
+            ),
+            destination: termsOfUseURL
+        )
+    }
+
+    private var privacyPolicyLink: some View {
+        Link(
+            localizedText(
+                ru: "Политика конфиденциальности",
+                en: "Privacy Policy"
+            ),
+            destination: privacyPolicyURL
+        )
+    }
+
     private var selectedProduct: Product? {
         product(for: selectedPlan)
     }
 
     private func product(for plan: Plan) -> Product? {
         subscriptionManager.products.first { $0.id == plan.rawValue }
+    }
+
+    private func localizedText(
+        ru: String,
+        en: String
+    ) -> String {
+        isEnglish ? en : ru
+    }
+
+    @MainActor
+    private func restorePurchases() async {
+        guard !isRestoring else {
+            return
+        }
+
+        isRestoring = true
+
+        defer {
+            isRestoring = false
+        }
+
+        do {
+            try await AppStore.sync()
+            await subscriptionManager.refreshAndSync()
+
+            if subscriptionManager.hasActiveSubscription {
+                purchaseMessage = localizedText(
+                    ru: "Покупки восстановлены. Подписка активна.",
+                    en: "Purchases restored. Your subscription is active."
+                )
+                onPurchaseCompleted?()
+            } else {
+                purchaseMessage = localizedText(
+                    ru: "Активная подписка для этого Apple ID не найдена.",
+                    en: "No active subscription was found for this Apple Account."
+                )
+            }
+        } catch {
+            purchaseMessage = localizedText(
+                ru: "Не удалось восстановить покупки: \(error.localizedDescription)",
+                en: "Could not restore purchases: \(error.localizedDescription)"
+            )
+        }
     }
 
     @MainActor

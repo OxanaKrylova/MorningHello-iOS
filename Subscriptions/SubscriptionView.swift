@@ -18,6 +18,7 @@ struct SubscriptionView: View {
 
     @State private var showManageSubscriptions = false
     @State private var showSubscriptionPlans = false
+    @State private var showSubscriptionPlansInfo = false
     @State private var isRestoring = false
     @State private var subscriptionMessage: String?
 
@@ -114,6 +115,11 @@ struct SubscriptionView: View {
         .manageSubscriptionsSheet(
             isPresented: $showManageSubscriptions
         )
+        .sheet(
+            isPresented: $showSubscriptionPlansInfo
+        ) {
+            SubscriptionPlansInfoView()
+        }
         .sheet(
             isPresented: $showSubscriptionPlans,
             onDismiss: refreshAfterPlanSelection
@@ -303,6 +309,22 @@ struct SubscriptionView: View {
                     SubscriptionActionButtonStyle()
                 )
             }
+
+            Button {
+                showSubscriptionPlansInfo = true
+            } label: {
+                actionButtonLabel(
+                    title: AppLanguage.selected == .englishUS
+                        ? "Plan Details"
+                        : "Подробно о тарифах",
+                    systemImage: "list.bullet.rectangle.portrait",
+                    imageColor: .orange,
+                    showsChevron: true
+                )
+            }
+            .buttonStyle(
+                SubscriptionActionButtonStyle()
+            )
 
             Button {
                 Task {

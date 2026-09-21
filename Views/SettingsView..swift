@@ -26,7 +26,7 @@ struct SettingsView: View {
     @State private var showHolidaySettings = false
     @State private var showSubscription = false
     @State private var showFeedback = false
-
+    
     private let backgroundColor = AppAdaptiveColor.warmFormBackground
     private let titleColor = AppAdaptiveColor.text
     private let textColor = AppAdaptiveColor.text

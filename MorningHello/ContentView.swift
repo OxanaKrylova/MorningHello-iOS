@@ -1360,7 +1360,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
 
                 if hasEmergencyContacts {
                     monitoringTechnicalStatus
-                        .frame(maxWidth: 340)
+                        .frame(maxWidth: 286)
                 }
             }
             .frame(
@@ -1419,18 +1419,6 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 : "До следующей отметки"
         }
 
-    func overdueContactsWarning(
-        isOverdue: Bool
-    ) -> String? {
-        guard isOverdue else {
-            return nil
-        }
-
-        return usesEnglishMonitoringText
-            ? "Your emergency contacts may be notified"
-            : "Тревожные контакты могут получить уведомление"
-    }
-    
         func deadlineHasPassed(
             in snapshot: MonitoringSnapshot,
             at localDate: Date = Date()
@@ -1497,9 +1485,9 @@ This is an automated MorningHello message. If there is an immediate threat to li
                             let remainingSeconds = dueAt
                                 .timeIntervalSince(serverNow)
                             let isOverdue =
-                            snapshot.status == .overdue ||
-                            remainingSeconds <= 0
-                            
+                                snapshot.status == .overdue ||
+                                remainingSeconds <= 0
+
                             Text(
                                 countdownHeading(
                                     isOverdue: isOverdue
@@ -1515,7 +1503,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                             .foregroundStyle(
                                 AppAdaptiveColor.text
                             )
-                            
+
                             Text(
                                 countdownValueText(
                                     seconds: remainingSeconds
@@ -1538,29 +1526,9 @@ This is an automated MorningHello message. If there is an immediate threat to li
                                     date: now
                                 )
                             )
-                            
-                            if let warning = overdueContactsWarning(
-                                isOverdue: isOverdue
-                            ) {
-                                Text(warning)
-                                    .font(
-                                        .system(
-                                            .subheadline,
-                                            design: .rounded
-                                        )
-                                        .weight(.semibold)
-                                    )
-                                    .foregroundStyle(
-                                        Color(
-                                            red: 0.88,
-                                            green: 0.22,
-                                            blue: 0.20
-                                        )
-                                    )
-                                    .multilineTextAlignment(.center)
-                                    .padding(.top, 2)
-                            }
+
                         }
+
                     case .needsCheckIn:
                         Text(
                             usesEnglishMonitoringText
@@ -1789,12 +1757,12 @@ This is an automated MorningHello message. If there is an immediate threat to li
             )
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
-            .padding(.horizontal, 14)
-            .padding(.vertical, 9)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 7)
             .background(
-                AppAdaptiveColor.warmCardBackground.opacity(0.72),
+                AppAdaptiveColor.warmCardBackground.opacity(0.62),
                 in: RoundedRectangle(
-                    cornerRadius: 16,
+                    cornerRadius: 14,
                     style: .continuous
                 )
             )

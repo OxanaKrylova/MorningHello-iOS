@@ -60,6 +60,9 @@ struct ProfileView: View {
     
     @State
     private var showRequiredFieldAlert = false
+
+    @State
+    private var showCountrySelection = false
     
     // MARK: Сохранённые данные
     
@@ -74,6 +77,9 @@ struct ProfileView: View {
     
     @AppStorage("profile_salutation")
     private var savedSalutation = ""
+
+    @AppStorage("profile_country_code")
+    private var countryCode = ""
     
     // MARK: Временные значения полей даты
     
@@ -95,10 +101,33 @@ struct ProfileView: View {
     private var isBirthdayComplete: Bool {
         birthDay > 0 && birthMonth > 0
     }
+
+    private var selectedCountryName: String {
+        guard !countryCode.isEmpty else {
+            return ""
+        }
+
+        return AppLanguage.selected.locale
+            .localizedString(
+                forRegionCode: countryCode
+            ) ?? countryCode
+    }
+
+    private var isEnglishProfile: Bool {
+        AppLanguage.selected == .englishUS
+    }
+
+    private func profileText(
+        ru: String,
+        en: String
+    ) -> String {
+        isEnglishProfile ? en : ru
+    }
     
     private var canCloseProfile: Bool {
         !trimmedName.isEmpty &&
         !savedSalutation.isEmpty &&
+        !countryCode.isEmpty &&
         birthDay > 0 &&
         birthMonth > 0 &&
         checkInIntervalHours > 0 &&
@@ -119,10 +148,12 @@ struct ProfileView: View {
                         profileHeader
                         
                         nameSection
-                        
-                        birthdaySection
-                        
+
                         checkInIntervalSection
+
+                        countrySection
+
+                        birthdaySection
                         
                         if SponsorshipFeatureConfiguration.isEnabled {
                             sponsorshipSection
@@ -154,6 +185,13 @@ struct ProfileView: View {
             loadBirthdayFields()
         }
         .sheet(
+            isPresented: $showCountrySelection
+        ) {
+            CountrySelectionView(
+                selectedCode: $countryCode
+            )
+        }
+        .sheet(
             isPresented: $showFeedback
         ) {
             FeedbackView()
@@ -169,7 +207,10 @@ struct ProfileView: View {
             }
         } message: {
             Text(
-                "Пожалуйста, заполните имя, форму обращения, день и месяц рождения и выберите интервал тревожного оповещения."
+                profileText(
+                    ru: "Пожалуйста, заполните имя, форму обращения, страну проживания, день и месяц рождения и выберите интервал тревожного оповещения.",
+                    en: "Please enter your name, salutation, country of residence, day and month of birth, and select a monitoring interval."
+                )
             )
         }
     }
@@ -472,6 +513,145 @@ struct ProfileView: View {
                     newValue == 72 {
                     checkInIntervalConfirmed = true
                 }
+            }
+        }
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+        .profileCard()
+    }
+
+    // MARK: - Страна проживания
+
+    private var countrySection: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 12
+        ) {
+            Label {
+                Text(
+                    profileText(
+                        ru: "Страна проживания",
+                        en: "Country of residence"
+                    )
+                )
+            } icon: {
+                Image(systemName: "globe")
+                    .foregroundColor(.orange)
+            }
+            .font(
+                .system(
+                    .title3,
+                    design: .rounded
+                )
+                .weight(.semibold)
+            )
+            .foregroundColor(AppAdaptiveColor.text)
+
+            Text(
+                profileText(
+                    ru: "Выберите страну, в которой вы постоянно проживаете.",
+                    en: "Select the country where you currently live."
+                )
+            )
+            .font(
+                .system(
+                    .caption,
+                    design: .rounded
+                )
+            )
+            .foregroundColor(
+                AppAdaptiveColor.secondaryText
+            )
+
+            Button {
+                focusedField = nil
+                showCountrySelection = true
+            } label: {
+                HStack(spacing: 12) {
+                    Text(
+                        countryCode.isEmpty
+                            ? profileText(
+                                ru: "Выберите страну",
+                                en: "Select a country"
+                            )
+                            : selectedCountryName
+                    )
+                    .font(
+                        .system(
+                            .body,
+                            design: .rounded
+                        )
+                        .weight(.semibold)
+                    )
+                    .foregroundColor(
+                        countryCode.isEmpty
+                            ? AppAdaptiveColor.secondaryText
+                            : AppAdaptiveColor.text
+                    )
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .font(
+                            .system(
+                                size: 15,
+                                weight: .semibold
+                            )
+                        )
+                        .foregroundColor(
+                            AppAdaptiveColor.secondaryText
+                        )
+                }
+                .padding(.horizontal, 16)
+                .frame(height: 52)
+                .background(
+                    AppAdaptiveColor.warmFormBackground
+                )
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: 16,
+                        style: .continuous
+                    )
+                )
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+
+            if countryCode.isEmpty {
+                Label(
+                    profileText(
+                        ru: "Выберите страну проживания",
+                        en: "Select your country of residence"
+                    ),
+                    systemImage:
+                        "exclamationmark.circle.fill"
+                )
+                .font(
+                    .system(
+                        .caption,
+                        design: .rounded
+                    )
+                )
+                .foregroundColor(.red.opacity(0.75))
+            } else {
+                Label(
+                    profileText(
+                        ru: "Страна сохранена",
+                        en: "Country saved"
+                    ),
+                    systemImage: "checkmark.circle.fill"
+                )
+                .font(
+                    .system(
+                        .caption,
+                        design: .rounded
+                    )
+                )
+                .foregroundColor(.green)
             }
         }
         .frame(
@@ -852,5 +1032,146 @@ struct ProfileView: View {
         let text: String
         let icon: String
         let color: Color
+    }
+
+    private struct ProfileCountry: Identifiable,
+        Hashable {
+
+        let code: String
+        let name: String
+
+        var id: String {
+            code
+        }
+    }
+
+    private struct CountrySelectionView: View {
+
+        @Environment(\.dismiss)
+        private var dismiss
+
+        @Binding var selectedCode: String
+
+        @State private var searchText = ""
+
+        private var isEnglish: Bool {
+            AppLanguage.selected == .englishUS
+        }
+
+        private var countries: [ProfileCountry] {
+            let locale = AppLanguage.selected.locale
+
+            return Locale.Region.isoRegions
+                .compactMap { region in
+                    let code = region.identifier
+
+                    guard
+                        code.count == 2,
+                        let name = locale.localizedString(
+                            forRegionCode: code
+                        )
+                    else {
+                        return nil
+                    }
+
+                    return ProfileCountry(
+                        code: code,
+                        name: name
+                    )
+                }
+                .sorted {
+                    $0.name.localizedStandardCompare(
+                        $1.name
+                    ) == .orderedAscending
+                }
+        }
+
+        private var filteredCountries:
+            [ProfileCountry] {
+
+            let query = searchText
+                .trimmingCharacters(
+                    in: .whitespacesAndNewlines
+                )
+
+            guard !query.isEmpty else {
+                return countries
+            }
+
+            return countries.filter { country in
+                country.name.localizedCaseInsensitiveContains(
+                    query
+                ) ||
+                country.code.localizedCaseInsensitiveContains(
+                    query
+                )
+            }
+        }
+
+        var body: some View {
+            NavigationStack {
+                List(filteredCountries) { country in
+                    Button {
+                        selectedCode = country.code
+                        dismiss()
+                    } label: {
+                        HStack(spacing: 12) {
+                            Text(country.name)
+                                .foregroundColor(
+                                    AppAdaptiveColor.text
+                                )
+
+                            Spacer()
+
+                            if selectedCode == country.code {
+                                Image(
+                                    systemName: "checkmark"
+                                )
+                                .fontWeight(.semibold)
+                                .foregroundColor(.orange)
+                            }
+                        }
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                }
+                .scrollContentBackground(.hidden)
+                .background(
+                    AppAdaptiveColor.warmFormBackground
+                )
+                .navigationTitle(
+                    isEnglish
+                        ? "Country of residence"
+                        : "Страна проживания"
+                )
+                .navigationBarTitleDisplayMode(.inline)
+                .searchable(
+                    text: $searchText,
+                    prompt: isEnglish
+                        ? "Search country"
+                        : "Найти страну"
+                )
+                .toolbar {
+                    ToolbarItem(
+                        placement: .topBarTrailing
+                    ) {
+                        Button(
+                            isEnglish
+                                ? "Cancel"
+                                : "Отмена"
+                        ) {
+                            dismiss()
+                        }
+                    }
+                }
+                .overlay {
+                    if filteredCountries.isEmpty {
+                        ContentUnavailableView.search(
+                            text: searchText
+                        )
+                    }
+                }
+            }
+        }
     }
     
