@@ -42,7 +42,7 @@ struct MorningHelloAccountGateView: View {
                 }
 
                 if let errorMessage = session.errorMessage {
-                    Text(L10n.text(errorMessage))
+                    Text(errorMessage)
                         .font(.footnote)
                         .foregroundStyle(.red)
                         .multilineTextAlignment(.center)
@@ -106,10 +106,10 @@ struct MorningHelloUsageModeView: View {
                     .frame(width: 48)
 
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(L10n.text(title))
+                    Text(title)
                         .font(.system(.title3, design: .rounded).weight(.bold))
 
-                    Text(L10n.text(subtitle))
+                    Text(subtitle)
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.leading)
@@ -203,7 +203,7 @@ struct CreateSponsorshipInvitationView: View {
 
                 if let errorMessage {
                     Section {
-                        Text(L10n.text(errorMessage))
+                        Text(errorMessage)
                             .foregroundStyle(.red)
                     }
                 }
@@ -279,12 +279,7 @@ struct SponsorshipInvitationAcceptanceView: View {
                         Text("Приглашение в MorningHello")
                             .font(.system(size: 30, weight: .bold, design: .rounded))
 
-                        Text(
-                            L10n.format(
-                                "%@ предлагает оплатить для вас MorningHello.",
-                                preview.sponsorName
-                            )
-                        )
+                        Text("\(preview.sponsorName) предлагает оплатить для вас MorningHello.")
                         .font(.system(.title3, design: .rounded).weight(.semibold))
                         .multilineTextAlignment(.center)
 
@@ -305,7 +300,7 @@ struct SponsorshipInvitationAcceptanceView: View {
                     }
 
                     if let errorMessage {
-                        Text(L10n.text(errorMessage))
+                        Text(errorMessage)
                             .foregroundStyle(.red)
                             .multilineTextAlignment(.center)
                     }
@@ -405,14 +400,14 @@ struct SponsorDashboardView: View {
                         }
 
                         if let errorMessage = store.errorMessage {
-                            Text(L10n.text(errorMessage))
+                            Text(errorMessage)
                                 .font(.footnote)
                                 .foregroundStyle(.red)
                                 .multilineTextAlignment(.center)
                         }
 
                         if let actionError {
-                            Text(L10n.text(actionError))
+                            Text(actionError)
                                 .font(.footnote)
                                 .foregroundStyle(.red)
                                 .multilineTextAlignment(.center)
@@ -612,7 +607,7 @@ struct SponsorDashboardView: View {
     }
 
     private func statusBadge(_ status: SponsorshipStatus) -> some View {
-        Text(L10n.text(sponsorshipStatusText(status)))
+        Text(sponsorshipStatusText(status))
             .font(.caption.weight(.semibold))
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
@@ -625,9 +620,9 @@ struct SponsorDashboardView: View {
 
     private func informationRow(_ title: String, value: String) -> some View {
         HStack(alignment: .top) {
-            Text(L10n.text(title)).foregroundStyle(.secondary)
+            Text(title).foregroundStyle(.secondary)
             Spacer()
-            Text(L10n.text(value))
+            Text(value)
                 .fontWeight(.semibold)
                 .multilineTextAlignment(.trailing)
         }
@@ -686,12 +681,7 @@ struct SponsoredSubscriptionPaywallView: View {
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
-                        Text(
-                            L10n.format(
-                                "Подписка для %@",
-                                sponsorship.beneficiaryName
-                            )
-                        )
+                        Text("Подписка для \(sponsorship.beneficiaryName)")
                             .font(.system(.title2, design: .rounded).weight(.bold))
 
                         Text(
@@ -748,7 +738,7 @@ struct SponsoredSubscriptionPaywallView: View {
         ) {
             Button("Понятно", role: .cancel) { message = nil }
         } message: {
-            Text(L10n.text(message ?? ""))
+            Text(message ?? "")
         }
     }
 

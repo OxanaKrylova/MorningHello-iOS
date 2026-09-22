@@ -20,7 +20,7 @@ final class CheckInNotificationManager {
     func configureNotificationActions() {
         let openMessageAction = UNNotificationAction(
             identifier: Self.openMessageActionIdentifier,
-            title: L10n.text("Подготовить сообщение близким"),
+            title: "Подготовить сообщение близким",
             options: [.foreground]
         )
         
@@ -84,10 +84,8 @@ final class CheckInNotificationManager {
         
         let content = UNMutableNotificationContent()
         content.title = "MorningHello"
-        content.body = L10n.format(
-            "Прошло %@ с последней отметки. Пожалуйста, подтвердите, что с вами всё хорошо.",
+        content.body = "Прошло %@ с последней отметки. Пожалуйста, подтвердите, что с вами всё хорошо."
             intervalText
-        )
         content.sound = .default
         content.categoryIdentifier = Self.categoryIdentifier
         

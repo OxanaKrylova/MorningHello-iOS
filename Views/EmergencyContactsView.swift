@@ -30,11 +30,13 @@ struct EmergencyContactsView: View {
     
     @State private var isContactFormExpanded = false
     @State private var originalEditingEmail = ""
-    @State private var contactAwaitingDeletion: EmergencyContact?
-    @State private var deletingContactIDs: Set<UUID> = []
+
     @State private var deletionErrorMessage: String?
     @State private var isRefreshingContactStatuses = false
     @State private var statusRefreshErrorMessage: String?
+    
+    @State private var contactAwaitingDeletion: EmergencyContact?
+    @State private var deletingContactIDs: Set<UUID> = []
     
     @AppStorage("profile_display_name")
     private var displayName = ""
@@ -44,7 +46,45 @@ struct EmergencyContactsView: View {
     
     private let contactsKey = "emergency_contacts"
     
-    var canAddContact: Bool {
+    private var isStoppingMonitoring: Bool {
+        !deletingContactIDs.isEmpty
+    }
+
+    private func isValidEmail(_ value: String) -> Bool {
+        let trimmedEmail = value.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+
+        let emailPattern =
+            #"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$"#
+
+        return trimmedEmail.range(
+            of: emailPattern,
+            options: [
+                .regularExpression,
+                .caseInsensitive
+            ]
+        ) != nil
+    }
+
+    private func saveContacts() {
+        do {
+            let data = try JSONEncoder().encode(contacts)
+            UserDefaults.standard.set(
+                data,
+                forKey: contactsKey
+            )
+        } catch {
+            #if DEBUG
+            print(
+                "Failed to save emergency contacts:",
+                error.localizedDescription
+            )
+            #endif
+        }
+    }
+    
+    private var canAddContact: Bool {
         contacts.count < 2 &&
         !name.trimmingCharacters(in: .whitespaces).isEmpty &&
         !surname.trimmingCharacters(in: .whitespaces).isEmpty &&
@@ -52,7 +92,7 @@ struct EmergencyContactsView: View {
         isValidEmail(email)
     }
     
-    var canSaveContact: Bool {
+    private var canSaveContact: Bool {
         !name.trimmingCharacters(in: .whitespaces).isEmpty &&
         !surname.trimmingCharacters(in: .whitespaces).isEmpty &&
         phoneDigits.count >= 10 &&
@@ -149,15 +189,91 @@ struct EmergencyContactsView: View {
         }
         return normalizedPhone
     }
+    // MARK: - Прекращение мониторинга
+
+    @MainActor
+    private func stopMonitoring(
+        for contact: EmergencyContact
+    ) async {
+
+        guard !deletingContactIDs.contains(
+            contact.id
+        ) else {
+            return
+        }
+
+        deletingContactIDs.insert(contact.id)
+
+        defer {
+            deletingContactIDs.remove(contact.id)
+        }
+
+        do {
+            let remainingContacts =
+                contacts.filter {
+                    $0.id != contact.id
+                }
+
+            try await EmergencyContactAPIClient
+                .shared
+                .replaceContacts(
+                    remainingContacts
+                )
+
+            let editingContactID =
+                editingIndex.flatMap { index in
+                    contacts.indices.contains(index)
+                        ? contacts[index].id
+                        : nil
+                }
+
+            contacts = remainingContacts
+            saveContacts()
+
+            if editingContactID == contact.id {
+                self.editingIndex = nil
+                originalEditingEmail = ""
+                name = ""
+                surname = ""
+                phoneDigits = ""
+                email = ""
+                salutation = "Уважаемый"
+                isContactFormExpanded = false
+            } else if let editingContactID {
+                self.editingIndex =
+                    contacts.firstIndex {
+                        $0.id == editingContactID
+                    }
+            }
+
+#if DEBUG
+            print(
+                "✅ Emergency contact monitoring stopped:",
+                contact.email
+            )
+#endif
+        } catch {
+            deletionErrorMessage =
+                "Контакт не удалён. Проверьте подключение к интернету и попробуйте ещё раз."
+
+#if DEBUG
+            print(
+                "❌ Failed to stop emergency contact monitoring:",
+                error
+            )
+#endif
+   }
+}
+
     var body: some View {
         ZStack {
             AppAdaptiveColor.warmFormBackground
                 .ignoresSafeArea()
-
+            
             ScrollView {
                 VStack(spacing: 20) {
                     // MARK: - Заголовок
-
+                    
                     ZStack {
                         Text("Тревожные контакты")
                             .font(
@@ -177,7 +293,7 @@ struct EmergencyContactsView: View {
                         
                         HStack {
                             Spacer()
-
+                            
                             if !isOnboarding {
                                 Button {
                                     dismiss()
@@ -202,7 +318,7 @@ struct EmergencyContactsView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.top, 4)
-
+                    
                     VStack(alignment: .leading, spacing: 8) {
                         HStack(alignment: .top, spacing: 10) {
                             Image(systemName: "envelope.badge.fill")
@@ -213,11 +329,11 @@ struct EmergencyContactsView: View {
                                     )
                                 )
                                 .foregroundColor(.orange)
-
+                            
                             Text(
                                 """
                                 После сохранения нового тревожного контакта MorningHello отправит ему письмо с просьбой подтвердить согласие.
-
+                                
                                 До подтверждения его статус будет Pending, и тревожные оповещения ему отправляться не будут.
                                 """
                             )
@@ -243,17 +359,17 @@ struct EmergencyContactsView: View {
                     .padding(.bottom, 2)
                     
                     // MARK: - Поля ввода
-
+                    
                     Button {
                         withAnimation(
                             .easeInOut(duration: 0.22)
                         ) {
                             isContactFormExpanded.toggle()
-
+                            
                             if !isContactFormExpanded {
                                 editingIndex = nil
                                 originalEditingEmail = ""
-
+                                
                                 name = ""
                                 surname = ""
                                 phoneDigits = ""
@@ -263,27 +379,27 @@ struct EmergencyContactsView: View {
                         }
                     } label: {
                         HStack(spacing: 10) {
-
+                            
                             Image(
                                 systemName:
                                     editingIndex == nil
-                                    ? "person.badge.plus"
-                                    : "person.crop.circle.badge.checkmark"
+                                ? "person.badge.plus"
+                                : "person.crop.circle.badge.checkmark"
                             )
-
+                            
                             Text(
                                 editingIndex == nil
                                 ? "Добавить тревожный контакт"
                                 : "Редактировать тревожный контакт"
                             )
-
+                            
                             Spacer()
-
+                            
                             Image(
                                 systemName:
                                     isContactFormExpanded
-                                    ? "chevron.up"
-                                    : "chevron.down"
+                                ? "chevron.up"
+                                : "chevron.down"
                             )
                         }
                         .font(
@@ -306,31 +422,31 @@ struct EmergencyContactsView: View {
                     }
                     .buttonStyle(.plain)
                     .padding(.horizontal, 28)
-
-
+                    
+                    
                     // MARK: - Раскрытая форма контакта
-
+                    
                     if isContactFormExpanded {
-
+                        
                         VStack(spacing: 14) {
-
+                            
                             // Обращение
-
+                            
                             Picker(
                                 "Обращение",
                                 selection: $salutation
                             ) {
                                 Text("Уважаемый")
                                     .tag("Уважаемый")
-
+                                
                                 Text("Уважаемая")
                                     .tag("Уважаемая")
                             }
                             .pickerStyle(.segmented)
-
-
+                            
+                            
                             // Имя
-
+                            
                             TextField(
                                 "",
                                 text: $name,
@@ -356,10 +472,10 @@ struct EmergencyContactsView: View {
                                     style: .continuous
                                 )
                             )
-
-
+                            
+                            
                             // Фамилия
-
+                            
                             TextField(
                                 "",
                                 text: $surname,
@@ -385,15 +501,15 @@ struct EmergencyContactsView: View {
                                     style: .continuous
                                 )
                             )
-
-
+                            
+                            
                             // Телефон
-
+                            
                             VStack(
                                 alignment: .leading,
                                 spacing: 8
                             ) {
-
+                                
                                 TextField(
                                     "",
                                     text: $phoneDigits,
@@ -420,7 +536,7 @@ struct EmergencyContactsView: View {
                                         style: .continuous
                                     )
                                 )
-
+                                
                                 Text(
                                     """
                                     Введите номер в международном формате с кодом страны. \
@@ -438,7 +554,7 @@ struct EmergencyContactsView: View {
                                     horizontal: false,
                                     vertical: true
                                 )
-
+                                
                                 Text(
                                     "Например: +972501234567"
                                 )
@@ -451,10 +567,10 @@ struct EmergencyContactsView: View {
                                 )
                                 .foregroundColor(AppAdaptiveColor.secondaryText)
                             }
-
-
+                            
+                            
                             // Email
-
+                            
                             TextField(
                                 "",
                                 text: $email,
@@ -499,19 +615,19 @@ struct EmergencyContactsView: View {
                             )
                         )
                         .padding(.horizontal, 28)
-
-
+                        
+                        
                         // MARK: - Добавить / Сохранить контакт
-
+                        
                         Button {
-
+                            
                             guard
                                 contacts.count < 2 ||
-                                editingIndex != nil
+                                    editingIndex != nil
                             else {
                                 return
                             }
-
+                            
                             guard
                                 !email
                                     .trimmingCharacters(
@@ -521,165 +637,165 @@ struct EmergencyContactsView: View {
                             else {
                                 formErrorTitle = "Не указан e-mail"
                                 phoneErrorMessage =
-                                    "Введите адрес электронной почты."
+                                "Введите адрес электронной почты."
                                 showPhoneError = true
                                 return
                             }
-
+                            
                             guard isValidEmail(email) else {
                                 formErrorTitle = "Неверный e-mail"
                                 phoneErrorMessage = """
                                 Введите корректный адрес электронной почты.
-
+                                
                                 Например: name@gmail.com
                                 """
                                 showPhoneError = true
                                 return
                             }
-
+                            
                             guard let normalizedPhone =
-                                normalizedInternationalPhone(
-                                    from: phoneDigits
-                                )
+                                    normalizedInternationalPhone(
+                                        from: phoneDigits
+                                    )
                             else {
                                 showPhoneError = true
                                 return
                             }
-
+                            
                             let trimmedName =
-                                name.trimmingCharacters(
-                                    in: .whitespacesAndNewlines
-                                )
-
+                            name.trimmingCharacters(
+                                in: .whitespacesAndNewlines
+                            )
+                            
                             let trimmedSurname =
-                                surname.trimmingCharacters(
-                                    in: .whitespacesAndNewlines
-                                )
-
+                            surname.trimmingCharacters(
+                                in: .whitespacesAndNewlines
+                            )
+                            
                             let trimmedEmail =
-                                email.trimmingCharacters(
-                                    in: .whitespacesAndNewlines
-                                )
-
+                            email.trimmingCharacters(
+                                in: .whitespacesAndNewlines
+                            )
+                            
                             guard !trimmedEmail.isEmpty else {
                                 formErrorTitle = "Не указан e-mail"
                                 phoneErrorMessage =
-                                    "Введите адрес электронной почты."
+                                "Введите адрес электронной почты."
                                 showPhoneError = true
                                 return
                             }
-
+                            
                             guard isValidEmail(trimmedEmail) else {
                                 formErrorTitle = "Неверный e-mail"
                                 phoneErrorMessage = """
                                 Введите корректный адрес электронной почты.
-
+                                
                                 Например: name@gmail.com
                                 """
                                 showPhoneError = true
                                 return
                             }
-
-
+                            
+                            
                             // MARK: Проверяем изменение email
-
+                            
                             let normalizedNewEmail =
-                                trimmedEmail.lowercased()
-
+                            trimmedEmail.lowercased()
+                            
                             let normalizedOldEmail =
-                                originalEditingEmail
-                                    .trimmingCharacters(
-                                        in: .whitespacesAndNewlines
-                                    )
-                                    .lowercased()
-
+                            originalEditingEmail
+                                .trimmingCharacters(
+                                    in: .whitespacesAndNewlines
+                                )
+                                .lowercased()
+                            
                             let shouldSendInvitation: Bool
-
+                            
                             if editingIndex == nil {
-
+                                
                                 // Новый контакт:
                                 // приглашение отправляем всегда.
-
+                                
                                 shouldSendInvitation = true
-
+                                
                             } else {
-
+                                
                                 // При редактировании повторное
                                 // приглашение отправляем только,
                                 // если изменился email.
-
+                                
                                 shouldSendInvitation =
-                                    normalizedNewEmail !=
-                                    normalizedOldEmail
+                                normalizedNewEmail !=
+                                normalizedOldEmail
                             }
-
-
+                            
+                            
                             // MARK: Сохраняем ID и статус
-
+                            
                             let contactID: UUID
                             let contactStatus:
-                                EmergencyContactStatus
-
+                            EmergencyContactStatus
+                            
                             if let editingIndex {
-
+                                
                                 contactID =
-                                    contacts[editingIndex].id
-
+                                contacts[editingIndex].id
+                                
                                 if shouldSendInvitation {
-
+                                    
                                     // Email изменился.
                                     // Требуется новое согласие.
-
+                                    
                                     contactStatus = .pending
-
+                                    
                                 } else {
-
+                                    
                                     // Email не изменился.
                                     // Сохраняем прежний статус.
-
+                                    
                                     contactStatus =
-                                        contacts[editingIndex].status
+                                    contacts[editingIndex].status
                                 }
-
+                                
                             } else {
-
+                                
                                 contactID = UUID()
                                 contactStatus = .pending
                             }
-
-
+                            
+                            
                             let contact =
-                                EmergencyContact(
-                                    id: contactID,
-                                    name: trimmedName,
-                                    surname: trimmedSurname,
-                                    phoneDigits: normalizedPhone,
-                                    email: trimmedEmail,
-                                    salutation: salutation,
-                                    status: contactStatus
-                                )
-
-
+                            EmergencyContact(
+                                id: contactID,
+                                name: trimmedName,
+                                surname: trimmedSurname,
+                                phoneDigits: normalizedPhone,
+                                email: trimmedEmail,
+                                salutation: salutation,
+                                status: contactStatus
+                            )
+                            
+                            
                             // MARK: Сохраняем локально
-
+                            
                             if let editingIndex {
-
+                                
                                 contacts[editingIndex] =
-                                    contact
-
+                                contact
+                                
                                 self.editingIndex = nil
-
+                                
                             } else {
-
+                                
                                 contacts.append(contact)
                             }
-
+                            
                             saveContacts()
-
+                            
                             // MARK: Синхронизируем полный список с сервером
-
+                            
                             let contactsToUpload = contacts
-
+                            
                             Task {
                                 do {
                                     try await EmergencyContactAPIClient
@@ -687,9 +803,9 @@ struct EmergencyContactsView: View {
                                         .replaceContacts(
                                             contactsToUpload
                                         )
-
+                                    
                                     await refreshContactStatuses()
-
+                                    
 #if DEBUG
                                     print(
                                         "✅ Emergency contacts synchronized"
@@ -698,9 +814,9 @@ struct EmergencyContactsView: View {
                                 } catch {
                                     await MainActor.run {
                                         statusRefreshErrorMessage =
-                                            "Контакт сохранён на телефоне, но не отправлен на сервер. Проверьте интернет и повторите сохранение."
+                                        "Контакт сохранён на телефоне, но не отправлен на сервер. Проверьте интернет и повторите сохранение."
                                     }
-
+                                    
 #if DEBUG
                                     print(
                                         "❌ Emergency contacts synchronization failed:",
@@ -709,39 +825,39 @@ struct EmergencyContactsView: View {
 #endif
                                 }
                             }
-
-
+                            
+                            
                             // MARK: Онбординг
-
+                            
                             if contacts.count == 1 {
                                 showSecondContactSuggestion = true
                             }
-
+                            
                             if contacts.count == 2,
                                isOnboarding {
-
+                                
                                 onOnboardingComplete?()
                             }
-
-
+                            
+                            
                             // MARK: Очищаем и сворачиваем форму
-
+                            
                             name = ""
                             surname = ""
                             phoneDigits = ""
                             email = ""
                             salutation = "Уважаемый"
-
+                            
                             originalEditingEmail = ""
-
+                            
                             withAnimation(
                                 .easeInOut(duration: 0.22)
                             ) {
                                 isContactFormExpanded = false
                             }
-
+                            
                         } label: {
-
+                            
                             Text(
                                 editingIndex == nil
                                 ? "Добавить"
@@ -776,15 +892,15 @@ struct EmergencyContactsView: View {
                         )
                         .padding(.horizontal, 40)
                         .padding(.top, 4)
-
+                        
                     } // Конец if isContactFormExpanded
-
-
+                    
+                    
                     // MARK: - Ограничение количества контактов
-
+                    
                     if contacts.count >= 2 &&
-                       editingIndex == nil {
-
+                        editingIndex == nil {
+                        
                         Text(
                             "Максимум можно сохранить 2 тревожных контакта."
                         )
@@ -798,38 +914,33 @@ struct EmergencyContactsView: View {
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
                     }
-
-
+                    
+                    
                     // MARK: - Период оповещения
                     // MARK: - Период оповещения
                     VStack(alignment: .leading, spacing: 12) {
-
+                        
                         Text("Период оповещения")
                             .font(.headline)
-
+                        
                         Picker("Период оповещения", selection: $checkInIntervalHours) {
                             Text("24 часа").tag(24)
                             Text("48 часов").tag(48)
                             Text("72 часа").tag(72)
                         }
                         .pickerStyle(.segmented)
-
+                        
                         Text("Выберите время, через которое мы сообщим вашим близким, если вы не отметитесь.")
                             .font(.footnote)
                             .foregroundColor(.secondary)
-
+                        
                     }
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(16)
                     // MARK: - Список контактов
-
-                    Text(
-                        L10n.format(
-                            "Контакты %d/2",
-                            contacts.count
-                        )
-                    )
+                    
+                    Text("Контакты \(contacts.count)/2")
                         .font(
                             .system(
                                 .title3,
@@ -844,11 +955,11 @@ struct EmergencyContactsView: View {
                         )
                         .padding(.horizontal, 32)
                         .padding(.top, 12)
-
+                    
                     HStack(spacing: 8) {
                         if isRefreshingContactStatuses {
                             ProgressView()
-
+                            
                             Text("Обновляем статусы…")
                         } else {
                             Button {
@@ -877,9 +988,13 @@ struct EmergencyContactsView: View {
                         alignment: .leading
                     )
                     .padding(.horizontal, 32)
-
+                    
                     if let statusRefreshErrorMessage {
-                        Text(L10n.text(statusRefreshErrorMessage))
+                        Text(
+                            AppLanguage.selected.localized(
+                                statusRefreshErrorMessage
+                            )
+                        )
                             .font(
                                 .system(
                                     .caption,
@@ -893,10 +1008,10 @@ struct EmergencyContactsView: View {
                             )
                             .padding(.horizontal, 32)
                     }
-
+                    
                     ForEach(contacts) { contact in
                         VStack(alignment: .leading, spacing: 8) {
-
+                            
                             Text(
                                 "\(contact.name) \(contact.surname)"
                             )
@@ -906,7 +1021,7 @@ struct EmergencyContactsView: View {
                                     design: .rounded
                                 )
                             )
-
+                            
                             Text(contact.phoneDigits)
                                 .font(
                                     .system(
@@ -915,7 +1030,7 @@ struct EmergencyContactsView: View {
                                     )
                                 )
                                 .foregroundColor(.gray)
-
+                            
                             Text(contact.email)
                                 .font(
                                     .system(
@@ -924,28 +1039,33 @@ struct EmergencyContactsView: View {
                                     )
                                 )
                                 .foregroundColor(.gray)
-
+                            
                             HStack(spacing: 6) {
-                                if deletingContactIDs.contains(
-                                    contact.id
-                                ) {
-                                    ProgressView()
-
-                                    Text("Deleting")
-                                } else {
-                                    Image(
-                                        systemName: statusIcon(
-                                            for: contact.status
-                                        )
+                                Image(
+                                    systemName: statusIcon(
+                                        for: contact.status
                                     )
-
-                                    Text(
-                                        statusTitle(
-                                            for: contact.status
-                                        )
+                                )
+                                
+                                Text(
+                                    statusTitle(
+                                        for: contact.status
                                     )
-                                }
+                                )
                             }
+                            .font(
+                                .system(
+                                    .caption,
+                                    design: .rounded
+                                )
+                                .weight(.semibold)
+                            )
+                            .foregroundColor(
+                                statusColor(
+                                    for: contact.status
+                                )
+                            )
+                            .padding(.top, 4)
                             .font(
                                 .system(
                                     .caption,
@@ -963,22 +1083,7 @@ struct EmergencyContactsView: View {
                                 )
                             )
                             .padding(.top, 4)
-
-                            Button(role: .destructive) {
-                                contactAwaitingDeletion = contact
-                            } label: {
-                                Label(
-                                    "Прекратить мониторинг",
-                                    systemImage: "person.crop.circle.badge.minus"
-                                )
-                                .font(
-                                    .system(
-                                        .subheadline,
-                                        design: .rounded
-                                    )
-                                    .weight(.semibold)
-                                )
-                            }
+                            
                             .buttonStyle(.borderless)
                             .disabled(
                                 deletingContactIDs.contains(
@@ -1001,25 +1106,23 @@ struct EmergencyContactsView: View {
                         )
                         .padding(.horizontal, 28)
                         .onTapGesture {
-                            guard !deletingContactIDs.contains(
-                                contact.id
-                            ) else {
+                            guard !isStoppingMonitoring else {
                                 return
                             }
-
+                            
                             editingIndex =
-                                contacts.firstIndex {
-                                    $0.id == contact.id
-                                }
-
+                            contacts.firstIndex {
+                                $0.id == contact.id
+                            }
+                            
                             originalEditingEmail = contact.email
-
+                            
                             name = contact.name
                             surname = contact.surname
                             phoneDigits = contact.phoneDigits
                             email = contact.email
                             salutation = contact.salutation
-
+                            
                             withAnimation(
                                 .easeInOut(duration: 0.22)
                             ) {
@@ -1027,241 +1130,255 @@ struct EmergencyContactsView: View {
                             }
                         }
                     }
-
-                    Spacer(minLength: 30)
-                                    }
+                    if !contacts.isEmpty && !isOnboarding {
+                        Button(role: .destructive) {
+                            contactAwaitingDeletion =
+                            contacts.first
+                        } label: {
+                            HStack(spacing: 10) {
+                                if !deletingContactIDs.isEmpty {
+                                    ProgressView()
+                                        .tint(AppAdaptiveColor.secondaryText)
+                                } else {
+                                    Image(
+                                        systemName:
+                                            "person.2.slash.fill"
+                                    )
                                 }
+                                
+                                Text(
+                                    "Прекратить мониторинг"
+                                )
                             }
-                            .task {
-                                loadContacts()
-                                await refreshContactStatuses()
-                            }
-        .alert(
-            L10n.text(formErrorTitle),
-            isPresented: $showPhoneError
-        ) {
-            Button("Понятно", role: .cancel) {
-            }
-        } message: {
-            Text(L10n.text(phoneErrorMessage))
-        }
-        .confirmationDialog(
-            "Прекратить мониторинг?",
-            isPresented: Binding(
-                get: {
-                    contactAwaitingDeletion != nil
-                },
-                set: { isPresented in
-                    if !isPresented {
-                        contactAwaitingDeletion = nil
+                            .font(
+                                .system(
+                                    .caption,
+                                    design: .rounded
+                                )
+                                .weight(.semibold)
+                            )
+                            .foregroundStyle(AppAdaptiveColor.secondaryText)
+                            .frame(
+                                maxWidth: .infinity,
+                                alignment: .leading
+                            )
+                            .padding(.vertical, 8)
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(
+                            !deletingContactIDs.isEmpty
+                        )
+                        .padding(.horizontal, 28)
+                        .padding(.top, 4)
+                    }
+                    
+                    if !contacts.isEmpty && !isOnboarding {
+                        
+                        Spacer(minLength: 30)
                     }
                 }
-            ),
-            titleVisibility: .visible,
-            presenting: contactAwaitingDeletion
-        ) { contact in
-            Button(
-                "Прекратить мониторинг",
-                role: .destructive
+            }
+            .task {
+                loadContacts()
+                await refreshContactStatuses()
+            }
+            .alert(
+                formErrorTitle,
+                isPresented: $showPhoneError
             ) {
-                contactAwaitingDeletion = nil
-
-                Task {
-                    await stopMonitoring(
-                        for: contact
+                Button("Понятно", role: .cancel) {
+                }
+            } message: {
+                Text(
+                    AppLanguage.selected.localized(
+                        phoneErrorMessage
                     )
-                }
-            }
-
-            Button("Отмена", role: .cancel) {
-                contactAwaitingDeletion = nil
-            }
-        } message: { contact in
-            Text(
-                L10n.format(
-                    "MorningHello удалит %@ %@ из списка тревожных контактов.",
-                    contact.name,
-                    contact.surname
                 )
-            )
-        }
-        .alert(
-            "Не удалось прекратить мониторинг",
-            isPresented: Binding(
-                get: {
-                    deletionErrorMessage != nil
-                },
-                set: { isPresented in
-                    if !isPresented {
-                        deletionErrorMessage = nil
+            }
+            
+            .confirmationDialog(
+                "Прекратить мониторинг?",
+                isPresented: Binding(
+                    get: {
+                        contactAwaitingDeletion != nil
+                    },
+                    set: { isPresented in
+                        if !isPresented {
+                            contactAwaitingDeletion = nil
+                        }
+                    }
+                ),
+                titleVisibility: .visible,
+                presenting: contactAwaitingDeletion
+            ) { contact in
+                Button(
+                    "Прекратить мониторинг",
+                    role: .destructive
+                ) {
+                    contactAwaitingDeletion = nil
+                    
+                    Task {
+                        await stopMonitoring(
+                            for: contact
+                        )
                     }
                 }
-            )
-        ) {
-            Button("Понятно", role: .cancel) {
-                deletionErrorMessage = nil
-            }
-        } message: {
-            Text(L10n.text(deletionErrorMessage ?? ""))
-        }
-        .confirmationDialog(
-            "Добавить второй тревожный контакт?",
-            isPresented: $showSecondContactSuggestion,
-            titleVisibility: .visible
-        ) {
-            Button("Добавить второй контакт") {
-                // Остаёмся на форме
-            }
-
-            Button("Продолжить с одним контактом") {
-                if isOnboarding {
-                    onOnboardingComplete?()
+                
+                Button(
+                    "Отмена",
+                    role: .cancel
+                ) {
+                    contactAwaitingDeletion = nil
                 }
+            } message: { _ in
+                Text(
+                    "MorningHello остановит мониторинг и удалит все тревожные контакты."
+                )
             }
-
-            Button(
-                "Отмена",
-                role: .cancel
+            
+            .confirmationDialog(
+                "Добавить второй тревожный контакт?",
+                isPresented: $showSecondContactSuggestion,
+                titleVisibility: .visible
             ) {
-            }
-
-        } message: {
-            Text(
+                Button("Добавить второй контакт") {
+                    // Остаёмся на форме
+                }
+                
+                Button("Продолжить с одним контактом") {
+                    if isOnboarding {
+                        onOnboardingComplete?()
+                    }
+                }
+                
+                Button(
+                    "Отмена",
+                    role: .cancel
+                ) {
+                }
+                
+            } message: {
+                Text(
                 """
                 Первый тревожный контакт сохранён.
-
+                
                 Для большей надёжности мы рекомендуем добавить второго близкого человека.
-
+                
                 MorningHello поддерживает до двух тревожных контактов.
                 """
-            )
+                )
+            }
         }
-        }
-
+    }
         // MARK: - Форматирование телефона
-
-        private func formatPhone(
+        
+    private func formatPhone(
             _ digits: String
         ) -> String {
-
+            
             let numbers = Array(
                 digits.prefix(15)
             )
-
+            
             var result = "+"
-
+            
             for index in numbers.indices {
-
+                
                 if index == 0 {
                     result += "("
                 }
-
+                
                 if index == 3 {
                     result += ") "
                 }
-
+                
                 if index == 6 {
                     result += " "
                 }
-
+                
                 if index == 9 {
                     result += " "
                 }
-
+                
                 result.append(
                     numbers[index]
                 )
             }
-
+            
             return result
         }
-
-        // MARK: - Сохранение контактов
-
-        private func saveContacts() {
-            if let data =
-                try? JSONEncoder().encode(
-                    contacts
-                ) {
-
-                UserDefaults.standard.set(
-                    data,
-                    forKey: contactsKey
-                )
-            }
-        }
-
+        
         // MARK: - Загрузка контактов
-
-        private func loadContacts() {
-
+        
+    private func loadContacts() {
+            
             guard let data =
-                UserDefaults.standard.data(
-                    forKey: contactsKey
-                )
+                    UserDefaults.standard.data(
+                        forKey: contactsKey
+                    )
             else {
                 contacts = []
                 return
             }
-
+            
             contacts =
-                (
-                    try? JSONDecoder().decode(
-                        [EmergencyContact].self,
-                        from: data
-                    )
-                ) ?? []
+            (
+                try? JSONDecoder().decode(
+                    [EmergencyContact].self,
+                    from: data
+                )
+            ) ?? []
         }
-
+        
         // MARK: - Актуальные статусы согласия с сервера
-
+        
         @MainActor
-        private func refreshContactStatuses() async {
+    private func refreshContactStatuses() async {
             guard !contacts.isEmpty,
                   !isRefreshingContactStatuses
             else {
                 return
             }
-
+            
             isRefreshingContactStatuses = true
             statusRefreshErrorMessage = nil
-
+            
             defer {
                 isRefreshingContactStatuses = false
             }
-
+            
             do {
                 let serverStatuses =
-                    try await EmergencyContactAPIClient
-                        .shared
-                        .fetchConsentStatuses()
-
+                try await EmergencyContactAPIClient
+                    .shared
+                    .fetchConsentStatuses()
+                
                 var statusWasChanged = false
-
+                
                 for index in contacts.indices {
                     let normalizedEmail =
-                        contacts[index].email
-                            .trimmingCharacters(
-                                in: .whitespacesAndNewlines
-                            )
-                            .lowercased()
-
+                    contacts[index].email
+                        .trimmingCharacters(
+                            in: .whitespacesAndNewlines
+                        )
+                        .lowercased()
+                    
                     guard let serverStatus =
-                        serverStatuses[normalizedEmail]
+                            serverStatuses[normalizedEmail]
                     else {
                         continue
                     }
-
+                    
                     if contacts[index].status != serverStatus {
                         contacts[index].status = serverStatus
                         statusWasChanged = true
                     }
                 }
-
+                
                 if statusWasChanged {
                     saveContacts()
                 }
-
+                
 #if DEBUG
                 print(
                     "✅ Emergency contact statuses refreshed"
@@ -1269,8 +1386,8 @@ struct EmergencyContactsView: View {
 #endif
             } catch {
                 statusRefreshErrorMessage =
-                    "Не удалось получить актуальные статусы. Проверьте интернет и повторите попытку."
-
+                "Не удалось получить актуальные статусы. Проверьте интернет и повторите попытку."
+                
 #if DEBUG
                 print(
                     "❌ Failed to refresh emergency contact statuses:",
@@ -1279,154 +1396,61 @@ struct EmergencyContactsView: View {
 #endif
             }
         }
-
-        // MARK: - Прекращение мониторинга
-
-        @MainActor
-        private func stopMonitoring(
-            for contact: EmergencyContact
-        ) async {
-
-            guard !deletingContactIDs.contains(
-                contact.id
-            ) else {
-                return
-            }
-
-            deletingContactIDs.insert(contact.id)
-
-            defer {
-                deletingContactIDs.remove(contact.id)
-            }
-
-            do {
-                let remainingContacts =
-                    contacts.filter {
-                        $0.id != contact.id
-                    }
-
-                try await EmergencyContactAPIClient
-                    .shared
-                    .replaceContacts(
-                        remainingContacts
-                    )
-
-                let editingContactID =
-                    editingIndex.flatMap { index in
-                        contacts.indices.contains(index)
-                            ? contacts[index].id
-                            : nil
-                    }
-
-                contacts = remainingContacts
-                saveContacts()
-
-                if editingContactID == contact.id {
-                    self.editingIndex = nil
-                    originalEditingEmail = ""
-                    name = ""
-                    surname = ""
-                    phoneDigits = ""
-                    email = ""
-                    salutation = "Уважаемый"
-                    isContactFormExpanded = false
-                } else if let editingContactID {
-                    self.editingIndex =
-                        contacts.firstIndex {
-                            $0.id == editingContactID
-                        }
-                }
-
-#if DEBUG
-                print(
-                    "✅ Emergency contact monitoring stopped:",
-                    contact.email
-                )
-#endif
-            } catch {
-                deletionErrorMessage =
-                    "Контакт не удалён. Проверьте подключение к интернету и попробуйте ещё раз."
-
-#if DEBUG
-                print(
-                    "❌ Failed to stop emergency contact monitoring:",
-                    error
-                )
-#endif
-            }
-        }
-
-        // MARK: - Проверка email
-
-        private func isValidEmail(
-            _ email: String
-        ) -> Bool {
-
-            let emailRegex =
-                #"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$"#
-
-            return NSPredicate(
-                format: "SELF MATCHES[c] %@",
-                emailRegex
-            )
-            .evaluate(with: email)
-        }
-
+        
         // MARK: - Статус тревожного контакта
-
+        
     private func statusTitle(
-        for status: EmergencyContactStatus
-    ) -> String {
-        switch status {
-        case .pending:
-            return L10n.text("Ожидает подтверждения")
-        case .confirmed:
-            return L10n.text("Подтверждён")
-        case .declined:
-            return L10n.text("Отклонён")
-        case .revoked:
-            return L10n.text("Доступ отозван")
-        }
-    }
-
-        private func statusIcon(
             for status: EmergencyContactStatus
         ) -> String {
-
             switch status {
-
+            case .pending:
+                return AppLanguage.selected.localized("Ожидает подтверждения")
+            case .confirmed:
+                return AppLanguage.selected.localized("Подтверждён")
+            case .declined:
+                return AppLanguage.selected.localized("Отклонён")
+            case .revoked:
+                return AppLanguage.selected.localized("Доступ отозван")
+            }
+        }
+        
+    private func statusIcon(
+            for status: EmergencyContactStatus
+        ) -> String {
+            
+            switch status {
+                
             case .pending:
                 return "clock.fill"
-
+                
             case .confirmed:
                 return "checkmark.circle.fill"
-
+                
             case .declined:
                 return "xmark.circle.fill"
-
+                
             case .revoked:
                 return "minus.circle.fill"
             }
         }
-
-        private func statusColor(
+        
+    private func statusColor(
             for status: EmergencyContactStatus
         ) -> Color {
-
+            
             switch status {
-
+                
             case .pending:
                 return .orange
-
+                
             case .confirmed:
                 return .green
-
+                
             case .declined:
                 return .red
-
+                
             case .revoked:
                 return .gray
             }
         }
-
-        }
+    }

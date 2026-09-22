@@ -29,6 +29,7 @@ struct HeartbeatRequest: Encodable {
 enum BackendLanguage: String, Encodable {
     case ru = "RU"
     case en = "EN"
+    case es419 = "es-419"
 }
 
 // MARK: - Пользователь

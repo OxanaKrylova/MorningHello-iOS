@@ -22,7 +22,7 @@ struct MoodCheckInView: View {
 
                 ScrollView {
                     VStack(spacing: 18) {
-                        Text(L10n.text("Насколько вы спокойны сейчас?"))
+                        Text("Насколько вы спокойны сейчас?")
                             .font(
                                 .system(
                                     .title2,
@@ -41,7 +41,7 @@ struct MoodCheckInView: View {
 
                         if let selectedLevel = store.todayEntry?.moodLevel {
                             Text(
-                                "\(selectedLevel.rawValue) – \(selectedLevel.title)"
+                                "\(selectedLevel.rawValue) – \(AppLanguage.selected.localized(selectedLevel.title))"
                             )
                                 .font(
                                     .system(
@@ -53,7 +53,7 @@ struct MoodCheckInView: View {
                                 .foregroundStyle(selectedLevel.color)
                                 .multilineTextAlignment(.center)
                         } else {
-                            Text(L10n.text("0 – дзен, 4 – в панике"))
+                            Text("0 – дзен, 4 – в панике")
                                 .font(
                                     .system(
                                         size: 22,
@@ -90,10 +90,9 @@ struct MoodCheckInView: View {
                                 .foregroundStyle(.red)
                                 .multilineTextAlignment(.center)
                                 .accessibilityLabel(
-                                    L10n.format(
-                                        "Ошибка. %@",
-                                        errorMessage
-                                    )
+                                    AppLanguage.selected.localized("Ошибка")
+                                    + ". "
+                                    + errorMessage
                                 )
                         }
 
@@ -200,7 +199,7 @@ struct MoodCheckInView: View {
     }
 
     private func actionButton(
-        title: String,
+        title: LocalizedStringKey,
         systemImage: String,
         action: @escaping () -> Void
     ) -> some View {
@@ -210,7 +209,7 @@ struct MoodCheckInView: View {
                     .font(.system(size: 24, weight: .semibold))
                     .foregroundStyle(.orange)
 
-                Text(L10n.text(title))
+                Text(title)
                     .font(
                         .system(
                             .headline,
@@ -251,7 +250,7 @@ struct MoodCheckInView: View {
     ) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Label(
-                L10n.text("Что можно сделать сейчас"),
+                "Что можно сделать сейчас",
                 systemImage: "heart.text.square.fill"
             )
             .font(
@@ -263,7 +262,7 @@ struct MoodCheckInView: View {
             )
             .foregroundStyle(textColor)
 
-            Text(text)
+            Text(AppLanguage.selected.localized(text))
                 .font(
                     .system(
                         size: 16,
@@ -348,13 +347,11 @@ struct MoodCheckInView: View {
         .accessibilityLabel(level.accessibilityText)
         .accessibilityValue(
             isSelected
-                ? L10n.text("Выбрано")
-                : L10n.text("Не выбрано")
+                ? AppLanguage.selected.localized("Выбрано")
+                : AppLanguage.selected.localized("Не выбрано")
         )
         .accessibilityHint(
-            L10n.text(
                 "Дважды коснитесь, чтобы сохранить уровень спокойствия на сегодня"
-            )
         )
     }
 }
@@ -519,6 +516,6 @@ private enum CalmnessAdvice {
             daySeed + level.rawValue * 17
         ) % texts.count
 
-        return L10n.text(texts[index])
+        return texts[index]
     }
 }

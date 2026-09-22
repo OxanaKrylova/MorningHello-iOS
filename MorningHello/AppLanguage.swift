@@ -1,12 +1,23 @@
+//
+//  AppLanguage.swift
+//  MorningHello
+//
+//  Oxana Krylova built this version 12-09-2026
+//
+
+
 import Foundation
 
 enum AppLanguage: String, CaseIterable, Identifiable {
     case russian = "ru"
     case englishUS = "en-US"
+    case spanishLatinAmerica = "es-419"
 
     static let storageKey = "app_language"
 
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
 
     var locale: Locale {
         Locale(identifier: rawValue)
@@ -16,8 +27,12 @@ enum AppLanguage: String, CaseIterable, Identifiable {
         switch self {
         case .russian:
             return "ru"
+
         case .englishUS:
             return "en"
+
+        case .spanishLatinAmerica:
+            return "es-419"
         }
     }
 
@@ -25,79 +40,65 @@ enum AppLanguage: String, CaseIterable, Identifiable {
         switch self {
         case .russian:
             return "Русский"
+
         case .englishUS:
             return "English (US)"
+
+        case .spanishLatinAmerica:
+            return "Español (Latinoamérica)"
         }
     }
 
-    static var initial: AppLanguage {
-        let preferredLanguage =
-            Locale.preferredLanguages.first?.lowercased() ?? "en"
-
-        return preferredLanguage.hasPrefix("ru")
-            ? .russian
-            : .englishUS
-    }
-
-    static var selected: AppLanguage {
-        guard let storedValue = UserDefaults.standard.string(
-            forKey: storageKey
-        ) else {
-            return initial
-        }
-
-        return AppLanguage(rawValue: storedValue) ?? initial
-    }
-}
-
-enum L10n {
-    static func text(_ key: String) -> String {
-        let language = AppLanguage.selected
-
-        guard let path = Bundle.main.path(
-            forResource: language.localizationFolder,
-            ofType: "lproj"
-        ),
-        let bundle = Bundle(path: path)
+    var localizationBundle: Bundle {
+        guard
+            let path = Bundle.main.path(
+                forResource: localizationFolder,
+                ofType: "lproj"
+            ),
+            let bundle = Bundle(path: path)
         else {
-            return key
+            return .main
         }
 
-        return bundle.localizedString(
+        return bundle
+    }
+
+    func localized(_ key: String) -> String {
+        localizationBundle.localizedString(
             forKey: key,
             value: key,
             table: nil
         )
     }
 
-    static func format(
-        _ key: String,
-        _ arguments: CVarArg...
-    ) -> String {
-        String(
-            format: text(key),
-            locale: AppLanguage.selected.locale,
-            arguments: arguments
-        )
+    static var initial: AppLanguage {
+        let preferredLanguage =
+            Locale.preferredLanguages
+                .first?
+                .lowercased() ?? "en"
+
+        if preferredLanguage.hasPrefix("ru") {
+            return .russian
+        }
+
+        if preferredLanguage.hasPrefix("es") {
+            return .spanishLatinAmerica
+        }
+
+        return .englishUS
     }
 
-    static func postcard(
-        _ sourceText: String,
-        category: String = ""
-    ) -> String {
-        guard AppLanguage.selected == .englishUS else {
-            return sourceText
+    static var selected: AppLanguage {
+        guard let storedValue =
+            UserDefaults.standard.string(
+                forKey: storageKey
+            )
+        else {
+            return initial
         }
 
-        let exactTranslation = text(sourceText)
-
-        if exactTranslation != sourceText {
-            return exactTranslation
-        }
-
-        return EnglishPostcardLocalizer.localize(
-            sourceText,
-            category: category
-        )
+        return AppLanguage(
+            rawValue: storedValue
+        ) ?? initial
     }
 }

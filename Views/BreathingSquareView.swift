@@ -33,9 +33,9 @@ struct BreathingSquareView: View {
                 VStack(spacing: 20) {
                     header
 
-                    Text(L10n.text(
+                    Text(
                         "Квадратное дыхание — это простая техника контроля дыхания из четырёх равных фаз по 4 секунды каждая, которая помогает быстро снять стресс и успокоить нервную систему."
-                    ))
+                    )
                     .font(
                         .system(
                             .body,
@@ -60,18 +60,18 @@ struct BreathingSquareView: View {
 
                     VStack(spacing: 12) {
                         Toggle(
-                            L10n.text("Звук дыхания"),
+                            "Звук дыхания",
                             isOn: $isBreathingSoundEnabled
                         )
 
                         Picker(
-                            L10n.text("Мелодия"),
+                            "Мелодия",
                             selection: $breathingSoundVariant
                         ) {
-                            Text(L10n.text("Вариант 1")).tag(1)
-                            Text(L10n.text("Вариант 2")).tag(2)
-                            Text(L10n.text("Вариант 3")).tag(3)
-                            Text(L10n.text("Вариант 4")).tag(4)
+                            Text("Вариант 1").tag(1)
+                            Text("Вариант 2").tag(2)
+                            Text("Вариант 3").tag(3)
+                            Text("Вариант 4").tag(4)
                         }
                         .disabled(!isBreathingSoundEnabled)
                     }
@@ -101,9 +101,9 @@ struct BreathingSquareView: View {
                     .frame(height: 350)
                     .padding(.horizontal, 14)
 
-                    Text(L10n.text(
+                    Text(
                         "Следуйте за стрелкой и дышите спокойно, без усилия."
-                    ))
+                    )
                     .font(
                         .system(
                             .subheadline,
@@ -181,7 +181,7 @@ struct BreathingSquareView: View {
 
     private var header: some View {
         ZStack {
-            Text(L10n.text("Квадрат дыхания"))
+            Text("Квадрат дыхания")
                 .font(
                     .system(
                         size: 32,
@@ -459,7 +459,7 @@ private struct BreathingSquareDiagram: View {
                     )
 
                 VStack(spacing: 3) {
-                    Text(L10n.text(phase.title))
+                    Text(AppLanguage.selected.localized(phase.title))
                         .font(
                             .system(
                                 .headline,
@@ -491,7 +491,7 @@ private struct BreathingSquareDiagram: View {
                 children: .ignore
             )
             .accessibilityLabel(
-                "\(L10n.text(phase.title)), \(secondsRemaining)"
+                "\(AppLanguage.selected.localized(phase.title)), \(secondsRemaining)"
             )
         }
     }

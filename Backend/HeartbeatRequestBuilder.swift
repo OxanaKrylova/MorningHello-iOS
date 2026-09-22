@@ -72,8 +72,12 @@ struct HeartbeatRequestBuilder {
         switch AppLanguage.selected {
         case .russian:
             backendLanguage = .ru
+
         case .englishUS:
             backendLanguage = .en
+
+        case .spanishLatinAmerica:
+            backendLanguage = .es419
         }
         
         return HeartbeatRequest(

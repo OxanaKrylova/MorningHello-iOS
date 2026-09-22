@@ -40,6 +40,9 @@ enum AppBackground: String {
 }
 struct ContentView: View {
 
+    @AppStorage(AppLanguage.storageKey)
+    private var selectedLanguageRawValue = AppLanguage.initial.rawValue
+
     @State private var showContacts = false
     @State private var hasCheckedIn = false
 
@@ -108,6 +111,10 @@ struct ContentView: View {
     @State private var serverClockOffset: TimeInterval = 0
     @State private var lastExpiredStatusRefreshAt: Date?
 
+    private var selectedLanguage: AppLanguage {
+        AppLanguage(rawValue: selectedLanguageRawValue) ?? .initial
+    }
+
     private let monitoringSnapshotKey = "monitoring_snapshot"
     private let serverClockOffsetKey = "monitoring_server_clock_offset"
 
@@ -146,13 +153,11 @@ struct ContentView: View {
     }
 
     private var checkInIntervalText: String {
-        if AppLanguage.selected == .englishUS {
-            return "\(checkInIntervalHours) hours"
-        }
+        let key = checkInIntervalHours == 24
+            ? "24 часа"
+            : "\(checkInIntervalHours) часов"
 
-        return checkInIntervalHours == 24
-        ? "24 часа"
-        : "\(checkInIntervalHours) часов"
+        return selectedLanguage.localized(key)
     }
 
     private let phrases = [
@@ -1079,8 +1084,8 @@ struct ContentView: View {
 
     func scheduleCheckInReminder() {
         let content = UNMutableNotificationContent()
-        content.title = L10n.text("Мы волнуемся за вас!")
-        content.body = L10n.text(
+        content.title = selectedLanguage.localized("Мы волнуемся за вас!")
+        content.body = selectedLanguage.localized(
             "Пожалуйста, подтвердите, что с вами всё хорошо"
         )
         content.sound = .default
@@ -1118,26 +1123,17 @@ struct ContentView: View {
         if let savedName, !savedName.isEmpty {
             userName = savedName
         } else {
-            userName = L10n.text("Пользователь MorningHello")
+            userName = "Пользователь MorningHello"
         }
 
-        if AppLanguage.selected == .englishUS {
-            return """
-Important: \(userName) hasn't confirmed that they're OK within the last \(checkInIntervalText).
-
-Please try to contact them directly.
-
-This is an automated MorningHello message. If there is an immediate threat to life or health, contact local emergency services.
-"""
-        }
-
-        return """
-Внимание. \(userName) не подтвердил(а), что с ним или с ней всё хорошо, в течение последних \(checkInIntervalText).
-
-Пожалуйста, попробуйте связаться с ним или с ней напрямую.
-
-Это автоматическое напоминание приложения MorningHello. Если существует непосредственная угроза жизни или здоровью, обратитесь в местные экстренные службы.
-"""
+        return String(
+            format: selectedLanguage.localized(
+                "Внимание. %@ не подтвердил(а), что с ним или с ней всё хорошо, в течение последних %@.\n\nПожалуйста, попробуйте связаться с ним или с ней напрямую.\n\nЭто автоматическое напоминание приложения MorningHello. Если существует непосредственная угроза жизни или здоровью, обратитесь в местные экстренные службы."
+            ),
+            locale: selectedLanguage.locale,
+            userName,
+            checkInIntervalText
+        )
     }
     var welcomeScreen: some View {
         ZStack(alignment: .top) {
@@ -1179,12 +1175,12 @@ This is an automated MorningHello message. If there is an immediate threat to li
                             )
                     }
                     .accessibilityLabel(
-                        L10n.text("Настройки")
+                       "Настройки"
                     )
                 }
                 .frame(maxWidth: .infinity)
 
-                Text(L10n.text("Как ты сегодня?"))
+                Text("Как ты сегодня?")
                     .font(
                         .system(
                             .title3,
@@ -1212,7 +1208,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                             Image(systemName: "heart.fill")
 
                             Text(
-                                L10n.text("Я в порядке")
+                                "Я в порядке"
                             )
                         }
                     }
@@ -1264,9 +1260,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         .foregroundColor(.orange)
 
                         Text(
-                            L10n.text(
                                 "Добавьте тревожный контакт"
-                            )
                         )
                         .font(
                             .system(
@@ -1281,10 +1275,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         .multilineTextAlignment(.center)
 
                         Text(
-                            L10n.format(
-                                "Без тревожного контакта приложение не сможет сообщить близким, если вы не отметитесь в течение %@.",
-                                checkInIntervalText
-                            )
+                            "Без тревожного контакта приложение не сможет сообщить близким, если вы не отметитесь в течение \(checkInIntervalText)."
                         )
                         .font(
                             .system(
@@ -1304,7 +1295,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                             showContacts = true
                         } label: {
                             Label(
-                                L10n.text("Добавить контакт"),
+                                "Добавить контакт",
                                 systemImage: "person.badge.plus"
                             )
                             .font(
@@ -1372,10 +1363,6 @@ This is an automated MorningHello message. If there is an immediate threat to li
             .safeAreaPadding(.top, 28)
         }
     }
-        var usesEnglishMonitoringText: Bool {
-            AppLanguage.selected == .englishUS
-        }
-
         func estimatedServerNow(
             from localDate: Date
         ) -> Date {
@@ -1398,25 +1385,23 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 minutes
             )
 
-            if usesEnglishMonitoringText {
-                return "\(hours)h \(minuteText)m"
-            }
-
-            return "\(hours) ч \(minuteText) мин"
+            let format = selectedLanguage.localized("%lld ч %02lld мин")
+            return String(
+                format: format,
+                locale: selectedLanguage.locale,
+                hours,
+                minutes
+            )
         }
 
         func countdownHeading(
             isOverdue: Bool
         ) -> String {
-            if isOverdue {
-                return usesEnglishMonitoringText
-                    ? "Check-in overdue by"
-                    : "Отметка просрочена на"
-            }
-
-            return usesEnglishMonitoringText
-                ? "Until your next check-in"
-                : "До следующей отметки"
+            selectedLanguage.localized(
+                isOverdue
+                    ? "Отметка просрочена на"
+                    : "До следующей отметки"
+            )
         }
 
         func deadlineHasPassed(
@@ -1530,11 +1515,9 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         }
 
                     case .needsCheckIn:
-                        Text(
-                            usesEnglishMonitoringText
-                                ? "Tap “I’m OK” to start monitoring"
-                                : "Нажмите «Я в порядке», чтобы запустить мониторинг"
-                        )
+                        Text(selectedLanguage.localized(
+                            "Нажмите «Я в порядке», чтобы запустить мониторинг"
+                        ))
                         .font(
                             .system(
                                 .headline,
@@ -1547,11 +1530,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         )
 
                     case .paused:
-                        Text(
-                            usesEnglishMonitoringText
-                                ? "Monitoring is paused"
-                                : "Мониторинг приостановлен"
-                        )
+                        Text(selectedLanguage.localized("Мониторинг приостановлен"))
                         .font(
                             .system(
                                 .headline,
@@ -1564,11 +1543,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         )
 
                     case .subscriptionEnded:
-                        Text(
-                            usesEnglishMonitoringText
-                                ? "Monitoring has stopped"
-                                : "Мониторинг остановлен"
-                        )
+                        Text(selectedLanguage.localized("Мониторинг остановлен"))
                         .font(
                             .system(
                                 .headline,
@@ -1584,11 +1559,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     ProgressView()
                         .tint(.orange)
 
-                    Text(
-                        usesEnglishMonitoringText
-                            ? "Getting monitoring status…"
-                            : "Получаем состояние мониторинга…"
-                    )
+                    Text(selectedLanguage.localized("Получаем состояние мониторинга…"))
                     .font(
                         .system(
                             .subheadline,
@@ -1599,11 +1570,9 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         AppAdaptiveColor.secondaryText
                     )
                 } else {
-                    Text(
-                        usesEnglishMonitoringText
-                            ? "Tap “I’m OK” to get your next due time"
-                            : "Нажмите «Я в порядке», чтобы получить время следующей отметки"
-                    )
+                    Text(selectedLanguage.localized(
+                        "Нажмите «Я в порядке», чтобы получить время следующей отметки"
+                    ))
                     .font(
                         .system(
                             .headline,
@@ -1636,17 +1605,11 @@ This is an automated MorningHello message. If there is an immediate threat to li
         var monitoringTechnicalStatus: some View {
             VStack(spacing: 5) {
                 if checkInRequestFailed {
-                    Text(
-                        usesEnglishMonitoringText
-                            ? "Couldn’t send the check-in. The due time hasn’t changed."
-                            : "Не удалось передать отметку. Срок не изменён."
-                    )
+                    Text(selectedLanguage.localized(
+                        "Не удалось передать отметку. Срок не изменён."
+                    ))
 
-                    Button(
-                        usesEnglishMonitoringText
-                            ? "Try again"
-                            : "Повторить"
-                    ) {
+                    Button(selectedLanguage.localized("Повторить")) {
                         Task {
                             await markAsAlive()
                         }
@@ -1655,17 +1618,11 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     .fontWeight(.semibold)
                     .buttonStyle(.plain)
                 } else if monitoringRequestFailed {
-                    Text(
-                        usesEnglishMonitoringText
-                            ? "No connection to the server. Showing the last known data."
-                            : "Нет связи с сервером. Показаны последние данные."
-                    )
+                    Text(selectedLanguage.localized(
+                        "Нет связи с сервером. Показаны последние данные."
+                    ))
 
-                    Button(
-                        usesEnglishMonitoringText
-                            ? "Refresh"
-                            : "Обновить"
-                    ) {
+                    Button(selectedLanguage.localized("Обновить")) {
                         Task {
                             await refreshMonitoringStatus()
                         }
@@ -1674,74 +1631,46 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     .fontWeight(.semibold)
                     .buttonStyle(.plain)
                 } else if isSendingCheckIn {
-                    Text(
-                        usesEnglishMonitoringText
-                            ? "Sending your check-in…"
-                            : "Передаём отметку…"
-                    )
+                    Text(selectedLanguage.localized("Передаём отметку…"))
                 } else if let snapshot = monitoringSnapshot {
                     switch snapshot.status {
                     case .active:
                         if deadlineHasPassed(in: snapshot) {
-                            Text(
-                                usesEnglishMonitoringText
-                                    ? "The due time has passed. Checking the server status…"
-                                    : "Срок отметки прошёл. Проверяем состояние на сервере…"
-                            )
+                            Text(selectedLanguage.localized(
+                                "Срок отметки прошёл. Проверяем состояние на сервере…"
+                            ))
                         } else if snapshot.lastCheckInAt == nil {
-                            Text(
-                                usesEnglishMonitoringText
-                                    ? "Monitoring is active"
-                                    : "Мониторинг активен"
-                            )
+                            Text(selectedLanguage.localized("Мониторинг активен"))
                         } else {
-                            Text(
-                                usesEnglishMonitoringText
-                                    ? "✓ Monitoring is active · Check-in accepted by the server"
-                                    : "✓ Мониторинг активен · Отметка принята сервером"
-                            )
+                            Text(selectedLanguage.localized(
+                                "✓ Мониторинг активен · Отметка принята сервером"
+                            ))
                         }
 
                     case .overdue:
-                        Text(
-                            usesEnglishMonitoringText
-                                ? "The server recorded a missed check-in"
-                                : "Сервер зафиксировал пропущенную отметку"
-                        )
+                        Text(selectedLanguage.localized(
+                            "Сервер зафиксировал пропущенную отметку"
+                        ))
 
                     case .needsCheckIn:
-                        Text(
-                            usesEnglishMonitoringText
-                                ? "Monitoring is waiting for your first check-in"
-                                : "Для запуска мониторинга нужна первая отметка"
-                        )
+                        Text(selectedLanguage.localized(
+                            "Для запуска мониторинга нужна первая отметка"
+                        ))
 
                     case .paused:
-                        Text(
-                            usesEnglishMonitoringText
-                                ? "Monitoring is paused"
-                                : "Мониторинг приостановлен"
-                        )
+                        Text(selectedLanguage.localized("Мониторинг приостановлен"))
 
                     case .subscriptionEnded:
-                        Text(
-                            usesEnglishMonitoringText
-                                ? "Monitoring stopped because the subscription ended"
-                                : "Мониторинг остановлен: подписка завершена"
-                        )
+                        Text(selectedLanguage.localized(
+                            "Мониторинг остановлен: подписка завершена"
+                        ))
                     }
                 } else if isRefreshingMonitoring {
-                    Text(
-                        usesEnglishMonitoringText
-                            ? "Updating monitoring status…"
-                            : "Обновляем состояние мониторинга…"
-                    )
+                    Text(selectedLanguage.localized("Обновляем состояние мониторинга…"))
                 } else {
-                    Text(
-                        usesEnglishMonitoringText
-                            ? "Monitoring status is not available yet"
-                            : "Состояние мониторинга пока не получено"
-                    )
+                    Text(selectedLanguage.localized(
+                        "Состояние мониторинга пока не получено"
+                    ))
                 }
             }
             .font(
@@ -1779,7 +1708,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         .font(.system(size: 25, weight: .semibold))
                         .fixedSize()
 
-                    Text(L10n.text(title))
+                    Text(selectedLanguage.localized(title))
                         .font(
                             .system(
                                 .headline,
@@ -1793,7 +1722,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
 
-                Text(L10n.text(subtitle))
+                Text(selectedLanguage.localized(subtitle))
                     .font(
                         .system(
                             .caption2,
@@ -1820,16 +1749,16 @@ This is an automated MorningHello message. If there is an immediate threat to li
 
             switch hour {
             case 5..<12:
-                return L10n.text("Доброе утро")
+                return "Доброе утро"
 
             case 12..<18:
-                return L10n.text("Добрый день")
+                return "Добрый день"
 
             case 18..<22:
-                return L10n.text("Добрый вечер")
+                return "Добрый вечер"
 
             default:
-                return L10n.text("Доброй ночи")
+                return "Доброй ночи"
             }
         }
          var currentPostcard: SelectedPostcard {
@@ -2109,9 +2038,9 @@ This is an automated MorningHello message. If there is an immediate threat to li
             currentPostcard.image
         }
 
-        var smartPhrase: String {
-            L10n.postcard(currentPostcard.phrase)
-        }
+    var smartPhrase: String {
+        selectedLanguage.localized(currentPostcard.phrase)
+    }
         var postcardScreen: some View {
             PostcardScreen(
                 imageName: smartImage,
@@ -2133,7 +2062,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                 }
             )
             .confirmationDialog(
-                L10n.text("Как отправить открытку?"),
+                "Как отправить открытку?",
                 isPresented: $showContactForWhatsApp,
                 titleVisibility: .visible
             ) {
@@ -2152,7 +2081,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     }
                 }
 
-                Button(L10n.text("Выбрать мессенджер")) {
+                Button("Выбрать мессенджер") {
                     DispatchQueue.main.asyncAfter(
                         deadline: .now() + 0.5
                     ) {
@@ -2163,7 +2092,7 @@ This is an automated MorningHello message. If there is an immediate threat to li
                     }
                 }
 
-                Button(L10n.text("Отмена"), role: .cancel) {
+                Button("Отмена", role: .cancel) {
                 }
             }
 
@@ -2313,31 +2242,32 @@ This is an automated MorningHello message. If there is an immediate threat to li
                         showEmergencyMessageAlert = true
                     }
                     .alert(
-                        L10n.format(
-                            "Прошло %@",
-                            checkInIntervalText
-                        ),
+                        "Прошло \(checkInIntervalText)",
                         isPresented: $showEmergencyMessageAlert
                     ) {
-                        Button(L10n.text("Открыть WhatsApp")) {
+                        Button("Открыть WhatsApp") {
                             showEmergencyContactSelection = true
                         }
 
-                        Button(L10n.text("Открыть Сообщения")) {
+                        Button("Открыть Сообщения") {
                             showMessageComposer = true
                         }
 
-                        Button(L10n.text("Отмена"), role: .cancel) {
+                        Button("Отмена", role: .cancel) {
                         }
                     } message: {
                         Text(
-                            AppLanguage.selected == .englishUS
-                            ? "The user hasn't confirmed that they're OK within the last \(checkInIntervalText).\n\nPrepare a message for the emergency contacts?"
-                            : "Пользователь не подтвердил, что с ним всё хорошо, в течение последних \(checkInIntervalText).\n\nПодготовить сообщение тревожным контактам?"
+                            String(
+                                format: selectedLanguage.localized(
+                                    "Пользователь не подтвердил, что с ним всё хорошо, в течение последних %@.\n\nПодготовить сообщение тревожным контактам?"
+                                ),
+                                locale: selectedLanguage.locale,
+                                checkInIntervalText
+                            )
                         )
                     }
                     .confirmationDialog(
-                        L10n.text("Кому открыть сообщение?"),
+                        "Кому открыть сообщение?",
                         isPresented: $showEmergencyContactSelection
                     ) {
                         ForEach(
@@ -2353,11 +2283,12 @@ This is an automated MorningHello message. If there is an immediate threat to li
                             }
                         }
 
-                        Button(L10n.text("Отмена"), role: .cancel) {
+                        Button("Отмена", role: .cancel) {
                         }
                     }
                 }
             }
+            .environment(\.locale, selectedLanguage.locale)
         }
         func augustOrdinaryDayIndex(
             for date: Date

@@ -15,6 +15,6 @@ struct SelectedPostcard {
         phrase: String
     ) {
         self.image = image
-        self.phrase = L10n.postcard(phrase)
+        self.phrase = phrase
     }
 }

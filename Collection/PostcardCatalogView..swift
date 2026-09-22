@@ -57,12 +57,12 @@ struct PostcardCatalogView: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 18))
                                 
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Text(L10n.text("Поздравить с днём рождения"))
+                                    Text("Поздравить с днём рождения")
                                         .font(.system(.title3, design: .rounded).weight(.semibold))
                                         .foregroundStyle(AppAdaptiveColor.text)
                                         .multilineTextAlignment(.leading)
                                     
-                                    Text(L10n.text("Выбрать открытку ко дню рождения"))
+                                    Text("Выбрать открытку ко дню рождения")
                                         .font(.subheadline)
                                         .foregroundStyle(AppAdaptiveColor.secondaryText)
                                         .multilineTextAlignment(.leading)
@@ -105,7 +105,7 @@ struct PostcardCatalogView: View {
                     .padding(.bottom, 40)
                 }
             }
-            .navigationTitle(L10n.text("Категории открыток"))
+            .navigationTitle("Категории открыток")
             .navigationBarTitleDisplayMode(
                 .inline
             )
@@ -165,7 +165,7 @@ struct PostcardCatalogView: View {
                     Image(systemName: collection.systemImage)
                         .foregroundStyle(.orange)
 
-                    Text(collection.title)
+                    Text(AppLanguage.selected.localized(collection.title))
                         .font(
                             .system(
                                 .title3,
@@ -179,8 +179,9 @@ struct PostcardCatalogView: View {
                 }
 
                 Text(
-                    L10n.format(
-                        "%d открыток",
+                    String(
+                        format: AppLanguage.selected.localized("%d открыток"),
+                        locale: AppLanguage.selected.locale,
                         collection.assetNames.count
                     )
                 )
@@ -217,10 +218,8 @@ struct PostcardCatalogView: View {
 
             VStack(alignment: .leading, spacing: 8) {
                 Text(
-                    L10n.text(
                         "Поздравить с днём рождения"
                     )
-                )
                 .font(
                     .system(
                         .title3,
@@ -232,9 +231,7 @@ struct PostcardCatalogView: View {
                 .multilineTextAlignment(.leading)
 
                 Text(
-                    L10n.text(
                         "Выбрать открытку ко дню рождения"
-                    )
                 )
                 .font(.subheadline)
                 .foregroundStyle(

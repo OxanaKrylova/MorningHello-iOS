@@ -200,7 +200,7 @@ struct HolidaySettingsView: View {
             isOn: isOn
         ) {
             Label(
-                L10n.text(title),
+               AppLanguage.selected.localized(title),
                 systemImage: systemImage
             )
             .font(
@@ -271,7 +271,7 @@ struct HolidaySettingsView: View {
                 .orange.opacity(0.85)
             )
 
-            Text(L10n.text(text))
+            Text(AppLanguage.selected.localized(text))
         }
     }
 
@@ -311,11 +311,9 @@ struct HolidaySettingsView: View {
                 )
 
                 Text(
-                    L10n.text(
                         showDetails
                         ? "Скрыть список праздников"
                         : "Полный список праздников"
-                    )
                 )
 
                 Image(
@@ -427,7 +425,7 @@ struct HolidaySettingsView: View {
                     )
                     .foregroundColor(.orange)
 
-                    Text(L10n.text(title))
+                    Text(AppLanguage.selected.localized(title))
                         .font(
                             .system(
                                 .headline,
@@ -527,7 +525,7 @@ struct HolidaySettingsView: View {
                                 alignment: .trailing
                             )
 
-                            Text(L10n.text(holiday))
+                            Text(AppLanguage.selected.localized(holiday))
                                 .foregroundColor(AppAdaptiveColor.text)
                                 .frame(
                                     maxWidth:

@@ -32,7 +32,7 @@ private enum FeedbackType: String, Identifiable {
             "Просто написать"
         }
 
-        return L10n.text(key)
+        return AppLanguage.selected.localized(key)
     }
 
     var icon: String {
@@ -60,69 +60,22 @@ private enum FeedbackType: String, Identifiable {
             "Сообщение разработчику"
         }
 
-        return L10n.text(key)
+        return AppLanguage.selected.localized(key)
     }
 
     var messageBody: String {
-        if AppLanguage.selected == .englishUS {
-            switch self {
-            case .holiday:
-                return """
-                I'd like to suggest a holiday.
-
-                Name:
-
-                Date:
-
-                Why it matters:
-
-                """
-
-            case .problem:
-                return """
-                Please describe the issue:
-
-                What happened:
-
-                Which screen were you on?
-
-                """
-
-            case .message:
-                return "Hello!\n\n"
-            }
-        }
-
-        switch self {
+        let key: String = switch self {
         case .holiday:
-            return """
-            Я хотел(а) предложить новый праздник.
-
-            Название:
-
-            Дата:
-
-            Почему он важен:
-
-            """
+            "Я хотел(а) предложить новый праздник.\n\nНазвание:\n\nДата:\n\nПочему он важен:\n\n"
 
         case .problem:
-            return """
-            Опишите проблему:
-
-            Что произошло:
-
-            На каком экране:
-
-            """
+            "Опишите проблему:\n\nЧто произошло:\n\nНа каком экране:\n\n"
 
         case .message:
-            return """
-            Здравствуйте!
-
-
-            """
+            "Здравствуйте!\n\n"
         }
+
+        return AppLanguage.selected.localized(key)
     }
 
     /// Для SMS/iMessage добавляем тему прямо в текст,
@@ -258,7 +211,7 @@ struct FeedbackView: View {
             Button("Понятно", role: .cancel) {
             }
         } message: {
-            Text(L10n.text(unavailableMessage))
+            Text(unavailableMessage)
         }
     }
 

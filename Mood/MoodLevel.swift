@@ -21,11 +21,11 @@ enum MoodLevel: Int, CaseIterable, Identifiable, Codable {
 
     var title: String {
         switch self {
-        case .zen: return L10n.text("Дзен")
-        case .calm: return L10n.text("Спокойно")
-        case .slightlyAnxious: return L10n.text("Немного тревожно")
-        case .worried: return L10n.text("Волнуюсь")
-        case .panic: return L10n.text("В панике")
+        case .zen: return "Дзен"
+        case .calm: return "Спокойно"
+        case .slightlyAnxious: return "Немного тревожно"
+        case .worried: return "Волнуюсь"
+        case .panic: return "В панике"
         }
     }
 
@@ -45,11 +45,7 @@ enum MoodLevel: Int, CaseIterable, Identifiable, Codable {
     }
 
     var accessibilityText: String {
-        L10n.format(
-            "Уровень спокойствия %lld: %@",
-            rawValue,
-            title
-        )
+        "Уровень спокойствия \(rawValue): \(title)"
     }
 }
 

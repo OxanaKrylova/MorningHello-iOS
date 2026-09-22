@@ -113,15 +113,10 @@ struct ProfileView: View {
             ) ?? countryCode
     }
 
-    private var isEnglishProfile: Bool {
-        AppLanguage.selected == .englishUS
-    }
-
     private func profileText(
-        ru: String,
-        en: String
+        _ key: String
     ) -> String {
-        isEnglishProfile ? en : ru
+        AppLanguage.selected.localized(key)
     }
     
     private var canCloseProfile: Bool {
@@ -208,8 +203,7 @@ struct ProfileView: View {
         } message: {
             Text(
                 profileText(
-                    ru: "Пожалуйста, заполните имя, форму обращения, страну проживания, день и месяц рождения и выберите интервал тревожного оповещения.",
-                    en: "Please enter your name, salutation, country of residence, day and month of birth, and select a monitoring interval."
+                    "Пожалуйста, заполните имя, форму обращения, страну проживания, день и месяц рождения и выберите интервал тревожного оповещения."
                 )
             )
         }
@@ -431,7 +425,11 @@ struct ProfileView: View {
                     ForEach(
                         ProfileSalutation.allCases
                     ) { option in
-                        Text(L10n.text(option.rawValue))
+                        Text(
+                            AppLanguage.selected.localized(
+                                option.rawValue
+                            )
+                        )
                             .tag(option.rawValue)
                     }
                 }
@@ -532,8 +530,7 @@ struct ProfileView: View {
             Label {
                 Text(
                     profileText(
-                        ru: "Страна проживания",
-                        en: "Country of residence"
+                        "Страна проживания"
                     )
                 )
             } icon: {
@@ -551,8 +548,7 @@ struct ProfileView: View {
 
             Text(
                 profileText(
-                    ru: "Выберите страну, в которой вы постоянно проживаете.",
-                    en: "Select the country where you currently live."
+                    "Выберите страну, в которой вы постоянно проживаете."
                 )
             )
             .font(
@@ -573,8 +569,7 @@ struct ProfileView: View {
                     Text(
                         countryCode.isEmpty
                             ? profileText(
-                                ru: "Выберите страну",
-                                en: "Select a country"
+                                "Выберите страну"
                             )
                             : selectedCountryName
                     )
@@ -624,8 +619,7 @@ struct ProfileView: View {
             if countryCode.isEmpty {
                 Label(
                     profileText(
-                        ru: "Выберите страну проживания",
-                        en: "Select your country of residence"
+                        "Выберите страну проживания"
                     ),
                     systemImage:
                         "exclamationmark.circle.fill"
@@ -640,8 +634,7 @@ struct ProfileView: View {
             } else {
                 Label(
                     profileText(
-                        ru: "Страна сохранена",
-                        en: "Country saved"
+                        "Страна сохранена"
                     ),
                     systemImage: "checkmark.circle.fill"
                 )
@@ -700,7 +693,11 @@ struct ProfileView: View {
             
             if let birthdayMessage {
                 Label {
-                    Text(L10n.text(birthdayMessage.text))
+                    Text(
+                        AppLanguage.selected.localized(
+                            birthdayMessage.text
+                        )
+                    )
                 } icon: {
                     Image(
                         systemName: birthdayMessage.icon
@@ -739,7 +736,7 @@ struct ProfileView: View {
         maximumLength: Int
     ) -> some View {
         VStack(alignment: .leading, spacing: 7) {
-            Text(L10n.text(title))
+            Text(AppLanguage.selected.localized(title))
                 .font(
                     .system(
                         .subheadline,
@@ -910,7 +907,9 @@ struct ProfileView: View {
             else {
                 return BirthdayMessage(
                     text:
-                        "Введите дату от 1 до 31 и месяц от 1 до 12.",
+                        AppLanguage.selected.localized(
+                            "Введите дату от 1 до 31 и месяц от 1 до 12."
+                        ),
                     icon:
                         "exclamationmark.circle.fill",
                     color:
@@ -924,7 +923,9 @@ struct ProfileView: View {
             ) else {
                 return BirthdayMessage(
                     text:
-                        "Такой календарной даты не существует.",
+                        AppLanguage.selected.localized(
+                            "Такой календарной даты не существует."
+                        ),
                     icon:
                         "exclamationmark.circle.fill",
                     color:
@@ -933,14 +934,18 @@ struct ProfileView: View {
             }
             
             return BirthdayMessage(
-                text: L10n.format(
-                    "Дата сохранена: %@.",
-                    formattedBirthday(day: day, month: month)
+                text: String(
+                    format: AppLanguage.selected.localized(
+                        "Дата сохранена: %@."
+                    ),
+                    locale: AppLanguage.selected.locale,
+                    formattedBirthday(
+                        day: day,
+                        month: month
+                    )
                 ),
-                icon:
-                    "checkmark.circle.fill",
-                color:
-                        .green
+                icon: "checkmark.circle.fill",
+                color: .green
             )
         }
         
@@ -1054,10 +1059,6 @@ struct ProfileView: View {
 
         @State private var searchText = ""
 
-        private var isEnglish: Bool {
-            AppLanguage.selected == .englishUS
-        }
-
         private var countries: [ProfileCountry] {
             let locale = AppLanguage.selected.locale
 
@@ -1140,25 +1141,19 @@ struct ProfileView: View {
                     AppAdaptiveColor.warmFormBackground
                 )
                 .navigationTitle(
-                    isEnglish
-                        ? "Country of residence"
-                        : "Страна проживания"
+                    AppLanguage.selected.localized("Страна проживания")
                 )
                 .navigationBarTitleDisplayMode(.inline)
                 .searchable(
                     text: $searchText,
-                    prompt: isEnglish
-                        ? "Search country"
-                        : "Найти страну"
+                    prompt: AppLanguage.selected.localized("Найти страну")
                 )
                 .toolbar {
                     ToolbarItem(
                         placement: .topBarTrailing
                     ) {
                         Button(
-                            isEnglish
-                                ? "Cancel"
-                                : "Отмена"
+                            AppLanguage.selected.localized("Отмена")
                         ) {
                             dismiss()
                         }

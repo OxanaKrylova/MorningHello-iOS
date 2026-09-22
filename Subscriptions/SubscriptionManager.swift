@@ -372,13 +372,10 @@ private enum SubscriptionPurchaseError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .failedVerification:
-            return L10n.text(
-                "App Store не удалось подтвердить покупку."
-            )
+            return "App Store не удалось подтвердить покупку."
         case .unknownResult:
-            return L10n.text(
+            return
                 "App Store вернул неизвестный результат покупки."
-            )
         }
     }
 }

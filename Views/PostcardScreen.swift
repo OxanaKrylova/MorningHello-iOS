@@ -58,7 +58,7 @@ struct PostcardScreen: View {
                 )
 
                 if !trimmedPhrase.isEmpty {
-                    Text(L10n.postcard(phrase))
+                    Text(AppLanguage.selected.localized(phrase))
                         .font(
                             .system(
                                 .title2,
@@ -161,7 +161,7 @@ struct PostcardScreen: View {
                                 Image(systemName: "pencil")
                                     .font(.title3)
 
-                                Text(L10n.text("Напиши"))
+                                Text("Напиши")
                                     .font(
                                         .system(
                                             size: 11,
@@ -264,7 +264,7 @@ struct PostcardScreen: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 12) {
 
-                Text(L10n.text("Напиши текст для открытки"))
+                Text("Напиши текст для открытки")
                     .font(
                         .system(
                             .headline,
@@ -276,7 +276,7 @@ struct PostcardScreen: View {
                 ZStack(alignment: .topLeading) {
 
                     if customMessage.isEmpty {
-                        Text(L10n.text("Напиши пару тёплых слов..."))
+                        Text("Напиши пару тёплых слов...")
                             .font(
                                 .system(
                                     .body,
@@ -338,13 +338,13 @@ struct PostcardScreen: View {
                 Spacer()
             }
             .padding(20)
-            .navigationTitle(L10n.text("Текст открытки"))
+            .navigationTitle("Текст открытки")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(
                     placement: .topBarTrailing
                 ) {
-                    Button(L10n.text("Готово")) {
+                    Button("Готово") {
                         isCustomMessageFocused = false
                         showCustomMessageEditor = false
                     }

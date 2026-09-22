@@ -96,7 +96,7 @@ struct PostcardCollectionView: View {
             }
         }
         .navigationTitle(
-            collection.title
+            AppLanguage.selected.localized(collection.title)
         )
         .navigationBarTitleDisplayMode(
             .inline

@@ -35,7 +35,7 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
 
         switch self {
         case .protestant_church:
-            return L10n.text("Протестантизм")
+            return "Протестантизм"
         case .orthodox_church:
             return isEnglish ? "Orthodox Christianity" : "Православие"
         case .shabbat:

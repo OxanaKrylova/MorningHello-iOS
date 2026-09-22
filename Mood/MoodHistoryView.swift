@@ -6,20 +6,23 @@ struct MoodHistoryView: View {
     @Environment(\.modelContext) private var modelContext
     @StateObject private var store = MoodStore()
 
+    @AppStorage(AppLanguage.storageKey)
+    private var selectedLanguageCode: String = AppLanguage.initial.rawValue
+    
     @State private var selectedPeriod = 7
     @State private var showDeleteConfirmation = false
-
+    
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     Picker("Период", selection: $selectedPeriod) {
-                        Text(L10n.text("7 дней")).tag(7)
-                        Text(L10n.text("30 дней")).tag(30)
+                        Text("7 дней").tag(7)
+                        Text("30 дней").tag(30)
                     }
                     .pickerStyle(.segmented)
                     .accessibilityHint("Выберите период отображения истории")
-
+                    
                     if store.history.isEmpty {
                         ContentUnavailableView(
                             "Пока нет отметок",
@@ -34,22 +37,22 @@ struct MoodHistoryView: View {
                             entries: store.history,
                             days: selectedPeriod
                         )
-
+                        
                         historyList
                     }
-
+                    
                     if let errorMessage = store.errorMessage {
-                        Text(errorMessage)
+                        Text(selectedLanguage.localized(errorMessage))
                             .font(.footnote)
                             .foregroundStyle(.red)
                             .multilineTextAlignment(.center)
                     }
-
+                    
                     Button(role: .destructive) {
                         showDeleteConfirmation = true
                     } label: {
                         Label(
-                            L10n.text("Удалить историю состояний"),
+                            "Удалить историю состояний",
                             systemImage: "trash"
                         )
                         .font(.system(.body, design: .rounded).weight(.semibold))
@@ -73,11 +76,11 @@ struct MoodHistoryView: View {
                 AppAdaptiveColor.warmFormBackground
                     .ignoresSafeArea()
             )
-            .navigationTitle(L10n.text("История спокойствия"))
+            .navigationTitle("История спокойствия")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(L10n.text("Готово")) {
+                    Button("Готово") {
                         dismiss()
                     }
                 }
@@ -97,34 +100,44 @@ struct MoodHistoryView: View {
                 Button("Удалить", role: .destructive) {
                     store.deleteHistory()
                 }
-
+                
                 Button("Отмена", role: .cancel) {}
             } message: {
                 Text("Это действие нельзя отменить.")
             }
+            .environment(\.locale, selectedLanguage.locale)
         }
     }
 
+    private var selectedLanguage: AppLanguage {
+        AppLanguage(rawValue: selectedLanguageCode) ?? AppLanguage.initial
+    }
+    
     private var historyList: some View {
-        LazyVStack(spacing: 10) {
-            ForEach(store.history.reversed(), id: \.id) { entry in
+        let entries: [MoodEntry] = Array(store.history.reversed())
+        
+        return LazyVStack(spacing: 10) {
+            ForEach(
+                entries,
+                id: \MoodEntry.recordedAt
+            ) { (entry: MoodEntry) in
                 if let level = entry.moodLevel {
                     HStack(spacing: 14) {
                         Text(level.emoji)
                             .font(.system(size: 30))
                             .accessibilityHidden(true)
-
+                        
                         VStack(alignment: .leading, spacing: 3) {
                             Text(formattedDate(entry.recordedAt))
                                 .font(.system(.body, design: .rounded).weight(.semibold))
-
-                            Text(level.title)
+                            
+                            Text(selectedLanguage.localized(level.title))
                                 .font(.system(.subheadline, design: .rounded))
                                 .foregroundStyle(.secondary)
                         }
-
+                        
                         Spacer()
-
+                        
                         Circle()
                             .fill(level.color)
                             .frame(width: 16, height: 16)
@@ -140,23 +153,26 @@ struct MoodHistoryView: View {
                     )
                     .accessibilityElement(children: .ignore)
                     .accessibilityLabel(
-                        L10n.format(
-                            "%@, состояние «%@»",
+                        String(
+                            format: selectedLanguage.localized(
+                                "%@, состояние «%@»"
+                            ),
+                            locale: selectedLanguage.locale,
                             formattedDate(entry.recordedAt),
-                            level.title
+                            selectedLanguage.localized(level.title)
                         )
                     )
                 }
             }
         }
-    }
-
-    private func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.locale = AppLanguage.selected.locale
-        formatter.timeZone = .current
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter.string(from: date)
+        
+        func formattedDate(_ date: Date) -> String {
+            let formatter = DateFormatter()
+            formatter.locale = selectedLanguage.locale
+            formatter.timeZone = .current
+            formatter.dateStyle = .long
+            formatter.timeStyle = .none
+            return formatter.string(from: date)
+        }
     }
 }

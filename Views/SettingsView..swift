@@ -7,9 +7,6 @@
 
 import SwiftUI
 
-private let titleColor = AppAdaptiveColor.text
-private let textColor = AppAdaptiveColor.text
-
 struct SettingsView: View {
 
     @Environment(\.dismiss)
@@ -19,17 +16,45 @@ struct SettingsView: View {
     private var areSoundsEnabled = true
 
     @AppStorage(AppLanguage.storageKey)
-    private var selectedLanguageCode = AppLanguage.initial.rawValue
+    private var selectedLanguageRawValue = AppLanguage.initial.rawValue
 
     @State private var showProfile = false
     @State private var showContacts = false
     @State private var showHolidaySettings = false
-    @State private var showSubscription = false
     @State private var showFeedback = false
-    
-    private let backgroundColor = AppAdaptiveColor.warmFormBackground
-    private let titleColor = AppAdaptiveColor.text
-    private let textColor = AppAdaptiveColor.text
+
+    private let backgroundColor = Color(
+        red: 1.00,
+        green: 0.96,
+        blue: 0.88
+    )
+
+    private let titleColor = Color(
+        red: 0.55,
+        green: 0.30,
+        blue: 0.14
+    )
+
+    private let textColor = Color(
+        red: 0.12,
+        green: 0.16,
+        blue: 0.28
+    )
+
+    private var selectedLanguage: AppLanguage {
+        AppLanguage(rawValue: selectedLanguageRawValue) ?? .initial
+    }
+
+    private var selectedLanguageBinding: Binding<AppLanguage> {
+        Binding(
+            get: {
+                selectedLanguage
+            },
+            set: { language in
+                selectedLanguageRawValue = language.rawValue
+            }
+        )
+    }
 
     var body: some View {
         NavigationStack {
@@ -40,7 +65,6 @@ struct SettingsView: View {
                 ScrollView {
                     VStack(spacing: 24) {
                         monitoringSection
-                        subscriptionSection
                         soundSection
                         languageSection
                         feedbackSection
@@ -49,13 +73,13 @@ struct SettingsView: View {
                     .padding(.vertical, 24)
                 }
             }
-            .navigationTitle(L10n.text("Настройки"))
+            .navigationTitle("Настройки")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(
                     placement: .confirmationAction
                 ) {
-                    Button(L10n.text("Готово")) {
+                    Button("Готово") {
                         dismiss()
                     }
                     .foregroundStyle(titleColor)
@@ -71,9 +95,6 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $showHolidaySettings) {
             HolidaySettingsView()
-        }
-        .sheet(isPresented: $showSubscription) {
-            SubscriptionView()
         }
         .sheet(isPresented: $showFeedback) {
             FeedbackView()
@@ -92,12 +113,10 @@ struct SettingsView: View {
         .onChange(of: showHolidaySettings) { _, isShowing in
             playOpeningSound(if: isShowing)
         }
-        .onChange(of: showSubscription) { _, isShowing in
-            playOpeningSound(if: isShowing)
-        }
         .onChange(of: showFeedback) { _, isShowing in
             playOpeningSound(if: isShowing)
         }
+        .environment(\.locale, selectedLanguage.locale)
     }
 
     // MARK: - Данные и мониторинг
@@ -144,23 +163,6 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: - Подписка
-
-    private var subscriptionSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            sectionTitle("Подписка")
-
-            settingsRow(
-                title: "Текущая подписка",
-                subtitle: "Тариф, срок действия и управление",
-                systemImage: "creditcard.fill"
-            ) {
-                showSubscription = true
-            }
-            .settingsCard()
-        }
-    }
-
     // MARK: - Звук
 
     private var soundSection: some View {
@@ -175,7 +177,7 @@ struct SettingsView: View {
                     isOn: $areSoundsEnabled
                 ) {
                     Label(
-                        L10n.text("Звуки приложения"),
+                        "Звуки приложения",
                         systemImage:
                             areSoundsEnabled
                             ? "speaker.wave.2.fill"
@@ -186,7 +188,7 @@ struct SettingsView: View {
                 .tint(.orange)
 
                 Text(
-                    L10n.text("Звуки сопровождают отметку «Я в порядке» и открытие экранов приложения.")
+                    "Звуки сопровождают отметку «Я в порядке» и открытие экранов приложения."
                 )
                 .font(.footnote)
                 .foregroundStyle(.secondary)
@@ -202,42 +204,42 @@ struct SettingsView: View {
     // MARK: - Язык
 
     private var languageSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 16) {
-                Label(
-                    L10n.text("Язык приложения"),
-                    systemImage: "globe"
-                )
-                .foregroundStyle(textColor)
+        VStack(
+            alignment: .leading,
+            spacing: 12
+        ) {
+            sectionTitle("Язык")
 
-                Spacer(minLength: 8)
-
+            VStack(spacing: 12) {
                 Picker(
-                    L10n.text("Язык приложения"),
-                    selection: $selectedLanguageCode
+                    selection: selectedLanguageBinding
                 ) {
-                    Text(verbatim: "Русский")
-                        .tag(AppLanguage.russian.rawValue)
-
-                    Text(verbatim: "English")
-                        .tag(AppLanguage.englishUS.rawValue)
+                    ForEach(AppLanguage.allCases) { language in
+                        Text(language.titleKey)
+                            .tag(language)
+                    }
+                } label: {
+                    Label(
+                        "Язык приложения",
+                        systemImage: "globe"
+                    )
+                    .foregroundStyle(textColor)
                 }
-                .labelsHidden()
                 .pickerStyle(.menu)
                 .tint(titleColor)
-                .fixedSize(horizontal: true, vertical: false)
-                .frame(minWidth: 120, alignment: .trailing)
-            }
 
-            Text(
-                L10n.text(
-                    "Выберите язык интерфейса приложения. Мониторинг будет вестись на выбранном языке."
+                Text(
+                    "Язык применяется сразу ко всем экранам приложения."
                 )
-            )
-            .font(.footnote)
-            .foregroundStyle(.secondary)
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .leading
+                )
+            }
+            .settingsCard()
         }
-        .settingsCard()
     }
 
     // MARK: - Связь
@@ -258,7 +260,7 @@ struct SettingsView: View {
                     showFeedback = true
                 }
 
-                Text(L10n.text("Я читаю все сообщения лично"))
+                Text("Я читаю все сообщения лично")
                     .font(
                         .system(
                             .footnote,
@@ -288,7 +290,7 @@ struct SettingsView: View {
 
             VStack(spacing: 16) {
                 HStack {
-                    Text(L10n.text("Версия"))
+                    Text("Версия")
                     Spacer()
                     Text(Bundle.main.appVersion)
                         .foregroundStyle(.secondary)
@@ -297,7 +299,7 @@ struct SettingsView: View {
                 Divider()
 
                 HStack {
-                    Text(L10n.text("Номер сборки"))
+                    Text("Номер сборки")
                     Spacer()
                     Text(Bundle.main.buildNumber)
                         .foregroundStyle(.secondary)
@@ -311,8 +313,8 @@ struct SettingsView: View {
     // MARK: - Элементы интерфейса
 
     private func settingsRow(
-        title: String,
-        subtitle: String,
+        title: LocalizedStringKey,
+        subtitle: LocalizedStringKey,
         systemImage: String,
         action: @escaping () -> Void
     ) -> some View {
@@ -327,7 +329,7 @@ struct SettingsView: View {
                     alignment: .leading,
                     spacing: 3
                 ) {
-                    Text(L10n.text(title))
+                    Text(title)
                         .font(
                             .system(
                                 .headline,
@@ -336,7 +338,7 @@ struct SettingsView: View {
                         )
                         .foregroundStyle(textColor)
 
-                    Text(L10n.text(subtitle))
+                    Text(subtitle)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.leading)
@@ -364,9 +366,9 @@ struct SettingsView: View {
     }
 
     private func sectionTitle(
-        _ title: String
+        _ title: LocalizedStringKey
     ) -> some View {
-        Text(L10n.text(title))
+        Text(title)
             .font(
                 .system(
                     .headline,
@@ -395,7 +397,7 @@ private extension View {
         self
             .padding(.horizontal, 20)
             .padding(.vertical, 18)
-            .background(AppAdaptiveColor.secondaryBackground)
+            .background(.white.opacity(0.72))
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: 28,
@@ -403,7 +405,7 @@ private extension View {
                 )
             )
             .shadow(
-                color: AppAdaptiveColor.separator.opacity(0.20),
+                color: .brown.opacity(0.06),
                 radius: 8,
                 x: 0,
                 y: 4

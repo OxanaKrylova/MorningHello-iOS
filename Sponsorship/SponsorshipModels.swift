@@ -187,56 +187,47 @@ enum SponsorshipAPIError: LocalizedError {
     case missingAppleCredential
     case invalidTransaction
     case missingPendingSponsorship
-
+    
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return L10n.text("Не удалось сформировать адрес запроса.")
+            return "Не удалось сформировать адрес запроса."
+            
         case .invalidResponse:
-            return L10n.text("Сервер вернул неизвестный ответ.")
+            return "Сервер вернул неизвестный ответ."
+            
         case .unauthorized:
-            return L10n.text(
-                "Сеанс завершён. Войдите через Apple ещё раз."
-            )
+            return "Сеанс завершён. Войдите через Apple ещё раз."
+            
         case let .server(statusCode, message):
             if let message, !message.isEmpty {
-                return L10n.format(
-                    "Ошибка сервера %d: %@",
-                    statusCode,
-                    message
-                )
+                return "Ошибка сервера \(statusCode): \(message)"
             }
-            return L10n.format(
-                "Ошибка сервера %d.",
-                statusCode
-            )
+            
+            return "Ошибка сервера \(statusCode)."
+            
         case .missingAppleCredential:
-            return L10n.text(
-                "Apple не передал данные, необходимые для входа."
-            )
+            return "Apple не передал данные, необходимые для входа."
+            
         case .invalidTransaction:
-            return L10n.text(
-                "App Store не удалось подтвердить покупку."
-            )
+            return "App Store не удалось подтвердить покупку."
+            
         case .missingPendingSponsorship:
-            return L10n.text(
-                "Не найдено принятое приглашение для этой покупки."
-            )
+            return "Не найдено принятое приглашение для этой покупки."
         }
     }
 }
-
-enum AppInstanceIdentity {
-    static var id: UUID {
-        let key = "app_instance_id"
-
-        if let value = UserDefaults.standard.string(forKey: key),
-           let id = UUID(uuidString: value) {
+    enum AppInstanceIdentity {
+        static var id: UUID {
+            let key = "app_instance_id"
+            
+            if let value = UserDefaults.standard.string(forKey: key),
+               let id = UUID(uuidString: value) {
+                return id
+            }
+            
+            let id = UUID()
+            UserDefaults.standard.set(id.uuidString, forKey: key)
             return id
         }
-
-        let id = UUID()
-        UserDefaults.standard.set(id.uuidString, forKey: key)
-        return id
     }
-}

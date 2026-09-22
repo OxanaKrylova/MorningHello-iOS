@@ -24,13 +24,13 @@ struct MoodChartView: View {
             ForEach(segments) { segment in
                 ForEach(segment.points) { point in
                     LineMark(
-                        x: .value(L10n.text("Дата отметки"), point.date),
+                        x: .value("Дата отметки", point.date),
                         y: .value(
-                            L10n.text("Состояние"),
+                            "Состояние",
                             point.level.rawValue
                         ),
                         series: .value(
-                            L10n.text("Отрезок"),
+                           "Отрезок",
                             segment.id
                         )
                     )
@@ -41,20 +41,16 @@ struct MoodChartView: View {
 
             ForEach(points) { point in
                 PointMark(
-                    x: .value(L10n.text("Дата отметки"), point.date),
+                    x: .value("Дата отметки", point.date),
                     y: .value(
-                        L10n.text("Состояние"),
+                        "Состояние",
                         point.level.rawValue
                     )
                 )
                 .foregroundStyle(point.level.color)
                 .symbolSize(95)
                 .accessibilityLabel(
-                    L10n.format(
-                        "%@, состояние «%@»",
-                        formattedDate(point.date),
-                        point.level.title
-                    )
+                    localizedStateDescription(for: point)
                 )
             }
         }
@@ -67,7 +63,9 @@ struct MoodChartView: View {
                 AxisValueLabel {
                     if let rawValue = value.as(Int.self),
                        let level = MoodLevel(rawValue: rawValue) {
-                        Text("\(level.emoji) \(level.title)")
+                        Text(
+                            "\(level.emoji) \(AppLanguage.selected.localized(level.title))"
+                        )
                             .font(.caption2)
                     }
                 }
@@ -82,8 +80,11 @@ struct MoodChartView: View {
         }
         .frame(height: 270)
         .accessibilityLabel(
-            L10n.format(
-                "График истории состояний за %lld дней",
+            String(
+                format: AppLanguage.selected.localized(
+                    "График истории состояний за %lld дней"
+                ),
+                locale: AppLanguage.selected.locale,
                 days
             )
         )
@@ -151,5 +152,18 @@ struct MoodChartView: View {
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         return formatter.string(from: date)
+    }
+
+    private func localizedStateDescription(
+        for point: MoodChartPoint
+    ) -> String {
+        String(
+            format: AppLanguage.selected.localized(
+                "%@, состояние «%@»"
+            ),
+            locale: AppLanguage.selected.locale,
+            formattedDate(point.date),
+            AppLanguage.selected.localized(point.level.title)
+        )
     }
 }

@@ -90,9 +90,8 @@ struct BirthdayGreetingView: View {
     }
     
     private var selectedPhrase: String {
-        L10n.postcard(
-            phrases[selectedPhraseIndex],
-            category: "birthday"
+        AppLanguage.selected.localized(
+            phrases[selectedPhraseIndex]
         )
     }
     private var birthdayMessage: String {
@@ -131,7 +130,7 @@ struct BirthdayGreetingView: View {
             ScrollView {
                 VStack(spacing: 9) {
                     
-                    Text(L10n.text("Выберите открытку"))
+                    Text("Выберите открытку")
                         .font(
                             .system(
                                 .title2,
@@ -147,8 +146,9 @@ struct BirthdayGreetingView: View {
                     
                     postcardNavigation
                     Text(
-                        L10n.format(
-                            "%d из %d",
+                        String(
+                            format: AppLanguage.selected.localized("%d из %d"),
+                            locale: AppLanguage.selected.locale,
                             selectedImageIndex + 1,
                             imageNames.count
                         )
@@ -162,7 +162,7 @@ struct BirthdayGreetingView: View {
                     .foregroundColor(darkBrown.opacity(0.65))
                     
                     HStack {
-                        Text(L10n.text("Выберите пожелание"))
+                        Text("Выберите пожелание")
                             .font(
                                 .system(
                                     .title3,
@@ -177,7 +177,7 @@ struct BirthdayGreetingView: View {
                         Button {
                             showCustomMessageEditor = true
                         } label: {
-                            Label(L10n.text("Напиши"), systemImage: "pencil")
+                            Label("Напиши", systemImage: "pencil")
                             .foregroundColor(darkBrown)
                             .padding(.horizontal, 14)
                             .frame(height: 38)
@@ -196,8 +196,9 @@ struct BirthdayGreetingView: View {
                     phraseNavigation
                     
                     Text(
-                        L10n.format(
-                            "%d из %d",
+                        String(
+                            format: AppLanguage.selected.localized("%d из %d"),
+                            locale: AppLanguage.selected.locale,
                             selectedPhraseIndex + 1,
                             phrases.count
                         )
@@ -214,7 +215,7 @@ struct BirthdayGreetingView: View {
                         showRecipientDialog = true
                     } label: {
                         Label(
-                            L10n.text("Отправить открытку"),
+                            "Отправить открытку",
                             systemImage: "square.and.arrow.up.fill"
                         )
                         .font(
@@ -255,7 +256,7 @@ struct BirthdayGreetingView: View {
                 AppAdaptiveColor.warmFormBackground
                     .ignoresSafeArea()
             )
-            .navigationTitle(L10n.text("С днём рождения"))
+            .navigationTitle("С днём рождения")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(
@@ -479,7 +480,7 @@ struct BirthdayGreetingView: View {
                     in: imageNames.indices
                 )
             } label: {
-                Label(L10n.text("Случайная"), systemImage: "shuffle")
+                Label("Случайная", systemImage: "shuffle")
                 .font(
                     .system(
                         .subheadline,
@@ -561,7 +562,7 @@ struct BirthdayGreetingView: View {
                     in: phrases.indices
                 )
             } label: {
-                Label(L10n.text("Случайное"), systemImage: "shuffle")
+                Label("Случайное", systemImage: "shuffle")
                 .font(
                     .system(
                         .subheadline,
@@ -627,16 +628,16 @@ struct BirthdayGreetingView: View {
                 ).isEmpty
             }
             .joined(separator: " ")
-        
+
         if fullName.isEmpty {
-            return L10n.format(
-                "Тревожный контакт №%d",
+            return String(
+                format: "Тревожный контакт №%d",
                 number
             )
         }
-        
-        return L10n.format(
-            "Контакт №%d: %@",
+
+        return String(
+            format: "Контакт №%d: %@",
             number,
             fullName
         )
@@ -734,7 +735,7 @@ private struct BirthdayCustomMessageView: View {
         NavigationStack {
             VStack(spacing: 16) {
 
-                Text(L10n.text("Добавьте своё пожелание"))
+                Text("Добавьте своё пожелание")
                     .font(
                         .system(
                             .title3,
@@ -746,7 +747,7 @@ private struct BirthdayCustomMessageView: View {
                 ZStack(alignment: .topLeading) {
 
                     if text.isEmpty {
-                        Text(L10n.text("Напишите несколько тёплых слов..."))
+                        Text("Напишите несколько тёплых слов...")
                         .foregroundColor(.secondary)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 14)
@@ -802,7 +803,7 @@ private struct BirthdayCustomMessageView: View {
                 ToolbarItem(
                     placement: .topBarTrailing
                 ) {
-                    Button(L10n.text("Готово")) {
+                    Button("Готово") {
                         finishEditing()
                     }
                     .fontWeight(.semibold)

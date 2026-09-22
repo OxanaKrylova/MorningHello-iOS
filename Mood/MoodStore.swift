@@ -27,9 +27,8 @@ final class MoodStore: ObservableObject {
             )
             errorMessage = nil
         } catch {
-            errorMessage = L10n.text(
+            errorMessage =
                 "Не удалось загрузить сегодняшнюю отметку."
-            )
         }
     }
 
@@ -40,9 +39,8 @@ final class MoodStore: ObservableObject {
         at date: Date = Date()
     ) -> Bool {
         guard let repository else {
-            errorMessage = L10n.text(
+            errorMessage =
                 "Хранилище состояний ещё не готово."
-            )
             return false
         }
 
@@ -56,9 +54,8 @@ final class MoodStore: ObservableObject {
             showSaveConfirmation()
             return true
         } catch {
-            errorMessage = L10n.text(
+            errorMessage =
                 "Не удалось сохранить состояние. Попробуйте ещё раз."
-            )
             return false
         }
     }
@@ -83,9 +80,8 @@ final class MoodStore: ObservableObject {
             value: 1,
             to: startOfToday
         ) else {
-            errorMessage = L10n.text(
+            errorMessage =
                 "Не удалось определить период истории."
-            )
             return
         }
 
@@ -96,9 +92,8 @@ final class MoodStore: ObservableObject {
             )
             errorMessage = nil
         } catch {
-            errorMessage = L10n.text(
+            errorMessage =
                 "Не удалось загрузить историю состояний."
-            )
         }
     }
 
@@ -111,9 +106,8 @@ final class MoodStore: ObservableObject {
             history = []
             errorMessage = nil
         } catch {
-            errorMessage = L10n.text(
+            errorMessage =
                 "Не удалось удалить историю состояний."
-            )
         }
     }
 

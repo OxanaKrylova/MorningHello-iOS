@@ -42,6 +42,9 @@ struct AppEntryView: View {
     @AppStorage(AppLanguage.storageKey)
     private var selectedLanguageCode = AppLanguage.initial.rawValue
 
+    @Environment(\.purchase)
+    private var purchase
+
     @StateObject
     private var subscriptionManager = SubscriptionManager.shared
 
@@ -93,7 +96,7 @@ struct AppEntryView: View {
                             isLoadingSponsoredEntitlement {
 
                     ProgressView(
-                        L10n.text("Проверяем подписку…")
+                       "Проверяем подписку…"
                     )
 
                 } else if subscriptionManager.hasActiveSubscription ||
@@ -111,7 +114,7 @@ struct AppEntryView: View {
 
                 } else {
 
-                    SubscriptionPaywallView(
+                    MorningHelloPaywallView(
                         mode: paywallMode
                     )
                 }
