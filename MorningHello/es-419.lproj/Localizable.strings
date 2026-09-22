@@ -1,0 +1,705 @@
+/* Settings */
+"Настройки" = "Settings";
+"Готово" = "Done";
+"Данные и мониторинг" = "Data and Monitoring";
+"Профиль" = "Profile";
+"Имя, дата рождения и интервал отметки" = "Name, birthday, and check-in interval";
+"Тревожные контакты" = "Emergency Contacts";
+"Кому сообщить, если отметки не будет" = "Who to notify if you miss a check-in";
+"Праздники" = "Holidays";
+"Какие праздничные открытки показывать" = "Choose which holiday cards to show";
+"Звук" = "Sound";
+"Звуки приложения" = "App Sounds";
+"Звуки сопровождают отметку «Я в порядке» и открытие экранов приложения." = "Sounds play when you check in and open app screens.";
+"Язык" = "Language";
+"Язык приложения" = "App Language";
+"Язык применяется сразу ко всем экранам приложения." = "The selected language is applied throughout the app immediately.";
+"Русский" = "Russian";
+"English (US)" = "English (US)";
+"Связь" = "Contact";
+"Написать разработчику" = "Contact the Developer";
+"Предложить праздник или сообщить о проблеме" = "Suggest a holiday or report a problem";
+"Я читаю все сообщения лично" = "I personally read every message";
+"О приложении" = "About the App";
+"Версия" = "Version";
+"Номер сборки" = "Build Number";
+
+/* General actions */
+"Закрыть" = "Close";
+"Отмена" = "Cancel";
+"Сохранить" = "Save";
+"Добавить" = "Add";
+"Продолжить" = "Continue";
+"Понятно" = "Got It";
+"Хорошо" = "OK";
+"Выбрано" = "Selected";
+"Проверяем подписку…" = "Checking your subscription…";
+"Открываем App Store…" = "Opening the App Store…";
+
+/* Main navigation */
+"Я в порядке" = "I'm OK";
+"Открытки" = "Cards";
+"Оценка" = "Check In With Yourself";
+"Отметки" = "Check-Ins";
+"Выбрать и отправить" = "Choose and Send";
+"Уровень спокойствия" = "How You Feel";
+"Выбрать открытку ко дню рождения" = "Choose a Birthday Card";
+"Квадрат дыхания" = "Box Breathing";
+"История" = "History";
+"Доброе утро" = "Good Morning";
+"Добрый день" = "Good Afternoon";
+"Добрый вечер" = "Good Evening";
+"Доброй ночи" = "Good Night";
+
+/* Subscription */
+"Подписка" = "Subscription";
+"Текущая подписка" = "Current Subscription";
+"Тариф, срок действия и управление" = "Plan, Expiration, and Management";
+"Ежемесячная" = "Monthly";
+"На 3 месяца" = "Every 3 Months";
+"Годовая" = "Annual";
+"Бесплатный период" = "Free Trial";
+"Активна" = "Active";
+"Льготный период" = "Grace Period";
+"Ошибка оплаты" = "Billing Issue";
+"Истекла" = "Expired";
+"Отменена" = "Revoked";
+"Не оформлена" = "Not Subscribed";
+"Нет активной подписки" = "No Active Subscription";
+"Автопродление" = "Auto-Renewal";
+"Включено" = "On";
+"Отключено" = "Off";
+"Следующее продление" = "Next Renewal";
+"Действует до" = "Access Until";
+"Срок действия" = "Expiration";
+"Нет данных" = "Not Available";
+"Выбрать тариф" = "Choose a Plan";
+"Управлять подпиской" = "Manage Subscription";
+"Восстановить покупки" = "Restore Purchases";
+"Восстанавливаем…" = "Restoring…";
+"Покупки восстановлены. Подписка активна." = "Purchases restored. Your subscription is active.";
+"Активная подписка для этого Apple ID не найдена." = "No active subscription was found for this Apple ID.";
+"Подписка оформляется через Apple App Store и автоматически продлевается, если автопродление не отключено в настройках Apple." = "Subscriptions are purchased through the Apple App Store and renew automatically unless auto-renewal is turned off in your Apple settings.";
+"Удаление приложения MorningHello не отменяет подписку и не останавливает серверный мониторинг." = "Deleting MorningHello does not cancel your subscription or stop server monitoring.";
+"Выберите подписку" = "Choose a Subscription";
+"Оплата каждый месяц" = "Billed monthly";
+"Оплата каждые три месяца" = "Billed every three months";
+"Самый выгодный вариант" = "Best Value";
+"Тариф пока недоступен в App Store. Попробуйте ещё раз позднее." = "This plan is currently unavailable in the App Store. Please try again later.";
+"Не удалось загрузить тарифы App Store. Проверьте интернет и попробуйте ещё раз." = "We couldn't load the App Store plans. Check your internet connection and try again.";
+"Покупка ожидает подтверждения. Доступ включится автоматически после одобрения App Store." = "Your purchase is awaiting approval. Access will be enabled automatically after the App Store approves it.";
+"Подписка оформлена. Доступ к MorningHello активирован." = "Subscription complete. Your MorningHello access is now active.";
+"Бесплатный период завершён. Мониторинг остановлен." = "Your free trial has ended. Monitoring has stopped.";
+"Попробуйте MorningHello бесплатно в течение 30 дней, чтобы:" = "Try MorningHello free for 30 days to:";
+"Продолжите пользоваться MorningHello, чтобы:" = "Continue with MorningHello to:";
+"отмечаться «Я в порядке» каждые 24, 48 или 72 часа;" = "check in every 24, 48, or 72 hours;";
+"автоматически предупреждать подтверждённых контактов, если отметки нет;" = "automatically notify confirmed contacts if you miss a check-in;";
+"отправлять близким открытки с добрыми пожеланиями." = "send thoughtful cards to the people you care about.";
+"Вы можете отменить подписку в настройках Apple до окончания бесплатного периода. В этом случае плата не будет списана." = "You can cancel in your Apple settings before the free trial ends, and you won't be charged.";
+
+/* Postcard */
+"Напиши" = "Write";
+"Написать текст на открытке" = "Write a message on the card";
+"Напиши текст для открытки" = "Write a Message for Your Card";
+"Напиши пару тёплых слов..." = "Write a few warm words…";
+"Текст открытки" = "Card Message";
+"Как отправить открытку?" = "How would you like to send the card?";
+"Выбрать мессенджер" = "Choose an App";
+"Православие" = "Orthodox Christianity";
+"Иудаизм" = "Judaism";
+"Вкусный стол" = "Food and Gatherings";
+"Утренний кофе" = "Morning Coffee";
+"Коты" = "Cats";
+"Осень" = "Fall";
+"Урожай" = "Harvest";
+"Отпуск" = "Vacation";
+"Сказка" = "Fairy Tales";
+"Десерты" = "Desserts";
+"Собаки" = "Dogs";
+"Католизм" = "Catholic Christianity";
+
+/* Breathing */
+"Вдох" = "Inhale";
+"Выдох" = "Exhale";
+"Пауза" = "Hold";
+"Квадратное дыхание — это простая техника контроля дыхания из четырёх равных фаз по 4 секунды каждая, которая помогает быстро снять стресс и успокоить нервную систему." = "Box breathing is a simple technique with four equal four-second phases that can help reduce stress and calm your nervous system.";
+"Следуйте за стрелкой и дышите спокойно, без усилия." = "Follow the arrow and breathe slowly and comfortably.";
+
+/* Feedback */
+"Хочешь написать мне?" = "Would You Like to Message Me?";
+"Сообщение разработчику" = "Message the Developer";
+"Выбери тему сообщения" = "Choose a Topic";
+"Предложить праздник" = "Suggest a Holiday";
+"Сообщить о проблеме" = "Report a Problem";
+"Просто написать" = "Send a Message";
+"Способ отправки" = "How to Send";
+"Написать в WhatsApp" = "Message Me on WhatsApp";
+"Отправить по электронной почте" = "Send by Email";
+"Отправить через Сообщения" = "Send in Messages";
+"Не удалось открыть отправку" = "Unable to Open a Messaging App";
+"Не удалось открыть WhatsApp.\n\nУбедитесь, что WhatsApp установлен, или выберите другой способ отправки." = "We couldn't open WhatsApp.\n\nMake sure WhatsApp is installed, or choose another way to send your message.";
+
+/* Onboarding */
+"Условия использования MorningHello" = "MorningHello Terms of Use";
+"Открыть полную версию Условий использования" = "View the Full Terms of Use";
+"Согласиться и продолжить" = "Agree and Continue";
+
+/* Main screen and check-in */
+"Как ты сегодня?" = "How Are You Today?";
+"Если ты не нажмёшь кнопку в течение %@ — мы сообщим близким" = "If you don't check in within %@, we'll notify your loved ones";
+"Добавьте тревожный контакт" = "Add an Emergency Contact";
+"Без тревожного контакта приложение не сможет сообщить близким, если вы не отметитесь в течение %@." = "Without an emergency contact, the app cannot notify your loved ones if you miss a check-in for %@.";
+"Добавить контакт" = "Add Contact";
+"Поздравить с днём рождения" = "Send Birthday Wishes";
+"Контакты" = "Contacts";
+"Коллекция открыток" = "Card Collection";
+"Кому открыть сообщение?" = "Choose a Recipient";
+"Открыть WhatsApp" = "Open WhatsApp";
+"Открыть Сообщения" = "Open Messages";
+"Прошло %@" = "%@ Have Passed";
+"Мы волнуемся за вас!" = "We're Worried About You";
+"Пожалуйста, подтвердите, что с вами всё хорошо" = "Please let us know that you're OK";
+"Пользователь MorningHello" = "MorningHello User";
+"24 часа" = "24 Hours";
+"48 часов" = "48 Hours";
+"72 часа" = "72 Hours";
+"Нейтральный" = "General";
+"Православный" = "Orthodox";
+"Католический" = "Catholic";
+"Еврейский" = "Jewish";
+"Еврейский праздник" = "Jewish Holiday";
+
+/* Contacts */
+"Добавить тревожный контакт" = "Add an Emergency Contact";
+"Редактировать тревожный контакт" = "Edit Emergency Contact";
+"Добавить второй контакт" = "Add a Second Contact";
+"Добавить второй тревожный контакт?" = "Add a Second Emergency Contact?";
+"Продолжить с одним контактом" = "Continue With One Contact";
+"Максимум можно сохранить 2 тревожных контакта." = "You can save up to two emergency contacts.";
+"Имя*" = "First Name*";
+"Фамилия*" = "Last Name*";
+"Телефон*" = "Phone*";
+"Емейл*" = "Email*";
+"Обращение" = "Salutation";
+"Уважаемый" = "Mr.";
+"Уважаемая" = "Ms.";
+"Период оповещения" = "Notification Interval";
+"Выберите время, через которое мы сообщим вашим близким, если вы не отметитесь." = "Choose how long MorningHello should wait before notifying your loved ones about a missed check-in.";
+"Введите номер телефона." = "Enter a phone number.";
+"Введите адрес электронной почты." = "Enter an email address.";
+"Неверный номер телефона" = "Invalid Phone Number";
+"Неверный e-mail" = "Invalid Email Address";
+"Например: +972501234567" = "Example: +12025550123";
+"Не указан e-mail" = "No Email Address";
+"Контакты %lld/2" = "Contacts %lld/2";
+"Ожидает подтверждения" = "Pending Confirmation";
+"Подтверждён" = "Confirmed";
+"Отклонён" = "Declined";
+"Доступ отозван" = "Access Revoked";
+"Обновить статусы" = "Refresh Statuses";
+"Обновляем статусы…" = "Refreshing Statuses…";
+"Не удалось получить актуальные статусы. Проверьте интернет и повторите попытку." = "We couldn't refresh the statuses. Check your internet connection and try again.";
+"Контакт сохранён на телефоне, но не отправлен на сервер. Проверьте интернет и повторите сохранение." = "The contact was saved on this phone but not sent to the server. Check your internet connection and save again.";
+"Прекратить мониторинг" = "Stop Monitoring";
+"Прекратить мониторинг?" = "Stop Monitoring?";
+"Не удалось прекратить мониторинг" = "Unable to Stop Monitoring";
+"Контакт не удалён. Проверьте подключение к интернету и попробуйте ещё раз." = "The contact wasn't removed. Check your internet connection and try again.";
+
+/* Profile */
+"Заполните профиль" = "Complete Your Profile";
+"Пожалуйста, заполните имя, форму обращения, день и месяц рождения и выберите интервал тревожного оповещения." = "Enter your name, select a salutation, add your birth month and day, and choose a missed check-in interval.";
+"Эти данные помогут персонализировать открытки и тревожные сообщения." = "This information helps personalize cards and missed check-in messages.";
+"Данные профиля сохраняются только на этом устройстве." = "Profile information is stored only on this device.";
+"Закрыть профиль" = "Close Profile";
+"Как нам к вам обращаться?" = "What Should We Call You?";
+"Например, Анна или Анна Петрова" = "For example, Anna or Anna Peterson";
+"Напишите имя так, чтобы близкие поняли, от кого пришло тревожное сообщение." = "Enter a name your loved ones will recognize in a missed check-in message.";
+"Как обращаться в сообщении?" = "How Should We Address You?";
+"Это обязательное поле. Оно нужно для правильного текста тревожного сообщения." = "This field is required to personalize missed check-in messages.";
+"Форма обращения" = "Salutation";
+"Выберите один из двух вариантов" = "Choose One of the Two Options";
+"Форма обращения сохранена" = "Salutation Saved";
+"Интервал тревожного оповещения" = "Missed Check-In Interval";
+"Выберите, через сколько часов без новой отметки «Я в порядке» нужно предупредить тревожные контакты." = "Choose how many hours can pass without a new “I'm OK” check-in before your emergency contacts are notified.";
+"Интервал" = "Interval";
+"Выберите интервал" = "Choose an Interval";
+"Дата рождения для персональной открытки" = "Birthday for Your Personal Card";
+"Дата" = "Day";
+"Месяц" = "Month";
+"Год рождения не требуется. Приложение использует только день и месяц." = "Your birth year isn't required. The app uses only the month and day.";
+"Введите дату от 1 до 31 и месяц от 1 до 12." = "Enter a day from 1 to 31 and a month from 1 to 12.";
+"Такой календарной даты не существует." = "That date doesn't exist.";
+"Обратная связь" = "Feedback";
+"Оплатить для близкого" = "Pay for a Loved One";
+"Приглашение и отдельная подписка" = "Invitation and Separate Subscription";
+
+/* Holiday preferences */
+"Выбор праздников" = "Holiday Preferences";
+"Сохранить и продолжить" = "Save and Continue";
+"Православные" = "Orthodox Christian";
+"Католические" = "Catholic";
+"Еврейские" = "Jewish";
+"Нейтральные" = "General";
+"Выберите, открытки каких религиозных праздников вы хотите получать." = "Choose which religious holiday cards you'd like to receive.";
+"Нейтральные праздники показываются всегда." = "General holidays are always included.";
+"При выборе еврейских праздников с 18 ч. пятницы по 18 ч. субботы будет показана открытка к Шабату." = "When Jewish holidays are enabled, a Shabbat card is shown from 6:00 PM Friday through 6:00 PM Saturday.";
+"При выборе католических или православных праздников по воскресеньям будет показана воскресная открытка." = "When Catholic or Orthodox holidays are enabled, a Sunday card is shown on Sundays.";
+"Полный список праздников" = "Full Holiday List";
+"Скрыть список праздников" = "Hide Holiday List";
+
+/* Holiday names */
+"1 января — Новый год" = "January 1 – New Year's Day";
+"14 февраля — День святого Валентина" = "February 14 – Valentine's Day";
+"8 марта — Международный женский день" = "March 8 – International Women's Day";
+"17 марта — День святого Патрика" = "March 17 – St. Patrick's Day";
+"20 марта — День Земли" = "March 20 – Earth Day";
+"22 марта — Весеннее равноденствие" = "March 22 – Spring Equinox";
+"1 апреля — День смеха" = "April 1 – April Fools' Day";
+"12 апреля — День космонавтики" = "April 12 – International Day of Human Space Flight";
+"1 мая — Праздник Весны и Труда" = "May 1 – International Workers' Day";
+"9 мая — День Победы" = "May 8 – Victory European Day";
+"1 июня — День защиты детей" = "June 1 – International Children's Day";
+"4 июля — День независимости США" = "July 4 – U.S. Independence Day";
+"14 июля — День взятия Бастилии" = "July 14 – Bastille Day";
+"30 июля — Международный день дружбы" = "July 30 – International Day of Friendship";
+"8 августа — Всемирный день кошек" = "August 8 – International Cat Day";
+"11–13 августа — поток Персеид" = "August 11–13 – Perseid Meteor Shower";
+"1 сентября — День знаний" = "September 1 – Knowledge Day";
+"5 сентября — Международный день благотворительности" = "September 5 – International Day of Charity";
+"22 сентября — Осеннее равноденствие" = "September 22 – Fall Equinox";
+"1 октября — День пожилых людей" = "October 1 – International Day of Older Persons";
+"31 октября — Хэллоуин" = "October 31 – Halloween";
+"1 ноября — День всех святых" = "November 1 – All Saints' Day";
+"Четвёртый четверг ноября — День Благодарения" = "Fourth Thursday in November – Thanksgiving";
+"1 декабря — Начало календарной зимы" = "December 1 – Start of Meteorological Winter";
+"25 декабря — Католическое Рождество" = "December 25 – Christmas Day";
+"6 января — Богоявление (День трёх царей)" = "January 6 – Epiphany (Three Kings' Day)";
+"Пальмовое воскресенье" = "Palm Sunday";
+"Пасхальная неделя" = "Easter Week";
+"Вознесение Господне — 40-й день после Пасхи" = "Ascension Day – 40 Days After Easter";
+"День Святой Троицы — 50-й день после Пасхи" = "Pentecost – 50 Days After Easter";
+"Первое воскресенье Адвента" = "First Sunday of Advent";
+"7 января — Православное Рождество" = "January 7 – Orthodox Christmas";
+"19 января — Крещение Господне" = "January 19 – Epiphany";
+"Прощеное воскресенье" = "Forgiveness Sunday";
+"Чистый понедельник" = "Clean Monday";
+"7 апреля — Благовещение" = "April 7 – Annunciation";
+"Лазарева суббота" = "Lazarus Saturday";
+"Вход Господень в Иерусалим (Вербное воскресенье)" = "Entry into Jerusalem (Palm Sunday)";
+"Пятидесятница" = "Pentecost";
+"Рош ха-Шана — Еврейский Новый год" = "Rosh Hashanah – Jewish New Year";
+"Йом-Кипур — Судный день" = "Yom Kippur – Day of Atonement";
+"Неделя Суккота" = "Sukkot Week";
+"Ханукальная неделя" = "Hanukkah Week";
+"Пурим" = "Purim";
+"Песах" = "Passover";
+"Шавуот" = "Shavuot";
+"Ту би-Шват — Новый год деревьев" = "Tu BiShvat – New Year of the Trees";
+"Тиша бе-Ав" = "Tisha B'Av";
+"Симха Тора" = "Simchat Torah";
+"Пост Гедальи" = "Fast of Gedaliah";
+"Пост Десятое тевета" = "Fast of the Tenth of Tevet";
+"Пост Семнадцатое тамуза" = "Fast of the Seventeenth of Tammuz";
+"Пост Эстер" = "Fast of Esther";
+
+/* Birthday cards */
+"С днём рождения" = "Happy Birthday";
+"Выберите открытку" = "Choose a Card";
+"Выберите пожелание" = "Choose a Greeting";
+"Добавьте своё пожелание" = "Add Your Own Message";
+"Напишите несколько тёплых слов..." = "Write a few warm words…";
+"Отправить открытку" = "Send Card";
+"Случайная" = "Random";
+"Случайное" = "Random";
+"Не удалось создать открытку ко дню рождения" = "We couldn't create the birthday card.";
+
+/* Subscription errors and status */
+"Не удалось восстановить покупки: %@" = "We couldn't restore your purchases: %@";
+"App Store не удалось подтвердить покупку." = "The App Store couldn't verify the purchase.";
+"App Store вернул неизвестный результат покупки." = "The App Store returned an unknown purchase result.";
+"Тарифные планы. Попробуйте MorningHello бесплатно в течение 30 дней." = "Subscription plans. Try MorningHello free for 30 days.";
+
+/* Sponsored subscriptions */
+"Добро пожаловать" = "Welcome";
+"Войдите, чтобы пользоваться MorningHello для себя или оплачивать его для близкого." = "Sign in to use MorningHello for yourself or pay for a loved one.";
+"Выполняем вход…" = "Signing In…";
+"Apple передаёт имя и email только при первом входе. MorningHello не получает пароль Apple ID." = "Apple shares your name and email only the first time you sign in. MorningHello never receives your Apple ID password.";
+"Как вы хотите использовать MorningHello?" = "How Would You Like to Use MorningHello?";
+"Для себя" = "For Myself";
+"Отмечаться «Я в порядке» и настроить мониторинг" = "Check in with “I'm OK” and set up monitoring";
+"Мой близкий" = "My Loved One";
+"Пригласить одного близкого и подключить ему подписку" = "Invite one loved one and purchase a separate subscription";
+"Выйти" = "Sign Out";
+"Пригласите близкого" = "Invite a Loved One";
+"Имя близкого" = "Loved One's Name";
+"Обращение: мама, папа…" = "Relationship: Mom, Dad…";
+"Ваши данные – по желанию" = "Your Information Is Optional";
+"Предложить меня как тревожный контакт" = "Offer to Be an Emergency Contact";
+"Мониторинг не начнётся без согласия близкого. Он сам настроит профиль, интервал и тревожные контакты." = "Monitoring won't begin without your loved one's consent. They will set up their own profile, check-in interval, and emergency contacts.";
+"Создать приглашение" = "Create Invitation";
+"Приглашение готово" = "Invitation Ready";
+"Ссылка действует 7 дней и может быть использована один раз." = "The link is valid for seven days and can be used once.";
+"Отправить приглашение" = "Send Invitation";
+"Отправить приглашение ещё раз" = "Send Invitation Again";
+"Отменить приглашение" = "Cancel Invitation";
+"Создать новое приглашение" = "Create New Invitation";
+"Ожидает ответа" = "Awaiting Response";
+"Отклонено" = "Declined";
+"Отозвана" = "Revoked";
+"Завершено" = "Completed";
+"Приглашение в MorningHello" = "MorningHello Invitation";
+"предлагает оплатить для вас MorningHello." = "would like to pay for your MorningHello subscription.";
+"Что увидит плательщик" = "What the Payer Can See";
+"Только состояние оплаты и работы мониторинга. Данные профиля, эмоциональные оценки, открытки и история отметок останутся недоступны." = "Only subscription and monitoring status. Your profile, emotional check-ins, cards, and check-in history remain private.";
+"Принять" = "Accept";
+"Отклонить" = "Decline";
+"Приглашение принято" = "Invitation Accepted";
+"Использовать для себя" = "Use for Myself";
+"После принятия приглашения вы сможете выбрать для него отдельную подписку." = "After the invitation is accepted, you can choose a separate subscription for your loved one.";
+"Выберите тариф" = "Choose a Plan";
+"Бесплатный период начнётся только после подтверждения покупки Apple, если ваш Apple ID имеет право на вводное предложение." = "The free trial begins only after Apple confirms the purchase and only if your Apple ID is eligible for an introductory offer.";
+"Одна подписка «для близкого» закрепляется за одним принявшим приглашение аккаунтом и не переносится другому человеку." = "A subscription for a loved one is linked to the account that accepts the invitation and cannot be transferred to someone else.";
+"Подключить подписку" = "Activate Subscription";
+"Покупка ожидает подтверждения Apple. Доступ включится после одобрения." = "The purchase is awaiting Apple confirmation. Access will begin after approval.";
+"Мониторинг" = "Monitoring";
+"Подключён" = "Connected";
+"Не подключён" = "Not Connected";
+"Ожидаются контакты" = "Waiting for Contacts";
+"Ожидается первая отметка" = "Waiting for First Check-In";
+"Приостановлен" = "Paused";
+"Остановлен" = "Stopped";
+"Проверить подключение" = "Check Connection";
+"Управлять подпиской Apple" = "Manage Apple Subscription";
+"Вы увидите только оплату и состояние мониторинга. Личные данные близкого останутся закрыты." = "You'll see only subscription and monitoring status. Your loved one's personal information remains private.";
+"Загружаем данные…" = "Loading…";
+"Проверяем приглашение…" = "Checking Invitation…";
+"Восстанавливаем вход…" = "Restoring Sign-In…";
+
+/* Terms */
+"Версия 1.0" = "Version 1.0";
+"Дата вступления в силу: 9 августа 2026 года" = "Effective Date: August 9, 2026";
+
+/* Accessibility and miscellaneous */
+"Категории открыток" = "Card Categories";
+"Коллекция пока пуста" = "This Collection Is Empty";
+"Открытки будут добавлены позже." = "Cards will be added later.";
+"Дата сохранена: %@." = "Birthday saved: %@.";
+"%d из %d" = "%d of %d";
+"Тревожный контакт №%d" = "Emergency Contact %d";
+"Контакт №%d: %@" = "Contact %d: %@";
+"Контакты %d/2" = "Contacts %d/2";
+"%@ предлагает оплатить для вас MorningHello." = "%@ would like to pay for your MorningHello subscription.";
+"Подписка для %@" = "Subscription for %@";
+"Подготовить сообщение близким" = "Prepare a Message for Loved Ones";
+"Прошло %@ с последней отметки. Пожалуйста, подтвердите, что с вами всё хорошо." = "%@ have passed since your last check-in. Please let us know that you're OK.";
+
+/* Additional holiday list */
+"1 марта — Начало календарной весны" = "March 1 – Start of Meteorological Spring";
+"3 марта — Всемирный день дикой природы" = "March 3 – World Wildlife Day";
+"4 февраля — Всемирный день борьбы против рака" = "February 4 – World Cancer Day";
+"9 февраля — Международный день стоматолога" = "February 9 – International Dentist Day";
+"25 января — День студента" = "January 25 – Students' Day";
+"2 июля — Международный день собак" = "July 2 – International Dog Day";
+"6 июня — День русского языка" = "June 6 – Russian Language Day";
+"24 июня — День святого Иоанна Крестителя" = "June 24 – Nativity of St. John the Baptist";
+"28 июля — Крещение Руси" = "July 28 – Baptism of Kievan Rus'";
+"31 июля — День рождения Гарри Поттера" = "July 31 – Harry Potter's Birthday";
+"6 августа — Преображение Господне" = "August 6 – Transfiguration of the Lord";
+"15 августа - Успение Богородицы" = "August 15 – Assumption of Mary";
+"15 сентября — день рождения Агаты Кристи" = "September 15 – Agatha Christie's Birthday";
+"27 октября — день плюшевого мишки" = "October 27 – Teddy Bear Day";
+"11 ноября — Всемирный день шопинга" = "November 11 – World Shopping Day";
+"6 января — Рождественский сочельник" = "January 6 – Orthodox Christmas Eve";
+"15 февраля — Сретение Господне" = "February 15 – Presentation of Jesus at the Temple";
+"Блинный день — 47-й день до Пасхи" = "Shrove Tuesday – 47 Days Before Easter";
+"Пепельная среда. Начало Великого поста" = "Ash Wednesday – Beginning of Lent";
+"Четыре Пятниц Великого поста" = "Four Fridays of Lent";
+"Три пятницы Адвента" = "Three Fridays of Advent";
+"8 декабря — Непорочное зачатие Пресвятой Богородицы" = "December 8 – Immaculate Conception";
+"Второй понедельник Великого поста" = "Second Monday of Great Lent";
+"Первая пятница после Чистого понедельника" = "First Friday After Clean Monday";
+"Начало Петрова поста" = "Beginning of the Apostles' Fast";
+"Завершение Петрова Поста" = "End of the Apostles' Fast";
+"12 июля - праздник святых апостолов Петра и Павла" = "July 12 – Feast of Saints Peter and Paul";
+"7 июля — Рождество Иоанна Предтечи (ночь Иван Купала)" = "July 7 – Nativity of St. John the Baptist";
+"8 июля — День семьи, любви и верности" = "July 8 – Day of Family, Love, and Fidelity";
+"Начало Успенского поста" = "Beginning of the Dormition Fast";
+"19 августа — Преображение Господне (Яблочный Спас)" = "August 19 – Transfiguration of the Lord";
+"Последний день Успенского поста" = "Last Day of the Dormition Fast";
+"28 августа — Успение Пресвятой Богородицы" = "August 28 – Dormition of the Mother of God";
+"Начало Рождественского поста" = "Beginning of the Nativity Fast";
+
+/* Current general holiday list */
+"23 января - открытие Венецианского карнавала" = "January 23 – Opening of the Venice Carnival";
+"5 февраля - открытие карнавала в Рио де Жанейро" = "February 5 – Opening of the Rio de Janeiro Carnival";
+"14 марта - День мимозы" = "March 14 – Mimosa Day";
+"15 марта - церемония вручения Оскара" = "March 15 – Academy Awards Ceremony";
+"31 марта -  День апельсина и лимона" = "March 31 – Orange and Lemon Day";
+"21 мая - День розы" = "May 21 – Rose Day";
+"27 мая - День клубники" = "May 27 – Strawberry Day";
+"27 июня - День рыбака" = "June 27 – Fishermen's Day";
+"30 июля - международный день дружбы" = "July 30 – International Day of Friendship";
+"31 июля - день рождения Гарри Поттера" = "July 31 – Harry Potter's Birthday";
+"11-13 августа - персеиды" = "August 11–13 – Perseid Meteor Shower";
+"15 сентября - день рождения Агаты Кристи" = "September 15 – Agatha Christie's Birthday";
+"19 сентября - Открытие Октоберфеста" = "September 19 – Opening of Oktoberfest";
+"3 октября - День грибника" = "October 3 – Mushroom Picker's Day";
+"27 октября - день плюшевого мишки" = "October 27 – Teddy Bear Day";
+
+/* Feedback message subjects */
+"Ошибка в приложении" = "App Issue";
+"Предложение праздника" = "Holiday Suggestion";
+
+/* API and account errors */
+"Сервер вернул неизвестный ответ." = "The server returned an unknown response.";
+"Apple не передал данные, необходимые для входа." = "Apple didn't provide the information needed to sign in.";
+"Не найдено принятое приглашение для этой покупки." = "No accepted invitation was found for this purchase.";
+"Не удалось сформировать адрес запроса." = "We couldn't create the request URL.";
+"Сеанс завершён. Войдите через Apple ещё раз." = "Your session has ended. Sign in with Apple again.";
+"Ошибка сервера %d: %@" = "Server error %d: %@";
+"Ошибка сервера %d." = "Server error %d.";
+"Телефон" = "Phone";
+"Близкий" = "Loved One";
+"Можно оплачивать" = "Ready for Payment";
+"Подключено" = "Connected";
+"Приглашение" = "Invitation";
+"Сообщим вашему близкому, что теперь он может подключить подписку. Ваши настройки и личные данные ему недоступны." = "We'll let your loved one know that they can now activate a subscription. They won't have access to your settings or personal information.";
+"На этом устройстве не настроена отправка электронной почты.\n\nДобавьте почтовый аккаунт в приложении Mail или выберите отправку через Сообщения." = "Email isn't set up on this device.\n\nAdd an email account in the Mail app or choose Messages instead.";
+"Это устройство не может отправлять SMS или iMessage.\n\nПопробуйте отправить обращение по электронной почте." = "This device can't send SMS or iMessage.\n\nTry sending your message by email.";
+"MorningHello удалит %@ %@ из списка тревожных контактов." = "MorningHello will remove %@ %@ from your emergency contacts.";
+"%d открыток" = "%d Cards";
+"Годовая · Активна" = "Annual · Active";
+"Номер может содержать только цифры, знак +, пробелы, тире и скобки." = "The number may contain only digits, a plus sign, spaces, hyphens, and parentheses.";
+"Номер должен начинаться со знака + и кода страны.\n\nНапример: +972501234567" = "The number must begin with a plus sign and country code.\n\nExample: +12025550123";
+"Используйте только один знак + в начале номера.\n\nНапример: +972501234567" = "Use only one plus sign at the beginning of the number.\n\nExample: +12025550123";
+"Введите номер в международном формате с кодом страны.\n\nПосле знака + должно быть от 8 до 15 цифр.\n\nНапример: +972501234567" = "Enter the number in international format with a country code.\n\nEnter 8 to 15 digits after the plus sign.\n\nExample: +12025550123";
+"Введите номер в международном формате с кодом страны.\n\nПосле знака + должно быть от 8 до 15 цифр.\n\nНапример:\n+972501234567" = "Enter the number in international format with a country code.\n\nEnter 8 to 15 digits after the plus sign.\n\nExample:\n+12025550123";
+"Введите корректный адрес электронной почты.\n\nНапример: name@gmail.com" = "Enter a valid email address.\n\nExample: name@gmail.com";
+"После сохранения нового тревожного контакта MorningHello отправит ему письмо с просьбой подтвердить согласие.\n\nДо подтверждения его статус будет Pending, и тревожные оповещения ему отправляться не будут." = "After you save a new emergency contact, MorningHello will email them to request consent.\n\nUntil they confirm, their status will be Pending and they won't receive missed check-in notifications.";
+"Введите номер в международном формате с кодом страны. Можно использовать пробелы, тире и скобки." = "Enter the number in international format with a country code. You may use spaces, hyphens, and parentheses.";
+"Первый тревожный контакт сохранён.\n\nДля большей надёжности мы рекомендуем добавить второго близкого человека.\n\nMorningHello поддерживает до двух тревожных контактов." = "Your first emergency contact has been saved.\n\nFor added reliability, we recommend adding another person you trust.\n\nMorningHello supports up to two emergency contacts.";
+"Я прочитал(а) и принимаю Условия использования MorningHello" = "I have read and accept the MorningHello Terms of Use";
+/* Emotional check-in */
+"Насколько вы спокойны сейчас?" = "How Calm Do You Feel Right Now?";
+"0 – дзен, 4 – в панике" = "0 – zen, 4 – panicking";
+"Дзен" = "Zen";
+"Спокойно" = "Calm";
+"Немного тревожно" = "Slightly Anxious";
+"Волнуюсь" = "Worried";
+"В панике" = "Panicking";
+"Оценка сохранена" = "Rating Saved";
+"Что можно сделать сейчас" = "What You Can Do Right Now";
+"История спокойствия" = "Calmness History";
+"Закрыть оценку" = "Close Check-In";
+"Открывает график и список ваших отметок" = "Opens a chart and a list of your check-ins";
+"Дважды коснитесь, чтобы сохранить уровень спокойствия на сегодня" = "Double-tap to save this calmness level for today";
+"Не выбрано" = "Not Selected";
+"Уровень спокойствия %lld: %@" = "Calmness level %lld: %@";
+"Ошибка. %@" = "Error. %@";
+
+/* Emotional check-in history and chart */
+"Период" = "Period";
+"7 дней" = "7 Days";
+"30 дней" = "30 Days";
+"Выберите период отображения истории" = "Choose the time period shown in your history";
+"Пока нет отметок" = "No Check-Ins Yet";
+"Оцените уровень спокойствия, и отметка появится здесь." = "Rate your calmness level, and your check-in will appear here.";
+"Удалить историю состояний" = "Delete Calmness History";
+"Удалить всю историю состояний?" = "Delete All Calmness History?";
+"Удалить" = "Delete";
+"Это действие нельзя отменить." = "This action cannot be undone.";
+"Дата отметки" = "Check-In Date";
+"Состояние" = "State";
+"Отрезок" = "Segment";
+"%@, состояние «%@»" = "%@, state: %@";
+"График истории состояний за %lld дней" = "Calmness history chart for %lld days";
+
+/* Emotional check-in errors */
+"Не удалось загрузить сегодняшнюю отметку." = "We couldn't load today's check-in.";
+"Хранилище состояний ещё не готово." = "The calmness history is not ready yet.";
+"Не удалось сохранить состояние. Попробуйте ещё раз." = "We couldn't save your rating. Please try again.";
+"Не удалось определить период истории." = "We couldn't determine the history period.";
+"Не удалось загрузить историю состояний." = "We couldn't load your calmness history.";
+"Не удалось удалить историю состояний." = "We couldn't delete your calmness history.";
+
+/* Advice for slight anxiety */
+"Начните утро немного медленнее обычного и дайте себе несколько минут без дел и новостей. Небольшое снижение темпа помогает нервной системе понять, что прямо сейчас не нужно никуда спешить." = "Start your morning a little more slowly than usual, and give yourself a few minutes without tasks or news. Slowing down can help signal to your nervous system that you do not need to rush right now.";
+
+"Сделайте спокойный вдох и немного более длинный выдох, затем расслабьте плечи. Удлинённый выдох может помочь телу постепенно перейти из напряжения в более спокойное состояние." = "Breathe in gently and let your exhale last a little longer, then relax your shoulders. A longer exhale may help your body gradually move from tension toward a calmer state.";
+
+"Подумайте только об одном приятном или важном деле, которое ждёт вас сегодня. Когда мы возвращаем внимание к ближайшему шагу, тревожные мысли о будущем обычно становятся менее настойчивыми." = "Think of just one enjoyable or important thing you plan to do today. Focusing on your next step can make anxious thoughts about the future feel less persistent.";
+
+"Выпейте чай, кофе или воду не торопясь и обратите внимание на вкус, тепло и запах. Такое простое внимание к ощущениям помогает вернуться из тревожных мыслей в настоящий момент." = "Take your time drinking tea, coffee, or water, and notice its taste, temperature, and smell. Paying attention to these simple sensations can bring your focus back from anxious thoughts to the present moment.";
+
+"Если вам позволяет самочувствие, немного прогуляйтесь в привычном темпе. Спокойное движение помогает снять часть телесного напряжения и переключить внимание." = "If you feel well enough, take a short walk at a comfortable pace. Gentle movement may ease some physical tension and help shift your attention.";
+
+"Подойдите к окну или выйдите на балкон и несколько минут замечайте свет, воздух, звуки и движение вокруг. Наблюдение за реальным окружением помогает мыслям меньше кружиться вокруг тревоги." = "Go to a window or step onto a balcony, and spend a few minutes noticing the light, air, sounds, and movement around you. Observing your surroundings can help your thoughts move away from worry.";
+
+"Сегодня необязательно решить все задачи сразу, поэтому выберите одну или две самые важные. Чёткий и небольшой план часто снижает ощущение перегруженности." = "You do not have to take care of everything at once today. Choose one or two things that matter most. A short, clear plan can make the day feel less overwhelming.";
+
+"Начните с самого простого дела, которое можно закончить за несколько минут. Небольшое завершённое действие возвращает ощущение порядка и способности справляться." = "Start with the easiest task you can finish in a few minutes. Completing one small thing can help you feel more organized and capable.";
+
+"Если мысли снова убегают в неприятное будущее, мягко спросите себя, что происходит со мной именно сейчас. Это помогает отделить реальные события от предположений и страхов." = "If your thoughts race toward an upsetting future, gently ask yourself what is happening right now. This can help you distinguish what is actually happening from fears and assumptions.";
+
+"Выделите хотя бы десять минут на занятие, которое обычно приносит вам удовольствие. Приятные привычные действия напоминают нервной системе, что день состоит не только из тревоги." = "Set aside at least ten minutes for something you usually enjoy. Familiar, pleasant activities can remind your nervous system that there is more to your day than anxiety.";
+
+"Позвоните человеку, разговор с которым обычно даёт вам чувство тепла и спокойствия. Контакт с близким человеком часто помогает уменьшить внутреннее напряжение." = "Call someone whose voice usually makes you feel warm and at ease. Connecting with someone close to you may help ease some of your tension.";
+
+"Включите знакомую музыку, которая ассоциируется у вас с хорошими и спокойными моментами. Знакомые звуки могут стать для нервной системы сигналом безопасности и устойчивости." = "Play familiar music that reminds you of good, peaceful moments. Familiar sounds can offer your nervous system a sense of comfort and steadiness.";
+
+"Оглянитесь вокруг и найдите три вещи, которые вам сейчас приятны или за которые вы благодарны. Это не отменяет тревогу, но помогает вниманию увидеть рядом с ней и что-то хорошее." = "Look around and find three things you appreciate or feel grateful for right now. This does not erase anxiety, but it can help you notice something good alongside it.";
+
+"Разрешите себе сегодня двигаться в собственном темпе, даже если обычно вы требуете от себя большего. Снижение лишних требований к себе уменьшает дополнительное напряжение." = "Give yourself permission to move at your own pace today, even if you usually expect more of yourself. Letting go of unnecessary demands can reduce added stress.";
+
+"Проверьте простые потребности тела: давно ли вы ели, пили воду, отдыхали или двигались. Иногда усталость, голод или недостаток сна усиливают ощущение тревоги." = "Check in with your basic needs: When did you last eat, drink water, rest, or move around? Fatigue, hunger, and lack of sleep can sometimes make anxiety feel stronger.";
+
+"Не пытайтесь силой выгнать тревожную мысль, а просто отметьте, что она появилась. Затем мягко верните внимание к тому, чем вы занимались до неё." = "You do not have to force an anxious thought away. Simply notice that it has appeared, then gently return your attention to what you were doing.";
+
+"Если новости или телефон усиливают напряжение, устройте себе небольшой перерыв от информационного потока. Мозгу бывает легче успокоиться, когда ему не приходится постоянно реагировать на новые тревожные сигналы." = "If the news or your phone increases your tension, take a short break from the stream of information. It may be easier to settle when your mind is not constantly responding to new upsetting updates.";
+
+"Спросите себя, что могло бы сделать сегодняшний день хотя бы немного приятнее. Даже небольшой выбор в свою пользу возвращает ощущение влияния на собственную жизнь." = "Ask yourself what might make today a little more pleasant. Even a small choice that supports your well-being can help you feel more in control of your day.";
+
+"То, что вы заметили свою тревогу, уже является полезным шагом. Теперь можно не бороться с собой, а выбрать одно простое действие, которое поможет почувствовать больше спокойствия." = "Noticing your anxiety is already a helpful step. Instead of fighting yourself, choose one simple action that may help you feel a little calmer.";
+
+"Если лёгкая тревога повторяется почти каждый день, усиливается или начинает мешать сну и обычным делам, не оставайтесь с ней один на один. Обсудите своё состояние с врачом или специалистом по психическому здоровью." = "If mild anxiety returns almost every day, grows stronger, or begins to affect your sleep or daily activities, you do not have to handle it alone. Talk with a doctor or mental health professional.";
+
+/* Advice for worry */
+"Поставьте обе стопы на пол и несколько секунд почувствуйте твёрдую поверхность под ними. Ощущение физической опоры помогает вернуть внимание от тревожных мыслей к тому, что происходит прямо сейчас." = "Place both feet on the floor and notice the firm surface beneath them for a few seconds. Feeling that physical support can bring your attention away from anxious thoughts and back to the present moment.";
+
+"Дышите спокойно, не стараясь набрать как можно больше воздуха, а выдох делайте немного длиннее вдоха. Такой ритм может постепенно уменьшить телесное возбуждение, которое сопровождает тревогу." = "Breathe gently without trying to take in as much air as possible, and let your exhale last a little longer than your inhale. This rhythm may gradually ease some of the physical arousal that comes with anxiety.";
+
+"Посмотрите вокруг и медленно назовите пять предметов, которые вы видите. Это простое упражнение возвращает внимание к окружающей реальности и помогает прервать поток тревожных мыслей." = "Look around and slowly name five things you can see. This simple exercise brings your attention back to your surroundings and may interrupt the flow of anxious thoughts.";
+
+"Сейчас не нужно решать все проблемы, которые возникают у вас в голове. Выберите только одно действие, которое действительно необходимо сделать в ближайшее время." = "You do not need to solve every problem that comes to mind right now. Choose just one action that truly needs your attention soon.";
+
+"Сядьте удобно, сделайте несколько глотков воды и дайте себе несколько минут без спешки. Когда телу становится немного комфортнее, эмоциональное напряжение часто тоже начинает снижаться." = "Sit comfortably, take a few sips of water, and give yourself a few unhurried minutes. As your body becomes a little more comfortable, emotional tension may begin to ease as well.";
+
+"Если мысли быстро сменяют одна другую, спросите себя, что вы видите, слышите и чувствуете прямо сейчас. Возвращение к непосредственным ощущениям помогает не следовать за каждой тревожной мыслью." = "If your thoughts are racing, ask yourself what you can see, hear, and feel right now. Returning to your immediate senses can help you avoid following every anxious thought.";
+
+"Посмотрите несколько минут вдаль или спокойно понаблюдайте за тем, что происходит за окном. Переключение внимания на внешнее пространство может уменьшить внутреннюю сосредоточенность на тревоге." = "Look into the distance for a few minutes, or quietly watch what is happening outside a window. Turning your attention outward may reduce your focus on anxious feelings.";
+
+"Положите ладонь на живот или грудь и просто почувствуйте движение дыхания, не пытаясь его исправить. Спокойное наблюдение за телом помогает постепенно восстановить ощущение устойчивости." = "Place a hand on your stomach or chest and simply notice the movement of your breath without trying to change it. Gently observing your body may help you regain a sense of steadiness.";
+
+"Когда тревога высока, разрешите себе делать обычные дела медленнее и с паузами. Вашей нервной системе сейчас важнее чувство безопасности, чем скорость и продуктивность." = "When anxiety is high, allow yourself to do everyday tasks more slowly and take breaks. Right now, feeling secure matters more than speed or productivity.";
+
+"Назовите три вещи, на которые вы действительно можете повлиять сегодня. Это помогает отделить реальные действия от событий, которые сейчас находятся вне вашего контроля." = "Name three things you can genuinely influence today. This can help you separate actions you can take from events that are currently beyond your control.";
+
+"Если здоровье позволяет, несколько минут спокойно походите по комнате или на улице. Ритмичное движение может помочь телу расходовать часть накопившегося напряжения." = "If your health allows, walk gently around the room or outside for a few minutes. Rhythmic movement may help your body release some built-up tension.";
+
+"Напомните себе, что тревожная мысль является мыслью, а не доказательством того, что плохое обязательно произойдёт. Попробуйте проверить, какие факты есть у вас прямо сейчас." = "Remind yourself that an anxious thought is a thought, not proof that something bad will happen. Consider what facts you actually have right now.";
+
+"Вспомните место, человека или ситуацию, рядом с которыми вы обычно чувствуете себя спокойно. Несколько минут удерживайте в памяти детали этого ощущения, позволяя телу немного расслабиться." = "Think of a place, person, or situation that usually helps you feel at ease. Spend a few minutes remembering its details and allow your body to relax a little.";
+
+"На время отложите новости, социальные сети и разговоры, которые усиливают ваше напряжение. При сильной тревоге уменьшение количества тревожной информации даёт нервной системе возможность восстановиться." = "Step away for a while from news, social media, and conversations that increase your tension. When anxiety is strong, reducing distressing information can give your nervous system a chance to settle.";
+
+"Свяжитесь с человеком, рядом с которым вам обычно спокойнее, и прямо скажите, что сегодня вы тревожитесь. Иногда несколько минут спокойного человеческого контакта оказываются полезнее попыток справиться со всем в одиночку." = "Contact someone who usually helps you feel calmer, and tell them directly that you feel anxious today. A few minutes of supportive contact may help more than trying to manage everything alone.";
+
+"Спросите себя не о том, как полностью избавиться от тревоги, а о том, что может уменьшить её хотя бы немного. Маленькая достижимая цель обычно полезнее требования немедленно почувствовать себя хорошо." = "Instead of asking how to get rid of anxiety completely, ask what might ease it a little. A small, achievable goal is often more helpful than expecting yourself to feel better immediately.";
+
+"Выберите знакомое и предсказуемое занятие: приготовьте чай, послушайте музыку, почитайте или немного прогуляйтесь. Привычные действия помогают вернуть ощущение нормального течения дня." = "Choose a familiar, predictable activity: make tea, listen to music, read, or take a short walk. Familiar routines can help restore a sense of normalcy to your day.";
+
+"Обратите внимание, не напряжены ли сейчас челюсть, плечи, руки или живот, и мягко расслабьте их. Когда мышцы постепенно отпускают напряжение, мозг получает меньше телесных сигналов опасности." = "Notice whether your jaw, shoulders, hands, or stomach feel tense, and gently let them relax. As your muscles release tension, your brain may receive fewer physical signals of distress.";
+
+"Не требуйте от себя сегодня идеального настроения или высокой продуктивности. В тревожный день достаточно бережно пройти через необходимые дела и дать себе больше отдыха." = "Do not demand a perfect mood or high productivity from yourself today. On an anxious day, it is enough to approach necessary tasks gently and give yourself more rest.";
+
+"Если тревога не уменьшается, становится сильнее, мешает спать или выполнять обычные дела, расскажите об этом врачу или специалисту. Постоянную тревогу не обязательно терпеть, и с ней можно работать." = "If your anxiety does not ease, gets stronger, or interferes with sleep or everyday activities, tell a doctor or mental health professional. You do not have to simply endure ongoing anxiety; support is available.";
+
+/* Advice for panic */
+"Сядьте или встаньте так, чтобы хорошо чувствовать опору под ногами и устойчивость своего тела. Сейчас ваша задача не победить все ощущения, а помочь телу почувствовать, что оно находится здесь, в настоящем моменте." = "Sit or stand so you can clearly feel the support beneath your feet and the steadiness of your body. You do not need to overcome every sensation right now; focus on helping your body connect with the present moment.";
+
+"Не пытайтесь делать очень глубокие вдохи, потому что это иногда усиливает головокружение и неприятные ощущения. Дышите обычно, стараясь лишь сделать выдох немного медленнее и длиннее." = "Do not force very deep breaths, which can sometimes increase dizziness or discomfort. Breathe naturally and, if comfortable, let your exhale be a little slower and longer.";
+
+"Выберите один предмет рядом с собой и внимательно рассмотрите его форму, цвет и детали. Такое сосредоточение помогает мозгу переключить внимание с внутренних ощущений на безопасное окружение." = "Choose an object near you and look closely at its shape, color, and details. Focusing on it can help shift your attention from internal sensations to your surroundings.";
+
+"Спокойно произнесите своё имя, место, где вы находитесь, сегодняшний день и время суток. Ориентация в настоящем помогает вернуть чувство связи с происходящим вокруг." = "Calmly say your name, where you are, what day it is, and the time of day. Orienting yourself to the present can help you reconnect with what is happening around you.";
+
+"Положите ладони на колени или на подлокотники и почувствуйте давление и температуру поверхности. Ясные телесные ощущения могут стать точкой опоры, пока сильная волна тревоги постепенно проходит." = "Rest your hands on your knees or the arms of a chair, and notice the pressure and temperature of the surface. These clear physical sensations can give you something to focus on as the intense wave of anxiety passes.";
+
+"Если кажется, что воздуха не хватает, не заставляйте себя вдыхать глубже и чаще. Частое глубокое дыхание может усиливать симптомы, поэтому постарайтесь дышать мягко и естественно." = "If it feels as though you cannot get enough air, do not force yourself to breathe deeper or faster. Frequent deep breaths can worsen symptoms, so try to breathe gently and naturally.";
+
+"Если можете, сядьте в устойчивое положение и обопритесь спиной на спинку стула. Чем меньше телу приходится удерживать равновесие и напряжение, тем легче сосредоточиться на успокоении." = "If you can, sit in a stable position with your back supported by a chair. With less effort spent holding yourself steady, it may be easier to focus on calming down.";
+
+"Найдите четыре предмета рядом с собой и по очереди прикоснитесь к ним. Обратите внимание, какие они на ощупь: гладкие, холодные, мягкие или твёрдые." = "Find four objects near you and touch them one at a time. Notice how each feels: smooth, cool, soft, or firm.";
+
+"Не пытайтесь сейчас разобраться со всем будущим, сосредоточьтесь только на ближайшей минуте. Когда эта минута закончится, займитесь следующей, не требуя от себя большего." = "You do not need to figure out the entire future right now. Focus only on the next minute. When it passes, take the next one without asking more of yourself.";
+
+"Если вам комфортно и вы можете безопасно глотать, сделайте несколько небольших глотков воды. Выполняйте это медленно, обращая внимание на само ощущение воды и движение глотка." = "If you feel comfortable and can swallow safely, take a few small sips of water. Go slowly and notice the sensation of the water and the movement of swallowing.";
+
+"Ослабьте тесный воротник или другую одежду, которая мешает вам чувствовать себя свободно, и устройтесь удобнее. Уменьшение физического дискомфорта может помочь снизить дополнительное напряжение." = "Loosen a tight collar or any clothing that makes you uncomfortable, and find a more comfortable position. Reducing physical discomfort may help ease added tension.";
+
+"Если рядом есть человек, которому вы доверяете, скажите ему, что вам сейчас страшно, и попросите немного побыть с вами. Ему необязательно что-то исправлять, иногда достаточно спокойного присутствия." = "If someone you trust is nearby, tell them you feel frightened and ask them to stay with you for a while. They do not need to fix anything; a calm presence may be enough.";
+
+"Если страх очень сильный, не заставляйте себя обязательно справляться в одиночку. Позвоните близкому человеку и попросите его оставаться с вами на связи, пока состояние не станет спокойнее." = "If the fear feels overwhelming, do not force yourself to handle it alone. Call someone close to you and ask them to stay on the line until you feel calmer.";
+
+"Если знакомый спокойный голос или музыка обычно помогают вам, включите их негромко. Предсказуемый и привычный звук может стать дополнительной опорой для внимания." = "If a familiar, calming voice or music usually helps you, play it softly. A familiar, predictable sound can give your attention another place to rest.";
+
+"Одновременно почувствуйте стопы на полу, спину на стуле и ладони на поверхности рядом. Несколько устойчивых ощущений помогают мозгу получать информацию не только от страха, но и от реального окружающего пространства." = "Notice your feet on the floor, your back against the chair, and your hands resting on a surface. These steady sensations help your mind take in information from your surroundings as well as from fear.";
+
+"Не пытайтесь оценивать каждое сердцебиение, вдох или другое ощущение в теле. Заметьте его и затем снова переведите внимание на предметы, звуки и пространство вокруг." = "Try not to analyze every heartbeat, breath, or other physical sensation. Notice it, then turn your attention back to objects, sounds, and the space around you.";
+
+"Если подобное состояние уже случалось и врач объяснял вам, что это паническая реакция, вспомните, какие способы помогали вам раньше. Используйте знакомые действия по одному, не пытаясь выполнить всё сразу." = "If you have experienced this before and a doctor has explained that it was a panic reaction, recall what helped you then. Try those familiar steps one at a time rather than all at once.";
+
+"Если состояние продолжает усиливаться или вам трудно оставаться одному, свяжитесь с близким человеком, врачом или службой медицинской помощи. Просить о помощи при сильных симптомах является разумным действием." = "If your symptoms continue to intensify or it is hard to be alone, contact someone close to you, a doctor, or a medical service. Seeking help for severe symptoms is a sensible step.";
+
+"Новая или сильная боль в груди, выраженная одышка, потеря сознания, внезапная слабость, нарушение речи или необычные для вас симптомы требуют срочной медицинской оценки. Особенно в старшем возрасте не стоит автоматически считать такие признаки проявлением паники." = "New or severe chest pain, significant shortness of breath, fainting, sudden weakness, difficulty speaking, or symptoms that are unusual for you require urgent medical evaluation. Especially for older adults, these signs should not automatically be assumed to be caused by panic.";
+
+"Если вы не уверены, что происходящее связано именно с паникой, лучше отнестись к новым или необычным физическим симптомам серьёзно. Обратитесь за медицинской помощью, чтобы исключить причину, требующую лечения." = "If you are unsure whether what you are experiencing is panic, take new or unusual physical symptoms seriously. Seek medical care to rule out a condition that needs treatment.";
+
+/* Birthday Greetings */
+"С днём рождения! Пусть каждый новый день приносит радость, тепло и приятные события." = "Happy birthday! May each new day bring joy, warmth, and happy moments.";
+"Желаю здоровья, счастья, душевного спокойствия и исполнения самых добрых желаний!" = "Wishing you good health, happiness, peace of mind, and all that your heart hopes for!";
+"Пусть этот день рождения станет началом прекрасного года, полного радости и успехов." = "May this birthday mark the beginning of a wonderful year filled with joy and success.";
+"Желаю, чтобы рядом всегда были любящие люди, верные друзья и множество поводов для улыбки." = "May you always have loving people, loyal friends, and plenty of reasons to smile by your side.";
+"Пусть жизнь будет наполнена светом, уютом, добрыми встречами и счастливыми мгновениями." = "May your life be filled with light, comfort, warm reunions, and happy moments.";
+"С днём рождения! Желаю прекрасного настроения, крепкого здоровья и благополучия." = "Happy birthday! Wishing you a wonderful day, good health, and well-being.";
+"Пусть мечты исполняются, удача сопровождает во всех делах, а сердце остаётся молодым." = "May your dreams come true, good fortune follow you, and your heart stay young.";
+"Желаю тепла в душе, мира в доме, радости в сердце и только хороших новостей." = "Wishing you warmth in your soul, peace at home, joy in your heart, and only good news.";
+"Пусть впереди ждут интересные события, приятные открытия и множество счастливых дней." = "May the days ahead bring interesting experiences, delightful discoveries, and much happiness.";
+"С днём рождения! Пусть каждый год жизни становится ещё ярче, добрее и счастливее." = "Happy birthday! May every year grow brighter, kinder, and happier.";
+"Пусть в день рождения тебя окружают забота, тепло и любимые люди." = "May you be surrounded by care, warmth, and the people you love on your birthday.";
+"Желаю хорошего самочувствия, спокойных дней и радостных встреч." = "Wishing you good health, peaceful days, and joyful reunions.";
+"Пусть каждый новый день дарит повод улыбнуться и почувствовать себя счастливым." = "May each new day give you a reason to smile and feel happy.";
+"Желаю уютного дома, добрых разговоров и приятных сюрпризов." = "Wishing you a cozy home, heartfelt conversations, and pleasant surprises.";
+"Пусть впереди будет много светлых дней и маленьких поводов для радости." = "May many bright days and little moments of joy lie ahead.";
+"Желаю сил для любимых дел и времени для того, что приносит удовольствие." = "Wishing you energy for the things you love and time to enjoy them.";
+"Пусть рядом будут люди, с которыми легко смеяться и хорошо молчать." = "May you have people by your side who make laughter easy and quiet moments comfortable.";
+"Желаю мира в душе, тепла в сердце и добрых новостей." = "Wishing you peace of mind, warmth in your heart, and good news.";
+"Пусть этот год подарит новые впечатления и исполнение заветных желаний." = "May this year bring new experiences and make your dearest wishes come true.";
+"Желаю приятных прогулок, тёплых встреч и красивых моментов каждый день." = "Wishing you pleasant walks, warm reunions, and beautiful moments every day.";
+"Пусть день рождения будет наполнен заботой, улыбками и любимыми голосами." = "May your birthday be filled with care, smiles, and the voices of people you love.";
+"Желаю крепкого здоровья, душевного равновесия и уверенности в завтрашнем дне." = "Wishing you good health, peace of mind, and confidence in the days ahead.";
+"Пусть в жизни всегда найдётся место чуду, надежде и хорошему настроению." = "May your life always have room for wonder, hope, and good cheer.";
+"Желаю радоваться простым вещам и находить красоту в каждом дне." = "May you enjoy life's simple pleasures and find beauty in every day.";
+"Пусть впереди ждут добрые перемены, счастливые встречи и много поводов для улыбки." = "May kind changes, happy reunions, and many reasons to smile lie ahead.";
+"Выберите язык интерфейса приложения. Мониторинг будет вестись на выбранном языке." = "Choose the language used in the app. Monitoring will be conducted in that language.";
+"Звук дыхания" = "Breathing Sound";
+"Мелодия" = "Sound";
+"Вариант 1" = "Option 1";
+"Вариант 2" = "Option 2";
+"Вариант 3" = "Option 3";
+"Вариант 4" = "Option 4";
+"Отклонён" = "Declined";
+"Доступ отозван" = "Access Revoked";
+"Протестантские" = "Protestant";
+"Протестантизм" = "Protestant Christianity";
+"При выборе протестантских, католических или православных праздников по воскресеньям будет показана воскресная открытка." = "When Protestant, Catholic, or Orthodox holidays are selected, a Sunday card will be shown on Sundays.";
+
+"25 декабря – Рождество Христово" = "December 25 – Christmas";
+"6 января – Богоявление" = "January 6 – Epiphany";
+"16 января – День свободы вероисповедания" = "January 16 – Religious Freedom Day";
+"Страстная пятница – за два дня до Пасхи" = "Good Friday – two days before Easter";
+"Пасхальное воскресенье" = "Easter Sunday";
+"Вознесение Господне – через 39 дней после Пасхи" = "Ascension Day – 39 days after Easter";
+"Пятидесятница – через 49 дней после Пасхи" = "Pentecost – 49 days after Easter";
+"Пепельная среда – за 46 дней до Пасхи" = "Ash Wednesday – 46 days before Easter";
+"Пальмовое воскресенье – за неделю до Пасхи" = "Palm Sunday – one week before Easter";
+"Великий четверг – за три дня до Пасхи" = "Maundy Thursday – three days before Easter";
+"Преображенское воскресенье – перед Пепельной средой" = "Transfiguration Sunday – before Ash Wednesday";
+"День благодарения – четвёртый четверг ноября" = "Thanksgiving – fourth Thursday in November";
+"Воскресенье Реформации – последнее воскресенье октября" = "Reformation Sunday – last Sunday in October";
+"День матери – второе воскресенье мая" = "Mother's Day – second Sunday in May";
+"День отца – третье воскресенье июня" = "Father's Day – third Sunday in June";
+"Национальный день молитвы – первый четверг мая" = "National Day of Prayer – first Thursday in May";
+"31 октября – День Реформации" = "October 31 – Reformation Day";
+"1 ноября – День всех святых" = "November 1 – All Saints' Day";
+"Если ты не нажмёшь кнопку в течение %@, мы сообщим близким." = "If you don’t tap the button within %@, we’ll notify your loved ones.";
