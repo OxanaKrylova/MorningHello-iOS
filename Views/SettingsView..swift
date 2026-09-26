@@ -8,43 +8,44 @@
 import SwiftUI
 
 struct SettingsView: View {
-
+    
     @Environment(\.dismiss)
     private var dismiss
-
+    
     @AppStorage("app_sounds_enabled")
     private var areSoundsEnabled = true
-
+    
     @AppStorage(AppLanguage.storageKey)
     private var selectedLanguageRawValue = AppLanguage.initial.rawValue
-
+    
     @State private var showProfile = false
     @State private var showContacts = false
     @State private var showHolidaySettings = false
+    @State private var showSubscription = false
     @State private var showFeedback = false
-
+    
     private let backgroundColor = Color(
         red: 1.00,
         green: 0.96,
         blue: 0.88
     )
-
+    
     private let titleColor = Color(
         red: 0.55,
         green: 0.30,
         blue: 0.14
     )
-
+    
     private let textColor = Color(
         red: 0.12,
         green: 0.16,
         blue: 0.28
     )
-
+    
     private var selectedLanguage: AppLanguage {
         AppLanguage(rawValue: selectedLanguageRawValue) ?? .initial
     }
-
+    
     private var selectedLanguageBinding: Binding<AppLanguage> {
         Binding(
             get: {
@@ -55,23 +56,22 @@ struct SettingsView: View {
             }
         )
     }
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 backgroundColor
                     .ignoresSafeArea()
-
-                ScrollView {
-                    VStack(spacing: 24) {
-                        monitoringSection
-                        soundSection
-                        languageSection
-                        feedbackSection
-                        applicationSection
-                    }
-                    .padding(.vertical, 24)
+                
+                VStack(spacing: 24) {
+                    monitoringSection
+                    subscriptionSection
+                    soundSection
+                    languageSection
+                    feedbackSection
+                    applicationSection
                 }
+                .padding(.vertical, 24)
             }
             .navigationTitle("Настройки")
             .navigationBarTitleDisplayMode(.inline)
@@ -96,6 +96,9 @@ struct SettingsView: View {
         .sheet(isPresented: $showHolidaySettings) {
             HolidaySettingsView()
         }
+        .sheet(isPresented: $showSubscription) {
+            SubscriptionView()
+        }
         .sheet(isPresented: $showFeedback) {
             FeedbackView()
         }
@@ -113,21 +116,24 @@ struct SettingsView: View {
         .onChange(of: showHolidaySettings) { _, isShowing in
             playOpeningSound(if: isShowing)
         }
+        .onChange(of: showSubscription) { _, isShowing in
+            playOpeningSound(if: isShowing)
+        }
         .onChange(of: showFeedback) { _, isShowing in
             playOpeningSound(if: isShowing)
         }
         .environment(\.locale, selectedLanguage.locale)
     }
-
+    
     // MARK: - Данные и мониторинг
-
+    
     private var monitoringSection: some View {
         VStack(
             alignment: .leading,
             spacing: 12
         ) {
             sectionTitle("Данные и мониторинг")
-
+            
             VStack(spacing: 0) {
                 settingsRow(
                     title: "Профиль",
@@ -136,10 +142,10 @@ struct SettingsView: View {
                 ) {
                     showProfile = true
                 }
-
+                
                 Divider()
                     .padding(.leading, 46)
-
+                
                 settingsRow(
                     title: "Тревожные контакты",
                     subtitle: "Кому сообщить, если отметки не будет",
@@ -147,10 +153,10 @@ struct SettingsView: View {
                 ) {
                     showContacts = true
                 }
-
+                
                 Divider()
                     .padding(.leading, 46)
-
+                
                 settingsRow(
                     title: "Праздники",
                     subtitle: "Какие праздничные открытки показывать",
@@ -162,16 +168,38 @@ struct SettingsView: View {
             .settingsCard()
         }
     }
-
+    
+    // MARK: - Подписка
+    
+    private var subscriptionSection: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 12
+        ) {
+            sectionTitle("Подписка")
+            
+            VStack(spacing: 0) {
+                settingsRow(
+                    title: "Управление подпиской",
+                    subtitle: "Тариф, статус и восстановление покупок",
+                    systemImage: "creditcard.fill"
+                ) {
+                    showSubscription = true
+                }
+            }
+            .settingsCard()
+        }
+    }
+    
     // MARK: - Звук
-
+    
     private var soundSection: some View {
         VStack(
             alignment: .leading,
             spacing: 12
         ) {
             sectionTitle("Звук")
-
+            
             VStack(spacing: 12) {
                 Toggle(
                     isOn: $areSoundsEnabled
@@ -180,13 +208,13 @@ struct SettingsView: View {
                         "Звуки приложения",
                         systemImage:
                             areSoundsEnabled
-                            ? "speaker.wave.2.fill"
-                            : "speaker.slash.fill"
+                        ? "speaker.wave.2.fill"
+                        : "speaker.slash.fill"
                     )
                     .foregroundStyle(textColor)
                 }
                 .tint(.orange)
-
+                
                 Text(
                     "Звуки сопровождают отметку «Я в порядке» и открытие экранов приложения."
                 )
@@ -200,16 +228,16 @@ struct SettingsView: View {
             .settingsCard()
         }
     }
-
+    
     // MARK: - Язык
-
+    
     private var languageSection: some View {
         VStack(
             alignment: .leading,
             spacing: 12
         ) {
             sectionTitle("Язык")
-
+            
             VStack(spacing: 12) {
                 Picker(
                     selection: selectedLanguageBinding
@@ -227,7 +255,12 @@ struct SettingsView: View {
                 }
                 .pickerStyle(.menu)
                 .tint(titleColor)
-
+                .onChange(
+                    of: selectedLanguageBinding.wrappedValue
+                ) { _, _ in
+                    ProfileDataSyncService.shared.scheduleSync()
+                }
+                
                 Text(
                     "Язык применяется сразу ко всем экранам приложения."
                 )
@@ -241,16 +274,16 @@ struct SettingsView: View {
             .settingsCard()
         }
     }
-
+    
     // MARK: - Связь
-
+    
     private var feedbackSection: some View {
         VStack(
             alignment: .leading,
             spacing: 12
         ) {
             sectionTitle("Связь")
-
+            
             VStack(spacing: 8) {
                 settingsRow(
                     title: "Написать разработчику",
@@ -259,7 +292,7 @@ struct SettingsView: View {
                 ) {
                     showFeedback = true
                 }
-
+                
                 Text("Я читаю все сообщения лично")
                     .font(
                         .system(
@@ -278,16 +311,16 @@ struct SettingsView: View {
             .settingsCard()
         }
     }
-
+    
     // MARK: - О приложении
-
+    
     private var applicationSection: some View {
         VStack(
             alignment: .leading,
             spacing: 12
         ) {
             sectionTitle("О приложении")
-
+            
             VStack(spacing: 16) {
                 HStack {
                     Text("Версия")
@@ -295,9 +328,9 @@ struct SettingsView: View {
                     Text(Bundle.main.appVersion)
                         .foregroundStyle(.secondary)
                 }
-
+                
                 Divider()
-
+                
                 HStack {
                     Text("Номер сборки")
                     Spacer()
@@ -309,9 +342,9 @@ struct SettingsView: View {
             .settingsCard()
         }
     }
-
+    
     // MARK: - Элементы интерфейса
-
+    
     private func settingsRow(
         title: LocalizedStringKey,
         subtitle: LocalizedStringKey,
@@ -324,7 +357,7 @@ struct SettingsView: View {
                     .font(.title3)
                     .foregroundStyle(.orange)
                     .frame(width: 30)
-
+                
                 VStack(
                     alignment: .leading,
                     spacing: 3
@@ -337,15 +370,15 @@ struct SettingsView: View {
                             )
                         )
                         .foregroundStyle(textColor)
-
+                    
                     Text(subtitle)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.leading)
                 }
-
+                
                 Spacer(minLength: 8)
-
+                
                 Image(systemName: "chevron.right")
                     .font(
                         .system(
@@ -364,7 +397,7 @@ struct SettingsView: View {
         }
         .buttonStyle(.plain)
     }
-
+    
     private func sectionTitle(
         _ title: LocalizedStringKey
     ) -> some View {
@@ -379,18 +412,17 @@ struct SettingsView: View {
             .foregroundStyle(titleColor)
             .padding(.horizontal, 28)
     }
-
+    
     private func playOpeningSound(
         if isShowing: Bool
     ) {
         guard isShowing else {
             return
         }
-
+        
         AppSoundPlayer.shared.play(.openForm)
     }
 }
-
 private extension View {
 
     func settingsCard() -> some View {

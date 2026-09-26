@@ -41,7 +41,8 @@ enum AppBackground: String {
 struct ContentView: View {
 
     @AppStorage(AppLanguage.storageKey)
-    private var selectedLanguageRawValue = AppLanguage.initial.rawValue
+    private var selectedLanguageCode =
+        AppLanguage.initial.rawValue
 
     @State private var showContacts = false
     @State private var hasCheckedIn = false
@@ -77,6 +78,9 @@ struct ContentView: View {
     @AppStorage("showJewishHolidays")
     private var showJewishHolidays = false
 
+    @AppStorage("showLatinAmericanHolidays")
+    private var showLatinAmericanHolidays = false
+    
     @AppStorage("app_instance_id")
     private var appInstanceId: String = UUID().uuidString
     @AppStorage("check_in_interval_hours")
@@ -112,7 +116,7 @@ struct ContentView: View {
     @State private var lastExpiredStatusRefreshAt: Date?
 
     private var selectedLanguage: AppLanguage {
-        AppLanguage(rawValue: selectedLanguageRawValue) ?? .initial
+        AppLanguage(rawValue: selectedLanguageCode) ?? .initial
     }
 
     private let monitoringSnapshotKey = "monitoring_snapshot"
@@ -561,11 +565,31 @@ struct ContentView: View {
         }
     }
 
+    private func applyHolidayPreset() {
+        let language =
+            AppLanguage(
+                rawValue: selectedLanguageCode
+            ) ?? AppLanguage.initial
+
+        HolidayPresetManager.applyIfNeeded(
+            for: language
+        )
+    }
+    
     func holidayContent(
         for date: Date = Date()
     ) -> HolidayContent? {
 
         let today = date
+        if showLatinAmericanHolidays,
+           let latinAmericanHoliday =
+            LatinAmericanHolidayProvider.content(
+                for: today
+            ) {
+
+            return latinAmericanHoliday
+        }
+        
         if showProtestantHolidays,
            let protestant = ProtestantHolidayProvider.content(for: today) {
             return protestant
@@ -1102,14 +1126,36 @@ struct ContentView: View {
         UNUserNotificationCenter.current().add(request)
     }
 
-    func isHolidayAllowed(_ category: String) -> Bool {
-        if category == "Нейтральный" { return true }
+    func isHolidayAllowed(
+        _ category: String
+    ) -> Bool {
+
+        if category == "Нейтральный" {
+            return true
+        }
+
         if category == "Протестантский" {
             return showProtestantHolidays
         }
-        if category == "Православный" { return showOrthodoxHolidays }
-        if category == "Католический" { return showCatholicHolidays }
-        if category == "Еврейский" || category == "Еврейский праздник" { return showJewishHolidays }
+
+        if category == "Православный" {
+            return showOrthodoxHolidays
+        }
+
+        if category == "Католический" {
+            return showCatholicHolidays
+        }
+
+        if category == "Еврейский" ||
+            category == "Еврейский праздник" {
+
+            return showJewishHolidays
+        }
+
+        if category == "Праздники Латинской Америки" {
+            return showLatinAmericanHolidays
+        }
+
         return true
     }
     var emergencyAlertText: String {
@@ -1744,23 +1790,28 @@ struct ContentView: View {
             )
         }
 
-        var timeGreeting: String {
-            let hour = Calendar.current.component(.hour, from: Date())
+    var timeGreeting: String {
+        let hour = Calendar.current.component(.hour, from: Date())
 
-            switch hour {
-            case 5..<12:
-                return "Доброе утро"
+        let localizationKey: String
 
-            case 12..<18:
-                return "Добрый день"
+        switch hour {
+        case 5..<12:
+            localizationKey = "Доброе утро"
 
-            case 18..<22:
-                return "Добрый вечер"
+        case 12..<18:
+            localizationKey = "Добрый день"
 
-            default:
-                return "Доброй ночи"
-            }
+        case 18..<22:
+            localizationKey = "Добрый вечер"
+
+        default:
+            localizationKey = "Доброй ночи"
         }
+
+        return selectedLanguage.localized(localizationKey)
+    }
+    
          var currentPostcard: SelectedPostcard {
 
             // 1. День рождения
@@ -2217,6 +2268,14 @@ struct ContentView: View {
                             await refreshMonitoringStatus()
                         }
                     }
+                    .onAppear {
+                        applyHolidayPreset()
+                    }
+                    .onChange(
+                        of: selectedLanguageCode
+                    ) { _, _ in
+                        applyHolidayPreset()
+                    }
                     .onChange(of: scenePhase) { _, newPhase in
                         guard newPhase == .active else { return }
 
@@ -2362,51 +2421,48 @@ struct ContentView: View {
             return nil
         }
 
-         func isPriorityPostcardDay(
-            _ date: Date
-        ) -> Bool {
+    func isPriorityPostcardDay(
+        _ date: Date
+    ) -> Bool {
 
-            let calendar = Calendar.current
-            if birthdayContent(for: date) != nil {
-                return true
-            }
+        let calendar = Calendar.current
 
-            // Праздник
-            if holidayContent(
-                for: date
-            ) != nil {
-                return true
-            }
+        // День рождения
+        if birthdayContent(
+            for: date
+        ) != nil {
+            return true
+        }
 
-            let weekday =
+        // Праздник
+        if holidayContent(
+            for: date
+        ) != nil {
+            return true
+        }
+
+        let weekday =
             calendar.component(
                 .weekday,
                 from: date
             )
 
-            // Понедельник
-            if weekday == 2 {
-                return true
-            }
-
-            // Суббота / Шаббат
-            if showJewishHolidays,
-               weekday == 7 {
-                return true
-            }
-            // Воскресенье
-            if (
-                !showJewishHolidays ||
-                showOrthodoxHolidays ||
-                showCatholicHolidays
-            ),
-               weekday == 1 {
-
-                return true
-            }
-
-            return false
+        // Воскресенье и понедельник
+        if weekday == 1 || weekday == 2 {
+            return true
         }
+
+        // Суббота при включённых
+        // еврейских праздниках
+        if showJewishHolidays,
+           weekday == 7 {
+            return true
+        }
+
+        return false
+    }
+    
+    
         func openProfileIfNeeded() {
             guard !hasCheckedProfileOnLaunch else {
                 return

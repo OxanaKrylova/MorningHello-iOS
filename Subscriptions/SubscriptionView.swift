@@ -79,6 +79,43 @@ struct SubscriptionView: View {
         AppAdaptiveColor.warmFormBackground.ignoresSafeArea()
     }
 
+    private var morningHelloTermsURL: URL {
+        switch AppLanguage.selected {
+        case .russian:
+            return URL(
+                string:
+                    "https://www.morninghelloapp.com/ru/terms-and-conditions"
+            )!
+
+        case .englishUS, .spanishLatinAmerica:
+            return URL(
+                string:
+                    "https://www.morninghelloapp.com/terms-and-conditions"
+            )!
+        }
+    }
+
+    private var privacyPolicyURL: URL {
+        switch AppLanguage.selected {
+        case .russian:
+            return URL(
+                string:
+                    "https://www.morninghelloapp.com/ru/privacy-policy"
+            )!
+
+        case .englishUS, .spanishLatinAmerica:
+            return URL(
+                string:
+                    "https://www.morninghelloapp.com/privacy-policy"
+            )!
+        }
+    }
+
+    private let appleEULAURL = URL(
+        string:
+            "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/"
+    )!
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -389,19 +426,146 @@ struct SubscriptionView: View {
     private var legalSection: some View {
         VStack(
             alignment: .leading,
-            spacing: 10
+            spacing: 14
         ) {
+            Divider()
+                .padding(.vertical, 4)
+
             Text(
-                "Подписка оформляется через Apple App Store и автоматически продлевается, если автопродление не отключено в настройках Apple."
+                AppLanguage.selected.localized(
+                    "Условия подписки"
+                )
+            )
+            .font(
+                .system(
+                    .headline,
+                    design: .rounded
+                )
+                .weight(.bold)
+            )
+            .foregroundColor(
+                AppAdaptiveColor.text
             )
 
             Text(
-                "Удаление приложения MorningHello не отменяет подписку и не останавливает серверный мониторинг."
+                AppLanguage.selected.localized(
+                    "Подписка оформляется через Apple App Store и автоматически продлевается, если автопродление не отключено в настройках Apple."
+                )
+            )
+            .font(.footnote)
+            .foregroundColor(.secondary)
+            .fixedSize(
+                horizontal: false,
+                vertical: true
+            )
+
+            Text(
+                AppLanguage.selected.localized(
+                    "Удаление приложения MorningHello не отменяет подписку и не останавливает серверный мониторинг."
+                )
+            )
+            .font(.footnote)
+            .foregroundColor(.secondary)
+            .fixedSize(
+                horizontal: false,
+                vertical: true
+            )
+
+            legalLink(
+                title:
+                    AppLanguage.selected.localized(
+                        "Условия использования MorningHello"
+                    ),
+                destination:
+                    morningHelloTermsURL
+            )
+
+            legalLink(
+                title:
+                    AppLanguage.selected.localized(
+                        "Условия использования Apple (EULA)"
+                    ),
+                destination:
+                    appleEULAURL
+            )
+
+            legalLink(
+                title:
+                    AppLanguage.selected.localized(
+                        "Политика конфиденциальности"
+                    ),
+                destination:
+                    privacyPolicyURL
             )
         }
-        .font(.footnote)
-        .foregroundColor(.secondary)
         .padding(.horizontal, 4)
+        .padding(.top, 4)
+    }
+    
+    private func legalLink(
+        title: String,
+        destination: URL
+    ) -> some View {
+        Link(
+            destination: destination
+        ) {
+            HStack(
+                alignment: .center,
+                spacing: 10
+            ) {
+                Image(
+                    systemName:
+                        "doc.text.fill"
+                )
+                .font(.subheadline)
+                .foregroundColor(.orange)
+
+                Text(title)
+                    .font(
+                        .system(
+                            .footnote,
+                            design: .rounded
+                        )
+                        .weight(.semibold)
+                    )
+                    .multilineTextAlignment(
+                        .leading
+                    )
+
+                Spacer(minLength: 8)
+
+                Image(
+                    systemName:
+                        "arrow.up.right"
+                )
+                .font(
+                    .system(
+                        size: 12,
+                        weight: .semibold
+                    )
+                )
+                .foregroundColor(.secondary)
+            }
+            .foregroundColor(
+                AppAdaptiveColor.text
+            )
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            )
+            .background(
+                AppAdaptiveColor.warmCardBackground
+            )
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: 14,
+                    style: .continuous
+                )
+            )
+        }
+        .buttonStyle(.plain)
     }
 
     private func openSubscriptionPlans() {

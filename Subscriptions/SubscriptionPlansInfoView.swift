@@ -364,84 +364,36 @@ enum SubscriptionPaywallMode: Equatable {
                             ProgressView()
                                 .controlSize(.small)
                         }
-                        
+
                         Text(
                             isRestoring
-                            ? selectedLanguage.localized("Восстанавливаем…")
-                            : selectedLanguage.localized("Восстановить покупки")
+                            ? selectedLanguage.localized(
+                                "Восстанавливаем…"
+                            )
+                            : selectedLanguage.localized(
+                                "Восстановить покупки"
+                            )
                         )
                     }
+                    .frame(
+                        maxWidth: .infinity
+                    )
                 }
                 .buttonStyle(.plain)
                 .fontWeight(.semibold)
                 .foregroundStyle(
                     Color(uiColor: .systemBrown)
                 )
-                .disabled(isRestoring || isPurchasing)
-                
-                ViewThatFits(in: .horizontal) {
-                    HStack(spacing: 8) {
-                        appleTermsOfUseLink
-                        
-                        Text("•")
-                            .foregroundStyle(.secondary)
-                        
-                        morningHelloTermsOfUseLink
-                        
-                        Text("•")
-                            .foregroundStyle(.secondary)
-                        
-                        privacyPolicyLink
-                    }
-                    .fixedSize(
-                        horizontal: true,
-                        vertical: false
-                    )
-                    
-                    VStack(spacing: 6) {
-                        appleTermsOfUseLink
-                        morningHelloTermsOfUseLink
-                        privacyPolicyLink
-                    }
-                }
-                .font(
-                    .system(
-                        .footnote,
-                        design: .rounded
-                    )
+                .disabled(
+                    isRestoring || isPurchasing
                 )
-                .multilineTextAlignment(.center)
             }
-            .frame(maxWidth: .infinity)
+            .frame(
+                maxWidth: .infinity
+            )
             .padding(.top, 2)
         }
-        
-        private var appleTermsOfUseLink: some View {
-            Link(
-                selectedLanguage.localized(
-                    "Стандартные условия использования Apple"
-                ),
-                destination: appleTermsOfUseURL
-            )
-        }
-        
-        private var morningHelloTermsOfUseLink: some View {
-            Link(
-                selectedLanguage.localized(
-                    "Условия использования MorningHello"
-                ),
-                destination: morningHelloTermsURL
-            )
-        }
-        
-        private var privacyPolicyLink: some View {
-            Link(
-                selectedLanguage.localized(
-                    "Политика конфиденциальности"
-                ),
-                destination: privacyPolicyURL
-            )
-        }
+
         
         private var selectedProduct: Product? {
             product(for: selectedPlan)
@@ -593,9 +545,18 @@ enum SubscriptionPaywallMode: Equatable {
             defer { isPurchasing = false }
             
             do {
-                let purchaseResult = try await purchase(
-                    productToPurchase
-                )
+                let appInstanceId =
+                    AppInstanceIdentity.id
+
+                let purchaseResult =
+                    try await purchase(
+                        productToPurchase,
+                        options: [
+                            .appAccountToken(
+                                appInstanceId
+                            )
+                        ]
+                    )
                 let outcome = try await subscriptionManager
                     .processPurchaseResult(
                         purchaseResult

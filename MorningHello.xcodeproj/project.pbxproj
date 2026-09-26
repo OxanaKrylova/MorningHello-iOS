@@ -32,6 +32,15 @@
 		2976EF0E3027D60C00C0E8B1 /* TermsOfUseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976EF0D3027D60C00C0E8B1 /* TermsOfUseView.swift */; };
 		2976EF113027D66000C0E8B1 /* TermsOfUseText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */; };
 		2976EF133027D69B00C0E8B1 /* AppEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976EF123027D69B00C0E8B1 /* AppEntryView.swift */; };
+		2988741B3062A10500361B7D /* SubscriptionPaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F44CBD303F95F10043E63A /* SubscriptionPaywallView.swift */; };
+		2988741D306332A900361B7D /* LatinAmericanHolidayProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2988741C306332A900361B7D /* LatinAmericanHolidayProvider.swift */; };
+		2988743B3064022D00361B7D /* HolidayPresetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2988743A3064022D00361B7D /* HolidayPresetManager.swift */; };
+		2988743D30647BF500361B7D /* JulyPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2988743C30647BF500361B7D /* JulyPostcardProvider.swift */; };
+		2988745B3065D25200361B7D /* PetProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2988745A3065D25200361B7D /* PetProfileView.swift */; };
+		29887479306713EB00361B7D /* AppInstanceIDProvider..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29887478306713EB00361B7D /* AppInstanceIDProvider..swift */; };
+		2988747B3067141800361B7D /* ProfileDataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2988747A3067141800361B7D /* ProfileDataModels.swift */; };
+		2988747D3067144900361B7D /* ProfileDataAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2988747C3067144900361B7D /* ProfileDataAPIClient.swift */; };
+		2988747F3067146800361B7D /* ProfileDataSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2988747E3067146800361B7D /* ProfileDataSyncService.swift */; };
 		2992CC2D304A2C29003301E9 /* AprilPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2992CC2C304A2C29003301E9 /* AprilPostcardProvider.swift */; };
 		29AFFF9B3037B456007FE955 /* SubscriptionSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFFF9A3037B456007FE955 /* SubscriptionSnapshot.swift */; };
 		29AFFF9D3037B4BC007FE955 /* SubscriptionLifecycleAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFFF9C3037B4BC007FE955 /* SubscriptionLifecycleAPIClient.swift */; };
@@ -86,7 +95,6 @@
 		29EC924C3053143A00D9BD71 /* MoodChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC92403053143A00D9BD71 /* MoodChartView.swift */; };
 		29EC924D3053143A00D9BD71 /* MoodRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC92453053143A00D9BD71 /* MoodRepository.swift */; };
 		29EC924F3053144800D9BD71 /* SwiftDataMoodRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC924E3053144800D9BD71 /* SwiftDataMoodRepository.swift */; };
-		29F44CBE303F95F10043E63A /* SubscriptionPaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F44CBD303F95F10043E63A /* SubscriptionPaywallView.swift */; };
 		29FAEAF23040DE51003CFA12 /* MarchPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FAEAF13040DE51003CFA12 /* MarchPostcardProvider.swift */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +124,14 @@
 		2976EF0D3027D60C00C0E8B1 /* TermsOfUseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseView.swift; sourceTree = "<group>"; };
 		2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseText.swift; sourceTree = "<group>"; };
 		2976EF123027D69B00C0E8B1 /* AppEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntryView.swift; sourceTree = "<group>"; };
+		2988741C306332A900361B7D /* LatinAmericanHolidayProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatinAmericanHolidayProvider.swift; sourceTree = "<group>"; };
+		2988743A3064022D00361B7D /* HolidayPresetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayPresetManager.swift; sourceTree = "<group>"; };
+		2988743C30647BF500361B7D /* JulyPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JulyPostcardProvider.swift; sourceTree = "<group>"; };
+		2988745A3065D25200361B7D /* PetProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetProfileView.swift; sourceTree = "<group>"; };
+		29887478306713EB00361B7D /* AppInstanceIDProvider..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInstanceIDProvider..swift; sourceTree = "<group>"; };
+		2988747A3067141800361B7D /* ProfileDataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataModels.swift; sourceTree = "<group>"; };
+		2988747C3067144900361B7D /* ProfileDataAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataAPIClient.swift; sourceTree = "<group>"; };
+		2988747E3067146800361B7D /* ProfileDataSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataSyncService.swift; sourceTree = "<group>"; };
 		2992CC2C304A2C29003301E9 /* AprilPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AprilPostcardProvider.swift; sourceTree = "<group>"; };
 		29AFFF9A3037B456007FE955 /* SubscriptionSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionSnapshot.swift; sourceTree = "<group>"; };
 		29AFFF9C3037B4BC007FE955 /* SubscriptionLifecycleAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionLifecycleAPIClient.swift; sourceTree = "<group>"; };
@@ -235,14 +251,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2916AEA1305C95D6007248C3 /* Protestant */ = {
-			isa = PBXGroup;
-			children = (
-				2916AEA2305C9603007248C3 /* ProtestantHolidayProvider.swift */,
-			);
-			path = Protestant;
-			sourceTree = "<group>";
-		};
 		293CF91E30594601002DACBD /* Sponsorship */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,22 +286,6 @@
 				2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */,
 			);
 			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		2992CC2B304A2C15003301E9 /* April */ = {
-			isa = PBXGroup;
-			children = (
-				2992CC2C304A2C29003301E9 /* AprilPostcardProvider.swift */,
-			);
-			path = April;
-			sourceTree = "<group>";
-		};
-		29AFFF9E3037B6E7007FE955 /* January */ = {
-			isa = PBXGroup;
-			children = (
-				29AFFF9F3037B6F9007FE955 /* JanuaryPostcardProvider.swift */,
-			);
-			path = January;
 			sourceTree = "<group>";
 		};
 		29AFFFBF30390273007FE955 /* Collection */ = {
@@ -341,41 +333,28 @@
 		29B76C44301AAB9900D1D295 /* HolidayProvider */ = {
 			isa = PBXGroup;
 			children = (
-				29B76C4C301AAC0000D1D295 /* International */,
-				29AFFF9E3037B6E7007FE955 /* January */,
-				29B76C53301AAC4200D1D295 /* February */,
-				29FAEAF03040DE3B003CFA12 /* March */,
-				2992CC2B304A2C15003301E9 /* April */,
-				29B76C8D301E9D9600D1D295 /* August */,
-				29B76CAA302144B200D1D295 /* September */,
-				29DD590A30350B180067B04F /* October */,
-				29BCCD29303053280027557C /* November */,
-				29B76C50301AAC2B00D1D295 /* December */,
-				29B76C4F301AAC2100D1D295 /* Sunday */,
-				29B76C4E301AAC1700D1D295 /* Monday */,
-				2916AEA1305C95D6007248C3 /* Protestant */,
-				29B76C4B301AABEC00D1D295 /* Jewish */,
-				29B76C4A301AABE100D1D295 /* Catholic */,
-				29B76C47301AABBF00D1D295 /* Orthodox */,
+				2992CC2C304A2C29003301E9 /* AprilPostcardProvider.swift */,
+				29B76C8E301E9DB300D1D295 /* AugustPostcardProvider.swift */,
 				29B76C89301E91C000D1D295 /*  BirthdayPostcardProvider.swift */,
+				29B76C87301D523900D1D295 /* CatholicHolidayProvider.swift */,
+				29B76C7D301BF11200D1D295 /* DecemberPostcardProvider.swift */,
+				29B76C7F301BF9E100D1D295 /* InternationalHolidayProvider.swift */,
+				29B76C7B301BDF9800D1D295 /* FebruaryPostcardProvider.swift */,
+				29AFFF9F3037B6F9007FE955 /* JanuaryPostcardProvider.swift */,
+				29B76C4B301AABEC00D1D295 /* Jewish */,
+				2988743C30647BF500361B7D /* JulyPostcardProvider.swift */,
+				2988741C306332A900361B7D /* LatinAmericanHolidayProvider.swift */,
+				29FAEAF13040DE51003CFA12 /* MarchPostcardProvider.swift */,
+				29B76C54301AAC7F00D1D295 /* MondayPostcardProvider.swift */,
+				29BCCD2A3030533A0027557C /* NovemberPostcardProvider.swift */,
+				29DD590B30350B360067B04F /* OctoberPostcardProvider.swift */,
+				29B76C81301D418000D1D295 /* OrthodoxHolidayProvider.swift */,
+				2916AEA2305C9603007248C3 /* ProtestantHolidayProvider.swift */,
+				29B76CAB302144C000D1D295 /* SeptemberPostcardProvider.swift */,
+				29B76C79301BD94C00D1D295 /* SundayPostcardProvider.swift */,
+				2988743A3064022D00361B7D /* HolidayPresetManager.swift */,
 			);
 			path = HolidayProvider;
-			sourceTree = "<group>";
-		};
-		29B76C47301AABBF00D1D295 /* Orthodox */ = {
-			isa = PBXGroup;
-			children = (
-				29B76C81301D418000D1D295 /* OrthodoxHolidayProvider.swift */,
-			);
-			path = Orthodox;
-			sourceTree = "<group>";
-		};
-		29B76C4A301AABE100D1D295 /* Catholic */ = {
-			isa = PBXGroup;
-			children = (
-				29B76C87301D523900D1D295 /* CatholicHolidayProvider.swift */,
-			);
-			path = Catholic;
 			sourceTree = "<group>";
 		};
 		29B76C4B301AABEC00D1D295 /* Jewish */ = {
@@ -386,46 +365,6 @@
 				29B76C85301D4EB900D1D295 /* JewishHolidayProvider.swift */,
 			);
 			path = Jewish;
-			sourceTree = "<group>";
-		};
-		29B76C4C301AAC0000D1D295 /* International */ = {
-			isa = PBXGroup;
-			children = (
-				29B76C7F301BF9E100D1D295 /* InternationalHolidayProvider.swift */,
-			);
-			path = International;
-			sourceTree = "<group>";
-		};
-		29B76C4E301AAC1700D1D295 /* Monday */ = {
-			isa = PBXGroup;
-			children = (
-				29B76C54301AAC7F00D1D295 /* MondayPostcardProvider.swift */,
-			);
-			path = Monday;
-			sourceTree = "<group>";
-		};
-		29B76C4F301AAC2100D1D295 /* Sunday */ = {
-			isa = PBXGroup;
-			children = (
-				29B76C79301BD94C00D1D295 /* SundayPostcardProvider.swift */,
-			);
-			path = Sunday;
-			sourceTree = "<group>";
-		};
-		29B76C50301AAC2B00D1D295 /* December */ = {
-			isa = PBXGroup;
-			children = (
-				29B76C7D301BF11200D1D295 /* DecemberPostcardProvider.swift */,
-			);
-			path = December;
-			sourceTree = "<group>";
-		};
-		29B76C53301AAC4200D1D295 /* February */ = {
-			isa = PBXGroup;
-			children = (
-				29B76C7B301BDF9800D1D295 /* FebruaryPostcardProvider.swift */,
-			);
-			path = February;
 			sourceTree = "<group>";
 		};
 		29B76C70301BCFEC00D1D295 /* Models */ = {
@@ -470,6 +409,7 @@
 				29CA8E2C300197C800F59ECA /* ProfileView.swift */,
 				296D4CDA3046B1AC000248AD /* SettingsView..swift */,
 				290E2524304D97FB000D4A2D /* BreathingSquareView.swift */,
+				2988745A3065D25200361B7D /* PetProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -484,48 +424,20 @@
 			path = Intro;
 			sourceTree = "<group>";
 		};
-		29B76C8D301E9D9600D1D295 /* August */ = {
-			isa = PBXGroup;
-			children = (
-				29B76C8E301E9DB300D1D295 /* AugustPostcardProvider.swift */,
-			);
-			path = August;
-			sourceTree = "<group>";
-		};
-		29B76CAA302144B200D1D295 /* September */ = {
-			isa = PBXGroup;
-			children = (
-				29B76CAB302144C000D1D295 /* SeptemberPostcardProvider.swift */,
-			);
-			path = September;
-			sourceTree = "<group>";
-		};
 		29BCCD02302D9F140027557C /* Backend */ = {
 			isa = PBXGroup;
 			children = (
 				29B76CA230212FD700D1D295 /* HeartbeatModels.swift */,
+				2988747C3067144900361B7D /* ProfileDataAPIClient.swift */,
 				29B76CA63021304700D1D295 /* HeartbeatAPIClient.swift */,
 				29BCCD03302D9F260027557C /* EmergencyContactAPIClient.swift */,
 				29B76CA43021301A00D1D295 /* HeartbeatRequestBuilder.swift */,
 				2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */,
+				29887478306713EB00361B7D /* AppInstanceIDProvider..swift */,
+				2988747A3067141800361B7D /* ProfileDataModels.swift */,
+				2988747E3067146800361B7D /* ProfileDataSyncService.swift */,
 			);
 			path = Backend;
-			sourceTree = "<group>";
-		};
-		29BCCD29303053280027557C /* November */ = {
-			isa = PBXGroup;
-			children = (
-				29BCCD2A3030533A0027557C /* NovemberPostcardProvider.swift */,
-			);
-			path = November;
-			sourceTree = "<group>";
-		};
-		29DD590A30350B180067B04F /* October */ = {
-			isa = PBXGroup;
-			children = (
-				29DD590B30350B360067B04F /* OctoberPostcardProvider.swift */,
-			);
-			path = October;
 			sourceTree = "<group>";
 		};
 		29EC923F3053141A00D9BD71 /* Mood */ = {
@@ -541,14 +453,6 @@
 				29EC92463053143A00D9BD71 /* MoodStore.swift */,
 			);
 			path = Mood;
-			sourceTree = "<group>";
-		};
-		29FAEAF03040DE3B003CFA12 /* March */ = {
-			isa = PBXGroup;
-			children = (
-				29FAEAF13040DE51003CFA12 /* MarchPostcardProvider.swift */,
-			);
-			path = March;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -660,6 +564,7 @@
 				29B76C55301AAC7F00D1D295 /* MondayPostcardProvider.swift in Sources */,
 				29B76C82301D418000D1D295 /* OrthodoxHolidayProvider.swift in Sources */,
 				29B76C43301AA87500D1D295 /* PostcardScreen.swift in Sources */,
+				2988745B3065D25200361B7D /* PetProfileView.swift in Sources */,
 				29BCCD04302D9F260027557C /* EmergencyContactAPIClient.swift in Sources */,
 				290CA89F305A5CF7008BA815 /* AdaptiveColors.swift in Sources */,
 				29B76C74301BD1F300D1D295 /* SelectedPostcard.swift in Sources */,
@@ -675,17 +580,24 @@
 				29BCCCED302A68140027557C /* EmergencyContact.swift in Sources */,
 				29B76C80301BF9E100D1D295 /* InternationalHolidayProvider.swift in Sources */,
 				290CA89D3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift in Sources */,
+				29887479306713EB00361B7D /* AppInstanceIDProvider..swift in Sources */,
+				2988743B3064022D00361B7D /* HolidayPresetManager.swift in Sources */,
 				29EC92473053143A00D9BD71 /* MoodHistoryView.swift in Sources */,
 				29EC92483053143A00D9BD71 /* MoodCheckInView.swift in Sources */,
+				2988747D3067144900361B7D /* ProfileDataAPIClient.swift in Sources */,
 				293CF91F30594601002DACBD /* SponsorshipViews.swift in Sources */,
+				2988747F3067146800361B7D /* ProfileDataSyncService.swift in Sources */,
 				293CF92030594601002DACBD /* SponsorshipAPIClient.swift in Sources */,
 				293CF92130594601002DACBD /* SponsoredPurchaseManager.swift in Sources */,
 				293CF92230594601002DACBD /* AccountSession.swift in Sources */,
 				293CF92330594601002DACBD /* SponsorshipRootView.swift in Sources */,
+				2988741D306332A900361B7D /* LatinAmericanHolidayProvider.swift in Sources */,
 				293CF92430594601002DACBD /* SponsorshipStore.swift in Sources */,
 				293CF92530594601002DACBD /* SponsorshipModels.swift in Sources */,
 				29EC92493053143A00D9BD71 /* MoodStore.swift in Sources */,
 				29EC924A3053143A00D9BD71 /* MoodLevel.swift in Sources */,
+				2988741B3062A10500361B7D /* SubscriptionPaywallView.swift in Sources */,
+				2988747B3067141800361B7D /* ProfileDataModels.swift in Sources */,
 				29EC924B3053143A00D9BD71 /* MoodEntry.swift in Sources */,
 				29EC924C3053143A00D9BD71 /* MoodChartView.swift in Sources */,
 				29EC924D3053143A00D9BD71 /* MoodRepository.swift in Sources */,
@@ -696,6 +608,7 @@
 				29CD29F63023DBB800C72D5D /* PostcardRenderer..swift in Sources */,
 				29B76C8A301E91C000D1D295 /*  BirthdayPostcardProvider.swift in Sources */,
 				29B76C5B301B6DA500D1D295 /* BirthdayGreetingView.swift in Sources */,
+				2988743D30647BF500361B7D /* JulyPostcardProvider.swift in Sources */,
 				296D4CC730462788000248AD /* AppSoundPlayer.swift in Sources */,
 				29AFFFA03037B6F9007FE955 /* JanuaryPostcardProvider.swift in Sources */,
 				29B76C7E301BF11200D1D295 /* DecemberPostcardProvider.swift in Sources */,
@@ -705,7 +618,6 @@
 				29B76CA330212FD700D1D295 /* HeartbeatModels.swift in Sources */,
 				2976EF113027D66000C0E8B1 /* TermsOfUseText.swift in Sources */,
 				29AFFF9B3037B456007FE955 /* SubscriptionSnapshot.swift in Sources */,
-				29F44CBE303F95F10043E63A /* SubscriptionPaywallView.swift in Sources */,
 				29B76CA73021304700D1D295 /* HeartbeatAPIClient.swift in Sources */,
 				292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */,
 			);
@@ -840,7 +752,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -880,7 +792,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

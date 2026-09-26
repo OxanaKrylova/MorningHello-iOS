@@ -64,6 +64,18 @@ struct ProfileView: View {
     @State
     private var showCountrySelection = false
     
+    @State private var showPetProfile = false
+    
+    @AppStorage(AppLanguage.storageKey)
+    private var selectedLanguageCode =
+        AppLanguage.initial.rawValue
+
+    private var selectedLanguage: AppLanguage {
+        AppLanguage(
+            rawValue: selectedLanguageCode
+        ) ?? .initial
+    }
+    
     // MARK: Сохранённые данные
     
     @AppStorage("profile_display_name")
@@ -81,6 +93,9 @@ struct ProfileView: View {
     @AppStorage("profile_country_code")
     private var countryCode = ""
     
+    @AppStorage("profile_phone")
+    private var profilePhone = ""
+    
     // MARK: Временные значения полей даты
     
     @State
@@ -96,6 +111,55 @@ struct ProfileView: View {
         displayName.trimmingCharacters(
             in: .whitespacesAndNewlines
         )
+    }
+    
+    private var trimmedProfilePhone: String {
+        profilePhone.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+    }
+
+    private var normalizedProfilePhone: String? {
+        guard !trimmedProfilePhone.isEmpty else {
+            return nil
+        }
+
+        let allowedCharacters = CharacterSet(
+            charactersIn: "+0123456789 -()"
+        )
+
+        guard trimmedProfilePhone.unicodeScalars.allSatisfy({
+            allowedCharacters.contains($0)
+        }) else {
+            return nil
+        }
+
+        guard trimmedProfilePhone.first == "+" else {
+            return nil
+        }
+
+        guard trimmedProfilePhone.filter({
+            $0 == "+"
+        }).count == 1 else {
+            return nil
+        }
+
+        let digits = trimmedProfilePhone
+            .dropFirst()
+            .filter(\.isNumber)
+
+        let normalizedPhone = "+\(digits)"
+
+        let pattern = #"^\+[1-9][0-9]{7,14}$"#
+
+        guard normalizedPhone.range(
+            of: pattern,
+            options: .regularExpression
+        ) != nil else {
+            return nil
+        }
+
+        return normalizedPhone
     }
     
     private var isBirthdayComplete: Bool {
@@ -122,6 +186,7 @@ struct ProfileView: View {
     private var canCloseProfile: Bool {
         !trimmedName.isEmpty &&
         !savedSalutation.isEmpty &&
+        normalizedProfilePhone != nil &&
         !countryCode.isEmpty &&
         birthDay > 0 &&
         birthMonth > 0 &&
@@ -135,49 +200,83 @@ struct ProfileView: View {
         NavigationStack {
             ZStack {
                 profileBackground
-                
-                ScrollView {
-                    VStack(spacing: 20) {
-                        closeButton
-                        
-                        profileHeader
-                        
-                        nameSection
 
-                        checkInIntervalSection
+                ScrollViewReader { proxy in
+                    ScrollView(
+                        .vertical,
+                        showsIndicators: true
+                    ) {
+                        VStack(spacing: 20) {
+                            closeButton
+                                .id("profile_top")
 
-                        countrySection
+                            profileHeader
 
-                        birthdaySection
-                        
-                        if SponsorshipFeatureConfiguration.isEnabled {
-                            sponsorshipSection
-                        }
-                                                
-                        
-                        Text(
-                            "Данные профиля сохраняются только на этом устройстве."
-                        )
-                        .font(
-                            .system(
-                                .caption,
-                                design: .rounded
+                            nameSection
+
+                            checkInIntervalSection
+
+                            petSection
+
+                            phoneSection
+
+                            countrySection
+
+                            birthdaySection
+
+                            if SponsorshipFeatureConfiguration.isEnabled {
+                                sponsorshipSection
+                            }
+
+                            Text(
+                                "Данные профиля сохраняются на устройстве и синхронизируются с защищённым сервером MorningHello."
                             )
-                        )
-                        .foregroundColor(AppAdaptiveColor.secondaryText)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 36)
-                        .padding(.bottom, 30)
+                            .font(
+                                .system(
+                                    .caption,
+                                    design: .rounded
+                                )
+                            )
+                            .foregroundColor(
+                                AppAdaptiveColor.secondaryText
+                            )
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 36)
+                            .padding(.bottom, 30)
+                        }
+                        .padding(.top, 4)
                     }
-                    .padding(.top, 4)
+                    .scrollDisabled(false)
+                    .scrollDismissesKeyboard(
+                        .interactively
+                    )
+                    .onAppear {
+                        focusedField = nil
+
+                        DispatchQueue.main.async {
+                            proxy.scrollTo(
+                                "profile_top",
+                                anchor: .top
+                            )
+                        }
+                    }
                 }
-                .scrollDismissesKeyboard(.interactively)
             }
-            .toolbar(.hidden, for: .navigationBar)
+            .toolbar(
+                .hidden,
+                for: .navigationBar
+            )
         }
-        .interactiveDismissDisabled(!canCloseProfile)
+        .interactiveDismissDisabled(
+            !canCloseProfile
+        )
         .onAppear {
             loadBirthdayFields()
+        }
+        .task {
+            await ProfileDataSyncService
+                .shared
+                .retryPendingSync()
         }
         .sheet(
             isPresented: $showCountrySelection
@@ -191,6 +290,11 @@ struct ProfileView: View {
         ) {
             FeedbackView()
         }
+        .sheet(
+            isPresented: $showPetProfile
+        ) {
+            PetProfileView()
+        }
         .alert(
             "Заполните профиль",
             isPresented: $showRequiredFieldAlert
@@ -203,7 +307,7 @@ struct ProfileView: View {
         } message: {
             Text(
                 profileText(
-                    "Пожалуйста, заполните имя, форму обращения, страну проживания, день и месяц рождения и выберите интервал тревожного оповещения."
+                    "Пожалуйста, заполните имя, форму обращения, телефон, страну проживания, день и месяц рождения и выберите интервал тревожного оповещения."
                 )
             )
         }
@@ -291,14 +395,21 @@ struct ProfileView: View {
     
     private func closeProfile() {
         focusedField = nil
-        
-        displayName = trimmedName
-        
-        guard canCloseProfile else {
+
+        guard canCloseProfile,
+              let normalizedProfilePhone
+        else {
             showRequiredFieldAlert = true
             return
         }
-        
+
+        displayName = trimmedName
+        profilePhone = normalizedProfilePhone
+
+        ProfileDataSyncService
+            .shared
+            .scheduleSync()
+
         dismiss()
     }
     
@@ -520,6 +631,199 @@ struct ProfileView: View {
         .profileCard()
     }
 
+    // MARK: - Телефон пользователя
+
+    private var phoneSection: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 12
+        ) {
+            Label {
+                HStack(spacing: 4) {
+                    Text(
+                        profileText(
+                            "Телефон пользователя"
+                        )
+                    )
+
+                    Text("*")
+                        .fontWeight(.bold)
+                        .foregroundColor(
+                            .red.opacity(0.8)
+                        )
+                }
+            } icon: {
+                Image(
+                    systemName: "phone.fill"
+                )
+                .foregroundColor(.orange)
+            }
+            .font(
+                .system(
+                    .title3,
+                    design: .rounded
+                )
+                .weight(.semibold)
+            )
+            .foregroundColor(
+                AppAdaptiveColor.text
+            )
+
+            Text(
+                profileText(
+                    "Номер телефона нужен для отправки кодов, связанных с подпиской."
+                )
+            )
+            .font(
+                .system(
+                    .caption,
+                    design: .rounded
+                )
+            )
+            .foregroundColor(
+                AppAdaptiveColor.secondaryText
+            )
+            .fixedSize(
+                horizontal: false,
+                vertical: true
+            )
+
+            TextField(
+                "",
+                text: $profilePhone,
+                prompt: Text(
+                    profileText(
+                        "Телефон*"
+                    )
+                )
+                .foregroundColor(
+                    AppAdaptiveColor.tertiaryText
+                )
+            )
+            .focused(
+                $focusedField,
+                equals: .phone
+            )
+            .keyboardType(.phonePad)
+            .textContentType(.telephoneNumber)
+            .autocorrectionDisabled()
+            .padding(.horizontal, 16)
+            .frame(height: 52)
+            .background(
+                AppAdaptiveColor.warmFormBackground
+            )
+            .overlay {
+                RoundedRectangle(
+                    cornerRadius: 16,
+                    style: .continuous
+                )
+                .stroke(
+                    normalizedProfilePhone == nil
+                        ? .red.opacity(0.30)
+                        : .green.opacity(0.35),
+                    lineWidth: 1
+                )
+            }
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: 16,
+                    style: .continuous
+                )
+            )
+
+            Text(
+                profileText(
+                    "Введите номер в международном формате с кодом страны. Можно использовать пробелы, тире и скобки."
+                )
+            )
+            .font(
+                .system(
+                    .caption,
+                    design: .rounded
+                )
+            )
+            .foregroundColor(
+                AppAdaptiveColor.secondaryText
+            )
+            .fixedSize(
+                horizontal: false,
+                vertical: true
+            )
+
+            Text(
+                profileText(
+                    "Например: +972501234567"
+                )
+            )
+            .font(
+                .system(
+                    .caption,
+                    design: .rounded
+                )
+                .weight(.semibold)
+            )
+            .foregroundColor(
+                AppAdaptiveColor.secondaryText
+            )
+
+            if profilePhone.isEmpty {
+                Label(
+                    profileText(
+                        "Введите номер телефона"
+                    ),
+                    systemImage:
+                        "exclamationmark.circle.fill"
+                )
+                .font(
+                    .system(
+                        .caption,
+                        design: .rounded
+                    )
+                )
+                .foregroundColor(
+                    .red.opacity(0.75)
+                )
+            } else if normalizedProfilePhone == nil {
+                Label(
+                    profileText(
+                        "Введите корректный номер в международном формате"
+                    ),
+                    systemImage:
+                        "exclamationmark.circle.fill"
+                )
+                .font(
+                    .system(
+                        .caption,
+                        design: .rounded
+                    )
+                )
+                .foregroundColor(
+                    .red.opacity(0.75)
+                )
+            } else {
+                Label(
+                    profileText(
+                        "Телефон сохранён"
+                    ),
+                    systemImage:
+                        "checkmark.circle.fill"
+                )
+                .font(
+                    .system(
+                        .caption,
+                        design: .rounded
+                    )
+                )
+                .foregroundColor(.green)
+            }
+        }
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+        .profileCard()
+    }
+    
     // MARK: - Страна проживания
 
     private var countrySection: some View {
@@ -653,7 +957,36 @@ struct ProfileView: View {
         )
         .profileCard()
     }
-    
+    // MARK: - Питомец
+
+    private var petSection: some View {
+        Button {
+            showPetProfile = true
+        } label: {
+            HStack(spacing: 14) {
+                Image(systemName: "pawprint.fill")
+                    .font(.title2)
+                    .foregroundStyle(.orange)
+
+                Text(
+                    selectedLanguage.localized(
+                        "Питомец"
+                    )
+                )
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .buttonStyle(.plain)
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+        .profileCard()
+    }
     // MARK: - День рождения
     
     private var birthdaySection: some View {
@@ -864,9 +1197,9 @@ struct ProfileView: View {
             )
             
             switch field {
-            case .name:
+            case .name, .phone:
                 break
-                
+
             case .day:
                 if dayText != filtered {
                     dayText = filtered
@@ -1027,11 +1360,12 @@ struct ProfileView: View {
     
     // MARK: - Вспомогательные типы
     
-    private enum ProfileField: Hashable {
-        case name
-        case day
-        case month
-    }
+private enum ProfileField: Hashable {
+    case name
+    case phone
+    case day
+    case month
+}
     
     private struct BirthdayMessage {
         let text: String

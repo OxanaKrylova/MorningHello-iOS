@@ -8,39 +8,46 @@
 import SwiftUI
 
 struct HolidaySettingsView: View {
-
+    
     var isOnboarding: Bool = false
     var onOnboardingComplete: (() -> Void)? = nil
-
+    
     @Environment(\.dismiss)
     private var dismiss
-
+    
     @AppStorage("showProtestantHolidays")
     private var showProtestantHolidays = false
-
+    
     @AppStorage("showOrthodoxHolidays")
     private var showOrthodoxHolidays = false
-
+    
     @AppStorage("showCatholicHolidays")
     private var showCatholicHolidays = false
-
+    
     @AppStorage("showJewishHolidays")
     private var showJewishHolidays = false
-
+    
+    @AppStorage("showLatinAmericanHolidays")
+    private var showLatinAmericanHolidays = false
+    
     @State private var showDetails = false
     @State private var expandedGroup: HolidayGroup?
-
+    
+    @AppStorage(AppLanguage.storageKey)
+    private var selectedLanguageCode =
+    AppLanguage.initial.rawValue
+    
     var body: some View {
         ZStack {
             AppAdaptiveColor.warmFormBackground
-            .ignoresSafeArea()
-
+                .ignoresSafeArea()
+            
             ScrollViewReader { proxy in
                 ScrollView {
                     VStack(spacing: 16) {
-
+                        
                         closeButton
-
+                        
                         Image(
                             systemName: "calendar.badge.clock"
                         )
@@ -51,7 +58,7 @@ struct HolidaySettingsView: View {
                             )
                         )
                         .foregroundColor(.orange)
-
+                        
                         Text("Выбор праздников")
                             .font(
                                 .system(
@@ -62,18 +69,18 @@ struct HolidaySettingsView: View {
                             )
                             .foregroundColor(AppAdaptiveColor.text)
                             .multilineTextAlignment(.center)
-
+                        
                         categorySelectionCard
-
+                        
                         descriptionBlock
-
+                        
                         detailsButton(proxy: proxy)
-
+                        
                         if showDetails {
                             holidayList
                                 .id("holidayList")
                         }
-
+                        
                         // Кнопка завершения онбординга
                         // находится ОДИН раз,
                         // после всех настроек.
@@ -87,14 +94,24 @@ struct HolidaySettingsView: View {
                 .scrollIndicators(.hidden)
             }
         }
+        .onAppear {
+            let language =
+            AppLanguage(
+                rawValue: selectedLanguageCode
+            ) ?? AppLanguage.initial
+            
+            HolidayPresetManager.applyIfNeeded(
+                for: language
+            )
+        }
     }
-
+    
     // MARK: - Кнопка закрытия
-
+    
     private var closeButton: some View {
         HStack {
             Spacer()
-
+            
             if !isOnboarding {
                 Button {
                     dismiss()
@@ -111,16 +128,16 @@ struct HolidaySettingsView: View {
                             width: 38,
                             height: 38
                         )
-            .background(AppAdaptiveColor.warmCardBackground)
+                        .background(AppAdaptiveColor.warmCardBackground)
                         .clipShape(Circle())
                 }
             }
         }
         .padding(.horizontal, 24)
     }
-
+    
     // MARK: - Кнопка завершения онбординга
-
+    
     private var onboardingContinueButton: some View {
         Button {
             onOnboardingComplete?()
@@ -150,9 +167,9 @@ struct HolidaySettingsView: View {
         .padding(.top, 10)
         .padding(.bottom, 10)
     }
-
+    
     // MARK: - Выбор категорий
-
+    
     private var categorySelectionCard: some View {
         VStack(spacing: 14) {
             holidayToggle(
@@ -166,17 +183,23 @@ struct HolidaySettingsView: View {
                 systemImage: "building.columns.fill",
                 isOn: $showOrthodoxHolidays
             )
-
+            
             holidayToggle(
                 title: "Католические",
                 systemImage: "cross.fill",
                 isOn: $showCatholicHolidays
             )
-
+            
             holidayToggle(
                 title: "Еврейские",
                 systemImage: "sparkles",
                 isOn: $showJewishHolidays
+            )
+            
+            holidayToggle(
+                title: "Праздники Латинской Америки",
+                systemImage: "sun.max.fill",
+                isOn: $showLatinAmericanHolidays
             )
         }
         .padding(.horizontal, 22)
@@ -190,7 +213,7 @@ struct HolidaySettingsView: View {
         )
         .padding(.horizontal, 28)
     }
-
+    
     private func holidayToggle(
         title: String,
         systemImage: String,
@@ -200,7 +223,7 @@ struct HolidaySettingsView: View {
             isOn: isOn
         ) {
             Label(
-               AppLanguage.selected.localized(title),
+                AppLanguage.selected.localized(title),
                 systemImage: systemImage
             )
             .font(
@@ -214,28 +237,28 @@ struct HolidaySettingsView: View {
         }
         .tint(.green)
     }
-
+    
     // MARK: - Пояснения
-
+    
     private var descriptionBlock: some View {
         VStack(spacing: 13) {
-
+            
             Text(
                 "Выберите, открытки каких религиозных праздников вы хотите получать."
             )
-
+            
             informationRow(
                 systemImage: "globe",
                 text:
                     "Нейтральные праздники показываются всегда."
             )
-
+            
             informationRow(
                 systemImage: "sparkles",
                 text:
                     "При выборе еврейских праздников с 18 ч. пятницы по 18 ч. субботы будет показана открытка к Шабату."
             )
-
+            
             informationRow(
                 systemImage: "sun.max.fill",
                 text:
@@ -252,7 +275,7 @@ struct HolidaySettingsView: View {
         .multilineTextAlignment(.center)
         .padding(.horizontal, 34)
     }
-
+    
     private func informationRow(
         systemImage: String,
         text: String
@@ -270,19 +293,19 @@ struct HolidaySettingsView: View {
             .foregroundColor(
                 .orange.opacity(0.85)
             )
-
+            
             Text(AppLanguage.selected.localized(text))
         }
     }
-
+    
     // MARK: - Кнопка Подробнее
-
+    
     private func detailsButton(
         proxy: ScrollViewProxy
     ) -> some View {
         Button {
             showDetails.toggle()
-
+            
             if showDetails {
                 DispatchQueue.main.asyncAfter(
                     deadline: .now() + 0.1
@@ -301,26 +324,26 @@ struct HolidaySettingsView: View {
             } else {
                 expandedGroup = nil
             }
-
+            
         } label: {
             HStack(spacing: 10) {
-
+                
                 Image(
                     systemName:
                         "info.circle.fill"
                 )
-
+                
                 Text(
-                        showDetails
-                        ? "Скрыть список праздников"
-                        : "Полный список праздников"
+                    showDetails
+                    ? "Скрыть список праздников"
+                    : "Полный список праздников"
                 )
-
+                
                 Image(
                     systemName:
                         showDetails
-                        ? "chevron.up"
-                        : "chevron.down"
+                    ? "chevron.up"
+                    : "chevron.down"
                 )
             }
             .font(
@@ -340,12 +363,12 @@ struct HolidaySettingsView: View {
         }
         .padding(.horizontal, 38)
     }
-
+    
     // MARK: - Полный список праздников
-
+    
     private var holidayList: some View {
         VStack(spacing: 14) {
-
+            
             holidaySectionCard(
                 group: .neutral,
                 title: "Нейтральные",
@@ -367,7 +390,7 @@ struct HolidaySettingsView: View {
                 systemImage: "cross.fill",
                 holidays: catholicHolidays
             )
-
+            
             holidaySectionCard(
                 group: .orthodox,
                 title: "Православные",
@@ -375,7 +398,7 @@ struct HolidaySettingsView: View {
                     "building.columns.fill",
                 holidays: orthodoxHolidays
             )
-
+            
             holidaySectionCard(
                 group: .jewish,
                 title: "Еврейские",
@@ -385,19 +408,19 @@ struct HolidaySettingsView: View {
         }
         .padding(.horizontal, 28)
     }
-
+    
     private func holidaySectionCard(
         group: HolidayGroup,
         title: String,
         systemImage: String,
         holidays: [String]
     ) -> some View {
-
+        
         let isExpanded =
-            expandedGroup == group
-
+        expandedGroup == group
+        
         return VStack(spacing: 0) {
-
+            
             Button {
                 withAnimation(
                     .easeInOut(
@@ -405,14 +428,14 @@ struct HolidaySettingsView: View {
                     )
                 ) {
                     expandedGroup =
-                        isExpanded
-                        ? nil
-                        : group
+                    isExpanded
+                    ? nil
+                    : group
                 }
-
+                
             } label: {
                 HStack(spacing: 12) {
-
+                    
                     Image(
                         systemName:
                             systemImage
@@ -424,7 +447,7 @@ struct HolidaySettingsView: View {
                         )
                     )
                     .foregroundColor(.orange)
-
+                    
                     Text(AppLanguage.selected.localized(title))
                         .font(
                             .system(
@@ -433,7 +456,7 @@ struct HolidaySettingsView: View {
                             )
                         )
                         .foregroundColor(AppAdaptiveColor.text)
-
+                    
                     Text("\(holidays.count)")
                         .font(
                             .system(
@@ -457,14 +480,14 @@ struct HolidaySettingsView: View {
                         .clipShape(
                             Capsule()
                         )
-
+                    
                     Spacer()
-
+                    
                     Image(
                         systemName:
                             isExpanded
-                            ? "chevron.up"
-                            : "chevron.down"
+                        ? "chevron.up"
+                        : "chevron.down"
                     )
                     .font(
                         .system(
@@ -484,9 +507,9 @@ struct HolidaySettingsView: View {
                 )
             }
             .buttonStyle(.plain)
-
+            
             if isExpanded {
-
+                
                 Divider()
                     .overlay(
                         .brown.opacity(0.12)
@@ -495,7 +518,7 @@ struct HolidaySettingsView: View {
                         .horizontal,
                         18
                     )
-
+                
                 VStack(
                     alignment: .leading,
                     spacing: 12
@@ -506,7 +529,7 @@ struct HolidaySettingsView: View {
                         ),
                         id: \.offset
                     ) { index, holiday in
-
+                        
                         HStack(
                             alignment: .top,
                             spacing: 10
@@ -524,14 +547,14 @@ struct HolidaySettingsView: View {
                                 width: 28,
                                 alignment: .trailing
                             )
-
+                            
                             Text(AppLanguage.selected.localized(holiday))
                                 .foregroundColor(AppAdaptiveColor.text)
                                 .frame(
                                     maxWidth:
-                                        .infinity,
+                                            .infinity,
                                     alignment:
-                                        .leading
+                                            .leading
                                 )
                         }
                     }
@@ -557,9 +580,9 @@ struct HolidaySettingsView: View {
                 .transition(
                     .opacity.combined(
                         with:
-                            .move(
-                                edge: .top
-                            )
+                                .move(
+                                    edge: .top
+                                )
                     )
                 )
             }
@@ -572,9 +595,9 @@ struct HolidaySettingsView: View {
             )
         )
     }
-
+    
     // MARK: - Нейтральные праздники
-
+    
     private let neutralHolidays = [
         "1 января — Новый год",
         "23 января - открытие Венецианского карнавала",
@@ -640,7 +663,7 @@ struct HolidaySettingsView: View {
     ]
     
     // MARK: - Католические праздники
-
+    
     private let catholicHolidays = [
         "6 января — Богоявление (День трёх царей)",
         "Блинный день — 47-й день до Пасхи",
@@ -662,9 +685,9 @@ struct HolidaySettingsView: View {
         "Три пятницы Адвента",
         "25 декабря — Католическое Рождество"
     ]
-
+    
     // MARK: - Православные праздники
-
+    
     private let orthodoxHolidays = [
         "6 января — Рождественский сочельник",
         "7 января — Православное Рождество",
@@ -691,9 +714,9 @@ struct HolidaySettingsView: View {
         "28 августа — Успение Пресвятой Богородицы",
         "Начало Рождественского поста"
     ]
-
+    
     // MARK: - Еврейские праздники
-
+    
     private let jewishHolidays = [
         "Рош ха-Шана — Еврейский Новый год",
         "Йом-Кипур — Судный день",
@@ -710,20 +733,31 @@ struct HolidaySettingsView: View {
         "Пост Семнадцатое тамуза",
         "Пост Эстер"
     ]
-}
-
-// MARK: - Группы праздников
-
-private enum HolidayGroup:
-    String,
-    Identifiable {
-    case protestant
-    case neutral
-    case catholic
-    case orthodox
-    case jewish
-
-    var id: String {
-        rawValue
+    
+    // MARK: - Праздники Латинской Америки
+    
+    private let latinAmericanHolidays = [
+        "5–9 февраля 2027 — Карнавалы Бразилии и Колумбии",
+        "24 июня — Инти Райми",
+        "1–2 ноября — День мёртвых",
+        "16–24 декабря — Лас Посадас",
+        "25 декабря — Рождество"
+    ]
+    
+    // MARK: - Группы праздников
+    
+    private enum HolidayGroup:
+        String,
+        Identifiable {
+        case protestant
+        case neutral
+        case catholic
+        case orthodox
+        case jewish
+        case latinAmerican
+        
+        var id: String {
+            rawValue
+        }
     }
 }
