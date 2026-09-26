@@ -62,20 +62,55 @@ struct SettingsView: View {
             ZStack {
                 backgroundColor
                     .ignoresSafeArea()
-                
-                VStack(spacing: 24) {
-                    monitoringSection
-                    subscriptionSection
-                    soundSection
-                    languageSection
-                    feedbackSection
-                    applicationSection
+
+                ScrollViewReader { proxy in
+                    ScrollView(.vertical) {
+                        LazyVStack(spacing: 24) {
+                            Color.clear
+                                .frame(height: 1)
+                                .id("settings_top")
+
+                            monitoringSection
+                            subscriptionSection
+                            soundSection
+                            languageSection
+                            feedbackSection
+                            applicationSection
+                        }
+                        .padding(.top, 16)
+                        .padding(.bottom, 40)
+                    }
+                    .scrollIndicators(.hidden)
+                    .scrollDismissesKeyboard(
+                        .interactively
+                    )
+                    .onAppear {
+                        DispatchQueue.main.async {
+                            proxy.scrollTo(
+                                "settings_top",
+                                anchor: .top
+                            )
+                        }
+                    }
                 }
-                .padding(.vertical, 24)
             }
-            .navigationTitle("Настройки")
+            .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(
+                    placement: .principal
+                ) {
+                    Text("Настройки")
+                        .font(
+                            .system(
+                                size: 24,
+                                weight: .bold,
+                                design: .rounded
+                            )
+                        )
+                        .foregroundStyle(textColor)
+                }
+
                 ToolbarItem(
                     placement: .confirmationAction
                 ) {
@@ -83,7 +118,13 @@ struct SettingsView: View {
                         dismiss()
                     }
                     .foregroundStyle(titleColor)
-                    .fontWeight(.semibold)
+                    .font(
+                        .system(
+                            size: 17,
+                            weight: .semibold,
+                            design: .rounded
+                        )
+                    )
                 }
             }
         }
@@ -93,7 +134,9 @@ struct SettingsView: View {
         .sheet(isPresented: $showContacts) {
             EmergencyContactsView()
         }
-        .sheet(isPresented: $showHolidaySettings) {
+        .sheet(
+            isPresented: $showHolidaySettings
+        ) {
             HolidaySettingsView()
         }
         .sheet(isPresented: $showSubscription) {
@@ -102,27 +145,53 @@ struct SettingsView: View {
         .sheet(isPresented: $showFeedback) {
             FeedbackView()
         }
-        .onChange(of: areSoundsEnabled) { _, newValue in
+        .onChange(
+            of: areSoundsEnabled
+        ) { _, newValue in
             if !newValue {
-                AppSoundPlayer.shared.stopAllSounds()
+                AppSoundPlayer.shared
+                    .stopAllSounds()
             }
         }
-        .onChange(of: showProfile) { _, isShowing in
-            playOpeningSound(if: isShowing)
+        .onChange(
+            of: showProfile
+        ) { _, isShowing in
+            playOpeningSound(
+                if: isShowing
+            )
         }
-        .onChange(of: showContacts) { _, isShowing in
-            playOpeningSound(if: isShowing)
+        .onChange(
+            of: showContacts
+        ) { _, isShowing in
+            playOpeningSound(
+                if: isShowing
+            )
         }
-        .onChange(of: showHolidaySettings) { _, isShowing in
-            playOpeningSound(if: isShowing)
+        .onChange(
+            of: showHolidaySettings
+        ) { _, isShowing in
+            playOpeningSound(
+                if: isShowing
+            )
         }
-        .onChange(of: showSubscription) { _, isShowing in
-            playOpeningSound(if: isShowing)
+        .onChange(
+            of: showSubscription
+        ) { _, isShowing in
+            playOpeningSound(
+                if: isShowing
+            )
         }
-        .onChange(of: showFeedback) { _, isShowing in
-            playOpeningSound(if: isShowing)
+        .onChange(
+            of: showFeedback
+        ) { _, isShowing in
+            playOpeningSound(
+                if: isShowing
+            )
         }
-        .environment(\.locale, selectedLanguage.locale)
+        .environment(
+            \.locale,
+            selectedLanguage.locale
+        )
     }
     
     // MARK: - Данные и мониторинг
