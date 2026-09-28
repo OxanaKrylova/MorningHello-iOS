@@ -1389,3 +1389,88 @@
 
 "Подписка" = "Subscription";
 "Понятно" = "OK";
+/* Stay Connected */
+
+"connection.title" = "Stay Connected";
+"connection.home.title" = "Stay Connected";
+"connection.home.subtitle" = "Reminders to keep in touch";
+
+"connection.next.title" = "Next Planned Connection";
+"connection.next.empty" = "You do not have any planned reminders yet.";
+
+"connection.action.close" = "Close";
+"connection.action.add" = "Add Reminder";
+"connection.action.create" = "Create Reminder";
+"connection.action.edit" = "Edit";
+"connection.action.delete" = "Delete";
+"connection.action.cancel" = "Cancel";
+"connection.action.save" = "Save";
+"connection.action.ok" = "OK";
+
+"connection.month.previous" = "Previous month";
+"connection.month.next" = "Next month";
+"connection.month.today" = "Today";
+
+"connection.day.empty" = "There are no reminders for this day.";
+"connection.day.count" = "Reminders: %d";
+
+"connection.delete.title" = "Delete Reminder?";
+"connection.delete.message" = "This reminder and all its future occurrences will be deleted.";
+"connection.delete.error" = "The reminder could not be deleted. Please try again.";
+"connection.error.title" = "Error";
+
+"connection.privacy.note" = "Reminders are stored only on this iPhone and are not sent to the server or your emergency contacts.";
+
+"connection.form.new.title" = "New Reminder";
+"connection.form.edit.title" = "Edit Reminder";
+
+"connection.form.person.header" = "Who do you want to keep in touch with?";
+"connection.form.person.source" = "Choose a person";
+"connection.form.person.footer" = "You can select an emergency contact, an iPhone contact, or enter a name manually.";
+"connection.form.person.placeholder" = "Person’s name";
+
+"connection.form.emergency.select" = "Select an emergency contact";
+"connection.form.emergency.empty" = "No emergency contacts have been added yet. You can enter a name manually.";
+
+"connection.form.device.select" = "Select from iPhone Contacts";
+"connection.form.device.change" = "Choose another person";
+
+"connection.form.method.header" = "How would you like to connect?";
+"connection.form.method.title" = "Way to connect";
+"connection.form.method.other" = "Enter another way to connect";
+
+"connection.form.schedule.header" = "Schedule";
+"connection.form.date.title" = "First reminder";
+"connection.form.recurrence.title" = "Repeat";
+"connection.form.schedule.footer" = "The reminder will appear in the calendar and on the postcard on the scheduled day.";
+
+"connection.validation.title" = "Check the Information";
+"connection.validation.person" = "Select a person or enter their name.";
+"connection.validation.method" = "Enter how you would like to connect.";
+"connection.save.error" = "The reminder could not be saved. Please try again.";
+
+"Из тревожных контактов" = "From Emergency Contacts";
+"Из контактов iPhone" = "From iPhone Contacts";
+"Ввести имя вручную" = "Enter a Name Manually";
+
+"Позвонить" = "Phone Call";
+"Видеозвонок" = "Video Call";
+"Встретиться" = "Meet in Person";
+"Написать сообщение" = "Send a Message";
+"Отправить открытку" = "Send a Postcard";
+"Другое" = "Other";
+
+"Один раз" = "Once";
+"Каждую неделю" = "Every Week";
+"Каждые две недели" = "Every Two Weeks";
+"Каждый месяц" = "Every Month";
+
+"connection.postcard.phoneCall" = "Call %@ today.";
+"connection.postcard.videoCall" = "Have a video call with %@ today.";
+"connection.postcard.meeting" = "You have a meeting with %@ today.";
+"connection.postcard.message" = "Send %@ a message today.";
+"connection.postcard.postcard" = "Send %@ a postcard today.";
+"connection.postcard.other" = "Today: %@ – %@.";
+"connection.intro" = "Life is about connection. Add reminders to stay in touch more often with the people who matter to you.";
+"connection.all.title" = "All Reminders";
+"connection.all.empty" = "There are no saved reminders yet.";

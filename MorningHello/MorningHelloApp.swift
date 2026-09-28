@@ -120,6 +120,11 @@ struct MorningHelloApp: App {
                 _ = SponsorshipLinkRouter.shared.handle(url: url)
             }
         }
-        .modelContainer(for: MoodEntry.self)
+        .modelContainer(
+            for: [
+                MoodEntry.self,
+                ConnectionReminder.self
+            ]
+        )
     }
 }

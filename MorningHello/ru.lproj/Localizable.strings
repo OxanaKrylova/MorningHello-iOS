@@ -52,3 +52,87 @@
 "Очень спокойно" = "Очень спокойно";
 
 "Уровень %d: %@" = "Уровень %d: %@";
+/* Stay Connected */
+"connection.title" = "На связи";
+"connection.home.title" = "На связи";
+"connection.home.subtitle" = "Напоминания об общении";
+
+"connection.next.title" = "Ближайшее общение";
+"connection.next.empty" = "У вас пока нет запланированных напоминаний.";
+
+"connection.action.close" = "Закрыть";
+"connection.action.add" = "Добавить напоминание";
+"connection.action.create" = "Создать напоминание";
+"connection.action.edit" = "Изменить";
+"connection.action.delete" = "Удалить";
+"connection.action.cancel" = "Отмена";
+"connection.action.save" = "Сохранить";
+"connection.action.ok" = "ОК";
+
+"connection.month.previous" = "Предыдущий месяц";
+"connection.month.next" = "Следующий месяц";
+"connection.month.today" = "Сегодня";
+
+"connection.day.empty" = "На этот день напоминаний нет.";
+"connection.day.count" = "Напоминаний: %d";
+
+"connection.delete.title" = "Удалить напоминание?";
+"connection.delete.message" = "Это напоминание и все его будущие повторения будут удалены.";
+"connection.delete.error" = "Не удалось удалить напоминание. Попробуйте ещё раз.";
+"connection.error.title" = "Ошибка";
+
+"connection.privacy.note" = "Напоминания хранятся только на этом iPhone и не передаются на сервер или тревожным контактам.";
+
+"connection.form.new.title" = "Новое напоминание";
+"connection.form.edit.title" = "Изменить напоминание";
+
+"connection.form.person.header" = "С кем вы хотите быть на связи?";
+"connection.form.person.source" = "Как выбрать человека";
+"connection.form.person.footer" = "Вы можете выбрать тревожный контакт, контакт iPhone или ввести имя вручную.";
+"connection.form.person.placeholder" = "Имя человека";
+
+"connection.form.emergency.select" = "Выберите тревожный контакт";
+"connection.form.emergency.empty" = "Тревожные контакты ещё не добавлены. Вы можете ввести имя вручную.";
+
+"connection.form.device.select" = "Выбрать из контактов iPhone";
+"connection.form.device.change" = "Выбрать другого человека";
+
+"connection.form.method.header" = "Как вы хотите общаться?";
+"connection.form.method.title" = "Способ общения";
+"connection.form.method.other" = "Напишите способ общения";
+
+"connection.form.schedule.header" = "Расписание";
+"connection.form.date.title" = "Первое напоминание";
+"connection.form.recurrence.title" = "Регулярность";
+"connection.form.schedule.footer" = "Напоминание появится в календаре и на открытке в запланированный день.";
+
+"connection.validation.title" = "Проверьте данные";
+"connection.validation.person" = "Выберите человека или введите его имя.";
+"connection.validation.method" = "Напишите, как вы хотите общаться.";
+"connection.save.error" = "Не удалось сохранить напоминание. Попробуйте ещё раз.";
+
+"Из тревожных контактов" = "Из тревожных контактов";
+"Из контактов iPhone" = "Из контактов iPhone";
+"Ввести имя вручную" = "Ввести имя вручную";
+
+"Позвонить" = "Позвонить";
+"Видеозвонок" = "Видеозвонок";
+"Встретиться" = "Встретиться";
+"Написать сообщение" = "Написать сообщение";
+"Отправить открытку" = "Отправить открытку";
+"Другое" = "Другое";
+
+"Один раз" = "Один раз";
+"Каждую неделю" = "Каждую неделю";
+"Каждые две недели" = "Каждые две недели";
+"Каждый месяц" = "Каждый месяц";
+
+"connection.postcard.phoneCall" = "Сегодня позвоните %@.";
+"connection.postcard.videoCall" = "Сегодня устройте видеозвонок с %@.";
+"connection.postcard.meeting" = "Сегодня у вас встреча с %@.";
+"connection.postcard.message" = "Сегодня напишите сообщение для %@.";
+"connection.postcard.postcard" = "Сегодня отправьте открытку для %@.";
+"connection.postcard.other" = "Сегодня: %@ – %@.";
+"connection.intro" = "Жизнь – это общение. Добавляйте напоминания, чтобы чаще оставаться на связи с важными для вас людьми.";
+"connection.all.title" = "Все напоминания";
+"connection.all.empty" = "Сохранённых напоминаний пока нет.";

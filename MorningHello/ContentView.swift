@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 import Combine
 import UIKit
 import UserNotifications
 import MessageUI
+
 enum AppBackground: String {
     case morning = "Primary_background_Morning"
     case day = "Primary_Background_Day"
@@ -50,6 +52,19 @@ struct ContentView: View {
     @State private var showHolidaySettings = false
     @State private var showProfile = false
     @State private var showPostcard = false
+    
+    @State private var showPostcardCatalog = false
+    @State private var showSettings = false
+    @State private var showMoodCheckIn = false
+    @State private var showConnectionCalendar = false
+
+    @Query(
+        sort: \ConnectionReminder.startDate,
+        order: .forward
+    )
+    private var connectionReminders:
+        [ConnectionReminder]
+    
     @State private var hasEmergencyContacts = false
     @State private var showContactForWhatsApp = false
     @State private var showMessageComposer = false
@@ -61,10 +76,6 @@ struct ContentView: View {
     @State private var showBirthdayGreeting = false
     @State private var customMessage = ""
     @State private var showSubscription = false
-
-    @State private var showPostcardCatalog = false
-    @State private var showSettings = false
-    @State private var showMoodCheckIn = false
 
     @AppStorage("showProtestantHolidays")
     private var showProtestantHolidays = false
@@ -118,7 +129,92 @@ struct ContentView: View {
     private var selectedLanguage: AppLanguage {
         AppLanguage(rawValue: selectedLanguageCode) ?? .initial
     }
+    private var todayConnectionReminder:
+        ConnectionReminder? {
 
+        let enabledReminders =
+            connectionReminders.filter {
+                $0.isEnabled
+            }
+
+        return ConnectionReminderProvider
+            .reminders(
+                for: Date(),
+                from: enabledReminders,
+                calendar: Calendar.current
+            )
+            .first
+    }
+
+    private var todayConnectionReminderText:
+        String? {
+
+        guard let reminder =
+            todayConnectionReminder
+        else {
+            return nil
+        }
+
+        let formatKey: String
+
+        switch reminder.communicationMethod {
+        case .phoneCall:
+            formatKey =
+                "connection.postcard.phoneCall"
+
+        case .videoCall:
+            formatKey =
+                "connection.postcard.videoCall"
+
+        case .meeting:
+            formatKey =
+                "connection.postcard.meeting"
+
+        case .message:
+            formatKey =
+                "connection.postcard.message"
+
+        case .postcard:
+            formatKey =
+                "connection.postcard.postcard"
+
+        case .other:
+            let customMethod =
+                reminder
+                    .customCommunicationMethod?
+                    .trimmingCharacters(
+                        in: .whitespacesAndNewlines
+                    )
+
+            let methodText =
+                customMethod?.isEmpty == false
+                    ? customMethod!
+                    : selectedLanguage.localized(
+                        "Другое"
+                    )
+
+            return String(
+                format:
+                    selectedLanguage.localized(
+                        "connection.postcard.other"
+                    ),
+                locale:
+                    selectedLanguage.locale,
+                methodText,
+                reminder.personName
+            )
+        }
+
+        return String(
+            format:
+                selectedLanguage.localized(
+                    formatKey
+                ),
+            locale:
+                selectedLanguage.locale,
+            reminder.personName
+        )
+    }
     private let monitoringSnapshotKey = "monitoring_snapshot"
     private let serverClockOffsetKey = "monitoring_server_clock_offset"
 
@@ -1366,33 +1462,65 @@ struct ContentView: View {
                     )
                 }
 
-                HStack(spacing: 24) {
-                    Button {
-                        showPostcardCatalog = true
-                    } label: {
-                        mainActionLabel(
-                            title: "Открытки",
-                            subtitle: "Выбрать и отправить",
-                            systemImage:
-                                "photo.on.rectangle.angled"
-                        )
-                    }
-                    .buttonStyle(.plain)
+                VStack(spacing: 18) {
+                    HStack(spacing: 24) {
+                        Button {
+                            showPostcardCatalog = true
+                        } label: {
+                            mainActionLabel(
+                                title: "Открытки",
+                                subtitle: "Выбрать и отправить",
+                                systemImage: "photo.on.rectangle.angled"
+                            )
+                        }
+                        .buttonStyle(.plain)
 
-                    Button {
-                        AppSoundPlayer.shared.play(.openForm)
-                        showMoodCheckIn = true
-                    } label: {
-                        mainActionLabel(
-                            title: "Отметки",
-                            subtitle: "Уровень спокойствия",
-                            systemImage: "face.smiling"
+                        Button {
+                            AppSoundPlayer.shared.play(.openForm)
+                            showMoodCheckIn = true
+                        } label: {
+                            mainActionLabel(
+                                title: "Отметки",
+                                subtitle: "Уровень спокойствия",
+                                systemImage: "face.smiling"
+                            )
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    HStack(spacing: 24) {
+                        Color.clear
+                            .frame(
+                                maxWidth: .infinity,
+                                minHeight: 78
+                            )
+                            .allowsHitTesting(false)
+
+                        Button {
+                            AppSoundPlayer.shared.play(.openForm)
+                            showConnectionCalendar = true
+                        } label: {
+                            connectionActionLabel()
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(
+                            selectedLanguage.localized(
+                                "connection.home.title"
+                            )
+                        )
+                        .accessibilityHint(
+                            selectedLanguage.localized(
+                                "connection.home.subtitle"
+                            )
                         )
                     }
-                    .buttonStyle(.plain)
                 }
                 .frame(maxWidth: 340)
-
+                .accessibilityHint(
+                    selectedLanguage.localized(
+                        "connection.home.subtitle"
+                    )
+                )
                 Spacer(minLength: 12)
 
                 if hasEmergencyContacts {
@@ -1743,6 +1871,73 @@ struct ContentView: View {
             )
         }
 
+    private func connectionActionLabel() -> some View {
+        VStack(spacing: 7) {
+            HStack(spacing: 7) {
+                Image(
+                    systemName: "person.2.wave.2.fill"
+                )
+                .font(
+                    .system(
+                        size: 25,
+                        weight: .semibold
+                    )
+                )
+                .foregroundStyle(Color.black)
+                .fixedSize()
+
+                Text(
+                    selectedLanguage.localized(
+                        "connection.home.title"
+                    )
+                )
+                .font(
+                    .system(
+                        .headline,
+                        design: .rounded
+                    )
+                    .weight(.semibold)
+                )
+                .foregroundStyle(Color.black)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+                .allowsTightening(true)
+            }
+            .frame(
+                maxWidth: .infinity,
+                alignment: .center
+            )
+
+            Text(
+                selectedLanguage.localized(
+                    "connection.home.subtitle"
+                )
+            )
+            .font(
+                .system(
+                    .caption2,
+                    design: .rounded
+                )
+            )
+            .foregroundStyle(
+                AppAdaptiveColor.secondaryText
+            )
+            .lineLimit(1)
+            .minimumScaleFactor(0.8)
+        }
+        .frame(
+            maxWidth: .infinity,
+            minHeight: 78
+        )
+        .background(
+            AppAdaptiveColor.warmCardBackground,
+            in: RoundedRectangle(
+                cornerRadius: 25,
+                style: .continuous
+            )
+        )
+    }
+    
         func mainActionLabel(
             title: String,
             subtitle: String,
@@ -2096,15 +2291,19 @@ struct ContentView: View {
             PostcardScreen(
                 imageName: smartImage,
                 phrase: smartPhrase,
+                reminderText:
+                    todayConnectionReminderText,
                 customMessage: $customMessage,
                 onHomeTap: {
                     showPostcard = false
                 },
                 onShareTap: {
                     emergencyContactsForSharing =
-                    loadContactsForSharing()
+                        loadContactsForSharing()
 
-                    guard !emergencyContactsForSharing.isEmpty else {
+                    guard
+                        !emergencyContactsForSharing.isEmpty
+                    else {
                         showContacts = true
                         return
                     }
@@ -2112,6 +2311,7 @@ struct ContentView: View {
                     showContactForWhatsApp = true
                 }
             )
+            
             .confirmationDialog(
                 "Как отправить открытку?",
                 isPresented: $showContactForWhatsApp,
@@ -2206,6 +2406,12 @@ struct ContentView: View {
                     }
                     .sheet(isPresented: $showMoodCheckIn) {
                         MoodCheckInView()
+                    }
+                    .sheet(
+                        isPresented:
+                            $showConnectionCalendar
+                    ) {
+                        ConnectionCalendarView()
                     }
                     .sheet(
                         isPresented: $showBirthdayGreeting

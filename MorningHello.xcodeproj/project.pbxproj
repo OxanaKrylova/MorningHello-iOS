@@ -19,6 +19,12 @@
 		2916AEC0305D90C0007248C3 /* MonitoringSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */; };
 		291B30BD3050AD70002C3689 /* open_form.wav in Resources */ = {isa = PBXBuildFile; fileRef = 291B30BC3050AD70002C3689 /* open_form.wav */; };
 		292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B3D5430126C50005F4183 /* FeedbackView.swift */; };
+		292FB2EB306ACA2D0071D95A /* ConnectionReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FB2EA306ACA2D0071D95A /* ConnectionReminder.swift */; };
+		292FB2ED306ACA4E0071D95A /* ConnectionReminderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FB2EC306ACA4E0071D95A /* ConnectionReminderProvider.swift */; };
+		292FB2EF306ACA6E0071D95A /* ConnectionReminderRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FB2EE306ACA6E0071D95A /* ConnectionReminderRepository.swift */; };
+		292FB2F1306AD2EA0071D95A /* SystemContactPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FB2F0306AD2EA0071D95A /* SystemContactPicker.swift */; };
+		292FB2F3306AD3270071D95A /* ConnectionReminderFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FB2F2306AD3270071D95A /* ConnectionReminderFormView.swift */; };
+		292FB2F5306AD42F0071D95A /* ConnectionCalendarView..swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FB2F4306AD42F0071D95A /* ConnectionCalendarView..swift */; };
 		293CF91F30594601002DACBD /* SponsorshipViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91D30594601002DACBD /* SponsorshipViews.swift */; };
 		293CF92030594601002DACBD /* SponsorshipAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91930594601002DACBD /* SponsorshipAPIClient.swift */; };
 		293CF92130594601002DACBD /* SponsoredPurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91830594601002DACBD /* SponsoredPurchaseManager.swift */; };
@@ -111,6 +117,12 @@
 		2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringSnapshot.swift; sourceTree = "<group>"; };
 		291B30BC3050AD70002C3689 /* open_form.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = open_form.wav; sourceTree = "<group>"; };
 		292B3D5430126C50005F4183 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
+		292FB2EA306ACA2D0071D95A /* ConnectionReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionReminder.swift; sourceTree = "<group>"; };
+		292FB2EC306ACA4E0071D95A /* ConnectionReminderProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionReminderProvider.swift; sourceTree = "<group>"; };
+		292FB2EE306ACA6E0071D95A /* ConnectionReminderRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionReminderRepository.swift; sourceTree = "<group>"; };
+		292FB2F0306AD2EA0071D95A /* SystemContactPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemContactPicker.swift; sourceTree = "<group>"; };
+		292FB2F2306AD3270071D95A /* ConnectionReminderFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionReminderFormView.swift; sourceTree = "<group>"; };
+		292FB2F4306AD42F0071D95A /* ConnectionCalendarView..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionCalendarView..swift; sourceTree = "<group>"; };
 		293CF91730594601002DACBD /* AccountSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSession.swift; sourceTree = "<group>"; };
 		293CF91830594601002DACBD /* SponsoredPurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredPurchaseManager.swift; sourceTree = "<group>"; };
 		293CF91930594601002DACBD /* SponsorshipAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipAPIClient.swift; sourceTree = "<group>"; };
@@ -251,6 +263,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		292FB2E9306ACA0A0071D95A /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				292FB2EA306ACA2D0071D95A /* ConnectionReminder.swift */,
+				292FB2EC306ACA4E0071D95A /* ConnectionReminderProvider.swift */,
+				292FB2EE306ACA6E0071D95A /* ConnectionReminderRepository.swift */,
+				292FB2F0306AD2EA0071D95A /* SystemContactPicker.swift */,
+				292FB2F2306AD3270071D95A /* ConnectionReminderFormView.swift */,
+				292FB2F4306AD42F0071D95A /* ConnectionCalendarView..swift */,
+			);
+			path = Connection;
+			sourceTree = "<group>";
+		};
 		293CF91E30594601002DACBD /* Sponsorship */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,6 +330,7 @@
 				290CA89C3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift */,
 				29BCCD02302D9F140027557C /* Backend */,
 				29AFFFBF30390273007FE955 /* Collection */,
+				292FB2E9306ACA0A0071D95A /* Connection */,
 				290E2543304F655C000D4A2D /* Frameworks */,
 				29B76C44301AAB9900D1D295 /* HolidayProvider */,
 				29B76C78301BD31700D1D295 /* Intro */,
@@ -563,6 +589,8 @@
 				29B76C86301D4EB900D1D295 /* JewishHolidayProvider.swift in Sources */,
 				29D0C197304CAC8C0061569D /* EmergencyContactsView.swift in Sources */,
 				29B76C55301AAC7F00D1D295 /* MondayPostcardProvider.swift in Sources */,
+				292FB2F5306AD42F0071D95A /* ConnectionCalendarView..swift in Sources */,
+				292FB2EB306ACA2D0071D95A /* ConnectionReminder.swift in Sources */,
 				29B76C82301D418000D1D295 /* OrthodoxHolidayProvider.swift in Sources */,
 				29B76C43301AA87500D1D295 /* PostcardScreen.swift in Sources */,
 				2988745B3065D25200361B7D /* PetProfileView.swift in Sources */,
@@ -579,6 +607,7 @@
 				29AFFFBA30390225007FE955 /* PostcardCatalogView..swift in Sources */,
 				29AFFFBC30390243007FE955 /* PostcardCollectionView..swift in Sources */,
 				29BCCCED302A68140027557C /* EmergencyContact.swift in Sources */,
+				292FB2ED306ACA4E0071D95A /* ConnectionReminderProvider.swift in Sources */,
 				29B76C80301BF9E100D1D295 /* InternationalHolidayProvider.swift in Sources */,
 				290CA89D3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift in Sources */,
 				29887479306713EB00361B7D /* AppInstanceIDProvider..swift in Sources */,
@@ -588,10 +617,12 @@
 				293CF91F30594601002DACBD /* SponsorshipViews.swift in Sources */,
 				2988747F3067146800361B7D /* ProfileDataSyncService.swift in Sources */,
 				293CF92030594601002DACBD /* SponsorshipAPIClient.swift in Sources */,
+				292FB2EF306ACA6E0071D95A /* ConnectionReminderRepository.swift in Sources */,
 				293CF92130594601002DACBD /* SponsoredPurchaseManager.swift in Sources */,
 				293CF92230594601002DACBD /* AccountSession.swift in Sources */,
 				293CF92330594601002DACBD /* SponsorshipRootView.swift in Sources */,
 				2988741D306332A900361B7D /* LatinAmericanHolidayProvider.swift in Sources */,
+				292FB2F3306AD3270071D95A /* ConnectionReminderFormView.swift in Sources */,
 				293CF92430594601002DACBD /* SponsorshipStore.swift in Sources */,
 				293CF92530594601002DACBD /* SponsorshipModels.swift in Sources */,
 				29EC92493053143A00D9BD71 /* MoodStore.swift in Sources */,
@@ -600,6 +631,7 @@
 				2988747B3067141800361B7D /* ProfileDataModels.swift in Sources */,
 				29EC924B3053143A00D9BD71 /* MoodEntry.swift in Sources */,
 				29EC924C3053143A00D9BD71 /* MoodChartView.swift in Sources */,
+				292FB2F1306AD2EA0071D95A /* SystemContactPicker.swift in Sources */,
 				29EC924D3053143A00D9BD71 /* MoodRepository.swift in Sources */,
 				29BDC65E30082BA800EEA736 /* NotificationDelegate..swift in Sources */,
 				29CA8E2D300197C900F59ECA /* ProfileView.swift in Sources */,
@@ -752,13 +784,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MorningHello/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Morning Hello";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSContactsUsageDescription = "MorningHello uses access to Contacts so you can choose a person for a private communication reminder.<string>MorningHello использует доступ к контактам, чтобы вы могли выбрать человека для личного напоминания об общении.</string>";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -792,13 +825,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MorningHello/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Morning Hello";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSContactsUsageDescription = "MorningHello uses access to Contacts so you can choose a person for a private communication reminder.<string>MorningHello использует доступ к контактам, чтобы вы могли выбрать человека для личного напоминания об общении.</string>";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

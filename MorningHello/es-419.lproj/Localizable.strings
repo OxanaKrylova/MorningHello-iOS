@@ -1391,3 +1391,88 @@
 
 "Подписка" = "Suscripción";
 "Понятно" = "Aceptar";
+/* En contacto */
+
+"connection.title" = "En contacto";
+"connection.home.title" = "En contacto";
+"connection.home.subtitle" = "Recordatorios para mantener el contacto";
+
+"connection.next.title" = "Próximo contacto";
+"connection.next.empty" = "Todavía no tienes recordatorios programados.";
+
+"connection.action.close" = "Cerrar";
+"connection.action.add" = "Agregar recordatorio";
+"connection.action.create" = "Crear recordatorio";
+"connection.action.edit" = "Editar";
+"connection.action.delete" = "Eliminar";
+"connection.action.cancel" = "Cancelar";
+"connection.action.save" = "Guardar";
+"connection.action.ok" = "Aceptar";
+
+"connection.month.previous" = "Mes anterior";
+"connection.month.next" = "Mes siguiente";
+"connection.month.today" = "Hoy";
+
+"connection.day.empty" = "No hay recordatorios para este día.";
+"connection.day.count" = "Recordatorios: %d";
+
+"connection.delete.title" = "¿Eliminar el recordatorio?";
+"connection.delete.message" = "Este recordatorio y todas sus repeticiones futuras se eliminarán.";
+"connection.delete.error" = "No se pudo eliminar el recordatorio. Inténtalo de nuevo.";
+"connection.error.title" = "Error";
+
+"connection.privacy.note" = "Los recordatorios se guardan solo en este iPhone y no se envían al servidor ni a tus contactos de emergencia.";
+
+"connection.form.new.title" = "Nuevo recordatorio";
+"connection.form.edit.title" = "Editar recordatorio";
+
+"connection.form.person.header" = "¿Con quién quieres mantener el contacto?";
+"connection.form.person.source" = "Elegir una persona";
+"connection.form.person.footer" = "Puedes seleccionar un contacto de emergencia, un contacto del iPhone o ingresar un nombre manualmente.";
+"connection.form.person.placeholder" = "Nombre de la persona";
+
+"connection.form.emergency.select" = "Seleccionar un contacto de emergencia";
+"connection.form.emergency.empty" = "Todavía no agregaste contactos de emergencia. Puedes ingresar un nombre manualmente.";
+
+"connection.form.device.select" = "Seleccionar de Contactos del iPhone";
+"connection.form.device.change" = "Elegir otra persona";
+
+"connection.form.method.header" = "¿Cómo quieres comunicarte?";
+"connection.form.method.title" = "Forma de comunicación";
+"connection.form.method.other" = "Escribe otra forma de comunicación";
+
+"connection.form.schedule.header" = "Programación";
+"connection.form.date.title" = "Primer recordatorio";
+"connection.form.recurrence.title" = "Frecuencia";
+"connection.form.schedule.footer" = "El recordatorio aparecerá en el calendario y en la postal el día programado.";
+
+"connection.validation.title" = "Revisa los datos";
+"connection.validation.person" = "Selecciona una persona o ingresa su nombre.";
+"connection.validation.method" = "Escribe cómo quieres comunicarte.";
+"connection.save.error" = "No se pudo guardar el recordatorio. Inténtalo de nuevo.";
+
+"Из тревожных контактов" = "De los contactos de emergencia";
+"Из контактов iPhone" = "De los contactos del iPhone";
+"Ввести имя вручную" = "Ingresar el nombre manualmente";
+
+"Позвонить" = "Llamar";
+"Видеозвонок" = "Videollamada";
+"Встретиться" = "Reunirse";
+"Написать сообщение" = "Enviar un mensaje";
+"Отправить открытку" = "Enviar una postal";
+"Другое" = "Otro";
+
+"Один раз" = "Una vez";
+"Каждую неделю" = "Cada semana";
+"Каждые две недели" = "Cada dos semanas";
+"Каждый месяц" = "Cada mes";
+
+"connection.postcard.phoneCall" = "Llama hoy a %@.";
+"connection.postcard.videoCall" = "Haz una videollamada con %@ hoy.";
+"connection.postcard.meeting" = "Hoy tienes un encuentro con %@.";
+"connection.postcard.message" = "Envía hoy un mensaje a %@.";
+"connection.postcard.postcard" = "Envía hoy una postal a %@.";
+"connection.postcard.other" = "Hoy: %@ – %@.";
+"connection.intro" = "La vida es comunicación. Añade recordatorios para mantenerte en contacto más a menudo con las personas importantes para ti.";
+"connection.all.title" = "Todos los recordatorios";
+"connection.all.empty" = "Todavía no hay recordatorios guardados.";

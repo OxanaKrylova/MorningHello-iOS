@@ -233,7 +233,8 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
             return (1...19).map {
                 "August_\($0)"
             }
-            
+            +
+            ["holiday_turizm"]
             
         case .fairyAnimals:
             

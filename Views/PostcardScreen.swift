@@ -10,7 +10,8 @@ struct PostcardScreen: View {
 
     let imageName: String
     let phrase: String
-
+    let reminderText: String?
+    
     @Binding var customMessage: String
 
     let onHomeTap: () -> Void
@@ -127,6 +128,74 @@ struct PostcardScreen: View {
                             x: geometry.size.width / 2,
                             y: geometry.size.height * 0.68
                         )
+                }
+                
+                if let reminderText {
+                    let trimmedReminder =
+                        reminderText.trimmingCharacters(
+                            in: .whitespacesAndNewlines
+                        )
+
+                    if !trimmedReminder.isEmpty {
+                        HStack(
+                            alignment: .center,
+                            spacing: 9
+                        ) {
+                            Image(
+                                systemName:
+                                    "person.2.wave.2.fill"
+                            )
+                            .font(
+                                .system(
+                                    size: 16,
+                                    weight: .semibold
+                                )
+                            )
+                            .foregroundStyle(
+                                Color.orange
+                            )
+
+                            Text(trimmedReminder)
+                                .font(
+                                    .system(
+                                        size: 15,
+                                        weight: .semibold,
+                                        design: .rounded
+                                    )
+                                )
+                                .foregroundStyle(
+                                    Color.primary
+                                )
+                                .multilineTextAlignment(
+                                    .leading
+                                )
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.8)
+
+                            Spacer(
+                                minLength: 0
+                            )
+                        }
+                        .padding(.horizontal, 15)
+                        .padding(.vertical, 11)
+                        .frame(
+                            width: min(
+                                geometry.size.width - 48,
+                                340
+                            )
+                        )
+                        .background(
+                            .ultraThinMaterial,
+                            in: RoundedRectangle(
+                                cornerRadius: 18,
+                                style: .continuous
+                            )
+                        )
+                        .position(
+                            x: geometry.size.width / 2,
+                            y: geometry.size.height * 0.80
+                        )
+                    }
                 }
 
                 // Нижние кнопки
