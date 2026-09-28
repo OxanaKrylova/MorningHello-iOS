@@ -1317,3 +1317,75 @@
 "Условия использования MorningHello" = "MorningHello Terms of Use";
 "Условия использования Apple (EULA)" = "Apple Terms of Use (EULA)";
 "Политика конфиденциальности" = "Privacy Policy";
+"С Днём туризма! Вперёд, к неизведанным местам!" = "Happy World Tourism Day! Onward to places yet to be discovered!";
+"Календарь состояния" = "Wellbeing Calendar";
+"Назад" = "Back";
+"Сегодня" = "Today";
+"Предыдущий месяц" = "Previous month";
+"Следующий месяц" = "Next month";
+
+"Очень тревожно" = "Very anxious";
+"Тревожно" = "Anxious";
+"Немного тревожно" = "A little anxious";
+"Спокойно" = "Calm";
+"Очень спокойно" = "Very calm";
+
+"Как вы себя чувствуете сегодня?" = "How are you feeling today?";
+"Отметить состояние" = "Record how you feel";
+"Изменить состояние" = "Change how you feel";
+"В этот день состояние не отмечалось" = "No emotional check-in was recorded on this day";
+
+"Заменить сегодняшнюю отметку?" = "Replace today’s check-in?";
+"Новая отметка заменит ранее сохранённое состояние за сегодня." = "The new check-in will replace the state previously saved for today.";
+"Заменить" = "Replace";
+"Отмена" = "Cancel";
+
+"В этом месяце вы отметили состояние %d раз" = "You recorded how you felt %d times this month";
+"Спокойных дней: %d" = "Calm days: %d";
+
+"%@, состояние не отмечено" = "%@, no emotional check-in";
+"%@, состояние: %@" = "%@, emotional state: %@";
+"Как вы себя чувствуете сейчас?" = "How are you feeling right now?";
+"Выберите состояние" = "Choose how you feel";
+"Календарь" = "Calendar";
+"Открывает календарь ваших эмоциональных отметок" = "Opens your emotional wellbeing calendar";
+"Дважды коснитесь, чтобы сохранить состояние на сегодня" = "Double-tap to save how you feel today";
+
+"Очень тревожно" = "Very anxious";
+"Тревожно" = "Anxious";
+"Немного тревожно" = "A little anxious";
+"Спокойно" = "Calm";
+"Очень спокойно" = "Very calm";
+
+"Уровень %d: %@" = "Level %d: %@";
+"Управление подпиской" = "Manage Subscription";
+"Тариф, статус и восстановление покупок" = "Plan, status, and purchase restoration";
+
+"Ежемесячная" = "Monthly";
+"На 3 месяца" = "Quarterly";
+"Годовая" = "Annual";
+"Нет активной подписки" = "No Active Subscription";
+
+"Не оформлена" = "Not Subscribed";
+"Бесплатный период" = "Free Trial";
+"Активна" = "Active";
+"Льготный период" = "Grace Period";
+"Ошибка оплаты" = "Billing Issue";
+"Истекла" = "Expired";
+"Отменена" = "Cancelled";
+
+"Включено" = "Enabled";
+"Отключено" = "Disabled";
+
+"Выбрать тариф" = "Choose a Plan";
+"Управлять подпиской" = "Manage Subscription";
+"Подробно о тарифах" = "Plan Details";
+"Восстанавливаем…" = "Restoring…";
+"Восстановить покупки" = "Restore Purchases";
+
+"Покупки восстановлены. Подписка активна." = "Purchases restored. Your subscription is active.";
+"Активная подписка для этого Apple ID не найдена." = "No active subscription was found for this Apple ID.";
+"Не удалось восстановить покупки: %@" = "Could not restore purchases: %@";
+
+"Подписка" = "Subscription";
+"Понятно" = "OK";

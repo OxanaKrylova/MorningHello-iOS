@@ -22,6 +22,22 @@ struct SubscriptionView: View {
     @State private var isRestoring = false
     @State private var subscriptionMessage: String?
 
+    @AppStorage(AppLanguage.storageKey)
+    private var selectedLanguageCode =
+        AppLanguage.initial.rawValue
+
+    private var selectedLanguage: AppLanguage {
+        AppLanguage(
+            rawValue: selectedLanguageCode
+        ) ?? .initial
+    }
+
+    private func localized(
+        _ key: String
+    ) -> String {
+        selectedLanguage.localized(key)
+    }
+    
     private var snapshot: SubscriptionSnapshot {
         subscriptionManager.snapshot
     }
@@ -29,39 +45,50 @@ struct SubscriptionView: View {
     private var planName: String {
         switch snapshot.productId {
         case "com.morninghello.subscription.monthly":
-            return "Ежемесячная"
+            return localized("Ежемесячная")
+
         case "com.morninghello.subscription.quarterly":
-            return "На 3 месяца"
+            return localized("На 3 месяца")
+
         case "com.morninghello.subscription.annual":
-            return "Годовая"
+            return localized("Годовая")
+
         default:
-            return "Нет активной подписки"
+            return localized(
+                "Нет активной подписки"
+            )
         }
     }
 
     private var statusText: String {
         switch snapshot.status {
         case .none:
-            return "Не оформлена"
+            return localized("Не оформлена")
+
         case .trial:
-            return "Бесплатный период"
+            return localized("Бесплатный период")
+
         case .active:
-            return "Активна"
+            return localized("Активна")
+
         case .gracePeriod:
-            return "Льготный период"
+            return localized("Льготный период")
+
         case .billingRetry:
-            return "Ошибка оплаты"
+            return localized("Ошибка оплаты")
+
         case .expired:
-            return "Истекла"
+            return localized("Истекла")
+
         case .revoked:
-            return "Отменена"
+            return localized("Отменена")
         }
     }
 
     private var autoRenewText: String {
         snapshot.autoRenewEnabled
-            ? "Включено"
-            : "Отключено"
+            ? localized("Включено")
+            : localized("Отключено")
     }
 
     private var statusColor: Color {
@@ -170,7 +197,7 @@ struct SubscriptionView: View {
                 .refreshSubscriptionStatus()
         }
         .alert(
-          "Подписка",
+            localized("Подписка"),
             isPresented: Binding(
                 get: {
                     subscriptionMessage != nil
@@ -183,7 +210,7 @@ struct SubscriptionView: View {
             )
         ) {
             Button(
-                "Понятно",
+                localized("Понятно"),
                 role: .cancel
             ) {
                 subscriptionMessage = nil
@@ -191,8 +218,12 @@ struct SubscriptionView: View {
         } message: {
             Text(subscriptionMessage ?? "")
         }
+        .environment(
+            \.locale,
+            selectedLanguage.locale
+        )
     }
-
+    
     private var currentSubscriptionCard: some View {
         VStack(
             alignment: .leading,
@@ -320,7 +351,7 @@ struct SubscriptionView: View {
                     action: openSubscriptionPlans
                 ) {
                     actionButtonLabel(
-                        title: "Выбрать тариф",
+                        title: localized("Выбрать тариф"),
                         systemImage: "creditcard.fill",
                         imageColor: .orange,
                         showsChevron: true
@@ -336,7 +367,9 @@ struct SubscriptionView: View {
                     action: openSubscriptionManagement
                 ) {
                     actionButtonLabel(
-                        title: "Управлять подпиской",
+                        title: localized(
+                            "Управлять подпиской"
+                        ),
                         systemImage: "gearshape",
                         imageColor: .primary,
                         showsChevron: true
@@ -351,9 +384,9 @@ struct SubscriptionView: View {
                 showSubscriptionPlansInfo = true
             } label: {
                 actionButtonLabel(
-                    title: AppLanguage.selected == .englishUS
-                        ? "Plan Details"
-                        : "Подробно о тарифах",
+                    title: localized(
+                        "Подробно о тарифах"
+                    ),
                     systemImage: "list.bullet.rectangle.portrait",
                     imageColor: .orange,
                     showsChevron: true
@@ -370,8 +403,10 @@ struct SubscriptionView: View {
             } label: {
                 actionButtonLabel(
                     title: isRestoring
-                        ? "Восстанавливаем…"
-                        : "Восстановить покупки",
+                        ? localized("Восстанавливаем…")
+                        : localized(
+                            "Восстановить покупки"
+                        ),
                     systemImage: "arrow.clockwise",
                     imageColor: .primary,
                     showsChevron: false
@@ -599,15 +634,22 @@ struct SubscriptionView: View {
             await subscriptionManager.refreshAndSync()
 
             if subscriptionManager.hasActiveSubscription {
-                subscriptionMessage =
+                subscriptionMessage = localized(
                     "Покупки восстановлены. Подписка активна."
+                )
             } else {
-                subscriptionMessage =
+                subscriptionMessage = localized(
                     "Активная подписка для этого Apple ID не найдена."
+                )
             }
         } catch {
-            subscriptionMessage =
-                "Не удалось восстановить покупки: \(error.localizedDescription)"
+            subscriptionMessage = String(
+                format: localized(
+                    "Не удалось восстановить покупки: %@"
+                ),
+                locale: selectedLanguage.locale,
+                error.localizedDescription
+            )
         }
     }
 }

@@ -964,20 +964,40 @@ struct ProfileView: View {
             showPetProfile = true
         } label: {
             HStack(spacing: 14) {
-                Image(systemName: "pawprint.fill")
-                    .font(.title2)
-                    .foregroundStyle(.orange)
+                Image(
+                    systemName: "pawprint.fill"
+                )
+                .font(.title3)
+                .foregroundStyle(.orange)
 
                 Text(
                     selectedLanguage.localized(
                         "Питомец"
                     )
                 )
+                .font(
+                    .system(
+                        .title3,
+                        design: .rounded
+                    )
+                    .weight(.semibold)
+                )
+                .foregroundStyle(
+                    AppAdaptiveColor.text
+                )
 
                 Spacer()
 
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(.secondary)
+                Image(
+                    systemName: "chevron.right"
+                )
+                .font(
+                    .system(
+                        size: 14,
+                        weight: .semibold
+                    )
+                )
+                .foregroundStyle(.secondary)
             }
         }
         .buttonStyle(.plain)

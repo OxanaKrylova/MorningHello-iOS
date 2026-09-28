@@ -499,6 +499,20 @@ struct InternationalHolidayProvider {
             )
         }
 
+        // Международный день туризма.
+        if day == 27 && month == 9 {
+
+            return HolidayContent(
+                images: [
+                    "holiday_turizm"
+                ],
+                phrases: [
+                    "С Днём туризма! Вперёд, к неизведанным местам!"
+                ],
+                category: "Нейтральный"
+            )
+        }
+        
         // День пожилых людей.
         if day == 1 && month == 10 {
 

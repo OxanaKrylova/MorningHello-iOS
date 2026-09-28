@@ -1319,3 +1319,75 @@
 "Условия использования MorningHello" = "Condiciones de uso de MorningHello";
 "Условия использования Apple (EULA)" = "Condiciones de uso de Apple (EULA)";
 "Политика конфиденциальности" = "Política de privacidad";
+"С Днём туризма! Вперёд, к неизведанным местам!" = "¡Feliz Día Mundial del Turismo! ¡Adelante, hacia lugares aún por descubrir!";
+"Календарь состояния" = "Calendario de bienestar";
+"Назад" = "Atrás";
+"Сегодня" = "Hoy";
+"Предыдущий месяц" = "Mes anterior";
+"Следующий месяц" = "Mes siguiente";
+
+"Очень тревожно" = "Muy ansioso";
+"Тревожно" = "Ansioso";
+"Немного тревожно" = "Un poco ansioso";
+"Спокойно" = "Tranquilo";
+"Очень спокойно" = "Muy tranquilo";
+
+"Как вы себя чувствуете сегодня?" = "¿Cómo te sientes hoy?";
+"Отметить состояние" = "Registrar cómo me siento";
+"Изменить состояние" = "Cambiar mi estado";
+"В этот день состояние не отмечалось" = "Ese día no se registró ningún estado emocional";
+
+"Заменить сегодняшнюю отметку?" = "¿Reemplazar el registro de hoy?";
+"Новая отметка заменит ранее сохранённое состояние за сегодня." = "El nuevo registro reemplazará el estado guardado anteriormente para hoy.";
+"Заменить" = "Reemplazar";
+"Отмена" = "Cancelar";
+
+"В этом месяце вы отметили состояние %d раз" = "Este mes registraste cómo te sentías %d veces";
+"Спокойных дней: %d" = "Días tranquilos: %d";
+
+"%@, состояние не отмечено" = "%@, sin registro emocional";
+"%@, состояние: %@" = "%@, estado emocional: %@";
+"Как вы себя чувствуете сейчас?" = "¿Cómo te sientes ahora?";
+"Выберите состояние" = "Elige cómo te sientes";
+"Календарь" = "Calendario";
+"Открывает календарь ваших эмоциональных отметок" = "Abre tu calendario de bienestar emocional";
+"Дважды коснитесь, чтобы сохранить состояние на сегодня" = "Toca dos veces para guardar cómo te sientes hoy";
+
+"Очень тревожно" = "Mucha ansiedad";
+"Тревожно" = "Ansiedad";
+"Немного тревожно" = "Un poco de ansiedad";
+"Спокойно" = "En calma";
+"Очень спокойно" = "Muy en calma";
+
+"Уровень %d: %@" = "Nivel %d: %@";
+"Управление подпиской" = "Gestionar suscripción";
+"Тариф, статус и восстановление покупок" = "Plan, estado y restauración de compras";
+
+"Ежемесячная" = "Mensual";
+"На 3 месяца" = "Trimestral";
+"Годовая" = "Anual";
+"Нет активной подписки" = "Sin suscripción activa";
+
+"Не оформлена" = "Sin suscripción";
+"Бесплатный период" = "Período de prueba";
+"Активна" = "Activa";
+"Льготный период" = "Período de gracia";
+"Ошибка оплаты" = "Problema de pago";
+"Истекла" = "Vencida";
+"Отменена" = "Cancelada";
+
+"Включено" = "Activada";
+"Отключено" = "Desactivada";
+
+"Выбрать тариф" = "Elegir un plan";
+"Управлять подпиской" = "Gestionar suscripción";
+"Подробно о тарифах" = "Detalles de los planes";
+"Восстанавливаем…" = "Restaurando…";
+"Восстановить покупки" = "Restaurar compras";
+
+"Покупки восстановлены. Подписка активна." = "Las compras se restauraron. Tu suscripción está activa.";
+"Активная подписка для этого Apple ID не найдена." = "No se encontró una suscripción activa para este Apple ID.";
+"Не удалось восстановить покупки: %@" = "No se pudieron restaurar las compras: %@";
+
+"Подписка" = "Suscripción";
+"Понятно" = "Aceptar";

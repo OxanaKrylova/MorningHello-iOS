@@ -136,10 +136,23 @@ struct PetProfileView: View {
                 additionalInformationSection
                 actionsSection
             }
+            .scrollContentBackground(.hidden)
+            .background(
+                AppAdaptiveColor.warmFormBackground
+                    .ignoresSafeArea()
+            )
             .navigationTitle(
                 localized("Питомец")
             )
             .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(
+                AppAdaptiveColor.warmFormBackground,
+                for: .navigationBar
+            )
+            .toolbarBackground(
+                .visible,
+                for: .navigationBar
+            )
             .toolbar {
                 ToolbarItem(
                     placement: .cancellationAction

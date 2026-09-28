@@ -22,7 +22,7 @@ struct MoodCheckInView: View {
 
                 ScrollView {
                     VStack(spacing: 18) {
-                        Text("Насколько вы спокойны сейчас?")
+                        Text("Как вы себя чувствуете сейчас?")
                             .font(
                                 .system(
                                     .title2,
@@ -34,29 +34,35 @@ struct MoodCheckInView: View {
                             .multilineTextAlignment(.center)
 
                         HStack(spacing: 6) {
-                            ForEach(MoodLevel.allCases) { level in
+                            ForEach(MoodLevel.displayCases) { level in
                                 moodButton(for: level)
                             }
                         }
 
-                        if let selectedLevel = store.todayEntry?.moodLevel {
+                        if let selectedLevel =
+                            store.todayEntry?.moodLevel {
                             Text(
-                                "\(selectedLevel.rawValue) – \(AppLanguage.selected.localized(selectedLevel.title))"
-                            )
-                                .font(
-                                    .system(
-                                        size: 22,
-                                        weight: .semibold,
-                                        design: .rounded
-                                    )
+                                "\(selectedLevel.displayLevel) – "
+                                + AppLanguage.selected.localized(
+                                    selectedLevel.title
                                 )
-                                .foregroundStyle(selectedLevel.color)
-                                .multilineTextAlignment(.center)
+                            )
+                            .font(
+                                .system(
+                                    size: 22,
+                                    weight: .semibold,
+                                    design: .rounded
+                                )
+                            )
+                            .foregroundStyle(
+                                selectedLevel.color
+                            )
+                            .multilineTextAlignment(.center)
                         } else {
-                            Text("0 – дзен, 4 – в панике")
+                            Text("Выберите состояние")
                                 .font(
                                     .system(
-                                        size: 22,
+                                        size: 20,
                                         weight: .semibold,
                                         design: .rounded
                                     )
@@ -128,13 +134,13 @@ struct MoodCheckInView: View {
                     }
 
                     actionButton(
-                        title: "История",
-                        systemImage: "chart.xyaxis.line"
+                        title: "Календарь",
+                        systemImage: "calendar"
                     ) {
                         showHistory = true
                     }
                     .accessibilityHint(
-                        "Открывает график и список ваших отметок"
+                        "Открывает календарь ваших эмоциональных отметок"
                     )
                 }
                 .padding(.horizontal, 20)
@@ -158,7 +164,7 @@ struct MoodCheckInView: View {
             store.loadToday()
         }
         .sheet(isPresented: $showHistory) {
-            MoodHistoryView()
+            MoodCalendarView()
         }
         .fullScreenCover(isPresented: $showBreathingSquare) {
             BreathingSquareView()
@@ -317,41 +323,89 @@ struct MoodCheckInView: View {
         .accessibilityElement(children: .combine)
     }
 
-    private func moodButton(for level: MoodLevel) -> some View {
-        let isSelected = store.todayEntry?.level == level.rawValue
+    private func moodButton(
+        for level: MoodLevel
+    ) -> some View {
+        let isSelected =
+            store.todayEntry?.level
+            == level.rawValue
 
         return Button {
-            _ = store.save(level: level)
+            _ = store.save(
+                level: level
+            )
         } label: {
-            VStack(spacing: 3) {
-                Text(level.emoji)
-                    .font(.system(size: 28))
+            VStack(spacing: 4) {
+                Image(level.imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(
+                        width: 36,
+                        height: 36
+                    )
                     .accessibilityHidden(true)
 
-                Text("\(level.rawValue)")
-                    .font(.system(.caption, design: .rounded).weight(.bold))
-            }
-            .frame(maxWidth: .infinity, minHeight: 62)
-            .foregroundStyle(.primary)
-            .background(level.color.opacity(isSelected ? 0.38 : 0.18))
-            .overlay {
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(
-                        isSelected ? level.color : Color.clear,
-                        lineWidth: 3
+                Text(
+                    "\(level.displayLevel)"
+                )
+                .font(
+                    .system(
+                        size: 16,
+                        weight: .bold,
+                        design: .rounded
                     )
+                )
             }
-            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .frame(
+                maxWidth: .infinity,
+                minHeight: 74
+            )
+            .foregroundStyle(
+                AppAdaptiveColor.text
+            )
+            .background(
+                level.color.opacity(
+                    isSelected
+                        ? 0.32
+                        : 0.13
+                )
+            )
+            .overlay {
+                RoundedRectangle(
+                    cornerRadius: 18,
+                    style: .continuous
+                )
+                .stroke(
+                    isSelected
+                        ? level.color
+                        : Color.clear,
+                    lineWidth: 3
+                )
+            }
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: 18,
+                    style: .continuous
+                )
+            )
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(level.accessibilityText)
+        .accessibilityLabel(
+            level.accessibilityText
+        )
         .accessibilityValue(
             isSelected
-                ? AppLanguage.selected.localized("Выбрано")
-                : AppLanguage.selected.localized("Не выбрано")
+                ? AppLanguage.selected.localized(
+                    "Выбрано"
+                )
+                : AppLanguage.selected.localized(
+                    "Не выбрано"
+                )
         )
         .accessibilityHint(
-                "Дважды коснитесь, чтобы сохранить уровень спокойствия на сегодня"
+            AppLanguage.selected.localized(
+                "Дважды коснитесь, чтобы сохранить состояние на сегодня"
+            )
         )
     }
 }
