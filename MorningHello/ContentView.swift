@@ -1391,7 +1391,7 @@ struct ContentView: View {
                             now: context.date
                         )
                     }
-                    .frame(maxWidth: 340)
+                    .frame(maxWidth: 230)
                 } else {
                     VStack(spacing: 14) {
                         Image(
@@ -1462,7 +1462,7 @@ struct ContentView: View {
                     )
                 }
 
-                VStack(spacing: 18) {
+                VStack(spacing: 10) {
                     HStack(spacing: 24) {
                         Button {
                             showPostcardCatalog = true
@@ -1872,41 +1872,18 @@ struct ContentView: View {
         }
 
     private func connectionActionLabel() -> some View {
-        VStack(spacing: 7) {
-            HStack(spacing: 7) {
-                Image(
-                    systemName: "person.2.wave.2.fill"
-                )
-                .font(
-                    .system(
-                        size: 25,
-                        weight: .semibold
-                    )
-                )
-                .foregroundStyle(Color.black)
-                .fixedSize()
-
-                Text(
-                    selectedLanguage.localized(
-                        "connection.home.title"
-                    )
-                )
-                .font(
-                    .system(
-                        .headline,
-                        design: .rounded
-                    )
-                    .weight(.semibold)
-                )
-                .foregroundStyle(Color.black)
-                .lineLimit(1)
-                .minimumScaleFactor(0.75)
-                .allowsTightening(true)
-            }
-            .frame(
-                maxWidth: .infinity,
-                alignment: .center
+        HStack(spacing: 8) {
+            Image(
+                systemName: "person.2.wave.2.fill"
             )
+            .font(
+                .system(
+                    size: 25,
+                    weight: .semibold
+                )
+            )
+            .foregroundStyle(Color.black)
+            .fixedSize()
 
             Text(
                 selectedLanguage.localized(
@@ -1915,15 +1892,14 @@ struct ContentView: View {
             )
             .font(
                 .system(
-                    .caption2,
+                    .headline,
                     design: .rounded
                 )
+                .weight(.semibold)
             )
-            .foregroundStyle(
-                AppAdaptiveColor.secondaryText
-            )
+            .foregroundStyle(Color.black)
             .lineLimit(1)
-            .minimumScaleFactor(0.8)
+            .minimumScaleFactor(0.75)
         }
         .frame(
             maxWidth: .infinity,

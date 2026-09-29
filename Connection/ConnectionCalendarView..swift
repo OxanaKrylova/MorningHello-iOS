@@ -289,7 +289,7 @@ struct ConnectionCalendarView: View {
             )
             .toolbar {
                 ToolbarItem(
-                    placement: .topBarLeading
+                    placement: .topBarTrailing
                 ) {
                     Button {
                         dismiss()
@@ -303,6 +303,7 @@ struct ConnectionCalendarView: View {
                                 weight: .bold
                             )
                         )
+                        .foregroundStyle(Color.primary)
                         .frame(
                             width: 44,
                             height: 44
@@ -313,51 +314,6 @@ struct ConnectionCalendarView: View {
                             "connection.action.close"
                         )
                     )
-                }
-
-                ToolbarItem(
-                    placement: .topBarTrailing
-                ) {
-                    Button {
-                        showNewReminder = true
-                    } label: {
-                        Image(
-                            systemName:
-                                "plus"
-                        )
-                        .font(
-                            .system(
-                                size: 20,
-                                weight: .bold
-                            )
-                        )
-                        .frame(
-                            width: 44,
-                            height: 44
-                        )
-                    }
-                    .accessibilityLabel(
-                        localized(
-                            "connection.action.add"
-                        )
-                    )
-                }
-                ToolbarItem(
-                    placement: .principal
-                ) {
-                    Text(
-                        localized(
-                            "connection.title"
-                        )
-                    )
-                    .font(
-                        .system(
-                            size: 28,
-                            weight: .bold,
-                            design: .rounded
-                        )
-                    )
-                    .foregroundStyle(Color.primary)
                 }
             }
             .sheet(
@@ -436,6 +392,25 @@ struct ConnectionCalendarView: View {
                     deletionErrorMessage ?? ""
                 )
             }
+            ScrollView {
+                VStack(
+                    spacing: 20
+                ) {
+                    calendarHeader
+
+                    calendarCard
+
+                    selectedDaySection
+
+                    privacyNote
+
+                    allRemindersSection
+                }
+                .padding(.horizontal, 18)
+                .padding(.top, 8)
+                .padding(.bottom, 40)
+            }
+            .scrollIndicators(.visible)
         }
     }
 
@@ -493,6 +468,77 @@ struct ConnectionCalendarView: View {
             maxWidth: .infinity
         )
         .padding(.horizontal, 10)
+    }
+    
+    private var calendarHeader:
+        some View {
+
+        VStack(spacing: 12) {
+            Text(
+                localized(
+                    "connection.title"
+                )
+            )
+            .font(
+                .system(
+                    size: 25,
+                    weight: .bold,
+                    design: .rounded
+                )
+            )
+            .foregroundStyle(Color.primary)
+            .lineLimit(1)
+            .minimumScaleFactor(0.72)
+            .multilineTextAlignment(.center)
+
+            Text(
+                localized(
+                    "connection.intro"
+                )
+            )
+            .font(
+                .system(
+                    size: 15,
+                    design: .rounded
+                )
+            )
+            .foregroundStyle(Color.secondary)
+            .multilineTextAlignment(.center)
+            .lineSpacing(3)
+            .padding(.horizontal, 8)
+
+            Button {
+                showNewReminder = true
+            } label: {
+                Label(
+                    localized(
+                        "connection.action.create"
+                    ),
+                    systemImage: "plus"
+                )
+                .font(
+                    .system(
+                        size: 17,
+                        weight: .semibold,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(Color.white)
+                .frame(
+                    maxWidth: .infinity,
+                    minHeight: 48
+                )
+                .background(
+                    accentColor,
+                    in: RoundedRectangle(
+                        cornerRadius: 16,
+                        style: .continuous
+                    )
+                )
+            }
+            .buttonStyle(.plain)
+        }
+        .frame(maxWidth: .infinity)
     }
     
     // MARK: - Next Communication
@@ -803,9 +849,9 @@ struct ConnectionCalendarView: View {
                         design: .rounded
                     )
                 )
-                .multilineTextAlignment(
-                    .center
-                )
+                .foregroundStyle(Color.black)
+                .multilineTextAlignment(.center)
+                
 
                 if !isShowingCurrentMonth {
                     Button(

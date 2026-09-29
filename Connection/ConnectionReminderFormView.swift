@@ -71,6 +71,9 @@ struct ConnectionReminderFormView: View {
     @State private var showDeviceContactPicker =
         false
 
+    @State private var pendingDeviceContact:
+        SelectedDeviceContact?
+    
     @State private var showValidationAlert =
         false
 
@@ -295,35 +298,24 @@ struct ConnectionReminderFormView: View {
             }
             .sheet(
                 isPresented:
-                    $showDeviceContactPicker
+                    $showDeviceContactPicker,
+                onDismiss: {
+                    applyPendingDeviceContact()
+                }
             ) {
                 SystemContactPicker(
                     onSelect: {
                         selectedContact in
 
-                        Task { @MainActor in
-                            personName =
-                                selectedContact.displayName
-                                    .trimmingCharacters(
-                                        in:
-                                            .whitespacesAndNewlines
-                                    )
+                        pendingDeviceContact =
+                            selectedContact
 
-                            sourceIdentifier =
-                                selectedContact.identifier
-
-                            personSource =
-                                .deviceContact
-
-                            showDeviceContactPicker =
-                                false
-                        }
+                        showDeviceContactPicker =
+                            false
                     },
                     onCancel: {
-                        Task { @MainActor in
-                            showDeviceContactPicker =
-                                false
-                        }
+                        showDeviceContactPicker =
+                            false
                     }
                 )
                 .ignoresSafeArea()
@@ -348,6 +340,23 @@ struct ConnectionReminderFormView: View {
         }
     }
 
+    private func fieldLabel(
+        _ key: String
+    ) -> some View {
+
+        Text(
+            localized(key)
+        )
+        .font(
+            .system(
+                size: 17,
+                weight: .bold,
+                design: .rounded
+            )
+        )
+        .foregroundStyle(Color.primary)
+    }
+    
     // MARK: - Person Section
 
     private var personSection:
@@ -355,9 +364,6 @@ struct ConnectionReminderFormView: View {
 
         Section {
             Picker(
-                localized(
-                    "connection.form.person.source"
-                ),
                 selection: $personSource
             ) {
                 ForEach(
@@ -370,6 +376,10 @@ struct ConnectionReminderFormView: View {
                     )
                     .tag(source)
                 }
+            } label: {
+                fieldLabel(
+                    "connection.form.person.source"
+                )
             }
             .pickerStyle(.menu)
             .onChange(
@@ -549,11 +559,7 @@ struct ConnectionReminderFormView: View {
 
         Section {
             Picker(
-                localized(
-                    "connection.form.method.title"
-                ),
-                selection:
-                    $communicationMethod
+                selection: $communicationMethod
             ) {
                 ForEach(
                     ConnectionMethod.allCases
@@ -567,6 +573,10 @@ struct ConnectionReminderFormView: View {
                     )
                     .tag(method)
                 }
+            } label: {
+                fieldLabel(
+                    "connection.form.method.title"
+                )
             }
             .pickerStyle(.menu)
 
@@ -596,23 +606,17 @@ struct ConnectionReminderFormView: View {
 
         Section {
             DatePicker(
-                localized(
+                selection: $startDate,
+                in: earliestAllowedDate...,
+                displayedComponents: [.date]
+            ) {
+                fieldLabel(
                     "connection.form.date.title"
-                ),
-                selection:
-                    $startDate,
-                in:
-                    earliestAllowedDate...,
-                displayedComponents:
-                    [.date]
-            )
+                )
+            }
 
             Picker(
-                localized(
-                    "connection.form.recurrence.title"
-                ),
-                selection:
-                    $recurrence
+                selection: $recurrence
             ) {
                 ForEach(
                     ConnectionRecurrence.allCases
@@ -626,6 +630,10 @@ struct ConnectionReminderFormView: View {
                     )
                     .tag(recurrenceOption)
                 }
+            } label: {
+                fieldLabel(
+                    "connection.form.recurrence.title"
+                )
             }
             .pickerStyle(.menu)
         } header: {
@@ -712,6 +720,36 @@ struct ConnectionReminderFormView: View {
             selectedContact.displayName
     }
 
+    private func applyPendingDeviceContact() {
+        guard let selectedContact =
+            pendingDeviceContact
+        else {
+            return
+        }
+
+        let selectedName =
+            selectedContact.displayName
+                .trimmingCharacters(
+                    in: .whitespacesAndNewlines
+                )
+
+        pendingDeviceContact =
+            nil
+
+        guard !selectedName.isEmpty else {
+            return
+        }
+
+        personName =
+            selectedName
+
+        sourceIdentifier =
+            selectedContact.identifier
+
+        personSource =
+            .deviceContact
+    }
+    
     // MARK: - Save
 
     private func saveReminder() {

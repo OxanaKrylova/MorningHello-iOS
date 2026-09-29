@@ -39,6 +39,11 @@ struct SystemContactPicker:
         picker.delegate =
             context.coordinator
 
+        picker.predicateForSelectionOfContact =
+            NSPredicate(
+                value: true
+            )
+        
         picker.displayedPropertyKeys = [
             CNContactGivenNameKey,
             CNContactFamilyNameKey,
@@ -86,6 +91,25 @@ struct SystemContactPicker:
             didSelect contact:
                 CNContact
         ) {
+            sendSelectedContact(
+                contact
+            )
+        }
+
+        func contactPicker(
+            _ picker:
+                CNContactPickerViewController,
+            didSelect contactProperty:
+                CNContactProperty
+        ) {
+            sendSelectedContact(
+                contactProperty.contact
+            )
+        }
+
+        private func sendSelectedContact(
+            _ contact: CNContact
+        ) {
             let formatter =
                 CNContactFormatter()
 
@@ -97,11 +121,10 @@ struct SystemContactPicker:
                     from: contact
                 )?
                 .trimmingCharacters(
-                    in:
-                        .whitespacesAndNewlines
+                    in: .whitespacesAndNewlines
                 ) ?? ""
 
-            let fallbackPersonName =
+            let fallbackName =
                 [
                     contact.givenName,
                     contact.middleName,
@@ -109,33 +132,28 @@ struct SystemContactPicker:
                 ]
                 .map {
                     $0.trimmingCharacters(
-                        in:
-                            .whitespacesAndNewlines
+                        in: .whitespacesAndNewlines
                     )
                 }
                 .filter {
                     !$0.isEmpty
                 }
-                .joined(
-                    separator: " "
-                )
+                .joined(separator: " ")
 
             let organizationName =
                 contact.organizationName
                     .trimmingCharacters(
-                        in:
-                            .whitespacesAndNewlines
+                        in: .whitespacesAndNewlines
                     )
 
-            let finalName:
-                String
+            let finalName: String
 
             if !formattedName.isEmpty {
                 finalName =
                     formattedName
-            } else if !fallbackPersonName.isEmpty {
+            } else if !fallbackName.isEmpty {
                 finalName =
-                    fallbackPersonName
+                    fallbackName
             } else {
                 finalName =
                     organizationName
