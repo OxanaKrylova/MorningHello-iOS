@@ -57,6 +57,7 @@
 		29AFFFBA30390225007FE955 /* PostcardCatalogView..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFFFB930390225007FE955 /* PostcardCatalogView..swift */; };
 		29AFFFBC30390243007FE955 /* PostcardCollectionView..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFFFBB30390243007FE955 /* PostcardCollectionView..swift */; };
 		29AFFFBE30390261007FE955 /* CatalogPostcardPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29AFFFBD30390261007FE955 /* CatalogPostcardPreviewView.swift */; };
+		29B54B04306C6635001E689C /* JunePostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B54B03306C6635001E689C /* JunePostcardProvider.swift */; };
 		29B76C43301AA87500D1D295 /* PostcardScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C42301AA86B00D1D295 /* PostcardScreen.swift */; };
 		29B76C55301AAC7F00D1D295 /* MondayPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C54301AAC7F00D1D295 /* MondayPostcardProvider.swift */; };
 		29B76C59301B582A00D1D295 /* HanukkahPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76C58301B582500D1D295 /* HanukkahPostcardProvider.swift */; };
@@ -155,6 +156,7 @@
 		29AFFFBB30390243007FE955 /* PostcardCollectionView..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostcardCollectionView..swift; sourceTree = "<group>"; };
 		29AFFFBD30390261007FE955 /* CatalogPostcardPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogPostcardPreviewView.swift; sourceTree = "<group>"; };
 		29B441A22F3BE23E00A4F417 /* MorningHello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MorningHello.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		29B54B03306C6635001E689C /* JunePostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JunePostcardProvider.swift; sourceTree = "<group>"; };
 		29B76C42301AA86B00D1D295 /* PostcardScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostcardScreen.swift; sourceTree = "<group>"; };
 		29B76C54301AAC7F00D1D295 /* MondayPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MondayPostcardProvider.swift; sourceTree = "<group>"; };
 		29B76C58301B582500D1D295 /* HanukkahPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanukkahPostcardProvider.swift; sourceTree = "<group>"; };
@@ -369,6 +371,7 @@
 				29AFFF9F3037B6F9007FE955 /* JanuaryPostcardProvider.swift */,
 				29B76C4B301AABEC00D1D295 /* Jewish */,
 				2988743C30647BF500361B7D /* JulyPostcardProvider.swift */,
+				29B54B03306C6635001E689C /* JunePostcardProvider.swift */,
 				2988741C306332A900361B7D /* LatinAmericanHolidayProvider.swift */,
 				29FAEAF13040DE51003CFA12 /* MarchPostcardProvider.swift */,
 				29B76C54301AAC7F00D1D295 /* MondayPostcardProvider.swift */,
@@ -578,6 +581,7 @@
 				29B76C84301D4D8500D1D295 /* SukkotPostcardProvider..swift in Sources */,
 				296D4CDB3046B1AC000248AD /* SettingsView..swift in Sources */,
 				29C3A9BA3061DAAB0031851C /* SubscriptionView.swift in Sources */,
+				29B54B04306C6635001E689C /* JunePostcardProvider.swift in Sources */,
 				29FAEAF23040DE51003CFA12 /* MarchPostcardProvider.swift in Sources */,
 				29EC924F3053144800D9BD71 /* SwiftDataMoodRepository.swift in Sources */,
 				2916AEC0305D90C0007248C3 /* MonitoringSnapshot.swift in Sources */,
@@ -784,7 +788,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -825,7 +829,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

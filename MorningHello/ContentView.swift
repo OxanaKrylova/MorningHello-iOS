@@ -1487,20 +1487,67 @@ struct ContentView: View {
                         }
                         .buttonStyle(.plain)
                     }
+                    .frame(maxWidth: 340)
+                    .offset(y: -10)
 
                     HStack(spacing: 24) {
-                        Color.clear
-                            .frame(
-                                maxWidth: .infinity,
-                                minHeight: 78
-                            )
-                            .allowsHitTesting(false)
+                        Spacer()
+                            .frame(width: 158)
 
                         Button {
-                            AppSoundPlayer.shared.play(.openForm)
+                            AppSoundPlayer.shared.play(
+                                .openForm
+                            )
+
                             showConnectionCalendar = true
                         } label: {
-                            connectionActionLabel()
+                            VStack(
+                                spacing: 7
+                            ) {
+                                Image(
+                                    systemName:
+                                        "person.2.wave.2.fill"
+                                )
+                                .font(
+                                    .system(
+                                        size: 27,
+                                        weight: .semibold
+                                    )
+                                )
+                                .foregroundStyle(
+                                    Color.black
+                                )
+
+                                Text(
+                                    selectedLanguage.localized(
+                                        "connection.home.title"
+                                    )
+                                )
+                                .font(
+                                    .system(
+                                        size: 17,
+                                        weight: .bold,
+                                        design: .rounded
+                                    )
+                                )
+                                .foregroundStyle(
+                                    Color.black
+                                )
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
+                            }
+                            .frame(
+                                width: 158,
+                                height: 78
+                            )
+                            .background(
+                                AppAdaptiveColor
+                                    .warmCardBackground,
+                                in: RoundedRectangle(
+                                    cornerRadius: 22,
+                                    style: .continuous
+                                )
+                            )
                         }
                         .buttonStyle(.plain)
                         .accessibilityLabel(
@@ -1508,12 +1555,9 @@ struct ContentView: View {
                                 "connection.home.title"
                             )
                         )
-                        .accessibilityHint(
-                            selectedLanguage.localized(
-                                "connection.home.subtitle"
-                            )
-                        )
                     }
+                    .frame(maxWidth: 340)
+                    .padding(.top, 4)
                 }
                 .frame(maxWidth: 340)
                 .accessibilityHint(
@@ -2116,7 +2160,26 @@ struct ContentView: View {
                 )
             }
 
+             // Июнь – обычные дни месяца
 
+             if let juneIndex =
+                 ordinaryDayIndex(
+                     for: Date(),
+                     month: 6
+                 ),
+                let june =
+                 JunePostcardProvider.content(
+                     index: juneIndex
+                 ),
+                let image = june.images.first,
+                let phrase = june.phrases.first {
+
+                 return SelectedPostcard(
+                     image: image,
+                     phrase: phrase
+                 )
+             }
+             
             // Август — обычные дни месяца
 
             if let augustIndex =

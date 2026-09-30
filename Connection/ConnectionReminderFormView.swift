@@ -257,15 +257,6 @@ struct ConnectionReminderFormView: View {
                 )
                 .ignoresSafeArea()
             )
-            .navigationTitle(
-                reminder == nil
-                    ? localized(
-                        "connection.form.new.title"
-                    )
-                    : localized(
-                        "connection.form.edit.title"
-                    )
-            )
             .navigationBarTitleDisplayMode(
                 .inline
             )
@@ -367,7 +358,10 @@ struct ConnectionReminderFormView: View {
                 selection: $personSource
             ) {
                 ForEach(
-                    ConnectionPersonSource.allCases
+                    [
+                        ConnectionPersonSource.emergencyContact,
+                        ConnectionPersonSource.manual
+                    ]
                 ) { source in
                     Text(
                         localized(

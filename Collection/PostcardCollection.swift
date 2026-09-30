@@ -175,7 +175,11 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
                 "holiday_cat",
                 "autumn_thursday",
                 "autumn_tuesday",
-                "spring_tuesday"
+                "spring_tuesday",
+                "June_3",
+                "June_6",
+                "June_14",
+                "June_17"
             ]
         case .seasonal:
             
@@ -210,7 +214,10 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
                     "holiday_vernal_equinox",
                     "spring_friday",
                     "winter_friday",
-                    "holiday_fishman"
+                    "holiday_fishman",
+                    "June_2",
+                    "June_4",
+                    "June_8"
                 ]
             )
 
@@ -275,7 +282,10 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
                     "summer_saturday",
                     "summer_thursday",
                     "holiday_mimosa",
-                    "holiday_rose"
+                    "holiday_rose",
+                    "June_9",
+                    "June_11",
+                    "June_12"
                 ]
             )
 
@@ -292,6 +302,10 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
             ["Holiday_PancakeDay"]
             +
             ["holiday_valentine"]
+            +
+            ["June_10"]
+            +
+            ["June_18"]
             
         case .protestant_church:
             return ProtestantHolidayProvider.assetNames
@@ -404,17 +418,21 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
             ]
 
         case .dogs:
-            
             return (1...20).map {
-                "January_\($0)"}
-                +
-                ["holiday_dog"]
-            +
-            ["spring_saturday"]
-            +
-            ["spring_thursday"]
-            +
-            ["spring_wednesday"]
+                "January_\($0)"
+            } + [
+                "holiday_dog",
+                "spring_saturday",
+                "spring_thursday",
+                "spring_wednesday",
+                "June_1",
+                "June_5",
+                "June_7",
+                "June_13",
+                "June_15",
+                "June_16",
+                "June_19"
+            ]
         }
     }
 }

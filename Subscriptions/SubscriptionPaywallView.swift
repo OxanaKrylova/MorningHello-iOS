@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SubscriptionPlansInfoView: View {
-
+    
     private enum InfoSection: Hashable {
         case included
         case personal
@@ -17,38 +17,47 @@ struct SubscriptionPlansInfoView: View {
         case onboarding
         case terms
     }
-
+    
     @Environment(\.dismiss)
     private var dismiss
-
+    
     @AppStorage(AppLanguage.storageKey)
     private var selectedLanguageCode =
-        AppLanguage.initial.rawValue
-
+    AppLanguage.initial.rawValue
+    
     @State private var expandedSection: InfoSection?
-
-    private var isEnglish: Bool {
-        selectedLanguageCode ==
-            AppLanguage.englishUS.rawValue
+    
+    private var selectedLanguage: AppLanguage {
+        AppLanguage(
+            rawValue: selectedLanguageCode
+        ) ?? .initial
     }
-
+    
+    private var isEnglish: Bool {
+        selectedLanguage == .englishUS
+    }
+    
+    private var isSpanish: Bool {
+        selectedLanguage == .spanishLatinAmerica
+    }
+    
     private var background: some View {
         AppAdaptiveColor.warmFormBackground
             .ignoresSafeArea()
     }
-
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 background
-
+                
                 ScrollView {
                     LazyVStack(
                         alignment: .leading,
                         spacing: 18
                     ) {
                         introductionCard
-
+                        
                         collapsibleSection(
                             section: .included,
                             title: text(
@@ -59,7 +68,7 @@ struct SubscriptionPlansInfoView: View {
                         ) {
                             bulletList(includedFeatures)
                         }
-
+                        
                         collapsibleSection(
                             section: .personal,
                             title: text(
@@ -73,7 +82,7 @@ struct SubscriptionPlansInfoView: View {
                                 plans: personalPlans
                             )
                         }
-
+                        
                         collapsibleSection(
                             section: .lovedOne,
                             title: text(
@@ -87,7 +96,7 @@ struct SubscriptionPlansInfoView: View {
                                 plans: sponsoredPlans
                             )
                         }
-
+                        
                         collapsibleSection(
                             section: .onboarding,
                             title: text(
@@ -98,7 +107,7 @@ struct SubscriptionPlansInfoView: View {
                         ) {
                             onboardingSupportContent
                         }
-
+                        
                         collapsibleSection(
                             section: .terms,
                             title: text(
@@ -141,7 +150,7 @@ struct SubscriptionPlansInfoView: View {
             }
         }
     }
-
+    
     private var introductionCard: some View {
         VStack(
             alignment: .leading,
@@ -154,7 +163,7 @@ struct SubscriptionPlansInfoView: View {
                 )
                 .font(.system(size: 38))
                 .foregroundStyle(.orange)
-
+                
                 Text(
                     text(
                         ru: "ТАРИФНЫЕ ПЛАНЫ MORNINGHELLO",
@@ -172,14 +181,14 @@ struct SubscriptionPlansInfoView: View {
                     AppAdaptiveColor.text
                 )
             }
-
+            
             bodyText(
                 text(
                     ru: "Выберите подписку для себя или оплатите доступ для близкого человека.",
                     en: "Choose a subscription for yourself or sponsor MorningHello access for a loved one."
                 )
             )
-
+            
             bodyText(
                 text(
                     ru: "Все тарифные планы открывают одинаковые функции MorningHello. Они отличаются сроком действия подписки, способом её использования и наличием персональной помощи с подключением.",
@@ -189,7 +198,7 @@ struct SubscriptionPlansInfoView: View {
         }
         .infoCard()
     }
-
+    
     private func plansContent(
         introduction: [String]?,
         plans: [SubscriptionPlanDescription]
@@ -206,13 +215,13 @@ struct SubscriptionPlansInfoView: View {
                     bodyText(paragraph)
                 }
             }
-
+            
             ForEach(
                 Array(plans.enumerated()),
                 id: \.element.id
             ) { index, plan in
                 planContent(plan)
-
+                
                 if index < plans.count - 1 {
                     Divider()
                         .padding(.vertical, 4)
@@ -220,7 +229,7 @@ struct SubscriptionPlansInfoView: View {
             }
         }
     }
-
+    
     private func planContent(
         _ plan: SubscriptionPlanDescription
     ) -> some View {
@@ -239,7 +248,7 @@ struct SubscriptionPlansInfoView: View {
                 .foregroundStyle(
                     AppAdaptiveColor.text
                 )
-
+            
             ForEach(
                 Array(plan.paragraphs.enumerated()),
                 id: \.offset
@@ -248,7 +257,7 @@ struct SubscriptionPlansInfoView: View {
             }
         }
     }
-
+    
     private var onboardingSupportContent: some View {
         VStack(
             alignment: .leading,
@@ -270,14 +279,14 @@ struct SubscriptionPlansInfoView: View {
             .foregroundStyle(
                 AppAdaptiveColor.text
             )
-
+            
             bodyText(
                 text(
                     ru: "Полный доступ к MorningHello для одного получателя на один год и одна бесплатная персональная встреча по Zoom или Google Meet продолжительностью до 30 минут.",
                     en: "Full MorningHello access for one recipient for one year, plus one complimentary personal onboarding session of up to 30 minutes via Zoom or Google Meet."
                 )
             )
-
+            
             bodyText(
                 text(
                     ru: "Во время встречи мы поможем:",
@@ -285,16 +294,16 @@ struct SubscriptionPlansInfoView: View {
                 )
             )
             .fontWeight(.semibold)
-
+            
             bulletList(onboardingFeatures)
-
+            
             bodyText(
                 text(
                     ru: "Встреча является бесплатной услугой поддержки. Она не оплачивается отдельно, не является обязательной и не влияет на активацию подписки. Доступ к MorningHello открывается после успешного оформления подписки.",
                     en: "The onboarding session is a complimentary customer-support service. It is not sold separately, is not required, and does not affect subscription activation. MorningHello access becomes available after the subscription purchase is completed successfully."
                 )
             )
-
+            
             Label(
                 text(
                     ru: "Во время встречи мы никогда не просим сообщать пароль Apple ID, банковские данные или коды подтверждения.",
@@ -312,7 +321,7 @@ struct SubscriptionPlansInfoView: View {
             .foregroundStyle(.orange)
         }
     }
-
+    
     private var subscriptionTermsContent: some View {
         VStack(
             alignment: .leading,
@@ -324,7 +333,7 @@ struct SubscriptionPlansInfoView: View {
             ) { _, paragraph in
                 bodyText(paragraph)
             }
-
+            
             Label(
                 text(
                     ru: "MorningHello не является службой экстренной помощи и не заменяет звонок в экстренные службы.",
@@ -343,7 +352,7 @@ struct SubscriptionPlansInfoView: View {
             .foregroundStyle(.orange)
         }
     }
-
+    
     private func collapsibleSection<Content: View>(
         section: InfoSection,
         title: String,
@@ -351,7 +360,7 @@ struct SubscriptionPlansInfoView: View {
         @ViewBuilder content: () -> Content
     ) -> some View {
         let isExpanded = expandedSection == section
-
+        
         return VStack(
             alignment: .leading,
             spacing: 0
@@ -361,8 +370,8 @@ struct SubscriptionPlansInfoView: View {
                     .easeInOut(duration: 0.22)
                 ) {
                     expandedSection = isExpanded
-                        ? nil
-                        : section
+                    ? nil
+                    : section
                 }
             } label: {
                 HStack(spacing: 12) {
@@ -373,7 +382,7 @@ struct SubscriptionPlansInfoView: View {
                                 weight: .semibold
                             )
                         )
-
+                    
                     Text(title)
                         .font(
                             .system(
@@ -383,13 +392,13 @@ struct SubscriptionPlansInfoView: View {
                             .weight(.bold)
                         )
                         .multilineTextAlignment(.leading)
-
+                    
                     Spacer(minLength: 8)
-
+                    
                     Image(
                         systemName: isExpanded
-                            ? "chevron.up"
-                            : "chevron.down"
+                        ? "chevron.up"
+                        : "chevron.down"
                     )
                     .font(
                         .system(
@@ -404,11 +413,11 @@ struct SubscriptionPlansInfoView: View {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-
+            
             if isExpanded {
                 Divider()
                     .padding(.horizontal, 18)
-
+                
                 content()
                     .padding(.horizontal, 18)
                     .padding(.top, 16)
@@ -443,11 +452,11 @@ struct SubscriptionPlansInfoView: View {
         .accessibilityLabel(title)
         .accessibilityValue(
             isExpanded
-                ? text(ru: "Развёрнуто", en: "Expanded")
-                : text(ru: "Свёрнуто", en: "Collapsed")
+            ? text(ru: "Развёрнуто", en: "Expanded")
+            : text(ru: "Свёрнуто", en: "Collapsed")
         )
     }
-
+    
     private func bodyText(
         _ value: String
     ) -> some View {
@@ -462,7 +471,7 @@ struct SubscriptionPlansInfoView: View {
                 AppAdaptiveColor.text
             )
     }
-
+    
     private func bulletList(
         _ items: [String]
     ) -> some View {
@@ -481,7 +490,7 @@ struct SubscriptionPlansInfoView: View {
                     Text("•")
                         .fontWeight(.bold)
                         .foregroundStyle(.orange)
-
+                    
                     bodyText(item)
                         .frame(
                             maxWidth: .infinity,
@@ -491,7 +500,7 @@ struct SubscriptionPlansInfoView: View {
             }
         }
     }
-
+    
     private var includedFeatures: [String] {
         if isEnglish {
             return [
@@ -509,7 +518,22 @@ struct SubscriptionPlansInfoView: View {
                 "a guided box-breathing exercise."
             ]
         }
-
+        if isSpanish {
+            return [
+                "confirmaciones periódicas «Estoy bien»;",
+                "elección de un intervalo de 24, 48 o 72 horas entre confirmaciones;",
+                "monitoreo del servidor incluso cuando la aplicación está cerrada;",
+                "avisos a los contactos de confianza confirmados si no se realiza una confirmación a tiempo;",
+                "estado de la confirmación aceptada por el servidor y cuenta regresiva hasta la siguiente confirmación;",
+                "una nueva postal diaria con un mensaje amable;",
+                "un catálogo de postales de temporada, festivas y temáticas;",
+                "la posibilidad de añadir un mensaje personal y enviar una postal a un ser querido;",
+                "registro diario del estado emocional;",
+                "calendario mensual del estado emocional;",
+                "consejos de bienestar para momentos de ansiedad;",
+                "ejercicio guiado de respiración cuadrada."
+            ]
+        }
         return [
             "регулярная отметка «Я в порядке»;",
             "выбор периода между отметками: 24, 48 или 72 часа;",
@@ -525,9 +549,9 @@ struct SubscriptionPlansInfoView: View {
             "упражнение «Квадрат дыхания»."
         ]
     }
-
+    
     private var personalPlans:
-        [SubscriptionPlanDescription] {
+    [SubscriptionPlanDescription] {
         if isEnglish {
             return [
                 SubscriptionPlanDescription(
@@ -556,7 +580,34 @@ struct SubscriptionPlansInfoView: View {
                 )
             ]
         }
-
+        if isSpanish {
+            return [
+                SubscriptionPlanDescription(
+                    number: 1,
+                    title: "1. Suscripción mensual",
+                    paragraphs: [
+                        "Acceso completo a todas las funciones de MorningHello durante un mes. La suscripción se renueva automáticamente cada mes hasta que la canceles.",
+                        "Una opción flexible si prefieres pagar mensualmente."
+                    ]
+                ),
+                SubscriptionPlanDescription(
+                    number: 2,
+                    title: "2. Suscripción de 3 meses",
+                    paragraphs: [
+                        "Acceso completo a todas las funciones de MorningHello durante tres meses. La suscripción se renueva automáticamente cada tres meses hasta que la canceles.",
+                        "Una opción cómoda si prefieres realizar los pagos con menos frecuencia."
+                    ]
+                ),
+                SubscriptionPlanDescription(
+                    number: 3,
+                    title: "3. Suscripción anual",
+                    paragraphs: [
+                        "Acceso completo a todas las funciones de MorningHello durante un año. La suscripción se renueva automáticamente cada año hasta que la canceles.",
+                        "Una opción pensada para el uso continuo y la tranquilidad a largo plazo para ti y tus seres queridos."
+                    ]
+                )
+            ]
+        }
         return [
             SubscriptionPlanDescription(
                 number: 1,
@@ -584,7 +635,7 @@ struct SubscriptionPlansInfoView: View {
             )
         ]
     }
-
+    
     private var lovedOneIntroduction: [String] {
         if isEnglish {
             return [
@@ -593,16 +644,16 @@ struct SubscriptionPlansInfoView: View {
                 "Each subscription provides access for one recipient. The purchaser manages the payment but does not receive access to the recipient’s profile, emotional check-ins, postcards, trusted contacts, or other personal information."
             ]
         }
-
+        
         return [
             "Эти планы позволяют оплатить MorningHello для пожилого родителя или другого близкого человека.",
             "После покупки вы создаёте приглашение и отправляете его получателю. Получатель устанавливает MorningHello, принимает приглашение и самостоятельно настраивает свой профиль, тревожные контакты и период отметок.",
             "Одна подписка предназначена для одного получателя. Плательщик управляет оплатой, но не получает доступ к профилю получателя, его эмоциональным оценкам, открыткам, тревожным контактам и другой личной информации."
         ]
     }
-
+    
     private var sponsoredPlans:
-        [SubscriptionPlanDescription] {
+    [SubscriptionPlanDescription] {
         if isEnglish {
             return [
                 SubscriptionPlanDescription(
@@ -628,7 +679,31 @@ struct SubscriptionPlansInfoView: View {
                 )
             ]
         }
-
+        if isSpanish {
+            return [
+                SubscriptionPlanDescription(
+                    number: 4,
+                    title: "4. Suscripción mensual para un ser querido",
+                    paragraphs: [
+                        "Acceso completo a MorningHello para una persona durante un mes. La suscripción se renueva automáticamente cada mes hasta que quien paga la cancele."
+                    ]
+                ),
+                SubscriptionPlanDescription(
+                    number: 5,
+                    title: "5. Suscripción de 3 meses para un ser querido",
+                    paragraphs: [
+                        "Acceso completo a MorningHello para una persona durante tres meses. La suscripción se renueva automáticamente cada tres meses hasta que quien paga la cancele."
+                    ]
+                ),
+                SubscriptionPlanDescription(
+                    number: 6,
+                    title: "6. Suscripción anual para un ser querido",
+                    paragraphs: [
+                        "Acceso completo a MorningHello para una persona durante un año. La suscripción se renueva automáticamente cada año hasta que quien paga la cancele."
+                    ]
+                )
+            ]
+        }
         return [
             SubscriptionPlanDescription(
                 number: 4,
@@ -653,7 +728,7 @@ struct SubscriptionPlansInfoView: View {
             )
         ]
     }
-
+    
     private var onboardingFeatures: [String] {
         if isEnglish {
             return [
@@ -666,7 +741,17 @@ struct SubscriptionPlansInfoView: View {
                 "learn how to use postcards, emotional check-ins, and the box-breathing exercise."
             ]
         }
-
+        if isSpanish {
+            return [
+                "completar la instalación y el primer inicio de MorningHello;",
+                "configurar su perfil;",
+                "añadir contactos de confianza;",
+                "elegir el intervalo entre confirmaciones;",
+                "realizar la primera confirmación;",
+                "comprender el estado del monitoreo y la cuenta regresiva;",
+                "aprender a utilizar las postales, los registros emocionales y el ejercicio de respiración cuadrada."
+            ]
+        }
         return [
             "пройти установку и первый запуск MorningHello;",
             "заполнить профиль;",
@@ -677,7 +762,7 @@ struct SubscriptionPlansInfoView: View {
             "научиться пользоваться открытками, эмоциональными оценками и квадратом дыхания."
         ]
     }
-
+    
     private var subscriptionTerms: [String] {
         if isEnglish {
             return [
@@ -687,7 +772,14 @@ struct SubscriptionPlansInfoView: View {
                 "After cancellation, access remains available until the end of the already paid subscription period."
             ]
         }
-
+        if isSpanish {
+            return [
+                "El precio real de cada plan se muestra en App Store antes de confirmar la compra y puede variar según el país o la región.",
+                "Si el plan seleccionado ofrece un período introductorio gratuito, App Store mostrará sus condiciones antes de la compra. Apple determina quién puede utilizar las ofertas introductorias.",
+                "El pago se carga a la cuenta de Apple de quien realiza la compra. La suscripción se renueva automáticamente, salvo que se cancele en la configuración de suscripciones de Apple antes de la siguiente fecha de renovación.",
+                "Después de la cancelación, el acceso se mantiene hasta el final del período ya pagado. La suscripción puede administrarse desde la configuración de la cuenta de Apple."
+            ]
+        }
         return [
             "Фактическая стоимость каждого плана отображается App Store перед подтверждением покупки и может отличаться в зависимости от страны или региона.",
             "Если для выбранного плана доступен бесплатный ознакомительный период, App Store покажет его условия перед оформлением. Право на ознакомительное предложение определяется Apple.",
@@ -695,27 +787,92 @@ struct SubscriptionPlansInfoView: View {
             "После отмены доступ сохраняется до окончания уже оплаченного периода. Управлять подпиской можно в настройках Apple Account."
         ]
     }
-
+    
     private func text(
         ru: String,
         en: String
     ) -> String {
-        isEnglish ? en : ru
+        
+        if isEnglish {
+            return en
+        }
+        
+        if isSpanish {
+            switch ru {
+            case "ЧТО ВХОДИТ В ПОДПИСКУ":
+                return "QUÉ INCLUYE LA SUSCRIPCIÓN"
+                
+            case "ПОДПИСКИ ДЛЯ СЕБЯ":
+                return "PLANES PARA TI"
+                
+            case "ПОДПИСКИ ДЛЯ БЛИЗКОГО":
+                return "PLANES PARA UN SER QUERIDO"
+                
+            case "ПЕРСОНАЛЬНАЯ ПОМОЩЬ":
+                return "ASISTENCIA PERSONAL"
+                
+            case "УСЛОВИЯ ПОДПИСКИ":
+                return "CONDICIONES DE SUSCRIPCIÓN"
+                
+            case "Тарифные планы":
+                return "Planes de suscripción"
+                
+            case "Закрыть":
+                return "Cerrar"
+                
+            case "ТАРИФНЫЕ ПЛАНЫ MORNINGHELLO":
+                return "PLANES DE SUSCRIPCIÓN DE MORNINGHELLO"
+                
+            case "Выберите подписку для себя или оплатите доступ для близкого человека.":
+                return "Elige una suscripción para ti o paga el acceso de un ser querido."
+                
+            case "Все тарифные планы открывают одинаковые функции MorningHello. Они отличаются сроком действия подписки, способом её использования и наличием персональной помощи с подключением.":
+                return "Todos los planes incluyen las mismas funciones de MorningHello. Se diferencian por la duración de la suscripción, la forma de uso y la disponibilidad de ayuda personalizada para la configuración."
+                
+            case "7. Годовой доступ для близкого с настройкой":
+                return "7. Acceso anual para un ser querido con ayuda para la configuración"
+                
+            case "Полный доступ к MorningHello для одного получателя на один год и одна бесплатная персональная встреча по Zoom или Google Meet продолжительностью до 30 минут.":
+                return "Acceso completo a MorningHello para una persona durante un año y una sesión personal gratuita de hasta 30 minutos por Zoom o Google Meet."
+                
+            case "Во время встречи мы поможем:":
+                return "Durante la sesión ayudaremos a la persona a:"
+                
+            case "Встреча является бесплатной услугой поддержки. Она не оплачивается отдельно, не является обязательной и не влияет на активацию подписки. Доступ к MorningHello открывается после успешного оформления подписки.":
+                return "La sesión es un servicio gratuito de asistencia. No se cobra por separado, no es obligatoria y no afecta la activación de la suscripción. El acceso a MorningHello se activa después de completar correctamente la compra."
+                
+            case "Во время встречи мы никогда не просим сообщать пароль Apple ID, банковские данные или коды подтверждения.":
+                return "Durante la sesión nunca solicitaremos la contraseña de tu Apple ID, datos bancarios ni códigos de verificación."
+                
+            case "MorningHello не является службой экстренной помощи и не заменяет звонок в экстренные службы.":
+                return "MorningHello no es un servicio de emergencia y no sustituye una llamada a los servicios de emergencia locales."
+                
+            case "Развёрнуто":
+                return "Expandido"
+                
+            case "Свёрнуто":
+                return "Contraído"
+                
+            default:
+                return en
+            }
+        }
+        
+        return ru
+    }
+    
+    private struct SubscriptionPlanDescription:
+        Identifiable {
+        
+        let number: Int
+        let title: String
+        let paragraphs: [String]
+        
+        var id: Int {
+            number
+        }
     }
 }
-
-private struct SubscriptionPlanDescription:
-    Identifiable {
-
-    let number: Int
-    let title: String
-    let paragraphs: [String]
-
-    var id: Int {
-        number
-    }
-}
-
 private extension View {
 
     func infoCard() -> some View {

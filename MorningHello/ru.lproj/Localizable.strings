@@ -134,5 +134,5 @@
 "connection.postcard.postcard" = "Сегодня отправьте открытку для %@.";
 "connection.postcard.other" = "Сегодня: %@ – %@.";
 "connection.intro" = "Жизнь – это общение. Добавляйте напоминания, чтобы чаще оставаться на связи с важными для вас людьми.";
-"connection.all.title" = "Все напоминания";
 "connection.all.empty" = "Сохранённых напоминаний пока нет.";
+"connection.home.title" = "Напоминания";
