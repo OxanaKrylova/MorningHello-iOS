@@ -64,10 +64,13 @@ struct ProfileDataAPIClient {
                 profileRequest
             )
 
-        let (data, response) =
-            try await URLSession.shared.data(
-                for: request
+        let result =
+            try await BackendLoggedRequest.perform(
+                request
             )
+
+        let data = result.data
+        let response = result.response
 
         guard let httpResponse =
                 response as? HTTPURLResponse

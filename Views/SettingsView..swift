@@ -24,6 +24,14 @@ struct SettingsView: View {
     @State private var showSubscription = false
     @State private var showFeedback = false
     
+    @State private var diagnosticLogURL: URL?
+
+    @State private var showDiagnosticLogShare =
+        false
+
+    @State private var diagnosticLogError:
+        String?
+    
     private let backgroundColor = Color(
         red: 1.00,
         green: 0.96,
@@ -75,6 +83,7 @@ struct SettingsView: View {
                             soundSection
                             languageSection
                             feedbackSection
+                            diagnosticsSection
                             applicationSection
                         }
                         .padding(.top, 16)
@@ -144,6 +153,60 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $showFeedback) {
             FeedbackView()
+        }
+        .sheet(
+            isPresented:
+                $showDiagnosticLogShare,
+            onDismiss: {
+
+                guard let diagnosticLogURL
+                else {
+                    return
+                }
+
+                Task {
+                    await BackendFailureLogger
+                        .shared
+                        .removeExportFile(
+                            at: diagnosticLogURL
+                        )
+                }
+
+                self.diagnosticLogURL = nil
+            }
+        ) {
+            if let diagnosticLogURL {
+                DiagnosticLogShareSheet(
+                    fileURL: diagnosticLogURL
+                )
+            }
+        }
+        .alert(
+            AppLanguage.selected.localized(
+                "Ошибка экспорта"
+            ),
+            isPresented: Binding(
+                get: {
+                    diagnosticLogError != nil
+                },
+                set: { isPresented in
+                    if !isPresented {
+                        diagnosticLogError = nil
+                    }
+                }
+            )
+        ) {
+            Button(
+                AppLanguage.selected
+                    .localized("Понятно"),
+                role: .cancel
+            ) {
+                diagnosticLogError = nil
+            }
+        } message: {
+            Text(
+                diagnosticLogError ?? ""
+            )
         }
         .onChange(
             of: areSoundsEnabled
@@ -409,6 +472,57 @@ struct SettingsView: View {
             }
             .foregroundStyle(textColor)
             .settingsCard()
+        }
+    }
+    
+    // MARK: - Диагностика
+
+    private var diagnosticsSection:
+        some View {
+
+        VStack(
+            alignment: .leading,
+            spacing: 12
+        ) {
+            sectionTitle(
+                "Диагностика"
+            )
+
+            VStack(spacing: 0) {
+                settingsRow(
+                    title:
+                        "Экспорт журнала ошибок",
+                    subtitle:
+                        "Ошибочные обращения к серверу за последние 30 дней",
+                    systemImage:
+                        "doc.text.magnifyingglass"
+                ) {
+                    prepareDiagnosticLog()
+                }
+            }
+            .settingsCard()
+        }
+    }
+
+
+    private func prepareDiagnosticLog() {
+
+        Task {
+            do {
+                let url =
+                    try await BackendFailureLogger
+                        .shared
+                        .makeExportFile()
+
+                diagnosticLogURL = url
+                showDiagnosticLogShare = true
+
+            } catch {
+                diagnosticLogError =
+                    """
+                    Не удалось подготовить журнал ошибок.
+                    """
+            }
         }
     }
     

@@ -7,183 +7,394 @@
 
 import Foundation
 
-final class SubscriptionLifecycleAPIClient {
+actor SubscriptionLifecycleAPIClient {
 
-    static let shared =
-        SubscriptionLifecycleAPIClient()
+    static let shared = SubscriptionLifecycleAPIClient()
 
-    private init() {}
+    private let baseURL = URL(
+        string: "https://api.morninghelloapp.com"
+    )!
+
+    private let session: URLSession
+
+    private let encoder: JSONEncoder = {
+        let encoder = JSONEncoder()
+        return encoder
+    }()
+
+    private let decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return decoder
+    }()
+
+    private init(
+        session: URLSession = .shared
+    ) {
+        self.session = session
+    }
 
 
-    // MARK: - Backend
+    // MARK: - Register StoreKit Transaction
 
-    private let baseURL =
-        URL(
-            string:
-                "https://api.morninghelloapp.com"
-        )!
+    /// Передаёт Backend подписанную транзакцию StoreKit.
+    ///
+    /// Endpoint:
+    /// POST /users/{appInstanceId}/subscriptions
+    ///
+    /// Вызывать:
+    /// - после успешной покупки;
+    /// - после восстановления покупок;
+    /// - при обработке обновлённой транзакции;
+    /// - при повторной синхронизации актуальной подписки.
+    @discardableResult
+    func registerSubscription(
+        signedTransaction: String
+    ) async throws -> BackendSubscription {
 
+        let normalizedTransaction =
+            signedTransaction.trimmingCharacters(
+                in: .whitespacesAndNewlines
+            )
 
-    // MARK: - Sync
+        guard !normalizedTransaction.isEmpty else {
+            throw SubscriptionLifecycleAPIError
+                .missingSignedTransaction
+        }
 
-    func syncSubscriptionState(
-        snapshot: SubscriptionSnapshot
-    ) async throws {
-
-        let url =
-            baseURL.appendingPathComponent(
-                "api/subscription/state"
+        let requestBody =
+            LifecycleRegisterSubscriptionRequest(
+                signedTransaction:
+                    normalizedTransaction
             )
 
         var request =
-            URLRequest(url: url)
+            URLRequest(
+                url: subscriptionsURL
+            )
 
         request.httpMethod = "POST"
 
         request.setValue(
             "application/json",
-            forHTTPHeaderField:
-                "Content-Type"
+            forHTTPHeaderField: "Content-Type"
         )
 
         request.setValue(
             "application/json",
-            forHTTPHeaderField:
-                "Accept"
+            forHTTPHeaderField: "Accept"
         )
-
-        let payload =
-            SubscriptionSyncRequest(
-                appInstanceId:
-                    appInstanceID(),
-                productId:
-                    snapshot.productId,
-                status:
-                    snapshot.status.rawValue,
-                autoRenewEnabled:
-                    snapshot.autoRenewEnabled,
-                expiresAt:
-                    snapshot.expiresAt,
-                trialEndsAt:
-                    snapshot.trialEndsAt,
-                originalTransactionId:
-                    snapshot.originalTransactionId
-            )
-
-        let encoder =
-            JSONEncoder()
-
-        encoder.dateEncodingStrategy =
-            .iso8601
 
         request.httpBody =
             try encoder.encode(
-                payload
+                requestBody
             )
 
 #if DEBUG
-        if let body =
-            request.httpBody,
-           let json =
-            String(
-                data: body,
-                encoding: .utf8
-            ) {
-
-            print(
-                "📤 SUBSCRIPTION SYNC:",
-                json
-            )
-        }
+        print(
+            "📤 POST",
+            subscriptionsURL.absoluteString
+        )
 #endif
 
-        let (_, response) =
-            try await URLSession.shared
-                .data(for: request)
+        let data = try await perform(request)
+
+        do {
+            let subscription =
+                try decoder.decode(
+                    BackendSubscription.self,
+                    from: data
+                )
+
+#if DEBUG
+            print(
+                "✅ Subscription registered:",
+                subscription.productId
+            )
+#endif
+
+            return subscription
+
+        } catch {
+            throw SubscriptionLifecycleAPIError
+                .decodingFailed(error)
+        }
+    }
+
+
+    // MARK: - Fetch Subscription State
+
+    /// Получает все подписки, связанные с данной установкой приложения.
+    ///
+    /// Endpoint:
+    /// GET /users/{appInstanceId}/subscriptions
+    func fetchSubscriptions()
+        async throws
+        -> BackendSubscriptionOverview {
+
+        var request =
+            URLRequest(
+                url: subscriptionsURL
+            )
+
+        request.httpMethod = "GET"
+
+        request.setValue(
+            "application/json",
+            forHTTPHeaderField: "Accept"
+        )
+
+#if DEBUG
+        print(
+            "📤 GET",
+            subscriptionsURL.absoluteString
+        )
+#endif
+
+        let data = try await perform(request)
+
+        do {
+            return try decoder.decode(
+                BackendSubscriptionOverview.self,
+                from: data
+            )
+
+        } catch {
+            throw SubscriptionLifecycleAPIError
+                .decodingFailed(error)
+        }
+    }
+
+
+    // MARK: - URL
+
+    private var subscriptionsURL: URL {
+        baseURL
+            .appendingPathComponent("users")
+            .appendingPathComponent(
+                AppInstanceIdentity.id.uuidString
+            )
+            .appendingPathComponent("subscriptions")
+    }
+
+
+    // MARK: - Request
+
+    private func perform(
+        _ request: URLRequest
+    ) async throws -> Data {
+
+        let data: Data
+        let response: URLResponse
+
+        do {
+            (data, response) =
+                try await session.data(
+                    for: request
+                )
+
+        } catch {
+            throw SubscriptionLifecycleAPIError
+                .transportError(error)
+        }
 
         guard let httpResponse =
-            response
-                as? HTTPURLResponse
+            response as? HTTPURLResponse
         else {
-
-            throw SubscriptionAPIError
+            throw SubscriptionLifecycleAPIError
                 .invalidResponse
         }
 
         guard 200..<300 ~=
                 httpResponse.statusCode
         else {
+            let backendError =
+                try? decoder.decode(
+                    BackendErrorResponse.self,
+                    from: data
+                )
 
-            throw SubscriptionAPIError
-                .httpError(
-                    httpResponse.statusCode
+            throw SubscriptionLifecycleAPIError
+                .backendError(
+                    statusCode:
+                        httpResponse.statusCode,
+                    code:
+                        backendError?.error,
+                    message:
+                        backendError?.message
                 )
         }
 
-#if DEBUG
-        print(
-            "✅ Subscription state synced"
-        )
-#endif
-    }
-
-
-    // MARK: - Device ID
-
-    private func appInstanceID()
-        -> UUID {
-
-        let key =
-            "app_instance_id"
-
-        if let existing =
-            UserDefaults.standard.string(
-                forKey: key
-            ),
-           let uuid =
-            UUID(uuidString: existing) {
-
-            return uuid
-        }
-
-        let newID = UUID()
-
-        UserDefaults.standard.set(
-            newID.uuidString,
-            forKey: key
-        )
-
-        return newID
+        return data
     }
 }
 
 
-// MARK: - Request
+// MARK: - Request Models
 
-private struct SubscriptionSyncRequest:
+private struct LifecycleRegisterSubscriptionRequest:
     Encodable {
 
-    let appInstanceId: UUID
+    let signedTransaction: String
+}
 
-    let productId: String?
+// MARK: - Response Models
 
-    let status: String
+struct BackendSubscription:
+    Decodable,
+    Equatable,
+    Identifiable {
 
-    let autoRenewEnabled: Bool
+    var id: String {
+        originalTransactionId
+    }
 
-    let expiresAt: Date?
+    let originalTransactionId: String
 
-    let trialEndsAt: Date?
+    let kind: LifecycleSubscriptionKind
+    
+    let productId: String
 
-    let originalTransactionId: String?
+    let environment: String
+
+    let expiresAt: Date
+
+    let active: Bool
+}
+
+
+enum LifecycleSubscriptionKind:
+    String,
+    Decodable,
+    Equatable {
+
+    case user = "USER"
+    case sponsor = "SPONSOR"
+}
+
+
+struct BackendSponsoringSubscription:
+    Decodable,
+    Equatable,
+    Identifiable {
+
+    var id: String {
+        originalTransactionId
+    }
+
+    let originalTransactionId: String
+
+    let productId: String
+
+    let environment: String
+
+    let expiresAt: Date
+
+    let active: Bool
+
+    let hasBeneficiary: Bool
+}
+
+
+struct BackendSponsoredAccess:
+    Decodable,
+    Equatable {
+
+    let active: Bool
+
+    let expiresAt: Date
+
+    let since: Date
+}
+
+
+struct BackendSubscriptionOverview:
+    Decodable,
+    Equatable {
+
+    let own: [BackendSubscription]
+
+    let sponsoring: [BackendSponsoringSubscription]
+
+    let sponsored: BackendSponsoredAccess?
+}
+
+
+private struct BackendErrorResponse:
+    Decodable {
+
+    let error: String?
+
+    let message: String?
 }
 
 
 // MARK: - Errors
 
-private enum SubscriptionAPIError:
-    Error {
+enum SubscriptionLifecycleAPIError:
+    LocalizedError {
+
+    case missingSignedTransaction
 
     case invalidResponse
-    case httpError(Int)
+
+    case transportError(Error)
+
+    case decodingFailed(Error)
+
+    case backendError(
+        statusCode: Int,
+        code: String?,
+        message: String?
+    )
+
+
+    var errorDescription: String? {
+        switch self {
+
+        case .missingSignedTransaction:
+            return """
+            StoreKit не передал подписанную транзакцию.
+            """
+
+        case .invalidResponse:
+            return """
+            Сервер вернул неизвестный ответ.
+            """
+
+        case let .transportError(error):
+            return """
+            Не удалось связаться с сервером: \
+            \(error.localizedDescription)
+            """
+
+        case let .decodingFailed(error):
+            return """
+            Не удалось прочитать ответ сервера: \
+            \(error.localizedDescription)
+            """
+
+        case let .backendError(
+            statusCode,
+            code,
+            message
+        ):
+            let serverCode =
+                code ?? "UNKNOWN_ERROR"
+
+            if let message,
+               !message.isEmpty {
+
+                return """
+                Ошибка сервера \(statusCode) \
+                (\(serverCode)): \(message)
+                """
+            }
+
+            return """
+            Ошибка сервера \(statusCode) \
+            (\(serverCode)).
+            """
+        }
+    }
 }

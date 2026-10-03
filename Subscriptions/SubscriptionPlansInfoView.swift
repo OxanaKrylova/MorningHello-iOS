@@ -549,8 +549,7 @@ enum SubscriptionPaywallMode: Equatable {
                     AppInstanceIdentity.id
 
                 let purchaseResult =
-                    try await purchase(
-                        productToPurchase,
+                    try await productToPurchase.purchase(
                         options: [
                             .appAccountToken(
                                 appInstanceId

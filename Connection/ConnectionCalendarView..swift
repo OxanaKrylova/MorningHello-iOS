@@ -1441,13 +1441,29 @@ struct ConnectionCalendarView: View {
                             for: reminder
                         )
                     )
-                    .font(
-                        .system(
-                            size: 18,
-                            weight: .medium,
-                            design: .rounded
-                        )
-                    )
+                    if let comment =
+                        reminder.comment?
+                            .trimmingCharacters(
+                                in: .whitespacesAndNewlines
+                            ),
+                       !comment.isEmpty {
+
+                        Text(comment)
+                            .font(
+                                .system(
+                                    size: 16,
+                                    weight: .regular,
+                                    design: .rounded
+                                )
+                            )
+                            .foregroundStyle(
+                                Color.secondary
+                            )
+                            .fixedSize(
+                                horizontal: false,
+                                vertical: true
+                            )
+                    }
 
                     Label(
                         localized(

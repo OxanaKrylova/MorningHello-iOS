@@ -90,10 +90,17 @@
 		29CA8E2B2FFEF94500F59ECA /* HolidaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */; };
 		29CA8E2D300197C900F59ECA /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA8E2C300197C800F59ECA /* ProfileView.swift */; };
 		29CA8E3C3004435500F59ECA /* IntroVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA8E3B3004435500F59ECA /* IntroVideoView.swift */; };
+		29CB1C25306ECF63009EB187 /* BackendFailureLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB1C24306ECF63009EB187 /* BackendFailureLogger.swift */; };
+		29CB1C27306ED142009EB187 /* PendingContactReminderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB1C26306ED142009EB187 /* PendingContactReminderManager.swift */; };
+		29CB1C29306ED1D9009EB187 /* PendingContactReminderHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB1C28306ED1D9009EB187 /* PendingContactReminderHost.swift */; };
+		29CB1C2B306ED220009EB187 /* DiagnosticLogShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB1C2A306ED220009EB187 /* DiagnosticLogShareSheet.swift */; };
+		29CB1C4B306EFF30009EB187 /* OptionalSetupOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB1C4A306EFF30009EB187 /* OptionalSetupOnboardingView.swift */; };
+		29CB1C4D30705D94009EB187 /* MonitoringSetupIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB1C4C30705D94009EB187 /* MonitoringSetupIntroView.swift */; };
 		29CD29F63023DBB800C72D5D /* PostcardRenderer..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */; };
 		29D0C197304CAC8C0061569D /* EmergencyContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0C196304CAC8C0061569D /* EmergencyContactsView.swift */; };
 		29DD590C30350B360067B04F /* OctoberPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DD590B30350B360067B04F /* OctoberPostcardProvider.swift */; };
 		29DD59203035DCCB0067B04F /* TrialNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DD591F3035DCCB0067B04F /* TrialNotificationManager.swift */; };
+		29E0059F306E390100222DE6 /* SponsorshipL10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E0059E306E390100222DE6 /* SponsorshipL10n.swift */; };
 		29EC86F33006AABE00E16D51 /* MessageComposerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC86F23006AABE00E16D51 /* MessageComposerView.swift */; };
 		29EC92483053143A00D9BD71 /* MoodCheckInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC92413053143A00D9BD71 /* MoodCheckInView.swift */; };
 		29EC92493053143A00D9BD71 /* MoodStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC92463053143A00D9BD71 /* MoodStore.swift */; };
@@ -189,10 +196,17 @@
 		29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidaySettingsView.swift; sourceTree = "<group>"; };
 		29CA8E2C300197C800F59ECA /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		29CA8E3B3004435500F59ECA /* IntroVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroVideoView.swift; sourceTree = "<group>"; };
+		29CB1C24306ECF63009EB187 /* BackendFailureLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendFailureLogger.swift; sourceTree = "<group>"; };
+		29CB1C26306ED142009EB187 /* PendingContactReminderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingContactReminderManager.swift; sourceTree = "<group>"; };
+		29CB1C28306ED1D9009EB187 /* PendingContactReminderHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingContactReminderHost.swift; sourceTree = "<group>"; };
+		29CB1C2A306ED220009EB187 /* DiagnosticLogShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticLogShareSheet.swift; sourceTree = "<group>"; };
+		29CB1C4A306EFF30009EB187 /* OptionalSetupOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalSetupOnboardingView.swift; sourceTree = "<group>"; };
+		29CB1C4C30705D94009EB187 /* MonitoringSetupIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringSetupIntroView.swift; sourceTree = "<group>"; };
 		29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostcardRenderer..swift; sourceTree = "<group>"; };
 		29D0C196304CAC8C0061569D /* EmergencyContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContactsView.swift; sourceTree = "<group>"; };
 		29DD590B30350B360067B04F /* OctoberPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OctoberPostcardProvider.swift; sourceTree = "<group>"; };
 		29DD591F3035DCCB0067B04F /* TrialNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationManager.swift; sourceTree = "<group>"; };
+		29E0059E306E390100222DE6 /* SponsorshipL10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipL10n.swift; sourceTree = "<group>"; };
 		29EC86F23006AABE00E16D51 /* MessageComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageComposerView.swift; sourceTree = "<group>"; };
 		29EC92403053143A00D9BD71 /* MoodChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodChartView.swift; sourceTree = "<group>"; };
 		29EC92413053143A00D9BD71 /* MoodCheckInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodCheckInView.swift; sourceTree = "<group>"; };
@@ -247,7 +261,6 @@
 			isa = PBXGroup;
 			children = (
 				29AFFF9C3037B4BC007FE955 /* SubscriptionLifecycleAPIClient.swift */,
-				2976EF123027D69B00C0E8B1 /* AppEntryView.swift */,
 				29F44CBD303F95F10043E63A /* SubscriptionPaywallView.swift */,
 				29AFFF9A3037B456007FE955 /* SubscriptionSnapshot.swift */,
 				29AFFFA13037B82C007FE955 /* SubscriptionManager.swift */,
@@ -288,6 +301,7 @@
 				293CF91B30594601002DACBD /* SponsorshipRootView.swift */,
 				293CF91C30594601002DACBD /* SponsorshipStore.swift */,
 				293CF91D30594601002DACBD /* SponsorshipViews.swift */,
+				29E0059E306E390100222DE6 /* SponsorshipL10n.swift */,
 			);
 			path = Sponsorship;
 			sourceTree = "<group>";
@@ -309,6 +323,9 @@
 		2976EF0F3027D63C00C0E8B1 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				2976EF123027D69B00C0E8B1 /* AppEntryView.swift */,
+				29CB1C4C30705D94009EB187 /* MonitoringSetupIntroView.swift */,
+				29CB1C4A306EFF30009EB187 /* OptionalSetupOnboardingView.swift */,
 				2976EF0D3027D60C00C0E8B1 /* TermsOfUseView.swift */,
 				2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */,
 			);
@@ -430,15 +447,15 @@
 		29B76C77301BD2AB00D1D295 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				29B76C42301AA86B00D1D295 /* PostcardScreen.swift */,
 				29B76C5A301B6DA500D1D295 /* BirthdayGreetingView.swift */,
+				290E2524304D97FB000D4A2D /* BreathingSquareView.swift */,
 				292B3D5430126C50005F4183 /* FeedbackView.swift */,
-				29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */,
 				29D0C196304CAC8C0061569D /* EmergencyContactsView.swift */,
+				29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */,
+				2988745A3065D25200361B7D /* PetProfileView.swift */,
+				29B76C42301AA86B00D1D295 /* PostcardScreen.swift */,
 				29CA8E2C300197C800F59ECA /* ProfileView.swift */,
 				296D4CDA3046B1AC000248AD /* SettingsView..swift */,
-				290E2524304D97FB000D4A2D /* BreathingSquareView.swift */,
-				2988745A3065D25200361B7D /* PetProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -456,13 +473,17 @@
 		29BCCD02302D9F140027557C /* Backend */ = {
 			isa = PBXGroup;
 			children = (
-				29B76CA230212FD700D1D295 /* HeartbeatModels.swift */,
-				2988747C3067144900361B7D /* ProfileDataAPIClient.swift */,
-				29B76CA63021304700D1D295 /* HeartbeatAPIClient.swift */,
-				29BCCD03302D9F260027557C /* EmergencyContactAPIClient.swift */,
-				29B76CA43021301A00D1D295 /* HeartbeatRequestBuilder.swift */,
-				2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */,
 				29887478306713EB00361B7D /* AppInstanceIDProvider..swift */,
+				29CB1C24306ECF63009EB187 /* BackendFailureLogger.swift */,
+				29CB1C2A306ED220009EB187 /* DiagnosticLogShareSheet.swift */,
+				29BCCD03302D9F260027557C /* EmergencyContactAPIClient.swift */,
+				29B76CA63021304700D1D295 /* HeartbeatAPIClient.swift */,
+				29B76CA230212FD700D1D295 /* HeartbeatModels.swift */,
+				29B76CA43021301A00D1D295 /* HeartbeatRequestBuilder.swift */,
+				2988747C3067144900361B7D /* ProfileDataAPIClient.swift */,
+				2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */,
+				29CB1C26306ED142009EB187 /* PendingContactReminderManager.swift */,
+				29CB1C28306ED1D9009EB187 /* PendingContactReminderHost.swift */,
 				2988747A3067141800361B7D /* ProfileDataModels.swift */,
 				2988747E3067146800361B7D /* ProfileDataSyncService.swift */,
 			);
@@ -573,6 +594,7 @@
 				29BCCD2B3030533A0027557C /* NovemberPostcardProvider.swift in Sources */,
 				290E2525304D97FB000D4A2D /* BreathingSquareView.swift in Sources */,
 				2976EF133027D69B00C0E8B1 /* AppEntryView.swift in Sources */,
+				29E0059F306E390100222DE6 /* SponsorshipL10n.swift in Sources */,
 				29B76C72301BD0B000D1D295 /* HolidayContent.swift in Sources */,
 				298D841030694E9A00F94646 /* MoodCalendarView.swift in Sources */,
 				2992CC2D304A2C29003301E9 /* AprilPostcardProvider.swift in Sources */,
@@ -598,6 +620,7 @@
 				29B76C82301D418000D1D295 /* OrthodoxHolidayProvider.swift in Sources */,
 				29B76C43301AA87500D1D295 /* PostcardScreen.swift in Sources */,
 				2988745B3065D25200361B7D /* PetProfileView.swift in Sources */,
+				29CB1C4B306EFF30009EB187 /* OptionalSetupOnboardingView.swift in Sources */,
 				29BCCD04302D9F260027557C /* EmergencyContactAPIClient.swift in Sources */,
 				290CA89F305A5CF7008BA815 /* AdaptiveColors.swift in Sources */,
 				29B76C74301BD1F300D1D295 /* SelectedPostcard.swift in Sources */,
@@ -619,6 +642,7 @@
 				29EC92483053143A00D9BD71 /* MoodCheckInView.swift in Sources */,
 				2988747D3067144900361B7D /* ProfileDataAPIClient.swift in Sources */,
 				293CF91F30594601002DACBD /* SponsorshipViews.swift in Sources */,
+				29CB1C25306ECF63009EB187 /* BackendFailureLogger.swift in Sources */,
 				2988747F3067146800361B7D /* ProfileDataSyncService.swift in Sources */,
 				293CF92030594601002DACBD /* SponsorshipAPIClient.swift in Sources */,
 				292FB2EF306ACA6E0071D95A /* ConnectionReminderRepository.swift in Sources */,
@@ -628,6 +652,7 @@
 				2988741D306332A900361B7D /* LatinAmericanHolidayProvider.swift in Sources */,
 				292FB2F3306AD3270071D95A /* ConnectionReminderFormView.swift in Sources */,
 				293CF92430594601002DACBD /* SponsorshipStore.swift in Sources */,
+				29CB1C29306ED1D9009EB187 /* PendingContactReminderHost.swift in Sources */,
 				293CF92530594601002DACBD /* SponsorshipModels.swift in Sources */,
 				29EC92493053143A00D9BD71 /* MoodStore.swift in Sources */,
 				29EC924A3053143A00D9BD71 /* MoodLevel.swift in Sources */,
@@ -641,10 +666,13 @@
 				29CA8E2D300197C900F59ECA /* ProfileView.swift in Sources */,
 				29B76C8F301E9DB300D1D295 /* AugustPostcardProvider.swift in Sources */,
 				29EC86F33006AABE00E16D51 /* MessageComposerView.swift in Sources */,
+				29CB1C2B306ED220009EB187 /* DiagnosticLogShareSheet.swift in Sources */,
 				29CD29F63023DBB800C72D5D /* PostcardRenderer..swift in Sources */,
 				29B76C8A301E91C000D1D295 /*  BirthdayPostcardProvider.swift in Sources */,
 				29B76C5B301B6DA500D1D295 /* BirthdayGreetingView.swift in Sources */,
+				29CB1C4D30705D94009EB187 /* MonitoringSetupIntroView.swift in Sources */,
 				2988743D30647BF500361B7D /* JulyPostcardProvider.swift in Sources */,
+				29CB1C27306ED142009EB187 /* PendingContactReminderManager.swift in Sources */,
 				296D4CC730462788000248AD /* AppSoundPlayer.swift in Sources */,
 				29AFFFA03037B6F9007FE955 /* JanuaryPostcardProvider.swift in Sources */,
 				29B76C7E301BF11200D1D295 /* DecemberPostcardProvider.swift in Sources */,
@@ -788,7 +816,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -829,7 +857,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

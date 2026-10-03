@@ -128,8 +128,12 @@ final class ConnectionReminderRepository {
                 communicationMethod,
             customCommunicationMethod:
                 customCommunicationMethod,
-            startDate: startDate,
-            recurrence: recurrence
+            comment:
+                reminder.comment,
+            startDate:
+                startDate,
+            recurrence:
+                recurrence
         )
 
         try modelContext.save()

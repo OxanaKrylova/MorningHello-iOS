@@ -28,33 +28,9 @@ struct BirthdayGreetingView: View {
     @State private var showCustomMessageEditor = false
     @State private var useCustomBirthdayMessage = false
     
-    private let imageNames: [String] = [
-        "holiday_birthday_1",
-        "holiday_birthday_2",
-        "holiday_birthday_3",
-        "holiday_birthday_4",
-        "holiday_birthday_5",
-        "holiday_birthday_6",
-        "holiday_birthday_7",
-        "holiday_birthday_8",
-        "holiday_birthday_9",
-        "holiday_birthday_10",
-        "holiday_birthday_11",
-        "holiday_birthday_12",
-        "holiday_birthday_13",
-        "holiday_birthday_14",
-        "holiday_birthday_15",
-        "holiday_birthday_16",
-        "holiday_birthday_17",
-        "holiday_birthday_18",
-        "holiday_birthday_19",
-        "holiday_birthday_20",
-        "holiday_birthday_21",
-        "holiday_birthday_22",
-        "holiday_birthday_23",
-        "holiday_birthday_24",
-        "holiday_birthday_25"
-    ]
+    private let imageNames: [String] = (1...32).map {
+        "holiday_birthday_\($0)"
+    }
     
     private let phrases: [String] = [
         "С днём рождения! Пусть каждый новый день приносит радость, тепло и приятные события.",

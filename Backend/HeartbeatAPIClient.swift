@@ -5,7 +5,7 @@
 //  Created by Oxana Krylova on 03/08/2026.
 //
 
-//
+///
 //  HeartbeatAPIClient.swift
 //  MorningHello
 //
@@ -14,146 +14,196 @@
 
 import Foundation
 
+
 struct HeartbeatAPIClient {
 
-    static let shared = HeartbeatAPIClient()
+    static let shared =
+        HeartbeatAPIClient()
 
-    private let baseURL = URL(
-        string: "https://api.morninghelloapp.com"
-    )!
+    private let baseURL =
+        URL(
+            string:
+                "https://api.morninghelloapp.com"
+        )!
 
     private init() {
     }
+
 
     // MARK: - Отправка отметки
 
     func sendHeartbeat(
         appInstanceID: UUID,
-        request heartbeat: HeartbeatRequest
-    ) async throws -> MonitoringSnapshot {
+        request heartbeat:
+            HeartbeatRequest
+    ) async throws
+        -> MonitoringSnapshot {
 
-        let endpoint = heartbeatEndpoint(
-            appInstanceID: appInstanceID
-        )
-
-        var urlRequest = URLRequest(
-            url: endpoint
-        )
-
-        urlRequest.httpMethod = "PUT"
-
-        urlRequest.setValue(
-            "application/json",
-            forHTTPHeaderField: "Content-Type"
-        )
-
-        urlRequest.setValue(
-            "application/json",
-            forHTTPHeaderField: "Accept"
-        )
-
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-
-        urlRequest.httpBody = try encoder.encode(
-            heartbeat
-        )
-
-        let (data, response) =
-            try await URLSession.shared.data(
-                for: urlRequest
+        let endpoint =
+            heartbeatEndpoint(
+                appInstanceID:
+                    appInstanceID
             )
 
-        let validatedData = try validateResponse(
-            data: data,
-            response: response
+        var urlRequest =
+            URLRequest(
+                url: endpoint
+            )
+
+        urlRequest.httpMethod =
+            "PUT"
+
+        urlRequest.setValue(
+            "application/json",
+            forHTTPHeaderField:
+                "Content-Type"
         )
 
-        return try decodeMonitoringSnapshot(
-            from: validatedData
+        urlRequest.setValue(
+            "application/json",
+            forHTTPHeaderField:
+                "Accept"
         )
+
+        let encoder =
+            JSONEncoder()
+
+        encoder.dateEncodingStrategy =
+            .iso8601
+
+        urlRequest.httpBody =
+            try encoder.encode(
+                heartbeat
+            )
+
+        let result =
+            try await BackendLoggedRequest
+                .perform(
+                    urlRequest
+                )
+
+        let validatedData =
+            try validateResponse(
+                data: result.data,
+                response: result.response
+            )
+
+        return try await
+            decodeMonitoringSnapshot(
+                from: validatedData,
+                request: urlRequest,
+                durationMilliseconds:
+                    result.durationMilliseconds
+            )
     }
+
 
     // MARK: - Временный старый вариант отправки
 
     func sendHeartbeatWithoutSnapshot(
         appInstanceID: UUID,
-        request heartbeat: HeartbeatRequest
+        request heartbeat:
+            HeartbeatRequest
     ) async throws {
 
-        let endpoint = heartbeatEndpoint(
-            appInstanceID: appInstanceID
-        )
-
-        var urlRequest = URLRequest(
-            url: endpoint
-        )
-
-        urlRequest.httpMethod = "PUT"
-
-        urlRequest.setValue(
-            "application/json",
-            forHTTPHeaderField: "Content-Type"
-        )
-
-        urlRequest.setValue(
-            "application/json",
-            forHTTPHeaderField: "Accept"
-        )
-
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
-
-        urlRequest.httpBody = try encoder.encode(
-            heartbeat
-        )
-
-        let (data, response) =
-            try await URLSession.shared.data(
-                for: urlRequest
+        let endpoint =
+            heartbeatEndpoint(
+                appInstanceID:
+                    appInstanceID
             )
 
+        var urlRequest =
+            URLRequest(
+                url: endpoint
+            )
+
+        urlRequest.httpMethod =
+            "PUT"
+
+        urlRequest.setValue(
+            "application/json",
+            forHTTPHeaderField:
+                "Content-Type"
+        )
+
+        urlRequest.setValue(
+            "application/json",
+            forHTTPHeaderField:
+                "Accept"
+        )
+
+        let encoder =
+            JSONEncoder()
+
+        encoder.dateEncodingStrategy =
+            .iso8601
+
+        urlRequest.httpBody =
+            try encoder.encode(
+                heartbeat
+            )
+
+        let result =
+            try await BackendLoggedRequest
+                .perform(
+                    urlRequest
+                )
+
         _ = try validateResponse(
-            data: data,
-            response: response
+            data: result.data,
+            response: result.response
         )
     }
+
 
     // MARK: - Получение состояния мониторинга
 
     func getMonitoringStatus(
         appInstanceID: UUID
-    ) async throws -> MonitoringSnapshot {
+    ) async throws
+        -> MonitoringSnapshot {
 
-        let endpoint = heartbeatEndpoint(
-            appInstanceID: appInstanceID
-        )
+        let endpoint =
+            heartbeatEndpoint(
+                appInstanceID:
+                    appInstanceID
+            )
 
-        var urlRequest = URLRequest(
-            url: endpoint
-        )
+        var urlRequest =
+            URLRequest(
+                url: endpoint
+            )
 
-        urlRequest.httpMethod = "GET"
+        urlRequest.httpMethod =
+            "GET"
 
         urlRequest.setValue(
             "application/json",
-            forHTTPHeaderField: "Accept"
+            forHTTPHeaderField:
+                "Accept"
         )
 
-        let (data, response) =
-            try await URLSession.shared.data(
-                for: urlRequest
+        let result =
+            try await BackendLoggedRequest
+                .perform(
+                    urlRequest
+                )
+
+        let validatedData =
+            try validateResponse(
+                data: result.data,
+                response: result.response
             )
 
-        let validatedData = try validateResponse(
-            data: data,
-            response: response
-        )
-
-        return try decodeMonitoringSnapshot(
-            from: validatedData
-        )
+        return try await
+            decodeMonitoringSnapshot(
+                from: validatedData,
+                request: urlRequest,
+                durationMilliseconds:
+                    result.durationMilliseconds
+            )
     }
+
 
     // MARK: - Адрес heartbeat
 
@@ -162,12 +212,17 @@ struct HeartbeatAPIClient {
     ) -> URL {
 
         baseURL
-            .appendingPathComponent("users")
+            .appendingPathComponent(
+                "users"
+            )
             .appendingPathComponent(
                 appInstanceID.uuidString
             )
-            .appendingPathComponent("heartbeat")
+            .appendingPathComponent(
+                "heartbeat"
+            )
     }
+
 
     // MARK: - Проверка HTTP-ответа
 
@@ -177,8 +232,11 @@ struct HeartbeatAPIClient {
     ) throws -> Data {
 
         guard let httpResponse =
-                response as? HTTPURLResponse else {
-            throw HeartbeatAPIError.invalidResponse
+                response
+                    as? HTTPURLResponse
+        else {
+            throw HeartbeatAPIError
+                .invalidResponse
         }
 
         if (200...299).contains(
@@ -187,14 +245,16 @@ struct HeartbeatAPIClient {
             return data
         }
 
-        let errorBody = try? JSONDecoder().decode(
-            HeartbeatServerErrorBody.self,
-            from: data
-        )
+        let errorBody =
+            try? JSONDecoder().decode(
+                HeartbeatServerErrorBody.self,
+                from: data
+            )
 
-        let errorCode = errorBody?
-            .error?
-            .uppercased()
+        let errorCode =
+            errorBody?
+                .error?
+                .uppercased()
 
         let serverMessage =
             errorBody?.message ??
@@ -204,74 +264,110 @@ struct HeartbeatAPIClient {
             )
 
         switch errorCode {
+
         case "MONITORING_PAUSED":
-            throw HeartbeatAPIError.monitoringPaused(
-                message: serverMessage
-            )
+            throw HeartbeatAPIError
+                .monitoringPaused(
+                    message:
+                        serverMessage
+                )
 
         case "USER_DELETED":
-            throw HeartbeatAPIError.userDeleted(
-                message: serverMessage
-            )
+            throw HeartbeatAPIError
+                .userDeleted(
+                    message:
+                        serverMessage
+                )
 
         default:
             break
         }
 
         switch httpResponse.statusCode {
+
         case 400:
-            throw HeartbeatAPIError.validationError(
-                message: serverMessage
-            )
+            throw HeartbeatAPIError
+                .validationError(
+                    message:
+                        serverMessage
+                )
 
         case 404:
-            throw HeartbeatAPIError.userNotFound(
-                message: serverMessage
-            )
+            throw HeartbeatAPIError
+                .userNotFound(
+                    message:
+                        serverMessage
+                )
 
         default:
-            throw HeartbeatAPIError.serverError(
-                statusCode: httpResponse.statusCode,
-                message: serverMessage
-            )
+            throw HeartbeatAPIError
+                .serverError(
+                    statusCode:
+                        httpResponse.statusCode,
+                    message:
+                        serverMessage
+                )
         }
     }
 
-    // MARK: - Декодирование состояния
+
+    // MARK: - Декодирование состояния мониторинга
 
     private func decodeMonitoringSnapshot(
-        from data: Data
-    ) throws -> MonitoringSnapshot {
+        from data: Data,
+        request: URLRequest,
+        durationMilliseconds: Int
+    ) async throws
+        -> MonitoringSnapshot {
 
         guard !data.isEmpty else {
-            throw HeartbeatAPIError.invalidResponse
+
+            await BackendLoggedRequest
+                .recordInvalidPayload(
+                    request: request,
+                    durationMilliseconds:
+                        durationMilliseconds,
+                    message:
+                        """
+                        Monitoring response body is empty.
+                        """
+                )
+
+            throw HeartbeatAPIError
+                .invalidResponse
         }
 
-        let decoder = JSONDecoder()
+        let decoder =
+            JSONDecoder()
 
         decoder.dateDecodingStrategy =
             .custom { decoder in
 
                 let container =
-                    try decoder.singleValueContainer()
+                    try decoder
+                        .singleValueContainer()
 
                 let value =
-                    try container.decode(String.self)
+                    try container.decode(
+                        String.self
+                    )
 
                 let fractionalFormatter =
                     ISO8601DateFormatter()
 
-                fractionalFormatter.formatOptions = [
-                    .withInternetDateTime,
-                    .withFractionalSeconds
-                ]
+                fractionalFormatter
+                    .formatOptions = [
+                        .withInternetDateTime,
+                        .withFractionalSeconds
+                    ]
 
                 let regularFormatter =
                     ISO8601DateFormatter()
 
-                regularFormatter.formatOptions = [
-                    .withInternetDateTime
-                ]
+                regularFormatter
+                    .formatOptions = [
+                        .withInternetDateTime
+                    ]
 
                 if let date =
                     fractionalFormatter.date(
@@ -280,6 +376,7 @@ struct HeartbeatAPIClient {
                     regularFormatter.date(
                         from: value
                     ) {
+
                     return date
                 }
 
@@ -287,37 +384,79 @@ struct HeartbeatAPIClient {
                     .dataCorruptedError(
                         in: container,
                         debugDescription:
-                            "Invalid ISO 8601 date: \(value)"
+                            """
+                            Invalid ISO 8601 date.
+                            """
                     )
             }
 
-        let snapshot = try decoder.decode(
-            MonitoringSnapshot.self,
-            from: data
-        )
+        let snapshot =
+            try await BackendLoggedRequest
+                .decode(
+                    MonitoringSnapshot.self,
+                    from: data,
+                    using: decoder,
+                    request: request,
+                    durationMilliseconds:
+                        durationMilliseconds
+                )
 
-        guard snapshot.checkInIntervalHours > 0 else {
-            throw HeartbeatAPIError.invalidResponse
+        guard
+            snapshot
+                .checkInIntervalHours > 0
+        else {
+
+            await BackendLoggedRequest
+                .recordInvalidPayload(
+                    request: request,
+                    durationMilliseconds:
+                        durationMilliseconds,
+                    message:
+                        """
+                        checkInIntervalHours must be greater than zero.
+                        """
+                )
+
+            throw HeartbeatAPIError
+                .invalidResponse
         }
 
         switch snapshot.status {
-        case .active, .overdue:
+
+        case .active,
+             .overdue:
+
             guard
                 snapshot.lastCheckInAt != nil,
                 snapshot.nextCheckInDueAt != nil
             else {
-                throw HeartbeatAPIError.invalidResponse
+
+                await BackendLoggedRequest
+                    .recordInvalidPayload(
+                        request: request,
+                        durationMilliseconds:
+                            durationMilliseconds,
+                        message:
+                            """
+                            Active or overdue monitoring response has no check-in dates.
+                            """
+                    )
+
+                throw HeartbeatAPIError
+                    .invalidResponse
             }
 
         case .needsCheckIn,
              .paused,
              .subscriptionEnded:
+
             break
         }
 
         return snapshot
     }
 }
+
 
 // MARK: - Тело ошибки Backend
 
@@ -328,9 +467,11 @@ private struct HeartbeatServerErrorBody:
     let message: String?
 }
 
-// MARK: - Ошибки heartbeat API
 
-enum HeartbeatAPIError: LocalizedError {
+// MARK: - Ошибки Heartbeat API
+
+enum HeartbeatAPIError:
+    LocalizedError {
 
     case invalidResponse
 
@@ -355,32 +496,43 @@ enum HeartbeatAPIError: LocalizedError {
         message: String?
     )
 
+
     var errorDescription: String? {
+
         switch self {
+
         case .invalidResponse:
             return """
             Сервер вернул неизвестный ответ.
             """
 
-        case let .monitoringPaused(message):
+        case let .monitoringPaused(
+            message
+        ):
             return message ??
                 """
                 Мониторинг приостановлен.
                 """
 
-        case let .userDeleted(message):
+        case let .userDeleted(
+            message
+        ):
             return message ??
                 """
                 Данные пользователя удалены на сервере.
                 """
 
-        case let .userNotFound(message):
+        case let .userNotFound(
+            message
+        ):
             return message ??
                 """
                 Пользователь пока не зарегистрирован на сервере.
                 """
 
-        case let .validationError(message):
+        case let .validationError(
+            message
+        ):
             return message ??
                 """
                 Сервер не принял данные отметки.
@@ -390,8 +542,10 @@ enum HeartbeatAPIError: LocalizedError {
             statusCode,
             message
         ):
+
             if let message,
                !message.isEmpty {
+
                 return """
                 Ошибка сервера \(statusCode): \
                 \(message)

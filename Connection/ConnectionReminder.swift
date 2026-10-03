@@ -30,6 +30,8 @@ enum ConnectionPersonSource:
             return "Из тревожных контактов"
 
         case .deviceContact:
+            // Оставляем для совместимости с ранее сохранёнными данными.
+            // В форме этот вариант больше не показываем.
             return "Из контактов iPhone"
 
         case .manual:
@@ -167,6 +169,8 @@ final class ConnectionReminder {
     var communicationMethodRawValue: String
     var customCommunicationMethod: String?
 
+    var comment: String?
+
     var startDate: Date
     var recurrenceRawValue: String
 
@@ -182,6 +186,7 @@ final class ConnectionReminder {
         sourceIdentifier: String? = nil,
         communicationMethod: ConnectionMethod,
         customCommunicationMethod: String? = nil,
+        comment: String? = nil,
         startDate: Date,
         recurrence: ConnectionRecurrence,
         isEnabled: Bool = true,
@@ -190,36 +195,36 @@ final class ConnectionReminder {
     ) {
         self.id = id
 
-        self.personName =
-            personName.trimmingCharacters(
+        self.personName = personName.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+
+        self.personSourceRawValue = personSource.rawValue
+        self.sourceIdentifier = sourceIdentifier
+        self.communicationMethodRawValue = communicationMethod.rawValue
+
+        let trimmedCustomMethod = customCommunicationMethod?
+            .trimmingCharacters(
                 in: .whitespacesAndNewlines
             )
 
-        self.personSourceRawValue =
-            personSource.rawValue
-
-        self.sourceIdentifier =
-            sourceIdentifier
-
-        self.communicationMethodRawValue =
-            communicationMethod.rawValue
-
-        let trimmedCustomMethod =
-            customCommunicationMethod?
-                .trimmingCharacters(
-                    in: .whitespacesAndNewlines
-                )
-
         self.customCommunicationMethod =
             trimmedCustomMethod?.isEmpty == false
-                ? trimmedCustomMethod
-                : nil
+            ? trimmedCustomMethod
+            : nil
+
+        let trimmedComment = comment?
+            .trimmingCharacters(
+                in: .whitespacesAndNewlines
+            )
+
+        self.comment =
+            trimmedComment?.isEmpty == false
+            ? trimmedComment
+            : nil
 
         self.startDate = startDate
-
-        self.recurrenceRawValue =
-            recurrence.rawValue
-
+        self.recurrenceRawValue = recurrence.rawValue
         self.isEnabled = isEnabled
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -231,22 +236,21 @@ final class ConnectionReminder {
                 rawValue: personSourceRawValue
             ) ?? .manual
         }
+
         set {
-            personSourceRawValue =
-                newValue.rawValue
+            personSourceRawValue = newValue.rawValue
         }
     }
 
     var communicationMethod: ConnectionMethod {
         get {
             ConnectionMethod(
-                rawValue:
-                    communicationMethodRawValue
+                rawValue: communicationMethodRawValue
             ) ?? .phoneCall
         }
+
         set {
-            communicationMethodRawValue =
-                newValue.rawValue
+            communicationMethodRawValue = newValue.rawValue
         }
     }
 
@@ -256,28 +260,26 @@ final class ConnectionReminder {
                 rawValue: recurrenceRawValue
             ) ?? .once
         }
+
         set {
-            recurrenceRawValue =
-                newValue.rawValue
+            recurrenceRawValue = newValue.rawValue
         }
     }
 
     var hasValidRequiredData: Bool {
-        let trimmedName =
-            personName.trimmingCharacters(
-                in: .whitespacesAndNewlines
-            )
+        let trimmedName = personName.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
 
         guard !trimmedName.isEmpty else {
             return false
         }
 
         if communicationMethod == .other {
-            let customMethod =
-                customCommunicationMethod?
-                    .trimmingCharacters(
-                        in: .whitespacesAndNewlines
-                    ) ?? ""
+            let customMethod = customCommunicationMethod?
+                .trimmingCharacters(
+                    in: .whitespacesAndNewlines
+                ) ?? ""
 
             return !customMethod.isEmpty
         }
@@ -289,6 +291,7 @@ final class ConnectionReminder {
         if communicationMethod == .other,
            let customCommunicationMethod,
            !customCommunicationMethod.isEmpty {
+
             return customCommunicationMethod
         }
 
@@ -301,41 +304,40 @@ final class ConnectionReminder {
         sourceIdentifier: String?,
         communicationMethod: ConnectionMethod,
         customCommunicationMethod: String?,
+        comment: String?,
         startDate: Date,
         recurrence: ConnectionRecurrence
     ) {
-        self.personName =
-            personName.trimmingCharacters(
+        self.personName = personName.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+
+        self.personSource = personSource
+        self.sourceIdentifier = sourceIdentifier
+        self.communicationMethod = communicationMethod
+
+        let trimmedCustomMethod = customCommunicationMethod?
+            .trimmingCharacters(
                 in: .whitespacesAndNewlines
             )
 
-        self.personSource =
-            personSource
-
-        self.sourceIdentifier =
-            sourceIdentifier
-
-        self.communicationMethod =
-            communicationMethod
-
-        let trimmedCustomMethod =
-            customCommunicationMethod?
-                .trimmingCharacters(
-                    in: .whitespacesAndNewlines
-                )
-
         self.customCommunicationMethod =
             trimmedCustomMethod?.isEmpty == false
-                ? trimmedCustomMethod
-                : nil
+            ? trimmedCustomMethod
+            : nil
 
-        self.startDate =
-            startDate
+        let trimmedComment = comment?
+            .trimmingCharacters(
+                in: .whitespacesAndNewlines
+            )
 
-        self.recurrence =
-            recurrence
+        self.comment =
+            trimmedComment?.isEmpty == false
+            ? trimmedComment
+            : nil
 
-        self.updatedAt =
-            Date()
+        self.startDate = startDate
+        self.recurrence = recurrence
+        self.updatedAt = Date()
     }
 }

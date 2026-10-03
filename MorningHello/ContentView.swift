@@ -155,28 +155,69 @@ struct ContentView: View {
             return nil
         }
 
-        let formatKey: String
+        let baseText: String
 
         switch reminder.communicationMethod {
+
         case .phoneCall:
-            formatKey =
-                "connection.postcard.phoneCall"
+            baseText =
+                String(
+                    format:
+                        selectedLanguage.localized(
+                            "connection.postcard.phoneCall"
+                        ),
+                    locale:
+                        selectedLanguage.locale,
+                    reminder.personName
+                )
 
         case .videoCall:
-            formatKey =
-                "connection.postcard.videoCall"
+            baseText =
+                String(
+                    format:
+                        selectedLanguage.localized(
+                            "connection.postcard.videoCall"
+                        ),
+                    locale:
+                        selectedLanguage.locale,
+                    reminder.personName
+                )
 
         case .meeting:
-            formatKey =
-                "connection.postcard.meeting"
+            baseText =
+                String(
+                    format:
+                        selectedLanguage.localized(
+                            "connection.postcard.meeting"
+                        ),
+                    locale:
+                        selectedLanguage.locale,
+                    reminder.personName
+                )
 
         case .message:
-            formatKey =
-                "connection.postcard.message"
+            baseText =
+                String(
+                    format:
+                        selectedLanguage.localized(
+                            "connection.postcard.message"
+                        ),
+                    locale:
+                        selectedLanguage.locale,
+                    reminder.personName
+                )
 
         case .postcard:
-            formatKey =
-                "connection.postcard.postcard"
+            baseText =
+                String(
+                    format:
+                        selectedLanguage.localized(
+                            "connection.postcard.postcard"
+                        ),
+                    locale:
+                        selectedLanguage.locale,
+                    reminder.personName
+                )
 
         case .other:
             let customMethod =
@@ -188,32 +229,36 @@ struct ContentView: View {
 
             let methodText =
                 customMethod?.isEmpty == false
-                    ? customMethod!
-                    : selectedLanguage.localized(
-                        "Другое"
-                    )
+                ? customMethod!
+                : selectedLanguage.localized(
+                    "Другое"
+                )
 
-            return String(
-                format:
-                    selectedLanguage.localized(
-                        "connection.postcard.other"
-                    ),
-                locale:
-                    selectedLanguage.locale,
-                methodText,
-                reminder.personName
-            )
+            baseText =
+                String(
+                    format:
+                        selectedLanguage.localized(
+                            "connection.postcard.other"
+                        ),
+                    locale:
+                        selectedLanguage.locale,
+                    methodText,
+                    reminder.personName
+                )
         }
 
-        return String(
-            format:
-                selectedLanguage.localized(
-                    formatKey
-                ),
-            locale:
-                selectedLanguage.locale,
-            reminder.personName
-        )
+        guard
+            let comment =
+                reminder.comment?
+                    .trimmingCharacters(
+                        in: .whitespacesAndNewlines
+                    ),
+            !comment.isEmpty
+        else {
+            return baseText
+        }
+
+        return "\(baseText)\n\(comment)"
     }
     private let monitoringSnapshotKey = "monitoring_snapshot"
     private let serverClockOffsetKey = "monitoring_server_clock_offset"

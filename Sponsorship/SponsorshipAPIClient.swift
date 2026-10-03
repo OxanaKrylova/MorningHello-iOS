@@ -1,193 +1,192 @@
+//
+//  SponsorshipAPIClient.swift
+//  MorningHello
+//
+//  Created by Oxana Krylova on 30/09/2026.
+//
+
 import Foundation
 
 actor SponsorshipAPIClient {
-    static let shared = SponsorshipAPIClient()
 
-    private let baseURL = URL(string: "https://api.morninghelloapp.com")!
+    static let shared =
+        SponsorshipAPIClient()
+
+    private let baseURL =
+        URL(
+            string:
+                "https://api.morninghelloapp.com"
+        )!
 
     private let encoder: JSONEncoder = {
         let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .iso8601
+
+        encoder.dateEncodingStrategy =
+            .iso8601
+
         return encoder
     }()
 
     private let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
+
+        decoder.dateDecodingStrategy =
+            .iso8601
+
         return decoder
     }()
 
-    func exchangeAppleCredential(
-        _ body: AppleSignInExchangeRequest
-    ) async throws -> AuthenticatedAccountResponse {
+    private init() {}
+
+    func registerSubscription(
+        appInstanceId: UUID,
+        signedTransaction: String
+    ) async throws -> RegisteredSubscription {
+
+        let body = RegisterSubscriptionRequest(
+            signedTransaction:
+                signedTransaction
+        )
+
+        return try await send(
+            appInstanceId:
+                appInstanceId,
+            method:
+                "POST",
+            body:
+                body
+        )
+    }
+
+    func subscriptions(
+        appInstanceId: UUID
+    ) async throws -> SubscriptionOverview {
+
         try await send(
-            path: ["auth", "apple"],
-            method: "POST",
-            body: body,
-            bearerToken: nil
+            appInstanceId:
+                appInstanceId,
+            method:
+                "GET",
+            body:
+                Optional<RegisterSubscriptionRequest>
+                    .none
         )
     }
 
-    func currentAccount(
-        bearerToken: String
-    ) async throws -> MorningHelloAccount {
-        try await send(
-            path: ["me"],
-            method: "GET",
-            body: Optional<EmptyBody>.none,
-            bearerToken: bearerToken
-        )
-    }
+    private func endpoint(
+        appInstanceId: UUID
+    ) -> URL {
 
-    func invitationPreview(
-        token: String
-    ) async throws -> SponsorshipInvitationPreview {
-        try await send(
-            path: ["sponsorship-invitations", token],
-            method: "GET",
-            body: Optional<EmptyBody>.none,
-            bearerToken: nil
-        )
-    }
-
-    func createInvitation(
-        _ body: CreateSponsorshipInvitationRequest,
-        bearerToken: String
-    ) async throws -> SponsorshipInvitation {
-        try await send(
-            path: ["sponsorship-invitations"],
-            method: "POST",
-            body: body,
-            bearerToken: bearerToken
-        )
-    }
-
-    func acceptInvitation(
-        token: String,
-        bearerToken: String
-    ) async throws -> Sponsorship {
-        try await send(
-            path: ["sponsorship-invitations", token, "accept"],
-            method: "POST",
-            body: EmptyBody(),
-            bearerToken: bearerToken
-        )
-    }
-
-    func declineInvitation(
-        token: String,
-        bearerToken: String
-    ) async throws -> Sponsorship {
-        try await send(
-            path: ["sponsorship-invitations", token, "decline"],
-            method: "POST",
-            body: EmptyBody(),
-            bearerToken: bearerToken
-        )
-    }
-
-    func cancelInvitation(
-        id: UUID,
-        bearerToken: String
-    ) async throws {
-        let _: EmptyResponse = try await send(
-            path: ["sponsorship-invitations", id.uuidString],
-            method: "DELETE",
-            body: Optional<EmptyBody>.none,
-            bearerToken: bearerToken
-        )
-    }
-
-    func sponsorships(
-        bearerToken: String
-    ) async throws -> [Sponsorship] {
-        try await send(
-            path: ["sponsorships"],
-            method: "GET",
-            body: Optional<EmptyBody>.none,
-            bearerToken: bearerToken
-        )
-    }
-
-    func entitlement(
-        bearerToken: String
-    ) async throws -> ServiceEntitlement {
-        try await send(
-            path: ["me", "entitlement"],
-            method: "GET",
-            body: Optional<EmptyBody>.none,
-            bearerToken: bearerToken
-        )
-    }
-
-    func registerPurchase(
-        sponsorshipID: UUID,
-        body: SponsoredPurchaseRequest,
-        bearerToken: String
-    ) async throws -> SponsoredPurchaseResponse {
-        try await send(
-            path: ["sponsorships", sponsorshipID.uuidString, "purchase"],
-            method: "POST",
-            body: body,
-            bearerToken: bearerToken
-        )
-    }
-
-    private func send<Response: Decodable, Body: Encodable>(
-        path: [String],
-        method: String,
-        body: Body?,
-        bearerToken: String?
-    ) async throws -> Response {
-        let endpoint = path.reduce(baseURL) { url, component in
-            url.appendingPathComponent(component)
-        }
-
-        var request = URLRequest(url: endpoint)
-        request.httpMethod = method
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-
-        if let bearerToken {
-            request.setValue(
-                "Bearer \(bearerToken)",
-                forHTTPHeaderField: "Authorization"
+        baseURL
+            .appendingPathComponent(
+                "users"
             )
-        }
+            .appendingPathComponent(
+                appInstanceId.uuidString
+            )
+            .appendingPathComponent(
+                "subscriptions"
+            )
+    }
+
+    private func send<
+        Response: Decodable,
+        Body: Encodable
+    >(
+        appInstanceId: UUID,
+        method: String,
+        body: Body?
+    ) async throws -> Response {
+
+        let url = endpoint(
+            appInstanceId:
+                appInstanceId
+        )
+
+        var request = URLRequest(
+            url: url
+        )
+
+        request.httpMethod = method
+
+        request.setValue(
+            "application/json",
+            forHTTPHeaderField:
+                "Accept"
+        )
 
         if let body {
             request.setValue(
                 "application/json",
-                forHTTPHeaderField: "Content-Type"
+                forHTTPHeaderField:
+                    "Content-Type"
             )
-            request.httpBody = try encoder.encode(body)
+
+            request.httpBody =
+                try encoder.encode(
+                    body
+                )
         }
 
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (
+            data,
+            response
+        ) = try await URLSession.shared.data(
+            for: request
+        )
 
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw SponsorshipAPIError.invalidResponse
+        guard let httpResponse =
+                response as? HTTPURLResponse
+        else {
+            throw SponsorshipAPIError
+                .invalidResponse
         }
 
-        if httpResponse.statusCode == 401 {
-            throw SponsorshipAPIError.unauthorized
-        }
+        guard 200..<300 ~=
+                httpResponse.statusCode
+        else {
+            let errorBody =
+                try? decoder.decode(
+                    SponsorshipAPIErrorBody.self,
+                    from: data
+                )
 
-        guard 200..<300 ~= httpResponse.statusCode else {
-            let message = String(data: data, encoding: .utf8)
             throw SponsorshipAPIError.server(
-                statusCode: httpResponse.statusCode,
-                message: message
+                statusCode:
+                    httpResponse.statusCode,
+                code:
+                    errorBody?.error,
+                message:
+                    errorBody?.message
             )
         }
 
-        if Response.self == EmptyResponse.self {
-            return EmptyResponse() as! Response
-        }
+        do {
+            return try decoder.decode(
+                Response.self,
+                from: data
+            )
+        } catch {
+#if DEBUG
+            let responseText =
+                String(
+                    data: data,
+                    encoding: .utf8
+                ) ?? ""
 
-        return try decoder.decode(Response.self, from: data)
+            print(
+                """
+                SPONSORSHIP DECODING ERROR:
+                \(error)
+
+                RESPONSE:
+                \(responseText)
+                """
+            )
+#endif
+
+            throw SponsorshipAPIError
+                .invalidResponse
+        }
     }
 }
-
-private struct EmptyBody: Encodable {}
-
-private struct EmptyResponse: Decodable {}

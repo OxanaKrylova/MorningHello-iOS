@@ -59,7 +59,8 @@ struct ConnectionReminderFormView: View {
 
     @State private var customCommunicationMethod:
         String
-
+    @State private var comment: String
+    
     @State private var startDate:
         Date
 
@@ -118,6 +119,11 @@ struct ConnectionReminderFormView: View {
                 ?? ""
         )
 
+        _comment = State(
+            initialValue:
+                reminder?.comment ?? ""
+        )
+        
         _startDate = State(
             initialValue:
                 reminder?.startDate ?? Date()
@@ -150,6 +156,15 @@ struct ConnectionReminderFormView: View {
         }
     }
 
+    private var availablePersonSources:
+        [ConnectionPersonSource] {
+
+        [
+            .emergencyContact,
+            .manual
+        ]
+    }
+    
     private var emergencyContacts:
         [StoredEmergencyContact] {
 
@@ -188,6 +203,14 @@ struct ConnectionReminderFormView: View {
             )
     }
 
+    private var trimmedComment:
+        String {
+
+        comment.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+    }
+    
     private var canSave:
         Bool {
 
@@ -234,6 +257,8 @@ struct ConnectionReminderFormView: View {
                 personSection
 
                 communicationSection
+                
+                commentSection
 
                 scheduleSection
 
@@ -593,6 +618,42 @@ struct ConnectionReminderFormView: View {
         }
     }
 
+    // MARK: - Comment Section
+
+    private var commentSection:
+        some View {
+
+        Section {
+            TextField(
+                localized(
+                    "connection.form.comment.placeholder"
+                ),
+                text: $comment,
+                axis: .vertical
+            )
+            .lineLimit(
+                3...6
+            )
+            .textInputAutocapitalization(
+                .sentences
+            )
+            .autocorrectionDisabled(false)
+        } header: {
+            Text(
+                localized(
+                    "connection.form.comment.title"
+                )
+            )
+            .fontWeight(.bold)
+        } footer: {
+            Text(
+                localized(
+                    "connection.form.comment.footer"
+                )
+            )
+        }
+    }
+    
     // MARK: - Schedule Section
 
     private var scheduleSection:
@@ -783,14 +844,34 @@ struct ConnectionReminderFormView: View {
             finalSourceIdentifier =
                 sourceIdentifier
         }
-        
+
+        let finalCustomCommunicationMethod:
+            String?
+
+        if communicationMethod == .other {
+            finalCustomCommunicationMethod =
+                trimmedCustomMethod
+        } else {
+            finalCustomCommunicationMethod =
+                nil
+        }
+
+        let finalComment:
+            String?
+
+        if trimmedComment.isEmpty {
+            finalComment = nil
+        } else {
+            finalComment = trimmedComment
+        }
+
         let normalizedDate =
             Calendar.current.startOfDay(
                 for: startDate
             )
 
-        if let reminder {
-            reminder.update(
+        if let existingReminder = reminder {
+            existingReminder.update(
                 personName:
                     trimmedPersonName,
                 personSource:
@@ -800,9 +881,9 @@ struct ConnectionReminderFormView: View {
                 communicationMethod:
                     communicationMethod,
                 customCommunicationMethod:
-                    communicationMethod == .other
-                        ? trimmedCustomMethod
-                        : nil,
+                    finalCustomCommunicationMethod,
+                comment:
+                    finalComment,
                 startDate:
                     normalizedDate,
                 recurrence:
@@ -820,9 +901,9 @@ struct ConnectionReminderFormView: View {
                     communicationMethod:
                         communicationMethod,
                     customCommunicationMethod:
-                        communicationMethod == .other
-                            ? trimmedCustomMethod
-                            : nil,
+                        finalCustomCommunicationMethod,
+                    comment:
+                        finalComment,
                     startDate:
                         normalizedDate,
                     recurrence:

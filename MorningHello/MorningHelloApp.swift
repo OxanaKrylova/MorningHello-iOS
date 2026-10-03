@@ -28,7 +28,6 @@ struct MorningHelloApp: App {
 
     var body: some Scene {
         WindowGroup {
-            Group {
                 if isShowingIntro {
                     IntroVideoView {
                         withAnimation(
@@ -38,7 +37,86 @@ struct MorningHelloApp: App {
                         }
                     }
                 } else {
-                    SponsorshipRootView()
+                    PendingContactReminderHost {
+                        SponsorshipRootView()
+                            .task {
+                                _ = await CheckInNotificationManager
+                                    .shared
+                                    .requestPermission()
+                            }
+                            .task {
+                                await SubscriptionManager
+                                    .shared
+                                    .refreshAndSync()
+                            }
+                            .task {
+                                for await update
+                                in Transaction.updates {
+
+                                    guard case .verified(
+                                        let transaction
+                                    ) = update
+                                    else {
+                                        continue
+                                    }
+
+                                    if SponsoredPurchaseManager
+                                        .isSponsoredProduct(
+                                            transaction.productID
+                                        ) {
+                                        do {
+                                            try await SponsoredPurchaseManager
+                                                .shared
+                                                .handleTransactionUpdate(
+                                                    update
+                                                )
+                                        } catch {
+                    #if DEBUG
+                                            print(
+                                                """
+                                                Sponsored transaction sync failed:
+                                                \(error)
+                                                """
+                                            )
+                    #endif
+                                        }
+
+                                        continue
+                                    }
+
+                                    await transaction.finish()
+
+                                    await SubscriptionManager
+                                        .shared
+                                        .refreshAndSync()
+                                }
+                            }
+                            .onChange(
+                                of: scenePhase
+                            ) {
+                                guard scenePhase == .active else {
+                                    return
+                                }
+
+                                Task {
+                                    await SubscriptionManager
+                                        .shared
+                                        .refreshAndSync()
+
+                                    guard SponsorshipFeatureConfiguration.isEnabled else {
+                                        return
+                                    }
+
+                                    await SponsorshipStore
+                                        .shared
+                                        .refresh()
+
+                                    await SponsoredPurchaseManager
+                                        .shared
+                                        .recoverUnfinishedPurchases()
+                                }
+                            }
+                    }
                         .task {
                             _ = await CheckInNotificationManager.shared
                                 .requestPermission()
@@ -62,8 +140,7 @@ struct MorningHelloApp: App {
                                         try await SponsoredPurchaseManager
                                             .shared
                                             .handleTransactionUpdate(
-                                                update,
-                                                using: AccountSession.shared
+                                                update
                                             )
                                     } catch {
 #if DEBUG
@@ -83,7 +160,7 @@ struct MorningHelloApp: App {
                         }
                         .onChange(
                             of: scenePhase
-                        ) { _, newPhase in
+                        ) { newPhase in
 
                             guard newPhase == .active else {
                                 return
@@ -91,40 +168,24 @@ struct MorningHelloApp: App {
 
                             Task {
 
-                                await SubscriptionManager.shared
-                                    .refreshAndSync()
+                                if SponsorshipFeatureConfiguration
+                                    .purchaseAPIIsAvailable {
 
-                                guard SponsorshipFeatureConfiguration.isEnabled,
-                                      AccountSession.shared.account != nil
-                                else {
-                                    return
+                                    await SponsorshipStore.shared
+                                        .refresh()
+
+                                    await SponsoredPurchaseManager.shared
+                                        .recoverUnfinishedPurchases()
                                 }
-
-                                await SponsorshipStore.shared.refresh(
-                                    using: AccountSession.shared
-                                )
-
-                                await SponsoredPurchaseManager.shared
-                                    .recoverUnfinishedPurchase(
-                                        using: AccountSession.shared
-                                    )
                             }
                         }
                 }
-            }
-            .onOpenURL { url in
-                guard SponsorshipFeatureConfiguration.isEnabled else {
-                    return
-                }
-
-                _ = SponsorshipLinkRouter.shared.handle(url: url)
-            }
-        }
-        .modelContainer(
-            for: [
-                MoodEntry.self,
-                ConnectionReminder.self
-            ]
-        )
     }
+    .modelContainer(
+        for: [
+            MoodEntry.self,
+            ConnectionReminder.self
+        ]
+    )
+}
 }

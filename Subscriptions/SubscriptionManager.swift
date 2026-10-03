@@ -341,26 +341,36 @@ final class SubscriptionManager: ObservableObject {
     // MARK: - Refresh + Backend Sync
 
     func refreshAndSync() async {
-
         await refreshSubscriptionStatus()
 
         do {
+            for await verificationResult in Transaction.currentEntitlements {
+                guard case let .verified(transaction) = verificationResult else {
+                    continue
+                }
 
-            try await
-                SubscriptionLifecycleAPIClient
+                guard !SponsoredPurchaseManager.isSponsoredProduct(
+                    transaction.productID
+                ) else {
+                    continue
+                }
+
+                try await SubscriptionLifecycleAPIClient
                     .shared
-                    .syncSubscriptionState(
-                        snapshot: snapshot
+                    .registerSubscription(
+                        signedTransaction:
+                            verificationResult.jwsRepresentation
                     )
 
+                await transaction.finish()
+            }
         } catch {
-
-#if DEBUG
+    #if DEBUG
             print(
                 "❌ Subscription backend sync failed:",
                 error
             )
-#endif
+    #endif
         }
     }
 }

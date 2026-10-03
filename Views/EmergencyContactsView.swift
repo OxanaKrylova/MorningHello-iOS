@@ -229,7 +229,12 @@ struct EmergencyContactsView: View {
 
             contacts = remainingContacts
             saveContacts()
-
+            await PendingContactReminderManager
+                .shared
+                .synchronize(
+                    contacts: remainingContacts
+                )
+            
             if editingContactID == contact.id {
                 self.editingIndex = nil
                 originalEditingEmail = ""
@@ -803,7 +808,11 @@ struct EmergencyContactsView: View {
                                         .replaceContacts(
                                             contactsToUpload
                                         )
-                                    
+                                    await PendingContactReminderManager
+                                        .shared
+                                        .synchronize(
+                                            contacts: contactsToUpload
+                                        )
                                     await refreshContactStatuses()
                                     
 #if DEBUG
@@ -1378,7 +1387,11 @@ struct EmergencyContactsView: View {
                 if statusWasChanged {
                     saveContacts()
                 }
-                
+                await PendingContactReminderManager
+                    .shared
+                    .synchronize(
+                        contacts: contacts
+                    )
 #if DEBUG
                 print(
                     "✅ Emergency contact statuses refreshed"

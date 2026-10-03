@@ -475,7 +475,7 @@
 "Введите номер в международном формате с кодом страны.\n\nПосле знака + должно быть от 8 до 15 цифр.\n\nНапример: +972501234567" = "Enter the number in international format with a country code.\n\nEnter 8 to 15 digits after the plus sign.\n\nExample: +12025550123";
 "Введите номер в международном формате с кодом страны.\n\nПосле знака + должно быть от 8 до 15 цифр.\n\nНапример:\n+972501234567" = "Enter the number in international format with a country code.\n\nEnter 8 to 15 digits after the plus sign.\n\nExample:\n+12025550123";
 "Введите корректный адрес электронной почты.\n\nНапример: name@gmail.com" = "Enter a valid email address.\n\nExample: name@gmail.com";
-"После сохранения нового тревожного контакта MorningHello отправит ему письмо с просьбой подтвердить согласие.\n\nДо подтверждения его статус будет Pending, и тревожные оповещения ему отправляться не будут." = "After you save a new emergency contact, MorningHello will email them to request consent.\n\nUntil they confirm, their status will be Pending and they won't receive missed check-in notifications.";
+"После сохранения нового тревожного контакта MorningHello отправит ему письмо с просьбой подтвердить согласие.\n\nДо подтверждения его статус будет 'Ожидает подтверждения', и тревожные оповещения ему отправляться не будут." = "After you save a new emergency contact, MorningHello will email them to request consent.\n\nUntil they confirm, their status will be Pending and they won't receive missed check-in notifications.";
 "Введите номер в международном формате с кодом страны. Можно использовать пробелы, тире и скобки." = "Enter the number in international format with a country code. You may use spaces, hyphens, and parentheses.";
 "Первый тревожный контакт сохранён.\n\nДля большей надёжности мы рекомендуем добавить второго близкого человека.\n\nMorningHello поддерживает до двух тревожных контактов." = "Your first emergency contact has been saved.\n\nFor added reliability, we recommend adding another person you trust.\n\nMorningHello supports up to two emergency contacts.";
 "Я прочитал(а) и принимаю Условия использования MorningHello" = "I have read and accept the MorningHello Terms of Use";
@@ -1474,6 +1474,7 @@
 "connection.intro" = "Life is about connection. Add reminders to stay in touch more often with the people who matter to you.";
 "connection.home.title" = "Reminders";
 "connection.all.empty" = "There are no saved reminders yet.";
+"connection.all.title" = "All Reminders";
 "Пусть июньское утро наполнит день солнечным светом, теплом и хорошим настроением." = "May this June morning fill your day with sunshine, warmth, and a cheerful mood.";
 "Желаю тёплого летнего дня, лёгких мыслей и приятных встреч." = "Wishing you a warm summer day, lighthearted thoughts, and pleasant encounters.";
 "Пусть начало лета подарит новые силы, вдохновение и радость." = "May the beginning of summer bring you renewed energy, inspiration, and joy.";
@@ -1493,3 +1494,146 @@
 "Пусть сегодняшний день подарит красивое летнее воспоминание." = "May today give you a beautiful summer memory.";
 "Желаю наслаждаться каждым мгновением этого тёплого июня." = "May you enjoy every moment of this warm and lovely June.";
 "Пусть утро станет началом чудесного дня, наполненного радостью и заботой." = "May this morning begin a wonderful day filled with joy and care.";
+"Добро пожаловать" = "Welcome";
+"Войдите, чтобы пользоваться MorningHello для себя или оплачивать его для близкого." = "Sign in to use MorningHello for yourself or pay for a loved one.";
+"Выполняем вход…" = "Signing in…";
+"Apple передаёт имя и email только при первом входе. MorningHello не получает пароль Apple ID." = "Apple shares your name and email only when you sign in for the first time. MorningHello never receives your Apple ID password.";
+
+"Как вы хотите использовать MorningHello?" = "How would you like to use MorningHello?";
+"Для себя" = "For myself";
+"Отмечаться «Я в порядке» и настроить мониторинг" = "Check in with “I’m OK” and set up monitoring";
+"Оплатить для близкого" = "Pay for a loved one";
+"Пригласить одного близкого и подключить ему подписку" = "Invite a loved one and provide their subscription";
+
+"Приглашение готово" = "Invitation ready";
+"Ссылка действует 7 дней и может быть использована один раз." = "The link is valid for 7 days and can be used once.";
+"Отправить приглашение" = "Send invitation";
+"Близкий" = "Loved one";
+"Имя близкого" = "Loved one’s name";
+"Обращение: мама, папа…" = "Relationship: Mom, Dad…";
+"Ваши данные – по желанию" = "Your details – optional";
+"Телефон" = "Phone";
+"Email" = "Email";
+"Предложить меня как тревожный контакт" = "Suggest me as an emergency contact";
+"Создать приглашение" = "Create invitation";
+"Мониторинг не начнётся без согласия близкого. Он сам настроит профиль, интервал и тревожные контакты." = "Monitoring will not begin without your loved one’s consent. They will set up their own profile, check-in interval, and emergency contacts.";
+"Приглашение" = "Invitation";
+"Готово" = "Done";
+
+"Проверяем приглашение…" = "Checking invitation…";
+"Приглашение в MorningHello" = "MorningHello invitation";
+"%@ предлагает оплатить для вас MorningHello." = "%@ would like to pay for MorningHello for you.";
+"Принять" = "Accept";
+"Отклонить" = "Decline";
+"Что увидит плательщик" = "What the payer can see";
+"Только состояние оплаты и работы мониторинга. Данные профиля, эмоциональные оценки, открытки и история отметок останутся недоступны." = "Only the payment and monitoring status. Your profile details, emotional check-ins, postcards, and check-in history will remain private.";
+
+"Загружаем данные…" = "Loading data…";
+"Мой близкий" = "My loved one";
+"Использовать для себя" = "Use for myself";
+"Выйти" = "Sign out";
+"Вы увидите только оплату и состояние мониторинга. Личные данные близкого останутся закрыты." = "You will see only the payment and monitoring status. Your loved one’s personal information will remain private.";
+"Пригласите близкого" = "Invite a loved one";
+"После принятия приглашения вы сможете выбрать для него отдельную подписку." = "After the invitation is accepted, you will be able to choose a separate subscription for them.";
+
+"Подписка" = "Subscription";
+"Мониторинг" = "Monitoring";
+"Следующее продление" = "Next renewal";
+"Действует до" = "Valid until";
+"Отправить приглашение ещё раз" = "Send invitation again";
+"Отменить приглашение" = "Cancel invitation";
+"Подключить подписку" = "Start subscription";
+"Управлять подпиской Apple" = "Manage Apple subscription";
+"Создать новое приглашение" = "Create new invitation";
+
+"Ожидает ответа" = "Awaiting response";
+"Можно оплачивать" = "Ready for purchase";
+"Подключено" = "Connected";
+"Завершено" = "Ended";
+"Отклонено" = "Declined";
+
+"Бесплатный период" = "Free trial";
+"Активна" = "Active";
+"Льготный период" = "Grace period";
+"Истекла" = "Expired";
+"Отозвана" = "Revoked";
+"Ожидает подтверждения" = "Pending confirmation";
+"Не оформлена" = "Not purchased";
+
+"Не подключён" = "Not connected";
+"Ожидаются контакты" = "Waiting for emergency contacts";
+"Ожидается первая отметка" = "Waiting for the first check-in";
+"Подключён" = "Connected";
+"Приостановлен" = "Paused";
+"Остановлен" = "Stopped";
+
+"Подписка для %@" = "Subscription for %@";
+"Бесплатный период начнётся только после подтверждения покупки Apple, если ваш Apple ID имеет право на вводное предложение." = "The free trial will begin only after you confirm the Apple purchase, provided your Apple ID is eligible for the introductory offer.";
+"Открываем App Store…" = "Opening the App Store…";
+"Одна подписка «для близкого» закрепляется за одним принявшим приглашение аккаунтом и не переносится другому человеку." = "Each loved-one subscription is assigned to one account that accepted the invitation and cannot be transferred to another person.";
+"Выберите тариф" = "Choose a plan";
+"Закрыть" = "Close";
+"Понятно" = "OK";
+
+"Ежемесячная" = "Monthly";
+"На 3 месяца" = "Quarterly";
+"Годовая" = "Annual";
+"Покупка ожидает подтверждения Apple. Доступ включится после одобрения." = "The purchase is awaiting Apple confirmation. Access will begin after approval.";
+
+"Приглашение принято" = "Invitation accepted";
+"Сообщим вашему близкому, что теперь он может подключить подписку. Ваши настройки и личные данные ему недоступны." = "We will let your loved one know that the subscription can now be activated. They cannot access your settings or personal information.";
+"Проверить подключение" = "Check connection";
+
+"Восстанавливаем вход…" = "Restoring your session…";
+
+"Спонсорские подписки" = "Sponsored subscriptions";
+"Подписка для близкого" = "Subscription for a loved one";
+"Функция временно недоступна" = "This feature is temporarily unavailable";
+"Покупка спонсорской подписки будет доступна после подключения приглашений на сервере." = "Sponsored subscriptions will become available after invitations are supported by the server.";
+
+"Не удалось сформировать адрес запроса." = "Could not create the request URL.";
+"Сервер вернул неизвестный ответ." = "The server returned an unknown response.";
+"Сеанс завершён. Войдите через Apple ещё раз." = "Your session has ended. Sign in with Apple again.";
+"Apple не передал данные, необходимые для входа." = "Apple did not provide the information required to sign in.";
+"App Store не удалось подтвердить покупку." = "The App Store could not verify the purchase.";
+"Не найдено принятое приглашение для этой покупки." = "No accepted invitation was found for this purchase.";
+"Идентификатор покупки не соответствует этой установке приложения." = "The purchase identifier does not match this app installation.";
+"Ошибка сервера %ld." = "Server error %ld.";
+"Ошибка сервера %ld: %@" = "Server error %ld: %@";
+"Тревожный контакт не подтвердил приглашение" = "Emergency contact has not confirmed the invitation";
+"Приглашение для контакта «%@» остаётся неподтверждённым уже 3 дня. Проверьте email или свяжитесь с ним лично." = "The invitation for “%@” has remained unconfirmed for 3 days. Check the email address or contact this person directly.";
+"Приглашение ещё не подтверждено" = "Invitation not confirmed";
+"Контакт %@ не подтвердил приглашение MorningHello в течение 3 дней. Проверьте правильность email или свяжитесь с ним лично." = "%@ has not confirmed the MorningHello invitation within 3 days. Check the email address or contact this person directly.";
+"Диагностика" = "Diagnostics";
+"Экспорт журнала ошибок" = "Export Error Log";
+"Ошибочные обращения к серверу за последние 30 дней" = "Failed server requests from the last 30 days";
+"Ошибка экспорта" = "Export Error";
+"Не удалось подготовить журнал ошибок." = "The error log could not be prepared.";
+"onboarding.optional.title" = "Almost Ready";
+"onboarding.optional.subtitle" = "Add useful information now or return to it later.";
+"onboarding.optional.notice" = "Both steps are optional.";
+"onboarding.optional.pet.title" = "Pet";
+"onboarding.optional.pet.description" = "Save care instructions so it is clear how to help your pet in an important situation.";
+"onboarding.optional.pet.add" = "Add Pet Details";
+"onboarding.optional.reminder.title" = "Reminders";
+"onboarding.optional.reminder.description" = "Life is about staying connected. Add a reminder to call, write to, or meet someone close to you.";
+"onboarding.optional.reminder.add" = "Add a Reminder";
+"onboarding.optional.status.added" = "Added";
+"onboarding.optional.privacy" = "Pet details are part of your profile and may be securely synchronized with the MorningHello server. Reminders are stored only on this iPhone.";
+"onboarding.optional.complete" = "Finish Setup";
+"onboarding.subscription.checking" = "Checking your subscription…";
+"connection.form.person.footer" = "You can select an emergency contact or enter a name manually.";
+"connection.form.person.footer" = "Puedes elegir un contacto de emergencia o introducir un nombre manualmente.";
+"connection.form.comment.title" = "Comment";
+"connection.form.comment.placeholder" = "For example: take a walk by the sea together";
+"connection.form.comment.footer" = "Add any details you would like to see in the reminder.";
+"onboarding.setup.title" = "Setup Takes About 2 Minutes";
+"onboarding.setup.subtitle" = "Let’s prepare MorningHello for reliable monitoring and peace of mind.";
+"onboarding.setup.profile.title" = "Profile";
+"onboarding.setup.profile.description" = "Enter your basic details and choose your “I’m OK” check-in interval.";
+"onboarding.setup.contacts.title" = "Emergency Contacts";
+"onboarding.setup.contacts.description" = "Add up to two people MorningHello can notify if you miss a check-in.";
+"onboarding.setup.pet.title" = "Pet";
+"onboarding.setup.pet.description" = "Optionally save instructions for taking care of your pet.";
+"onboarding.setup.later" = "You can update your profile information later in the app settings.";
+"onboarding.setup.continue" = "Start Setup";

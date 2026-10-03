@@ -1,4 +1,4 @@
-//
+///
 //  EmergencyContactAPIClient.swift
 //  MorningHello
 //
@@ -7,62 +7,89 @@
 
 import Foundation
 
+
 struct EmergencyContactAPIClient {
-    
+
     static let shared =
-    EmergencyContactAPIClient()
-    
+        EmergencyContactAPIClient()
+
     private let baseURL =
-    URL(
-        string:
-            "https://api.morninghelloapp.com"
-    )!
-    
+        URL(
+            string:
+                "https://api.morninghelloapp.com"
+        )!
+
     private init() {
     }
-    
+
+
+    // MARK: - Получение статусов согласия
+
     func fetchConsentStatuses()
-    async throws -> [String: EmergencyContactStatus] {
-        
+        async throws
+        -> [String: EmergencyContactStatus] {
+
         let appInstanceID =
-        getOrCreateAppInstanceID()
-        
+            AppInstanceIDProvider
+                .getOrCreate()
+
         let endpoint =
-        baseURL
-            .appendingPathComponent("users")
-            .appendingPathComponent(
-                appInstanceID.uuidString
+            baseURL
+                .appendingPathComponent(
+                    "users"
+                )
+                .appendingPathComponent(
+                    appInstanceID.uuidString
+                )
+                .appendingPathComponent(
+                    "contacts"
+                )
+                .appendingPathComponent(
+                    "consent"
+                )
+
+        var request =
+            URLRequest(
+                url: endpoint
             )
-            .appendingPathComponent("contacts")
-            .appendingPathComponent("consent")
-        
-        var request = URLRequest(url: endpoint)
-        request.httpMethod = "GET"
+
+        request.httpMethod =
+            "GET"
+
         request.setValue(
             "application/json",
-            forHTTPHeaderField: "Accept"
+            forHTTPHeaderField:
+                "Accept"
         )
-        
-        let (data, response) =
-        try await URLSession.shared.data(
-            for: request
-        )
-        
+
+        let result =
+            try await BackendLoggedRequest
+                .perform(
+                    request
+                )
+
+        let data =
+            result.data
+
+        let response =
+            result.response
+
         guard let httpResponse =
                 response as? HTTPURLResponse
         else {
             throw EmergencyContactAPIError
                 .invalidResponse
         }
-        
+
 #if DEBUG
+
         let responseBody =
-        String(
-            data: data,
-            encoding: .utf8
-        ) ?? ""
-        
-        print(
+            String(
+                data: data,
+                encoding: .utf8
+            ) ?? ""
+
+        Swift.print(
             """
             
             EMERGENCY CONTACT CONSENT STATUS RESPONSE
@@ -73,90 +100,156 @@ struct EmergencyContactAPIClient {
             
             """
         )
+
 #endif
-        
-        guard 200...299 ~= httpResponse.statusCode else {
+
+        guard
+            (200...299).contains(
+                httpResponse.statusCode
+            )
+        else {
             throw EmergencyContactAPIError
                 .serverError(
-                    httpResponse.statusCode
+                    statusCode:
+                        httpResponse.statusCode
                 )
         }
-        
+
         let serverStatuses =
-        try JSONDecoder().decode(
-            [String: ServerConsentStatus].self,
-            from: data
-        )
-        
+            try await BackendLoggedRequest
+                .decode(
+                    [String: ServerConsentStatus]
+                        .self,
+                    from: data,
+                    using: JSONDecoder(),
+                    request: request,
+                    durationMilliseconds:
+                        result
+                            .durationMilliseconds
+                )
+
         return serverStatuses.reduce(
-            into: [String: EmergencyContactStatus]()
+            into:
+                [
+                    String:
+                        EmergencyContactStatus
+                ]()
         ) { result, item in
-            result[Self.normalizedEmail(item.key)] =
-            item.value.contactStatus
+
+            result[
+                Self.normalizedEmail(
+                    item.key
+                )
+            ] =
+                item.value
+                    .contactStatus
         }
     }
-    
+
+
+    // MARK: - Полная замена списка контактов
+
     func replaceContacts(
-        _ contacts: [EmergencyContact]
+        _ contacts:
+            [EmergencyContact]
     ) async throws {
-        
+
         let appInstanceID =
-        getOrCreateAppInstanceID()
-        
+            AppInstanceIDProvider
+                .getOrCreate()
+
         let endpoint =
-        baseURL
-            .appendingPathComponent("users")
-            .appendingPathComponent(
-                appInstanceID.uuidString
-            )
-            .appendingPathComponent("contacts")
-        
+            baseURL
+                .appendingPathComponent(
+                    "users"
+                )
+                .appendingPathComponent(
+                    appInstanceID.uuidString
+                )
+                .appendingPathComponent(
+                    "contacts"
+                )
+
         let body =
-        ServerContactsRequest(
-            emergencyContacts:
-                contacts.map { contact in
-                    ServerContact(
-                        firstName: contact.name,
-                        lastName: contact.surname,
-                        phone: contact.phoneDigits,
-                        email: contact.email
-                    )
-                }
-        )
-        
-        var request = URLRequest(url: endpoint)
-        request.httpMethod = "PUT"
+            ServerContactsRequest(
+                emergencyContacts:
+                    contacts.map {
+                        contact in
+
+                        ServerContact(
+                            firstName:
+                                contact.name,
+                            lastName:
+                                contact.surname,
+                            phone:
+                                contact
+                                    .phoneDigits,
+                            email:
+                                contact.email
+                        )
+                    }
+            )
+
+        var request =
+            URLRequest(
+                url: endpoint
+            )
+
+        request.httpMethod =
+            "PUT"
+
         request.setValue(
             "application/json",
-            forHTTPHeaderField: "Content-Type"
+            forHTTPHeaderField:
+                "Content-Type"
         )
+
         request.setValue(
             "application/json",
-            forHTTPHeaderField: "Accept"
+            forHTTPHeaderField:
+                "Accept"
         )
+
+        let encoder =
+            JSONEncoder()
+
+        encoder.outputFormatting = [
+            .sortedKeys
+        ]
+
         request.httpBody =
-        try JSONEncoder().encode(body)
-        
-        let (data, response) =
-        try await URLSession.shared.data(
-            for: request
-        )
-        
+            try encoder.encode(
+                body
+            )
+
+        let result =
+            try await BackendLoggedRequest
+                .perform(
+                    request
+                )
+
+        let data =
+            result.data
+
+        let response =
+            result.response
+
         guard let httpResponse =
                 response as? HTTPURLResponse
         else {
             throw EmergencyContactAPIError
                 .invalidResponse
         }
-        
+
 #if DEBUG
+
         let responseBody =
-        String(
-            data: data,
-            encoding: .utf8
-        ) ?? ""
-        
-        print(
+            String(
+                data: data,
+                encoding: .utf8
+            ) ?? ""
+
+        Swift.print(
             """
             
             EMERGENCY CONTACTS REPLACE RESPONSE
@@ -167,179 +260,29 @@ struct EmergencyContactAPIClient {
             
             """
         )
+
 #endif
-        
-        guard 200...299 ~= httpResponse.statusCode else {
-            throw EmergencyContactAPIError
-                .serverError(
-                    httpResponse.statusCode
-                )
-        }
-    }
-    
-    func sendInvitation(
-        contact: EmergencyContact,
-        userName: String
-    ) async throws {
-        
-        let appInstanceID =
-        getOrCreateAppInstanceID()
-        
-        let endpoint =
-        baseURL
-            .appendingPathComponent("users")
-            .appendingPathComponent(
-                appInstanceID.uuidString
-            )
-            .appendingPathComponent(
-                "emergency-contacts"
-            )
-            .appendingPathComponent(
-                contact.id.uuidString
-            )
-            .appendingPathComponent(
-                "invite"
-            )
-        
-        let body =
-        EmergencyContactInviteRequest(
-            user:
-                EmergencyContactInviteUser(
-                    name: userName
-                ),
-            contact:
-                EmergencyContactInviteContact(
-                    firstName: contact.name,
-                    lastName: contact.surname,
-                    phone: contact.phoneDigits,
-                    email: contact.email,
-                    salutation: contact.salutation,
-                    status: .pending
-                )
-        )
-        
-        var request =
-        URLRequest(
-            url: endpoint
-        )
-        
-        request.httpMethod = "POST"
-        
-        request.setValue(
-            "application/json",
-            forHTTPHeaderField:
-                "Content-Type"
-        )
-        
-        request.setValue(
-            "application/json",
-            forHTTPHeaderField:
-                "Accept"
-        )
-        
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [
-            .prettyPrinted,
-            .sortedKeys
-        ]
-        
-        request.httpBody =
-        try encoder.encode(body)
-        
-#if DEBUG
-        
-        if let data = request.httpBody,
-           let json =
-            String(
-                data: data,
-                encoding: .utf8
-            ) {
-            
-            print(
-                """
-                
-                EMERGENCY CONTACT INVITE REQUEST
-                \(request.httpMethod ?? "")
-                \(endpoint.absoluteString)
-                
-                \(json)
-                
-                """
-            )
-        }
-        
-#endif
-        
-        let (data, response) =
-        try await URLSession.shared.data(
-            for: request
-        )
-        
-        guard let httpResponse =
-                response as? HTTPURLResponse
-        else {
-            throw EmergencyContactAPIError
-                .invalidResponse
-        }
-        
-#if DEBUG
-        
-        let responseBody =
-        String(
-            data: data,
-            encoding: .utf8
-        ) ?? ""
-        
-        print(
-            """
-            
-            EMERGENCY CONTACT INVITE RESPONSE
-            STATUS: \(httpResponse.statusCode)
-            
-            \(responseBody)
-            
-            """
-        )
-        
-#endif
-        
+
         guard
-            200...299 ~= httpResponse.statusCode
+            (200...299).contains(
+                httpResponse.statusCode
+            )
         else {
             throw EmergencyContactAPIError
                 .serverError(
-                    httpResponse.statusCode
+                    statusCode:
+                        httpResponse.statusCode
                 )
         }
     }
-    
-    private func getOrCreateAppInstanceID()
-    -> UUID {
-        let key = "app_instance_id"
 
-        if let savedValue =
-            UserDefaults.standard.string(
-                forKey: key
-            ),
-           let savedUUID = UUID(
-            uuidString: savedValue
-           ) {
-            return savedUUID
-        }
 
-        let newUUID = UUID()
-
-        UserDefaults.standard.set(
-            newUUID.uuidString,
-            forKey: key
-        )
-
-        return newUUID
-    }
+    // MARK: - Нормализация email
 
     private static func normalizedEmail(
         _ email: String
     ) -> String {
+
         email
             .trimmingCharacters(
                 in: .whitespacesAndNewlines
@@ -348,35 +291,89 @@ struct EmergencyContactAPIClient {
     }
 }
 
-private enum ServerConsentStatus: String, Decodable {
-    case pending = "PENDING"
-    case granted = "GRANTED"
-    case denied = "DENIED"
 
-    var contactStatus: EmergencyContactStatus {
+// MARK: - Статус согласия Backend
+
+private enum ServerConsentStatus:
+    String,
+    Decodable {
+
+    case pending =
+        "PENDING"
+
+    case granted =
+        "GRANTED"
+
+    case denied =
+        "DENIED"
+
+
+    var contactStatus:
+        EmergencyContactStatus {
+
         switch self {
+
         case .pending:
             return .pending
+
         case .granted:
             return .confirmed
+
         case .denied:
             return .declined
         }
     }
 }
 
-private struct ServerContactsRequest: Encodable {
-    let emergencyContacts: [ServerContact]
+
+// MARK: - Тело запроса контактов
+
+private struct ServerContactsRequest:
+    Encodable {
+
+    let emergencyContacts:
+        [ServerContact]
 }
 
-private struct ServerContact: Encodable {
+
+private struct ServerContact:
+    Encodable {
+
     let firstName: String
     let lastName: String
     let phone: String
     let email: String
 }
 
-enum EmergencyContactAPIError: Error {
+
+// MARK: - Ошибки API
+
+enum EmergencyContactAPIError:
+    LocalizedError {
+
     case invalidResponse
-    case serverError(Int)
+
+    case serverError(
+        statusCode: Int
+    )
+
+
+    var errorDescription:
+        String? {
+
+        switch self {
+
+        case .invalidResponse:
+            return """
+            Сервер вернул некорректный ответ.
+            """
+
+        case let .serverError(
+            statusCode
+        ):
+            return """
+            Ошибка сервера \(statusCode).
+            """
+        }
+    }
 }

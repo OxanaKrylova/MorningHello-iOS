@@ -1,180 +1,254 @@
+//
+//  SponsoredPurchaseManager.swift
+//  MorningHello
+//
+//  Created by Oxana Krylova on 30/09/2026.
+//
+
 import Combine
 import Foundation
 import StoreKit
 
 @MainActor
-final class SponsoredPurchaseManager: ObservableObject {
-    static let shared = SponsoredPurchaseManager()
+final class SponsoredPurchaseManager:
+    ObservableObject {
 
-    enum PurchaseOutcome: Equatable {
+    static let shared =
+        SponsoredPurchaseManager()
+
+    enum PurchaseOutcome:
+        Equatable {
+
         case purchased
         case pending
         case cancelled
     }
 
-    @Published private(set) var products: [Product] = []
-    @Published private(set) var isLoading = false
-    @Published private(set) var lastError: String?
+    @Published private(set)
+    var products: [Product] = []
 
-    private let apiClient = SponsorshipAPIClient.shared
-    private let pendingSponsorshipKey = "pending_sponsored_purchase_id"
+    @Published private(set)
+    var isLoading = false
+
+    @Published private(set)
+    var lastError: String?
+
+    @Published private(set)
+    var lastRegisteredSubscription:
+        RegisteredSubscription?
+
+    private let apiClient =
+        SponsorshipAPIClient.shared
 
     private init() {}
 
-    static func isSponsoredProduct(_ productID: String) -> Bool {
-        SponsorshipFeatureConfiguration.sponsoredProductIDs.contains(productID)
+    static func isSponsoredProduct(
+        _ productID: String
+    ) -> Bool {
+
+        SponsorshipFeatureConfiguration
+            .sponsoredProductIDs
+            .contains(productID)
     }
 
     func loadProducts() async {
         isLoading = true
         lastError = nil
-        defer { isLoading = false }
+
+        defer {
+            isLoading = false
+        }
 
         do {
-            products = try await Product.products(
-                for: SponsorshipFeatureConfiguration.sponsoredProductIDs
-            )
-            .sorted { $0.price < $1.price }
+            products =
+                try await Product.products(
+                    for:
+                        SponsorshipFeatureConfiguration
+                            .sponsoredProductIDs
+                )
+                .sorted {
+                    $0.price < $1.price
+                }
         } catch {
-            lastError = error.localizedDescription
+            lastError =
+                error.localizedDescription
         }
     }
 
     func purchase(
-        product: Product,
-        sponsorshipID: UUID,
-        using session: AccountSession
+        product: Product
     ) async throws -> PurchaseOutcome {
-        guard let account = session.account,
-              session.accessToken != nil
-        else {
-            throw SponsorshipAPIError.unauthorized
+
+        guard Self.isSponsoredProduct(
+            product.id
+        ) else {
+            throw SponsorshipAPIError
+                .invalidTransaction
         }
 
-        UserDefaults.standard.set(
-            sponsorshipID.uuidString,
-            forKey: pendingSponsorshipKey
-        )
+        let appInstanceId =
+            AppInstanceIdentity.id
 
-        let result = try await product.purchase(
-            options: [
-                .appAccountToken(account.id)
-            ]
-        )
+        let result =
+            try await product.purchase(
+                options: [
+                    .appAccountToken(
+                        appInstanceId
+                    )
+                ]
+            )
 
         switch result {
-        case let .success(verificationResult):
+        case let .success(
+            verificationResult
+        ):
             try await register(
-                verificationResult,
-                sponsorshipID: sponsorshipID,
-                using: session
+                verificationResult
             )
+
             return .purchased
 
         case .pending:
             return .pending
 
         case .userCancelled:
-            clearPendingSponsorship()
             return .cancelled
 
         @unknown default:
-            throw SponsorshipAPIError.invalidTransaction
+            throw SponsorshipAPIError
+                .invalidTransaction
         }
     }
 
     func handleTransactionUpdate(
-        _ verificationResult: VerificationResult<Transaction>,
-        using session: AccountSession
+        _ verificationResult:
+            VerificationResult<Transaction>
     ) async throws {
-        guard case let .verified(transaction) = verificationResult,
-              Self.isSponsoredProduct(transaction.productID)
-        else {
-            throw SponsorshipAPIError.invalidTransaction
-        }
 
-        guard let sponsorshipID = pendingSponsorshipID else {
-            throw SponsorshipAPIError.missingPendingSponsorship
+        guard case let .verified(
+            transaction
+        ) = verificationResult,
+              Self.isSponsoredProduct(
+                transaction.productID
+              )
+        else {
+            throw SponsorshipAPIError
+                .invalidTransaction
         }
 
         try await register(
-            verificationResult,
-            sponsorshipID: sponsorshipID,
-            using: session
+            verificationResult
         )
     }
 
-    func recoverUnfinishedPurchase(
-        using session: AccountSession
-    ) async {
-        guard pendingSponsorshipID != nil,
-              session.account != nil
-        else {
-            return
-        }
+    func recoverUnfinishedPurchases() async {
+        lastError = nil
 
-        for await verificationResult in Transaction.unfinished {
-            guard case let .verified(transaction) = verificationResult,
-                  Self.isSponsoredProduct(transaction.productID)
+        for await verificationResult
+            in Transaction.unfinished {
+
+            guard case let .verified(
+                transaction
+            ) = verificationResult,
+                  Self.isSponsoredProduct(
+                    transaction.productID
+                  )
             else {
                 continue
             }
 
             do {
-                try await handleTransactionUpdate(
-                    verificationResult,
-                    using: session
+                try await register(
+                    verificationResult
                 )
             } catch {
-                lastError = error.localizedDescription
+                lastError =
+                    error.localizedDescription
             }
         }
     }
 
-    private func register(
-        _ verificationResult: VerificationResult<Transaction>,
-        sponsorshipID: UUID,
-        using session: AccountSession
-    ) async throws {
-        guard case let .verified(transaction) = verificationResult,
-              let account = session.account,
-              let bearerToken = session.accessToken,
-              transaction.appAccountToken == account.id
-        else {
-            throw SponsorshipAPIError.invalidTransaction
+    func restorePurchases() async {
+        isLoading = true
+        lastError = nil
+
+        defer {
+            isLoading = false
         }
 
-        let request = SponsoredPurchaseRequest(
-            signedTransactionInfo: verificationResult.jwsRepresentation,
-            productId: transaction.productID,
-            transactionId: String(transaction.id),
-            originalTransactionId: String(transaction.originalID),
-            appAccountToken: account.id,
-            environment: String(describing: transaction.environment)
-        )
+        do {
+            try await AppStore.sync()
 
-        _ = try await apiClient.registerPurchase(
-            sponsorshipID: sponsorshipID,
-            body: request,
-            bearerToken: bearerToken
-        )
+            for await verificationResult
+                in Transaction.currentEntitlements {
+
+                guard case let .verified(
+                    transaction
+                ) = verificationResult,
+                      Self.isSponsoredProduct(
+                        transaction.productID
+                      )
+                else {
+                    continue
+                }
+
+                try await register(
+                    verificationResult
+                )
+            }
+
+            await SponsorshipStore.shared
+                .refresh()
+        } catch {
+            lastError =
+                error.localizedDescription
+        }
+    }
+
+    private func register(
+        _ verificationResult:
+            VerificationResult<Transaction>
+    ) async throws {
+
+        guard case let .verified(
+            transaction
+        ) = verificationResult,
+              Self.isSponsoredProduct(
+                transaction.productID
+              )
+        else {
+            throw SponsorshipAPIError
+                .invalidTransaction
+        }
+
+        let appInstanceId =
+            AppInstanceIdentity.id
+
+        if let transactionToken =
+                transaction.appAccountToken,
+           transactionToken !=
+                appInstanceId {
+
+            throw SponsorshipAPIError
+                .appAccountTokenMismatch
+        }
+
+        let registeredSubscription =
+            try await apiClient
+                .registerSubscription(
+                    appInstanceId:
+                        appInstanceId,
+                    signedTransaction:
+                        verificationResult
+                            .jwsRepresentation
+                )
+
+        lastRegisteredSubscription =
+            registeredSubscription
 
         await transaction.finish()
-        clearPendingSponsorship()
-        await SponsorshipStore.shared.refresh(using: session)
-    }
 
-    private var pendingSponsorshipID: UUID? {
-        guard let value = UserDefaults.standard.string(
-            forKey: pendingSponsorshipKey
-        ) else {
-            return nil
-        }
-
-        return UUID(uuidString: value)
-    }
-
-    private func clearPendingSponsorship() {
-        UserDefaults.standard.removeObject(forKey: pendingSponsorshipKey)
+        await SponsorshipStore.shared
+            .refresh()
     }
 }

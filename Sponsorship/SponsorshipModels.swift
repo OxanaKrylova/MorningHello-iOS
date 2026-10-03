@@ -1,14 +1,21 @@
+//
+//  SponsorshopModels.swift
+//  MorningHello
+//
+//  Created by Oxana Krylova on 30/09/2026.
+//
+
 import Foundation
 
 enum SponsorshipFeatureConfiguration {
-    // Включить только после реализации backend-контракта и добавления
-    // Sign in with Apple / Associated Domains в Xcode.
+
+    // Полный пользовательский сценарий пока не включаем,
+    // потому что Backend ещё не поддерживает приглашения
+    // и передачу подписки получателю.
     static let isEnabled = false
 
-    static let inviteHosts: Set<String> = [
-        "morninghelloapp.com",
-        "www.morninghelloapp.com"
-    ]
+    // API покупки спонсорских подписок уже существует.
+    static let purchaseAPIIsAvailable = true
 
     static let sponsoredProductIDs: Set<String> = [
         "com.morninghello.sponsored.monthly",
@@ -17,217 +24,188 @@ enum SponsorshipFeatureConfiguration {
     ]
 }
 
-enum MorningHelloUsageMode: String, Codable, CaseIterable, Identifiable {
+enum MorningHelloUsageMode:
+    String,
+    Codable,
+    CaseIterable,
+    Identifiable {
+
     case selfUse = "self"
     case sponsor = "sponsor"
 
-    var id: String { rawValue }
-}
-
-struct MorningHelloAccount: Codable, Equatable, Identifiable {
-    let id: UUID
-    let name: String
-    let email: String?
-    let createdAt: Date
-    let status: String
-}
-
-enum SubscriptionPurchaseStatus: String, Codable {
-    case pending
-    case trial
-    case active
-    case gracePeriod = "grace_period"
-    case expired
-    case revoked
-}
-
-enum SponsorshipStatus: String, Codable {
-    case inviteSent = "invite_sent"
-    case accepted
-    case awaitingPurchase = "awaiting_purchase"
-    case active
-    case ended
-    case declined
-}
-
-enum SponsorshipMonitoringStatus: String, Codable {
-    case inactive
-    case awaitingContacts = "awaiting_contacts"
-    case awaitingFirstCheckIn = "awaiting_first_check_in"
-    case active
-    case paused
-    case stopped
-}
-
-enum ServiceEntitlementStatus: String, Codable {
-    case none
-    case trial
-    case active
-    case gracePeriod = "grace_period"
-    case expired
-    case revoked
-
-    var grantsAccess: Bool {
-        switch self {
-        case .trial, .active, .gracePeriod:
-            return true
-        case .none, .expired, .revoked:
-            return false
-        }
+    var id: String {
+        rawValue
     }
 }
 
-struct SponsorshipInvitationPreview: Codable, Equatable {
-    let sponsorName: String
-    let beneficiaryName: String
-    let expiresAt: Date
-    let status: SponsorshipStatus
-}
+enum AppInstanceIdentity {
 
-struct SponsorshipInvitation: Codable, Equatable, Identifiable {
-    let id: UUID
-    let sponsorAccountId: UUID
-    let beneficiaryName: String
-    let relationshipLabel: String?
-    let status: SponsorshipStatus
-    let inviteURL: URL
-    let expiresAt: Date
-    let acceptedAt: Date?
-    let cancelledAt: Date?
-}
+    private static let storageKey =
+        "app_instance_id"
 
-struct Sponsorship: Codable, Equatable, Identifiable {
-    let id: UUID
-    let sponsorAccountId: UUID
-    let beneficiaryAccountId: UUID?
-    let beneficiaryName: String
-    let relationshipLabel: String?
-    let status: SponsorshipStatus
-    let invitation: SponsorshipInvitation?
-    let productId: String?
-    let purchaseStatus: SubscriptionPurchaseStatus?
-    let expiresAt: Date?
-    let autoRenewEnabled: Bool?
-    let monitoringStatus: SponsorshipMonitoringStatus
-    let acceptedAt: Date?
-    let activatedAt: Date?
-    let endedAt: Date?
-}
-
-struct ServiceEntitlement: Codable, Equatable {
-    enum Source: String, Codable {
-        case none
-        case selfPurchased = "self_purchased"
-        case sponsored
-    }
-
-    let accountId: UUID
-    let source: Source
-    let sourceId: UUID?
-    let status: ServiceEntitlementStatus
-    let validUntil: Date?
-    let sponsorshipStatus: SponsorshipStatus?
-    let monitoringStatus: SponsorshipMonitoringStatus
-
-    var grantsAccess: Bool {
-        guard status.grantsAccess else {
-            return false
+    static var id: UUID {
+        if let savedValue =
+            UserDefaults.standard.string(
+                forKey: storageKey
+            ),
+           let savedUUID = UUID(
+                uuidString: savedValue
+           ) {
+            return savedUUID
         }
 
-        guard let validUntil else {
-            return true
-        }
+        let newUUID = UUID()
 
-        return validUntil > Date()
+        UserDefaults.standard.set(
+            newUUID.uuidString,
+            forKey: storageKey
+        )
+
+        return newUUID
     }
 }
 
-struct CreateSponsorshipInvitationRequest: Encodable {
-    let beneficiaryName: String
-    let relationshipLabel: String?
-    let sponsorName: String?
-    let sponsorPhone: String?
-    let sponsorEmail: String?
-    let proposeSponsorAsEmergencyContact: Bool
+// MARK: - POST /users/{appInstanceId}/subscriptions
+
+struct RegisterSubscriptionRequest: Encodable {
+    let signedTransaction: String
 }
 
-struct AppleSignInExchangeRequest: Encodable {
-    let identityToken: String
-    let authorizationCode: String
-    let givenName: String?
-    let familyName: String?
-    let email: String?
-    let appInstanceId: UUID
+enum BackendSubscriptionKind:
+    String,
+    Codable {
+
+    case user = "USER"
+    case sponsor = "SPONSOR"
 }
 
-struct AuthenticatedAccountResponse: Decodable {
-    let accessToken: String
-    let account: MorningHelloAccount
+enum BackendSubscriptionEnvironment:
+    String,
+    Codable {
+
+    case sandbox = "SANDBOX"
+    case production = "PRODUCTION"
 }
 
-struct SponsoredPurchaseRequest: Encodable {
-    let signedTransactionInfo: String
-    let productId: String
-    let transactionId: String
+struct RegisteredSubscription:
+    Codable,
+    Equatable,
+    Identifiable {
+
     let originalTransactionId: String
-    let appAccountToken: UUID
-    let environment: String
+    let kind: BackendSubscriptionKind
+    let productId: String
+    let environment: BackendSubscriptionEnvironment
+    let expiresAt: Date
+    let active: Bool
+
+    var id: String {
+        originalTransactionId
+    }
 }
 
-struct SponsoredPurchaseResponse: Decodable {
-    let sponsorship: Sponsorship
-    let entitlement: ServiceEntitlement
+// MARK: - GET /users/{appInstanceId}/subscriptions
+
+struct SponsoringSubscription:
+    Codable,
+    Equatable,
+    Identifiable {
+
+    let originalTransactionId: String
+    let productId: String
+    let environment: BackendSubscriptionEnvironment
+    let expiresAt: Date
+    let active: Bool
+    let hasBeneficiary: Bool
+
+    var id: String {
+        originalTransactionId
+    }
 }
 
-enum SponsorshipAPIError: LocalizedError {
+struct SponsoredAccess:
+    Codable,
+    Equatable {
+
+    let active: Bool
+    let expiresAt: Date
+    let since: Date
+}
+
+struct SubscriptionOverview:
+    Codable,
+    Equatable {
+
+    let own: [RegisteredSubscription]
+    let sponsoring: [SponsoringSubscription]
+    let sponsored: SponsoredAccess?
+}
+
+// MARK: - Ошибки API
+
+struct SponsorshipAPIErrorBody: Decodable {
+    let error: String?
+    let message: String?
+}
+
+enum SponsorshipAPIError:
+    LocalizedError {
+
     case invalidURL
     case invalidResponse
-    case unauthorized
-    case server(statusCode: Int, message: String?)
-    case missingAppleCredential
     case invalidTransaction
-    case missingPendingSponsorship
-    
+    case appAccountTokenMismatch
+    case server(
+        statusCode: Int,
+        code: String?,
+        message: String?
+    )
+
     var errorDescription: String? {
         switch self {
         case .invalidURL:
             return "Не удалось сформировать адрес запроса."
-            
+
         case .invalidResponse:
             return "Сервер вернул неизвестный ответ."
-            
-        case .unauthorized:
-            return "Сеанс завершён. Войдите через Apple ещё раз."
-            
-        case let .server(statusCode, message):
-            if let message, !message.isEmpty {
-                return "Ошибка сервера \(statusCode): \(message)"
-            }
-            
-            return "Ошибка сервера \(statusCode)."
-            
-        case .missingAppleCredential:
-            return "Apple не передал данные, необходимые для входа."
-            
+
         case .invalidTransaction:
             return "App Store не удалось подтвердить покупку."
-            
-        case .missingPendingSponsorship:
-            return "Не найдено принятое приглашение для этой покупки."
+
+        case .appAccountTokenMismatch:
+            return "Покупка связана с другой установкой MorningHello."
+
+        case let .server(
+            statusCode,
+            code,
+            message
+        ):
+            if code == "APP_ACCOUNT_TOKEN_MISMATCH" {
+                return "Покупка связана с другой установкой MorningHello."
+            }
+
+            if code == "SUBSCRIPTION_OWNED_BY_ANOTHER_USER" {
+                return "Эта подписка уже связана с другим пользователем."
+            }
+
+            if code == "UNKNOWN_PRODUCT" {
+                return "Сервер не распознал выбранный тариф."
+            }
+
+            if code == "INVALID_TRANSACTION" {
+                return "Сервер не смог подтвердить транзакцию Apple."
+            }
+
+            if code == "SANDBOX_NOT_ACCEPTED" {
+                return "Сервер временно не принимает тестовые покупки."
+            }
+
+            if let message,
+               !message.isEmpty {
+                return "Ошибка сервера \(statusCode): \(message)"
+            }
+
+            return "Ошибка сервера \(statusCode)."
         }
     }
 }
-    enum AppInstanceIdentity {
-        static var id: UUID {
-            let key = "app_instance_id"
-            
-            if let value = UserDefaults.standard.string(forKey: key),
-               let id = UUID(uuidString: value) {
-                return id
-            }
-            
-            let id = UUID()
-            UserDefaults.standard.set(id.uuidString, forKey: key)
-            return id
-        }
-    }
