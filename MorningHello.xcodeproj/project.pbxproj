@@ -261,10 +261,10 @@
 			isa = PBXGroup;
 			children = (
 				29AFFF9C3037B4BC007FE955 /* SubscriptionLifecycleAPIClient.swift */,
-				29F44CBD303F95F10043E63A /* SubscriptionPaywallView.swift */,
-				29AFFF9A3037B456007FE955 /* SubscriptionSnapshot.swift */,
 				29AFFFA13037B82C007FE955 /* SubscriptionManager.swift */,
+				29F44CBD303F95F10043E63A /* SubscriptionPaywallView.swift */,
 				29C3A9623060727C0031851C /* SubscriptionPlansInfoView.swift */,
+				29AFFF9A3037B456007FE955 /* SubscriptionSnapshot.swift */,
 				29C3A9B93061DAAB0031851C /* SubscriptionView.swift */,
 			);
 			path = Subscriptions;
@@ -816,13 +816,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MorningHello/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Morning Hello";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCameraUsageDescription = "MorningHello uses the camera to photograph your pet’s food.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "MorningHello uses access to Contacts so you can choose a person for a private communication reminder.<string>MorningHello использует доступ к контактам, чтобы вы могли выбрать человека для личного напоминания об общении.</string>";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -857,13 +858,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MorningHello/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Morning Hello";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSCameraUsageDescription = "MorningHello uses the camera to photograph your pet’s food.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "MorningHello uses access to Contacts so you can choose a person for a private communication reminder.<string>MorningHello использует доступ к контактам, чтобы вы могли выбрать человека для личного напоминания об общении.</string>";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

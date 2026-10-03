@@ -91,9 +91,6 @@ struct AppEntryView: View {
     private var selectedLanguageCode =
         AppLanguage.initial.rawValue
 
-    @Environment(\.purchase)
-    private var purchase
-
     @StateObject
     private var subscriptionManager =
         SubscriptionManager.shared

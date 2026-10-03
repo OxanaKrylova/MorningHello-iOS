@@ -341,35 +341,143 @@ final class SubscriptionManager: ObservableObject {
     // MARK: - Refresh + Backend Sync
 
     func refreshAndSync() async {
+
         await refreshSubscriptionStatus()
 
         do {
-            for await verificationResult in Transaction.currentEntitlements {
-                guard case let .verified(transaction) = verificationResult else {
+            for await verificationResult
+                in Transaction.currentEntitlements {
+
+                guard case let .verified(
+                    transaction
+                ) = verificationResult
+                else {
+    #if DEBUG
+
+                    print(
+                        """
+                        
+                        SUBSCRIPTION TRANSACTION WAS NOT VERIFIED
+                        The transaction was not sent to Backend.
+                        
+                        """
+                    )
+
+    #endif
+
                     continue
                 }
 
-                guard !SponsoredPurchaseManager.isSponsoredProduct(
-                    transaction.productID
-                ) else {
+                /*
+                 Спонсорские покупки используют account.id
+                 как appAccountToken.
+
+                 Их нельзя использовать для восстановления
+                 appInstanceId получателя.
+                 */
+
+                guard !SponsoredPurchaseManager
+                    .isSponsoredProduct(
+                        transaction.productID
+                    )
+                else {
                     continue
                 }
+
+                /*
+                 Дополнительно ограничиваем восстановление
+                 стандартными продуктами MorningHello.
+                 */
+
+                guard subscriptionProductIDs
+                    .contains(
+                        transaction.productID
+                    )
+                else {
+                    continue
+                }
+
+                /*
+                 При восстановлении StoreKit возвращает
+                 appAccountToken, который был передан
+                 во время первоначальной покупки.
+
+                 Для стандартной подписки этот UUID
+                 является прежним appInstanceId.
+                 */
+
+                if let restoredAppInstanceID =
+                    transaction.appAccountToken {
+
+                    AppInstanceIdentity
+                        .restore(
+                            restoredAppInstanceID
+                        )
+
+    #if DEBUG
+
+                    print(
+                        """
+                        
+                        SUBSCRIPTION IDENTITY CONFIRMED
+                        APP INSTANCE ID: \(restoredAppInstanceID.uuidString)
+                        PRODUCT: \(transaction.productID)
+                        ORIGINAL TRANSACTION: \(transaction.originalID)
+                        
+                        """
+                    )
+
+    #endif
+
+                } else {
+
+    #if DEBUG
+
+                    print(
+                        """
+                        
+                        SUBSCRIPTION HAS NO APP ACCOUNT TOKEN
+                        PRODUCT: \(transaction.productID)
+                        ORIGINAL TRANSACTION: \(transaction.originalID)
+                        Current local appInstanceId will be used.
+                        
+                        """
+                    )
+
+    #endif
+                }
+
+                /*
+                 subscriptionsURL вычисляется непосредственно
+                 перед запросом. Поэтому после restore()
+                 в URL попадёт уже восстановленный UUID.
+                 */
 
                 try await SubscriptionLifecycleAPIClient
                     .shared
                     .registerSubscription(
                         signedTransaction:
-                            verificationResult.jwsRepresentation
+                            verificationResult
+                                .jwsRepresentation
                     )
 
                 await transaction.finish()
             }
+
         } catch {
+
     #if DEBUG
+
             print(
-                "❌ Subscription backend sync failed:",
-                error
+                """
+                
+                SUBSCRIPTION BACKEND SYNC FAILED
+                APP INSTANCE ID: \(AppInstanceIdentity.id.uuidString)
+                ERROR: \(error.localizedDescription)
+                
+                """
             )
+
     #endif
         }
     }

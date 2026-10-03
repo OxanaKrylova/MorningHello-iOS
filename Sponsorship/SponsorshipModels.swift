@@ -40,28 +40,18 @@ enum MorningHelloUsageMode:
 
 enum AppInstanceIdentity {
 
-    private static let storageKey =
-        "app_instance_id"
-
     static var id: UUID {
-        if let savedValue =
-            UserDefaults.standard.string(
-                forKey: storageKey
-            ),
-           let savedUUID = UUID(
-                uuidString: savedValue
-           ) {
-            return savedUUID
-        }
+        AppInstanceIDProvider
+            .getOrCreate()
+    }
 
-        let newUUID = UUID()
-
-        UserDefaults.standard.set(
-            newUUID.uuidString,
-            forKey: storageKey
-        )
-
-        return newUUID
+    static func restore(
+        _ restoredID: UUID
+    ) {
+        AppInstanceIDProvider
+            .restore(
+                restoredID
+            )
     }
 }
 

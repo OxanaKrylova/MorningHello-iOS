@@ -1637,3 +1637,26 @@
 "onboarding.setup.pet.description" = "Optionally save instructions for taking care of your pet.";
 "onboarding.setup.later" = "You can update your profile information later in the app settings.";
 "onboarding.setup.continue" = "Start Setup";
+"NSCameraUsageDescription" = "MorningHello uses the camera to photograph your pet’s food.";
+
+"Выберите питомца" = "Choose a Pet";
+"Мои питомцы" = "My Pets";
+"Фотография корма" = "Food Photo";
+"Добавьте фотографию упаковки корма, чтобы нужный корм было легче найти." = "Add a photo of the food package so the correct food is easy to find.";
+"Фотография корма питомца" = "Pet food photo";
+"Выбрать из Фото" = "Choose Photo";
+"Сфотографировать" = "Take Photo";
+"Удалить фотографию" = "Remove Photo";
+"Сохранить" = "Save";
+"Добавить питомца" = "Add Pet";
+"Камера недоступна" = "Camera Unavailable";
+"На этом устройстве невозможно открыть камеру." = "The camera cannot be opened on this device.";
+"Ошибка фотографии" = "Photo Error";
+"Не удалось обработать выбранную фотографию." = "The selected photo could not be processed.";
+"Второй питомец добавлен" = "Second Pet Added";
+"Заполните сведения о втором питомце и нажмите «Сохранить»." = "Enter the second pet’s information and tap Save.";
+"Не удалось добавить второго питомца." = "The second pet could not be added.";
+"Ошибка удаления" = "Deletion Error";
+"Не удалось удалить сведения о питомце." = "The pet information could not be deleted.";
+"Достигнут предел" = "Limit Reached";
+"Можно сохранить сведения не более чем о двух питомцах." = "You can save information for no more than two pets.";

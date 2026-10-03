@@ -1638,3 +1638,26 @@
 "onboarding.setup.pet.description" = "Si lo deseas, guarda instrucciones para el cuidado de tu mascota.";
 "onboarding.setup.later" = "Puedes actualizar los datos de tu perfil más adelante en los ajustes.";
 "onboarding.setup.continue" = "Iniciar configuración";
+"NSCameraUsageDescription" = "MorningHello usa la cámara para fotografiar el alimento de tu mascota.";
+
+"Выберите питомца" = "Elige una mascota";
+"Мои питомцы" = "Mis mascotas";
+"Фотография корма" = "Foto del alimento";
+"Добавьте фотографию упаковки корма, чтобы нужный корм было легче найти." = "Agrega una foto del paquete para que sea más fácil encontrar el alimento correcto.";
+"Фотография корма питомца" = "Foto del alimento de la mascota";
+"Выбрать из Фото" = "Elegir de Fotos";
+"Сфотографировать" = "Tomar foto";
+"Удалить фотографию" = "Eliminar foto";
+"Сохранить" = "Guardar";
+"Добавить питомца" = "Agregar mascota";
+"Камера недоступна" = "Cámara no disponible";
+"На этом устройстве невозможно открыть камеру." = "No se puede abrir la cámara en este dispositivo.";
+"Ошибка фотографии" = "Error de foto";
+"Не удалось обработать выбранную фотографию." = "No se pudo procesar la foto seleccionada.";
+"Второй питомец добавлен" = "Segunda mascota agregada";
+"Заполните сведения о втором питомце и нажмите «Сохранить»." = "Completa los datos de la segunda mascota y toca Guardar.";
+"Не удалось добавить второго питомца." = "No se pudo agregar la segunda mascota.";
+"Ошибка удаления" = "Error al eliminar";
+"Не удалось удалить сведения о питомце." = "No se pudieron eliminar los datos de la mascota.";
+"Достигнут предел" = "Límite alcanzado";
+"Можно сохранить сведения не более чем о двух питомцах." = "Puedes guardar información de un máximo de dos mascotas.";
