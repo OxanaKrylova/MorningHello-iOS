@@ -71,12 +71,15 @@ final class SponsorshipStore:
             isLoading = false
         }
 
+        let appInstanceID =
+            AppInstanceIDProvider.getOrCreate()
+
         do {
             overview =
                 try await apiClient
                     .subscriptions(
                         appInstanceId:
-                            AppInstanceIdentity.id
+                            appInstanceID
                     )
         } catch {
             errorMessage =

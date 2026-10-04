@@ -38,23 +38,6 @@ enum MorningHelloUsageMode:
     }
 }
 
-enum AppInstanceIdentity {
-
-    static var id: UUID {
-        AppInstanceIDProvider
-            .getOrCreate()
-    }
-
-    static func restore(
-        _ restoredID: UUID
-    ) {
-        AppInstanceIDProvider
-            .restore(
-                restoredID
-            )
-    }
-}
-
 // MARK: - POST /users/{appInstanceId}/subscriptions
 
 struct RegisterSubscriptionRequest: Encodable {

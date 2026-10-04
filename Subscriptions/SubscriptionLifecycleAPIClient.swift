@@ -169,10 +169,13 @@ actor SubscriptionLifecycleAPIClient {
     // MARK: - URL
 
     private var subscriptionsURL: URL {
-        baseURL
+        let appInstanceID =
+            AppInstanceIDProvider.getOrCreate()
+
+        return baseURL
             .appendingPathComponent("users")
             .appendingPathComponent(
-                AppInstanceIdentity.id.uuidString
+                appInstanceID.uuidString
             )
             .appendingPathComponent("subscriptions")
     }

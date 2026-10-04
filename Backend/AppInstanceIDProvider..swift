@@ -10,200 +10,164 @@ import Security
 
 enum AppInstanceIDProvider {
 
-    private static let storageKey =
-        "app_instance_id"
+    private struct StoredIdentifier {
+
+        let identifier: UUID
+        let isSynchronizable: Bool
+    }
 
     private static let keychainAccount =
         "morninghello-app-instance-id"
 
-    private static var keychainService:
-        String {
+    private static var keychainService: String {
 
         let bundleIdentifier =
             Bundle.main.bundleIdentifier
             ?? "com.morninghelloapp"
 
-        return
-            "\(bundleIdentifier).identity"
+        return "\(bundleIdentifier).identity"
     }
 
-    // MARK: - Получение идентификатора
+    // MARK: - Public API
 
     static func getOrCreate() -> UUID {
 
-        /*
-         Сначала читаем Keychain.
-
-         В отличие от UserDefaults, запись Keychain
-         обычно сохраняется после удаления приложения
-         и повторной установки на том же устройстве.
-         */
-
-        if let keychainValue =
-            readFromKeychain(),
-           let keychainID =
-            UUID(
-                uuidString:
-                    keychainValue
-            ) {
-
-            saveToUserDefaults(
-                keychainID
-            )
-
-            return keychainID
-        }
-
-        /*
-         Если приложение обновилось со старой версии,
-         прежний UUID ещё может находиться в UserDefaults.
-         Переносим его в Keychain.
-         */
-
         if let storedValue =
-            UserDefaults.standard.string(
-                forKey: storageKey
-            ),
-           let storedID =
-            UUID(
-                uuidString:
-                    storedValue
-            ) {
+            readFromKeychain() {
 
-            saveToKeychain(
-                storedID.uuidString
+            /*
+             Если найдена запись старого типа
+             ThisDeviceOnly, сохраняем тот же UUID заново
+             уже как синхронизируемый через iCloud Keychain.
+             */
+
+            if !storedValue.isSynchronizable {
+
+                saveToKeychain(
+                    storedValue.identifier
+                )
+
+#if DEBUG
+
+                print(
+                    "[\(storedValue.identifier.uuidString)] APP INSTANCE ID MIGRATED TO SYNCHRONIZABLE KEYCHAIN"
+                )
+
+#endif
+            }
+
+#if DEBUG
+
+            print(
+                "[\(storedValue.identifier.uuidString)] APP INSTANCE ID LOADED FROM KEYCHAIN"
             )
 
-            return storedID
+#endif
+
+            return storedValue.identifier
         }
 
-        /*
-         Новый UUID создаём только тогда,
-         когда его нет ни в Keychain,
-         ни в UserDefaults.
-         */
+        let newID =
+            UUID()
 
-        let newID = UUID()
-
-        save(
+        saveToKeychain(
             newID
-        )
-
-        return newID
-    }
-
-    // MARK: - Восстановление из StoreKit
-
-    static func restore(
-        _ restoredID: UUID
-    ) {
-
-        let currentID =
-            getOrCreate()
-
-        guard currentID != restoredID else {
-            return
-        }
-
-        save(
-            restoredID
         )
 
 #if DEBUG
 
         print(
-            """
-            
-            APP INSTANCE ID RESTORED
-            PREVIOUS LOCAL ID: \(currentID.uuidString)
-            RESTORED ID: \(restoredID.uuidString)
-            
-            """
+            "[\(newID.uuidString)] APP INSTANCE ID CREATED"
         )
+
+#endif
+
+        return newID
+    }
+
+    /// Заменяет локальный идентификатор значением,
+    /// восстановленным из проверенной активной покупки StoreKit.
+    static func restore(
+        _ restoredID: UUID
+    ) {
+
+        if let storedValue =
+            readFromKeychain(),
+           storedValue.identifier == restoredID {
+
+            /*
+             UUID уже совпадает с StoreKit, но старая запись
+             всё равно может быть несинхронизируемой.
+             */
+
+            if !storedValue.isSynchronizable {
+
+                saveToKeychain(
+                    restoredID
+                )
+
+#if DEBUG
+
+                print(
+                    "[\(restoredID.uuidString)] STOREKIT ID MIGRATED TO SYNCHRONIZABLE KEYCHAIN"
+                )
+
+#endif
+            }
+
+#if DEBUG
+
+            print(
+                "[\(restoredID.uuidString)] APP INSTANCE ID ALREADY MATCHES STOREKIT"
+            )
+
+#endif
+
+            return
+        }
+
+        let previousID =
+            readFromKeychain()?
+                .identifier
+
+        saveToKeychain(
+            restoredID
+        )
+
+#if DEBUG
+
+        if let previousID {
+
+            print(
+                """
+                [\(restoredID.uuidString)] APP INSTANCE ID RESTORED FROM STOREKIT
+                PREVIOUS KEYCHAIN ID: \(previousID.uuidString)
+                """
+            )
+
+        } else {
+
+            print(
+                "[\(restoredID.uuidString)] APP INSTANCE ID RESTORED FROM STOREKIT"
+            )
+        }
 
 #endif
     }
 
-    // MARK: - Сохранение
+    /// Читает UUID без создания нового.
+    static func storedIdentifier() -> UUID? {
 
-    private static func save(
-        _ identifier: UUID
-    ) {
-
-        saveToUserDefaults(
-            identifier
-        )
-
-        saveToKeychain(
-            identifier.uuidString
-        )
+        readFromKeychain()?
+            .identifier
     }
 
-    private static func saveToUserDefaults(
-        _ identifier: UUID
-    ) {
+    // MARK: - Keychain Query
 
-        UserDefaults.standard.set(
-            identifier.uuidString,
-            forKey: storageKey
-        )
-    }
+    private static var baseQuery:
+        [String: Any] {
 
-    // MARK: - Keychain
-
-    private static func readFromKeychain()
-    -> String? {
-
-        let query: [String: Any] = [
-            kSecClass as String:
-                kSecClassGenericPassword,
-
-            kSecAttrService as String:
-                keychainService,
-
-            kSecAttrAccount as String:
-                keychainAccount,
-
-            kSecReturnData as String:
-                true,
-
-            kSecMatchLimit as String:
-                kSecMatchLimitOne
-        ]
-
-        var result: CFTypeRef?
-
-        let status =
-            SecItemCopyMatching(
-                query as CFDictionary,
-                &result
-            )
-
-        guard status == errSecSuccess,
-              let data = result as? Data
-        else {
-            return nil
-        }
-
-        return String(
-            data: data,
-            encoding: .utf8
-        )
-    }
-
-    private static func saveToKeychain(
-        _ value: String
-    ) {
-
-        guard let data =
-            value.data(
-                using: .utf8
-            )
-        else {
-            return
-        }
-
-        let searchQuery: [String: Any] = [
+        [
             kSecClass as String:
                 kSecClassGenericPassword,
 
@@ -213,56 +177,185 @@ enum AppInstanceIDProvider {
             kSecAttrAccount as String:
                 keychainAccount
         ]
+    }
 
-        let updateValues: [String: Any] = [
-            kSecValueData as String:
-                data,
+    // MARK: - Keychain Read
 
-            kSecAttrAccessible as String:
-                kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-        ]
+    private static func readFromKeychain()
+    -> StoredIdentifier? {
 
-        let updateStatus =
-            SecItemUpdate(
-                searchQuery as CFDictionary,
-                updateValues as CFDictionary
+        var query =
+            baseQuery
+
+        query[
+            kSecAttrSynchronizable as String
+        ] =
+            kSecAttrSynchronizableAny
+
+        query[
+            kSecReturnData as String
+        ] =
+            true
+
+        query[
+            kSecReturnAttributes as String
+        ] =
+            true
+
+        query[
+            kSecMatchLimit as String
+        ] =
+            kSecMatchLimitOne
+
+        var result:
+            CFTypeRef?
+
+        let status =
+            SecItemCopyMatching(
+                query as CFDictionary,
+                &result
             )
 
-        if updateStatus == errSecSuccess {
-            return
+        guard status == errSecSuccess else {
+
+            if status != errSecItemNotFound {
+
+#if DEBUG
+
+                print(
+                    "[NO_APP_INSTANCE_ID] KEYCHAIN READ FAILED, STATUS: \(status)"
+                )
+
+#endif
+            }
+
+            return nil
         }
 
-        guard updateStatus ==
-                errSecItemNotFound
+        guard
+            let item =
+                result as? [String: Any],
+            let data =
+                item[
+                    kSecValueData as String
+                ] as? Data,
+            let storedString =
+                String(
+                    data: data,
+                    encoding: .utf8
+                ),
+            let identifier =
+                UUID(
+                    uuidString:
+                        storedString
+                )
         else {
 
 #if DEBUG
 
             print(
-                """
-                
-                APP INSTANCE ID KEYCHAIN UPDATE FAILED
-                STATUS: \(updateStatus)
-                
-                """
+                "[INVALID_APP_INSTANCE_ID] KEYCHAIN VALUE IS NOT A VALID UUID"
             )
 
 #endif
 
-            return
+            return nil
         }
 
+        let isSynchronizable:
+            Bool
+
+        if let value =
+            item[
+                kSecAttrSynchronizable as String
+            ] as? Bool {
+
+            isSynchronizable =
+                value
+
+        } else if let value =
+            item[
+                kSecAttrSynchronizable as String
+            ] as? NSNumber {
+
+            isSynchronizable =
+                value.boolValue
+
+        } else {
+
+            isSynchronizable =
+                false
+        }
+
+        return StoredIdentifier(
+            identifier:
+                identifier,
+            isSynchronizable:
+                isSynchronizable
+        )
+    }
+
+    // MARK: - Keychain Save
+
+    private static func saveToKeychain(
+        _ identifier: UUID
+    ) {
+
+        /*
+         Удаляем обе возможные записи:
+         старую локальную и синхронизируемую.
+         */
+
+        var deleteQuery =
+            baseQuery
+
+        deleteQuery[
+            kSecAttrSynchronizable as String
+        ] =
+            kSecAttrSynchronizableAny
+
+        let deleteStatus =
+            SecItemDelete(
+                deleteQuery as CFDictionary
+            )
+
+        if deleteStatus != errSecSuccess,
+           deleteStatus != errSecItemNotFound {
+
+#if DEBUG
+
+            print(
+                "[\(identifier.uuidString)] KEYCHAIN DELETE FAILED, STATUS: \(deleteStatus)"
+            )
+
+#endif
+        }
+
+        /*
+         Создаём одну новую синхронизируемую запись.
+         */
+
         var addQuery =
-            searchQuery
+            baseQuery
 
         addQuery[
-            kSecValueData as String
-        ] = data
+            kSecAttrSynchronizable as String
+        ] =
+            true
 
         addQuery[
             kSecAttrAccessible as String
         ] =
-            kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+            kSecAttrAccessibleAfterFirstUnlock
+
+        addQuery[
+            kSecValueData as String
+        ] =
+            Data(
+                identifier
+                    .uuidString
+                    .utf8
+            )
 
         let addStatus =
             SecItemAdd(
@@ -270,18 +363,24 @@ enum AppInstanceIDProvider {
                 nil
             )
 
+        guard addStatus == errSecSuccess else {
+
 #if DEBUG
 
-        if addStatus != errSecSuccess {
             print(
-                """
-                
-                APP INSTANCE ID KEYCHAIN SAVE FAILED
-                STATUS: \(addStatus)
-                
-                """
+                "[\(identifier.uuidString)] KEYCHAIN SAVE FAILED, STATUS: \(addStatus)"
             )
+
+#endif
+
+            return
         }
+
+#if DEBUG
+
+        print(
+            "[\(identifier.uuidString)] APP INSTANCE ID SAVED TO SYNCHRONIZABLE KEYCHAIN"
+        )
 
 #endif
     }

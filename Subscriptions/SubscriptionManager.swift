@@ -10,72 +10,138 @@ import StoreKit
 import Combine
 
 @MainActor
-final class SubscriptionManager: ObservableObject {
+final class SubscriptionManager:
+    ObservableObject {
 
     static let shared =
         SubscriptionManager()
 
     @Published
-    private(set) var products: [Product] = []
+    private(set) var products:
+        [Product] = []
 
     @Published
     private(set) var snapshot:
         SubscriptionSnapshot = .empty
 
     @Published
-    private(set) var isLoading = false
+    private(set) var isLoading =
+        false
 
     @Published
-    private(set) var hasLoadedSubscriptionStatus = false
+    private(set) var hasLoadedSubscriptionStatus =
+        false
 
     @Published
-    private(set) var lastError: String?
+    private(set) var lastError:
+        String?
 
-    private init() {}
+    private init() {
+    }
 
-    var hasActiveSubscription: Bool {
+    var hasActiveSubscription:
+        Bool {
+
         switch snapshot.status {
-        case .trial, .active, .gracePeriod:
+
+        case .trial,
+             .active,
+             .gracePeriod:
+
             return true
-        case .none, .billingRetry, .expired, .revoked:
+
+        case .none,
+             .billingRetry,
+             .expired,
+             .revoked:
+
             return false
         }
     }
 
-    enum PurchaseOutcome: Equatable {
+    var hasSubscriptionLoadingError:
+        Bool {
+
+        lastError != nil
+    }
+
+    enum PurchaseOutcome:
+        Equatable {
+
         case purchased
         case pending
         case cancelled
     }
 
+    // MARK: - Identity Candidate
+
+    private struct IdentityCandidate {
+
+        let identifier:
+            UUID
+
+        let expirationDate:
+            Date
+
+        let productID:
+            String
+
+        let originalTransactionID:
+            String
+    }
 
     // MARK: - Product IDs
 
-    private let subscriptionProductIDs: Set<String> = [
+    private let subscriptionProductIDs:
+        Set<String> = [
+
         "com.morninghello.subscription.monthly",
         "com.morninghello.subscription.quarterly",
         "com.morninghello.subscription.annual"
     ]
 
-
     // MARK: - Load Products
 
     func loadProducts() async {
 
-        lastError = nil
+        lastError =
+            nil
 
         do {
 
-            products =
+            let loadedProducts =
                 try await Product.products(
-                    for: subscriptionProductIDs
+                    for:
+                        subscriptionProductIDs
                 )
 
+            products =
+                loadedProducts
+
+            guard !loadedProducts.isEmpty else {
+
+                lastError =
+                    SubscriptionPurchaseError
+                        .productsUnavailable
+                        .localizedDescription
+
 #if DEBUG
+
+                print(
+                    "[\(logIdentifier)] SUBSCRIPTION PRODUCTS ARE EMPTY"
+                )
+
+#endif
+
+                return
+            }
+
+#if DEBUG
+
             print(
-                "✅ Subscription products loaded:",
-                products.map(\.id)
+                "[\(logIdentifier)] SUBSCRIPTION PRODUCTS LOADED: \(loadedProducts.map(\.id))"
             )
+
 #endif
 
         } catch {
@@ -84,127 +150,475 @@ final class SubscriptionManager: ObservableObject {
                 error.localizedDescription
 
 #if DEBUG
+
             print(
-                "❌ Failed to load subscription products:",
-                error
+                "[\(logIdentifier)] SUBSCRIPTION PRODUCTS LOAD FAILED: \(error.localizedDescription)"
             )
+
 #endif
         }
     }
-
 
     // MARK: - Refresh
 
     func refreshSubscriptionStatus() async {
 
-        isLoading = true
-        lastError = nil
+        isLoading =
+            true
+
+        lastError =
+            nil
+
+        /*
+         hasLoadedSubscriptionStatus станет true
+         только после того, как будет окончательно выбран
+         appInstanceId.
+         */
 
         defer {
-            isLoading = false
-            hasLoadedSubscriptionStatus = true
+
+            isLoading =
+                false
+
+            hasLoadedSubscriptionStatus =
+                true
         }
 
         if products.isEmpty {
+
             await loadProducts()
         }
 
-        guard !products.isEmpty else {
-            snapshot = .empty
-            return
-        }
+        var allStatuses:
+            [Product.SubscriptionInfo.Status] = []
 
-        do {
+        var didLoadSubscriptionStatuses =
+            false
 
-            var allStatuses:
-                [Product.SubscriptionInfo.Status] = []
+        if let subscriptionInfo =
+            products
+                .compactMap(\.subscription)
+                .first {
 
-            if let subscriptionInfo =
-                products.first?.subscription {
+            do {
 
                 allStatuses =
                     try await subscriptionInfo.status
-            }
 
-            guard !allStatuses.isEmpty else {
+                didLoadSubscriptionStatuses =
+                    true
 
-                snapshot = .empty
+            } catch {
+
+                lastError =
+                    error.localizedDescription
 
 #if DEBUG
+
                 print(
-                    "ℹ️ No subscription status found"
+                    "[\(logIdentifier)] SUBSCRIPTION STATUS LOAD FAILED: \(error.localizedDescription)"
                 )
-#endif
 
-                return
+#endif
             }
 
-            guard let bestStatus =
+        } else if !products.isEmpty {
+
+            /*
+             Продукты получены, но среди них нет
+             автоматически продлеваемых подписок.
+             Это считается корректно полученным
+             пустым состоянием.
+             */
+
+            didLoadSubscriptionStatuses =
+                true
+        }
+
+        /*
+         Сначала восстанавливаем appInstanceId.
+
+         Порядок:
+         1. Активная собственная покупка StoreKit.
+         2. Существующий UUID в Keychain.
+         3. Новый UUID.
+         */
+
+        let resolvedAppInstanceID =
+            await resolveAppInstanceID(
+                from:
+                    allStatuses
+            )
+
+        /*
+         Snapshot изменяем только в том случае,
+         если App Store действительно ответил.
+
+         При сетевой ошибке прежний snapshot сохраняется,
+         чтобы не показывать пользователю ложный paywall.
+         */
+
+        if didLoadSubscriptionStatuses {
+
+            if let bestStatus =
                 bestSubscriptionStatus(
-                    from: allStatuses
-                )
-            else {
+                    from:
+                        allStatuses
+                ) {
 
-                snapshot = .empty
-                return
-            }
-
-            snapshot =
-                makeSnapshot(
-                    from: bestStatus
-                )
+                snapshot =
+                    makeSnapshot(
+                        from:
+                            bestStatus
+                    )
 
 #if DEBUG
-            print(
-                "✅ Subscription snapshot:",
-                snapshot
-            )
+
+                print(
+                    "[\(resolvedAppInstanceID.uuidString)] SUBSCRIPTION SNAPSHOT UPDATED: \(snapshot)"
+                )
+
 #endif
 
-        } catch {
+            } else {
 
-            lastError =
-                error.localizedDescription
+                snapshot =
+                    .empty
 
 #if DEBUG
+
+                print(
+                    "[\(resolvedAppInstanceID.uuidString)] NO SUBSCRIPTION STATUS FOUND"
+                )
+
+#endif
+            }
+
+        } else {
+
+#if DEBUG
+
             print(
-                "❌ Subscription refresh failed:",
-                error
+                "[\(resolvedAppInstanceID.uuidString)] PREVIOUS SUBSCRIPTION SNAPSHOT PRESERVED"
             )
+
 #endif
         }
     }
 
+    // MARK: - Resolve App Instance ID
+
+    private func resolveAppInstanceID(
+        from statuses:
+            [Product.SubscriptionInfo.Status]
+    ) async -> UUID {
+
+        let now =
+            Date()
+
+        var candidates:
+            [IdentityCandidate] = []
+
+        /*
+         Первый источник кандидатов:
+         подтверждённые транзакции из статусов подписки.
+         */
+
+        for status in statuses {
+
+            guard let candidate =
+                identityCandidate(
+                    from:
+                        status,
+                    now:
+                        now
+                )
+            else {
+                continue
+            }
+
+            candidates.append(
+                candidate
+            )
+        }
+
+        /*
+         Второй источник кандидатов:
+         текущие активные права StoreKit.
+
+         AppStore.sync() здесь намеренно не вызывается.
+         Он используется только по явному нажатию
+         кнопки «Восстановить покупки».
+         */
+
+        for await verificationResult
+            in Transaction.currentEntitlements {
+
+            guard case let .verified(
+                transaction
+            ) = verificationResult
+            else {
+
+#if DEBUG
+
+                print(
+                    "[\(logIdentifier)] CURRENT ENTITLEMENT WAS NOT VERIFIED"
+                )
+
+#endif
+
+                continue
+            }
+
+            guard let candidate =
+                identityCandidate(
+                    from:
+                        transaction,
+                    now:
+                        now
+                )
+            else {
+                continue
+            }
+
+            candidates.append(
+                candidate
+            )
+        }
+
+        /*
+         Если найдено несколько подходящих покупок,
+         используем ту, которая истекает позже.
+         */
+
+        if let selectedCandidate =
+            candidates.max(
+                by: {
+                    $0.expirationDate
+                    <
+                    $1.expirationDate
+                }
+            ) {
+
+            AppInstanceIDProvider.restore(
+                selectedCandidate.identifier
+            )
+
+#if DEBUG
+
+            print(
+                """
+                [\(selectedCandidate.identifier.uuidString)] APP INSTANCE ID SELECTED FROM STOREKIT
+                PRODUCT: \(selectedCandidate.productID)
+                ORIGINAL TRANSACTION: \(selectedCandidate.originalTransactionID)
+                EXPIRES AT: \(selectedCandidate.expirationDate)
+                """
+            )
+
+#endif
+
+            return selectedCandidate.identifier
+        }
+
+        /*
+         Если подходящей покупки нет,
+         провайдер использует Keychain
+         или создаёт новый UUID.
+         */
+
+        let localIdentifier =
+            AppInstanceIDProvider
+                .getOrCreate()
+
+#if DEBUG
+
+        print(
+            "[\(localIdentifier.uuidString)] APP INSTANCE ID SELECTED FROM KEYCHAIN OR CREATED"
+        )
+
+#endif
+
+        return localIdentifier
+    }
+
+    private func identityCandidate(
+        from status:
+            Product.SubscriptionInfo.Status,
+        now:
+            Date
+    ) -> IdentityCandidate? {
+
+        /*
+         Для восстановления идентификатора
+         используем только подписку, которая
+         действительно предоставляет доступ.
+         */
+
+        switch status.state {
+
+        case .subscribed,
+             .inGracePeriod:
+
+            break
+
+        case .inBillingRetryPeriod,
+             .expired,
+             .revoked:
+
+            return nil
+
+        default:
+
+            return nil
+        }
+
+        guard case let .verified(
+            transaction
+        ) = status.transaction
+        else {
+            return nil
+        }
+
+        return identityCandidate(
+            from:
+                transaction,
+            now:
+                now
+        )
+    }
+
+    private func identityCandidate(
+        from transaction:
+            Transaction,
+        now:
+            Date
+    ) -> IdentityCandidate? {
+
+        /*
+         Спонсорские продукты намеренно исключены.
+
+         Их appAccountToken относится к покупателю,
+         а не к получателю мониторинга.
+         */
+
+        guard subscriptionProductIDs.contains(
+            transaction.productID
+        ) else {
+            return nil
+        }
+
+        guard !SponsoredPurchaseManager
+            .isSponsoredProduct(
+                transaction.productID
+            )
+        else {
+            return nil
+        }
+
+        /*
+         Метку семейной покупки нельзя использовать,
+         потому что она может принадлежать другому
+         участнику семейной группы.
+         */
+
+        guard transaction.ownershipType
+                != .familyShared
+        else {
+            return nil
+        }
+
+        guard transaction.revocationDate == nil else {
+            return nil
+        }
+
+        guard !transaction.isUpgraded else {
+            return nil
+        }
+
+        guard let appAccountToken =
+            transaction.appAccountToken
+        else {
+
+#if DEBUG
+
+            print(
+                """
+                [\(logIdentifier)] SUBSCRIPTION HAS NO APP ACCOUNT TOKEN
+                PRODUCT: \(transaction.productID)
+                ORIGINAL TRANSACTION: \(transaction.originalID)
+                """
+            )
+
+#endif
+
+            return nil
+        }
+
+        guard let expirationDate =
+            transaction.expirationDate,
+              expirationDate > now
+        else {
+            return nil
+        }
+
+        return IdentityCandidate(
+            identifier:
+                appAccountToken,
+            expirationDate:
+                expirationDate,
+            productID:
+                transaction.productID,
+            originalTransactionID:
+                String(
+                    transaction.originalID
+                )
+        )
+    }
 
     // MARK: - Purchase
 
     func processPurchaseResult(
-        _ result: Product.PurchaseResult
+        _ result:
+            Product.PurchaseResult
     ) async throws -> PurchaseOutcome {
 
-        lastError = nil
+        lastError =
+            nil
 
         switch result {
-        case .success(let verificationResult):
-            guard case .verified(let transaction) = verificationResult else {
-                throw SubscriptionPurchaseError.failedVerification
+
+        case .success(
+            let verificationResult
+        ):
+
+            guard case .verified(
+                let transaction
+            ) = verificationResult
+            else {
+                throw SubscriptionPurchaseError
+                    .failedVerification
             }
 
             await transaction.finish()
+
             await refreshAndSync()
+
             return .purchased
 
         case .pending:
+
             return .pending
 
         case .userCancelled:
+
             return .cancelled
 
         @unknown default:
-            throw SubscriptionPurchaseError.unknownResult
+
+            throw SubscriptionPurchaseError
+                .unknownResult
         }
     }
-
 
     // MARK: - Best Status
 
@@ -213,17 +627,38 @@ final class SubscriptionManager: ObservableObject {
             [Product.SubscriptionInfo.Status]
     ) -> Product.SubscriptionInfo.Status? {
 
-        statuses.max { first, second in
+        statuses.max {
 
-            priority(
-                for: first.state
-            ) <
-            priority(
-                for: second.state
+            let firstPriority =
+                priority(
+                    for:
+                        $0.state
+                )
+
+            let secondPriority =
+                priority(
+                    for:
+                        $1.state
+                )
+
+            if firstPriority
+                != secondPriority {
+
+                return firstPriority
+                    < secondPriority
+            }
+
+            return expirationDate(
+                from:
+                    $0
+            )
+            <
+            expirationDate(
+                from:
+                    $1
             )
         }
     }
-
 
     private func priority(
         for state:
@@ -233,25 +668,46 @@ final class SubscriptionManager: ObservableObject {
         switch state {
 
         case .subscribed:
+
             return 5
 
         case .inGracePeriod:
+
             return 4
 
         case .inBillingRetryPeriod:
+
             return 3
 
         case .expired:
+
             return 2
 
         case .revoked:
+
             return 1
 
         default:
+
             return 0
         }
     }
 
+    private func expirationDate(
+        from status:
+            Product.SubscriptionInfo.Status
+    ) -> Date {
+
+        guard case let .verified(
+            transaction
+        ) = status.transaction
+        else {
+            return .distantPast
+        }
+
+        return transaction.expirationDate
+            ?? .distantPast
+    }
 
     // MARK: - Snapshot
 
@@ -294,22 +750,27 @@ final class SubscriptionManager: ObservableObject {
                 : .active
 
         case .inGracePeriod:
+
             subscriptionStatus =
                 .gracePeriod
 
         case .inBillingRetryPeriod:
+
             subscriptionStatus =
                 .billingRetry
 
         case .expired:
+
             subscriptionStatus =
                 .expired
 
         case .revoked:
+
             subscriptionStatus =
                 .revoked
 
         default:
+
             subscriptionStatus =
                 .none
         }
@@ -319,7 +780,8 @@ final class SubscriptionManager: ObservableObject {
             ?? renewalInfo.renewalDate
 
         return SubscriptionSnapshot(
-            status: subscriptionStatus,
+            status:
+                subscriptionStatus,
             productId:
                 transaction.productID,
             autoRenewEnabled:
@@ -337,14 +799,23 @@ final class SubscriptionManager: ObservableObject {
         )
     }
 
-
     // MARK: - Refresh + Backend Sync
 
     func refreshAndSync() async {
 
+        /*
+         refreshSubscriptionStatus сначала выбирает
+         окончательный appInstanceId.
+         */
+
         await refreshSubscriptionStatus()
 
+        let appInstanceID =
+            AppInstanceIDProvider
+                .getOrCreate()
+
         do {
+
             for await verificationResult
                 in Transaction.currentEntitlements {
 
@@ -352,28 +823,21 @@ final class SubscriptionManager: ObservableObject {
                     transaction
                 ) = verificationResult
                 else {
-    #if DEBUG
+
+#if DEBUG
 
                     print(
-                        """
-                        
-                        SUBSCRIPTION TRANSACTION WAS NOT VERIFIED
-                        The transaction was not sent to Backend.
-                        
-                        """
+                        "[\(appInstanceID.uuidString)] SUBSCRIPTION TRANSACTION WAS NOT VERIFIED"
                     )
 
-    #endif
+#endif
 
                     continue
                 }
 
                 /*
-                 Спонсорские покупки используют account.id
-                 как appAccountToken.
-
-                 Их нельзя использовать для восстановления
-                 appInstanceId получателя.
+                 Спонсорские продукты обрабатываются
+                 отдельным сценарием.
                  */
 
                 guard !SponsoredPurchaseManager
@@ -384,74 +848,40 @@ final class SubscriptionManager: ObservableObject {
                     continue
                 }
 
-                /*
-                 Дополнительно ограничиваем восстановление
-                 стандартными продуктами MorningHello.
-                 */
-
-                guard subscriptionProductIDs
-                    .contains(
-                        transaction.productID
-                    )
-                else {
+                guard subscriptionProductIDs.contains(
+                    transaction.productID
+                ) else {
                     continue
                 }
 
                 /*
-                 При восстановлении StoreKit возвращает
-                 appAccountToken, который был передан
-                 во время первоначальной покупки.
-
-                 Для стандартной подписки этот UUID
-                 является прежним appInstanceId.
+                 Семейная покупка может содержать
+                 appAccountToken другого человека.
                  */
 
-                if let restoredAppInstanceID =
-                    transaction.appAccountToken {
+                guard transaction.ownershipType
+                        != .familyShared
+                else {
 
-                    AppInstanceIdentity
-                        .restore(
-                            restoredAppInstanceID
-                        )
-
-    #if DEBUG
+#if DEBUG
 
                     print(
                         """
-                        
-                        SUBSCRIPTION IDENTITY CONFIRMED
-                        APP INSTANCE ID: \(restoredAppInstanceID.uuidString)
+                        [\(appInstanceID.uuidString)] FAMILY SHARED SUBSCRIPTION WAS NOT SENT TO BACKEND
                         PRODUCT: \(transaction.productID)
-                        ORIGINAL TRANSACTION: \(transaction.originalID)
-                        
                         """
                     )
 
-    #endif
+#endif
 
-                } else {
-
-    #if DEBUG
-
-                    print(
-                        """
-                        
-                        SUBSCRIPTION HAS NO APP ACCOUNT TOKEN
-                        PRODUCT: \(transaction.productID)
-                        ORIGINAL TRANSACTION: \(transaction.originalID)
-                        Current local appInstanceId will be used.
-                        
-                        """
-                    )
-
-    #endif
+                    continue
                 }
 
-                /*
-                 subscriptionsURL вычисляется непосредственно
-                 перед запросом. Поэтому после restore()
-                 в URL попадёт уже восстановленный UUID.
-                 */
+                guard transaction.revocationDate == nil,
+                      !transaction.isUpgraded
+                else {
+                    continue
+                }
 
                 try await SubscriptionLifecycleAPIClient
                     .shared
@@ -462,38 +892,73 @@ final class SubscriptionManager: ObservableObject {
                     )
 
                 await transaction.finish()
+
+#if DEBUG
+
+                print(
+                    """
+                    [\(appInstanceID.uuidString)] SUBSCRIPTION SENT TO BACKEND
+                    PRODUCT: \(transaction.productID)
+                    ORIGINAL TRANSACTION: \(transaction.originalID)
+                    """
+                )
+
+#endif
             }
 
         } catch {
 
-    #if DEBUG
+            lastError =
+                error.localizedDescription
+
+#if DEBUG
 
             print(
-                """
-                
-                SUBSCRIPTION BACKEND SYNC FAILED
-                APP INSTANCE ID: \(AppInstanceIdentity.id.uuidString)
-                ERROR: \(error.localizedDescription)
-                
-                """
+                "[\(appInstanceID.uuidString)] SUBSCRIPTION BACKEND SYNC FAILED: \(error.localizedDescription)"
             )
 
-    #endif
+#endif
         }
+    }
+
+    // MARK: - Debug
+
+    private var logIdentifier:
+        String {
+
+        AppInstanceIDProvider
+            .storedIdentifier()?
+            .uuidString
+        ?? "NO_APP_INSTANCE_ID"
     }
 }
 
-private enum SubscriptionPurchaseError: LocalizedError {
+private enum SubscriptionPurchaseError:
+    LocalizedError {
+
     case failedVerification
     case unknownResult
+    case productsUnavailable
 
-    var errorDescription: String? {
+    var errorDescription:
+        String? {
+
         switch self {
+
         case .failedVerification:
-            return "App Store не удалось подтвердить покупку."
+
+            return
+                "App Store не удалось подтвердить покупку."
+
         case .unknownResult:
+
             return
                 "App Store вернул неизвестный результат покупки."
+
+        case .productsUnavailable:
+
+            return
+                "Не удалось получить тарифные планы из App Store."
         }
     }
 }

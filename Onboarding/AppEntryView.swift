@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct AppEntryView: View {
+struct AppEntryView:
+    View {
 
     private let currentTermsVersion =
         "1.1"
@@ -99,14 +100,34 @@ struct AppEntryView: View {
     private var hasEmergencyContacts =
         false
 
-    var body: some View {
+    var body:
+        some View {
+
         Group {
 
+            /*
+             Сначала приложение должно проверить StoreKit
+             и окончательно выбрать appInstanceId.
+
+             Пока идентификатор не выбран, формы онбординга
+             и основной экран не открываются.
+             */
+
+            if !subscriptionManager
+                .hasLoadedSubscriptionStatus {
+
+                subscriptionLoadingView
+
+            } else if shouldShowSubscriptionRetry {
+
+                subscriptionRetryView
+
             // Шаг 1 – Условия использования
-            if acceptedTermsVersion !=
-                currentTermsVersion {
+            } else if acceptedTermsVersion
+                != currentTermsVersion {
 
                 TermsOfUseView {
+
                     acceptedTermsVersion =
                         currentTermsVersion
                 }
@@ -116,12 +137,14 @@ struct AppEntryView: View {
                 !monitoringSetupIntroCompleted {
 
                 MonitoringSetupIntroView {
+
                     monitoringSetupIntroCompleted =
                         true
                 }
 
             // Шаг 3 – Профиль
-            } else if !isProfileComplete {
+            } else if
+                !isProfileComplete {
 
                 ProfileView()
 
@@ -130,8 +153,10 @@ struct AppEntryView: View {
                 !contactsOnboardingCompleted {
 
                 EmergencyContactsView(
-                    isOnboarding: true,
+                    isOnboarding:
+                        true,
                     onOnboardingComplete: {
+
                         contactsOnboardingCompleted =
                             true
 
@@ -144,8 +169,10 @@ struct AppEntryView: View {
                 !holidayOnboardingCompleted {
 
                 HolidaySettingsView(
-                    isOnboarding: true,
+                    isOnboarding:
+                        true,
                     onOnboardingComplete: {
+
                         holidayOnboardingCompleted =
                             true
                     }
@@ -156,20 +183,10 @@ struct AppEntryView: View {
                 !optionalSetupOnboardingCompleted {
 
                 OptionalSetupOnboardingView {
+
                     optionalSetupOnboardingCompleted =
                         true
                 }
-
-            // Шаг 7 – Проверка подписки
-            } else if
-                !subscriptionManager
-                    .hasLoadedSubscriptionStatus {
-
-                ProgressView(
-                    selectedLanguage.localized(
-                        "onboarding.subscription.checking"
-                    )
-                )
 
             // Онбординг завершён
             } else if
@@ -181,7 +198,8 @@ struct AppEntryView: View {
             } else {
 
                 MorningHelloPaywallView(
-                    mode: paywallMode
+                    mode:
+                        paywallMode
                 )
             }
         }
@@ -190,7 +208,9 @@ struct AppEntryView: View {
             selectedAppLocale
         )
         .onAppear {
+
             migrateMonitoringSetupIntroIfNeeded()
+
             refreshEmergencyContacts()
         }
         .onReceive(
@@ -202,9 +222,264 @@ struct AppEntryView: View {
                             .didChangeNotification
                 )
         ) { _ in
+
             refreshEmergencyContacts()
         }
     }
+
+    // MARK: - Subscription Loading
+
+    private var subscriptionLoadingView:
+        some View {
+
+        VStack(
+            spacing:
+                20
+        ) {
+
+            ProgressView()
+                .controlSize(
+                    .large
+                )
+                .tint(
+                    .orange
+                )
+
+            Text(
+                selectedLanguage.localized(
+                    "onboarding.subscription.checking"
+                )
+            )
+            .font(
+                .system(
+                    size:
+                        20,
+                    weight:
+                        .semibold,
+                    design:
+                        .rounded
+                )
+            )
+            .multilineTextAlignment(
+                .center
+            )
+            .foregroundStyle(
+                .primary
+            )
+        }
+        .padding(
+            32
+        )
+        .frame(
+            maxWidth:
+                .infinity,
+            maxHeight:
+                .infinity
+        )
+        .background(
+            AppAdaptiveColor
+                .warmFormBackground
+                .ignoresSafeArea()
+        )
+    }
+
+    // MARK: - Subscription Retry
+
+    private var shouldShowSubscriptionRetry:
+        Bool {
+
+        subscriptionManager
+            .hasSubscriptionLoadingError
+        &&
+        subscriptionManager
+            .snapshot
+            .status
+            == .none
+    }
+
+    private var subscriptionRetryView:
+        some View {
+
+        VStack(
+            spacing:
+                24
+        ) {
+
+            Image(
+                systemName:
+                    "wifi.exclamationmark"
+            )
+            .font(
+                .system(
+                    size:
+                        54,
+                    weight:
+                        .semibold
+                )
+            )
+            .foregroundStyle(
+                .orange
+            )
+            .accessibilityHidden(
+                true
+            )
+
+            VStack(
+                spacing:
+                    12
+            ) {
+
+                Text(
+                    selectedLanguage.localized(
+                        "subscription.check.failed.title"
+                    )
+                )
+                .font(
+                    .system(
+                        size:
+                            28,
+                        weight:
+                            .bold,
+                        design:
+                            .rounded
+                    )
+                )
+                .multilineTextAlignment(
+                    .center
+                )
+                .foregroundStyle(
+                    .primary
+                )
+
+                Text(
+                    selectedLanguage.localized(
+                        "subscription.check.failed.message"
+                    )
+                )
+                .font(
+                    .system(
+                        size:
+                            18,
+                        weight:
+                            .regular,
+                        design:
+                            .rounded
+                    )
+                )
+                .multilineTextAlignment(
+                    .center
+                )
+                .foregroundStyle(
+                    .secondary
+                )
+                .fixedSize(
+                    horizontal:
+                        false,
+                    vertical:
+                        true
+                )
+            }
+
+            Button {
+
+                Task {
+
+                    await subscriptionManager
+                        .refreshSubscriptionStatus()
+                }
+
+            } label: {
+
+                HStack(
+                    spacing:
+                        12
+                ) {
+
+                    if subscriptionManager
+                        .isLoading {
+
+                        ProgressView()
+                            .tint(
+                                .white
+                            )
+
+                    } else {
+
+                        Image(
+                            systemName:
+                                "arrow.clockwise"
+                        )
+                    }
+
+                    Text(
+                        selectedLanguage.localized(
+                            "subscription.check.retry"
+                        )
+                    )
+                }
+                .font(
+                    .system(
+                        size:
+                            20,
+                        weight:
+                            .bold,
+                        design:
+                            .rounded
+                    )
+                )
+                .foregroundStyle(
+                    .white
+                )
+                .frame(
+                    maxWidth:
+                        .infinity
+                )
+                .frame(
+                    minHeight:
+                        58
+                )
+                .background(
+                    Color.orange,
+                    in:
+                        RoundedRectangle(
+                            cornerRadius:
+                                20,
+                            style:
+                                .continuous
+                        )
+                )
+            }
+            .buttonStyle(
+                .plain
+            )
+            .disabled(
+                subscriptionManager
+                    .isLoading
+            )
+            .opacity(
+                subscriptionManager
+                    .isLoading
+                ? 0.7
+                : 1
+            )
+        }
+        .padding(
+            32
+        )
+        .frame(
+            maxWidth:
+                .infinity,
+            maxHeight:
+                .infinity
+        )
+        .background(
+            AppAdaptiveColor
+                .warmFormBackground
+                .ignoresSafeArea()
+        )
+    }
+
+    // MARK: - Language
 
     private var selectedLanguage:
         AppLanguage {
@@ -220,6 +495,8 @@ struct AppEntryView: View {
 
         selectedLanguage.locale
     }
+
+    // MARK: - Profile
 
     private var isProfileComplete:
         Bool {
@@ -248,6 +525,8 @@ struct AppEntryView: View {
         )
     }
 
+    // MARK: - Paywall
+
     private var paywallMode:
         SubscriptionPaywallMode {
 
@@ -271,6 +550,8 @@ struct AppEntryView: View {
         }
     }
 
+    // MARK: - Migration
+
     private func migrateMonitoringSetupIntroIfNeeded() {
 
         guard
@@ -282,14 +563,16 @@ struct AppEntryView: View {
         monitoringSetupIntroMigrationChecked =
             true
 
-        if acceptedTermsVersion ==
-            currentTermsVersion,
+        if acceptedTermsVersion
+            == currentTermsVersion,
            isProfileComplete {
 
             monitoringSetupIntroCompleted =
                 true
         }
     }
+
+    // MARK: - Emergency Contacts
 
     private func refreshEmergencyContacts() {
 
@@ -304,9 +587,11 @@ struct AppEntryView: View {
             let contacts =
                 try? JSONDecoder().decode(
                     [EmergencyContact].self,
-                    from: data
+                    from:
+                        data
                 )
         else {
+
             hasEmergencyContacts =
                 false
 

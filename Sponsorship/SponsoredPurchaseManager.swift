@@ -87,7 +87,7 @@ final class SponsoredPurchaseManager:
         }
 
         let appInstanceId =
-            AppInstanceIdentity.id
+            AppInstanceIDProvider.getOrCreate()
 
         let result =
             try await product.purchase(
@@ -222,8 +222,8 @@ final class SponsoredPurchaseManager:
         }
 
         let appInstanceId =
-            AppInstanceIdentity.id
-
+            AppInstanceIDProvider.getOrCreate()
+        
         if let transactionToken =
                 transaction.appAccountToken,
            transactionToken !=

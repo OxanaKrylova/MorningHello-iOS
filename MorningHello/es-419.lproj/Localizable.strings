@@ -1661,3 +1661,73 @@
 "Не удалось удалить сведения о питомце." = "No se pudieron eliminar los datos de la mascota.";
 "Достигнут предел" = "Límite alcanzado";
 "Можно сохранить сведения не более чем о двух питомцах." = "Puedes guardar información de un máximo de dos mascotas.";
+"common.close" = "Cerrar";
+
+"emergency.screen.title" = "Servicios de emergencia";
+"emergency.country.title" = "País de residencia";
+"emergency.country.not_selected" = "País no seleccionado";
+"emergency.introduction" = "Esta pantalla contiene los números de emergencia del país seleccionado en tu perfil. Toca el ícono de copiar junto al número para guardarlo en el portapapeles.";
+
+"emergency.services.section.title" = "Ayuda de emergencia";
+"emergency.service.police" = "Policía";
+"emergency.service.ambulance" = "Ambulancia";
+"emergency.service.fire" = "Bomberos";
+"emergency.service.home_front" = "Comando del Frente Interno";
+"emergency.service.rescue" = "Servicio de rescate";
+"emergency.service.coast_guard" = "Guardia costera";
+"emergency.service.social_support" = "Asistencia social";
+"emergency.service.other" = "Otro servicio";
+
+"emergency.note.israel.ambulance" = "Magen David Adom";
+"emergency.note.israel.home_front" = "Información y ayuda durante situaciones de emergencia.";
+
+"emergency.copy.accessibility" = "Copiar número";
+"emergency.number.copied" = "Número copiado:";
+"emergency.source" = "Fuente:";
+
+"emergency.support.section.title" = "Ayuda para personas mayores";
+"emergency.support.section.description" = "Directorios internacionales de organizaciones que apoyan a las personas mayores. Son recursos informativos, no servicios de respuesta a emergencias.";
+"emergency.support.helpage.description" = "Una red mundial de organizaciones que apoyan a las personas mayores.";
+"emergency.support.who.description" = "La Red Mundial de la OMS de Ciudades y Comunidades Amigables con las Personas Mayores.";
+
+"emergency.country.missing.title" = "Selecciona tu país";
+"emergency.country.missing.message" = "Selecciona tu país de residencia en el perfil para que MorningHello muestre los números de emergencia correspondientes.";
+
+"emergency.country.unavailable.title" = "Estamos verificando la información del país";
+"emergency.country.unavailable.message" = "Todavía no está disponible una lista completa de números verificados para el país seleccionado. Los recursos internacionales de ayuda están disponibles abajo.";
+
+"emergency.disclaimer" = "MorningHello no contacta automáticamente a los servicios de emergencia. Si estás en otro país, utiliza el número local de emergencias.";
+"emergency.service.general" = "Servicios de emergencia";
+"emergency.service.crisis_support" = "Apoyo en situaciones de crisis";
+"emergency.service.police_non_emergency" = "Policía, casos no urgentes";
+"emergency.service.medical_advice" = "Asesoramiento médico urgente";
+"emergency.service.text_emergency" = "Servicio de emergencia por texto";
+"emergency.service.disaster_assistance" = "Asistencia en desastres";
+"emergency.service.health_advice" = "Asesoramiento de salud";
+
+"emergency.home.title" = "Servicios de\nemergencia";
+"emergency.home.accessibility" = "Servicios de emergencia";
+"emergency.home.hint" = "Abre los números de emergencia y los recursos de ayuda para personas mayores";
+
+"emergency.note.eu.112" = "Número único y gratuito para la policía, la ambulancia y los bomberos en toda la Unión Europea.";
+
+"emergency.note.us.911" = "Policía, ambulancia y bomberos cuando existe un peligro inmediato.";
+"emergency.note.us.988" = "Apoyo gratuito, confidencial y disponible las 24 horas para crisis emocionales o pensamientos suicidas.";
+
+"emergency.note.ca.911" = "Policía, ambulancia y bomberos cuando existe un peligro inmediato.";
+"emergency.note.ca.988" = "Apoyo disponible las 24 horas para crisis suicidas. Se puede llamar o enviar un mensaje de texto.";
+
+"emergency.note.gb.999" = "Número principal para la policía, la ambulancia, los bomberos y la guardia costera.";
+"emergency.note.gb.112" = "Número de emergencia adicional que conecta con los mismos servicios que el 999.";
+"emergency.note.gb.101" = "Para asuntos policiales que no son emergencias.";
+"emergency.note.gb.111" = "Asesoramiento médico urgente cuando la situación no pone en peligro la vida.";
+
+"emergency.note.au.000" = "Número principal para la policía, la ambulancia y los bomberos.";
+"emergency.note.au.112" = "Número de emergencia secundario para teléfonos móviles. El 000 sigue siendo el número principal.";
+"emergency.note.au.106" = "Servicio de emergencia por texto para personas con dificultades auditivas o del habla que utilizan TTY.";
+"emergency.note.au.132500" = "Asistencia del SES durante inundaciones, tormentas y otras situaciones que no ponen la vida en peligro inmediato.";
+"emergency.note.au.medicare" = "Asesoramiento médico gratuito las 24 horas. Si existe peligro para la vida, llama al 000.";
+"emergency.note.au.lifeline" = "Apoyo emocional en situaciones de crisis disponible las 24 horas a través de Lifeline.";
+"emergency.note.do.coverage" = "El 911 no tiene cobertura completa en todo el país. La cobertura puede ser limitada fuera de Santo Domingo.";
+"emergency.note.ht.delay" = "Debido a la situación de seguridad, los servicios de emergencia pueden tardar mucho o no poder responder.";
+"connection.screen.description" = "Todos los recordatorios guardados aparecerán en la parte inferior de la postal después de confirmar que estás bien.";

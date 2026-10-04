@@ -38,6 +38,9 @@
 		2976EF0E3027D60C00C0E8B1 /* TermsOfUseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976EF0D3027D60C00C0E8B1 /* TermsOfUseView.swift */; };
 		2976EF113027D66000C0E8B1 /* TermsOfUseText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */; };
 		2976EF133027D69B00C0E8B1 /* AppEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2976EF123027D69B00C0E8B1 /* AppEntryView.swift */; };
+		297E669D30712BFD00CF3173 /* EmergencyServicesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297E669C30712BFD00CF3173 /* EmergencyServicesView.swift */; };
+		297E669F307172EC00CF3173 /* OlderAdultSupportCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297E669E307172EC00CF3173 /* OlderAdultSupportCatalog.swift */; };
+		297E66A13071766400CF3173 /* RegionalEmergencyCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 297E66A03071766400CF3173 /* RegionalEmergencyCatalog.swift */; };
 		2988741B3062A10500361B7D /* SubscriptionPaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F44CBD303F95F10043E63A /* SubscriptionPaywallView.swift */; };
 		2988741D306332A900361B7D /* LatinAmericanHolidayProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2988741C306332A900361B7D /* LatinAmericanHolidayProvider.swift */; };
 		2988743B3064022D00361B7D /* HolidayPresetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2988743A3064022D00361B7D /* HolidayPresetManager.swift */; };
@@ -144,6 +147,9 @@
 		2976EF0D3027D60C00C0E8B1 /* TermsOfUseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseView.swift; sourceTree = "<group>"; };
 		2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseText.swift; sourceTree = "<group>"; };
 		2976EF123027D69B00C0E8B1 /* AppEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEntryView.swift; sourceTree = "<group>"; };
+		297E669C30712BFD00CF3173 /* EmergencyServicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyServicesView.swift; sourceTree = "<group>"; };
+		297E669E307172EC00CF3173 /* OlderAdultSupportCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OlderAdultSupportCatalog.swift; sourceTree = "<group>"; };
+		297E66A03071766400CF3173 /* RegionalEmergencyCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionalEmergencyCatalog.swift; sourceTree = "<group>"; };
 		2988741C306332A900361B7D /* LatinAmericanHolidayProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatinAmericanHolidayProvider.swift; sourceTree = "<group>"; };
 		2988743A3064022D00361B7D /* HolidayPresetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidayPresetManager.swift; sourceTree = "<group>"; };
 		2988743C30647BF500361B7D /* JulyPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JulyPostcardProvider.swift; sourceTree = "<group>"; };
@@ -332,6 +338,16 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		297E669830712BCD00CF3173 /* Emergency */ = {
+			isa = PBXGroup;
+			children = (
+				297E669C30712BFD00CF3173 /* EmergencyServicesView.swift */,
+				297E669E307172EC00CF3173 /* OlderAdultSupportCatalog.swift */,
+				297E66A03071766400CF3173 /* RegionalEmergencyCatalog.swift */,
+			);
+			path = Emergency;
+			sourceTree = "<group>";
+		};
 		29AFFFBF30390273007FE955 /* Collection */ = {
 			isa = PBXGroup;
 			children = (
@@ -350,6 +366,7 @@
 				29BCCD02302D9F140027557C /* Backend */,
 				29AFFFBF30390273007FE955 /* Collection */,
 				292FB2E9306ACA0A0071D95A /* Connection */,
+				297E669830712BCD00CF3173 /* Emergency */,
 				290E2543304F655C000D4A2D /* Frameworks */,
 				29B76C44301AAB9900D1D295 /* HolidayProvider */,
 				29B76C78301BD31700D1D295 /* Intro */,
@@ -416,11 +433,11 @@
 		29B76C70301BCFEC00D1D295 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				29B76C71301BD0B000D1D295 /* HolidayContent.swift */,
-				29B76C73301BD1F300D1D295 /* SelectedPostcard.swift */,
-				29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */,
 				29BCCCEC302A68140027557C /* EmergencyContact.swift */,
 				29BCCD00302D9EAF0027557C /* EmergencyContactInviteModels.swift */,
+				29B76C71301BD0B000D1D295 /* HolidayContent.swift */,
+				29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */,
+				29B76C73301BD1F300D1D295 /* SelectedPostcard.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -604,6 +621,7 @@
 				296D4CDB3046B1AC000248AD /* SettingsView..swift in Sources */,
 				29C3A9BA3061DAAB0031851C /* SubscriptionView.swift in Sources */,
 				29B54B04306C6635001E689C /* JunePostcardProvider.swift in Sources */,
+				297E669D30712BFD00CF3173 /* EmergencyServicesView.swift in Sources */,
 				29FAEAF23040DE51003CFA12 /* MarchPostcardProvider.swift in Sources */,
 				29EC924F3053144800D9BD71 /* SwiftDataMoodRepository.swift in Sources */,
 				2916AEC0305D90C0007248C3 /* MonitoringSnapshot.swift in Sources */,
@@ -631,6 +649,7 @@
 				29BDC65C30082B5D00EEA736 /* CheckInNotificationManager.swift in Sources */,
 				29B76C88301D523900D1D295 /* CatholicHolidayProvider.swift in Sources */,
 				29B76C5D301B704500D1D295 /* ShareSheet.swift in Sources */,
+				297E66A13071766400CF3173 /* RegionalEmergencyCatalog.swift in Sources */,
 				29AFFFBA30390225007FE955 /* PostcardCatalogView..swift in Sources */,
 				29AFFFBC30390243007FE955 /* PostcardCollectionView..swift in Sources */,
 				29BCCCED302A68140027557C /* EmergencyContact.swift in Sources */,
@@ -681,6 +700,7 @@
 				29B76C59301B582A00D1D295 /* HanukkahPostcardProvider.swift in Sources */,
 				29B76CA330212FD700D1D295 /* HeartbeatModels.swift in Sources */,
 				2976EF113027D66000C0E8B1 /* TermsOfUseText.swift in Sources */,
+				297E669F307172EC00CF3173 /* OlderAdultSupportCatalog.swift in Sources */,
 				29AFFF9B3037B456007FE955 /* SubscriptionSnapshot.swift in Sources */,
 				29B76CA73021304700D1D295 /* HeartbeatAPIClient.swift in Sources */,
 				292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */,
@@ -816,7 +836,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -858,7 +878,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 21;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

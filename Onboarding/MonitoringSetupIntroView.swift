@@ -48,27 +48,14 @@ struct MonitoringSetupIntroView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            let availableWidth =
-                max(
-                    geometry.size.width - 48,
-                    280
-                )
-
-            let contentWidth =
-                min(
-                    availableWidth,
-                    560
-                )
-
             ZStack {
-                background
+                background(
+                    size: geometry.size
+                )
 
-                ScrollView(
-                    .vertical,
-                    showsIndicators: false
-                ) {
+                ScrollView {
                     VStack(
-                        spacing: 20
+                        spacing: 22
                     ) {
                         Spacer()
                             .frame(height: 50)
@@ -80,19 +67,27 @@ struct MonitoringSetupIntroView: View {
                         continueButton
                     }
                     .frame(
-                        width: contentWidth
+                        maxWidth: .infinity,
+                        alignment: .center
                     )
+                    .padding(.horizontal, 22)
                     .padding(.bottom, 36)
-                    .frame(
-                        maxWidth: .infinity
-                    )
                 }
+                .frame(
+                    width: geometry.size.width,
+                    height: geometry.size.height
+                )
             }
+            .frame(
+                width: geometry.size.width,
+                height: geometry.size.height
+            )
         }
     }
 
-    private var background:
-        some View {
+    private func background(
+        size: CGSize
+    ) -> some View {
 
         ZStack {
             LinearGradient(
@@ -119,13 +114,19 @@ struct MonitoringSetupIntroView: View {
                 Image(backgroundImageName)
                     .resizable()
                     .scaledToFill()
+                    .frame(
+                        width: size.width,
+                        height: size.height,
+                        alignment: .center
+                    )
+                    .clipped()
                     .overlay {
                         LinearGradient(
                             colors: [
                                 Color.white
                                     .opacity(0.05),
                                 Color.white
-                                    .opacity(0.30)
+                                    .opacity(0.35)
                             ],
                             startPoint: .top,
                             endPoint: .bottom
@@ -133,6 +134,11 @@ struct MonitoringSetupIntroView: View {
                     }
             }
         }
+        .frame(
+            width: size.width,
+            height: size.height
+        )
+        .clipped()
         .ignoresSafeArea()
     }
 

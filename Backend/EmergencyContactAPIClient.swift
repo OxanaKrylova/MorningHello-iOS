@@ -1,4 +1,4 @@
-///
+//
 //  EmergencyContactAPIClient.swift
 //  MorningHello
 //
@@ -7,20 +7,15 @@
 
 import Foundation
 
-
 struct EmergencyContactAPIClient {
 
-    static let shared =
-        EmergencyContactAPIClient()
+    static let shared = EmergencyContactAPIClient()
 
-    private let baseURL =
-        URL(
-            string:
-                "https://api.morninghelloapp.com"
-        )!
+    private let baseURL = URL(
+        string: "https://api.morninghelloapp.com"
+    )!
 
-    private init() {
-    }
+    private init() {}
 
 
     // MARK: - Получение статусов согласия
@@ -30,49 +25,35 @@ struct EmergencyContactAPIClient {
         -> [String: EmergencyContactStatus] {
 
         let appInstanceID =
-            AppInstanceIDProvider
-                .getOrCreate()
+            AppInstanceIDProvider.getOrCreate()
 
         let endpoint =
             baseURL
-                .appendingPathComponent(
-                    "users"
-                )
+                .appendingPathComponent("users")
                 .appendingPathComponent(
                     appInstanceID.uuidString
                 )
-                .appendingPathComponent(
-                    "contacts"
-                )
-                .appendingPathComponent(
-                    "consent"
-                )
+                .appendingPathComponent("contacts")
+                .appendingPathComponent("consent")
 
-        var request =
-            URLRequest(
-                url: endpoint
-            )
+        var request = URLRequest(
+            url: endpoint
+        )
 
-        request.httpMethod =
-            "GET"
+        request.httpMethod = "GET"
 
         request.setValue(
             "application/json",
-            forHTTPHeaderField:
-                "Accept"
+            forHTTPHeaderField: "Accept"
         )
 
         let result =
-            try await BackendLoggedRequest
-                .perform(
-                    request
-                )
+            try await BackendLoggedRequest.perform(
+                request
+            )
 
-        let data =
-            result.data
-
-        let response =
-            result.response
+        let data = result.data
+        let response = result.response
 
         guard let httpResponse =
                 response as? HTTPURLResponse
@@ -91,13 +72,11 @@ struct EmergencyContactAPIClient {
 
         Swift.print(
             """
-            
-            EMERGENCY CONTACT CONSENT STATUS RESPONSE
+            [\(appInstanceID.uuidString)] EMERGENCY CONTACT CONSENT STATUS RESPONSE
             GET \(endpoint.absoluteString)
             STATUS: \(httpResponse.statusCode)
-            
+
             \(responseBody)
-            
             """
         )
 
@@ -116,24 +95,17 @@ struct EmergencyContactAPIClient {
         }
 
         let serverStatuses =
-            try await BackendLoggedRequest
-                .decode(
-                    [String: ServerConsentStatus]
-                        .self,
-                    from: data,
-                    using: JSONDecoder(),
-                    request: request,
-                    durationMilliseconds:
-                        result
-                            .durationMilliseconds
-                )
+            try await BackendLoggedRequest.decode(
+                [String: ServerConsentStatus].self,
+                from: data,
+                using: JSONDecoder(),
+                request: request,
+                durationMilliseconds:
+                    result.durationMilliseconds
+            )
 
         return serverStatuses.reduce(
-            into:
-                [
-                    String:
-                        EmergencyContactStatus
-                ]()
+            into: [String: EmergencyContactStatus]()
         ) { result, item in
 
             result[
@@ -141,8 +113,7 @@ struct EmergencyContactAPIClient {
                     item.key
                 )
             ] =
-                item.value
-                    .contactStatus
+                item.value.contactStatus
         }
     }
 
@@ -150,31 +121,24 @@ struct EmergencyContactAPIClient {
     // MARK: - Полная замена списка контактов
 
     func replaceContacts(
-        _ contacts:
-            [EmergencyContact]
+        _ contacts: [EmergencyContact]
     ) async throws {
 
         let appInstanceID =
-            AppInstanceIDProvider
-                .getOrCreate()
+            AppInstanceIDProvider.getOrCreate()
 
         let endpoint =
             baseURL
-                .appendingPathComponent(
-                    "users"
-                )
+                .appendingPathComponent("users")
                 .appendingPathComponent(
                     appInstanceID.uuidString
                 )
-                .appendingPathComponent(
-                    "contacts"
-                )
+                .appendingPathComponent("contacts")
 
         let body =
             ServerContactsRequest(
                 emergencyContacts:
-                    contacts.map {
-                        contact in
+                    contacts.map { contact in
 
                         ServerContact(
                             firstName:
@@ -182,36 +146,30 @@ struct EmergencyContactAPIClient {
                             lastName:
                                 contact.surname,
                             phone:
-                                contact
-                                    .phoneDigits,
+                                contact.phoneDigits,
                             email:
                                 contact.email
                         )
                     }
             )
 
-        var request =
-            URLRequest(
-                url: endpoint
-            )
+        var request = URLRequest(
+            url: endpoint
+        )
 
-        request.httpMethod =
-            "PUT"
+        request.httpMethod = "PUT"
 
         request.setValue(
             "application/json",
-            forHTTPHeaderField:
-                "Content-Type"
+            forHTTPHeaderField: "Content-Type"
         )
 
         request.setValue(
             "application/json",
-            forHTTPHeaderField:
-                "Accept"
+            forHTTPHeaderField: "Accept"
         )
 
-        let encoder =
-            JSONEncoder()
+        let encoder = JSONEncoder()
 
         encoder.outputFormatting = [
             .sortedKeys
@@ -223,16 +181,12 @@ struct EmergencyContactAPIClient {
             )
 
         let result =
-            try await BackendLoggedRequest
-                .perform(
-                    request
-                )
+            try await BackendLoggedRequest.perform(
+                request
+            )
 
-        let data =
-            result.data
-
-        let response =
-            result.response
+        let data = result.data
+        let response = result.response
 
         guard let httpResponse =
                 response as? HTTPURLResponse
@@ -251,13 +205,11 @@ struct EmergencyContactAPIClient {
 
         Swift.print(
             """
-            
-            EMERGENCY CONTACTS REPLACE RESPONSE
+            [\(appInstanceID.uuidString)] EMERGENCY CONTACTS REPLACE RESPONSE
             PUT \(endpoint.absoluteString)
             STATUS: \(httpResponse.statusCode)
-            
+
             \(responseBody)
-            
             """
         )
 
@@ -298,15 +250,9 @@ private enum ServerConsentStatus:
     String,
     Decodable {
 
-    case pending =
-        "PENDING"
-
-    case granted =
-        "GRANTED"
-
-    case denied =
-        "DENIED"
-
+    case pending = "PENDING"
+    case granted = "GRANTED"
+    case denied = "DENIED"
 
     var contactStatus:
         EmergencyContactStatus {
@@ -356,7 +302,6 @@ enum EmergencyContactAPIError:
     case serverError(
         statusCode: Int
     )
-
 
     var errorDescription:
         String? {

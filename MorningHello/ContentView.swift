@@ -57,7 +57,8 @@ struct ContentView: View {
     @State private var showSettings = false
     @State private var showMoodCheckIn = false
     @State private var showConnectionCalendar = false
-
+    @State private var showEmergencyServices = false
+    
     @Query(
         sort: \ConnectionReminder.startDate,
         order: .forward
@@ -92,8 +93,13 @@ struct ContentView: View {
     @AppStorage("showLatinAmericanHolidays")
     private var showLatinAmericanHolidays = false
     
-    @AppStorage("app_instance_id")
-    private var appInstanceId: String = UUID().uuidString
+    @State
+    private var isDeletedUserAccount =
+        false
+
+    @State
+    private var showDeletedUserAlert =
+        false
     @AppStorage("check_in_interval_hours")
     private var checkInIntervalHours: Int = 0
 
@@ -466,29 +472,102 @@ struct ContentView: View {
             intervalHours: checkInIntervalHours
         )
     }
-
-    private func getOrCreateAppInstanceID() -> UUID {
-        let key = "app_instance_id"
-
-        if let savedString = UserDefaults.standard.string(
-            forKey: key
-        ),
-           let savedUUID = UUID(
-            uuidString: savedString
-           ) {
-            return savedUUID
+    
+    private func heartbeatServerError(
+        from error:
+            Error
+    ) -> (
+        statusCode:
+            Int,
+        message:
+            String?
+    )? {
+        guard case let HeartbeatAPIError
+            .serverError(
+                statusCode,
+                message
+            ) = error
+        else {
+            return nil
         }
 
-        let newUUID = UUID()
-
-        UserDefaults.standard.set(
-            newUUID.uuidString,
-            forKey: key
+        return (
+            statusCode,
+            message
         )
-
-        return newUUID
     }
 
+    private func isDeletedUserMessage(
+        _ message:
+            String?
+    ) -> Bool {
+
+        guard let message else {
+            return false
+        }
+
+        return message
+            .localizedCaseInsensitiveContains(
+                "USER_DELETED"
+            )
+    }
+
+    @MainActor
+    private func handleDeletedUserAccount(
+        appInstanceID:
+            UUID
+    ) {
+
+        /*
+         ВАЖНО:
+         новый appInstanceId здесь не создаётся.
+
+         Старый идентификатор остаётся в Keychain
+         и продолжает совпадать с appAccountToken
+         первоначальной покупки.
+         */
+
+        isDeletedUserAccount =
+            true
+
+        showDeletedUserAlert =
+            true
+
+        monitoringSnapshot =
+            nil
+
+        serverClockOffset =
+            0
+
+        lastExpiredStatusRefreshAt =
+            nil
+
+        monitoringRequestFailed =
+            false
+
+        checkInRequestFailed =
+            false
+
+        UserDefaults.standard.removeObject(
+            forKey:
+                monitoringSnapshotKey
+        )
+
+        UserDefaults.standard.removeObject(
+            forKey:
+                serverClockOffsetKey
+        )
+
+    #if DEBUG
+
+        print(
+            "[\(appInstanceID.uuidString)] USER ACCOUNT IS MARKED AS DELETED"
+        )
+
+    #endif
+    }
+    
+    
     // MARK: - JSON для проверки в консоли
 
     private func createBackendJSON(
@@ -971,99 +1050,132 @@ struct ContentView: View {
         }
     }
 
-    // @MainActor
-    //private func markAsAlive() async {
-    //    guard !isSendingCheckIn else { return }
-    //
-    //isSendingCheckIn = true
-    //checkInRequestFailed = false
-    //defer { isSendingCheckIn = false }
-    //
-    //let request = makeHeartbeatRequest(
-    // checkInDate: Date()
-    //  )
-    //
-    //   do {
-    //        let response = try await HeartbeatAPIClient.shared
-    //            .sendHeartbeat(
-    //               appInstanceID: getOrCreateAppInstanceID(),
-    //               request: request
-    //          )
-    //
-    //       acceptMonitoringSnapshot(response)
-    //      monitoringRequestFailed = false
-    //
-    //       if let acceptedAt = response.lastAcceptedCheckInAt {
-    //           lastCheckInDate = acceptedAt
-    //            UserDefaults.standard.set(
-    //               acceptedAt,
-    //                forKey: lastCheckInKey
-    //           )
-    //       }
-    //
-    //        AppSoundPlayer.shared.play(.checkInSuccess)
-    //       customMessage = ""
-    //        showPostcard = true
-    //
-    //     } catch {
-    //          checkInRequestFailed = true
-    //         print("Heartbeat не принят:", error.localizedDescription)
-    //      }
-    //  }
     @MainActor
     private func markAsAlive() async {
-        guard !isSendingCheckIn else { return }
 
-        isSendingCheckIn = true
-        checkInRequestFailed = false
-        monitoringRequestFailed = false
-        defer { isSendingCheckIn = false }
+        guard !isSendingCheckIn else {
+            return
+        }
 
-        let request = makeHeartbeatRequest(
-            checkInDate: Date()
-        )
+        guard !isDeletedUserAccount else {
+
+            showDeletedUserAlert =
+                true
+
+            return
+        }
+
+        isSendingCheckIn =
+            true
+
+        checkInRequestFailed =
+            false
+
+        monitoringRequestFailed =
+            false
+
+        defer {
+
+            isSendingCheckIn =
+                false
+        }
+
+        let appInstanceID =
+            AppInstanceIDProvider
+                .getOrCreate()
+
+        let request =
+            makeHeartbeatRequest(
+                checkInDate:
+                    Date()
+            )
 
         do {
-            let response = try await HeartbeatAPIClient.shared
-                .sendHeartbeat(
-                    appInstanceID: getOrCreateAppInstanceID(),
-                    request: request
-                )
 
-            acceptMonitoringSnapshot(response)
-            monitoringRequestFailed = false
+            let response =
+                try await HeartbeatAPIClient
+                    .shared
+                    .sendHeartbeat(
+                        appInstanceID:
+                            appInstanceID,
+                        request:
+                            request
+                    )
 
-            if let acceptedAt = response.lastCheckInAt {
-                lastCheckInDate = acceptedAt
+            acceptMonitoringSnapshot(
+                response
+            )
+
+            monitoringRequestFailed =
+                false
+
+            if let acceptedAt =
+                response.lastCheckInAt {
+
+                lastCheckInDate =
+                    acceptedAt
+
                 UserDefaults.standard.set(
                     acceptedAt,
-                    forKey: lastCheckInKey
+                    forKey:
+                        lastCheckInKey
                 )
             }
 
-            AppSoundPlayer.shared.play(.checkInSuccess)
-            customMessage = ""
-            showPostcard = true
+            AppSoundPlayer.shared.play(
+                .checkInSuccess
+            )
+
+            customMessage =
+                ""
+
+            showPostcard =
+                true
 
         } catch {
-            if let serverError = heartbeatServerError(from: error) {
-                if serverError.statusCode == 409 {
-                    isSendingCheckIn = false
+
+            if let serverError =
+                heartbeatServerError(
+                    from:
+                        error
+                ) {
+
+                if serverError.statusCode
+                    == 409 {
+
+                    isSendingCheckIn =
+                        false
+
                     await refreshMonitoringStatus()
+
                     return
                 }
 
-                if serverError.statusCode == 404,
-                   isDeletedUserMessage(serverError.message) {
-                    resetDeletedAppInstance()
+                if serverError.statusCode
+                    == 404,
+                   isDeletedUserMessage(
+                        serverError.message
+                   ) {
+
+                    handleDeletedUserAccount(
+                        appInstanceID:
+                            appInstanceID
+                    )
+
+                    return
                 }
             }
 
-            checkInRequestFailed = true
+            checkInRequestFailed =
+                true
+
+    #if DEBUG
+
             print(
-                "Heartbeat не принят:",
-                error.localizedDescription
+                "[\(appInstanceID.uuidString)] HEARTBEAT WAS NOT ACCEPTED: \(error.localizedDescription)"
             )
+
+    #endif
         }
     }
 
@@ -1095,7 +1207,93 @@ struct ContentView: View {
             )
         }
     }
+    @MainActor
+    private func refreshMonitoringStatus() async {
 
+        guard !isDeletedUserAccount else {
+            return
+        }
+
+        guard !isRefreshingMonitoring,
+              !isSendingCheckIn
+        else {
+            return
+        }
+
+        isRefreshingMonitoring =
+            true
+
+        defer {
+
+            isRefreshingMonitoring =
+                false
+        }
+
+        let appInstanceID =
+            AppInstanceIDProvider
+                .getOrCreate()
+
+        do {
+
+            let response =
+                try await HeartbeatAPIClient
+                    .shared
+                    .getMonitoringStatus(
+                        appInstanceID:
+                            appInstanceID
+                    )
+
+            acceptMonitoringSnapshot(
+                response
+            )
+
+            monitoringRequestFailed =
+                false
+
+        } catch {
+
+            if let serverError =
+                heartbeatServerError(
+                    from:
+                        error
+                ),
+               serverError.statusCode
+                == 404 {
+
+                if isDeletedUserMessage(
+                    serverError.message
+                ) {
+
+                    handleDeletedUserAccount(
+                        appInstanceID:
+                            appInstanceID
+                    )
+
+                    return
+                }
+
+                monitoringSnapshot =
+                    nil
+
+                monitoringRequestFailed =
+                    false
+
+                return
+            }
+
+            monitoringRequestFailed =
+                true
+
+    #if DEBUG
+
+            print(
+                "[\(appInstanceID.uuidString)] MONITORING STATUS REFRESH FAILED: \(error.localizedDescription)"
+            )
+
+    #endif
+        }
+    }
+    
     @MainActor
     private func loadSavedMonitoringSnapshot() {
         guard let data = UserDefaults.standard.data(
@@ -1123,82 +1321,6 @@ struct ContentView: View {
                 forKey: serverClockOffsetKey
             )
         }
-    }
-
-    @MainActor
-    private func refreshMonitoringStatus() async {
-        guard !isRefreshingMonitoring,
-              !isSendingCheckIn else {
-            return
-        }
-
-        isRefreshingMonitoring = true
-        defer { isRefreshingMonitoring = false }
-
-        do {
-            let response = try await HeartbeatAPIClient.shared
-                .getMonitoringStatus(
-                    appInstanceID: getOrCreateAppInstanceID()
-                )
-
-            acceptMonitoringSnapshot(response)
-            monitoringRequestFailed = false
-
-        } catch {
-            if let serverError = heartbeatServerError(from: error),
-               serverError.statusCode == 404 {
-                if isDeletedUserMessage(serverError.message) {
-                    resetDeletedAppInstance()
-                }
-
-                // До первой успешной отметки пользователь может ещё
-                // отсутствовать на Backend. Это не ошибка соединения.
-                monitoringSnapshot = nil
-                monitoringRequestFailed = false
-                return
-            }
-
-            monitoringRequestFailed = true
-            print(
-                "Не удалось обновить статус мониторинга:",
-                error.localizedDescription
-            )
-        }
-    }
-
-    private func heartbeatServerError(
-        from error: Error
-    ) -> (statusCode: Int, message: String?)? {
-        guard case let HeartbeatAPIError.serverError(
-            statusCode,
-            message
-        ) = error else {
-            return nil
-        }
-
-        return (statusCode, message)
-    }
-
-    private func isDeletedUserMessage(
-        _ message: String?
-    ) -> Bool {
-        message?.contains("USER_DELETED") == true
-    }
-
-    @MainActor
-    private func resetDeletedAppInstance() {
-        let newID = UUID().uuidString
-        appInstanceId = newID
-        monitoringSnapshot = nil
-        serverClockOffset = 0
-        lastExpiredStatusRefreshAt = nil
-
-        UserDefaults.standard.removeObject(
-            forKey: monitoringSnapshotKey
-        )
-        UserDefaults.standard.removeObject(
-            forKey: serverClockOffsetKey
-        )
     }
 
     @MainActor
@@ -1536,8 +1658,73 @@ struct ContentView: View {
                     .offset(y: -10)
 
                     HStack(spacing: 24) {
-                        Spacer()
-                            .frame(width: 158)
+                        Button {
+                            AppSoundPlayer.shared.play(
+                                .openForm
+                            )
+
+                            showEmergencyServices = true
+                        } label: {
+                            VStack(spacing: 5) {
+                                Image(
+                                    systemName:
+                                        "cross.case.fill"
+                                )
+                                .font(
+                                    .system(
+                                        size: 25,
+                                        weight: .semibold
+                                    )
+                                )
+                                .foregroundStyle(
+                                    Color.black
+                                )
+
+                                Text(
+                                    selectedLanguage.localized(
+                                        "emergency.home.title"
+                                    )
+                                )
+                                .font(
+                                    .system(
+                                        size: 15,
+                                        weight: .bold,
+                                        design: .rounded
+                                    )
+                                )
+                                .foregroundStyle(
+                                    Color.black
+                                )
+                                .multilineTextAlignment(
+                                    .center
+                                )
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.75)
+                            }
+                            .frame(
+                                width: 158,
+                                height: 78
+                            )
+                            .background(
+                                AppAdaptiveColor
+                                    .warmCardBackground,
+                                in: RoundedRectangle(
+                                    cornerRadius: 22,
+                                    style: .continuous
+                                )
+                            )
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(
+                            selectedLanguage.localized(
+                                "emergency.home.accessibility"
+                            )
+                        )
+                        .accessibilityHint(
+                            selectedLanguage.localized(
+                                "emergency.home.hint"
+                            )
+                        )
 
                         Button {
                             AppSoundPlayer.shared.play(
@@ -1546,9 +1733,7 @@ struct ContentView: View {
 
                             showConnectionCalendar = true
                         } label: {
-                            VStack(
-                                spacing: 7
-                            ) {
+                            VStack(spacing: 7) {
                                 Image(
                                     systemName:
                                         "person.2.wave.2.fill"
@@ -1600,7 +1785,14 @@ struct ContentView: View {
                                 "connection.home.title"
                             )
                         )
+                        .accessibilityHint(
+                            selectedLanguage.localized(
+                                "connection.home.subtitle"
+                            )
+                        )
                     }
+                    .frame(maxWidth: 340)
+                    .padding(.top, 4)
                     .frame(maxWidth: 340)
                     .padding(.top, 4)
                 }
@@ -2493,6 +2685,12 @@ struct ContentView: View {
                     }
                     .sheet(
                         isPresented:
+                            $showEmergencyServices
+                    ) {
+                        EmergencyServicesView()
+                    }
+                    .sheet(
+                        isPresented:
                             $showConnectionCalendar
                     ) {
                         ConnectionCalendarView()
@@ -2612,6 +2810,31 @@ struct ContentView: View {
                                 ),
                                 locale: selectedLanguage.locale,
                                 checkInIntervalText
+                            )
+                        )
+                    }
+                    .alert(
+                        selectedLanguage.localized(
+                            "Аккаунт удалён"
+                        ),
+                        isPresented:
+                            $showDeletedUserAlert
+                    ) {
+
+                        Button(
+                            selectedLanguage.localized(
+                                "Понятно"
+                            ),
+                            role:
+                                .cancel
+                        ) {
+                        }
+
+                    } message: {
+
+                        Text(
+                            selectedLanguage.localized(
+                                "Аккаунт можно восстановить в течение 30 дней. Идентификатор пользователя сохранён."
                             )
                         )
                     }

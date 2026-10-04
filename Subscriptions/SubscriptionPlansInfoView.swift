@@ -408,35 +408,103 @@ enum SubscriptionPaywallMode: Equatable {
             guard !isRestoring else {
                 return
             }
-            
+
             isRestoring = true
-            
+
             defer {
                 isRestoring = false
             }
-            
+
             do {
                 try await AppStore.sync()
+
                 await subscriptionManager.refreshAndSync()
-                
+
                 if subscriptionManager.hasActiveSubscription {
-                    purchaseMessage = selectedLanguage.localized(
-                        "Покупки восстановлены. Подписка активна."
-                    )
+                    purchaseMessage =
+                        selectedLanguage.localized(
+                            "Покупки восстановлены. Подписка активна."
+                        )
+
                     onPurchaseCompleted?()
                 } else {
-                    purchaseMessage = selectedLanguage.localized(
-                        "Активная подписка для этого Apple ID не найдена."
-                    )
+                    purchaseMessage =
+                        selectedLanguage.localized(
+                            "Активная подписка для этого Apple ID не найдена."
+                        )
                 }
             } catch {
-                purchaseMessage = String(
-                    format: selectedLanguage.localized(
-                        "Не удалось восстановить покупки: %@"
-                    ),
-                    locale: selectedLanguage.locale,
+                purchaseMessage =
+                    String(
+                        format:
+                            selectedLanguage.localized(
+                                "Не удалось восстановить покупки: %@"
+                            ),
+                        locale:
+                            selectedLanguage.locale,
+                        error.localizedDescription
+                    )
+            }
+        }
+
+
+        @MainActor
+        private func purchaseSelectedPlan() async {
+            if selectedProduct == nil {
+                await subscriptionManager.loadProducts()
+            }
+
+            guard let productToPurchase =
+                    selectedProduct
+            else {
+                purchaseMessage =
+                    selectedLanguage.localized(
+                        "Тариф пока недоступен в App Store. Попробуйте ещё раз позднее."
+                    )
+
+                return
+            }
+
+            guard !isPurchasing else {
+                return
+            }
+
+            isPurchasing = true
+
+            defer {
+                isPurchasing = false
+            }
+
+            do {
+                let appInstanceID =
+                    AppInstanceIDProvider.getOrCreate()
+
+                let purchaseResult =
+                    try await productToPurchase.purchase(
+                        options: [
+                            .appAccountToken(
+                                appInstanceID
+                            )
+                        ]
+                    )
+
+                let outcome =
+                    try await subscriptionManager
+                        .processPurchaseResult(
+                            purchaseResult
+                        )
+
+                if outcome == .pending {
+                    purchaseMessage =
+                        selectedLanguage.localized(
+                            "Покупка ожидает подтверждения. Доступ включится автоматически после одобрения App Store."
+                        )
+                } else if outcome == .purchased {
+                    onPurchaseCompleted?()
+                }
+            } catch {
+                purchaseMessage =
                     error.localizedDescription
-                )
             }
         }
         
@@ -528,50 +596,6 @@ enum SubscriptionPaywallMode: Equatable {
             )
         }
         
-        @MainActor
-        private func purchaseSelectedPlan() async {
-            if selectedProduct == nil {
-                await subscriptionManager.loadProducts()
-            }
-            
-            guard let productToPurchase = selectedProduct else {
-                purchaseMessage = selectedLanguage.localized(
-                    "Тариф пока недоступен в App Store. Попробуйте ещё раз позднее."
-                )
-                return
-            }
-            
-            isPurchasing = true
-            defer { isPurchasing = false }
-            
-            do {
-                let appInstanceId =
-                    AppInstanceIdentity.id
-
-                let purchaseResult =
-                    try await productToPurchase.purchase(
-                        options: [
-                            .appAccountToken(
-                                appInstanceId
-                            )
-                        ]
-                    )
-                let outcome = try await subscriptionManager
-                    .processPurchaseResult(
-                        purchaseResult
-                    )
-                
-                if outcome == .pending {
-                    purchaseMessage = selectedLanguage.localized(
-                        "Покупка ожидает подтверждения. Доступ включится автоматически после одобрения App Store."
-                    )
-                } else if outcome == .purchased {
-                    onPurchaseCompleted?()
-                }
-            } catch {
-                purchaseMessage = error.localizedDescription
-            }
-        }
     }
     #Preview {
         MorningHelloPaywallView(
