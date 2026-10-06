@@ -682,20 +682,19 @@ struct EmergencyServicesView: View {
             .safeAreaInset(edge: .top) {
                 header
             }
-            .overlay(
-                alignment: .bottom
-            ) {
+            .overlay {
                 if let copiedNumber {
                     copiedMessage(
                         number: copiedNumber
                     )
-                    .padding(.bottom, 18)
+                    .padding(.horizontal, 24)
                     .transition(
-                        .move(edge: .bottom)
+                        .scale(scale: 0.9)
                             .combined(
                                 with: .opacity
                             )
                     )
+                    .zIndex(10)
                 }
             }
             .animation(
@@ -941,7 +940,7 @@ struct EmergencyServicesView: View {
             )
             .font(
                 .system(
-                    size: service.canCall ? 34 : 18,
+                    size: service.canCall ? 23 : 18,
                     weight: .bold,
                     design: .rounded
                 )
@@ -980,15 +979,14 @@ struct EmergencyServicesView: View {
                         .weight(.semibold)
                     )
                     .foregroundStyle(
-                        AppAdaptiveColor.text
+                        Color.white
                     )
                     .frame(
                         maxWidth: .infinity
                     )
                     .padding(.vertical, 12)
                     .background(
-                        AppAdaptiveColor
-                            .warmFormBackground,
+                        Color.orange,
                         in: RoundedRectangle(
                             cornerRadius: 16,
                             style: .continuous
@@ -998,6 +996,25 @@ struct EmergencyServicesView: View {
                 .buttonStyle(.plain)
             }
 
+            if let region = service.region,
+               !region.isEmpty {
+
+                Text(region)
+                    .font(
+                        .system(
+                            .subheadline,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        AppAdaptiveColor.text
+                    )
+                    .fixedSize(
+                        horizontal: false,
+                        vertical: true
+                    )
+            }
+            
             if let noteKey = service.noteKey {
                 Text(
                     selectedLanguage.localized(
@@ -1139,7 +1156,7 @@ struct EmergencyServicesView: View {
                     Text(phoneNumber)
                         .font(
                             .system(
-                                size: 28,
+                                size: 19,
                                 weight: .bold,
                                 design: .rounded
                             )
@@ -1175,15 +1192,14 @@ struct EmergencyServicesView: View {
                             .weight(.semibold)
                         )
                         .foregroundStyle(
-                            AppAdaptiveColor.text
+                            Color.white
                         )
                         .frame(
                             maxWidth: .infinity
                         )
                         .padding(.vertical, 12)
                         .background(
-                            AppAdaptiveColor
-                                .warmFormBackground,
+                            Color.orange,
                             in: RoundedRectangle(
                                 cornerRadius: 16,
                                 style: .continuous

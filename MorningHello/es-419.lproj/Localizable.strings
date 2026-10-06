@@ -1752,3 +1752,5 @@
 "Напомнить позже" = "Recordarme más tarde";
 "С момента последнего обновления прошло больше трёх месяцев. Пожалуйста, убедитесь, что сведения о корме, лекарствах, ветеринаре и уходе остаются актуальными." = "Han pasado más de tres meses desde la última actualización. Verifica que la información sobre el alimento, los medicamentos, el veterinario y los cuidados siga vigente.";
 "emergency.service.diabetes_support" = "Apoyo para la diabetes";
+"emergency.service.pet_aftercare" = "Cremación y despedida de mascotas";
+"emergency.pet_aftercare.confirm_details" = "Confirme por teléfono el horario, la disponibilidad de recogida y el área de servicio.";

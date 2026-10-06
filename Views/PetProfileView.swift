@@ -854,9 +854,6 @@ struct PetProfileView: View {
                     .warmFormBackground
                     .ignoresSafeArea()
             )
-            .navigationTitle(
-                localized("Питомец")
-            )
             .navigationBarTitleDisplayMode(
                 .inline
             )
@@ -871,8 +868,25 @@ struct PetProfileView: View {
             )
             .toolbar {
                 ToolbarItem(
-                    placement:
-                        .cancellationAction
+                    placement: .principal
+                ) {
+                    Text(
+                        localized("Питомец")
+                    )
+                    .font(
+                        .system(
+                            size: 34,
+                            weight: .bold,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        AppAdaptiveColor.text
+                    )
+                }
+
+                ToolbarItem(
+                    placement: .cancellationAction
                 ) {
                     Button(
                         localized("Закрыть")
@@ -1586,6 +1600,8 @@ struct PetProfileView: View {
         }
 
         hasLoadedProfiles = true
+        lastSavedAt =
+            PetProfileStorage.lastSavedAt()
         savedProfiles =
             PetProfileStorage.loadAll()
 
@@ -1824,7 +1840,14 @@ struct PetProfileView: View {
                 .saveAll(
                     savedProfiles
                 )
+            let savedAt = Date()
 
+            PetProfileStorage
+                .markInformationSaved(
+                    at: savedAt
+                )
+
+            lastSavedAt = savedAt
             profile = cleanedProfile
             selectedPetID =
                 cleanedProfile.id

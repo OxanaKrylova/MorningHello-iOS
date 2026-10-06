@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026.10.06.1",
-  "generatedAt": "2026-10-05T21:40:00Z",
+  "catalogVersion": "2026.10.06.2",
+  "generatedAt": "2026-10-06T06:43:00Z",
   "countryCodes": [
     "AU",
     "GB",
@@ -4134,6 +4134,1055 @@
       "verifiedAt": "2026-10-06",
       "internationalNumber": "+1 800 342 2383",
       "sourceURL": "https://consumerguide.diabetes.org/contact-us"
+    },
+    {
+      "id": "au-pet-aftercare-1",
+      "countryCode": "AU",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Sydney",
+      "localizedNames": {
+        "en": "Petrest"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+61409365192",
+      "internationalNumber": "+61 409 365 192",
+      "sourceName": "Petrest",
+      "sourceURL": "https://www.petrest.com.au/contact/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "gb-pet-aftercare-1",
+      "countryCode": "GB",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "London, Lambeth",
+      "localizedNames": {
+        "en": "Lambeth Pet Crematorium"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+442079264221",
+      "internationalNumber": "+44 20 7926 4221",
+      "sourceName": "Lambeth Pet Crematorium",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "il-pet-aftercare-1",
+      "countryCode": "IL",
+      "category": "petAftercare",
+      "scope": "national",
+      "localizedNames": {
+        "en": "Pet101"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+972522648989",
+      "internationalNumber": "+972 52 264 8989",
+      "sourceName": "Pet101",
+      "sourceURL": "https://www.pet101.co.il/%D7%A6%D7%95%D7%A8-%D7%A7%D7%A9%D7%A8/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ca-pet-aftercare-1",
+      "countryCode": "CA",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Calgary and Rocky View, Alberta",
+      "localizedNames": {
+        "en": "Pet Cremation Care"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+14036055666",
+      "internationalNumber": "+1 403 605 5666",
+      "sourceName": "Pet Cremation Care",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "us-pet-aftercare-1",
+      "countryCode": "US",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "New York State",
+      "localizedNames": {
+        "en": "Hartsdale Pet Cemetery"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+19149492583,2",
+      "internationalNumber": "+1 914 949 2583, ext. 2",
+      "sourceName": "Hartsdale Pet Cemetery",
+      "sourceURL": "https://petcem.com/contact/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "at-pet-aftercare-1",
+      "countryCode": "AT",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Vienna",
+      "localizedNames": {
+        "en": "Wiener Tierkrematorium"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+4315234679",
+      "internationalNumber": "+43 1 523 46 79",
+      "sourceName": "Wiener Tierkrematorium",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "be-pet-aftercare-1",
+      "countryCode": "BE",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Oudenburg",
+      "localizedNames": {
+        "en": "Somnia"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+32475764949",
+      "internationalNumber": "+32 475 76 49 49",
+      "sourceName": "Somnia",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "bg-pet-aftercare-1",
+      "countryCode": "BG",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Plovdiv / Sofia",
+      "localizedNames": {
+        "en": "PALERMO"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+359898989933",
+      "internationalNumber": "+359 898 989 933",
+      "sourceName": "PALERMO",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "hu-pet-aftercare-1",
+      "countryCode": "HU",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Budapest",
+      "localizedNames": {
+        "en": "Kiss & Kiss Budapesti Állatkrematórium"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+36203979578",
+      "internationalNumber": "+36 20 397 9578",
+      "sourceName": "Kiss & Kiss Budapesti Állatkrematórium",
+      "sourceURL": "https://petcremation.hu/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "de-pet-aftercare-1",
+      "countryCode": "DE",
+      "category": "petAftercare",
+      "scope": "national",
+      "localizedNames": {
+        "en": "Cremare"
+      },
+      "localizedNotes": {
+        "ru": "Сеть крематориев с услугой вывоза по Германии. Возможность дозвона на бесплатный номер из-за границы не подтверждена.",
+        "en": "A crematorium network offering collection across Germany. Calls to this toll-free number from abroad are not confirmed.",
+        "es": "Red de crematorios con recogida en Alemania. No está confirmado que el número gratuito funcione desde el extranjero."
+      },
+      "dialString": "+498006646838",
+      "internationalNumber": "+49 800 664 6838",
+      "sourceName": "Cremare",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "gr-pet-aftercare-1",
+      "countryCode": "GR",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Antirrio / Western Greece",
+      "localizedNames": {
+        "en": "Pet Service Cremation"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+306947047985",
+      "internationalNumber": "+30 694 704 7985",
+      "sourceName": "Pet Service Cremation",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "dk-pet-aftercare-1",
+      "countryCode": "DK",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Løsning",
+      "localizedNames": {
+        "en": "Dansk Dyrekremering"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+4561543944",
+      "internationalNumber": "+45 61 54 39 44",
+      "sourceName": "Dansk Dyrekremering",
+      "sourceURL": "https://danskdyrekremering.dk/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ie-pet-aftercare-1",
+      "countryCode": "IE",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "County Donegal",
+      "localizedNames": {
+        "en": "Donegal Pet Crematorium"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+353863833434",
+      "internationalNumber": "+353 86 383 3434",
+      "sourceName": "Donegal Pet Crematorium",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "es-pet-aftercare-1",
+      "countryCode": "ES",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Alicante province",
+      "localizedNames": {
+        "en": "CremPet Costa Blanca"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+34641066604",
+      "internationalNumber": "+34 641 066 604",
+      "sourceName": "CremPet Costa Blanca",
+      "sourceURL": "https://www.crempet.es/es/contacto-crempet-entierro-de-animales-crematorio-de-animales",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "it-pet-aftercare-1",
+      "countryCode": "IT",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Villorba, Treviso province",
+      "localizedNames": {
+        "en": "Confido Servizi Funebri"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+393921119118",
+      "internationalNumber": "+39 392 111 9118",
+      "sourceName": "Confido Servizi Funebri",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "cy-pet-aftercare-1",
+      "countryCode": "CY",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Paphos",
+      "localizedNames": {
+        "en": "Paphiakos & CCP / Animal Rescue Cyprus"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+35726946461",
+      "internationalNumber": "+357 26 946 461",
+      "sourceName": "Animal Rescue Cyprus",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "lv-pet-aftercare-1",
+      "countryCode": "LV",
+      "category": "petAftercare",
+      "scope": "national",
+      "region": "Riga / Latvia",
+      "localizedNames": {
+        "en": "Riga Animal Crematorium"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+37129667205",
+      "internationalNumber": "+371 29 667 205",
+      "sourceName": "dzivnieku-apbedisana.lv",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "lt-pet-aftercare-1",
+      "countryCode": "LT",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Tauragė district",
+      "localizedNames": {
+        "en": "Augintinių krematoriumas"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+37065271663",
+      "internationalNumber": "+370 652 71 663",
+      "sourceName": "Augintinių krematoriumas",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "lu-pet-aftercare-1",
+      "countryCode": "LU",
+      "category": "petAftercare",
+      "scope": "national",
+      "region": "Olm",
+      "localizedNames": {
+        "en": "Cremando"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+35226300405",
+      "internationalNumber": "+352 26 30 04 05",
+      "sourceName": "Cremando",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "mt-pet-aftercare-1",
+      "countryCode": "MT",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Marsa",
+      "localizedNames": {
+        "en": "Forever Paws"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+35679888407",
+      "internationalNumber": "+356 7988 8407",
+      "sourceName": "Forever Paws",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "nl-pet-aftercare-1",
+      "countryCode": "NL",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Amsterdam",
+      "localizedNames": {
+        "en": "Dierenambulance Amsterdam"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+31206262121",
+      "internationalNumber": "+31 20 626 2121",
+      "sourceName": "Dierenambulance Amsterdam",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "pl-pet-aftercare-1",
+      "countryCode": "PL",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Lublin and other regions",
+      "localizedNames": {
+        "en": "Animal Park"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+48692910910",
+      "internationalNumber": "+48 692 910 910",
+      "sourceName": "Animal Park",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "pt-pet-aftercare-1",
+      "countryCode": "PT",
+      "category": "petAftercare",
+      "scope": "national",
+      "region": "Sintra / Portugal",
+      "localizedNames": {
+        "en": "Pet Memorial"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+351914347109",
+      "internationalNumber": "+351 914 347 109",
+      "sourceName": "Pet Memorial",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ro-pet-aftercare-1",
+      "countryCode": "RO",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Constanța",
+      "localizedNames": {
+        "en": "Memorial Pet"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+40793773333",
+      "internationalNumber": "+40 793 773 333",
+      "sourceName": "Memorial Pet",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "sk-pet-aftercare-1",
+      "countryCode": "SK",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Zálesie / Bratislava",
+      "localizedNames": {
+        "en": "Doriss"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+421948344415",
+      "internationalNumber": "+421 948 344 415",
+      "sourceName": "Doriss / kremaciapsov.sk",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "si-pet-aftercare-1",
+      "countryCode": "SI",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Litija",
+      "localizedNames": {
+        "en": "CREMONA"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+38670268696",
+      "internationalNumber": "+386 70 268 696",
+      "sourceName": "CREMONA",
+      "sourceURL": "https://zamavrico.si/en/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "fi-pet-aftercare-1",
+      "countryCode": "FI",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Mikkeli",
+      "localizedNames": {
+        "en": "Mikkelin lemmikkituhkaamo"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+358400691866",
+      "internationalNumber": "+358 400 691 866",
+      "sourceName": "Mikkelin lemmikkituhkaamo",
+      "sourceURL": "https://www.lemmikkituhkaamo.fi/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "fr-pet-aftercare-1",
+      "countryCode": "FR",
+      "category": "petAftercare",
+      "scope": "national",
+      "localizedNames": {
+        "en": "Esthima"
+      },
+      "localizedNotes": {
+        "ru": "Сеть крематориев по Франции. Возможность дозвона на бесплатный номер из-за границы не подтверждена.",
+        "en": "A crematorium network across France. Calls to this toll-free number from abroad are not confirmed.",
+        "es": "Red de crematorios en Francia. No está confirmado que el número gratuito funcione desde el extranjero."
+      },
+      "dialString": "+33805622222",
+      "internationalNumber": "+33 805 622 222",
+      "sourceName": "Esthima",
+      "sourceURL": "https://www.esthima.fr/contact",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "hr-pet-aftercare-1",
+      "countryCode": "HR",
+      "category": "petAftercare",
+      "scope": "national",
+      "region": "Zagreb / Croatia",
+      "localizedNames": {
+        "en": "Spomengaj"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+38512092136",
+      "internationalNumber": "+385 1 209 2136",
+      "sourceName": "Spomengaj",
+      "sourceType": "government",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "cz-pet-aftercare-1",
+      "countryCode": "CZ",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Brno",
+      "localizedNames": {
+        "en": "Krematorium zvířat Brno"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+420737110790",
+      "internationalNumber": "+420 737 110 790",
+      "sourceName": "Krematorium zvířat Brno",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "se-pet-aftercare-1",
+      "countryCode": "SE",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Stockholm / Värmdö",
+      "localizedNames": {
+        "en": "Stockholm Djurkremering"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+46850010609",
+      "internationalNumber": "+46 8 500 106 09",
+      "sourceName": "Stockholm Djurkremering",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ee-pet-aftercare-1",
+      "countryCode": "EE",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Tallinn",
+      "localizedNames": {
+        "en": "Tallinn Pet Crematorium"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+37255517527",
+      "internationalNumber": "+372 5551 7527",
+      "sourceName": "Tallinn municipal pet crematorium",
+      "sourceType": "government",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "am-pet-aftercare-1",
+      "countryCode": "AM",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Yerevan",
+      "localizedNames": {
+        "en": "Ecopro"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+37495898480",
+      "internationalNumber": "+374 95 898 480",
+      "sourceName": "Ecopro",
+      "sourceURL": "https://ecopro.co/ru/pet-cremation-services",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "by-pet-aftercare-1",
+      "countryCode": "BY",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Minsk",
+      "localizedNames": {
+        "ru": "Зоокрематор",
+        "en": "Zookremator",
+        "es": "Zookremator"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+375296161688",
+      "internationalNumber": "+375 29 616 16 88",
+      "sourceName": "Зоокрематор",
+      "sourceURL": "https://www.zookremator.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "kz-pet-aftercare-1",
+      "countryCode": "KZ",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Almaty",
+      "localizedNames": {
+        "en": "ZooVita"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+77473803805",
+      "internationalNumber": "+7 747 380 38 05",
+      "sourceName": "ZooVita",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ru-pet-aftercare-1",
+      "countryCode": "RU",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Moscow and Moscow region",
+      "localizedNames": {
+        "ru": "Гор-Крематорий",
+        "en": "Gor-Krematoriy",
+        "es": "Gor-Krematoriy"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+74993020078",
+      "internationalNumber": "+7 499 302 00 78",
+      "sourceName": "Гор-Крематорий",
+      "sourceURL": "https://msk.gor-crematory.ru/kontakty.html",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ua-pet-aftercare-1",
+      "countryCode": "UA",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Kyiv",
+      "localizedNames": {
+        "en": "ViaPet"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+380953542538",
+      "internationalNumber": "+380 95 354 25 38",
+      "sourceName": "ViaPet",
+      "sourceURL": "https://www.viapet.com.ua/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ar-pet-aftercare-1",
+      "countryCode": "AR",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Buenos Aires / San Isidro",
+      "localizedNames": {
+        "en": "Cremascotas"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+541147102900",
+      "internationalNumber": "+54 11 4710 2900",
+      "sourceName": "Cremascotas",
+      "sourceURL": "https://www.crematoriomascotas.com.ar/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "bo-pet-aftercare-1",
+      "countryCode": "BO",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Santa Cruz",
+      "localizedNames": {
+        "en": "Huellitas en el Cielo"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+59176457863",
+      "internationalNumber": "+591 7645 7863",
+      "sourceName": "Huellitas en el Cielo",
+      "sourceURL": "https://elianitazule.wixsite.com/website-1",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "br-pet-aftercare-1",
+      "countryCode": "BR",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "São Leopoldo, Rio Grande do Sul",
+      "localizedNames": {
+        "en": "Brazcão"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+555135680212",
+      "internationalNumber": "+55 51 3568 0212",
+      "sourceName": "Brazcão",
+      "sourceURL": "https://www.brazcao.com.br/certificado-cremacao-pet",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ve-pet-aftercare-1",
+      "countryCode": "VE",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Caracas metropolitan area",
+      "localizedNames": {
+        "en": "Interasist / Pets Plan"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+582128195000",
+      "internationalNumber": "+58 212 819 5000",
+      "sourceName": "Grupo Internacional de Asistencia C.A.",
+      "sourceURL": "https://interasist.com/contacto-faq/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "gt-pet-aftercare-1",
+      "countryCode": "GT",
+      "category": "petAftercare",
+      "scope": "regional",
+      "localizedNames": {
+        "en": "Almapet"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+50259995644",
+      "internationalNumber": "+502 5999 5644",
+      "sourceName": "Almapet",
+      "sourceURL": "https://www.almapet.com.gt/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "hn-pet-aftercare-1",
+      "countryCode": "HN",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "San Pedro Sula",
+      "localizedNames": {
+        "en": "DESESHOS / Pet Memorial"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+50494420045",
+      "internationalNumber": "+504 9442 0045",
+      "sourceName": "Desechos Especializados de Honduras S.A.",
+      "sourceURL": "https://deseshoshonduras.com/home",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "do-pet-aftercare-1",
+      "countryCode": "DO",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Santo Domingo",
+      "localizedNames": {
+        "en": "Pets Forever"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+18096924313",
+      "internationalNumber": "+1 809 692 4313",
+      "sourceName": "Pets Forever",
+      "sourceURL": "https://petsforever.com.do/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "co-pet-aftercare-1",
+      "countryCode": "CO",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Bogotá",
+      "localizedNames": {
+        "en": "Mascopaz"
+      },
+      "localizedNotes": {
+        "ru": "Служба вывоза и аквамации питомцев. Аквамация использует воду и щёлочь вместо огневой кремации.",
+        "en": "Pet collection and aquamation service. Aquamation uses water and alkali instead of flame cremation.",
+        "es": "Servicio de recogida y acuamación de mascotas. La acuamación utiliza agua y álcali en lugar de cremación con fuego."
+      },
+      "dialString": "+573126143606",
+      "internationalNumber": "+57 312 614 3606",
+      "sourceName": "Mascopaz",
+      "sourceURL": "https://www.mascopaz.com.co/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "cr-pet-aftercare-1",
+      "countryCode": "CR",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "San José",
+      "localizedNames": {
+        "en": "Cremación de Mascotas Costa Rica"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+50685844640",
+      "internationalNumber": "+506 8584 4640",
+      "sourceName": "Cremación de Mascotas Costa Rica",
+      "sourceURL": "https://www.cremacionmascotascr.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "mx-pet-aftercare-1",
+      "countryCode": "MX",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Mexico City",
+      "localizedNames": {
+        "en": "OHANA"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+525578855703",
+      "internationalNumber": "+52 55 7885 5703",
+      "sourceName": "OHANA",
+      "sourceURL": "https://ohanasfpm.wordpress.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "pa-pet-aftercare-1",
+      "countryCode": "PA",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Panama City, Paitilla",
+      "localizedNames": {
+        "en": "Vet4Pets"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+5072150114",
+      "internationalNumber": "+507 215 0114",
+      "sourceName": "Vet4Pets",
+      "sourceURL": "https://vet4pets.com.pa/contacto/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "py-pet-aftercare-1",
+      "countryCode": "PY",
+      "category": "petAftercare",
+      "scope": "city",
+      "region": "Limpio",
+      "localizedNames": {
+        "en": "Cielo de Mascotas"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+595982921403",
+      "internationalNumber": "+595 982 921 403",
+      "sourceName": "Cielo de Mascotas",
+      "sourceURL": "https://cielodemascotas.com.py/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "pe-pet-aftercare-1",
+      "countryCode": "PE",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Lima and Callao",
+      "localizedNames": {
+        "en": "Ángeles con Patitas"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+51921308090",
+      "internationalNumber": "+51 921 308 090",
+      "sourceName": "Ángeles con Patitas",
+      "sourceURL": "https://angelesconpatitas.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "sv-pet-aftercare-1",
+      "countryCode": "SV",
+      "category": "petAftercare",
+      "scope": "regional",
+      "localizedNames": {
+        "en": "Kipets / Grupo Resurrección"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+50321216500",
+      "internationalNumber": "+503 2121 6500",
+      "sourceName": "Grupo Resurrección",
+      "sourceURL": "https://www.gruporesurreccion.com/kipets/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "uy-pet-aftercare-1",
+      "countryCode": "UY",
+      "category": "petAftercare",
+      "scope": "regional",
+      "localizedNames": {
+        "en": "Parque del Este"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+59826820832",
+      "internationalNumber": "+598 2682 0832",
+      "sourceName": "Parque del Este",
+      "sourceURL": "https://www.parquedeleste.uy/preguntas-frecuentes",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "cl-pet-aftercare-1",
+      "countryCode": "CL",
+      "category": "petAftercare",
+      "scope": "regional",
+      "region": "Santiago, Viña del Mar and Valparaíso",
+      "localizedNames": {
+        "en": "EternaPet"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+56961610035",
+      "internationalNumber": "+56 9 6161 0035",
+      "sourceName": "EternaPet",
+      "sourceURL": "https://eternapet.cl/contacto/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ec-pet-aftercare-1",
+      "countryCode": "EC",
+      "category": "petAftercare",
+      "scope": "national",
+      "region": "Quito / Ecuador",
+      "localizedNames": {
+        "en": "Huellas Memorables"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+59322306590",
+      "internationalNumber": "+593 2 230 6590",
+      "sourceName": "Huellas Memorables",
+      "sourceURL": "https://crematoriodemascotas.org/contacto/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "sr-pet-aftercare-1",
+      "countryCode": "SR",
+      "category": "petAftercare",
+      "scope": "national",
+      "localizedNames": {
+        "en": "Dierenbescherming Suriname"
+      },
+      "localizedNotes": {
+        "ru": "Предлагается общая кремация животных. Индивидуальная кремация не предоставляется.",
+        "en": "Communal animal cremation is offered. Individual cremation is not available.",
+        "es": "Se ofrece cremación colectiva de animales. No se ofrece cremación individual."
+      },
+      "dialString": "+5978827127",
+      "internationalNumber": "+597 882 7127",
+      "sourceName": "Dierenbescherming Suriname",
+      "sourceURL": "https://dierenbeschermingsuriname.org/services/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "pr-pet-aftercare-1",
+      "countryCode": "PR",
+      "category": "petAftercare",
+      "scope": "national",
+      "region": "Carolina / Puerto Rico",
+      "localizedNames": {
+        "en": "Cremaciones del Este"
+      },
+      "localizedNotes": {},
+      "noteKey": "emergency.pet_aftercare.confirm_details",
+      "dialString": "+17874550405",
+      "internationalNumber": "+1 787 455 0405",
+      "sourceName": "Cremaciones del Este",
+      "sourceURL": "https://cremacionesdeleste.com/espanol",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
     }
   ]
 }

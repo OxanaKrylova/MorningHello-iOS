@@ -1726,13 +1726,13 @@
 "emergency.note.au.132500" = "SES assistance during floods, storms and other situations that are not immediately life-threatening.";
 "emergency.note.au.medicare" = "Free 24-hour medical advice. Call 000 if the situation is life-threatening.";
 "emergency.note.au.lifeline" = "24-hour crisis support provided by Lifeline.";
-"emergency.service.general" = "Servicios de emergencia";
-"emergency.service.crisis_support" = "Apoyo en situaciones de crisis";
-"emergency.service.police_non_emergency" = "Policía, casos no urgentes";
-"emergency.service.medical_advice" = "Asesoramiento médico urgente";
-"emergency.service.text_emergency" = "Servicio de emergencia por texto";
-"emergency.service.disaster_assistance" = "Asistencia en desastres";
-"emergency.service.health_advice" = "Asesoramiento de salud";
+"emergency.service.general" = "Emergency services";
+"emergency.service.crisis_support" = "Support in crisis situations";
+"emergency.service.police_non_emergency" = "Police, non-urgent cases";
+"emergency.service.medical_advice" = "Urgent medical advice";
+"emergency.service.text_emergency" = "Text-based emergency service";
+"emergency.service.disaster_assistance" = "Disaster assistance";
+"emergency.service.health_advice" = "Health advice";
 
 "emergency.note.eu.112" = "Número único y gratuito para la policía, la ambulancia y los bomberos en toda la Unión Europea.";
 
@@ -1786,3 +1786,5 @@
 "Напомнить позже" = "Remind Me Later";
 "С момента последнего обновления прошло больше трёх месяцев. Пожалуйста, убедитесь, что сведения о корме, лекарствах, ветеринаре и уходе остаются актуальными." = "It has been more than three months since the last update. Please make sure the food, medication, veterinarian, and care information is still current.";
 "emergency.service.diabetes_support" = "Diabetes Support";
+"emergency.service.pet_aftercare" = "Pet cremation and aftercare";
+"emergency.pet_aftercare.confirm_details" = "Confirm opening hours, collection availability and service area by phone.";
