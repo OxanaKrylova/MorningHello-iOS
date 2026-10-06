@@ -160,14 +160,13 @@ struct MorningHelloApp: App {
                         }
                         .onChange(
                             of: scenePhase
-                        ) { newPhase in
+                        ) { _, newPhase in
 
                             guard newPhase == .active else {
                                 return
                             }
 
                             Task {
-
                                 if SponsorshipFeatureConfiguration
                                     .purchaseAPIIsAvailable {
 
@@ -179,13 +178,14 @@ struct MorningHelloApp: App {
                                 }
                             }
                         }
-                }
-    }
-    .modelContainer(
-        for: [
-            MoodEntry.self,
-            ConnectionReminder.self
-        ]
-    )
-}
-}
+                        .petProfileFreshnessReminder()
+                        }
+                        }
+                        .modelContainer(
+                            for: [
+                                MoodEntry.self,
+                                ConnectionReminder.self
+                            ]
+                        )
+                        }
+                        }

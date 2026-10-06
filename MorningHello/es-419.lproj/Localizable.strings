@@ -1731,3 +1731,24 @@
 "emergency.note.do.coverage" = "El 911 no tiene cobertura completa en todo el país. La cobertura puede ser limitada fuera de Santo Domingo.";
 "emergency.note.ht.delay" = "Debido a la situación de seguridad, los servicios de emergencia pueden tardar mucho o no poder responder.";
 "connection.screen.description" = "Todos los recordatorios guardados aparecerán en la parte inferior de la postal después de confirmar que estás bien.";
+
+"emergency.service.veterinary_emergency" = "Urgencias veterinarias";
+"emergency.service.senior_support" = "Ayuda para personas mayores";
+"emergency.number.unavailable" = "Actualmente no hay un número verificado";
+
+"Ежедневно" = "Todos los días";
+"connection.intro" = "Todos tus recordatorios aparecerán en la parte inferior de la tarjeta después de confirmar que estás bien.";
+"Ошибочные обращения к серверу за последние 7 дней" = "Solicitudes fallidas al servidor de los últimos 7 días";
+
+"Требуется восстановление доступа" = "Se requiere restaurar el acceso";
+"Восстановление доступа пока недоступно. Ваш идентификатор сохранён. Попробуйте позже или напишите разработчику через Настройки." = "La restauración del acceso aún no está disponible. Tu identificador se ha conservado. Inténtalo más tarde o contacta al desarrollador desde Configuración.";
+"Корм, лекарства и инструкции по уходу" = "Alimento, medicamentos e instrucciones de cuidado";
+"connection.intro" = "Todos tus recordatorios aparecerán en la parte inferior de la postal después de que confirmes que estás bien.";
+"Последнее сохранение" = "Último guardado";
+"Данные ещё не сохранялись" = "La información aún no se ha guardado";
+"Проверьте данные о питомце" = "Revisa la información de tu mascota";
+"Проверить данные" = "Revisar información";
+"Всё актуально" = "Todo está actualizado";
+"Напомнить позже" = "Recordarme más tarde";
+"С момента последнего обновления прошло больше трёх месяцев. Пожалуйста, убедитесь, что сведения о корме, лекарствах, ветеринаре и уходе остаются актуальными." = "Han pasado más de tres meses desde la última actualización. Verifica que la información sobre el alimento, los medicamentos, el veterinario y los cuidados siga vigente.";
+"emergency.service.diabetes_support" = "Apoyo para la diabetes";

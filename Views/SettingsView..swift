@@ -28,7 +28,7 @@ struct SettingsView: View {
 
     @State private var showDiagnosticLogShare =
         false
-
+    @State private var showPetProfile = false
     @State private var diagnosticLogError:
         String?
     
@@ -139,6 +139,9 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $showProfile) {
             ProfileView()
+        }
+        .sheet(isPresented: $showPetProfile) {
+        PetProfileView()
         }
         .sheet(isPresented: $showContacts) {
             EmergencyContactsView()
@@ -274,7 +277,16 @@ struct SettingsView: View {
                 ) {
                     showProfile = true
                 }
-                
+                Divider()
+                    .padding(.leading, 46)
+
+                settingsRow(
+                    title: "Питомец",
+                    subtitle: "Корм, лекарства и инструкции по уходу",
+                    systemImage: "pawprint.fill"
+                ) {
+                    showPetProfile = true
+                }
                 Divider()
                     .padding(.leading, 46)
                 
@@ -476,7 +488,6 @@ struct SettingsView: View {
     }
     
     // MARK: - Диагностика
-
     private var diagnosticsSection:
         some View {
 
@@ -493,7 +504,7 @@ struct SettingsView: View {
                     title:
                         "Экспорт журнала ошибок",
                     subtitle:
-                        "Ошибочные обращения к серверу за последние 30 дней",
+                        "Ошибочные обращения к серверу за последние 7 дней",
                     systemImage:
                         "doc.text.magnifyingglass"
                 ) {

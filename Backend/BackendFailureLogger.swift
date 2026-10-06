@@ -53,7 +53,7 @@ actor BackendFailureLogger {
         BackendFailureLogger()
 
     private let retentionInterval:
-        TimeInterval = 30 * 24 * 60 * 60
+        TimeInterval = 7 * 24 * 60 * 60
 
     private let fileManager =
         FileManager.default

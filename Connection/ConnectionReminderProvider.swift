@@ -83,7 +83,10 @@ enum ConnectionReminderProvider {
                 checkedDay,
                 inSameDayAs: startDay
             )
-
+            
+        case .daily:
+            return true
+            
         case .weekly:
             return hasWholeWeekInterval(
                 from: startDay,

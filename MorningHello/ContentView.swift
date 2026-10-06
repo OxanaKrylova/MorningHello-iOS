@@ -518,15 +518,6 @@ struct ContentView: View {
             UUID
     ) {
 
-        /*
-         ВАЖНО:
-         новый appInstanceId здесь не создаётся.
-
-         Старый идентификатор остаётся в Keychain
-         и продолжает совпадать с appAccountToken
-         первоначальной покупки.
-         */
-
         isDeletedUserAccount =
             true
 
@@ -2815,26 +2806,22 @@ struct ContentView: View {
                     }
                     .alert(
                         selectedLanguage.localized(
-                            "Аккаунт удалён"
+                            "Требуется восстановление доступа"
                         ),
                         isPresented:
                             $showDeletedUserAlert
                     ) {
-
                         Button(
                             selectedLanguage.localized(
                                 "Понятно"
                             ),
-                            role:
-                                .cancel
+                            role: .cancel
                         ) {
                         }
-
                     } message: {
-
                         Text(
                             selectedLanguage.localized(
-                                "Аккаунт можно восстановить в течение 30 дней. Идентификатор пользователя сохранён."
+                                "Восстановление доступа пока недоступно. Ваш идентификатор сохранён. Попробуйте позже или напишите разработчику через Настройки."
                             )
                         )
                     }

@@ -25,6 +25,7 @@ enum EmergencyServiceCategory: String, Codable, CaseIterable {
     case textEmergency
     case disasterAssistance
     case healthAdvice
+    case diabetesSupport
     case veterinaryEmergency
     case seniorSupport
     case other
@@ -45,6 +46,7 @@ enum EmergencyServiceCategory: String, Codable, CaseIterable {
         case .textEmergency: return "emergency.service.text_emergency"
         case .disasterAssistance: return "emergency.service.disaster_assistance"
         case .healthAdvice: return "emergency.service.health_advice"
+        case .diabetesSupport: return "emergency.service.diabetes_support"
         case .veterinaryEmergency: return "emergency.service.veterinary_emergency"
         case .seniorSupport: return "emergency.service.senior_support"
         case .other: return "emergency.service.other"
@@ -67,6 +69,7 @@ enum EmergencyServiceCategory: String, Codable, CaseIterable {
         case .textEmergency: return "message.fill"
         case .disasterAssistance: return "cloud.bolt.rain.fill"
         case .healthAdvice: return "stethoscope"
+        case .diabetesSupport: return "cross.case.fill"
         case .veterinaryEmergency: return "pawprint.fill"
         case .other: return "phone.fill"
         }
@@ -109,6 +112,7 @@ struct CountryEmergencyService: Identifiable, Codable {
     let region: String?
     let localizedNames: [String: String]
     let localizedNotes: [String: String]
+    let noteKey: String?
     let dialString: String?
     let internationalNumber: String?
     let sourceName: String?
@@ -116,6 +120,34 @@ struct CountryEmergencyService: Identifiable, Codable {
     let sourceType: EmergencySourceType
     let verificationStatus: EmergencyVerificationStatus
     let verifiedAt: String?
+
+    init(
+        id: String,
+        kind: CountryEmergencyServiceKind,
+        number: String,
+        noteKey: String?,
+        sourceName: String,
+        sourceURL: URL,
+        verifiedAt: String
+    ) {
+        self.id = id
+        self.countryCode = String(
+            id.prefix(2)
+        ).uppercased()
+        self.category = kind
+        self.scope = .national
+        self.region = nil
+        self.localizedNames = [:]
+        self.localizedNotes = [:]
+        self.noteKey = noteKey
+        self.dialString = number
+        self.internationalNumber = number
+        self.sourceName = sourceName
+        self.sourceURL = sourceURL
+        self.sourceType = .officialService
+        self.verificationStatus = .verified
+        self.verifiedAt = verifiedAt
+    }
 
     var kind: CountryEmergencyServiceKind {
         category
@@ -205,13 +237,6 @@ struct CountryEmergencyCatalogDocument: Codable {
     let generatedAt: String
     let countryCodes: [String]
     let services: [CountryEmergencyService]
-}
-
-struct OlderAdultSupportResource: Identifiable, Hashable {
-    let id: String
-    let title: String
-    let descriptionKey: String
-    let websiteURL: URL
 }
 
 // MARK: - Local-first store
@@ -377,38 +402,6 @@ final class CountryEmergencyDirectoryStore: ObservableObject {
         let data = try encoder.encode(document)
         try data.write(to: fileURL, options: .atomic)
     }
-}
-
-// MARK: - Backward-compatible facade
-
-@MainActor
-enum CountryEmergencyCatalog {
-    static func directory(
-        for countryCode: String
-    ) -> CountryEmergencyDirectory? {
-        CountryEmergencyDirectoryStore.shared.directory(
-            for: countryCode
-        )
-    }
-
-    static let supportResources: [OlderAdultSupportResource] = [
-        OlderAdultSupportResource(
-            id: "helpage",
-            title: "HelpAge International",
-            descriptionKey: "emergency.support.helpage.description",
-            websiteURL: URL(
-                string: "https://www.helpage.org/global-network/"
-            )!
-        ),
-        OlderAdultSupportResource(
-            id: "who-age-friendly",
-            title: "WHO Global Network",
-            descriptionKey: "emergency.support.who.description",
-            websiteURL: URL(
-                string: "https://extranet.who.int/agefriendlyworld/network/"
-            )!
-        )
-    ]
 }
 
 // MARK: - Loading and validation

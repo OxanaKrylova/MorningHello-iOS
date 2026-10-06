@@ -8,139 +8,6 @@
 import SwiftUI
 import UIKit
 
-// MARK: - Вид экстренной службы
-
-enum CountryEmergencyServiceKind:
-    String,
-    Hashable {
-
-    case general
-    case police
-    case ambulance
-    case fire
-    case homeFront
-    case rescue
-    case coastGuard
-    case socialSupport
-    case crisisSupport
-    case policeNonEmergency
-    case medicalAdvice
-    case textEmergency
-    case disasterAssistance
-    case healthAdvice
-    case other
-
-    var titleKey: String {
-        switch self {
-        case .general:
-            return "emergency.service.general"
-
-        case .police:
-            return "emergency.service.police"
-
-        case .ambulance:
-            return "emergency.service.ambulance"
-
-        case .fire:
-            return "emergency.service.fire"
-
-        case .homeFront:
-            return "emergency.service.home_front"
-
-        case .rescue:
-            return "emergency.service.rescue"
-
-        case .coastGuard:
-            return "emergency.service.coast_guard"
-
-        case .socialSupport:
-            return "emergency.service.social_support"
-
-        case .crisisSupport:
-            return "emergency.service.crisis_support"
-
-        case .policeNonEmergency:
-            return "emergency.service.police_non_emergency"
-
-        case .medicalAdvice:
-            return "emergency.service.medical_advice"
-
-        case .textEmergency:
-            return "emergency.service.text_emergency"
-
-        case .disasterAssistance:
-            return "emergency.service.disaster_assistance"
-
-        case .healthAdvice:
-            return "emergency.service.health_advice"
-
-        case .other:
-            return "emergency.service.other"
-        }
-    }
-
-    var systemImage: String {
-        switch self {
-        case .general:
-            return "phone.fill"
-
-        case .police:
-            return "shield.fill"
-
-        case .ambulance:
-            return "cross.case.fill"
-
-        case .fire:
-            return "flame.fill"
-
-        case .homeFront:
-            return "exclamationmark.triangle.fill"
-
-        case .rescue:
-            return "lifepreserver.fill"
-
-        case .coastGuard:
-            return "water.waves"
-
-        case .socialSupport:
-            return "person.2.fill"
-
-        case .crisisSupport:
-            return "heart.text.square.fill"
-
-        case .policeNonEmergency:
-            return "shield"
-
-        case .medicalAdvice:
-            return "cross.case"
-
-        case .textEmergency:
-            return "message.fill"
-
-        case .disasterAssistance:
-            return "cloud.bolt.rain.fill"
-
-        case .healthAdvice:
-            return "stethoscope"
-
-        case .other:
-            return "phone.fill"
-        }
-    }
-}
-
-// MARK: - Телефон службы
-
-struct CountryEmergencyService: Identifiable, Hashable {
-    let id: String
-    let kind: CountryEmergencyServiceKind
-    let number: String
-    let noteKey: String?
-    let sourceName: String
-    let sourceURL: URL
-    let verifiedAt: String
-}
-
 // MARK: - Международный ресурс помощи пожилым
 
 struct OlderAdultSupportResource: Identifiable, Hashable {
@@ -148,13 +15,6 @@ struct OlderAdultSupportResource: Identifiable, Hashable {
     let title: String
     let descriptionKey: String
     let websiteURL: URL
-}
-
-// MARK: - Справочник страны
-
-struct CountryEmergencyDirectory {
-    let countryCode: String
-    let services: [CountryEmergencyService]
 }
 
 // MARK: - Локальный каталог
@@ -688,6 +548,7 @@ enum CountryEmergencyCatalog {
 
 // MARK: - Экран экстренных служб
 
+@MainActor
 struct EmergencyServicesView: View {
 
     @Environment(\.dismiss)
@@ -699,6 +560,10 @@ struct EmergencyServicesView: View {
 
     @AppStorage("profile_country_code")
     private var countryCode = ""
+
+    @StateObject
+    private var emergencyDirectoryStore =
+        CountryEmergencyDirectoryStore.shared
 
     @State
     private var copiedNumber: String?
@@ -735,8 +600,37 @@ struct EmergencyServicesView: View {
     private var directory:
         CountryEmergencyDirectory? {
 
-        CountryEmergencyCatalog.directory(
-            for: normalizedCountryCode
+        let publicServicesDirectory =
+            CountryEmergencyCatalog.directory(
+                for: normalizedCountryCode
+            )
+
+        let veterinaryDirectory =
+            emergencyDirectoryStore.directory(
+                for: normalizedCountryCode
+            )
+
+        let combinedServices =
+            (
+                publicServicesDirectory?.services ?? []
+            )
+            + (
+                veterinaryDirectory?.services ?? []
+            )
+
+        guard !combinedServices.isEmpty else {
+            return nil
+        }
+
+        var usedIDs = Set<String>()
+
+        let uniqueServices = combinedServices.filter {
+            usedIDs.insert($0.id).inserted
+        }
+
+        return CountryEmergencyDirectory(
+            countryCode: normalizedCountryCode,
+            services: uniqueServices
         )
     }
     private var countrySupportContacts:
@@ -999,110 +893,112 @@ struct EmergencyServicesView: View {
             alignment: .leading,
             spacing: 14
         ) {
-            HStack(spacing: 14) {
-                Image(
-                    systemName:
-                        service.kind.systemImage
+            Text(
+                service.localizedNames.isEmpty
+                ? selectedLanguage.localized(
+                    service.kind.titleKey
+                )
+                : service.localizedName(
+                    languageCode:
+                        selectedLanguageCode
+                )
+            )
+            .font(
+                .system(
+                    .headline,
+                    design: .rounded
+                )
+                .weight(.bold)
+            )
+            .foregroundStyle(
+                AppAdaptiveColor.text
+            )
+
+            if !service.localizedNames.isEmpty {
+                Text(
+                    selectedLanguage.localized(
+                        service.kind.titleKey
+                    )
                 )
                 .font(
                     .system(
-                        size: 25,
-                        weight: .semibold
+                        .subheadline,
+                        design: .rounded
                     )
+                    .weight(.semibold)
                 )
                 .foregroundStyle(
-                    Color.orange
+                    AppAdaptiveColor.text
                 )
-                .frame(
-                    width: 48,
-                    height: 48
+            }
+
+            Text(
+                service.canCall
+                ? service.number
+                : selectedLanguage.localized(
+                    "emergency.number.unavailable"
                 )
-                .background(
-                    Color.orange.opacity(0.12),
-                    in: Circle()
+            )
+            .font(
+                .system(
+                    size: service.canCall ? 34 : 18,
+                    weight: .bold,
+                    design: .rounded
                 )
+            )
+            .foregroundStyle(
+                service.canCall
+                ? AppAdaptiveColor.text
+                : AppAdaptiveColor.secondaryText
+            )
+            .frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            )
+            .fixedSize(
+                horizontal: false,
+                vertical: true
+            )
+            .textSelection(.enabled)
 
-                VStack(
-                    alignment: .leading,
-                    spacing: 4
-                ) {
-                    Text(
-                        selectedLanguage.localized(
-                            service.kind.titleKey
-                        )
-                    )
-                    .font(
-                        .system(
-                            .headline,
-                            design: .rounded
-                        )
-                        .weight(.bold)
-                    )
-                    .foregroundStyle(
-                        AppAdaptiveColor.text
-                    )
-
-                    Text(service.number)
-                        .font(
-                            .system(
-                                size: 30,
-                                weight: .bold,
-                                design: .rounded
-                            )
-                        )
-                        .foregroundStyle(
-                            AppAdaptiveColor.text
-                        )
-                        .textSelection(.enabled)
-                }
-
-                Spacer(minLength: 8)
-
+            if service.canCall {
                 Button {
                     copyNumber(
                         service.number
                     )
                 } label: {
-                    Image(
-                        systemName:
-                            copiedNumber
-                                == service.number
-                            ? "checkmark.circle.fill"
-                            : "doc.on.doc"
+                    Text(
+                        selectedLanguage.localized(
+                            "emergency.copy.accessibility"
+                        )
                     )
                     .font(
                         .system(
-                            size: 23,
-                            weight: .semibold
+                            .subheadline,
+                            design: .rounded
                         )
+                        .weight(.semibold)
                     )
                     .foregroundStyle(
-                        copiedNumber
-                            == service.number
-                        ? Color.green
-                        : Color.orange
+                        AppAdaptiveColor.text
                     )
                     .frame(
-                        width: 48,
-                        height: 48
+                        maxWidth: .infinity
                     )
+                    .padding(.vertical, 12)
                     .background(
                         AppAdaptiveColor
                             .warmFormBackground,
-                        in: Circle()
+                        in: RoundedRectangle(
+                            cornerRadius: 16,
+                            style: .continuous
+                        )
                     )
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel(
-                    selectedLanguage.localized(
-                        "emergency.copy.accessibility"
-                    )
-                )
             }
 
-            if let noteKey =
-                service.noteKey {
-
+            if let noteKey = service.noteKey {
                 Text(
                     selectedLanguage.localized(
                         noteKey
@@ -1115,50 +1011,34 @@ struct EmergencyServicesView: View {
                     )
                 )
                 .foregroundStyle(
-                    AppAdaptiveColor.secondaryText
+                    AppAdaptiveColor.text
                 )
                 .lineSpacing(3)
-            }
 
-            Divider()
+            } else if let localizedNote =
+                        service.localizedNote(
+                            languageCode:
+                                selectedLanguageCode
+                        ) {
 
-            HStack(
-                alignment: .firstTextBaseline,
-                spacing: 6
-            ) {
-                Text(
-                    selectedLanguage.localized(
-                        "emergency.source"
+                Text(localizedNote)
+                    .font(
+                        .system(
+                            .footnote,
+                            design: .rounded
+                        )
                     )
-                )
-                .foregroundStyle(
-                    AppAdaptiveColor.secondaryText
-                )
-
-                Link(
-                    service.sourceName,
-                    destination:
-                        service.sourceURL
-                )
-                .foregroundStyle(
-                    Color.orange
-                )
-
-                Spacer()
-
-                Text(service.verifiedAt)
                     .foregroundStyle(
-                        AppAdaptiveColor.tertiaryText
+                        AppAdaptiveColor.text
                     )
+                    .lineSpacing(3)
             }
-            .font(
-                .system(
-                    .caption,
-                    design: .rounded
-                )
-            )
         }
         .padding(20)
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
         .background(
             AppAdaptiveColor.secondaryBackground,
             in: RoundedRectangle(
@@ -1193,7 +1073,7 @@ struct EmergencyServicesView: View {
                 )
             )
             .foregroundStyle(
-                AppAdaptiveColor.secondaryText
+                AppAdaptiveColor.text
             )
             .lineSpacing(3)
             .padding(.horizontal, 4)
@@ -1217,45 +1097,19 @@ struct EmergencyServicesView: View {
             alignment: .leading,
             spacing: 16
         ) {
-            HStack(spacing: 14) {
-                Image(
-                    systemName:
-                        "person.2.fill"
+            Text(
+                contact.organizationName
+            )
+            .font(
+                .system(
+                    .headline,
+                    design: .rounded
                 )
-                .font(
-                    .system(
-                        size: 25,
-                        weight: .semibold
-                    )
-                )
-                .foregroundStyle(
-                    Color.orange
-                )
-                .frame(
-                    width: 48,
-                    height: 48
-                )
-                .background(
-                    Color.orange.opacity(0.12),
-                    in: Circle()
-                )
-
-                Text(
-                    contact.organizationName
-                )
-                .font(
-                    .system(
-                        .headline,
-                        design: .rounded
-                    )
-                    .weight(.bold)
-                )
-                .foregroundStyle(
-                    AppAdaptiveColor.text
-                )
-
-                Spacer(minLength: 8)
-            }
+                .weight(.bold)
+            )
+            .foregroundStyle(
+                AppAdaptiveColor.text
+            )
 
             Text(
                 selectedLanguage.localized(
@@ -1269,7 +1123,7 @@ struct EmergencyServicesView: View {
                 )
             )
             .foregroundStyle(
-                AppAdaptiveColor.secondaryText
+                AppAdaptiveColor.text
             )
             .lineSpacing(3)
 
@@ -1278,25 +1132,14 @@ struct EmergencyServicesView: View {
                 id: \.self
             ) { phoneNumber in
 
-                HStack(spacing: 12) {
-                    Image(
-                        systemName:
-                            "phone.fill"
-                    )
-                    .font(
-                        .system(
-                            size: 18,
-                            weight: .semibold
-                        )
-                    )
-                    .foregroundStyle(
-                        Color.orange
-                    )
-
+                VStack(
+                    alignment: .leading,
+                    spacing: 10
+                ) {
                     Text(phoneNumber)
                         .font(
                             .system(
-                                size: 22,
+                                size: 28,
                                 weight: .bold,
                                 design: .rounded
                             )
@@ -1304,50 +1147,50 @@ struct EmergencyServicesView: View {
                         .foregroundStyle(
                             AppAdaptiveColor.text
                         )
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .leading
+                        )
+                        .fixedSize(
+                            horizontal: false,
+                            vertical: true
+                        )
                         .textSelection(.enabled)
-
-                    Spacer(minLength: 8)
 
                     Button {
                         copyNumber(
                             phoneNumber
                         )
                     } label: {
-                        Image(
-                            systemName:
-                                copiedNumber
-                                    == phoneNumber
-                                ? "checkmark.circle.fill"
-                                : "doc.on.doc"
+                        Text(
+                            selectedLanguage.localized(
+                                "emergency.copy.accessibility"
+                            )
                         )
                         .font(
                             .system(
-                                size: 21,
-                                weight: .semibold
+                                .subheadline,
+                                design: .rounded
                             )
+                            .weight(.semibold)
                         )
                         .foregroundStyle(
-                            copiedNumber
-                                == phoneNumber
-                            ? Color.green
-                            : Color.orange
+                            AppAdaptiveColor.text
                         )
                         .frame(
-                            width: 44,
-                            height: 44
+                            maxWidth: .infinity
                         )
+                        .padding(.vertical, 12)
                         .background(
                             AppAdaptiveColor
                                 .warmFormBackground,
-                            in: Circle()
+                            in: RoundedRectangle(
+                                cornerRadius: 16,
+                                style: .continuous
+                            )
                         )
                     }
                     .buttonStyle(.plain)
-                    .accessibilityLabel(
-                        selectedLanguage.localized(
-                            "emergency.copy.accessibility"
-                        )
-                    )
                 }
             }
 
@@ -1355,39 +1198,28 @@ struct EmergencyServicesView: View {
                 destination:
                     contact.websiteURL
             ) {
-                HStack(spacing: 9) {
-                    Image(
-                        systemName:
-                            "safari.fill"
+                Text(
+                    selectedLanguage.localized(
+                        "emergency.support.open_website"
                     )
-
-                    Text(
-                        selectedLanguage.localized(
-                            "emergency.support.open_website"
-                        )
-                    )
-                    .font(
-                        .system(
-                            .subheadline,
-                            design: .rounded
-                        )
-                        .weight(.semibold)
-                    )
-
-                    Spacer()
-
-                    Image(
-                        systemName:
-                            "arrow.up.right"
-                    )
-                }
-                .foregroundStyle(
-                    Color.orange
                 )
-                .padding(.horizontal, 16)
+                .font(
+                    .system(
+                        .subheadline,
+                        design: .rounded
+                    )
+                    .weight(.semibold)
+                )
+                .foregroundStyle(
+                    AppAdaptiveColor.text
+                )
+                .frame(
+                    maxWidth: .infinity
+                )
                 .padding(.vertical, 12)
                 .background(
-                    Color.orange.opacity(0.10),
+                    AppAdaptiveColor
+                        .warmFormBackground,
                     in: RoundedRectangle(
                         cornerRadius: 16,
                         style: .continuous
@@ -1395,46 +1227,12 @@ struct EmergencyServicesView: View {
                 )
             }
             .buttonStyle(.plain)
-
-            Divider()
-
-            HStack(
-                alignment: .firstTextBaseline,
-                spacing: 6
-            ) {
-                Text(
-                    selectedLanguage.localized(
-                        "emergency.source"
-                    )
-                )
-                .foregroundStyle(
-                    AppAdaptiveColor.secondaryText
-                )
-
-                Link(
-                    contact.sourceName,
-                    destination:
-                        contact.sourceURL
-                )
-                .foregroundStyle(
-                    Color.orange
-                )
-
-                Spacer()
-
-                Text(contact.verifiedAt)
-                    .foregroundStyle(
-                        AppAdaptiveColor.tertiaryText
-                    )
-            }
-            .font(
-                .system(
-                    .caption,
-                    design: .rounded
-                )
-            )
         }
         .padding(20)
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
         .background(
             AppAdaptiveColor.secondaryBackground,
             in: RoundedRectangle(
@@ -1443,7 +1241,7 @@ struct EmergencyServicesView: View {
             )
         )
     }
-    
+
     private var olderAdultSupportSection:
         some View {
 
@@ -1468,7 +1266,7 @@ struct EmergencyServicesView: View {
                 )
             )
             .foregroundStyle(
-                AppAdaptiveColor.secondaryText
+                AppAdaptiveColor.text
             )
             .lineSpacing(3)
 
@@ -1481,74 +1279,46 @@ struct EmergencyServicesView: View {
                     destination:
                         resource.websiteURL
                 ) {
-                    HStack(spacing: 14) {
-                        Image(
-                            systemName:
-                                "person.2.circle.fill"
-                        )
-                        .font(
-                            .system(size: 28)
-                        )
-                        .foregroundStyle(
-                            Color.orange
-                        )
-
-                        VStack(
-                            alignment: .leading,
-                            spacing: 5
-                        ) {
-                            Text(resource.title)
-                                .font(
-                                    .system(
-                                        .headline,
-                                        design: .rounded
-                                    )
-                                    .weight(.bold)
-                                )
-                                .foregroundStyle(
-                                    AppAdaptiveColor.text
-                                )
-
-                            Text(
-                                selectedLanguage.localized(
-                                    resource
-                                        .descriptionKey
-                                )
-                            )
+                    VStack(
+                        alignment: .leading,
+                        spacing: 7
+                    ) {
+                        Text(resource.title)
                             .font(
                                 .system(
-                                    .footnote,
+                                    .headline,
                                     design: .rounded
                                 )
+                                .weight(.bold)
                             )
                             .foregroundStyle(
-                                AppAdaptiveColor
-                                    .secondaryText
+                                AppAdaptiveColor.text
                             )
-                            .multilineTextAlignment(
-                                .leading
+
+                        Text(
+                            selectedLanguage.localized(
+                                resource.descriptionKey
                             )
-                            .lineSpacing(3)
-                        }
-
-                        Spacer(minLength: 8)
-
-                        Image(
-                            systemName:
-                                "arrow.up.right"
                         )
                         .font(
                             .system(
-                                size: 18,
-                                weight: .semibold
+                                .footnote,
+                                design: .rounded
                             )
                         )
                         .foregroundStyle(
-                            AppAdaptiveColor
-                                .secondaryText
+                            AppAdaptiveColor.text
                         )
+                        .multilineTextAlignment(
+                            .leading
+                        )
+                        .lineSpacing(3)
                     }
                     .padding(20)
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .leading
+                    )
                     .background(
                         AppAdaptiveColor
                             .secondaryBackground,
@@ -1786,3 +1556,4 @@ struct EmergencyServicesView: View {
         }
     }
 }
+

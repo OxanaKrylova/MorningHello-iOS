@@ -1,0 +1,4139 @@
+{
+  "schemaVersion": 1,
+  "catalogVersion": "2026.10.06.1",
+  "generatedAt": "2026-10-05T21:40:00Z",
+  "countryCodes": [
+    "AU",
+    "GB",
+    "IL",
+    "CA",
+    "US",
+    "AT",
+    "BE",
+    "BG",
+    "HU",
+    "DE",
+    "GR",
+    "DK",
+    "IE",
+    "ES",
+    "IT",
+    "CY",
+    "LV",
+    "LT",
+    "LU",
+    "MT",
+    "NL",
+    "PL",
+    "PT",
+    "RO",
+    "SK",
+    "SI",
+    "FI",
+    "FR",
+    "HR",
+    "CZ",
+    "SE",
+    "EE",
+    "AM",
+    "AZ",
+    "BY",
+    "GE",
+    "KZ",
+    "KG",
+    "MD",
+    "RU",
+    "TJ",
+    "TM",
+    "UA",
+    "UZ",
+    "AR",
+    "BO",
+    "BR",
+    "VE",
+    "HT",
+    "GT",
+    "HN",
+    "DO",
+    "CO",
+    "CR",
+    "CU",
+    "MX",
+    "NI",
+    "PA",
+    "PY",
+    "PE",
+    "SV",
+    "UY",
+    "CL",
+    "EC",
+    "BZ",
+    "GY",
+    "SR",
+    "PR"
+  ],
+  "services": [
+    {
+      "id": "au-veterinary-emergency-1",
+      "countryCode": "AU",
+      "category": "veterinaryEmergency",
+      "scope": "regional",
+      "region": "Campbelltown / Sydney",
+      "localizedNames": {
+        "en": "VECA Emergency Veterinary Hospital"
+      },
+      "localizedNotes": {},
+      "dialString": "+61291295888",
+      "internationalNumber": "+61 2 9129 5888",
+      "sourceName": "VECA",
+      "sourceURL": "https://www.veca.com.au/emergency",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "gb-veterinary-emergency-1",
+      "countryCode": "GB",
+      "category": "veterinaryEmergency",
+      "scope": "regional",
+      "region": "Greater London",
+      "localizedNames": {
+        "en": "Veteris"
+      },
+      "localizedNotes": {
+        "ru": "Позвоните перед поездкой и уточните доступность экстренного приёма.",
+        "en": "Call before travelling and confirm that emergency intake is available.",
+        "es": "Llame antes de desplazarse y confirme que haya atención de urgencias."
+      },
+      "dialString": "+443308089066",
+      "internationalNumber": "+44 330 808 9066",
+      "sourceName": "Veteris",
+      "sourceURL": "https://veteris.co.uk/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "il-veterinary-emergency-1",
+      "countryCode": "IL",
+      "category": "veterinaryEmergency",
+      "scope": "regional",
+      "region": "Beit Dagan / Rishon LeZion",
+      "localizedNames": {
+        "en": "University Veterinary Hospital"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+97239688588",
+      "internationalNumber": "+972 3 968 8588",
+      "sourceName": "University Veterinary Hospital",
+      "sourceType": "university",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "ca-veterinary-emergency-1",
+      "countryCode": "CA",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Toronto",
+      "localizedNames": {
+        "en": "Toronto Veterinary Emergency Hospital"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+14162478387",
+      "internationalNumber": "+1 416 247 8387",
+      "sourceName": "Toronto Veterinary Emergency Hospital",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "us-veterinary-emergency-1",
+      "countryCode": "US",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "New York City",
+      "localizedNames": {
+        "en": "Schwarzman Animal Medical Center"
+      },
+      "localizedNotes": {},
+      "dialString": "+12128388100",
+      "internationalNumber": "+1 212 838 8100",
+      "sourceName": "Schwarzman Animal Medical Center",
+      "sourceURL": "https://www.amcny.org/visit-amc/contact-us/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "at-veterinary-emergency-1",
+      "countryCode": "AT",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Vienna",
+      "localizedNames": {
+        "en": "Vetmeduni Vienna"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+431250775555",
+      "internationalNumber": "+43 1 25077 5555",
+      "sourceName": "Vetmeduni Vienna",
+      "sourceType": "university",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "be-veterinary-emergency-1",
+      "countryCode": "BE",
+      "category": "veterinaryEmergency",
+      "scope": "regional",
+      "region": "Brussels service area",
+      "localizedNames": {
+        "en": "Vet Emergency"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+3226442424",
+      "internationalNumber": "+32 2 644 24 24",
+      "sourceName": "Vet Emergency",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "bg-veterinary-emergency-1",
+      "countryCode": "BG",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Pancharevo / Sofia",
+      "localizedNames": {
+        "en": "Sin Krast Veterinary Clinic"
+      },
+      "localizedNotes": {
+        "ru": "Служба работает не круглосуточно. Уточните доступность по телефону.",
+        "en": "This service is not open 24 hours. Confirm availability by phone.",
+        "es": "Este servicio no funciona las 24 horas. Confirme la disponibilidad por teléfono."
+      },
+      "dialString": "+359898361903",
+      "internationalNumber": "+359 898 361 903",
+      "sourceName": "Sin Krast",
+      "sourceURL": "https://bluecrossbg.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "hu-veterinary-emergency-1",
+      "countryCode": "HU",
+      "category": "veterinaryEmergency",
+      "scope": "national",
+      "localizedNames": {
+        "en": "Supervet / Pet Ambulance"
+      },
+      "localizedNotes": {
+        "ru": "Служба работает не круглосуточно. Уточните доступность по телефону.",
+        "en": "This service is not open 24 hours. Confirm availability by phone.",
+        "es": "Este servicio no funciona las 24 horas. Confirme la disponibilidad por teléfono."
+      },
+      "dialString": "+3618142800",
+      "internationalNumber": "+36 1 814 2800",
+      "sourceName": "Supervet",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "de-veterinary-emergency-1",
+      "countryCode": "DE",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Berlin",
+      "localizedNames": {
+        "en": "AniCura Tierklinik Berlin-Biesdorf"
+      },
+      "localizedNotes": {},
+      "dialString": "+49305143760",
+      "internationalNumber": "+49 30 5143760",
+      "sourceName": "AniCura",
+      "sourceURL": "https://www.anicura.de/standorte/berlin-biesdorf/kontakt/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "gr-veterinary-emergency-1",
+      "countryCode": "GR",
+      "category": "veterinaryEmergency",
+      "scope": "regional",
+      "region": "Pikermi / Athens",
+      "localizedNames": {
+        "en": "Athens Animal Hospital"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+302106038023",
+      "internationalNumber": "+30 210 603 8023",
+      "sourceName": "Athens Animal Hospital",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "dk-veterinary-emergency-1",
+      "countryCode": "DK",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Copenhagen",
+      "localizedNames": {
+        "en": "University Hospital for Companion Animals"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+4535332930",
+      "internationalNumber": "+45 35 33 29 30",
+      "sourceName": "University of Copenhagen",
+      "sourceType": "university",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "ie-veterinary-emergency-1",
+      "countryCode": "IE",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Dublin",
+      "localizedNames": {
+        "en": "UCD Pet Emergency Hospital"
+      },
+      "localizedNotes": {
+        "ru": "Позвоните перед поездкой и уточните доступность экстренного приёма.",
+        "en": "Call before travelling and confirm that emergency intake is available.",
+        "es": "Llame antes de desplazarse y confirme que haya atención de urgencias."
+      },
+      "dialString": "+35312609920",
+      "internationalNumber": "+353 1 260 9920",
+      "sourceName": "UCD Pet Emergency Hospital",
+      "sourceType": "university",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "es-veterinary-emergency-1",
+      "countryCode": "ES",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Madrid",
+      "localizedNames": {
+        "en": "AniCura Velázquez"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+34915627769",
+      "internationalNumber": "+34 915 627 769",
+      "sourceName": "AniCura Velázquez",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "it-veterinary-emergency-1",
+      "countryCode": "IT",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Rome",
+      "localizedNames": {
+        "en": "Ospedale Veterinario Croce Azzurra"
+      },
+      "localizedNotes": {
+        "ru": "Круглосуточно. При звонке сохраняйте ноль после кода +39.",
+        "en": "Open 24 hours. Keep the zero after country code +39 when calling.",
+        "es": "Abierto las 24 horas. Mantenga el cero después del código +39 al llamar."
+      },
+      "dialString": "+390652200364",
+      "internationalNumber": "+39 06 5220 0364",
+      "sourceName": "Croce Azzurra",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "cy-veterinary-emergency-1",
+      "countryCode": "CY",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Strovolos / Nicosia",
+      "localizedNames": {
+        "en": "Staris Veterinary Clinic"
+      },
+      "localizedNotes": {
+        "ru": "Позвоните перед поездкой и уточните доступность экстренного приёма.",
+        "en": "Call before travelling and confirm that emergency intake is available.",
+        "es": "Llame antes de desplazarse y confirme que haya atención de urgencias."
+      },
+      "dialString": "+35722274264",
+      "internationalNumber": "+357 22 274264",
+      "sourceName": "Staris Veterinary Clinic",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "lv-veterinary-emergency-1",
+      "countryCode": "LV",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Riga",
+      "localizedNames": {
+        "en": "PetCity Candera"
+      },
+      "localizedNotes": {
+        "ru": "Позвоните перед поездкой и уточните доступность экстренного приёма.",
+        "en": "Call before travelling and confirm that emergency intake is available.",
+        "es": "Llame antes de desplazarse y confirme que haya atención de urgencias."
+      },
+      "dialString": "+37167500494",
+      "internationalNumber": "+371 6750 0494",
+      "sourceName": "PetCity Candera",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "lt-veterinary-emergency-1",
+      "countryCode": "LT",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Vilnius",
+      "localizedNames": {
+        "en": "DR.VET Lazdynai Animal Hospital"
+      },
+      "localizedNotes": {},
+      "dialString": "+37067705503",
+      "internationalNumber": "+370 677 05 503",
+      "sourceName": "DR.VET",
+      "sourceURL": "https://drvet.lt/kontaktai/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "lu-veterinary-emergency-1",
+      "countryCode": "LU",
+      "category": "veterinaryEmergency",
+      "scope": "regional",
+      "region": "Walferdange",
+      "localizedNames": {
+        "en": "EVC Luxembourg"
+      },
+      "localizedNotes": {
+        "ru": "Позвоните перед поездкой и уточните доступность экстренного приёма.",
+        "en": "Call before travelling and confirm that emergency intake is available.",
+        "es": "Llame antes de desplazarse y confirme que haya atención de urgencias."
+      },
+      "dialString": "+35227839300",
+      "internationalNumber": "+352 27 83 93 00",
+      "sourceName": "EVC Luxembourg",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "mt-veterinary-emergency-1",
+      "countryCode": "MT",
+      "category": "veterinaryEmergency",
+      "scope": "national",
+      "localizedNames": {
+        "en": "National Veterinary Emergency Service"
+      },
+      "localizedNotes": {
+        "ru": "Национальная линия. Международный эквивалент номера не подтверждён.",
+        "en": "National line. An international equivalent has not been confirmed.",
+        "es": "Línea nacional. No se ha confirmado un equivalente internacional."
+      },
+      "dialString": "153,22",
+      "internationalNumber": "153, extension 22",
+      "sourceName": "Veterinary and Phytosanitary Regulation Division",
+      "sourceURL": "https://vsc.gov.mt/24-7-emergency-service/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "nl-veterinary-emergency-1",
+      "countryCode": "NL",
+      "category": "veterinaryEmergency",
+      "scope": "regional",
+      "region": "Utrecht area",
+      "localizedNames": {
+        "en": "Dierenambulance Utrecht"
+      },
+      "localizedNotes": {
+        "ru": "Перевозка и помощь животным, обычно 09:00–23:00; это не телефон врача ветбольницы.",
+        "en": "Animal transport and assistance, usually 09:00–23:00; this is not a veterinary hospital doctor line.",
+        "es": "Transporte y asistencia de animales, normalmente de 09:00 a 23:00; no es la línea médica de un hospital veterinario."
+      },
+      "dialString": "+31654772700",
+      "internationalNumber": "+31 6 5477 2700",
+      "sourceName": "Dierenambulance Utrecht",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "pl-veterinary-emergency-1",
+      "countryCode": "PL",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Warsaw",
+      "localizedNames": {
+        "en": "Veterio"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+48226675577",
+      "internationalNumber": "+48 22 667 55 77",
+      "sourceName": "Veterio",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "pt-veterinary-emergency-1",
+      "countryCode": "PT",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Lisbon",
+      "localizedNames": {
+        "en": "Hospital Veterinário de Lisboa"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+351217168548",
+      "internationalNumber": "+351 217 168 548",
+      "sourceName": "Hospital Veterinário de Lisboa",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "ro-veterinary-emergency-1",
+      "countryCode": "RO",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Bucharest",
+      "localizedNames": {
+        "en": "SpeedVet"
+      },
+      "localizedNotes": {},
+      "dialString": "+40371306308",
+      "internationalNumber": "+40 371 306 308",
+      "sourceName": "SpeedVet",
+      "sourceURL": "https://www.speedvet.ro/servicii/ambulanta-veterinara",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "sk-veterinary-emergency-1",
+      "countryCode": "SK",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Bratislava",
+      "localizedNames": {
+        "en": "Vetline"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+421254412869",
+      "internationalNumber": "+421 2 5441 2869",
+      "sourceName": "Vetline",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "si-veterinary-emergency-1",
+      "countryCode": "SI",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Ljubljana",
+      "localizedNames": {
+        "en": "University Small Animal Clinic"
+      },
+      "localizedNotes": {
+        "ru": "Позвоните перед поездкой и уточните доступность экстренного приёма.",
+        "en": "Call before travelling and confirm that emergency intake is available.",
+        "es": "Llame antes de desplazarse y confirme que haya atención de urgencias."
+      },
+      "dialString": "+38630716190",
+      "internationalNumber": "+386 30 716 190",
+      "sourceName": "University of Ljubljana Veterinary Faculty",
+      "sourceURL": "https://www.vf.uni-lj.si/dezurni-veterinar",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "fi-veterinary-emergency-1",
+      "countryCode": "FI",
+      "category": "veterinaryEmergency",
+      "scope": "regional",
+      "region": "Tampere region",
+      "localizedNames": {
+        "en": "Papuvet Veterinary Emergency Service"
+      },
+      "localizedNotes": {
+        "ru": "Служба работает не круглосуточно. Уточните доступность по телефону.",
+        "en": "This service is not open 24 hours. Confirm availability by phone.",
+        "es": "Este servicio no funciona las 24 horas. Confirme la disponibilidad por teléfono."
+      },
+      "dialString": "+358356544777",
+      "internationalNumber": "+358 3 565 44777",
+      "sourceName": "City of Tampere",
+      "sourceURL": "https://www.tampere.fi/en/current/2025/12/30/municipal-veterinary-emergency-service-small-animals-will-be-run",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "fr-veterinary-emergency-1",
+      "countryCode": "FR",
+      "category": "veterinaryEmergency",
+      "scope": "regional",
+      "region": "Paris / Île-de-France",
+      "localizedNames": {
+        "en": "VetoAdom"
+      },
+      "localizedNotes": {},
+      "dialString": "+33147460909",
+      "internationalNumber": "+33 1 47 46 09 09",
+      "sourceName": "VetoAdom",
+      "sourceURL": "https://www.vetoadom.com/veterinaire-domicile.php",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "hr-veterinary-emergency-1",
+      "countryCode": "HR",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Zagreb",
+      "localizedNames": {
+        "en": "BUBA Veterinary Clinic"
+      },
+      "localizedNotes": {
+        "ru": "Опубликованный местный номер. Международный вариант не подтверждён.",
+        "en": "Published local number. An international equivalent has not been confirmed.",
+        "es": "Número local publicado. No se ha confirmado un equivalente internacional."
+      },
+      "dialString": "060600100",
+      "internationalNumber": "060 600 100",
+      "sourceName": "BUBA",
+      "sourceURL": "https://vetti-buba.hr/kontakt/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "cz-veterinary-emergency-1",
+      "countryCode": "CZ",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Prague",
+      "localizedNames": {
+        "en": "Medicanima"
+      },
+      "localizedNotes": {
+        "ru": "Позвоните перед поездкой и уточните доступность экстренного приёма.",
+        "en": "Call before travelling and confirm that emergency intake is available.",
+        "es": "Llame antes de desplazarse y confirme que haya atención de urgencias."
+      },
+      "dialString": "+420252252111",
+      "internationalNumber": "+420 252 252 111",
+      "sourceName": "Medicanima",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "se-veterinary-emergency-1",
+      "countryCode": "SE",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Stockholm",
+      "localizedNames": {
+        "en": "AWAKE Djursjukhus"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+46843733401",
+      "internationalNumber": "+46 8 437 334 01",
+      "sourceName": "AWAKE Djursjukhus",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "ee-veterinary-emergency-1",
+      "countryCode": "EE",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Tallinn",
+      "localizedNames": {
+        "en": "Loomade Kiirabikliinik"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+3725023191",
+      "internationalNumber": "+372 502 3191",
+      "sourceName": "Estonian Veterinary Chamber",
+      "sourceType": "professionalAssociation",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "am-veterinary-emergency-1",
+      "countryCode": "AM",
+      "category": "veterinaryEmergency",
+      "scope": "regional",
+      "region": "Yerevan and up to 30 km",
+      "localizedNames": {
+        "en": "IMVET"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+37455561254",
+      "internationalNumber": "+374 55 561254",
+      "sourceName": "IMVET",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "az-veterinary-emergency-1",
+      "countryCode": "AZ",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Baku",
+      "localizedNames": {
+        "en": "VetAnimal"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+994505673033",
+      "internationalNumber": "+994 50 567 30 33",
+      "sourceName": "VetAnimal",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "by-veterinary-emergency-1",
+      "countryCode": "BY",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Minsk",
+      "localizedNames": {
+        "en": "Nine Lives Veterinary Clinic"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+375291410909",
+      "internationalNumber": "+375 29 141 09 09",
+      "sourceName": "Nine Lives",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "ge-veterinary-emergency-1",
+      "countryCode": "GE",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Tbilisi",
+      "localizedNames": {
+        "en": "Vetmedi"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+995511206640",
+      "internationalNumber": "+995 511 20 66 40",
+      "sourceName": "eMia directory",
+      "sourceURL": "https://emia.ge/en/vet-clinics/cmp9nn6a80003c9ll4hejcray",
+      "sourceType": "directory",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "kz-veterinary-emergency-1",
+      "countryCode": "KZ",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Almaty",
+      "localizedNames": {
+        "en": "Royal Vet"
+      },
+      "localizedNotes": {
+        "ru": "Позвоните перед поездкой и уточните доступность экстренного приёма.",
+        "en": "Call before travelling and confirm that emergency intake is available.",
+        "es": "Llame antes de desplazarse y confirme que haya atención de urgencias."
+      },
+      "dialString": "+77054546676",
+      "internationalNumber": "+7 705 454 66 76",
+      "sourceName": "Royal Vet",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "kg-veterinary-emergency-1",
+      "countryCode": "KG",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Bishkek",
+      "localizedNames": {
+        "en": "Ilbirs Veterinary Clinic"
+      },
+      "localizedNotes": {},
+      "dialString": "+996702542084",
+      "internationalNumber": "+996 702 54 20 84",
+      "sourceName": "Ilbirs",
+      "sourceURL": "https://ilbirsvet.kg/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "md-veterinary-emergency-1",
+      "countryCode": "MD",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Chișinău",
+      "localizedNames": {
+        "en": "ZOOMAMA Intensive Care"
+      },
+      "localizedNotes": {
+        "ru": "Позвоните перед поездкой и уточните доступность экстренного приёма.",
+        "en": "Call before travelling and confirm that emergency intake is available.",
+        "es": "Llame antes de desplazarse y confirme que haya atención de urgencias."
+      },
+      "dialString": "+37368285128",
+      "internationalNumber": "+373 68 285 128",
+      "sourceName": "ZOOMAMA",
+      "sourceURL": "https://zoomama.md/contact?lang=en",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "ru-veterinary-emergency-1",
+      "countryCode": "RU",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Moscow",
+      "localizedNames": {
+        "en": "Moscow State Veterinary Contact Center"
+      },
+      "localizedNotes": {
+        "ru": "Служба действует только в Москве.",
+        "en": "This service covers Moscow only.",
+        "es": "Este servicio cubre únicamente Moscú."
+      },
+      "dialString": "+74956121212",
+      "internationalNumber": "+7 495 612 12 12",
+      "sourceName": "Moscow State Veterinary Service",
+      "sourceURL": "https://mos-obvet.ru/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "tj-veterinary-emergency-1",
+      "countryCode": "TJ",
+      "category": "veterinaryEmergency",
+      "scope": "national",
+      "localizedNames": {
+        "en": "Veterinary emergency number not confirmed"
+      },
+      "localizedNotes": {
+        "ru": "Подтверждённый телефон срочной ветеринарной помощи пока не найден.",
+        "en": "A verified veterinary emergency number is not currently available.",
+        "es": "Actualmente no hay un número verificado de urgencias veterinarias."
+      },
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable"
+    },
+    {
+      "id": "tm-veterinary-emergency-1",
+      "countryCode": "TM",
+      "category": "veterinaryEmergency",
+      "scope": "national",
+      "localizedNames": {
+        "en": "Veterinary emergency number not confirmed"
+      },
+      "localizedNotes": {
+        "ru": "Подтверждённый телефон срочной ветеринарной помощи пока не найден.",
+        "en": "A verified veterinary emergency number is not currently available.",
+        "es": "Actualmente no hay un número verificado de urgencias veterinarias."
+      },
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable"
+    },
+    {
+      "id": "ua-veterinary-emergency-1",
+      "countryCode": "UA",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Kyiv / Obolon",
+      "localizedNames": {
+        "en": "A-Vet"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+380675371000",
+      "internationalNumber": "+380 67 537 10 00",
+      "sourceName": "A-Vet",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "uz-veterinary-emergency-1",
+      "countryCode": "UZ",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Tashkent",
+      "localizedNames": {
+        "en": "MyVet Emergency Line"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+998990670790",
+      "internationalNumber": "+998 99 067 07 90",
+      "sourceName": "MyVet",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "ar-veterinary-emergency-1",
+      "countryCode": "AR",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Buenos Aires",
+      "localizedNames": {
+        "en": "WellVet"
+      },
+      "localizedNotes": {},
+      "dialString": "+5491130624612",
+      "internationalNumber": "+54 9 11 3062 4612",
+      "sourceName": "WellVet",
+      "sourceURL": "https://wellvet.com.ar/emergencia/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "bo-veterinary-emergency-1",
+      "countryCode": "BO",
+      "category": "veterinaryEmergency",
+      "scope": "regional",
+      "region": "Santa Cruz area",
+      "localizedNames": {
+        "en": "DogCenter"
+      },
+      "localizedNotes": {},
+      "dialString": "+59169068327",
+      "internationalNumber": "+591 6906 8327",
+      "sourceName": "DogCenter",
+      "sourceURL": "https://www.dogcenterbolivia.com/contacto",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "br-veterinary-emergency-1",
+      "countryCode": "BR",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "São Paulo / Itaim Paulista",
+      "localizedNames": {
+        "en": "Max Vet"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+551125673012",
+      "internationalNumber": "+55 11 2567 3012",
+      "sourceName": "Max Vet",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "ve-veterinary-emergency-1",
+      "countryCode": "VE",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Caracas",
+      "localizedNames": {
+        "en": "Veterinaria Los Chorros"
+      },
+      "localizedNotes": {},
+      "dialString": "+584142238214",
+      "internationalNumber": "+58 414 223 8214",
+      "sourceName": "Veterinaria Los Chorros",
+      "sourceURL": "https://www.veterinarialoschorros.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "ht-veterinary-emergency-1",
+      "countryCode": "HT",
+      "category": "veterinaryEmergency",
+      "scope": "national",
+      "localizedNames": {
+        "en": "Veterinary emergency number not confirmed"
+      },
+      "localizedNotes": {
+        "ru": "Подтверждённый телефон срочной ветеринарной помощи пока не найден.",
+        "en": "A verified veterinary emergency number is not currently available.",
+        "es": "Actualmente no hay un número verificado de urgencias veterinarias."
+      },
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable"
+    },
+    {
+      "id": "gt-veterinary-emergency-1",
+      "countryCode": "GT",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Guatemala City",
+      "localizedNames": {
+        "en": "Hospital Veterinario San Juan Roosevelt"
+      },
+      "localizedNotes": {},
+      "dialString": "+50223758700",
+      "internationalNumber": "+502 2375 8700",
+      "sourceName": "Hospital Veterinario San Juan Roosevelt",
+      "sourceURL": "https://hospitaldemascotasgt.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "hn-veterinary-emergency-1",
+      "countryCode": "HN",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "San Pedro Sula / Barrio Río de Piedras",
+      "localizedNames": {
+        "en": "Hospital Veterinario Rivera"
+      },
+      "localizedNotes": {
+        "ru": "Круглосуточная помощь доступна только в филиале Barrio Río de Piedras.",
+        "en": "24-hour care is available only at the Barrio Río de Piedras branch.",
+        "es": "La atención las 24 horas está disponible solo en la sede de Barrio Río de Piedras."
+      },
+      "dialString": "+50497576797",
+      "internationalNumber": "+504 9757 6797",
+      "sourceName": "Hospital Veterinario Rivera",
+      "sourceURL": "https://hospitalveterinarioriverahn.com/servicios-veterinarios/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "do-veterinary-emergency-1",
+      "countryCode": "DO",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Santo Domingo",
+      "localizedNames": {
+        "en": "VetMetro"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+18093833234",
+      "internationalNumber": "+1 809 383 3234",
+      "sourceName": "VetMetro",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "co-veterinary-emergency-1",
+      "countryCode": "CO",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Bogotá",
+      "localizedNames": {
+        "en": "Animalandia"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+573102904913",
+      "internationalNumber": "+57 310 290 4913",
+      "sourceName": "Animalandia",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "cr-veterinary-emergency-1",
+      "countryCode": "CR",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "San José",
+      "localizedNames": {
+        "en": "Hospital Veterinario Intensivet"
+      },
+      "localizedNotes": {},
+      "dialString": "+50640022330",
+      "internationalNumber": "+506 4002 2330",
+      "sourceName": "Intensivet",
+      "sourceURL": "https://www.hospitalintensivet.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "cu-veterinary-emergency-1",
+      "countryCode": "CU",
+      "category": "veterinaryEmergency",
+      "scope": "national",
+      "localizedNames": {
+        "en": "Veterinary emergency number not confirmed"
+      },
+      "localizedNotes": {
+        "ru": "Подтверждённый телефон срочной ветеринарной помощи пока не найден.",
+        "en": "A verified veterinary emergency number is not currently available.",
+        "es": "Actualmente no hay un número verificado de urgencias veterinarias."
+      },
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable"
+    },
+    {
+      "id": "mx-veterinary-emergency-1",
+      "countryCode": "MX",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Mexico City / Iztapalapa",
+      "localizedNames": {
+        "en": "Hospital Veterinario Carson"
+      },
+      "localizedNotes": {},
+      "dialString": "+525572584583",
+      "internationalNumber": "+52 55 7258 4583",
+      "sourceName": "Hospital Veterinario Carson",
+      "sourceURL": "https://hospitalcarson.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "ni-veterinary-emergency-1",
+      "countryCode": "NI",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Managua / Las Colinas",
+      "localizedNames": {
+        "en": "Hospital Veterinarios Asociados"
+      },
+      "localizedNotes": {},
+      "dialString": "+50589665221",
+      "internationalNumber": "+505 8966 5221",
+      "sourceName": "Veterinarios Asociados",
+      "sourceURL": "https://asociados.vet/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "pa-veterinary-emergency-1",
+      "countryCode": "PA",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Panama City",
+      "localizedNames": {
+        "en": "Patas y Huellas"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+50762840188",
+      "internationalNumber": "+507 6284 0188",
+      "sourceName": "Catálogo de Servicios",
+      "sourceURL": "https://www.catalogodeservicios.com/negocios/536/",
+      "sourceType": "directory",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "py-veterinary-emergency-1",
+      "countryCode": "PY",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Asunción",
+      "localizedNames": {
+        "en": "Nantes Hospital Veterinario"
+      },
+      "localizedNotes": {},
+      "dialString": "+59521661953",
+      "internationalNumber": "+595 21 661 953",
+      "sourceName": "Nantes Hospital Veterinario",
+      "sourceURL": "https://nanteshospitalveterinario.com.py/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "pe-veterinary-emergency-1",
+      "countryCode": "PE",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Lima / Reducto and El Polo",
+      "localizedNames": {
+        "en": "HeyVet"
+      },
+      "localizedNotes": {},
+      "dialString": "+5116282000",
+      "internationalNumber": "+51 1 628 2000",
+      "sourceName": "HeyVet",
+      "sourceURL": "https://www.heyvet.pe/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "sv-veterinary-emergency-1",
+      "countryCode": "SV",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "San Salvador",
+      "localizedNames": {
+        "en": "Hospital Veterinario VetK"
+      },
+      "localizedNotes": {
+        "ru": "Номер и режим работы требуют дополнительного подтверждения.",
+        "en": "The number and operating hours require additional verification.",
+        "es": "El número y el horario requieren verificación adicional."
+      },
+      "dialString": "+50322631321",
+      "internationalNumber": "+503 2263 1321",
+      "sourceName": "Veterinaria El Salvador directory",
+      "sourceURL": "https://veterinariaelsalvador.com/ciudad/san-salvador/veterinarias/hospital-veterinario-vetk/",
+      "sourceType": "directory",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "uy-veterinary-emergency-1",
+      "countryCode": "UY",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Montevideo",
+      "localizedNames": {
+        "en": "Laika"
+      },
+      "localizedNotes": {
+        "ru": "Служба действует только в Монтевидео.",
+        "en": "This service covers Montevideo only.",
+        "es": "Este servicio cubre únicamente Montevideo."
+      },
+      "dialString": "+59893300089",
+      "internationalNumber": "+598 93 300 089",
+      "sourceName": "Laika",
+      "sourceURL": "https://servicios.laika.com.uy/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "cl-veterinary-emergency-1",
+      "countryCode": "CL",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Santiago",
+      "localizedNames": {
+        "en": "Hospital Veterinario de Santiago"
+      },
+      "localizedNotes": {},
+      "dialString": "+56225443528",
+      "internationalNumber": "+56 2 2544 3528",
+      "sourceName": "Hospital Veterinario de Santiago",
+      "sourceURL": "https://www.hvs.cl/contacto/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "ec-veterinary-emergency-1",
+      "countryCode": "EC",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Quito / El Bosque",
+      "localizedNames": {
+        "en": "Hospital Veterinario Medipet"
+      },
+      "localizedNotes": {},
+      "dialString": "+593992748396",
+      "internationalNumber": "+593 99 274 8396",
+      "sourceName": "Medipet",
+      "sourceURL": "https://medipet.com.ec/hospitalizacion-y-emergencia/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "bz-veterinary-emergency-1",
+      "countryCode": "BZ",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Belize City",
+      "localizedNames": {
+        "en": "Animal Medical Centre"
+      },
+      "localizedNotes": {
+        "ru": "Позвоните перед поездкой и уточните доступность экстренного приёма.",
+        "en": "Call before travelling and confirm that emergency intake is available.",
+        "es": "Llame antes de desplazarse y confirme que haya atención de urgencias."
+      },
+      "dialString": "+5016103481",
+      "internationalNumber": "+501 610 3481",
+      "sourceName": "Animal Medical Centre",
+      "sourceURL": "https://animalmedicalcentre.net/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "gy-veterinary-emergency-1",
+      "countryCode": "GY",
+      "category": "veterinaryEmergency",
+      "scope": "national",
+      "localizedNames": {
+        "en": "Veterinary emergency number not confirmed"
+      },
+      "localizedNotes": {
+        "ru": "Подтверждённый телефон срочной ветеринарной помощи пока не найден.",
+        "en": "A verified veterinary emergency number is not currently available.",
+        "es": "Actualmente no hay un número verificado de urgencias veterinarias."
+      },
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable"
+    },
+    {
+      "id": "sr-veterinary-emergency-1",
+      "countryCode": "SR",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Paramaribo",
+      "localizedNames": {
+        "en": "Dierenpoli Bansse"
+      },
+      "localizedNotes": {
+        "ru": "В выходные и праздники дежурная клиника может меняться; проверьте расписание.",
+        "en": "The on-call clinic may rotate on weekends and holidays; check the current schedule.",
+        "es": "La clínica de guardia puede cambiar los fines de semana y festivos; consulte el horario actual."
+      },
+      "dialString": "+5978511294",
+      "internationalNumber": "+597 851 1294",
+      "sourceName": "Dierenpoli Bansse",
+      "sourceURL": "https://www.dierenpolibansse.com/contact/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "pr-veterinary-emergency-1",
+      "countryCode": "PR",
+      "category": "veterinaryEmergency",
+      "scope": "regional",
+      "region": "Trujillo Alto",
+      "localizedNames": {
+        "en": "EMERVET"
+      },
+      "localizedNotes": {},
+      "dialString": "+17873316060",
+      "internationalNumber": "+1 787 331 6060",
+      "sourceName": "EMERVET",
+      "sourceURL": "https://emervet.com/contacto/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-04"
+    },
+    {
+      "id": "AU-crisis-support-131114",
+      "countryCode": "AU",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Lifeline",
+        "en": "Lifeline",
+        "es": "Lifeline"
+      },
+      "localizedNotes": {
+        "ru": "Кризисная помощь, круглосуточно. Короткий номер предназначен для звонков внутри Австралии.",
+        "en": "24/7 crisis support. The short number is intended for calls within Australia.",
+        "es": "Ayuda en crisis las 24 horas. El número corto está destinado a llamadas dentro de Australia."
+      },
+      "dialString": "13 11 14",
+      "internationalNumber": null,
+      "sourceName": "Lifeline Australia",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "gb-crisis-support-samaritans",
+      "countryCode": "GB",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Samaritans",
+        "en": "Samaritans",
+        "es": "Samaritans"
+      },
+      "localizedNotes": {
+        "ru": "Круглосуточно. В Великобритании бесплатно звоните 116 123. Полный номер используется как альтернатива, за него может взиматься плата оператора.",
+        "en": "Available 24/7. In the UK call 116 123 free of charge. The full number is an alternative and carrier charges may apply.",
+        "es": "Disponible las 24 horas. En el Reino Unido llame gratis al 116 123. El número completo es una alternativa y pueden aplicarse cargos del operador."
+      },
+      "dialString": "116 123",
+      "internationalNumber": "+44 330 094 5717",
+      "sourceName": "Samaritans",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "sourceURL": "https://www.samaritans.org/how-we-can-help/contact-samaritan/talk-us-phone/",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "il-crisis-support-eran-1201",
+      "countryCode": "IL",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "ERAN",
+        "en": "ERAN",
+        "es": "ERAN"
+      },
+      "localizedNotes": {
+        "ru": "Анонимная эмоциональная первая помощь, круглосуточно. Короткий номер действует внутри Израиля.",
+        "en": "Anonymous emotional first aid, available 24/7. The short number works within Israel.",
+        "es": "Primeros auxilios emocionales anónimos, disponibles las 24 horas. El número corto funciona dentro de Israel."
+      },
+      "dialString": "1201",
+      "internationalNumber": null,
+      "sourceName": "ERAN Association",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "sourceURL": "https://en.eran.org.il/our-services/",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "CA-crisis-support-988",
+      "countryCode": "CA",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "9-8-8 Suicide Crisis Helpline",
+        "en": "9-8-8 Suicide Crisis Helpline",
+        "es": "9-8-8 Suicide Crisis Helpline"
+      },
+      "localizedNotes": {
+        "ru": "Национальная линия помощи при суицидальном кризисе, звонки и сообщения круглосуточно. Номер действует внутри Канады.",
+        "en": "National suicide crisis helpline, available by call and text 24/7. The number works within Canada.",
+        "es": "Línea nacional para crisis suicidas, disponible por llamada y mensaje las 24 horas. El número funciona dentro de Canadá."
+      },
+      "dialString": "988",
+      "internationalNumber": null,
+      "sourceName": "Government of Canada",
+      "sourceType": "government",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "US-crisis-support-988",
+      "countryCode": "US",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "988 Suicide & Crisis Lifeline",
+        "en": "988 Suicide & Crisis Lifeline",
+        "es": "988 Suicide & Crisis Lifeline"
+      },
+      "localizedNotes": {
+        "ru": "Круглосуточно. В США звоните или отправляйте сообщение на 988. Прежний полный номер также продолжает работать.",
+        "en": "Available 24/7. In the United States call or text 988. The previous full number also remains in service.",
+        "es": "Disponible las 24 horas. En Estados Unidos llame o envíe un mensaje al 988. El número completo anterior también sigue funcionando."
+      },
+      "dialString": "988",
+      "internationalNumber": "+1 800 273 8255",
+      "sourceName": "988 Lifeline",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "sourceURL": "https://988lifeline.org/faq/about-us/faq-does-1-800-273-talk-8255-still-work/",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "at-crisis-support-142",
+      "countryCode": "AT",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "TelefonSeelsorge",
+        "en": "TelefonSeelsorge",
+        "es": "TelefonSeelsorge"
+      },
+      "localizedNotes": {
+        "ru": "Кризисная помощь, круглосуточно. Короткий номер действует внутри Австрии.",
+        "en": "24/7 crisis support. The short number works within Austria.",
+        "es": "Ayuda en crisis las 24 horas. El número corto funciona dentro de Austria."
+      },
+      "dialString": "142",
+      "internationalNumber": null,
+      "sourceName": "TelefonSeelsorge",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "be-crisis-support",
+      "countryCode": "BE",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Zelfmoordlijn 1813 / Centre de Prévention du Suicide",
+        "en": "Zelfmoordlijn 1813 / Centre de Prévention du Suicide",
+        "es": "Zelfmoordlijn 1813 / Centre de Prévention du Suicide"
+      },
+      "localizedNotes": {
+        "ru": "Круглосуточно. 1813 обслуживает на нидерландском языке. 0800 32 123 обслуживает на французском языке. Единого номера для всей страны нет.",
+        "en": "Available 24/7. Call 1813 for Dutch-language support or 0800 32 123 for French-language support. There is no single nationwide number.",
+        "es": "Disponible las 24 horas. Llame al 1813 para atención en neerlandés o al 0800 32 123 para atención en francés. No existe un único número nacional."
+      },
+      "dialString": "1813",
+      "internationalNumber": "+32 800 32 123",
+      "sourceName": "Belgian crisis helplines",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "bg-crisis-support-unavailable",
+      "countryCode": "BG",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National adult crisis line",
+        "en": "National adult crisis line",
+        "es": "National adult crisis line"
+      },
+      "localizedNotes": {
+        "ru": "Подтверждённый общий номер для взрослых не найден. Номер 116 111 предназначен для детей и поэтому здесь не используется.",
+        "en": "No confirmed general crisis number for adults was found. Number 116 111 is for children and is therefore not used here.",
+        "es": "No se encontró un número general confirmado para adultos. El 116 111 está destinado a menores y por eso no se utiliza aquí."
+      },
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": null,
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable"
+    },
+    {
+      "id": "hu-crisis-support-116123",
+      "countryCode": "HU",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "LESZ",
+        "en": "LESZ",
+        "es": "LESZ"
+      },
+      "localizedNotes": {
+        "ru": "Национальная сеть кризисной помощи, круглосуточно. Короткий номер действует внутри Венгрии.",
+        "en": "National crisis support network, available 24/7. The short number works within Hungary.",
+        "es": "Red nacional de ayuda en crisis, disponible las 24 horas. El número corto funciona dentro de Hungría."
+      },
+      "dialString": "116 123",
+      "internationalNumber": null,
+      "sourceName": "LESZ",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "de-crisis-support",
+      "countryCode": "DE",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "TelefonSeelsorge",
+        "en": "TelefonSeelsorge",
+        "es": "TelefonSeelsorge"
+      },
+      "localizedNotes": {
+        "ru": "Круглосуточно. В Германии также доступны 116 123 и 0800 111 0 111. Для звонков из-за рубежа могут действовать ограничения.",
+        "en": "Available 24/7. Within Germany, 116 123 and 0800 111 0 111 are also available. Calls from abroad may be restricted.",
+        "es": "Disponible las 24 horas. Dentro de Alemania también están disponibles 116 123 y 0800 111 0 111. Las llamadas desde el extranjero pueden estar restringidas."
+      },
+      "dialString": "116 123",
+      "internationalNumber": "+49 800 111 0 111",
+      "sourceName": "TelefonSeelsorge",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "gr-crisis-support-10306",
+      "countryCode": "GR",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "10306 Psychosocial Support Line",
+        "en": "10306 Psychosocial Support Line",
+        "es": "10306 Psychosocial Support Line"
+      },
+      "localizedNotes": {
+        "ru": "Психологическая помощь предоставляется по пункту 1 меню, круглосуточно. Короткий номер действует внутри Греции.",
+        "en": "Psychological support is available through menu option 1, 24/7. The short number works within Greece.",
+        "es": "La ayuda psicológica está disponible mediante la opción 1 del menú, las 24 horas. El número corto funciona dentro de Grecia."
+      },
+      "dialString": "10306",
+      "internationalNumber": null,
+      "sourceName": "Greek Ministry of Health",
+      "sourceType": "government",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "dk-crisis-support-livslinien",
+      "countryCode": "DK",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Livslinien",
+        "en": "Livslinien",
+        "es": "Livslinien"
+      },
+      "localizedNotes": {
+        "ru": "Работает ежедневно с 09:00 до 05:00. Служба не является круглосуточной.",
+        "en": "Open daily from 09:00 to 05:00. The service is not available around the clock.",
+        "es": "Atiende todos los días de 09:00 a 05:00. El servicio no está disponible las 24 horas."
+      },
+      "dialString": "70 201 201",
+      "internationalNumber": "+45 70 201 201",
+      "sourceName": "Livslinien",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "ie-crisis-support-samaritans",
+      "countryCode": "IE",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Samaritans",
+        "en": "Samaritans",
+        "es": "Samaritans"
+      },
+      "localizedNotes": {
+        "ru": "Бесплатная кризисная помощь, круглосуточно. Отдельный полный ирландский эквивалент не подтверждён.",
+        "en": "Free crisis support, available 24/7. A separate full Irish equivalent has not been confirmed.",
+        "es": "Ayuda gratuita en crisis, disponible las 24 horas. No se ha confirmado un número irlandés completo equivalente."
+      },
+      "dialString": "116 123",
+      "internationalNumber": null,
+      "sourceName": "Samaritans",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "sourceURL": "https://www.samaritans.org/how-we-can-help/contact-samaritan/talk-us-phone/",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "es-crisis-support-024",
+      "countryCode": "ES",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Línea 024",
+        "en": "Línea 024",
+        "es": "Línea 024"
+      },
+      "localizedNotes": {
+        "ru": "Национальная государственная линия помощи при суицидальных мыслях и риске, круглосуточно. Номер действует внутри Испании.",
+        "en": "National government helpline for suicidal thoughts and risk, available 24/7. The number works within Spain.",
+        "es": "Línea nacional pública para pensamientos y riesgo suicida, disponible las 24 horas. El número funciona dentro de España."
+      },
+      "dialString": "024",
+      "internationalNumber": null,
+      "sourceName": "Government of Spain",
+      "sourceType": "government",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "it-crisis-support-telefono-amico",
+      "countryCode": "IT",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Telefono Amico Italia",
+        "en": "Telefono Amico Italia",
+        "es": "Telefono Amico Italia"
+      },
+      "localizedNotes": {
+        "ru": "С сентября 2026 года служба заявляет круглосуточную работу. Начальный 0 сохраняется при наборе международного номера.",
+        "en": "The service reports 24/7 availability since September 2026. The initial 0 is retained when dialing internationally.",
+        "es": "El servicio declara atención las 24 horas desde septiembre de 2026. El 0 inicial se conserva al marcar desde el extranjero."
+      },
+      "dialString": "02 2327 2327",
+      "internationalNumber": "+39 02 2327 2327",
+      "sourceName": "Telefono Amico Italia",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "cy-crisis-support-samaritans",
+      "countryCode": "CY",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Cyprus Samaritans",
+        "en": "Cyprus Samaritans",
+        "es": "Cyprus Samaritans"
+      },
+      "localizedNotes": {
+        "ru": "Только для пользователей 18 лет и старше. Работает ежедневно с 16:00 до 00:00.",
+        "en": "For people aged 18 and over only. Open daily from 16:00 to 00:00.",
+        "es": "Solo para personas mayores de 18 años. Atiende todos los días de 16:00 a 00:00."
+      },
+      "dialString": "8000 7773",
+      "internationalNumber": "+357 8000 7773",
+      "sourceName": "Cyprus Samaritans",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "sourceURL": "https://cyprussamaritans.org/",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "lv-crisis-support-skalbes",
+      "countryCode": "LV",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Skalbes",
+        "en": "Skalbes",
+        "es": "Skalbes"
+      },
+      "localizedNotes": {
+        "ru": "Национальная кризисная линия, круглосуточно. Полный номер опубликован для звонков из-за рубежа.",
+        "en": "National crisis line, available 24/7. The full number is published for calls from abroad.",
+        "es": "Línea nacional de crisis, disponible las 24 horas. El número completo está publicado para llamadas desde el extranjero."
+      },
+      "dialString": "116 123",
+      "internationalNumber": "+371 6722 2922",
+      "sourceName": "Latvian Ministry of Health / Skalbes",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "lt-crisis-support-vilties",
+      "countryCode": "LT",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Vilties linija",
+        "en": "Vilties linija",
+        "es": "Vilties linija"
+      },
+      "localizedNotes": {
+        "ru": "Кризисная помощь взрослым, круглосуточно. Короткий номер действует внутри Литвы.",
+        "en": "Crisis support for adults, available 24/7. The short number works within Lithuania.",
+        "es": "Ayuda en crisis para adultos, disponible las 24 horas. El número corto funciona dentro de Lituania."
+      },
+      "dialString": "116 123",
+      "internationalNumber": null,
+      "sourceName": "Vilties linija",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "lu-crisis-support-sos-detresse",
+      "countryCode": "LU",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "SOS Détresse",
+        "en": "SOS Détresse",
+        "es": "SOS Détresse"
+      },
+      "localizedNotes": {
+        "ru": "Национальная эмоциональная поддержка по расписанию. Перед звонком проверьте актуальные часы работы.",
+        "en": "National emotional support offered on a schedule. Check current opening hours before calling.",
+        "es": "Apoyo emocional nacional con horario establecido. Compruebe el horario actual antes de llamar."
+      },
+      "dialString": "45 45 45",
+      "internationalNumber": "+352 45 45 45",
+      "sourceName": "SOS Détresse",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "mt-crisis-support-1579",
+      "countryCode": "MT",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Mental Health Helpline 1579",
+        "en": "Mental Health Helpline 1579",
+        "es": "Mental Health Helpline 1579"
+      },
+      "localizedNotes": {
+        "ru": "Национальная государственная линия психического здоровья, круглосуточно. Номер действует внутри Мальты.",
+        "en": "National government mental health helpline, available 24/7. The number works within Malta.",
+        "es": "Línea nacional pública de salud mental, disponible las 24 horas. El número funciona dentro de Malta."
+      },
+      "dialString": "1579",
+      "internationalNumber": null,
+      "sourceName": "Government of Malta",
+      "sourceType": "government",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "nl-crisis-support-113",
+      "countryCode": "NL",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "113 Zelfmoordpreventie",
+        "en": "113 Zelfmoordpreventie",
+        "es": "113 Zelfmoordpreventie"
+      },
+      "localizedNotes": {
+        "ru": "Круглосуточно. В Нидерландах также используется бесплатный номер 0800 0113. Телефонная линия может быть недоступна из-за рубежа.",
+        "en": "Available 24/7. Within the Netherlands, free number 0800 0113 is also used. The phone service may not be accessible from abroad.",
+        "es": "Disponible las 24 horas. Dentro de los Países Bajos también se utiliza el número gratuito 0800 0113. El servicio telefónico puede no estar disponible desde el extranjero."
+      },
+      "dialString": "113",
+      "internationalNumber": "+31 800 0113",
+      "sourceName": "113 Zelfmoordpreventie",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "pl-crisis-support",
+      "countryCode": "PL",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National crisis support lines",
+        "en": "National crisis support lines",
+        "es": "National crisis support lines"
+      },
+      "localizedNotes": {
+        "ru": "Круглосуточно. В Польше доступны 116 123 и 800 70 2222.",
+        "en": "Available 24/7. In Poland, both 116 123 and 800 70 2222 are available.",
+        "es": "Disponible las 24 horas. En Polonia están disponibles 116 123 y 800 70 2222."
+      },
+      "dialString": "116 123",
+      "internationalNumber": "+48 800 70 2222",
+      "sourceName": "Polish national crisis support services",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "pt-crisis-support-1411",
+      "countryCode": "PT",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Linha Nacional 1411",
+        "en": "Linha Nacional 1411",
+        "es": "Linha Nacional 1411"
+      },
+      "localizedNotes": {
+        "ru": "Национальная линия предотвращения суицида и психологической поддержки, круглосуточно. Номер действует внутри Португалии.",
+        "en": "National suicide prevention and psychological support line, available 24/7. The number works within Portugal.",
+        "es": "Línea nacional de prevención del suicidio y apoyo psicológico, disponible las 24 horas. El número funciona dentro de Portugal."
+      },
+      "dialString": "1411",
+      "internationalNumber": null,
+      "sourceName": "Government of Portugal",
+      "sourceType": "government",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "ro-crisis-support-arps",
+      "countryCode": "RO",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "ARPS",
+        "en": "ARPS",
+        "es": "ARPS"
+      },
+      "localizedNotes": {
+        "ru": "Линия НКО по предотвращению суицида. Государственный универсальный статус и круглосуточная работа не подтверждены. Проверьте актуальное расписание.",
+        "en": "Nonprofit suicide prevention line. Government-wide status and 24/7 availability are not confirmed. Check the current schedule.",
+        "es": "Línea de prevención del suicidio de una organización sin fines de lucro. No se confirma su carácter estatal ni la atención las 24 horas. Compruebe el horario actual."
+      },
+      "dialString": "0800 801 200",
+      "internationalNumber": "+40 800 801 200",
+      "sourceName": "ARPS",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "sk-crisis-support-ipcko",
+      "countryCode": "SK",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "IPčko",
+        "en": "IPčko",
+        "es": "IPčko"
+      },
+      "localizedNotes": {
+        "ru": "Кризисная помощь, круглосуточно.",
+        "en": "Crisis support, available 24/7.",
+        "es": "Ayuda en crisis, disponible las 24 horas."
+      },
+      "dialString": "0800 500 333",
+      "internationalNumber": "+421 800 500 333",
+      "sourceName": "IPčko",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "si-crisis-support-116123",
+      "countryCode": "SI",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Samarijan / Sopotnik",
+        "en": "Samarijan / Sopotnik",
+        "es": "Samarijan / Sopotnik"
+      },
+      "localizedNotes": {
+        "ru": "Национальная кризисная линия, круглосуточно. Короткий номер действует внутри Словении.",
+        "en": "National crisis line, available 24/7. The short number works within Slovenia.",
+        "es": "Línea nacional de crisis, disponible las 24 horas. El número corto funciona dentro de Eslovenia."
+      },
+      "dialString": "116 123",
+      "internationalNumber": null,
+      "sourceName": "Samarijan / Sopotnik",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "fi-crisis-support-mieli",
+      "countryCode": "FI",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "MIELI Crisis Helpline",
+        "en": "MIELI Crisis Helpline",
+        "es": "MIELI Crisis Helpline"
+      },
+      "localizedNotes": {
+        "ru": "Национальная кризисная линия на финском языке, круглосуточно.",
+        "en": "National Finnish-language crisis helpline, available 24/7.",
+        "es": "Línea nacional de crisis en finés, disponible las 24 horas."
+      },
+      "dialString": "09 2525 0111",
+      "internationalNumber": "+358 9 2525 0111",
+      "sourceName": "MIELI Mental Health Finland",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification"
+    },
+    {
+      "id": "fr-crisis-support-3114",
+      "countryCode": "FR",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "3114",
+        "en": "3114",
+        "es": "3114"
+      },
+      "localizedNotes": {
+        "ru": "Национальная линия предотвращения суицида, бесплатно и круглосуточно. Номер действует внутри Франции.",
+        "en": "National suicide prevention line, free and available 24/7. The number works within France.",
+        "es": "Línea nacional de prevención del suicidio, gratuita y disponible las 24 horas. El número funciona dentro de Francia."
+      },
+      "dialString": "3114",
+      "internationalNumber": null,
+      "sourceName": "3114",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "sourceURL": "https://3114.fr/",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "hr-crisis-support-kbc-zagreb",
+      "countryCode": "HR",
+      "category": "crisisSupport",
+      "scope": "facility",
+      "region": null,
+      "localizedNames": {
+        "ru": "KBC Zagreb Crisis Centre",
+        "en": "KBC Zagreb Crisis Centre",
+        "es": "KBC Zagreb Crisis Centre"
+      },
+      "localizedNotes": {
+        "ru": "Круглосуточный контакт конкретного кризисного центра в Загребе. Это не единый национальный номер.",
+        "en": "24/7 contact for a specific crisis centre in Zagreb. This is not a single nationwide number.",
+        "es": "Contacto disponible las 24 horas de un centro específico de crisis en Zagreb. No es un número nacional único."
+      },
+      "dialString": "+385 1 2376 335",
+      "internationalNumber": "+385 1 2376 335",
+      "sourceName": "KBC Zagreb",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "sourceURL": "https://www.kbc-zagreb.hr/klinika-za-psihijatriju-i-psiholosku-medicinu.aspx",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "cz-crisis-support-116123",
+      "countryCode": "CZ",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Linka první psychické pomoci",
+        "en": "Linka první psychické pomoci",
+        "es": "Linka první psychické pomoci"
+      },
+      "localizedNotes": {
+        "ru": "Национальная линия первой психологической помощи взрослым, круглосуточно. Короткий номер действует внутри Чехии.",
+        "en": "National first psychological aid line for adults, available 24/7. The short number works within Czechia.",
+        "es": "Línea nacional de primeros auxilios psicológicos para adultos, disponible las 24 horas. El número corto funciona dentro de Chequia."
+      },
+      "dialString": "116 123",
+      "internationalNumber": null,
+      "sourceName": "Linka první psychické pomoci",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "sourceURL": "https://linkapsychickepomoci.cz/",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "se-crisis-support-hjalplinjen",
+      "countryCode": "SE",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Hjälplinjen",
+        "en": "Hjälplinjen",
+        "es": "Hjälplinjen"
+      },
+      "localizedNotes": {
+        "ru": "Для пользователей 18 лет и старше, круглосуточно. Для иностранных SIM-карт используется 020 290 390.",
+        "en": "For people aged 18 and over, available 24/7. Foreign SIM cards should use 020 290 390.",
+        "es": "Para personas mayores de 18 años, disponible las 24 horas. Con tarjetas SIM extranjeras se debe usar 020 290 390."
+      },
+      "dialString": "90390",
+      "internationalNumber": "+46 20 290 390",
+      "sourceName": "Hjälplinjen",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "sourceURL": "https://hjalplinjen.se/telefon",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "ee-crisis-support-116123",
+      "countryCode": "EE",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Emotional Support Line 116 123",
+        "en": "Emotional Support Line 116 123",
+        "es": "Emotional Support Line 116 123"
+      },
+      "localizedNotes": {
+        "ru": "Государственная линия эмоциональной поддержки, ежедневно с 10:00 до 00:00. Номер +372 614 7393 относится к другой службе и здесь не используется.",
+        "en": "Government emotional support line, open daily from 10:00 to 00:00. Number +372 614 7393 belongs to another service and is not used here.",
+        "es": "Línea pública de apoyo emocional, disponible todos los días de 10:00 a 00:00. El número +372 614 7393 pertenece a otro servicio y no se utiliza aquí."
+      },
+      "dialString": "116 123",
+      "internationalNumber": null,
+      "sourceName": "Palunabi",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "sourceURL": "https://www.palunabi.ee/en/contact-us",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "am-crisis-support-mha",
+      "countryCode": "AM",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "MHA Emotional Support Hotline",
+        "en": "MHA Emotional Support Hotline",
+        "es": "MHA Emotional Support Hotline"
+      },
+      "localizedNotes": {
+        "ru": "Линия эмоциональной поддержки работает по будням с 09:00 до 18:00. Это не круглосуточная государственная служба.",
+        "en": "Emotional support line open on weekdays from 09:00 to 18:00. This is not a 24/7 government service.",
+        "es": "Línea de apoyo emocional disponible de lunes a viernes de 09:00 a 18:00. No es un servicio público disponible las 24 horas."
+      },
+      "dialString": "0800 00 900",
+      "internationalNumber": null,
+      "sourceName": "Mental Health Awareness Initiative",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "sourceURL": "https://hotline.mha.am/",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "az-crisis-support-unavailable",
+      "countryCode": "AZ",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National adult crisis line",
+        "en": "National adult crisis line",
+        "es": "National adult crisis line"
+      },
+      "localizedNotes": {
+        "ru": "Действующий официальный национальный номер общего психического кризиса для взрослых не подтверждён.",
+        "en": "No current official nationwide general mental health crisis number for adults has been confirmed.",
+        "es": "No se ha confirmado un número nacional oficial vigente para crisis generales de salud mental en adultos."
+      },
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": null,
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable"
+    },
+    {
+      "id": "by-crisis-support-133",
+      "countryCode": "BY",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Emergency Psychological Assistance 133",
+        "en": "Emergency Psychological Assistance 133",
+        "es": "Emergency Psychological Assistance 133"
+      },
+      "localizedNotes": {
+        "ru": "Государственная экстренная психологическая помощь взрослым, круглосуточно. Короткий номер действует внутри Беларуси.",
+        "en": "Government emergency psychological support for adults, available 24/7. The short number works within Belarus.",
+        "es": "Ayuda psicológica pública de emergencia para adultos, disponible las 24 horas. El número corto funciona dentro de Bielorrusia."
+      },
+      "dialString": "133",
+      "internationalNumber": null,
+      "sourceName": "Ministry of Health of Belarus",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "sourceURL": "https://t.me/s/minzdravbelarus",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "ge-crisis-support-unavailable",
+      "countryCode": "GE",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National adult crisis line",
+        "en": "National adult crisis line",
+        "es": "National adult crisis line"
+      },
+      "localizedNotes": {
+        "ru": "Общий номер для взрослых не подтверждён. Номер 0800 00 00 88 относится к помощи детям и школьному сообществу и поэтому здесь не используется.",
+        "en": "No general adult crisis number has been confirmed. Number 0800 00 00 88 serves children and the school community and is therefore not used here.",
+        "es": "No se ha confirmado un número general para adultos. El 0800 00 00 88 atiende a menores y a la comunidad escolar, por lo que no se utiliza aquí."
+      },
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": "Educational Institution Mandaturi Service",
+      "sourceType": "government",
+      "verificationStatus": "unavailable",
+      "sourceURL": "https://mandaturi.gov.ge/new/387-fsiqologta-shesarchevi-konkursi"
+    },
+    {
+      "id": "kz-crisis-support-111",
+      "countryCode": "KZ",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Contact Centre 111",
+        "en": "Contact Centre 111",
+        "es": "Contact Centre 111"
+      },
+      "localizedNotes": {
+        "ru": "Круглосуточная государственная помощь по вопросам семьи, женщин и детей, включая психологическую поддержку. Это служба со специальной целевой аудиторией.",
+        "en": "24/7 government support for family, women and children matters, including psychological support. This service has a specific target audience.",
+        "es": "Apoyo público las 24 horas para asuntos de familia, mujeres y menores, incluido el apoyo psicológico. Este servicio está dirigido a un público específico."
+      },
+      "dialString": "111",
+      "internationalNumber": null,
+      "sourceName": "Government of Kazakhstan",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "sourceURL": "https://www.gov.kz/situations/677/1457?lang=ru",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "kg-crisis-support-unavailable",
+      "countryCode": "KG",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National adult crisis line",
+        "en": "National adult crisis line",
+        "es": "National adult crisis line"
+      },
+      "localizedNotes": {
+        "ru": "Общий номер для взрослых не подтверждён. Номер 111 предназначен прежде всего для детей и обращений по вопросам детей.",
+        "en": "No general adult crisis number has been confirmed. Number 111 is intended primarily for children and child-related enquiries.",
+        "es": "No se ha confirmado un número general para adultos. El 111 está destinado principalmente a menores y consultas relacionadas con ellos."
+      },
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": "Ministry of Labour of Kyrgyzstan",
+      "sourceType": "government",
+      "verificationStatus": "unavailable",
+      "sourceURL": "https://mlsp.gov.kg/ru/2025/12/26/s-nachala-goda-na-telefon-doveriya-dlya-detej-111-postupilo-67-429-zvonkov/"
+    },
+    {
+      "id": "md-crisis-support-unavailable",
+      "countryCode": "MD",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National adult crisis line",
+        "en": "National adult crisis line",
+        "es": "National adult crisis line"
+      },
+      "localizedNotes": {
+        "ru": "Национальный телефон общего психического кризиса не подтверждён. Pentru Viață предоставляет эмоциональную поддержку через интернет.",
+        "en": "No nationwide general mental health crisis phone number has been confirmed. Pentru Viață provides emotional support online.",
+        "es": "No se ha confirmado un número telefónico nacional para crisis generales de salud mental. Pentru Viață ofrece apoyo emocional en línea."
+      },
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": "Pentru Viață",
+      "sourceType": "nonprofit",
+      "verificationStatus": "unavailable",
+      "sourceURL": "https://pentruviata.md/"
+    },
+    {
+      "id": "ru-crisis-support-mchs",
+      "countryCode": "RU",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "МЧС России",
+        "en": "МЧС России",
+        "es": "МЧС России"
+      },
+      "localizedNotes": {
+        "ru": "Государственная служба экстренной психологической помощи МЧС России.",
+        "en": "Emergency psychological support service of EMERCOM of Russia.",
+        "es": "Servicio de apoyo psicológico de emergencia del Ministerio de Emergencias de Rusia."
+      },
+      "dialString": "+7 495 989 50 50",
+      "internationalNumber": "+7 495 989 50 50",
+      "sourceName": "МЧС России",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "sourceURL": "https://psi.mchs.gov.ru/",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "tj-crisis-support-unavailable",
+      "countryCode": "TJ",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National adult crisis line",
+        "en": "National adult crisis line",
+        "es": "National adult crisis line"
+      },
+      "localizedNotes": {
+        "ru": "Официальный национальный номер общего психического кризиса для взрослых не подтверждён.",
+        "en": "No official nationwide general mental health crisis number for adults has been confirmed.",
+        "es": "No se ha confirmado un número nacional oficial para crisis generales de salud mental en adultos."
+      },
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": null,
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable"
+    },
+    {
+      "id": "tm-crisis-support-unavailable",
+      "countryCode": "TM",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National adult crisis line",
+        "en": "National adult crisis line",
+        "es": "National adult crisis line"
+      },
+      "localizedNotes": {
+        "ru": "Универсальный кризисный номер не подтверждён. Номер 118 относится к помощи в отказе от курения и поэтому здесь не используется.",
+        "en": "No universal crisis number has been confirmed. Number 118 is for smoking cessation support and is therefore not used here.",
+        "es": "No se ha confirmado un número universal para crisis. El 118 está destinado a dejar de fumar y por eso no se utiliza aquí."
+      },
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": "Ministry of Health of Turkmenistan",
+      "sourceType": "government",
+      "verificationStatus": "unavailable",
+      "sourceURL": "https://saglykhm.gov.tm/ru/ynam-merkezi"
+    },
+    {
+      "id": "ua-crisis-support-npa",
+      "countryCode": "UA",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National Psychological Association",
+        "en": "National Psychological Association",
+        "es": "National Psychological Association"
+      },
+      "localizedNotes": {
+        "ru": "Кризисная помощь психологов и психиатров ежедневно с 09:00 до 05:00 по Киеву. Работа номера 7333 приостановлена.",
+        "en": "Crisis support from psychologists and psychiatrists daily from 09:00 to 05:00 Kyiv time. Service on number 7333 is suspended.",
+        "es": "Apoyo en crisis de psicólogos y psiquiatras todos los días de 09:00 a 05:00, hora de Kyiv. El servicio del número 7333 está suspendido."
+      },
+      "dialString": "0800 100 102",
+      "internationalNumber": "+380 800 100 102",
+      "sourceName": "National Psychological Association of Ukraine",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "sourceURL": "https://help.npa-ua.org/",
+      "verifiedAt": "2026-10-05"
+    },
+    {
+      "id": "uz-crisis-support-unavailable",
+      "countryCode": "UZ",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National adult crisis line",
+        "en": "National adult crisis line",
+        "es": "National adult crisis line"
+      },
+      "localizedNotes": {
+        "ru": "Универсальный кризисный номер для взрослых не подтверждён. Номер 1097 относится к наркологии и зависимостям и поэтому здесь не используется.",
+        "en": "No universal adult crisis number has been confirmed. Number 1097 is for addiction-related support and is therefore not used here.",
+        "es": "No se ha confirmado un número universal para crisis en adultos. El 1097 está destinado a problemas de adicción y por eso no se utiliza aquí."
+      },
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": "Ministry of Health of Uzbekistan",
+      "sourceType": "government",
+      "verificationStatus": "unavailable",
+      "sourceURL": "https://digital.gov.uz/ru/ssv/news/view/173769"
+    },
+    {
+      "id": "au-ambulance-diabetes-emergency",
+      "countryCode": "AU",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Попросите соединить со скорой помощью. Используйте при опасных острых осложнениях диабета.",
+        "en": "Ask for an ambulance. Use for dangerous acute diabetes complications.",
+        "es": "Solicite una ambulancia. Úselo ante complicaciones agudas peligrosas de la diabetes."
+      },
+      "dialString": "000",
+      "sourceName": "Australian emergency services",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "gb-ambulance-diabetes-emergency",
+      "countryCode": "GB",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Попросите скорую помощь. NHS рекомендует экстренный вызов при признаках диабетического кетоацидоза.",
+        "en": "Ask for an ambulance. NHS recommends an emergency call for signs of diabetic ketoacidosis.",
+        "es": "Solicite una ambulancia. El NHS recomienda una llamada de emergencia ante signos de cetoacidosis diabética."
+      },
+      "dialString": "999",
+      "sourceName": "UK emergency services",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "il-ambulance-diabetes-emergency",
+      "countryCode": "IL",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "101",
+      "sourceName": "Magen David Adom",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ca-ambulance-diabetes-emergency",
+      "countryCode": "CA",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Попросите скорую помощь.",
+        "en": "Ask for an ambulance.",
+        "es": "Solicite una ambulancia."
+      },
+      "dialString": "911",
+      "sourceName": "Canadian emergency services",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://www.diabetes.ca/en-CA/managing-my-diabetes/tools---resources/guidelines-for-the-care-of-students"
+    },
+    {
+      "id": "us-ambulance-diabetes-emergency",
+      "countryCode": "US",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Попросите скорую помощь.",
+        "en": "Ask for an ambulance.",
+        "es": "Solicite una ambulancia."
+      },
+      "dialString": "911",
+      "sourceName": "United States emergency services",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "at-ambulance-diabetes-emergency",
+      "countryCode": "AT",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "be-ambulance-diabetes-emergency",
+      "countryCode": "BE",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "bg-ambulance-diabetes-emergency",
+      "countryCode": "BG",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "hu-ambulance-diabetes-emergency",
+      "countryCode": "HU",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "de-ambulance-diabetes-emergency",
+      "countryCode": "DE",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "gr-ambulance-diabetes-emergency",
+      "countryCode": "GR",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "dk-ambulance-diabetes-emergency",
+      "countryCode": "DK",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ie-ambulance-diabetes-emergency",
+      "countryCode": "IE",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "es-ambulance-diabetes-emergency",
+      "countryCode": "ES",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "it-ambulance-diabetes-emergency",
+      "countryCode": "IT",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "cy-ambulance-diabetes-emergency",
+      "countryCode": "CY",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "lv-ambulance-diabetes-emergency",
+      "countryCode": "LV",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "lt-ambulance-diabetes-emergency",
+      "countryCode": "LT",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "lu-ambulance-diabetes-emergency",
+      "countryCode": "LU",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "mt-ambulance-diabetes-emergency",
+      "countryCode": "MT",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "nl-ambulance-diabetes-emergency",
+      "countryCode": "NL",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "pl-ambulance-diabetes-emergency",
+      "countryCode": "PL",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "pt-ambulance-diabetes-emergency",
+      "countryCode": "PT",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ro-ambulance-diabetes-emergency",
+      "countryCode": "RO",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "sk-ambulance-diabetes-emergency",
+      "countryCode": "SK",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "si-ambulance-diabetes-emergency",
+      "countryCode": "SI",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "fi-ambulance-diabetes-emergency",
+      "countryCode": "FI",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "fr-ambulance-diabetes-emergency",
+      "countryCode": "FR",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "hr-ambulance-diabetes-emergency",
+      "countryCode": "HR",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "cz-ambulance-diabetes-emergency",
+      "countryCode": "CZ",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "se-ambulance-diabetes-emergency",
+      "countryCode": "SE",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ee-ambulance-diabetes-emergency",
+      "countryCode": "EE",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб ЕС. Попросите скорую помощь.",
+        "en": "EU emergency number. Ask for an ambulance.",
+        "es": "Número único de emergencias de la UE. Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "European emergency number 112",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "cy-ambulance-dispatch-full",
+      "countryCode": "CY",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Полный номер диспетчерской скорой помощи Кипра.",
+        "en": "Full number for the Cyprus ambulance dispatch centre.",
+        "es": "Número completo del centro de despacho de ambulancias de Chipre."
+      },
+      "dialString": "+35722887171",
+      "sourceName": "State Health Services Organisation",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "internationalNumber": "+357 22 887171",
+      "sourceURL": "https://www.shso.org.cy/en/epikoinonia-asthenofora/"
+    },
+    {
+      "id": "am-ambulance-103",
+      "countryCode": "AM",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Если номер 103 не соединяет, используйте 112.",
+        "en": "If 103 does not connect, use 112.",
+        "es": "Si el 103 no conecta, use el 112."
+      },
+      "dialString": "103",
+      "sourceName": "Armenian ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://english.hartak.am/guides/medical-care-in-armenia/"
+    },
+    {
+      "id": "am-emergency-backup-112",
+      "countryCode": "AM",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Запасной номер, если 103 не соединяет.",
+        "en": "Backup number if 103 does not connect.",
+        "es": "Número alternativo si el 103 no conecta."
+      },
+      "dialString": "112",
+      "sourceName": "Armenian emergency services",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://english.hartak.am/guides/medical-care-in-armenia/"
+    },
+    {
+      "id": "az-ambulance-103",
+      "countryCode": "AZ",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "103",
+      "sourceName": "Azerbaijan ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "by-ambulance-103",
+      "countryCode": "BY",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "103",
+      "sourceName": "Belarus ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ge-ambulance-112",
+      "countryCode": "GE",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Попросите скорую помощь.",
+        "en": "Ask for an ambulance.",
+        "es": "Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "Georgia emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "kz-ambulance-103",
+      "countryCode": "KZ",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "103",
+      "sourceName": "Kazakhstan ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "kg-ambulance-103",
+      "countryCode": "KG",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "103",
+      "sourceName": "Kyrgyzstan ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "md-ambulance-112",
+      "countryCode": "MD",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Попросите скорую помощь.",
+        "en": "Ask for an ambulance.",
+        "es": "Solicite una ambulancia."
+      },
+      "dialString": "112",
+      "sourceName": "Moldova emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ru-ambulance-103",
+      "countryCode": "RU",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "103",
+      "sourceName": "Russian ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ru-emergency-112",
+      "countryCode": "RU",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Единый номер экстренных служб.",
+        "en": "Unified emergency number.",
+        "es": "Número único de emergencias."
+      },
+      "dialString": "112",
+      "sourceName": "Russian emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "tj-ambulance-mobile-103",
+      "countryCode": "TJ",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Номер для звонка с мобильного телефона.",
+        "en": "Number for calls from a mobile phone.",
+        "es": "Número para llamadas desde un teléfono móvil."
+      },
+      "dialString": "103",
+      "sourceName": "Tajikistan ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "tj-ambulance-landline-03",
+      "countryCode": "TJ",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Номер для звонка со стационарного телефона.",
+        "en": "Number for calls from a landline.",
+        "es": "Número para llamadas desde un teléfono fijo."
+      },
+      "dialString": "03",
+      "sourceName": "Tajikistan ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "tm-ambulance-mobile-003",
+      "countryCode": "TM",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Номер для звонка с мобильного телефона.",
+        "en": "Number for calls from a mobile phone.",
+        "es": "Número para llamadas desde un teléfono móvil."
+      },
+      "dialString": "003",
+      "sourceName": "Turkmenistan ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://saglykhm.gov.tm/en/contacts"
+    },
+    {
+      "id": "tm-ambulance-landline-03",
+      "countryCode": "TM",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Номер для звонка со стационарного телефона.",
+        "en": "Number for calls from a landline.",
+        "es": "Número para llamadas desde un teléfono fijo."
+      },
+      "dialString": "03",
+      "sourceName": "Turkmenistan ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://saglykhm.gov.tm/en/contacts"
+    },
+    {
+      "id": "ua-ambulance-103",
+      "countryCode": "UA",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "103",
+      "sourceName": "National Health Service of Ukraine",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://nszu.gov.ua/en/news/chomu-pid-chas-dzvinka-na-103-vazhlyvo-detalno-vidp"
+    },
+    {
+      "id": "uz-ambulance-103",
+      "countryCode": "UZ",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "103",
+      "sourceName": "Uzbekistan ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ar-emergency-911",
+      "countryCode": "AR",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Национальная экстренная служба. Попросите скорую помощь.",
+        "en": "National emergency service. Ask for an ambulance.",
+        "es": "Servicio nacional de emergencias. Solicite una ambulancia."
+      },
+      "dialString": "911",
+      "sourceName": "Argentina emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://www.argentina.gob.ar/tema/emergencias"
+    },
+    {
+      "id": "ar-same-107",
+      "countryCode": "AR",
+      "category": "ambulance",
+      "scope": "regional",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Действует в Буэнос-Айресе и некоторых других населённых пунктах.",
+        "en": "Available in Buenos Aires and some other locations.",
+        "es": "Disponible en Buenos Aires y algunas otras localidades."
+      },
+      "dialString": "107",
+      "sourceName": "SAME",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "region": "Buenos Aires and participating locations",
+      "sourceURL": "https://www.argentina.gob.ar/tema/emergencias"
+    },
+    {
+      "id": "bo-ambulance-118",
+      "countryCode": "BO",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Доступность и скорость реагирования различаются по регионам.",
+        "en": "Availability and response times vary by region.",
+        "es": "La disponibilidad y los tiempos de respuesta varían según la región."
+      },
+      "dialString": "118",
+      "sourceName": "Bolivia ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "br-samu-192",
+      "countryCode": "BR",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "192",
+      "sourceName": "SAMU",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ve-emergency-911",
+      "countryCode": "VE",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Попросите скорую помощь.",
+        "en": "Ask for an ambulance.",
+        "es": "Solicite una ambulancia."
+      },
+      "dialString": "911",
+      "sourceName": "Venezuela emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ht-ambulance-116",
+      "countryCode": "HT",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Фактическая доступность бригад может быть ограничена.",
+        "en": "Ambulance availability may be limited.",
+        "es": "La disponibilidad de ambulancias puede ser limitada."
+      },
+      "dialString": "116",
+      "sourceName": "Haiti ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "gt-rescue-122",
+      "countryCode": "GT",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Экстренная спасательная служба, через которую можно вызвать медицинскую помощь.",
+        "en": "Emergency rescue service that can dispatch medical assistance.",
+        "es": "Servicio de rescate de emergencia que puede enviar asistencia médica."
+      },
+      "dialString": "122",
+      "sourceName": "Guatemala emergency rescue service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "gt-rescue-123",
+      "countryCode": "GT",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Альтернативная экстренная спасательная служба.",
+        "en": "Alternative emergency rescue service.",
+        "es": "Servicio alternativo de rescate de emergencia."
+      },
+      "dialString": "123",
+      "sourceName": "Guatemala emergency rescue service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "hn-emergency-911",
+      "countryCode": "HN",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Попросите скорую помощь.",
+        "en": "Ask for an ambulance.",
+        "es": "Solicite una ambulancia."
+      },
+      "dialString": "911",
+      "sourceName": "Honduras emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "do-emergency-911",
+      "countryCode": "DO",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Покрытие может различаться по регионам.",
+        "en": "Coverage may vary by region.",
+        "es": "La cobertura puede variar según la región."
+      },
+      "dialString": "911",
+      "sourceName": "Sistema Nacional de Atención a Emergencias y Seguridad 911",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://911.gob.do/gobierno-amplia-cobertura-del-sistema-911-con-inicio-de-operaciones-en-la-provincia-pedernales/gobierno-amplia-cobertura-del-sistema-911-con-inicio-de-operaciones-en-la-provincia-pedernales-1/"
+    },
+    {
+      "id": "co-emergency-123",
+      "countryCode": "CO",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Попросите скорую помощь.",
+        "en": "Ask for an ambulance.",
+        "es": "Solicite una ambulancia."
+      },
+      "dialString": "123",
+      "sourceName": "Colombia emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "cr-emergency-911",
+      "countryCode": "CR",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Попросите скорую помощь.",
+        "en": "Ask for an ambulance.",
+        "es": "Solicite una ambulancia."
+      },
+      "dialString": "911",
+      "sourceName": "Costa Rica emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "cu-ambulance-104",
+      "countryCode": "CU",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Доступность может быть ограничена, особенно вне городов.",
+        "en": "Availability may be limited, especially outside cities.",
+        "es": "La disponibilidad puede ser limitada, especialmente fuera de las ciudades."
+      },
+      "dialString": "104",
+      "sourceName": "Cuba ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "mx-emergency-911",
+      "countryCode": "MX",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Попросите скорую помощь.",
+        "en": "Ask for an ambulance.",
+        "es": "Solicite una ambulancia."
+      },
+      "dialString": "911",
+      "sourceName": "Mexico emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ni-ambulance-102",
+      "countryCode": "NI",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Прямая бесплатная линия диспетчерской скорой помощи.",
+        "en": "Direct free ambulance dispatch line.",
+        "es": "Línea directa y gratuita del despacho de ambulancias."
+      },
+      "dialString": "102",
+      "sourceName": "MINSA ambulance dispatch",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://www.minsa.gob.ni/"
+    },
+    {
+      "id": "ni-emergency-911",
+      "countryCode": "NI",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Резервный общий экстренный номер.",
+        "en": "Backup general emergency number.",
+        "es": "Número general de emergencia alternativo."
+      },
+      "dialString": "911",
+      "sourceName": "Nicaragua emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "pa-sume-911",
+      "countryCode": "PA",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Медицинская экстренная помощь, включая острые диабетические состояния.",
+        "en": "Medical emergencies, including acute diabetic emergencies.",
+        "es": "Emergencias médicas, incluidas las emergencias diabéticas agudas."
+      },
+      "dialString": "911",
+      "sourceName": "SUME",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "py-seme-141",
+      "countryCode": "PY",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Номер также опубликован Национальной программой диабета.",
+        "en": "This number is also published by the National Diabetes Program.",
+        "es": "Este número también está publicado por el Programa Nacional de Diabetes."
+      },
+      "dialString": "141",
+      "sourceName": "SEME",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://www.mspbs.gov.py/dvt-diabet.html"
+    },
+    {
+      "id": "pe-samu-106",
+      "countryCode": "PE",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Используется при неотложных состояниях, включая декомпенсацию диабета. Доступность зависит от местной сети SAMU.",
+        "en": "Used for emergencies including diabetes decompensation. Availability depends on the local SAMU network.",
+        "es": "Se utiliza para emergencias, incluida la descompensación de la diabetes. La disponibilidad depende de la red local de SAMU."
+      },
+      "dialString": "106",
+      "sourceName": "SAMU",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "sv-medical-emergency-132",
+      "countryCode": "SV",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "132",
+      "sourceName": "El Salvador medical emergency system",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "sv-emergency-911",
+      "countryCode": "SV",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {},
+      "dialString": "911",
+      "sourceName": "El Salvador emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "uy-same-105",
+      "countryCode": "UY",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "105",
+      "sourceName": "SAME 105",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://inau.gub.uy/linea-azul"
+    },
+    {
+      "id": "uy-emergency-911",
+      "countryCode": "UY",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Вызовы при необходимости передаются медицинской службе.",
+        "en": "Calls are transferred to medical services when needed.",
+        "es": "Las llamadas se transfieren a los servicios médicos cuando es necesario."
+      },
+      "dialString": "911",
+      "sourceName": "Uruguay emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://inau.gub.uy/linea-azul"
+    },
+    {
+      "id": "cl-ambulance-131",
+      "countryCode": "CL",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "131",
+      "sourceName": "Chile ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "ec-ecu911",
+      "countryCode": "EC",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {},
+      "dialString": "911",
+      "sourceName": "ECU 911",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://www.ecu911.gob.ec/gestion-de-la-atencion-de-emergencias/"
+    },
+    {
+      "id": "bz-emergency-911",
+      "countryCode": "BZ",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Доступность медицинского транспорта различается по местности.",
+        "en": "Medical transport availability varies by location.",
+        "es": "La disponibilidad de transporte médico varía según la localidad."
+      },
+      "dialString": "911",
+      "sourceName": "Belize emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://www.gov.uk/foreign-travel-advice/belize/getting-help"
+    },
+    {
+      "id": "bz-ambulance-90",
+      "countryCode": "BZ",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Доступность медицинского транспорта различается по местности.",
+        "en": "Medical transport availability varies by location.",
+        "es": "La disponibilidad de transporte médico varía según la localidad."
+      },
+      "dialString": "90",
+      "sourceName": "Belize ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://www.gov.uk/foreign-travel-advice/belize/getting-help"
+    },
+    {
+      "id": "gy-ambulance-913",
+      "countryCode": "GY",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {},
+      "dialString": "913",
+      "sourceName": "Guyana ambulance service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "sr-ambulance-113",
+      "countryCode": "SR",
+      "category": "ambulance",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Скорая медицинская помощь",
+        "en": "Ambulance",
+        "es": "Ambulancia"
+      },
+      "localizedNotes": {
+        "ru": "Одинаковое покрытие всей страны не подтверждено.",
+        "en": "Nationwide coverage has not been confirmed.",
+        "es": "No se ha confirmado una cobertura uniforme en todo el país."
+      },
+      "dialString": "113",
+      "sourceName": "Academisch Ziekenhuis Paramaribo",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "sourceURL": "https://gov.sr/thema/ziekenhuizen/"
+    },
+    {
+      "id": "pr-emergency-911",
+      "countryCode": "PR",
+      "category": "general",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Экстренные службы",
+        "en": "Emergency services",
+        "es": "Servicios de emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Используется при медицинской чрезвычайной ситуации.",
+        "en": "Use for a medical emergency.",
+        "es": "Úselo ante una emergencia médica."
+      },
+      "dialString": "911",
+      "sourceName": "Puerto Rico emergency service",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06"
+    },
+    {
+      "id": "au-diabetes-support-ndss",
+      "countryCode": "AU",
+      "category": "diabetesSupport",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Поддержка при диабете",
+        "en": "Diabetes support",
+        "es": "Apoyo para la diabetes"
+      },
+      "localizedNotes": {
+        "ru": "Не является экстренной линией. Общие консультации по диабету: понедельник–пятница, 08:30–17:00.",
+        "en": "Not an emergency line. General diabetes support: Monday–Friday, 8:30 am–5:00 pm.",
+        "es": "No es una línea de emergencia. Orientación general sobre diabetes: lunes a viernes, 08:30–17:00."
+      },
+      "dialString": "1800637700",
+      "sourceName": "National Diabetes Services Scheme",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "internationalNumber": "+61 1800 637 700"
+    },
+    {
+      "id": "gb-diabetes-support",
+      "countryCode": "GB",
+      "category": "diabetesSupport",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Поддержка при диабете",
+        "en": "Diabetes support",
+        "es": "Apoyo para la diabetes"
+      },
+      "localizedNotes": {
+        "ru": "Не является экстренной линией. Консультационная поддержка: понедельник–пятница, 09:00–18:00.",
+        "en": "Not an emergency line. Support and information: Monday–Friday, 9:00 am–6:00 pm.",
+        "es": "No es una línea de emergencia. Apoyo e información: lunes a viernes, 09:00–18:00."
+      },
+      "dialString": "03451232399",
+      "sourceName": "Diabetes UK",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "internationalNumber": "+44 345 123 2399"
+    },
+    {
+      "id": "gb-diabetes-support-scotland",
+      "countryCode": "GB",
+      "category": "diabetesSupport",
+      "scope": "regional",
+      "localizedNames": {
+        "ru": "Поддержка при диабете",
+        "en": "Diabetes support",
+        "es": "Apoyo para la diabetes"
+      },
+      "localizedNotes": {
+        "ru": "Не является экстренной линией. Номер для Шотландии.",
+        "en": "Not an emergency line. Number for Scotland.",
+        "es": "No es una línea de emergencia. Número para Escocia."
+      },
+      "dialString": "01414135148",
+      "sourceName": "Diabetes Scotland",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "region": "Scotland",
+      "internationalNumber": "+44 141 413 5148"
+    },
+    {
+      "id": "ca-diabetes-support",
+      "countryCode": "CA",
+      "category": "diabetesSupport",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Поддержка при диабете",
+        "en": "Diabetes support",
+        "es": "Apoyo para la diabetes"
+      },
+      "localizedNotes": {
+        "ru": "Не является экстренной линией. Информация и направление к подходящим ресурсам.",
+        "en": "Not an emergency line. Information and referral to appropriate resources.",
+        "es": "No es una línea de emergencia. Información y derivación a recursos adecuados."
+      },
+      "dialString": "18002268464",
+      "sourceName": "Diabetes Canada",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "internationalNumber": "+1 800 226 8464",
+      "sourceURL": "https://www.diabetes.ca/about-diabetes-canada/contact-us"
+    },
+    {
+      "id": "us-diabetes-support",
+      "countryCode": "US",
+      "category": "diabetesSupport",
+      "scope": "national",
+      "localizedNames": {
+        "ru": "Поддержка при диабете",
+        "en": "Diabetes support",
+        "es": "Apoyo para la diabetes"
+      },
+      "localizedNotes": {
+        "ru": "Не является экстренной линией. Информационная поддержка: понедельник–пятница, 09:00–17:30 ET.",
+        "en": "Not an emergency line. Information support: Monday–Friday, 9:00 am–5:30 pm ET.",
+        "es": "No es una línea de emergencia. Apoyo informativo: lunes a viernes, 09:00–17:30 ET."
+      },
+      "dialString": "18003422383",
+      "sourceName": "American Diabetes Association",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-06",
+      "internationalNumber": "+1 800 342 2383",
+      "sourceURL": "https://consumerguide.diabetes.org/contact-us"
+    }
+  ]
+}

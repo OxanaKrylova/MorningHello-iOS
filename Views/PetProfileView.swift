@@ -286,6 +286,7 @@ enum PetProfileStorage {
             }
 
         try saveAll(profiles)
+        markInformationSaved()
     }
 
     // MARK: Совместимость со старым кодом
@@ -313,6 +314,7 @@ enum PetProfileStorage {
         }
 
         try saveAll(profiles)
+        markInformationSaved()
     }
 
     static func delete() {
@@ -328,11 +330,100 @@ enum PetProfileStorage {
             forKey: storageKey
         )
 
+        clearFreshnessMetadata()
+    }
+
+    static func lastSavedAt() -> Date? {
+        UserDefaults.standard.object(
+            forKey: lastSavedAtKey
+        ) as? Date
+    }
+
+    static func markInformationSaved(
+        at date: Date = Date()
+    ) {
+        UserDefaults.standard.set(
+            date,
+            forKey: lastSavedAtKey
+        )
+
         UserDefaults.standard.removeObject(
-            forKey: legacyStorageKey
+            forKey:
+                freshnessReminderSnoozedUntilKey
         )
     }
 
+    static func markInformationReviewed(
+        at date: Date = Date()
+    ) {
+        markInformationSaved(at: date)
+    }
+
+    static func snoozeFreshnessReminder(
+        from date: Date = Date(),
+        calendar: Calendar = .current
+    ) {
+        guard let snoozedUntil =
+            calendar.date(
+                byAdding: .day,
+                value:
+                    reminderSnoozeIntervalInDays,
+                to: date
+            )
+        else {
+            return
+        }
+
+        UserDefaults.standard.set(
+            snoozedUntil,
+            forKey:
+                freshnessReminderSnoozedUntilKey
+        )
+    }
+
+    static func shouldPresentFreshnessReminder(
+        at date: Date = Date(),
+        calendar: Calendar = .current
+    ) -> Bool {
+        guard !loadAll().isEmpty,
+              let lastSavedAt = lastSavedAt()
+        else {
+            return false
+        }
+
+        if let snoozedUntil =
+            UserDefaults.standard.object(
+                forKey:
+                    freshnessReminderSnoozedUntilKey
+            ) as? Date,
+           date < snoozedUntil {
+            return false
+        }
+
+        guard let reminderDate =
+            calendar.date(
+                byAdding: .day,
+                value: freshnessIntervalInDays,
+                to: lastSavedAt
+            )
+        else {
+            return false
+        }
+
+        return date >= reminderDate
+    }
+
+    static func clearFreshnessMetadata() {
+        UserDefaults.standard.removeObject(
+            forKey: lastSavedAtKey
+        )
+
+        UserDefaults.standard.removeObject(
+            forKey:
+                freshnessReminderSnoozedUntilKey
+        )
+    }
+    
     // MARK: Фотография корма
 
     static func saveFoodPhoto(
@@ -452,6 +543,7 @@ enum PetProfileStorage {
             false
 
         try saveAll(profiles)
+        markInformationSaved()
     }
 
     // MARK: Очередь удаления фотографий на Backend
@@ -503,6 +595,16 @@ enum PetProfileStorage {
         )
     }
 
+    private static let lastSavedAtKey =
+        "pet_profiles_last_saved_at_v1"
+
+    private static let freshnessReminderSnoozedUntilKey =
+        "pet_profiles_freshness_reminder_snoozed_until_v1"
+
+    static let freshnessIntervalInDays = 91
+
+    static let reminderSnoozeIntervalInDays = 7
+    
     // MARK: Вспомогательные методы фотографии
 
     private static func photosDirectory()
@@ -666,6 +768,9 @@ struct PetProfileView: View {
     @State private var showCamera =
         false
 
+    @State private var lastSavedAt:
+        Date? = PetProfileStorage.lastSavedAt()
+    
     private var selectedLanguage:
         AppLanguage {
 
@@ -725,7 +830,9 @@ struct PetProfileView: View {
         NavigationStack {
             Form {
                 introductionSection
-
+                
+                lastSavedInformationSection
+                
                 if savedProfiles.count > 1 {
                     petSelectionSection
                 }
@@ -862,6 +969,50 @@ struct PetProfileView: View {
         }
     }
 
+    private var lastSavedInformationSection:
+        some View {
+
+        Section {
+            HStack(
+                alignment: .firstTextBaseline,
+                spacing: 12
+            ) {
+                Label(
+                    localized(
+                        "Последнее сохранение"
+                    ),
+                    systemImage: "clock.fill"
+                )
+                .font(.subheadline)
+                .fontWeight(.semibold)
+
+                Spacer()
+
+                Text(lastSavedDateText)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.trailing)
+            }
+        }
+    }
+
+    private var lastSavedDateText: String {
+        guard let lastSavedAt else {
+            return localized(
+                "Данные ещё не сохранялись"
+            )
+        }
+
+        let formatter = DateFormatter()
+        formatter.locale = selectedLanguage.locale
+        formatter.dateStyle = .long
+        formatter.timeStyle = .none
+
+        return formatter.string(
+            from: lastSavedAt
+        )
+    }
+    
     // MARK: - Выбор питомца
 
     private var petSelectionSection:
@@ -1810,6 +1961,13 @@ struct PetProfileView: View {
                 .saveAll(
                     savedProfiles
                 )
+
+            if savedProfiles.isEmpty {
+                PetProfileStorage
+                    .clearFreshnessMetadata()
+
+                lastSavedAt = nil
+            }
         } catch {
             alertTitle =
                 localized(
@@ -1919,6 +2077,119 @@ struct PetProfileView: View {
     }
 }
 
+// MARK: - Напоминание об актуальности данных
+
+private struct PetProfileFreshnessReminderModifier:
+    ViewModifier {
+
+    @Environment(\.scenePhase)
+    private var scenePhase
+
+    @AppStorage(AppLanguage.storageKey)
+    private var selectedLanguageCode =
+        AppLanguage.initial.rawValue
+
+    @State private var showReviewAlert =
+        false
+
+    @State private var showPetProfile =
+        false
+
+    private var selectedLanguage:
+        AppLanguage {
+
+        AppLanguage(
+            rawValue: selectedLanguageCode
+        ) ?? .initial
+    }
+
+    private func localized(
+        _ key: String
+    ) -> String {
+        selectedLanguage.localized(key)
+    }
+
+    func body(
+        content: Content
+    ) -> some View {
+        content
+            .onAppear {
+                checkFreshnessAfterPresentation()
+            }
+            .onChange(
+                of: scenePhase
+            ) { _, newPhase in
+                guard newPhase == .active else {
+                    return
+                }
+
+                checkFreshnessAfterPresentation()
+            }
+            .alert(
+                localized(
+                    "Проверьте данные о питомце"
+                ),
+                isPresented: $showReviewAlert
+            ) {
+                Button(
+                    localized(
+                        "Проверить данные"
+                    )
+                ) {
+                    DispatchQueue.main.async {
+                        showPetProfile = true
+                    }
+                }
+
+                Button(
+                    localized(
+                        "Всё актуально"
+                    )
+                ) {
+                    PetProfileStorage
+                        .markInformationReviewed()
+                }
+
+                Button(
+                    localized(
+                        "Напомнить позже"
+                    ),
+                    role: .cancel
+                ) {
+                    PetProfileStorage
+                        .snoozeFreshnessReminder()
+                }
+            } message: {
+                Text(
+                    localized(
+                        "С момента последнего обновления прошло больше трёх месяцев. Пожалуйста, убедитесь, что сведения о корме, лекарствах, ветеринаре и уходе остаются актуальными."
+                    )
+                )
+            }
+            .sheet(
+                isPresented: $showPetProfile
+            ) {
+                PetProfileView()
+            }
+    }
+
+    private func checkFreshnessAfterPresentation() {
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + 0.8
+        ) {
+            guard scenePhase == .active,
+                  !showPetProfile
+            else {
+                return
+            }
+
+            showReviewAlert =
+                PetProfileStorage
+                    .shouldPresentFreshnessReminder()
+        }
+    }
+}
+
 // MARK: - Камера
 
 private struct PetCameraImagePicker:
@@ -1974,7 +2245,7 @@ private struct PetCameraImagePicker:
         ) {
             self.parent = parent
         }
-
+        
         func imagePickerController(
             _ picker:
                 UIImagePickerController,
@@ -2001,6 +2272,14 @@ private struct PetCameraImagePicker:
         ) {
             parent.dismiss()
         }
+    }
+}
+
+extension View {
+    func petProfileFreshnessReminder() -> some View {
+        modifier(
+            PetProfileFreshnessReminderModifier()
+        )
     }
 }
 

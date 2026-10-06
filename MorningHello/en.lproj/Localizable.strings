@@ -1766,3 +1766,23 @@
 "emergency.note.do.coverage" = "911 does not have full coverage across the country. Coverage may be limited outside Santo Domingo.";
 "emergency.note.ht.delay" = "Due to the security situation, emergency services may face long delays or may be unable to respond.";
 "connection.screen.description" = "All saved reminders will appear at the bottom of the postcard after you check in.";
+
+"emergency.service.veterinary_emergency" = "Pet Emergency";
+"emergency.service.senior_support" = "Senior Support";
+"emergency.number.unavailable" = "No verified number is currently available";
+"Ежедневно" = "Every Day";
+"connection.intro" = "All your reminders will appear at the bottom of the postcard after you check in.";
+"Ошибочные обращения к серверу за последние 7 дней" = "Failed server requests from the last 7 days";
+"Требуется восстановление доступа" = "Access Restoration Required";
+"Восстановление доступа пока недоступно. Ваш идентификатор сохранён. Попробуйте позже или напишите разработчику через Настройки." = "Access restoration is not available yet. Your identifier has been preserved. Please try again later or contact the developer through Settings.";
+"Корм, лекарства и инструкции по уходу" = "Food, medication, and care instructions";
+
+"connection.intro" = "All your reminders will appear at the bottom of the postcard after you check in.";
+"Последнее сохранение" = "Last saved";
+"Данные ещё не сохранялись" = "Information has not been saved yet";
+"Проверьте данные о питомце" = "Review Your Pet Information";
+"Проверить данные" = "Review Information";
+"Всё актуально" = "Everything Is Up to Date";
+"Напомнить позже" = "Remind Me Later";
+"С момента последнего обновления прошло больше трёх месяцев. Пожалуйста, убедитесь, что сведения о корме, лекарствах, ветеринаре и уходе остаются актуальными." = "It has been more than three months since the last update. Please make sure the food, medication, veterinarian, and care information is still current.";
+"emergency.service.diabetes_support" = "Diabetes Support";

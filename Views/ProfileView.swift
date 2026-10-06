@@ -63,9 +63,7 @@ struct ProfileView: View {
 
     @State
     private var showCountrySelection = false
-    
-    @State private var showPetProfile = false
-    
+        
     @AppStorage(AppLanguage.storageKey)
     private var selectedLanguageCode =
         AppLanguage.initial.rawValue
@@ -216,8 +214,6 @@ struct ProfileView: View {
 
                             checkInIntervalSection
 
-                            petSection
-
                             phoneSection
 
                             countrySection
@@ -289,11 +285,6 @@ struct ProfileView: View {
             isPresented: $showFeedback
         ) {
             FeedbackView()
-        }
-        .sheet(
-            isPresented: $showPetProfile
-        ) {
-            PetProfileView()
         }
         .alert(
             "Заполните профиль",
@@ -951,56 +942,6 @@ struct ProfileView: View {
                 .foregroundColor(.green)
             }
         }
-        .frame(
-            maxWidth: .infinity,
-            alignment: .leading
-        )
-        .profileCard()
-    }
-    // MARK: - Питомец
-
-    private var petSection: some View {
-        Button {
-            showPetProfile = true
-        } label: {
-            HStack(spacing: 14) {
-                Image(
-                    systemName: "pawprint.fill"
-                )
-                .font(.title3)
-                .foregroundStyle(.orange)
-
-                Text(
-                    selectedLanguage.localized(
-                        "Питомец"
-                    )
-                )
-                .font(
-                    .system(
-                        .title3,
-                        design: .rounded
-                    )
-                    .weight(.semibold)
-                )
-                .foregroundStyle(
-                    AppAdaptiveColor.text
-                )
-
-                Spacer()
-
-                Image(
-                    systemName: "chevron.right"
-                )
-                .font(
-                    .system(
-                        size: 14,
-                        weight: .semibold
-                    )
-                )
-                .foregroundStyle(.secondary)
-            }
-        }
-        .buttonStyle(.plain)
         .frame(
             maxWidth: .infinity,
             alignment: .leading

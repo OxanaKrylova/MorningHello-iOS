@@ -18,6 +18,8 @@
 		2916AEA3305C9603007248C3 /* ProtestantHolidayProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2916AEA2305C9603007248C3 /* ProtestantHolidayProvider.swift */; };
 		2916AEC0305D90C0007248C3 /* MonitoringSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */; };
 		291B30BD3050AD70002C3689 /* open_form.wav in Resources */ = {isa = PBXBuildFile; fileRef = 291B30BC3050AD70002C3689 /* open_form.wav */; };
+		291B86D83072FC4C0042B55A /* country_emergency_services.json in Resources */ = {isa = PBXBuildFile; fileRef = 291B86D63072FC4C0042B55A /* country_emergency_services.json */; };
+		291B86D93072FC4C0042B55A /* CountryEmergencyDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291B86D73072FC4C0042B55A /* CountryEmergencyDirectory.swift */; };
 		292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B3D5430126C50005F4183 /* FeedbackView.swift */; };
 		292FB2EB306ACA2D0071D95A /* ConnectionReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FB2EA306ACA2D0071D95A /* ConnectionReminder.swift */; };
 		292FB2ED306ACA4E0071D95A /* ConnectionReminderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FB2EC306ACA4E0071D95A /* ConnectionReminderProvider.swift */; };
@@ -127,6 +129,8 @@
 		2916AEA2305C9603007248C3 /* ProtestantHolidayProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtestantHolidayProvider.swift; sourceTree = "<group>"; };
 		2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringSnapshot.swift; sourceTree = "<group>"; };
 		291B30BC3050AD70002C3689 /* open_form.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = open_form.wav; sourceTree = "<group>"; };
+		291B86D63072FC4C0042B55A /* country_emergency_services.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = country_emergency_services.json; sourceTree = "<group>"; };
+		291B86D73072FC4C0042B55A /* CountryEmergencyDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryEmergencyDirectory.swift; sourceTree = "<group>"; };
 		292B3D5430126C50005F4183 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		292FB2EA306ACA2D0071D95A /* ConnectionReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionReminder.swift; sourceTree = "<group>"; };
 		292FB2EC306ACA4E0071D95A /* ConnectionReminderProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionReminderProvider.swift; sourceTree = "<group>"; };
@@ -341,6 +345,8 @@
 		297E669830712BCD00CF3173 /* Emergency */ = {
 			isa = PBXGroup;
 			children = (
+				291B86D63072FC4C0042B55A /* country_emergency_services.json */,
+				291B86D73072FC4C0042B55A /* CountryEmergencyDirectory.swift */,
 				297E669C30712BFD00CF3173 /* EmergencyServicesView.swift */,
 				297E669E307172EC00CF3173 /* OlderAdultSupportCatalog.swift */,
 				297E66A03071766400CF3173 /* RegionalEmergencyCatalog.swift */,
@@ -590,6 +596,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				296D4CC43046275F000248AD /* checkin_success.wav in Resources */,
+				291B86D83072FC4C0042B55A /* country_emergency_services.json in Resources */,
 				290E252A304E13A6000D4A2D /* Breathing_Square_2.wav in Resources */,
 				290E252B304E13A6000D4A2D /* Breathing_Square_3.wav in Resources */,
 				290E252C304E13A6000D4A2D /* Breathing_Square_4.wav in Resources */,
@@ -657,6 +664,7 @@
 				29B76C80301BF9E100D1D295 /* InternationalHolidayProvider.swift in Sources */,
 				290CA89D3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift in Sources */,
 				29887479306713EB00361B7D /* AppInstanceIDProvider..swift in Sources */,
+				291B86D93072FC4C0042B55A /* CountryEmergencyDirectory.swift in Sources */,
 				2988743B3064022D00361B7D /* HolidayPresetManager.swift in Sources */,
 				29EC92483053143A00D9BD71 /* MoodCheckInView.swift in Sources */,
 				2988747D3067144900361B7D /* ProfileDataAPIClient.swift in Sources */,
@@ -836,7 +844,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -878,7 +886,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

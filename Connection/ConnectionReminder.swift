@@ -113,6 +113,7 @@ enum ConnectionRecurrence:
     Codable {
 
     case once
+    case daily
     case weekly
     case everyTwoWeeks
     case monthly
@@ -125,6 +126,9 @@ enum ConnectionRecurrence:
         switch self {
         case .once:
             return "Один раз"
+
+        case .daily:
+            return "Ежедневно"
 
         case .weekly:
             return "Каждую неделю"
@@ -141,6 +145,9 @@ enum ConnectionRecurrence:
         switch self {
         case .once:
             return "calendar"
+
+        case .daily:
+            return "sun.max.fill"
 
         case .weekly:
             return "repeat"
