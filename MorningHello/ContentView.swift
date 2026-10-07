@@ -66,6 +66,10 @@ struct ContentView: View {
     private var connectionReminders:
         [ConnectionReminder]
     
+    @StateObject
+    private var iPhoneCalendarService =
+        IPhoneCalendarService()
+    
     @State private var hasEmergencyContacts = false
     @State private var showContactForWhatsApp = false
     @State private var showMessageComposer = false
@@ -135,8 +139,8 @@ struct ContentView: View {
     private var selectedLanguage: AppLanguage {
         AppLanguage(rawValue: selectedLanguageCode) ?? .initial
     }
-    private var todayConnectionReminder:
-        ConnectionReminder? {
+    private var todayConnectionReminders:
+        [ConnectionReminder] {
 
         let enabledReminders =
             connectionReminders.filter {
@@ -149,17 +153,54 @@ struct ContentView: View {
                 from: enabledReminders,
                 calendar: Calendar.current
             )
-            .first
     }
 
-    private var todayConnectionReminderText:
-        String? {
+    private var todayPostcardAgendaItems:
+        [PostcardAgendaItem] {
 
-        guard let reminder =
-            todayConnectionReminder
-        else {
-            return nil
-        }
+        let reminderItems =
+            todayConnectionReminders.map {
+                reminder in
+
+                PostcardAgendaItem(
+                    id:
+                        "reminder-\(reminder.id.uuidString)",
+                    kind:
+                        .morningHelloReminder,
+                    timeText:
+                        nil,
+                    title:
+                        connectionReminderText(
+                            for: reminder
+                        )
+                )
+            }
+
+        let calendarItems =
+            iPhoneCalendarService
+                .eventsForSelectedDay
+                .map { event in
+
+                    PostcardAgendaItem(
+                        id:
+                            "calendar-\(event.id)",
+                        kind:
+                            .iPhoneCalendarEvent,
+                        timeText:
+                            calendarEventTimeText(
+                                for: event
+                            ),
+                        title:
+                            event.title
+                    )
+                }
+
+        return reminderItems + calendarItems
+    }
+
+    private func connectionReminderText(
+        for reminder: ConnectionReminder
+    ) -> String {
 
         let baseText: String
 
@@ -266,6 +307,37 @@ struct ContentView: View {
 
         return "\(baseText)\n\(comment)"
     }
+
+    private func calendarEventTimeText(
+        for event: IPhoneCalendarEvent
+    ) -> String {
+
+        if event.isAllDay {
+            return selectedLanguage.localized(
+                "iphoneCalendar.event.allDay"
+            )
+        }
+
+        let formatter =
+            DateFormatter()
+
+        formatter.locale =
+            selectedLanguage.locale
+
+        formatter.timeZone =
+            .current
+
+        formatter.dateStyle =
+            .none
+
+        formatter.timeStyle =
+            .short
+
+        return formatter.string(
+            from: event.startDate
+        )
+    }    
+    
     private let monitoringSnapshotKey = "monitoring_snapshot"
     private let serverClockOffsetKey = "monitoring_server_clock_offset"
 
@@ -1119,6 +1191,11 @@ struct ContentView: View {
 
             customMessage =
                 ""
+
+            iPhoneCalendarService.loadEvents(
+                for: Date(),
+                calendar: Calendar.current
+            )
 
             showPostcard =
                 true
@@ -2558,8 +2635,8 @@ struct ContentView: View {
             PostcardScreen(
                 imageName: smartImage,
                 phrase: smartPhrase,
-                reminderText:
-                    todayConnectionReminderText,
+                agendaItems:
+                    todayPostcardAgendaItems,
                 customMessage: $customMessage,
                 onHomeTap: {
                     showPostcard = false

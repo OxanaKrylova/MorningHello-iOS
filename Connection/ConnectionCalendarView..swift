@@ -28,6 +28,10 @@ struct ConnectionCalendarView: View {
     private var reminders:
         [ConnectionReminder]
 
+    @StateObject
+    private var iPhoneCalendarService =
+        IPhoneCalendarService()
+
     // MARK: - Language
 
     @AppStorage(AppLanguage.storageKey)
@@ -76,6 +80,8 @@ struct ConnectionCalendarView: View {
     @State private var deletionErrorMessage:
         String?
     @State private var isAllRemindersExpanded =
+        false
+    @State private var showIPhoneCalendarSelection =
         false
     
     // MARK: - Calendar
@@ -259,6 +265,22 @@ struct ConnectionCalendarView: View {
         )
     }
 
+    private var selectedDayCalendarEvents:
+        [IPhoneCalendarEvent] {
+
+        iPhoneCalendarService.events(
+            on: selectedDate,
+            calendar: localCalendar
+        )
+    }
+
+    private var displayedMonthCalendarEvents:
+        [IPhoneCalendarEvent] {
+
+        iPhoneCalendarService
+            .eventsForDisplayedPeriod
+    }
+
     // MARK: - Body
 
     var body: some View {
@@ -276,6 +298,8 @@ struct ConnectionCalendarView: View {
                     ) {
                         calendarHeader
 
+                        iPhoneCalendarCard
+                        
                         calendarCard
 
                         selectedDaySection
@@ -361,6 +385,15 @@ struct ConnectionCalendarView: View {
                     reminder: reminder
                 )
             }
+            .sheet(
+                isPresented:
+                    $showIPhoneCalendarSelection
+            ) {
+                IPhoneCalendarSelectionView(
+                    calendarService:
+                        iPhoneCalendarService
+                )
+            }
             .alert(
                 localized(
                     "connection.delete.title"
@@ -421,6 +454,20 @@ struct ConnectionCalendarView: View {
                     deletionErrorMessage ?? ""
                 )
             }
+        }
+        .onAppear {
+            refreshIPhoneCalendarEvents()
+        }
+        .onChange(
+            of: normalizedDisplayedMonth
+        ) { _, _ in
+            refreshIPhoneCalendarEvents()
+        }
+        .onChange(
+            of: iPhoneCalendarService
+                .selectedCalendarIdentifiers
+        ) { _, _ in
+            refreshIPhoneCalendarEvents()
         }
     }
 
@@ -756,6 +803,154 @@ struct ConnectionCalendarView: View {
         )
     }
     
+    // MARK: - iPhone Calendar
+
+    private var iPhoneCalendarCard:
+        some View {
+
+        Button {
+            showIPhoneCalendarSelection =
+                true
+
+        } label: {
+            HStack(
+                alignment: .center,
+                spacing: 14
+            ) {
+                Image(
+                    systemName:
+                        "calendar.badge.checkmark"
+                )
+                .font(
+                    .system(
+                        size: 25,
+                        weight: .semibold
+                    )
+                )
+                .foregroundStyle(
+                    accentColor
+                )
+                .frame(
+                    width: 46,
+                    height: 46
+                )
+                .background(
+                    accentColor.opacity(0.12)
+                )
+                .clipShape(
+                    Circle()
+                )
+
+                VStack(
+                    alignment: .leading,
+                    spacing: 5
+                ) {
+                    Text(
+                        localized(
+                            "iphoneCalendar.card.title"
+                        )
+                    )
+                    .font(
+                        .system(
+                            size: 18,
+                            weight: .bold,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        Color.primary
+                    )
+
+                    Text(
+                        iPhoneCalendarStatusText
+                    )
+                    .font(
+                        .system(
+                            size: 15,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        Color.secondary
+                    )
+                    .multilineTextAlignment(
+                        .leading
+                    )
+                    .fixedSize(
+                        horizontal: false,
+                        vertical: true
+                    )
+                }
+
+                Spacer(
+                    minLength: 4
+                )
+
+                Image(
+                    systemName:
+                        "chevron.right"
+                )
+                .font(
+                    .system(
+                        size: 18,
+                        weight: .semibold
+                    )
+                )
+                .foregroundStyle(
+                    Color.secondary
+                )
+            }
+            .frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            )
+            .padding(18)
+            .background(
+                cardColor
+            )
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: 22,
+                    style: .continuous
+                )
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var iPhoneCalendarStatusText:
+        String {
+
+        guard
+            iPhoneCalendarService
+                .hasReadAccess
+        else {
+            return localized(
+                "iphoneCalendar.card.permissionRequired"
+            )
+        }
+
+        let count =
+            iPhoneCalendarService
+                .selectedCalendarsCount
+
+        guard count > 0 else {
+            return localized(
+                "iphoneCalendar.card.notSelected"
+            )
+        }
+
+        return String(
+            format:
+                localized(
+                    "iphoneCalendar.card.selectedCount"
+                ),
+            locale:
+                selectedLanguage.locale,
+            count
+        )
+    }
+    
     // MARK: - Calendar Card
 
     private var calendarCard:
@@ -963,6 +1158,16 @@ struct ConnectionCalendarView: View {
                             localCalendar
                     )
 
+            let dayCalendarEvents =
+                iPhoneCalendarService.events(
+                    on: date,
+                    calendar: localCalendar
+                )
+
+            let dayItemsCount =
+                dayReminders.count
+                + dayCalendarEvents.count
+
             Button {
                 selectedDate =
                     localCalendar.startOfDay(
@@ -991,7 +1196,7 @@ struct ConnectionCalendarView: View {
                         )
                     )
 
-                    if dayReminders.isEmpty {
+                    if dayItemsCount == 0 {
                         Color.clear
                             .frame(
                                 height: 8
@@ -1002,7 +1207,7 @@ struct ConnectionCalendarView: View {
                         ) {
                             ForEach(
                                 0..<min(
-                                    dayReminders.count,
+                                    dayItemsCount,
                                     3
                                 ),
                                 id: \.self
@@ -1063,7 +1268,7 @@ struct ConnectionCalendarView: View {
                 dayAccessibilityLabel(
                     date: date,
                     remindersCount:
-                        dayReminders.count
+                        dayItemsCount
                 )
             )
         } else {
@@ -1087,7 +1292,9 @@ struct ConnectionCalendarView: View {
                 alignment: .leading,
                 spacing: 0
             ) {
-                if reminders.isEmpty {
+                if reminders.isEmpty
+                    && displayedMonthCalendarEvents
+                        .isEmpty {
                     Text(
                         localized(
                             "connection.all.empty"
@@ -1113,6 +1320,17 @@ struct ConnectionCalendarView: View {
 
                         compactReminderRow(
                             reminder
+                        )
+
+                        Divider()
+                            .opacity(0.5)
+                    }
+
+                    ForEach(
+                        displayedMonthCalendarEvents
+                    ) { event in
+                        compactCalendarEventRow(
+                            event
                         )
 
                         Divider()
@@ -1255,6 +1473,85 @@ struct ConnectionCalendarView: View {
                 : 0.55
         )
     }
+
+    private func compactCalendarEventRow(
+        _ event: IPhoneCalendarEvent
+    ) -> some View {
+
+        HStack(
+            alignment: .top,
+            spacing: 10
+        ) {
+            Image(
+                systemName: "calendar"
+            )
+            .font(
+                .system(
+                    size: 15,
+                    weight: .semibold
+                )
+            )
+            .foregroundStyle(
+                accentColor
+            )
+            .frame(
+                width: 22
+            )
+
+            VStack(
+                alignment: .leading,
+                spacing: 3
+            ) {
+                Text(event.title)
+                    .font(
+                        .system(
+                            size: 15,
+                            weight: .semibold,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        Color.primary
+                    )
+
+                HStack(
+                    spacing: 5
+                ) {
+                    Text(
+                        fullDateText(
+                            event.startDate
+                        )
+                    )
+
+                    Text("•")
+
+                    Text(
+                        calendarEventTimeText(
+                            for: event
+                        )
+                    )
+                }
+                .font(
+                    .system(
+                        size: 13,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(
+                    Color.secondary
+                )
+                .fixedSize(
+                    horizontal: false,
+                    vertical: true
+                )
+            }
+
+            Spacer(
+                minLength: 0
+            )
+        }
+        .padding(.vertical, 10)
+    }
     
     // MARK: - Selected Day
 
@@ -1288,7 +1585,8 @@ struct ConnectionCalendarView: View {
                 alignment: .center
             )
 
-            if selectedDayReminders.isEmpty {
+            if selectedDayReminders.isEmpty
+                && selectedDayCalendarEvents.isEmpty {
                 emptySelectedDayCard
             } else {
                 ForEach(
@@ -1296,6 +1594,14 @@ struct ConnectionCalendarView: View {
                 ) { reminder in
                     reminderCard(
                         reminder
+                    )
+                }
+
+                ForEach(
+                    selectedDayCalendarEvents
+                ) { event in
+                    calendarEventCard(
+                        event
                     )
                 }
             }
@@ -1559,6 +1865,98 @@ struct ConnectionCalendarView: View {
         )
     }
 
+    private func calendarEventCard(
+        _ event: IPhoneCalendarEvent
+    ) -> some View {
+
+        HStack(
+            alignment: .top,
+            spacing: 14
+        ) {
+            Image(
+                systemName: "calendar"
+            )
+            .font(
+                .system(
+                    size: 23,
+                    weight: .semibold
+                )
+            )
+            .foregroundStyle(
+                accentColor
+            )
+            .frame(
+                width: 44,
+                height: 44
+            )
+            .background(
+                accentColor.opacity(0.12)
+            )
+            .clipShape(
+                Circle()
+            )
+
+            VStack(
+                alignment: .leading,
+                spacing: 7
+            ) {
+                Text(event.title)
+                    .font(
+                        .system(
+                            size: 21,
+                            weight: .bold,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        Color.primary
+                    )
+                    .fixedSize(
+                        horizontal: false,
+                        vertical: true
+                    )
+
+                Label(
+                    calendarEventTimeText(
+                        for: event
+                    ),
+                    systemImage:
+                        event.isAllDay
+                        ? "sun.max.fill"
+                        : "clock.fill"
+                )
+                .font(
+                    .system(
+                        size: 16,
+                        weight: .semibold,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(
+                    Color.secondary
+                )
+            }
+
+            Spacer(
+                minLength: 0
+            )
+        }
+        .padding(18)
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+        .background(
+            cardColor
+        )
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: 24,
+                style: .continuous
+            )
+        )
+    }
+
     // MARK: - Privacy
 
     private var privacyNote:
@@ -1635,6 +2033,43 @@ struct ConnectionCalendarView: View {
                     for: Date()
                 )
         }
+    }
+
+    private func refreshIPhoneCalendarEvents() {
+        iPhoneCalendarService
+            .refreshAuthorizationAndCalendars()
+
+        iPhoneCalendarService
+            .loadEventsForMonth(
+                containing:
+                    normalizedDisplayedMonth,
+                calendar:
+                    localCalendar
+            )
+    }
+
+    private func calendarEventTimeText(
+        for event: IPhoneCalendarEvent
+    ) -> String {
+        if event.isAllDay {
+            return localized(
+                "iphoneCalendar.event.allDay"
+            )
+        }
+
+        let formatter = DateFormatter()
+        formatter.locale =
+            selectedLanguage.locale
+        formatter.timeZone =
+            localCalendar.timeZone
+        formatter.dateStyle =
+            .none
+        formatter.timeStyle =
+            .short
+
+        return formatter.string(
+            from: event.startDate
+        )
     }
 
     private func deleteSelectedReminder() {

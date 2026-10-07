@@ -293,3 +293,26 @@
 "emergency.service.diabetes_support" = "Поддержка при диабете";
 "emergency.service.pet_aftercare" = "Кремация и прощание с питомцем";
 "emergency.pet_aftercare.confirm_details" = "Уточните часы работы, возможность вывоза и территорию обслуживания по телефону.";
+"iphoneCalendar.card.title" = "Календарь iPhone";
+"iphoneCalendar.card.permissionRequired" = "Требуется разрешение на чтение календаря";
+"iphoneCalendar.card.notSelected" = "Календари пока не выбраны";
+"iphoneCalendar.card.selectedCount" = "Выбрано календарей: %d";
+
+"iphoneCalendar.selection.title" = "Выбор календарей";
+"iphoneCalendar.selection.description" = "Выберите календари, события которых MorningHello будет показывать после отметки «Я в порядке».";
+"iphoneCalendar.selection.empty" = "Доступные календари не найдены.";
+"iphoneCalendar.selection.calendars" = "Календари";
+
+"iphoneCalendar.action.done" = "Готово";
+"iphoneCalendar.action.selectAll" = "Выбрать все";
+"iphoneCalendar.action.clear" = "Снять выбор";
+
+"iphoneCalendar.permission.title" = "Разрешить доступ к календарю";
+"iphoneCalendar.permission.description" = "MorningHello читает только события из выбранных календарей. События остаются на этом iPhone и не передаются на сервер.";
+"iphoneCalendar.permission.allow" = "Разрешить доступ";
+"iphoneCalendar.permission.settings" = "Открыть настройки";
+
+"iphoneCalendar.event.allDay" = "Весь день";
+"iphoneCalendar.postcard.today" = "Сегодня";
+"iphoneCalendar.postcard.more" = "Ещё %d";
+"iphoneCalendar.postcard.collapse" = "Свернуть";

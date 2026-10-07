@@ -10,7 +10,7 @@ struct PostcardScreen: View {
 
     let imageName: String
     let phrase: String
-    let reminderText: String?
+    let agendaItems: [PostcardAgendaItem]
     
     @Binding var customMessage: String
 
@@ -26,6 +26,9 @@ struct PostcardScreen: View {
     @State
     private var showCustomMessageEditor = false
 
+    @State
+    private var isAgendaExpanded = false
+    
     private let customMessageLimit = 50
 
     var body: some View {
@@ -126,76 +129,30 @@ struct PostcardScreen: View {
                         )
                         .position(
                             x: geometry.size.width / 2,
-                            y: geometry.size.height * 0.68
+                            y:
+                                geometry.size.height
+                                * (
+                                    agendaItems.isEmpty
+                                    ? 0.68
+                                    : 0.52
+                                )
                         )
                 }
                 
-                if let reminderText {
-                    let trimmedReminder =
-                        reminderText.trimmingCharacters(
-                            in: .whitespacesAndNewlines
-                        )
-
-                    if !trimmedReminder.isEmpty {
-                        HStack(
-                            alignment: .center,
-                            spacing: 9
-                        ) {
-                            Image(
-                                systemName:
-                                    "person.2.wave.2.fill"
-                            )
-                            .font(
-                                .system(
-                                    size: 16,
-                                    weight: .semibold
-                                )
-                            )
-                            .foregroundStyle(
-                                Color.orange
-                            )
-
-                            Text(trimmedReminder)
-                                .font(
-                                    .system(
-                                        size: 15,
-                                        weight: .semibold,
-                                        design: .rounded
-                                    )
-                                )
-                                .foregroundStyle(
-                                    Color.primary
-                                )
-                                .multilineTextAlignment(
-                                    .leading
-                                )
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.8)
-
-                            Spacer(
-                                minLength: 0
-                            )
-                        }
-                        .padding(.horizontal, 15)
-                        .padding(.vertical, 11)
-                        .frame(
-                            width: min(
-                                geometry.size.width - 48,
-                                340
-                            )
-                        )
-                        .background(
-                            .ultraThinMaterial,
-                            in: RoundedRectangle(
-                                cornerRadius: 18,
-                                style: .continuous
-                            )
-                        )
-                        .position(
-                            x: geometry.size.width / 2,
-                            y: geometry.size.height * 0.80
-                        )
-                    }
+                if !agendaItems.isEmpty {
+                    agendaCard(
+                        width:
+                            min(
+                                geometry.size.width - 40,
+                                360
+                            ),
+                        maximumHeight:
+                            geometry.size.height * 0.31
+                    )
+                    .position(
+                        x: geometry.size.width / 2,
+                        y: geometry.size.height * 0.72
+                    )
                 }
 
                 // Нижние кнопки
@@ -329,6 +286,232 @@ struct PostcardScreen: View {
         }
     }
 
+    private var displayedAgendaItems:
+        [PostcardAgendaItem] {
+
+        if isAgendaExpanded {
+            return agendaItems
+        }
+
+        return Array(
+            agendaItems.prefix(3)
+        )
+    }
+
+    private var hiddenAgendaItemsCount: Int {
+        max(
+            agendaItems.count - 3,
+            0
+        )
+    }
+
+    private func agendaCard(
+        width: CGFloat,
+        maximumHeight: CGFloat
+    ) -> some View {
+
+        VStack(
+            alignment: .leading,
+            spacing: 8
+        ) {
+            Text(
+                AppLanguage.selected.localized(
+                    "iphoneCalendar.postcard.today"
+                )
+            )
+            .font(
+                .system(
+                    size: 15,
+                    weight: .bold,
+                    design: .rounded
+                )
+            )
+            .foregroundStyle(
+                Color.primary
+            )
+
+            ScrollView(
+                .vertical,
+                showsIndicators:
+                    isAgendaExpanded
+            ) {
+                LazyVStack(
+                    alignment: .leading,
+                    spacing: 8
+                ) {
+                    ForEach(
+                        displayedAgendaItems
+                    ) { item in
+                        agendaRow(item)
+                    }
+                }
+            }
+            .scrollDisabled(
+                !isAgendaExpanded
+            )
+
+            if hiddenAgendaItemsCount > 0 {
+                Button {
+                    withAnimation(
+                        .easeInOut(
+                            duration: 0.22
+                        )
+                    ) {
+                        isAgendaExpanded.toggle()
+                    }
+                } label: {
+                    HStack(
+                        spacing: 6
+                    ) {
+                        Text(
+                            isAgendaExpanded
+                            ? AppLanguage.selected.localized(
+                                "iphoneCalendar.postcard.collapse"
+                            )
+                            : String(
+                                format:
+                                    AppLanguage.selected.localized(
+                                        "iphoneCalendar.postcard.more"
+                                    ),
+                                locale:
+                                    AppLanguage.selected.locale,
+                                hiddenAgendaItemsCount
+                            )
+                        )
+
+                        Image(
+                            systemName:
+                                isAgendaExpanded
+                                ? "chevron.up"
+                                : "chevron.down"
+                        )
+                    }
+                    .font(
+                        .system(
+                            size: 14,
+                            weight: .bold,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        Color.orange
+                    )
+                    .frame(
+                        maxWidth: .infinity,
+                        alignment: .center
+                    )
+                    .padding(
+                        .top,
+                        2
+                    )
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(
+            .horizontal,
+            15
+        )
+        .padding(
+            .vertical,
+            12
+        )
+        .frame(
+            width: width
+        )
+        .frame(
+            maxHeight:
+                maximumHeight,
+            alignment: .topLeading
+        )
+        .background(
+            .ultraThinMaterial,
+            in: RoundedRectangle(
+                cornerRadius: 18,
+                style: .continuous
+            )
+        )
+    }
+
+    private func agendaRow(
+        _ item: PostcardAgendaItem
+    ) -> some View {
+
+        HStack(
+            alignment: .firstTextBaseline,
+            spacing: 8
+        ) {
+            Image(
+                systemName:
+                    item.kind
+                    == .morningHelloReminder
+                    ? "person.2.wave.2.fill"
+                    : "calendar"
+            )
+            .font(
+                .system(
+                    size: 14,
+                    weight: .semibold
+                )
+            )
+            .foregroundStyle(
+                Color.orange
+            )
+            .frame(
+                width: 20
+            )
+
+            if let timeText = item.timeText,
+               !timeText.isEmpty {
+
+                Text(timeText)
+                    .font(
+                        .system(
+                            size: 14,
+                            weight: .bold,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        Color.primary
+                    )
+                    .frame(
+                        minWidth: 54,
+                        alignment: .leading
+                    )
+            }
+
+            Text(item.title)
+                .font(
+                    .system(
+                        size: 14,
+                        weight: .semibold,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(
+                    Color.primary
+                )
+                .multilineTextAlignment(
+                    .leading
+                )
+                .lineLimit(
+                    isAgendaExpanded
+                    ? 3
+                    : 2
+                )
+                .minimumScaleFactor(0.8)
+
+            Spacer(
+                minLength: 0
+            )
+        }
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+    }
+    
     private var customMessageEditor: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 12) {

@@ -27,7 +27,7 @@ struct CatalogPostcardPreviewView: View {
         PostcardScreen(
             imageName: imageName,
             phrase: "",
-            reminderText: nil,
+            agendaItems: [],
             customMessage: $customMessage,
             onHomeTap: {
                 dismiss()

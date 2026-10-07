@@ -1788,3 +1788,26 @@
 "emergency.service.diabetes_support" = "Diabetes Support";
 "emergency.service.pet_aftercare" = "Pet cremation and aftercare";
 "emergency.pet_aftercare.confirm_details" = "Confirm opening hours, collection availability and service area by phone.";
+"iphoneCalendar.card.title" = "iPhone Calendar";
+"iphoneCalendar.card.permissionRequired" = "Calendar access is required";
+"iphoneCalendar.card.notSelected" = "No calendars selected";
+"iphoneCalendar.card.selectedCount" = "Calendars selected: %d";
+
+"iphoneCalendar.selection.title" = "Choose Calendars";
+"iphoneCalendar.selection.description" = "Choose the calendars whose events MorningHello will show after your “I’m OK” check-in.";
+"iphoneCalendar.selection.empty" = "No available calendars were found.";
+"iphoneCalendar.selection.calendars" = "Calendars";
+
+"iphoneCalendar.action.done" = "Done";
+"iphoneCalendar.action.selectAll" = "Select All";
+"iphoneCalendar.action.clear" = "Clear Selection";
+
+"iphoneCalendar.permission.title" = "Allow Calendar Access";
+"iphoneCalendar.permission.description" = "MorningHello only reads events from the calendars you choose. Events stay on this iPhone and are not sent to the server.";
+"iphoneCalendar.permission.allow" = "Allow Access";
+"iphoneCalendar.permission.settings" = "Open Settings";
+
+"iphoneCalendar.event.allDay" = "All day";
+"iphoneCalendar.postcard.today" = "Today";
+"iphoneCalendar.postcard.more" = "%d more";
+"iphoneCalendar.postcard.collapse" = "Show Less";

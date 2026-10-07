@@ -6,3 +6,5 @@
   
 */
 "NSCameraUsageDescription" = "MorningHello usa la cámara para fotografiar el alimento de tu mascota.";
+
+"NSCalendarsFullAccessUsageDescription" = "MorningHello lee únicamente los eventos de los calendarios seleccionados para mostrar los planes de hoy después de confirmar «Estoy bien». Los eventos permanecen en este iPhone y no se envían al servidor.";
