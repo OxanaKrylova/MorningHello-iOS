@@ -203,6 +203,13 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
             )
             
             seasonalCards.append(
+                contentsOf:
+                    (1...19).map {
+                        "February_\($0)"
+                    }
+            )
+            
+            seasonalCards.append(
                 contentsOf: [
                     "holiday_autumnal_equinox",
                     "holiday_labor_day",
@@ -293,8 +300,8 @@ enum PostcardCollection: String, CaseIterable, Identifiable {
             
         case .sweetTable:
             
-            return (1...18).map {
-                "February_\($0)"
+            return (1...26).map {
+                "DecemberUSA_\($0)"
             }
             +
             ["holiday_friendship"]

@@ -1777,3 +1777,9 @@
 "iphoneCalendar.postcard.today" = "Hoy";
 "iphoneCalendar.postcard.more" = "%d más";
 "iphoneCalendar.postcard.collapse" = "Mostrar menos";
+
+"emergency.pet_services.section.title" = "Ayuda para mascotas";
+"emergency.pet_services.section.description" = "Urgencias veterinarias, cremación y servicios posteriores al fallecimiento de una mascota.";
+"emergencyServices.countryUnavailableMessage" = "La información sobre los servicios de emergencia del país seleccionado aún no está disponible. En caso de emergencia, comuníquese con el servicio local de emergencias.";
+"emergency.service.trauma_care" = "Atención traumatológica";
+"emergency.country.unavailable.message" = "La información sobre los servicios de emergencia del país seleccionado aún no está disponible. En caso de emergencia, comuníquese con el servicio local de emergencias.";

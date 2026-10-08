@@ -26,6 +26,7 @@ enum EmergencyServiceCategory: String, Codable, CaseIterable {
     case disasterAssistance
     case healthAdvice
     case diabetesSupport
+    case traumaCare
     case veterinaryEmergency
     case petAftercare
     case seniorSupport
@@ -48,6 +49,7 @@ enum EmergencyServiceCategory: String, Codable, CaseIterable {
         case .disasterAssistance: return "emergency.service.disaster_assistance"
         case .healthAdvice: return "emergency.service.health_advice"
         case .diabetesSupport: return "emergency.service.diabetes_support"
+        case .traumaCare: return "emergency.service.trauma_care"
         case .veterinaryEmergency: return "emergency.service.veterinary_emergency"
         case .petAftercare: return "emergency.service.pet_aftercare"
         case .seniorSupport: return "emergency.service.senior_support"
@@ -72,6 +74,7 @@ enum EmergencyServiceCategory: String, Codable, CaseIterable {
         case .disasterAssistance: return "cloud.bolt.rain.fill"
         case .healthAdvice: return "stethoscope"
         case .diabetesSupport: return "cross.case.fill"
+        case .traumaCare: return "bandage.fill"
         case .veterinaryEmergency: return "pawprint.fill"
         case .petAftercare: return "pawprint.circle.fill"
         case .other: return "phone.fill"

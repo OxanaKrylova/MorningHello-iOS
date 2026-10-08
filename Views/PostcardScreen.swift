@@ -83,7 +83,11 @@ struct PostcardScreen: View {
                             )
                         )
                         .background(
-                            .black.opacity(0.24)
+                            .black.opacity(0.24),
+                            in: RoundedRectangle(
+                                cornerRadius: 18,
+                                style: .continuous
+                            )
                         )
                         .clipShape(
                             RoundedRectangle(
@@ -327,7 +331,7 @@ struct PostcardScreen: View {
                 )
             )
             .foregroundStyle(
-                Color.primary
+                Color.white
             )
 
             ScrollView(
@@ -455,7 +459,7 @@ struct PostcardScreen: View {
                 )
             )
             .foregroundStyle(
-                Color.orange
+                Color.white
             )
             .frame(
                 width: 20
@@ -473,7 +477,7 @@ struct PostcardScreen: View {
                         )
                     )
                     .foregroundStyle(
-                        Color.primary
+                        Color.white
                     )
                     .frame(
                         minWidth: 54,

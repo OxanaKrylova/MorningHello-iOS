@@ -600,22 +600,35 @@ struct EmergencyServicesView: View {
     private var directory:
         CountryEmergencyDirectory? {
 
+        guard
+            emergencyDirectoryStore
+                .document
+                .countryCodes
+                .contains(
+                    normalizedCountryCode
+                )
+        else {
+            return nil
+        }
+
         let publicServicesDirectory =
             CountryEmergencyCatalog.directory(
                 for: normalizedCountryCode
             )
 
-        let veterinaryDirectory =
+        let catalogDirectory =
             emergencyDirectoryStore.directory(
                 for: normalizedCountryCode
             )
 
         let combinedServices =
             (
-                publicServicesDirectory?.services ?? []
+                publicServicesDirectory?
+                    .services ?? []
             )
             + (
-                veterinaryDirectory?.services ?? []
+                catalogDirectory?
+                    .services ?? []
             )
 
         guard !combinedServices.isEmpty else {
@@ -624,15 +637,38 @@ struct EmergencyServicesView: View {
 
         var usedIDs = Set<String>()
 
-        let uniqueServices = combinedServices.filter {
-            usedIDs.insert($0.id).inserted
-        }
+        let uniqueServices =
+            combinedServices.filter {
+                usedIDs.insert(
+                    $0.id
+                ).inserted
+            }
 
         return CountryEmergencyDirectory(
-            countryCode: normalizedCountryCode,
-            services: uniqueServices
+            countryCode:
+                normalizedCountryCode,
+            services:
+                uniqueServices
         )
     }
+    private var publicEmergencyServices:
+        [CountryEmergencyService] {
+
+        directory?.services.filter {
+            $0.category != .veterinaryEmergency
+            && $0.category != .petAftercare
+        } ?? []
+    }
+
+    private var petEmergencyServices:
+        [CountryEmergencyService] {
+
+        directory?.services.filter {
+            $0.category == .veterinaryEmergency
+            || $0.category == .petAftercare
+        } ?? []
+    }
+    
     private var countrySupportContacts:
         [OlderAdultCountryContact] {
 
@@ -657,10 +693,16 @@ struct EmergencyServicesView: View {
                         if normalizedCountryCode.isEmpty {
                             countryNotSelectedCard
                         } else {
-                            if let directory {
-                                emergencyServicesSection(
-                                    directory
-                                )
+                            if directory != nil {
+                                if !publicEmergencyServices.isEmpty {
+                                    emergencyServicesSection(
+                                        publicEmergencyServices
+                                    )
+                                }
+
+                                if !petEmergencyServices.isEmpty {
+                                    petEmergencyServicesSection
+                                }
                             } else {
                                 unavailableCountryCard
                             }
@@ -839,9 +881,10 @@ struct EmergencyServicesView: View {
                     .body,
                     design: .rounded
                 )
+                .weight(.semibold)
             )
             .foregroundStyle(
-                AppAdaptiveColor.secondaryText
+                AppAdaptiveColor.text
             )
             .lineSpacing(4)
         }
@@ -860,9 +903,8 @@ struct EmergencyServicesView: View {
     }
 
     // MARK: - Экстренные службы
-
     private func emergencyServicesSection(
-        _ directory: CountryEmergencyDirectory
+        _ services: [CountryEmergencyService]
     ) -> some View {
 
         VStack(
@@ -874,8 +916,74 @@ struct EmergencyServicesView: View {
                     "emergency.services.section.title"
             )
 
-            ForEach(directory.services) {
-                service in
+            ForEach(services) { service in
+                emergencyServiceCard(
+                    service
+                )
+            }
+        }
+    }
+    
+    private var petEmergencyServicesSection:
+        some View {
+
+        VStack(
+            alignment: .leading,
+            spacing: 12
+        ) {
+            HStack(spacing: 12) {
+                Image(
+                    systemName: "pawprint.fill"
+                )
+                .font(
+                    .system(
+                        size: 24,
+                        weight: .bold
+                    )
+                )
+                .foregroundStyle(
+                    Color.orange
+                )
+
+                Text(
+                    selectedLanguage.localized(
+                        "emergency.pet_services.section.title"
+                    )
+                )
+                .font(
+                    .system(
+                        .title2,
+                        design: .rounded
+                    )
+                    .weight(.bold)
+                )
+                .foregroundStyle(
+                    AppAdaptiveColor.text
+                )
+            }
+            .padding(.leading, 4)
+
+            Text(
+                selectedLanguage.localized(
+                    "emergency.pet_services.section.description"
+                )
+            )
+            .font(
+                .system(
+                    .body,
+                    design: .rounded
+                )
+                .weight(.semibold)
+            )
+            .foregroundStyle(
+                AppAdaptiveColor.text
+            )
+            .lineSpacing(3)
+            .padding(.horizontal, 4)
+
+            ForEach(
+                petEmergencyServices
+            ) { service in
 
                 emergencyServiceCard(
                     service
@@ -883,7 +991,7 @@ struct EmergencyServicesView: View {
             }
         }
     }
-
+    
     private func emergencyServiceCard(
         _ service: CountryEmergencyService
     ) -> some View {

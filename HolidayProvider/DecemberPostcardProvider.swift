@@ -32,11 +32,24 @@ struct DecemberPostcardProvider {
             return nil
         }
 
-        let images = (1...26).map {
-            "December_\($0)"
+        let language = AppLanguage.selected
+
+        let imagePrefix: String
+
+        switch language {
+        case .russian:
+            imagePrefix = "December_"
+
+        case .englishUS,
+             .spanishLatinAmerica:
+            imagePrefix = "DecemberUSA_"
         }
 
-        let phrases = [
+        let images = (1...26).map {
+            "\(imagePrefix)\($0)"
+        }
+
+        let russianPhrases = [
             "Пусть декабрьское утро принесёт тепло, уют и добрые новости.",
             "Желаю светлого дня, спокойных мыслей и приятных зимних мгновений.",
             "Пусть этот декабрьский день будет наполнен заботой, радостью и душевным теплом.",
@@ -64,6 +77,77 @@ struct DecemberPostcardProvider {
             "Желаю тепла в сердце, мира в душе и света в каждом мгновении.",
             "Пусть сегодняшний день станет ещё одной доброй страницей вашей зимы."
         ]
+
+        let englishPhrases = [
+            "May this December morning bring warmth, comfort, and good news.",
+            "Wishing you a bright day, peaceful thoughts, and lovely winter moments.",
+            "May this December day be filled with care, joy, and heartfelt warmth.",
+            "May it be chilly outside while warmth always stays in your heart.",
+            "Wishing you a cozy morning, a cheerful mood, and little wishes coming true.",
+            "May today give you a reason to smile and believe in good things.",
+            "Wishing you warm meetings, kind words, and delightful winter wonders.",
+            "May December fill your home with light, your heart with peace, and your day with joy.",
+            "Wishing you a peaceful morning and a wonderful rest of the day.",
+            "May the winter atmosphere bring inspiration, comfort, and peace of mind.",
+            "May you be surrounded today by kind people and happy events.",
+            "May this day be gentle, bright, and filled with pleasant moments.",
+            "Wishing you winter comfort, heartfelt warmth, and a wonderful mood.",
+            "May this morning become the beginning of a kind and happy day.",
+            "Wishing you peace in your soul, warmth in your home, and joy in your heart.",
+            "May this December day bring good news and pleasant surprises.",
+            "Wishing you bright thoughts, warm meetings, and the feeling of wonder drawing near.",
+            "May today bring you comfort, care, and sincere smiles.",
+            "Wishing you a good morning and a day filled with warmth and gratitude.",
+            "May this winter day leave time for rest, joy, and the people you love.",
+            "May the cold remain outside while your home stays warm and peaceful.",
+            "May this December morning bring hope, inspiration, and a cheerful mood.",
+            "Wishing you a pleasant day, kind conversations, and happy moments.",
+            "May this winter day be beautiful, cozy, and truly kind.",
+            "Wishing you warmth in your heart, peace in your soul, and light in every moment.",
+            "May today become another beautiful page in your winter story."
+        ]
+
+        let spanishPhrases = [
+            "Que esta mañana de diciembre te traiga calidez, bienestar y buenas noticias.",
+            "Te deseo un día luminoso, pensamientos tranquilos y agradables momentos de invierno.",
+            "Que este día de diciembre esté lleno de cariño, alegría y calidez.",
+            "Que el frío se quede afuera y la calidez permanezca siempre en tu corazón.",
+            "Te deseo una mañana acogedora, buen ánimo y pequeños deseos cumplidos.",
+            "Que hoy encuentres un motivo para sonreír y confiar en todo lo bueno.",
+            "Te deseo encuentros cálidos, palabras amables y hermosas sorpresas de invierno.",
+            "Que diciembre llene tu hogar de luz, tu corazón de paz y tu día de alegría.",
+            "Te deseo una mañana tranquila y una maravillosa continuación del día.",
+            "Que el ambiente invernal te brinde inspiración, bienestar y serenidad.",
+            "Que hoy te rodeen personas amables y momentos felices.",
+            "Que este día sea sereno, luminoso y lleno de momentos agradables.",
+            "Te deseo bienestar invernal, calidez en el corazón y un ánimo maravilloso.",
+            "Que esta mañana sea el comienzo de un día amable y feliz.",
+            "Te deseo paz en el alma, calidez en el hogar y alegría en el corazón.",
+            "Que este día de diciembre te traiga buenas noticias y agradables sorpresas.",
+            "Te deseo pensamientos luminosos, encuentros cálidos y la emoción de una celebración cercana.",
+            "Que hoy recibas cariño, bienestar y sonrisas sinceras.",
+            "Te deseo buenos días y una jornada llena de calidez y gratitud.",
+            "Que este día de invierno te deje tiempo para descansar, disfrutar y estar con quienes quieres.",
+            "Que el frío se quede afuera y tu hogar permanezca cálido y tranquilo.",
+            "Que esta mañana de diciembre te traiga esperanza, inspiración y buen ánimo.",
+            "Te deseo un día agradable, conversaciones amables y momentos felices.",
+            "Que este día de invierno sea hermoso, acogedor y verdaderamente amable.",
+            "Te deseo calidez en el corazón, paz en el alma y luz en cada momento.",
+            "Que hoy sea otra hermosa página de tu historia de invierno."
+        ]
+
+        let phrases: [String]
+
+        switch language {
+        case .russian:
+            phrases = russianPhrases
+
+        case .englishUS:
+            phrases = englishPhrases
+
+        case .spanishLatinAmerica:
+            phrases = spanishPhrases
+        }
 
         let availableCount = min(
             images.count,

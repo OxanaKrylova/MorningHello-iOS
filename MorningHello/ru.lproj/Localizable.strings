@@ -316,3 +316,9 @@
 "iphoneCalendar.postcard.today" = "Сегодня";
 "iphoneCalendar.postcard.more" = "Ещё %d";
 "iphoneCalendar.postcard.collapse" = "Свернуть";
+
+"emergency.pet_services.section.title" = "Помощь питомцам";
+"emergency.pet_services.section.description" = "Ветеринарная помощь, кремация и прощание с питомцем.";
+"emergencyServices.countryUnavailableMessage" = "Информация об экстренных службах для выбранной страны пока недоступна. В экстренной ситуации обратитесь в местную службу помощи.";
+"emergency.service.trauma_care" = "Травматологическая помощь";
+"emergency.country.unavailable.message" = "Информация об экстренных службах для выбранной страны пока недоступна. В экстренной ситуации обратитесь в местную службу помощи.";
