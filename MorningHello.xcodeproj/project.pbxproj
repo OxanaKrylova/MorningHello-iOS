@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		290CA89D3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA89C3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift */; };
 		290CA89F305A5CF7008BA815 /* AdaptiveColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA89E305A5CF7008BA815 /* AdaptiveColors.swift */; };
 		290E2525304D97FB000D4A2D /* BreathingSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290E2524304D97FB000D4A2D /* BreathingSquareView.swift */; };
 		290E252A304E13A6000D4A2D /* Breathing_Square_2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 290E2527304E13A6000D4A2D /* Breathing_Square_2.wav */; };
@@ -20,6 +19,18 @@
 		291B30BD3050AD70002C3689 /* open_form.wav in Resources */ = {isa = PBXBuildFile; fileRef = 291B30BC3050AD70002C3689 /* open_form.wav */; };
 		291B86D83072FC4C0042B55A /* country_emergency_services.json in Resources */ = {isa = PBXBuildFile; fileRef = 291B86D63072FC4C0042B55A /* country_emergency_services.json */; };
 		291B86D93072FC4C0042B55A /* CountryEmergencyDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291B86D73072FC4C0042B55A /* CountryEmergencyDirectory.swift */; };
+		291FE0393078CCA000535330 /* GameHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FE0383078CCA000535330 /* GameHubView.swift */; };
+		291FE03B307944BD00535330 /* OnboardingRoleSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FE03A307944BD00535330 /* OnboardingRoleSelectionView.swift */; };
+		291FE03D3079456E00535330 /* SponsorOnboardingIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FE03C3079456E00535330 /* SponsorOnboardingIntroView.swift */; };
+		291FE03F3079478C00535330 /* SponsoredBeneficiaryDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FE03E3079478C00535330 /* SponsoredBeneficiaryDraft.swift */; };
+		291FE0413079556700535330 /* SponsoredBeneficiaryProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FE0403079556700535330 /* SponsoredBeneficiaryProfileView.swift */; };
+		291FE043307A1AAE00535330 /* SponsoredBeneficiaryEmergencyContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FE042307A1AAE00535330 /* SponsoredBeneficiaryEmergencyContactsView.swift */; };
+		291FE045307A268E00535330 /* SponsoredBeneficiaryHolidayPreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FE044307A268E00535330 /* SponsoredBeneficiaryHolidayPreferencesView.swift */; };
+		291FE047307A26AA00535330 /* SponsoredBeneficiaryPetOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FE046307A26AA00535330 /* SponsoredBeneficiaryPetOnboardingView.swift */; };
+		291FE049307A26C200535330 /* SponsoredBeneficiaryRemindersOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FE048307A26C200535330 /* SponsoredBeneficiaryRemindersOnboardingView.swift */; };
+		291FE04B307A26E400535330 /* SponsoredBeneficiaryReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FE04A307A26E400535330 /* SponsoredBeneficiaryReviewView.swift */; };
+		291FE04D307A2EC300535330 /* SponsoredBeneficiaryPurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FE04C307A2EC300535330 /* SponsoredBeneficiaryPurchaseView.swift */; };
+		291FE04F307A2FD600535330 /* SponsoredBeneficiaryPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291FE04E307A2FD600535330 /* SponsoredBeneficiaryPayload.swift */; };
 		292B3D5530126C51005F4183 /* FeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B3D5430126C50005F4183 /* FeedbackView.swift */; };
 		292FB2EB306ACA2D0071D95A /* ConnectionReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FB2EA306ACA2D0071D95A /* ConnectionReminder.swift */; };
 		292FB2ED306ACA4E0071D95A /* ConnectionReminderProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292FB2EC306ACA4E0071D95A /* ConnectionReminderProvider.swift */; };
@@ -119,7 +130,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		290CA89C3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MorningHello:EnglishPostcardLocalizer.swift"; sourceTree = "<group>"; };
 		290CA89E305A5CF7008BA815 /* AdaptiveColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveColors.swift; sourceTree = "<group>"; };
 		290E2524304D97FB000D4A2D /* BreathingSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingSquareView.swift; sourceTree = "<group>"; };
 		290E2526304E13A6000D4A2D /* Breathing_Square_1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Breathing_Square_1.wav; sourceTree = "<group>"; };
@@ -132,6 +142,18 @@
 		291B30BC3050AD70002C3689 /* open_form.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = open_form.wav; sourceTree = "<group>"; };
 		291B86D63072FC4C0042B55A /* country_emergency_services.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = country_emergency_services.json; sourceTree = "<group>"; };
 		291B86D73072FC4C0042B55A /* CountryEmergencyDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryEmergencyDirectory.swift; sourceTree = "<group>"; };
+		291FE0383078CCA000535330 /* GameHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameHubView.swift; sourceTree = "<group>"; };
+		291FE03A307944BD00535330 /* OnboardingRoleSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingRoleSelectionView.swift; sourceTree = "<group>"; };
+		291FE03C3079456E00535330 /* SponsorOnboardingIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorOnboardingIntroView.swift; sourceTree = "<group>"; };
+		291FE03E3079478C00535330 /* SponsoredBeneficiaryDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredBeneficiaryDraft.swift; sourceTree = "<group>"; };
+		291FE0403079556700535330 /* SponsoredBeneficiaryProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredBeneficiaryProfileView.swift; sourceTree = "<group>"; };
+		291FE042307A1AAE00535330 /* SponsoredBeneficiaryEmergencyContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredBeneficiaryEmergencyContactsView.swift; sourceTree = "<group>"; };
+		291FE044307A268E00535330 /* SponsoredBeneficiaryHolidayPreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredBeneficiaryHolidayPreferencesView.swift; sourceTree = "<group>"; };
+		291FE046307A26AA00535330 /* SponsoredBeneficiaryPetOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredBeneficiaryPetOnboardingView.swift; sourceTree = "<group>"; };
+		291FE048307A26C200535330 /* SponsoredBeneficiaryRemindersOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredBeneficiaryRemindersOnboardingView.swift; sourceTree = "<group>"; };
+		291FE04A307A26E400535330 /* SponsoredBeneficiaryReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredBeneficiaryReviewView.swift; sourceTree = "<group>"; };
+		291FE04C307A2EC300535330 /* SponsoredBeneficiaryPurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredBeneficiaryPurchaseView.swift; sourceTree = "<group>"; };
+		291FE04E307A2FD600535330 /* SponsoredBeneficiaryPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredBeneficiaryPayload.swift; sourceTree = "<group>"; };
 		292B3D5430126C50005F4183 /* FeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackView.swift; sourceTree = "<group>"; };
 		292FB2EA306ACA2D0071D95A /* ConnectionReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionReminder.swift; sourceTree = "<group>"; };
 		292FB2EC306ACA4E0071D95A /* ConnectionReminderProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionReminderProvider.swift; sourceTree = "<group>"; };
@@ -308,13 +330,22 @@
 			isa = PBXGroup;
 			children = (
 				293CF91730594601002DACBD /* AccountSession.swift */,
-				293CF91830594601002DACBD /* SponsoredPurchaseManager.swift */,
 				293CF91930594601002DACBD /* SponsorshipAPIClient.swift */,
+				291FE0403079556700535330 /* SponsoredBeneficiaryProfileView.swift */,
+				291FE04A307A26E400535330 /* SponsoredBeneficiaryReviewView.swift */,
+				291FE044307A268E00535330 /* SponsoredBeneficiaryHolidayPreferencesView.swift */,
+				291FE046307A26AA00535330 /* SponsoredBeneficiaryPetOnboardingView.swift */,
+				291FE048307A26C200535330 /* SponsoredBeneficiaryRemindersOnboardingView.swift */,
+				291FE042307A1AAE00535330 /* SponsoredBeneficiaryEmergencyContactsView.swift */,
+				291FE04C307A2EC300535330 /* SponsoredBeneficiaryPurchaseView.swift */,
+				293CF91830594601002DACBD /* SponsoredPurchaseManager.swift */,
+				291FE04E307A2FD600535330 /* SponsoredBeneficiaryPayload.swift */,
 				293CF91A30594601002DACBD /* SponsorshipModels.swift */,
 				293CF91B30594601002DACBD /* SponsorshipRootView.swift */,
 				293CF91C30594601002DACBD /* SponsorshipStore.swift */,
 				293CF91D30594601002DACBD /* SponsorshipViews.swift */,
 				29E0059E306E390100222DE6 /* SponsorshipL10n.swift */,
+				291FE03E3079478C00535330 /* SponsoredBeneficiaryDraft.swift */,
 			);
 			path = Sponsorship;
 			sourceTree = "<group>";
@@ -339,6 +370,8 @@
 				2976EF123027D69B00C0E8B1 /* AppEntryView.swift */,
 				29CB1C4C30705D94009EB187 /* MonitoringSetupIntroView.swift */,
 				29CB1C4A306EFF30009EB187 /* OptionalSetupOnboardingView.swift */,
+				291FE03A307944BD00535330 /* OnboardingRoleSelectionView.swift */,
+				291FE03C3079456E00535330 /* SponsorOnboardingIntroView.swift */,
 				2976EF0D3027D60C00C0E8B1 /* TermsOfUseView.swift */,
 				2976EF103027D66000C0E8B1 /* TermsOfUseText.swift */,
 			);
@@ -371,7 +404,6 @@
 		29B441992F3BE23E00A4F417 = {
 			isa = PBXGroup;
 			children = (
-				290CA89C3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift */,
 				29BCCD02302D9F140027557C /* Backend */,
 				29AFFFBF30390273007FE955 /* Collection */,
 				292FB2E9306ACA0A0071D95A /* Connection */,
@@ -482,6 +514,7 @@
 				29B76C42301AA86B00D1D295 /* PostcardScreen.swift */,
 				29CA8E2C300197C800F59ECA /* ProfileView.swift */,
 				296D4CDA3046B1AC000248AD /* SettingsView..swift */,
+				291FE0383078CCA000535330 /* GameHubView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -620,6 +653,7 @@
 				29B76C7A301BD94C00D1D295 /* SundayPostcardProvider.swift in Sources */,
 				29BCCD2B3030533A0027557C /* NovemberPostcardProvider.swift in Sources */,
 				290E2525304D97FB000D4A2D /* BreathingSquareView.swift in Sources */,
+				291FE03F3079478C00535330 /* SponsoredBeneficiaryDraft.swift in Sources */,
 				2976EF133027D69B00C0E8B1 /* AppEntryView.swift in Sources */,
 				29E0059F306E390100222DE6 /* SponsorshipL10n.swift in Sources */,
 				29B76C72301BD0B000D1D295 /* HolidayContent.swift in Sources */,
@@ -634,9 +668,11 @@
 				297E669D30712BFD00CF3173 /* EmergencyServicesView.swift in Sources */,
 				29FAEAF23040DE51003CFA12 /* MarchPostcardProvider.swift in Sources */,
 				29EC924F3053144800D9BD71 /* SwiftDataMoodRepository.swift in Sources */,
+				291FE04F307A2FD600535330 /* SponsoredBeneficiaryPayload.swift in Sources */,
 				2916AEC0305D90C0007248C3 /* MonitoringSnapshot.swift in Sources */,
 				29AFFFB8303901FA007FE955 /* PostcardCollection.swift in Sources */,
 				2976EF0E3027D60C00C0E8B1 /* TermsOfUseView.swift in Sources */,
+				291FE03B307944BD00535330 /* OnboardingRoleSelectionView.swift in Sources */,
 				29DD59203035DCCB0067B04F /* TrialNotificationManager.swift in Sources */,
 				29AFFFA23037B82C007FE955 /* SubscriptionManager.swift in Sources */,
 				2916AEA3305C9603007248C3 /* ProtestantHolidayProvider.swift in Sources */,
@@ -655,6 +691,7 @@
 				29B76CAC302144C000D1D295 /* SeptemberPostcardProvider.swift in Sources */,
 				29AFFF9D3037B4BC007FE955 /* SubscriptionLifecycleAPIClient.swift in Sources */,
 				29B76C7C301BDF9800D1D295 /* FebruaryPostcardProvider.swift in Sources */,
+				291FE0413079556700535330 /* SponsoredBeneficiaryProfileView.swift in Sources */,
 				29CA8E3C3004435500F59ECA /* IntroVideoView.swift in Sources */,
 				29BDC65C30082B5D00EEA736 /* CheckInNotificationManager.swift in Sources */,
 				29B76C88301D523900D1D295 /* CatholicHolidayProvider.swift in Sources */,
@@ -663,9 +700,9 @@
 				29AFFFBA30390225007FE955 /* PostcardCatalogView..swift in Sources */,
 				29AFFFBC30390243007FE955 /* PostcardCollectionView..swift in Sources */,
 				29BCCCED302A68140027557C /* EmergencyContact.swift in Sources */,
+				291FE04B307A26E400535330 /* SponsoredBeneficiaryReviewView.swift in Sources */,
 				292FB2ED306ACA4E0071D95A /* ConnectionReminderProvider.swift in Sources */,
 				29B76C80301BF9E100D1D295 /* InternationalHolidayProvider.swift in Sources */,
-				290CA89D3059F306008BA815 /* MorningHello:EnglishPostcardLocalizer.swift in Sources */,
 				29887479306713EB00361B7D /* AppInstanceIDProvider..swift in Sources */,
 				291B86D93072FC4C0042B55A /* CountryEmergencyDirectory.swift in Sources */,
 				2988743B3064022D00361B7D /* HolidayPresetManager.swift in Sources */,
@@ -684,19 +721,26 @@
 				293CF92430594601002DACBD /* SponsorshipStore.swift in Sources */,
 				29CB1C29306ED1D9009EB187 /* PendingContactReminderHost.swift in Sources */,
 				293CF92530594601002DACBD /* SponsorshipModels.swift in Sources */,
+				291FE047307A26AA00535330 /* SponsoredBeneficiaryPetOnboardingView.swift in Sources */,
 				29EC92493053143A00D9BD71 /* MoodStore.swift in Sources */,
 				29EC924A3053143A00D9BD71 /* MoodLevel.swift in Sources */,
 				2988741B3062A10500361B7D /* SubscriptionPaywallView.swift in Sources */,
+				291FE0393078CCA000535330 /* GameHubView.swift in Sources */,
 				2988747B3067141800361B7D /* ProfileDataModels.swift in Sources */,
 				29EC924B3053143A00D9BD71 /* MoodEntry.swift in Sources */,
+				291FE043307A1AAE00535330 /* SponsoredBeneficiaryEmergencyContactsView.swift in Sources */,
+				291FE03D3079456E00535330 /* SponsorOnboardingIntroView.swift in Sources */,
 				29EC924C3053143A00D9BD71 /* MoodChartView.swift in Sources */,
 				292FB2F1306AD2EA0071D95A /* SystemContactPicker.swift in Sources */,
 				29EC924D3053143A00D9BD71 /* MoodRepository.swift in Sources */,
+				291FE045307A268E00535330 /* SponsoredBeneficiaryHolidayPreferencesView.swift in Sources */,
 				29BDC65E30082BA800EEA736 /* NotificationDelegate..swift in Sources */,
 				29CA8E2D300197C900F59ECA /* ProfileView.swift in Sources */,
 				29B76C8F301E9DB300D1D295 /* AugustPostcardProvider.swift in Sources */,
 				29EC86F33006AABE00E16D51 /* MessageComposerView.swift in Sources */,
+				291FE049307A26C200535330 /* SponsoredBeneficiaryRemindersOnboardingView.swift in Sources */,
 				29CB1C2B306ED220009EB187 /* DiagnosticLogShareSheet.swift in Sources */,
+				291FE04D307A2EC300535330 /* SponsoredBeneficiaryPurchaseView.swift in Sources */,
 				29CD29F63023DBB800C72D5D /* PostcardRenderer..swift in Sources */,
 				29B76C8A301E91C000D1D295 /*  BirthdayPostcardProvider.swift in Sources */,
 				29B76C5B301B6DA500D1D295 /* BirthdayGreetingView.swift in Sources */,
@@ -848,7 +892,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -891,7 +935,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

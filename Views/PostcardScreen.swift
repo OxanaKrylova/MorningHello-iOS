@@ -21,7 +21,7 @@ struct PostcardScreen: View {
     private var isCustomMessageFocused: Bool
 
     @State
-    private var showBreathingSquare = false
+    private var showGameHub = false
 
     @State
     private var showCustomMessageEditor = false
@@ -214,27 +214,50 @@ struct PostcardScreen: View {
 
                         Button {
                             isCustomMessageFocused = false
+
                             AppSoundPlayer.shared.play(
                                 .openForm
                             )
-                            showBreathingSquare = true
+
+                            showGameHub = true
                         } label: {
-                            Image(systemName: "wind")
-                                .font(.title2)
-                                .foregroundColor(.white)
-                                .frame(
-                                    width: 64,
-                                    height: 64
+                            VStack(spacing: 3) {
+                                Image(
+                                    systemName:
+                                        "gamecontroller.fill"
                                 )
-                                .background(
-                                    .ultraThinMaterial
+                                .font(.title3)
+
+                                Text(
+                                    AppLanguage.selected.localized(
+                                        "games.button"
+                                    )
                                 )
-                                .clipShape(Circle())
+                                .font(
+                                    .system(
+                                        size: 11,
+                                        weight: .semibold,
+                                        design: .rounded
+                                    )
+                                )
+                                .minimumScaleFactor(0.8)
+                                .lineLimit(1)
+                            }
+                            .foregroundColor(.white)
+                            .frame(
+                                width: 64,
+                                height: 64
+                            )
+                            .background(
+                                .ultraThinMaterial
+                            )
+                            .clipShape(Circle())
                         }
                         .accessibilityLabel(
-                            "Квадрат дыхания"
+                            AppLanguage.selected.localized(
+                                "games.title"
+                            )
                         )
-
                         Button {
                             isCustomMessageFocused = false
                             onShareTap()
@@ -277,9 +300,9 @@ struct PostcardScreen: View {
             edges: .bottom
         )
         .fullScreenCover(
-            isPresented: $showBreathingSquare
+            isPresented: $showGameHub
         ) {
-            BreathingSquareView()
+            GameHubView()
         }
         .sheet(
             isPresented: $showCustomMessageEditor
@@ -334,11 +357,30 @@ struct PostcardScreen: View {
                 Color.white
             )
 
-            ScrollView(
-                .vertical,
-                showsIndicators:
-                    isAgendaExpanded
-            ) {
+            if isAgendaExpanded {
+                ScrollView(
+                    .vertical,
+                    showsIndicators: true
+                ) {
+                    LazyVStack(
+                        alignment: .leading,
+                        spacing: 8
+                    ) {
+                        ForEach(
+                            displayedAgendaItems
+                        ) { item in
+                            agendaRow(item)
+                        }
+                    }
+                }
+                .frame(
+                    maxHeight:
+                        max(
+                            maximumHeight - 78,
+                            120
+                        )
+                )
+            } else {
                 LazyVStack(
                     alignment: .leading,
                     spacing: 8
@@ -350,9 +392,6 @@ struct PostcardScreen: View {
                     }
                 }
             }
-            .scrollDisabled(
-                !isAgendaExpanded
-            )
 
             if hiddenAgendaItemsCount > 0 {
                 Button {
@@ -364,9 +403,7 @@ struct PostcardScreen: View {
                         isAgendaExpanded.toggle()
                     }
                 } label: {
-                    HStack(
-                        spacing: 6
-                    ) {
+                    HStack(spacing: 6) {
                         Text(
                             isAgendaExpanded
                             ? AppLanguage.selected.localized(
@@ -404,36 +441,27 @@ struct PostcardScreen: View {
                         maxWidth: .infinity,
                         alignment: .center
                     )
-                    .padding(
-                        .top,
-                        2
-                    )
+                    .padding(.top, 2)
                 }
                 .buttonStyle(.plain)
             }
         }
-        .padding(
-            .horizontal,
-            15
-        )
-        .padding(
-            .vertical,
-            12
-        )
+        .padding(.horizontal, 15)
+        .padding(.vertical, 12)
         .frame(
-            width: width
-        )
-        .frame(
-            maxHeight:
-                maximumHeight,
-            alignment: .topLeading
+            width: width,
+            alignment: .leading
         )
         .background(
-            .ultraThinMaterial,
+            Color.black.opacity(0.24),
             in: RoundedRectangle(
                 cornerRadius: 18,
                 style: .continuous
             )
+        )
+        .animation(
+            .easeInOut(duration: 0.22),
+            value: isAgendaExpanded
         )
     }
 
@@ -494,7 +522,7 @@ struct PostcardScreen: View {
                     )
                 )
                 .foregroundStyle(
-                    Color.primary
+                    Color.white
                 )
                 .multilineTextAlignment(
                     .leading

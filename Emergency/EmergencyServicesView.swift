@@ -58,7 +58,7 @@ enum CountryEmergencyCatalog {
 
         return nil
     }
-
+    
     static let supportResources:
         [OlderAdultSupportResource] = [
 
@@ -560,6 +560,9 @@ struct EmergencyServicesView: View {
 
     @AppStorage("profile_country_code")
     private var countryCode = ""
+    
+    @AppStorage("profile_display_name")
+    private var displayName = ""
 
     @StateObject
     private var emergencyDirectoryStore =
@@ -568,6 +571,25 @@ struct EmergencyServicesView: View {
     @State
     private var copiedNumber: String?
 
+    @State
+    private var emergencyMessage = ""
+    
+    @State
+    private var isEmergencyMessageExpanded = false
+
+    @State
+    private var showEmergencyMessageSendOptions = false
+
+    @State
+    private var showEmergencyMessageComposer = false
+
+    @State
+    private var showEmergencyMessageShareSheet = false
+
+    @State
+    private var selectedEmergencyMessageContacts:
+        [EmergencyContact] = []
+    
     private var selectedLanguage: AppLanguage {
         AppLanguage(
             rawValue: selectedLanguageCode
@@ -597,6 +619,57 @@ struct EmergencyServicesView: View {
             ?? normalizedCountryCode
     }
 
+    private var trimmedDisplayName: String {
+        displayName.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+    }
+
+    private var defaultEmergencyMessage: String {
+        if trimmedDisplayName.isEmpty {
+            return selectedLanguage.localized(
+                "emergency.message.default.generic"
+            )
+        }
+
+        return String(
+            format:
+                selectedLanguage.localized(
+                    "emergency.message.default.named"
+                ),
+            locale:
+                selectedLanguage.locale,
+            trimmedDisplayName
+        )
+    }
+
+    private var trimmedEmergencyMessage: String {
+        emergencyMessage.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+    }
+    
+    private var emergencyContacts:
+        [EmergencyContact] {
+
+        guard
+            let data =
+                UserDefaults.standard.data(
+                    forKey:
+                        "emergency_contacts"
+                ),
+            let contacts =
+                try? JSONDecoder().decode(
+                    [EmergencyContact].self,
+                    from: data
+                )
+        else {
+            return []
+        }
+
+        return contacts
+    }
+    
     private var directory:
         CountryEmergencyDirectory? {
 
@@ -688,6 +761,14 @@ struct EmergencyServicesView: View {
                     LazyVStack(
                         spacing: 20
                     ) {
+                        emergencyMessageCard
+                            .onAppear {
+                                if trimmedEmergencyMessage.isEmpty {
+                                    emergencyMessage =
+                                        defaultEmergencyMessage
+                                }
+                            }
+
                         introductionCard
 
                         if normalizedCountryCode.isEmpty {
@@ -742,6 +823,99 @@ struct EmergencyServicesView: View {
             .animation(
                 .easeInOut(duration: 0.2),
                 value: copiedNumber
+            )
+        }
+        .confirmationDialog(
+            selectedLanguage.localized(
+                "emergency.message.send_options"
+            ),
+            isPresented:
+                $showEmergencyMessageSendOptions,
+            titleVisibility: .visible
+        ) {
+            ForEach(
+                emergencyContacts
+            ) { contact in
+                Button(
+                    "\(selectedLanguage.localized("emergency.message.messages")): \(contact.name) \(contact.surname)"
+                ) {
+                    selectedEmergencyMessageContacts =
+                        [contact]
+
+                    DispatchQueue.main.asyncAfter(
+                        deadline:
+                            .now() + 0.4
+                    ) {
+                        showEmergencyMessageComposer =
+                            true
+                    }
+                }
+            }
+
+            if emergencyContacts.count > 1 {
+                Button(
+                    selectedLanguage.localized(
+                        "emergency.message.send_all_contacts"
+                    )
+                ) {
+                    selectedEmergencyMessageContacts =
+                        emergencyContacts
+
+                    DispatchQueue.main.asyncAfter(
+                        deadline:
+                            .now() + 0.4
+                    ) {
+                        showEmergencyMessageComposer =
+                            true
+                    }
+                }
+            }
+
+            Button(
+                selectedLanguage.localized(
+                    "emergency.message.choose_messenger"
+                )
+            ) {
+                DispatchQueue.main.asyncAfter(
+                    deadline:
+                        .now() + 0.4
+                ) {
+                    showEmergencyMessageShareSheet =
+                        true
+                }
+            }
+
+            Button(
+                selectedLanguage.localized(
+                    "common.cancel"
+                ),
+                role: .cancel
+            ) {
+            }
+        }
+        .sheet(
+            isPresented:
+                $showEmergencyMessageComposer
+        ) {
+            MessageComposerView(
+                recipients:
+                    selectedEmergencyMessageContacts
+                        .map {
+                            $0.phoneDigits
+                        },
+                message:
+                    trimmedEmergencyMessage,
+                image: nil
+            )
+        }
+        .sheet(
+            isPresented:
+                $showEmergencyMessageShareSheet
+        ) {
+            ShareSheet(
+                items: [
+                    trimmedEmergencyMessage
+                ]
             )
         }
     }
@@ -812,7 +986,252 @@ struct EmergencyServicesView: View {
                 .opacity(0.97)
         )
     }
+    
+    private var emergencyMessageCard:
+        some View {
 
+        VStack(
+            alignment: .leading,
+            spacing: 16
+        ) {
+            Button {
+                withAnimation(
+                    .easeInOut(
+                        duration: 0.24
+                    )
+                ) {
+                    isEmergencyMessageExpanded
+                        .toggle()
+                }
+            } label: {
+                HStack(
+                    alignment: .center,
+                    spacing: 12
+                ) {
+                    Image(
+                        systemName:
+                            "message.badge.waveform.fill"
+                    )
+                    .font(
+                        .system(
+                            size: 28,
+                            weight: .semibold
+                        )
+                    )
+                    .foregroundStyle(
+                        Color.orange
+                    )
+
+                    Text(
+                        selectedLanguage.localized(
+                            "emergency.message.title"
+                        )
+                    )
+                    .font(
+                        .system(
+                            .title2,
+                            design: .rounded
+                        )
+                        .weight(.bold)
+                    )
+                    .foregroundStyle(
+                        AppAdaptiveColor.text
+                    )
+
+                    Spacer()
+
+                    Image(
+                        systemName:
+                            isEmergencyMessageExpanded
+                            ? "chevron.up.circle.fill"
+                            : "chevron.down.circle.fill"
+                    )
+                    .font(
+                        .system(
+                            size: 27,
+                            weight: .semibold
+                        )
+                    )
+                    .foregroundStyle(
+                        Color.orange
+                    )
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+
+            if isEmergencyMessageExpanded {
+                VStack(
+                    alignment: .leading,
+                    spacing: 16
+                ) {
+                    Text(
+                        selectedLanguage.localized(
+                            "emergency.message.description"
+                        )
+                    )
+                    .font(
+                        .system(
+                            .body,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        AppAdaptiveColor.text
+                    )
+                    .fixedSize(
+                        horizontal: false,
+                        vertical: true
+                    )
+
+                    ZStack(
+                        alignment: .topLeading
+                    ) {
+                        if emergencyMessage.isEmpty {
+                            Text(
+                                selectedLanguage.localized(
+                                    "emergency.message.placeholder"
+                                )
+                            )
+                            .font(
+                                .system(
+                                    .body,
+                                    design: .rounded
+                                )
+                            )
+                            .foregroundStyle(
+                                AppAdaptiveColor
+                                    .secondaryText
+                            )
+                            .padding(
+                                .horizontal,
+                                8
+                            )
+                            .padding(
+                                .vertical,
+                                12
+                            )
+                            .allowsHitTesting(false)
+                        }
+
+                        TextEditor(
+                            text:
+                                $emergencyMessage
+                        )
+                        .font(
+                            .system(
+                                .body,
+                                design: .rounded
+                            )
+                        )
+                        .foregroundStyle(
+                            AppAdaptiveColor.text
+                        )
+                        .scrollContentBackground(
+                            .hidden
+                        )
+                        .background(
+                            Color.clear
+                        )
+                        .frame(
+                            minHeight: 120
+                        )
+                        .textInputAutocapitalization(
+                            .sentences
+                        )
+                    }
+                    .padding(8)
+                    .background(
+                        AppAdaptiveColor
+                            .warmFormBackground,
+                        in: RoundedRectangle(
+                            cornerRadius: 18,
+                            style: .continuous
+                        )
+                    )
+
+                    Button {
+                        showEmergencyMessageSendOptions =
+                            true
+                    } label: {
+                        HStack(spacing: 10) {
+                            Image(
+                                systemName:
+                                    "paperplane.fill"
+                            )
+
+                            Text(
+                                selectedLanguage.localized(
+                                    "emergency.message.send"
+                                )
+                            )
+                        }
+                        .font(
+                            .system(
+                                .headline,
+                                design: .rounded
+                            )
+                            .weight(.bold)
+                        )
+                        .foregroundStyle(
+                            Color.white
+                        )
+                        .frame(
+                            maxWidth: .infinity
+                        )
+                        .padding(
+                            .vertical,
+                            15
+                        )
+                        .background(
+                            Color.orange,
+                            in: RoundedRectangle(
+                                cornerRadius: 18,
+                                style: .continuous
+                            )
+                        )
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(
+                        trimmedEmergencyMessage
+                            .isEmpty
+                    )
+                    .opacity(
+                        trimmedEmergencyMessage
+                            .isEmpty
+                        ? 0.5
+                        : 1
+                    )
+                }
+                .transition(
+                    .opacity.combined(
+                        with: .move(
+                            edge: .top
+                        )
+                    )
+                )
+            }
+        }
+        .padding(20)
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+        .background(
+            AppAdaptiveColor
+                .secondaryBackground,
+            in: RoundedRectangle(
+                cornerRadius: 28,
+                style: .continuous
+            )
+        )
+        .animation(
+            .easeInOut(duration: 0.24),
+            value:
+                isEmergencyMessageExpanded
+        )
+    }
+    
     // MARK: - Вводная карточка
 
     private var introductionCard: some View {

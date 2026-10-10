@@ -17,10 +17,6 @@ struct SponsoredBeneficiaryProfileView: View {
 
     private let onContinue: () -> Void
 
-    @AppStorage(AppLanguage.storageKey)
-    private var selectedLanguageCode =
-        AppLanguage.initial.rawValue
-
     @State
     private var displayName: String
 
@@ -38,6 +34,9 @@ struct SponsoredBeneficiaryProfileView: View {
 
     @State
     private var checkInIntervalConfirmed: Bool
+
+    @State
+    private var beneficiaryLanguageCode: String
 
     @State
     private var dayText: String
@@ -83,6 +82,14 @@ struct SponsoredBeneficiaryProfileView: View {
         )
         self._checkInIntervalConfirmed = State(
             initialValue: profile.checkInIntervalConfirmed
+        )
+        self._beneficiaryLanguageCode = State(
+            initialValue:
+                AppLanguage(
+                    rawValue: profile.languageCode
+                ) != nil
+                    ? profile.languageCode
+                    : AppLanguage.selected.rawValue
         )
         self._dayText = State(
             initialValue: profile.birthDay > 0
@@ -170,6 +177,9 @@ struct SponsoredBeneficiaryProfileView: View {
             && !salutation.isEmpty
             && normalizedPhone != nil
             && !countryCode.isEmpty
+            && AppLanguage(
+                rawValue: beneficiaryLanguageCode
+            ) != nil
             && isBirthdayValid
             && [24, 48, 72].contains(
                 checkInIntervalHours
@@ -201,6 +211,7 @@ struct SponsoredBeneficiaryProfileView: View {
                     VStack(spacing: 20) {
                         header
                         nameSection
+                        languageSection
                         checkInIntervalSection
                         phoneSection
                         countrySection
@@ -280,19 +291,12 @@ struct SponsoredBeneficiaryProfileView: View {
 
     private var header: some View {
         VStack(spacing: 10) {
-            Image(systemName: "person.crop.circle.badge.checkmark")
-                .font(.system(size: 58))
-                .foregroundStyle(
-                    .orange.opacity(0.78),
-                    .brown.opacity(0.62)
-                )
-
             Text(
                 localized("Профиль подопечного")
             )
             .font(
                 .system(
-                    size: 34,
+                    size: 28,
                     weight: .bold,
                     design: .rounded
                 )
@@ -451,6 +455,93 @@ struct SponsoredBeneficiaryProfileView: View {
                 .pickerStyle(.segmented)
             }
         }
+        .sponsoredProfileCard()
+    }
+
+    private var languageSection: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 12
+        ) {
+            Label {
+                Text(
+                    localized(
+                        "Язык приложения подопечного"
+                    )
+                )
+            } icon: {
+                Image(systemName: "character.bubble.fill")
+                    .foregroundStyle(.orange)
+            }
+            .font(
+                .system(
+                    .title3,
+                    design: .rounded
+                )
+                .weight(.semibold)
+            )
+            .foregroundStyle(
+                AppAdaptiveColor.text
+            )
+
+            Text(
+                localized(
+                    "Выбранный язык будет установлен на iPhone подопечного вместе с переданными настройками."
+                )
+            )
+            .font(
+                .system(
+                    .caption,
+                    design: .rounded
+                )
+            )
+            .foregroundStyle(
+                AppAdaptiveColor.secondaryText
+            )
+            .fixedSize(
+                horizontal: false,
+                vertical: true
+            )
+
+            Picker(
+                localized(
+                    "Язык приложения подопечного"
+                ),
+                selection: $beneficiaryLanguageCode
+            ) {
+                ForEach(
+                    AppLanguage.allCases
+                ) { language in
+                    Text(
+                        beneficiaryLanguageName(
+                            language
+                        )
+                    )
+                    .tag(language.rawValue)
+                }
+            }
+            .pickerStyle(.menu)
+            .tint(.orange)
+            .frame(
+                maxWidth: .infinity,
+                minHeight: 52,
+                alignment: .leading
+            )
+            .padding(.horizontal, 16)
+            .background(
+                AppAdaptiveColor.warmFormBackground
+            )
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: 16,
+                    style: .continuous
+                )
+            )
+        }
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
         .sponsoredProfileCard()
     }
 
@@ -894,9 +985,7 @@ struct SponsoredBeneficiaryProfileView: View {
                 phone: normalizedPhone,
                 countryCode: countryCode,
                 languageCode:
-                    updatedDraft.profile.languageCode.isEmpty
-                        ? selectedLanguageCode
-                        : updatedDraft.profile.languageCode,
+                    beneficiaryLanguageCode,
                 checkInIntervalHours:
                     checkInIntervalHours,
                 checkInIntervalConfirmed:
@@ -951,6 +1040,21 @@ struct SponsoredBeneficiaryProfileView: View {
         _ key: String
     ) -> String {
         AppLanguage.selected.localized(key)
+    }
+
+    private func beneficiaryLanguageName(
+        _ language: AppLanguage
+    ) -> String {
+        switch language {
+        case .russian:
+            return "Русский"
+
+        case .englishUS:
+            return "English (US)"
+
+        case .spanishLatinAmerica:
+            return "Español (Latinoamérica)"
+        }
     }
 }
 

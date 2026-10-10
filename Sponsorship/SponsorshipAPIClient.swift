@@ -73,6 +73,38 @@ actor SponsorshipAPIClient {
         )
     }
 
+    /// Called only after Backend has confirmed an active SPONSOR purchase.
+    /// The request contains every saved beneficiary field except the pet food
+    /// photo and the local `hasFoodPhoto` flag.
+    func provisionBeneficiary(
+        appInstanceId: UUID,
+        originalTransactionId: String,
+        draft: SponsoredBeneficiaryDraft
+    ) async throws
+    -> SponsoredBeneficiaryProvisioningResponse {
+
+        let body =
+            SponsoredBeneficiaryProvisioningRequest(
+                draft: draft
+            )
+
+        let url =
+            sponsorshipEndpoint(
+                appInstanceId: appInstanceId,
+                originalTransactionId:
+                    originalTransactionId
+            )
+            .appendingPathComponent(
+                "beneficiary"
+            )
+
+        return try await send(
+            url: url,
+            method: "POST",
+            body: body
+        )
+    }
+
     private func endpoint(
         appInstanceId: UUID
     ) -> URL {
@@ -89,6 +121,22 @@ actor SponsorshipAPIClient {
             )
     }
 
+    private func sponsorshipEndpoint(
+        appInstanceId: UUID,
+        originalTransactionId: String
+    ) -> URL {
+
+        baseURL
+            .appendingPathComponent("users")
+            .appendingPathComponent(
+                appInstanceId.uuidString
+            )
+            .appendingPathComponent("sponsorships")
+            .appendingPathComponent(
+                originalTransactionId
+            )
+    }
+
     private func send<
         Response: Decodable,
         Body: Encodable
@@ -102,6 +150,22 @@ actor SponsorshipAPIClient {
             appInstanceId:
                 appInstanceId
         )
+
+        return try await send(
+            url: url,
+            method: method,
+            body: body
+        )
+    }
+
+    private func send<
+        Response: Decodable,
+        Body: Encodable
+    >(
+        url: URL,
+        method: String,
+        body: Body?
+    ) async throws -> Response {
 
         var request = URLRequest(
             url: url

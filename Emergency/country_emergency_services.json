@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026.10.09.1",
-  "generatedAt": "2026-10-08T21:15:00Z",
+  "catalogVersion": "2026.10.10.1",
+  "generatedAt": "2026-10-10T12:50:23Z",
   "countryCodes": [
     "AU",
     "BZ",
@@ -12,6 +12,7 @@
     "CA",
     "MT",
     "US",
+    "SG",
     "AR",
     "BO",
     "VE",
@@ -6822,6 +6823,3241 @@
       "sourceType": "officialService",
       "verificationStatus": "verified",
       "verifiedAt": "2026-10-08"
+    },
+    {
+      "id": "au-senior-support-national-1",
+      "countryCode": "AU",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "My Aged Care",
+        "en": "My Aged Care",
+        "es": "My Aged Care"
+      },
+      "localizedNotes": {
+        "ru": "Государственная навигация по уходу. Линия из-за границы: пн–пт 08:30–17:30 AEST; попросить My Aged Care. Местный номер: 1800 200 422. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 1800 200 422. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 1800 200 422. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+61262891555",
+      "internationalNumber": "+61 2 6289 1555",
+      "sourceName": "My Aged Care",
+      "sourceURL": "https://www.myagedcare.gov.au/how-to-contact-my-aged-care",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "bz-senior-support-national-1",
+      "countryCode": "BZ",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National Council on Ageing (NCA)",
+        "en": "National Council on Ageing (NCA)",
+        "es": "National Council on Ageing (NCA)"
+      },
+      "localizedNotes": {
+        "ru": "Национальный совет, общий контакт. Контакт офиса, не круглосуточная горячая линия. Подтверждён собственной публикацией организации в 2025 году. Местный номер: 822 1546. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 822 1546. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 822 1546. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+5018221546",
+      "internationalNumber": "+501 822 1546",
+      "sourceName": "National Council on Ageing (NCA)",
+      "sourceURL": "https://www.facebook.com/100069507188620/videos/the-national-council-on-ageing-nca-in-collaboration-with-the-senior-step-of-belm/1336910404518691/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "gb-senior-support-national-1",
+      "countryCode": "GB",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Age UK Advice Line",
+        "en": "Age UK Advice Line",
+        "es": "Age UK Advice Line"
+      },
+      "localizedNotes": {
+        "ru": "Консультации по уходу, деньгам, жилью и правам. Ежедневно 08:00–19:00. Бесплатный номер; приём звонков из-за границы не подтверждён. Для Шотландии, Уэльса и Северной Ирландии есть отдельные партнёрские службы. Местный номер: 0800 678 1602. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 0800 678 1602. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 0800 678 1602. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+448006781602",
+      "internationalNumber": "+44 800 678 1602",
+      "sourceName": "Age UK Advice Line",
+      "sourceURL": "https://www.ageuk.org.uk/services/age-uk-advice-line/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "gy-senior-support-national-1",
+      "countryCode": "GY",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Ministry of Human Services and Social Security",
+        "en": "Ministry of Human Services and Social Security",
+        "es": "Ministry of Human Services and Social Security"
+      },
+      "localizedNotes": {
+        "ru": "Государственное ведомство, общий контакт. Офис Cornhill; попросить службу для пожилых / пенсионного обеспечения. Не специализированная линия пожилых. Местный номер: 225 6202. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 225 6202. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 225 6202. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+5922256202",
+      "internationalNumber": "+592 225 6202",
+      "sourceName": "Ministry of Human Services and Social Security",
+      "sourceURL": "https://mhsss.gov.gy/contact-us/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "il-senior-support-national-1",
+      "countryCode": "IL",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Yad Sarah / Яд Сара",
+        "en": "Yad Sarah",
+        "es": "Yad Sarah"
+      },
+      "localizedNotes": {
+        "ru": "Национальная благотворительная организация. Оборудование, поддержка и услуги на дому, помощь пожилым и людям с ограничениями. Общий контакт. Государственная линия по правам пожилых: *8840, международный аналог не подтверждён. Местный номер: *6444. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: *6444. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: *6444. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+97226444444",
+      "internationalNumber": "+972 2 644 4444",
+      "sourceName": "Yad Sarah",
+      "sourceURL": "https://yadsarah.org/contact-us/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "ie-senior-support-national-1",
+      "countryCode": "IE",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "ALONE, National Support & Referral Line",
+        "en": "ALONE National Support & Referral Line",
+        "es": "ALONE National Support & Referral Line"
+      },
+      "localizedNotes": {
+        "ru": "Национальная поддержка и направление к услугам. Для пожилых людей и обращений в их интересах. Доступность 0818 из-за границы не подтверждена. Местный номер: 0818 222 024. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 0818 222 024. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 0818 222 024. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+353818222024",
+      "internationalNumber": "+353 818 222 024",
+      "sourceName": "ALONE National Support & Referral Line",
+      "sourceURL": "https://alone.ie/contact/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "ca-senior-support-national-1",
+      "countryCode": "CA",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "HelpAge Canada",
+        "en": "HelpAge Canada",
+        "es": "HelpAge Canada"
+      },
+      "localizedNotes": {
+        "ru": "Национальная благотворительная организация, офис. Работает через местные организации и программы; общий контакт, не экстренный диспетчер и не гарантированная линия индивидуального ведения случая. Местный номер: 1 800 648 1111. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 1 800 648 1111. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 1 800 648 1111. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+16132320727",
+      "internationalNumber": "+1 613 232 0727",
+      "sourceName": "HelpAge Canada",
+      "sourceURL": "https://helpagecanada.ca/contact-us/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "mt-senior-support-national-1",
+      "countryCode": "MT",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Active Ageing and Community Care, Ċentru Servizz Anzjan",
+        "en": "Active Ageing and Community Care",
+        "es": "Active Ageing and Community Care"
+      },
+      "localizedNotes": {
+        "ru": "Государственная служба пожилых и ухода. Пн–пт 07:30–14:30. Информация об услугах и оценке потребности в уходе. Местный номер: 2278 8900. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 2278 8900. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 2278 8900. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+35622788900",
+      "internationalNumber": "+356 2278 8900",
+      "sourceName": "Active Ageing and Community Care",
+      "sourceURL": "https://aacc.gov.mt/en/contact/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "us-senior-support-national-1",
+      "countryCode": "US",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Eldercare Locator",
+        "en": "Eldercare Locator",
+        "es": "Eldercare Locator"
+      },
+      "localizedNotes": {
+        "ru": "Национальный поиск услуг для пожилых. Направляет к местным службам: питание, транспорт, уход, помощь родственникам. Бесплатный номер США; международный доступ не подтверждён. Контакты штатов приведены отдельно. Местный номер: 1 800 677 1116. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 1 800 677 1116. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 1 800 677 1116. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+18006771116",
+      "internationalNumber": "+1 800 677 1116",
+      "sourceName": "Eldercare Locator",
+      "sourceURL": "https://www.usaging.org/eldercareloc",
+      "sourceType": "directory",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "sg-senior-support-national-1",
+      "countryCode": "SG",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "SAGE Counselling Centre",
+        "en": "SAGE Counselling Centre",
+        "es": "SAGE Counselling Centre"
+      },
+      "localizedNotes": {
+        "ru": "Национальная организация поддержки пожилых, офис. Обращения по консультированию и поддержке пожилых и их семей. Это контакт центра. Для навигации по уходу государственная AIC: 1800 650 6060 внутри Сингапура. Seniors Helpline: 1800 555 5555 внутри страны, пн–пт 09:00–17:00. Местный номер: 6354 1191. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 6354 1191. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 6354 1191. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+6563541191",
+      "internationalNumber": "+65 6354 1191",
+      "sourceName": "SAGE Counselling Centre",
+      "sourceURL": "https://www.sagecc.org.sg/contact-us/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "ar-senior-support-national-1",
+      "countryCode": "AR",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "PAMI Escucha / INSSJP",
+        "en": "PAMI Escucha / INSSJP",
+        "es": "PAMI Escucha / INSSJP"
+      },
+      "localizedNotes": {
+        "ru": "Национальная консультационная линия PAMI. Круглосуточно. Преимущественно для участников PAMI и вопросов его услуг. Бесплатный номер; международный доступ не подтверждён. Местный номер: 138 / 0800 222 7264. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 138 / 0800 222 7264. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 138 / 0800 222 7264. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+548002227264",
+      "internationalNumber": "+54 800 222 7264",
+      "sourceName": "PAMI Escucha / INSSJP",
+      "sourceURL": "https://www.gesell.gob.ar/novedad/37134/pami-atiende-consultas-de-sus-afiliados-por-tel-fono.html",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "bo-senior-support-national-1",
+      "countryCode": "BO",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Defensoría del Pueblo, Oficina Nacional",
+        "en": "Defensoría del Pueblo",
+        "es": "Defensoría del Pueblo"
+      },
+      "localizedNotes": {
+        "ru": "Защита прав, общий контакт национального офиса. Не организация исключительно для пожилых; принимает обращения о нарушении их прав. Бесплатная линия внутри страны указана отдельно. Местный номер: 800 10 8004. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 800 10 8004. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 800 10 8004. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+59122113600",
+      "internationalNumber": "+591 2 211 3600",
+      "sourceName": "Defensoría del Pueblo",
+      "sourceURL": "https://www.defensoria.gob.bo/oficinas",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "ve-senior-support-national-1",
+      "countryCode": "VE",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Ministerio de Adultos Mayores / страница INASS",
+        "en": "Ministerio de Adultos Mayores / INASS",
+        "es": "Ministerio de Adultos Mayores / INASS"
+      },
+      "localizedNotes": {
+        "ru": "Национальное ведомство пожилых, общий контакт. Номер опубликован в контактах министерства на странице INASS. Не подтверждён как специальная круглосуточная линия помощи. Местный номер: 0212 762 2589. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 0212 762 2589. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 0212 762 2589. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+582127622589",
+      "internationalNumber": "+58 212 762 2589",
+      "sourceName": "Ministerio de Adultos Mayores / INASS",
+      "sourceURL": "https://adultosmayores.minaamp.gob.ve/instituto-nacional-de-servicios-sociales-inass/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "gt-senior-support-national-1",
+      "countryCode": "GT",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "SOSEP, Mis Años Dorados",
+        "en": "SOSEP – Mis Años Dorados",
+        "es": "SOSEP – Mis Años Dorados"
+      },
+      "localizedNotes": {
+        "ru": "Государственная программа пожилых, общий контакт SOSEP. Дневные центры и поддержка пожилых; попросить Mis Años Dorados. Местный номер: 2294 3800. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 2294 3800. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 2294 3800. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+50222943800",
+      "internationalNumber": "+502 2294 3800",
+      "sourceName": "SOSEP – Mis Años Dorados",
+      "sourceURL": "https://sosep.gob.gt/index.php/contacto/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "hn-senior-support-national-1",
+      "countryCode": "HN",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "SEDESOL, Dirección General del Adulto Mayor",
+        "en": "SEDESOL – Dirección General del Adulto Mayor",
+        "es": "SEDESOL – Dirección General del Adulto Mayor"
+      },
+      "localizedNotes": {
+        "ru": "Национальное ведомство, общий телефон SEDESOL. Права, льготы, скидки и направления к услугам. Попросить Dirección General del Adulto Mayor. Местный номер: 2242 7981. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 2242 7981. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 2242 7981. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+50422427981",
+      "internationalNumber": "+504 2242 7981",
+      "sourceName": "SEDESOL – Dirección General del Adulto Mayor",
+      "sourceURL": "https://sedesol.gob.hn/direccion-general-del-adulto-mayor/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "do-senior-support-national-1",
+      "countryCode": "DO",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "CONAPE",
+        "en": "CONAPE",
+        "es": "CONAPE"
+      },
+      "localizedNotes": {
+        "ru": "Национальный совет по пожилым, общий контакт. Пн–пт 08:00–16:00; услуги, включение в программы и обращения. Местный номер: 809 688 4433. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 809 688 4433. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 809 688 4433. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+18096884433",
+      "internationalNumber": "+1 809 688 4433",
+      "sourceName": "CONAPE",
+      "sourceURL": "https://conape.gob.do/contactos.cfm",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "es-senior-support-national-1",
+      "countryCode": "ES",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "IMSERSO, Teléfono de Información",
+        "en": "IMSERSO – Teléfono de Información",
+        "es": "IMSERSO – Teléfono de Información"
+      },
+      "localizedNotes": {
+        "ru": "Национальная информационная служба пожилых. Консультации о программах IMSERSO, уходе и социальных услугах. Местный номер: 912 667 713. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 912 667 713. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 912 667 713. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+34912667713",
+      "internationalNumber": "+34 912 667 713",
+      "sourceName": "IMSERSO – Teléfono de Información",
+      "sourceURL": "https://imserso.es/es/contacte",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "co-senior-support-national-1",
+      "countryCode": "CO",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Prosperidad Social, Colombia Mayor",
+        "en": "Prosperidad Social – Colombia Mayor",
+        "es": "Prosperidad Social – Colombia Mayor"
+      },
+      "localizedNotes": {
+        "ru": "Информация о национальной программе пожилых. Общая гражданская линия Prosperidad Social; попросить Colombia Mayor. Программа денежной поддержки имеет условия участия. Местный номер: 01 8000 95 1100. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 01 8000 95 1100. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 01 8000 95 1100. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+576013791088",
+      "internationalNumber": "+57 601 379 1088",
+      "sourceName": "Prosperidad Social – Colombia Mayor",
+      "sourceURL": "https://prosperidadsocial.gov.co/colombia-mayor/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "cr-senior-support-national-1",
+      "countryCode": "CR",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "CONAPAM",
+        "en": "CONAPAM",
+        "es": "CONAPAM"
+      },
+      "localizedNotes": {
+        "ru": "Национальный совет по пожилым, общий контакт. Общий телефон совета; 1165 – отдельный короткий номер Línea Dorada внутри страны. Местный номер: 2223 8283 / 1165. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 2223 8283 / 1165. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 2223 8283 / 1165. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+50622238283",
+      "internationalNumber": "+506 2223 8283",
+      "sourceName": "CONAPAM",
+      "sourceURL": "https://conapam.go.cr/contacto/informacion-de-contacto/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "mx-senior-support-national-1",
+      "countryCode": "MX",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "INAPAM, Asesoría Jurídica",
+        "en": "INAPAM – Asesoría Jurídica",
+        "es": "INAPAM – Asesoría Jurídica"
+      },
+      "localizedNotes": {
+        "ru": "Правовая помощь пожилым. Специализированная юридическая консультация; не универсальная линия по всем социальным услугам. Местный номер: 55 5925 5366. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 55 5925 5366. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 55 5925 5366. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+525559255366",
+      "internationalNumber": "+52 55 5925 5366",
+      "sourceName": "INAPAM – Asesoría Jurídica",
+      "sourceURL": "https://www.gob.mx/inapam/es/acciones-y-programas/asesoria-juridica-para-adultos-mayores-del-inapam",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "ni-senior-support-national-1",
+      "countryCode": "NI",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Ministerio de la Familia / MIFAMILIA",
+        "en": "Ministerio de la Familia / MIFAMILIA",
+        "es": "Ministerio de la Familia / MIFAMILIA"
+      },
+      "localizedNotes": {
+        "ru": "Государственное ведомство, общий контакт. Семейная и социальная поддержка, включая вопросы пожилых. Попросить соответствующее подразделение; не специальная линия пожилых. Местный номер: 2222 4444. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 2222 4444. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 2222 4444. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+50522224444",
+      "internationalNumber": "+505 2222 4444",
+      "sourceName": "Ministerio de la Familia / MIFAMILIA",
+      "sourceURL": "https://www.mifamilia.gob.ni/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "pa-senior-support-national-1",
+      "countryCode": "PA",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "MIDES, Programa 120 a los 65",
+        "en": "MIDES – Programa 120 a los 65",
+        "es": "MIDES – Programa 120 a los 65"
+      },
+      "localizedNotes": {
+        "ru": "Национальная программа поддержки пожилых. Приёмная программы денежной поддержки лиц 65+; участие зависит от установленных условий. Местный номер: 500 6078. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 500 6078. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 500 6078. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+5075006078",
+      "internationalNumber": "+507 500 6078",
+      "sourceName": "MIDES – Programa 120 a los 65",
+      "sourceURL": "https://www.mides.gob.pa/directorio/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "py-senior-support-national-1",
+      "countryCode": "PY",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "MSPBS, Dirección de Adultos Mayores",
+        "en": "MSPBS – Dirección de Adultos Mayores",
+        "es": "MSPBS – Dirección de Adultos Mayores"
+      },
+      "localizedNotes": {
+        "ru": "Национальное управление по пожилым. Информация об услугах социальной поддержки и ухода. Местный номер: 021 440 854. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 021 440 854. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 021 440 854. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+59521440854",
+      "internationalNumber": "+595 21 440 854",
+      "sourceName": "MSPBS – Dirección de Adultos Mayores",
+      "sourceURL": "https://www.mspbs.gov.py/bienestarsocial/direccion-adultos-mayores.html",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "pe-senior-support-national-1",
+      "countryCode": "PE",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "MIMP, Servicio Mi60+ / Dirección de Personas Adultas Mayores",
+        "en": "MIMP – Servicio Mi60+",
+        "es": "MIMP – Servicio Mi60+"
+      },
+      "localizedNotes": {
+        "ru": "Национальная защита пожилых в ситуации риска. После соединения набрать / попросить добавочный 5118. Основной номер MIMP; помощь пожилым в уязвимом положении. Местный номер: 01 626 1600, доб. 5118. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 01 626 1600, доб. 5118. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 01 626 1600, доб. 5118. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+5116261600",
+      "internationalNumber": "+51 1 626 1600",
+      "sourceName": "MIMP – Servicio Mi60+",
+      "sourceURL": "https://www.gob.pe/47711-observatorio-nacional-sobre-envejecimiento-y-vejez-red-de-servicios-y-espacios-de-participacion-para-personas-adultas-mayores",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "sv-senior-support-national-1",
+      "countryCode": "SV",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "PDDH, Personas Adultas Mayores y Derechos Humanos",
+        "en": "PDDH – Personas Adultas Mayores y Derechos Humanos",
+        "es": "PDDH – Personas Adultas Mayores y Derechos Humanos"
+      },
+      "localizedNotes": {
+        "ru": "Национальная защита прав пожилых. Контакт профильного подразделения в текущем справочнике PDDH. Для нарушений прав и консультаций; не универсальная служба ухода. Местный номер: 2520 4336. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 2520 4336. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 2520 4336. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+50325204336",
+      "internationalNumber": "+503 2520 4336",
+      "sourceName": "PDDH – Personas Adultas Mayores y Derechos Humanos",
+      "sourceURL": "https://www.pddh.gob.sv/directorio-funcionariado/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "uy-senior-support-national-1",
+      "countryCode": "UY",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "MIDES, Inmayores",
+        "en": "MIDES – Inmayores",
+        "es": "MIDES – Inmayores"
+      },
+      "localizedNotes": {
+        "ru": "Национальный институт пожилых. Для службы помощи при уязвимости / жестоком обращении опубликованы доб. 7530 и 7531. Местный номер: 2400 0302. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 2400 0302. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 2400 0302. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+59824000302",
+      "internationalNumber": "+598 2400 0302",
+      "sourceName": "MIDES – Inmayores",
+      "sourceURL": "https://www.gub.uy/ministerio-desarrollo-social/inmayores",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "cl-senior-support-national-1",
+      "countryCode": "CL",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "SENAMA",
+        "en": "SENAMA",
+        "es": "SENAMA"
+      },
+      "localizedNotes": {
+        "ru": "Национальная служба пожилых, центральный офис. В международной колонке общий номер SENAMA; Fono Mayor – отдельная бесплатная линия внутри страны. Местный номер: 800 400 035. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 800 400 035. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 800 400 035. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+56225853500",
+      "internationalNumber": "+56 2 2585 3500",
+      "sourceName": "SENAMA",
+      "sourceURL": "https://www.senama.gob.cl/senama-regiones",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "ec-senior-support-national-1",
+      "countryCode": "EC",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Ministerio de Desarrollo Humano (ранее MIES)",
+        "en": "Ministerio de Desarrollo Humano",
+        "es": "Ministerio de Desarrollo Humano"
+      },
+      "localizedNotes": {
+        "ru": "Государственное ведомство, общий контакт. Попросить подразделение / услуги для personas adultas mayores. Не отдельная линия только для пожилых. Местный номер: 02 398 3100. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 02 398 3100. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 02 398 3100. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+59323983100",
+      "internationalNumber": "+593 2 398 3100",
+      "sourceName": "Ministerio de Desarrollo Humano",
+      "sourceURL": "https://servicios.desarrollohumano.gob.ec/inicio_servicios/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "am-senior-support-national-1",
+      "countryCode": "AM",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Mission Armenia / «Миссия Армения»",
+        "en": "Mission Armenia",
+        "es": "Mission Armenia"
+      },
+      "localizedNotes": {
+        "ru": "Благотворительная организация, общий контакт. Социальная поддержка пожилых и уязвимых групп. Номер указан как телефон в актуальном справочнике партнёров УВКБ ООН; не круглосуточная линия. Местный номер: 010 444 792. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 010 444 792. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 010 444 792. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+37410444792",
+      "internationalNumber": "+374 10 444 792",
+      "sourceName": "Mission Armenia",
+      "sourceURL": "https://help.unhcr.org/armenia/partners-and-contact-info/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "az-senior-support-national-1",
+      "countryCode": "AZ",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Social Services Agency",
+        "en": "Social Services Agency",
+        "es": "Social Services Agency"
+      },
+      "localizedNotes": {
+        "ru": "Горячая линия социальных услуг. По вопросам домашней социальной помощи, включая пожилых; ведомство обслуживает и другие уязвимые группы. Местный номер: 012 525 41 30. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 012 525 41 30. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 012 525 41 30. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+994125254130",
+      "internationalNumber": "+994 12 525 41 30",
+      "sourceName": "Social Services Agency",
+      "sourceURL": "https://sosial.gov.az/en/media/news/social-services-agency-currently-provides-home-mobile-social-and-household-services-to-410-families-8021",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "by-senior-support-national-1",
+      "countryCode": "BY",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Белорусский Красный Крест",
+        "en": "Belarus Red Cross",
+        "es": "Belarus Red Cross"
+      },
+      "localizedNotes": {
+        "ru": "Национальная организация, приёмная. Попросить службу медико-социальной помощи / ухода на дому. Общая приёмная, не специальная экстренная линия пожилых. Местный номер: 017 263 84 17. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 017 263 84 17. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 017 263 84 17. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+375172638417",
+      "internationalNumber": "+375 17 263 84 17",
+      "sourceName": "Belarus Red Cross",
+      "sourceURL": "https://www.ifrc.org/national-societies-directory/belarus-red-cross",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "ge-senior-support-national-1",
+      "countryCode": "GE",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Georgia Red Cross Society",
+        "en": "Georgia Red Cross Society",
+        "es": "Georgia Red Cross Society"
+      },
+      "localizedNotes": {
+        "ru": "Национальная организация, общий контакт. Попросить программу поддержки пожилых / ухода. Национальная организация обслуживает также другие группы. Местный номер: 032 250 1105. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 032 250 1105. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 032 250 1105. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+995322501105",
+      "internationalNumber": "+995 32 250 1105",
+      "sourceName": "Georgia Red Cross Society",
+      "sourceURL": "https://www.redcross.ge/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "kz-senior-support-national-1",
+      "countryCode": "KZ",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Единый контакт-центр 1414, социальные государственные услуги",
+        "en": "Unified Contact Center 1414",
+        "es": "Unified Contact Center 1414"
+      },
+      "localizedNotes": {
+        "ru": "Государственная навигация, не только для пожилых. Вопросы государственных услуг, включая социально-трудовые услуги. Полный номер опубликован на текущем портале eGov; специализированная организация пожилых этим не заменяется. Местный номер: 1414. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 1414. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 1414. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+77172906984",
+      "internationalNumber": "+7 7172 906 984",
+      "sourceName": "Unified Contact Center 1414",
+      "sourceURL": "https://dialog.egov.kz/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "cy-senior-support-national-1",
+      "countryCode": "CY",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Social Welfare Services",
+        "en": "Social Welfare Services",
+        "es": "Social Welfare Services"
+      },
+      "localizedNotes": {
+        "ru": "Государственная социальная служба, центральный офис. Попросить службу социальной помощи / ухода для пожилых. Компетенция Республики Кипр; ведомство обслуживает разные группы. Местный номер: 22 406600. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 22 406600. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 22 406600. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+35722406600",
+      "internationalNumber": "+357 22 406600",
+      "sourceName": "Social Welfare Services",
+      "sourceURL": "https://www.gov.cy/dmsw-sws/contact/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "kg-senior-support-national-1",
+      "countryCode": "KG",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "ОО «Ресурсный центр для пожилых», представительство в Бишкеке",
+        "en": "Resource Center for Older People",
+        "es": "Resource Center for Older People"
+      },
+      "localizedNotes": {
+        "ru": "Организация поддержки и защиты прав пожилых. Контакт представительства организации, работающей с пожилыми Кыргызстана; не единая экстренная диспетчерская. Местный номер: 0312 88 22 67. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 0312 88 22 67. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 0312 88 22 67. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+996312882267",
+      "internationalNumber": "+996 312 88 22 67",
+      "sourceName": "Resource Center for Older People",
+      "sourceURL": "https://agenet.org.kg/chleny-seti/kyrgyzstan/oo-rcp/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "lv-senior-support-national-1",
+      "countryCode": "LV",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Latvijas Pensionāru federācija",
+        "en": "Latvijas Pensionāru federācija",
+        "es": "Latvijas Pensionāru federācija"
+      },
+      "localizedNotes": {
+        "ru": "Национальная федерация пенсионеров. Публичный контакт члена правления Kārlis Ķergalvis. Не общий колл-центр; федерация публикует также контакты региональных координаторов. Местный номер: 2917 6520. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 2917 6520. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 2917 6520. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+37129176520",
+      "internationalNumber": "+371 2917 6520",
+      "sourceName": "Latvijas Pensionāru federācija",
+      "sourceURL": "https://latvijaspensionars.lv/kontakti/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "lt-senior-support-national-1",
+      "countryCode": "LT",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Sidabrinė linija",
+        "en": "Sidabrinė linija",
+        "es": "Sidabrinė linija"
+      },
+      "localizedNotes": {
+        "ru": "Национальная линия общения и поддержки пожилых. Будни 09:00–20:00, выходные / праздники 11:00–19:00. Бесплатный номер; международный доступ не подтверждён. Местный номер: 0 800 80020. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 0 800 80020. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 0 800 80020. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+37080080020",
+      "internationalNumber": "+370 800 80020",
+      "sourceName": "Sidabrinė linija",
+      "sourceURL": "https://www.sidabrinelinija.lt/fondas/kontaktai",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "md-senior-support-national-1",
+      "countryCode": "MD",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "HelpAge Moldova",
+        "en": "HelpAge Moldova",
+        "es": "HelpAge Moldova"
+      },
+      "localizedNotes": {
+        "ru": "Национальная организация пожилых, офис. Номер повторно опубликован самой организацией в сентябре 2026 года на CIVIC.MD; общий офисный контакт, не горячая линия. Местный номер: 022 225 098. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 022 225 098. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 022 225 098. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+37322225098",
+      "internationalNumber": "+373 22 225 098",
+      "sourceName": "HelpAge Moldova",
+      "sourceURL": "https://civic.md/anunturi/achizitii/91410-helpage-moldova-contracteaza-un-o-consultant-a-pentru-elaborarea-a-3-rapoarte-de-monitorizare-in-baza-activitatii-de-advocacy-a-3-ong-uri-privind-integrarea-imbatraniri-active-in-politicile-locale-raionale.html",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "tj-senior-support-national-1",
+      "countryCode": "TJ",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Министерство здравоохранения и социальной защиты населения",
+        "en": "Ministry of Health and Social Protection",
+        "es": "Ministry of Health and Social Protection"
+      },
+      "localizedNotes": {
+        "ru": "Национальное ведомство, общий отдел. Попросить подразделение социальной защиты / услуг пожилым. Общий отдел; не специализированная линия поддержки пожилых. Местный номер: 037 221 12 48. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 037 221 12 48. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 037 221 12 48. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+992372211248",
+      "internationalNumber": "+992 37 221 12 48",
+      "sourceName": "Ministry of Health and Social Protection",
+      "sourceURL": "https://moh.tj/ru/kontakty/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "ua-senior-support-national-1",
+      "countryCode": "UA",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Карітас України",
+        "en": "Caritas Ukraine",
+        "es": "Caritas Ukraine"
+      },
+      "localizedNotes": {
+        "ru": "Национальная гуманитарная линия, разные группы. Информация об участии в программах помощи, включая домашнюю опеку. Бесплатный номер; международный доступ не подтверждён. На странице поддержки указаны пн–пт 09:30–16:00. Местный номер: 0 800 336 734. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 0 800 336 734. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 0 800 336 734. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+380800336734",
+      "internationalNumber": "+380 800 336 734",
+      "sourceName": "Caritas Ukraine",
+      "sourceURL": "https://caritas.ua/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "uz-senior-support-national-1",
+      "countryCode": "UZ",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Национальное агентство социальной защиты",
+        "en": "National Agency for Social Protection",
+        "es": "National Agency for Social Protection"
+      },
+      "localizedNotes": {
+        "ru": "Национальная социальная защита. Полный номер – телефон доверия; 1140 – отдельный короткий номер социальных услуг. Обслуживает пожилых и другие группы. Местный номер: 1140 / 71 202 06 00. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 1140 / 71 202 06 00. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 1140 / 71 202 06 00. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+998712020600",
+      "internationalNumber": "+998 71 202 06 00",
+      "sourceName": "National Agency for Social Protection",
+      "sourceURL": "https://ihma.uz/ru/contact",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "ee-senior-support-national-1",
+      "countryCode": "EE",
+      "category": "seniorSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Eesti Pensionäride Ühenduste Liit (EPÜL)",
+        "en": "Eesti Pensionäride Ühenduste Liit (EPÜL)",
+        "es": "Eesti Pensionäride Ühenduste Liit (EPÜL)"
+      },
+      "localizedNotes": {
+        "ru": "Национальное объединение пенсионеров, общий контакт. Контакт организации по вопросам деятельности и прав пенсионеров; не экстренная горячая линия. Местный номер: 5872 3008. Это не экстренная служба.",
+        "en": "National or country-level senior support contact. Local number or additional line: 5872 3008. This is not an emergency service. Availability, eligibility and international access may be limited; call to confirm.",
+        "es": "Contacto nacional de apoyo para personas mayores. Número local o línea adicional: 5872 3008. No es un servicio de emergencias. La disponibilidad, los requisitos y el acceso internacional pueden ser limitados; llame para confirmarlos."
+      },
+      "noteKey": null,
+      "dialString": "+37258723008",
+      "internationalNumber": "+372 5872 3008",
+      "sourceName": "Eesti Pensionäride Ühenduste Liit (EPÜL)",
+      "sourceURL": "https://www.eakad.ee/kontakt/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-09"
+    },
+    {
+      "id": "au-dental-emergency-1",
+      "countryCode": "AU",
+      "category": "other",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Australian Dental Foundation",
+        "en": "Australian Dental Foundation",
+        "es": "Australian Dental Foundation"
+      },
+      "localizedNotes": {
+        "ru": "После рабочего времени; подбор ближайшего стоматолога. После рабочего времени; точные часы уточнить. Связь с ближайшим стоматологом; прием не гарантирован",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+61407111117",
+      "internationalNumber": "+61 407 111 117",
+      "sourceName": "Australian Dental Foundation",
+      "sourceURL": "https://www.healthdirect.gov.au/after-hours-health-services",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "bz-dental-emergency-1",
+      "countryCode": "BZ",
+      "category": "other",
+      "scope": "city",
+      "region": "Белиз-Сити",
+      "localizedNames": {
+        "ru": "Dr Osbert O. Usher",
+        "en": "Dr Osbert O. Usher",
+        "es": "Dr Osbert O. Usher"
+      },
+      "localizedNotes": {
+        "ru": "Белиз-Сити. Экстренный номер; часы не опубликованы. Основной телефон +501 227 3415; стоимость уточнить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+5016156041",
+      "internationalNumber": "+501 615 6041",
+      "sourceName": "Dr Osbert O. Usher",
+      "sourceURL": "https://www.dentalimplantsbelize.com/services/dental-emergencies/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "gb-dental-emergency-1",
+      "countryCode": "GB",
+      "category": "other",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "NHS / NHS 24",
+        "en": "NHS / NHS 24",
+        "es": "NHS / NHS 24"
+      },
+      "localizedNotes": {
+        "ru": "Англия, Шотландия, Уэльс; региональные маршруты. 24/7; стоматологический прием по направлению. Внутренний номер. Англия: NHS 111; Шотландия: NHS 24 вне часов; Уэльс: NHS 111 Wales. Для Северной Ирландии отдельный маршрут, см. источник",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "111",
+      "internationalNumber": "111",
+      "sourceName": "NHS / NHS 24",
+      "sourceURL": "https://www.nhs.uk/nhs-services/dentists/how-to-find-an-nhs-dentist-in-an-emergency/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "gy-dental-emergency-1",
+      "countryCode": "GY",
+      "category": "other",
+      "scope": "city",
+      "region": "Джорджтаун",
+      "localizedNames": {
+        "ru": "Jagan Dental Centre",
+        "en": "Jagan Dental Centre",
+        "es": "Jagan Dental Centre"
+      },
+      "localizedNotes": {
+        "ru": "Джорджтаун. Пн–пт 09:00–16:00; сб 09:00–12:00. Уточнить срочный прием; экстренный режим первичным источником не подтверждён",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+5922260400",
+      "internationalNumber": "+592 226 0400",
+      "sourceName": "Jagan Dental Centre",
+      "sourceURL": "https://jagandentalcentre.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "il-dental-emergency-1",
+      "countryCode": "IL",
+      "category": "other",
+      "scope": "regional",
+      "region": "Сеть; экстренные центры Хайфа, Рамат-Ган, Беэр-Шева",
+      "localizedNames": {
+        "ru": "Maccabident",
+        "en": "Maccabident",
+        "es": "Maccabident"
+      },
+      "localizedNotes": {
+        "ru": "Сеть; экстренные центры Хайфа, Рамат-Ган, Беэр-Шева. Вечера, выходные; расписание центра уточнить. Проверить право на услугу: участники Maccabi / пациенты Maccabident; не общая государственная линия",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+97237777777",
+      "internationalNumber": "*6300 / +972 3 777 7777",
+      "sourceName": "Maccabident",
+      "sourceURL": "https://www.maccabi4u.co.il/en/46562/eligibilities-bank/emergency_dental_care_and_first_aid/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "ie-dental-emergency-1",
+      "countryCode": "IE",
+      "category": "other",
+      "scope": "city",
+      "region": "Дублин",
+      "localizedNames": {
+        "ru": "Dublin Dental University Hospital",
+        "en": "Dublin Dental University Hospital",
+        "es": "Dublin Dental University Hospital"
+      },
+      "localizedNotes": {
+        "ru": "Дублин. Днем; вне часов пн–пт 17:00–22:00; выходные 09:00–22:00. Вне часов +353 1 612 7200; только тяжелые случаи, звонок и обратная связь, возможен только совет",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+35316127257",
+      "internationalNumber": "+353 1 612 7257",
+      "sourceName": "Dublin Dental University Hospital",
+      "sourceURL": "https://www.dentalhospital.ie/patient-information/emergency-services",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "ca-dental-emergency-1",
+      "countryCode": "CA",
+      "category": "other",
+      "scope": "city",
+      "region": "Оттава; не вся Канада",
+      "localizedNames": {
+        "ru": "Ottawa Dental Society",
+        "en": "Ottawa Dental Society",
+        "es": "Ottawa Dental Society"
+      },
+      "localizedNotes": {
+        "ru": "Оттава; не вся Канада. Ежедневно 09:00–21:00. Направление к дежурному стоматологу; оплату уточнить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+16135234185",
+      "internationalNumber": "+1 613 523 4185",
+      "sourceName": "Ottawa Dental Society",
+      "sourceURL": "https://ottawadentalsociety.org/dental-emergency/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "mt-dental-emergency-1",
+      "countryCode": "MT",
+      "category": "other",
+      "scope": "city",
+      "region": "Мсида, Mater Dei Hospital",
+      "localizedNames": {
+        "ru": "Department of Dental Surgery",
+        "en": "Department of Dental Surgery",
+        "es": "Department of Dental Surgery"
+      },
+      "localizedNotes": {
+        "ru": "Мсида, Mater Dei Hospital. Вс и праздники 09:00–12:00: экстренные случаи. Телефон отделения; другие дни и правила приема уточнить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+35625454800",
+      "internationalNumber": "+356 2545 4800",
+      "sourceName": "Department of Dental Surgery",
+      "sourceURL": "https://materdeihospital.gov.mt/en/departments-and-units/department-dental-surgery/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "sg-dental-emergency-1",
+      "countryCode": "SG",
+      "category": "other",
+      "scope": "city",
+      "region": "NDCS / Singapore General Hospital",
+      "localizedNames": {
+        "ru": "National Dental Centre Singapore",
+        "en": "National Dental Centre Singapore",
+        "es": "National Dental Centre Singapore"
+      },
+      "localizedNotes": {
+        "ru": "NDCS / Singapore General Hospital. Телефон: пн–чт 08:00–17:30, пт 08:00–17:00. Это запись, не круглосуточная линия. Срочная помощь: NDCS днем; SGH Emergency Department вне часов",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+6563248802",
+      "internationalNumber": "+65 6324 8802",
+      "sourceName": "National Dental Centre Singapore",
+      "sourceURL": "https://www.ndcs.com.sg/patient-services/contact-us",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "ar-dental-emergency-1",
+      "countryCode": "AR",
+      "category": "other",
+      "scope": "city",
+      "region": "Буэнос-Айрес, Muñiz 15",
+      "localizedNames": {
+        "ru": "Hospital de Odontología Dr. José Dueñas",
+        "en": "Hospital de Odontología Dr. José Dueñas",
+        "es": "Hospital de Odontología Dr. José Dueñas"
+      },
+      "localizedNotes": {
+        "ru": "Буэнос-Айрес, Muñiz 15. 24/7, 365 дней. Городская служба заявлена как бесплатная; номер коммутатора",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+541149838983",
+      "internationalNumber": "+54 11 4983 8983",
+      "sourceName": "Hospital de Odontología Dr. José Dueñas",
+      "sourceURL": "https://buenosaires.gob.ar/gcaba_historico/gerencia-operativa-de-odontologia/guardias-odontologicas",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "bo-dental-emergency-1",
+      "countryCode": "BO",
+      "category": "other",
+      "scope": "city",
+      "region": "Ла-Пас, Калакото",
+      "localizedNames": {
+        "ru": "CIMAX",
+        "en": "CIMAX",
+        "es": "CIMAX"
+      },
+      "localizedNotes": {
+        "ru": "Ла-Пас, Калакото. Часы срочного приема не указаны. Сайт указывает номер для стоматологических экстренных случаев; уточнить актуальность по звонку",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+59170616754",
+      "internationalNumber": "+591 706 16754",
+      "sourceName": "CIMAX",
+      "sourceURL": "https://cimax.com.bo/index.html",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "ve-dental-emergency-1",
+      "countryCode": "VE",
+      "category": "other",
+      "scope": "city",
+      "region": "Каракас, La Campiña",
+      "localizedNames": {
+        "ru": "Dra. Johanny Hernández",
+        "en": "Dra. Johanny Hernández",
+        "es": "Dra. Johanny Hernández"
+      },
+      "localizedNotes": {
+        "ru": "Каракас, La Campiña. Часы не указаны. Звонок / WhatsApp; наличие срочного слота и цену уточнить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+584122089840",
+      "internationalNumber": "+58 412 208 9840",
+      "sourceName": "Dra. Johanny Hernández",
+      "sourceURL": "https://odjohanny.com/servicios/urgencias/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "gt-dental-emergency-1",
+      "countryCode": "GT",
+      "category": "other",
+      "scope": "city",
+      "region": "Гватемала-Сити, зоны 1 и 9",
+      "localizedNames": {
+        "ru": "RoDa Dental",
+        "en": "RoDa Dental",
+        "es": "RoDa Dental"
+      },
+      "localizedNotes": {
+        "ru": "Гватемала-Сити, зоны 1 и 9. Прием в тот же день по записи; часы уточнить. WhatsApp +502 3159 5551; согласовать филиал",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+50222206981",
+      "internationalNumber": "+502 2220 6981",
+      "sourceName": "RoDa Dental",
+      "sourceURL": "https://www.rodadental.com/es/especialidades/emergencias-dentales-guatemala",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "hn-dental-emergency-1",
+      "countryCode": "HN",
+      "category": "other",
+      "scope": "city",
+      "region": "Тегусигальпа",
+      "localizedNames": {
+        "ru": "UNAH, Facultad de Odontología",
+        "en": "UNAH, Facultad de Odontología",
+        "es": "UNAH, Facultad de Odontología"
+      },
+      "localizedNotes": {
+        "ru": "Тегусигальпа. Услуги экстренной помощи 06:00–19:00; приемная 08:00–15:30. Телефон приемной, не 24/7; WhatsApp +504 3173 6957",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+50422163000",
+      "internationalNumber": "+504 2216 3000 доб. 100546",
+      "sourceName": "UNAH, Facultad de Odontología",
+      "sourceURL": "https://odontologia.unah.edu.hn/contacto/",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "do-dental-emergency-1",
+      "countryCode": "DO",
+      "category": "other",
+      "scope": "city",
+      "region": "Пунта-Кана",
+      "localizedNames": {
+        "ru": "Odontólogo Punta Cana",
+        "en": "Odontólogo Punta Cana",
+        "es": "Odontólogo Punta Cana"
+      },
+      "localizedNotes": {
+        "ru": "Пунта-Кана. 24 часа заявлено на сайте. Предварительно согласовать приезд; стоимость уточнить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+18297413324",
+      "internationalNumber": "+1 829 741 3324",
+      "sourceName": "Odontólogo Punta Cana",
+      "sourceURL": "https://odontologopuntacana.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "es-dental-emergency-1",
+      "countryCode": "ES",
+      "category": "other",
+      "scope": "city",
+      "region": "Мадрид, Bretón de los Herreros 32",
+      "localizedNames": {
+        "ru": "Centro Bretón Clínica Dental",
+        "en": "Centro Bretón Clínica Dental",
+        "es": "Centro Bretón Clínica Dental"
+      },
+      "localizedNotes": {
+        "ru": "Мадрид, Bretón de los Herreros 32. 24/7, предварительная запись. Звонок до приезда; локальная клиника",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+34639078855",
+      "internationalNumber": "+34 639 07 88 55",
+      "sourceName": "Centro Bretón Clínica Dental",
+      "sourceURL": "https://www.centrobretonclinicadental.com/contacto.php",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "co-dental-emergency-1",
+      "countryCode": "CO",
+      "category": "other",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "LopmanPlus",
+        "en": "LopmanPlus",
+        "es": "LopmanPlus"
+      },
+      "localizedNotes": {
+        "ru": "Богота; телефон назван национальной линией клиники. 24 часа заявлено. Номер национальной линии не означает лечение по всей стране; уточнить адрес",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+573138897117",
+      "internationalNumber": "+57 313 889 7117",
+      "sourceName": "LopmanPlus",
+      "sourceURL": "https://lopmanplus.com/urgencias/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "cr-dental-emergency-1",
+      "countryCode": "CR",
+      "category": "other",
+      "scope": "city",
+      "region": "Сан-Хосе",
+      "localizedNames": {
+        "ru": "DLM Dental",
+        "en": "DLM Dental",
+        "es": "DLM Dental"
+      },
+      "localizedNotes": {
+        "ru": "Сан-Хосе. Часы экстренного номера не указаны. Согласовать срочный прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+50688314569",
+      "internationalNumber": "+506 8831 4569",
+      "sourceName": "DLM Dental",
+      "sourceURL": "https://dlmdentalclinic.com/emergencia",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "mx-dental-emergency-1",
+      "countryCode": "MX",
+      "category": "other",
+      "scope": "city",
+      "region": "Мехико",
+      "localizedNames": {
+        "ru": "Eolodent",
+        "en": "Eolodent",
+        "es": "Eolodent"
+      },
+      "localizedNotes": {
+        "ru": "Мехико. 24 часа по предварительной записи. Сайт просит согласовать прием заранее, примерно за час; WhatsApp",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+525548281475",
+      "internationalNumber": "+52 55 4828 1475",
+      "sourceName": "Eolodent",
+      "sourceURL": "https://eolodent.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "ni-dental-emergency-1",
+      "countryCode": "NI",
+      "category": "other",
+      "scope": "city",
+      "region": "Манагуа / Матагальпа",
+      "localizedNames": {
+        "ru": "Pacific Dental",
+        "en": "Pacific Dental",
+        "es": "Pacific Dental"
+      },
+      "localizedNotes": {
+        "ru": "Манагуа / Матагальпа. Часы экстренного номера не указаны. Уточнить филиал и доступность",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+50557956820",
+      "internationalNumber": "+505 5795 6820",
+      "sourceName": "Pacific Dental",
+      "sourceURL": "https://pacificdentalnic.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "pa-dental-emergency-1",
+      "countryCode": "PA",
+      "category": "other",
+      "scope": "regional",
+      "region": "Панама-Сити; филиал уточнить",
+      "localizedNames": {
+        "ru": "Panamá Dental Center",
+        "en": "Panamá Dental Center",
+        "es": "Panamá Dental Center"
+      },
+      "localizedNotes": {
+        "ru": "Панама-Сити; филиал уточнить. Часы экстренной линии не указаны. Экстренный контакт с сайта; согласовать адрес",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+5073150007",
+      "internationalNumber": "+507 315 0007",
+      "sourceName": "Panamá Dental Center",
+      "sourceURL": "https://perfectsmile.com.pa/contacto/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "py-dental-emergency-1",
+      "countryCode": "PY",
+      "category": "other",
+      "scope": "regional",
+      "region": "Большой Асунсьон; филиалы сети",
+      "localizedNames": {
+        "ru": "CEO San Jorge",
+        "en": "CEO San Jorge",
+        "es": "CEO San Jorge"
+      },
+      "localizedNotes": {
+        "ru": "Большой Асунсьон; филиалы сети. 24/7 заявлено. Согласовать ближайший дежурный филиал и стоимость",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+595984518000",
+      "internationalNumber": "+595 984 518 000",
+      "sourceName": "CEO San Jorge",
+      "sourceURL": "https://www.ceosanjorge.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "pe-dental-emergency-1",
+      "countryCode": "PE",
+      "category": "other",
+      "scope": "city",
+      "region": "Лима",
+      "localizedNames": {
+        "ru": "Cerdent",
+        "en": "Cerdent",
+        "es": "Cerdent"
+      },
+      "localizedNotes": {
+        "ru": "Лима. Часы экстренного приема не указаны. WhatsApp; наличие приема уточнить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+51992349066",
+      "internationalNumber": "+51 992 349 066",
+      "sourceName": "Cerdent",
+      "sourceURL": "https://cerdentperu.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "sv-dental-emergency-1",
+      "countryCode": "SV",
+      "category": "other",
+      "scope": "city",
+      "region": "Сан-Сальвадор / Santa Elena",
+      "localizedNames": {
+        "ru": "Dental COP",
+        "en": "Dental COP",
+        "es": "Dental COP"
+      },
+      "localizedNotes": {
+        "ru": "Сан-Сальвадор / Santa Elena. Срочный прием в тот же день по записи. Не свободный прием без звонка; согласовать филиал",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+50377487469",
+      "internationalNumber": "+503 7748 7469",
+      "sourceName": "Dental COP",
+      "sourceURL": "https://dentalcop.com.sv/contacto/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "uy-dental-emergency-1",
+      "countryCode": "UY",
+      "category": "other",
+      "scope": "city",
+      "region": "Монтевидео",
+      "localizedNames": {
+        "ru": "Hospital Evangélico",
+        "en": "Hospital Evangélico",
+        "es": "Hospital Evangélico"
+      },
+      "localizedNotes": {
+        "ru": "Монтевидео. Стоматологические экстренные случаи 24 часа. Уточнить членство / оплату для неучастников; номер отделения",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+59824872319",
+      "internationalNumber": "+598 2487 2319 доб. 510",
+      "sourceName": "Hospital Evangélico",
+      "sourceURL": "https://www.hospitalevangelico.com.uy/servicios/odontologia",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "cl-dental-emergency-1",
+      "countryCode": "CL",
+      "category": "other",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Salud Responde",
+        "en": "Salud Responde",
+        "es": "Salud Responde"
+      },
+      "localizedNotes": {
+        "ru": "Вся страна: медицинская навигация. 24/7. Внутренний номер; консультация и маршрутизация, не стоматологическое лечение по телефону",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "6003607777",
+      "internationalNumber": "600 360 7777",
+      "sourceName": "Salud Responde",
+      "sourceURL": "https://saludresponde.minsal.cl/atencion-odontologica-de-urgencia/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "ec-dental-emergency-1",
+      "countryCode": "EC",
+      "category": "other",
+      "scope": "city",
+      "region": "Кито, América y Vozandes",
+      "localizedNames": {
+        "ru": "Dental Green",
+        "en": "Dental Green",
+        "es": "Dental Green"
+      },
+      "localizedNotes": {
+        "ru": "Кито, América y Vozandes. 24/7, 365 дней заявлено. Предварительный звонок; второй номер +593 99 501 0622",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+593998539211",
+      "internationalNumber": "+593 99 853 9211",
+      "sourceName": "Dental Green",
+      "sourceURL": "https://dentalgreenec.com/emergencias-odontologicas/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "am-dental-emergency-1",
+      "countryCode": "AM",
+      "category": "other",
+      "scope": "city",
+      "region": "Ереван, Мовсеса Хоренаци 110/1",
+      "localizedNames": {
+        "ru": "Dentaline",
+        "en": "Dentaline",
+        "es": "Dentaline"
+      },
+      "localizedNotes": {
+        "ru": "Ереван, Мовсеса Хоренаци 110/1. Экстренные случаи 24 часа заявлено. Предварительный звонок; стоимость уточнить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+37455571133",
+      "internationalNumber": "+374 55 571133",
+      "sourceName": "Dentaline",
+      "sourceURL": "https://www.dentalineclinic.am/en",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "az-dental-emergency-1",
+      "countryCode": "AZ",
+      "category": "other",
+      "scope": "city",
+      "region": "Баку, Шафаят Мехдиев 148",
+      "localizedNames": {
+        "ru": "German Dental Clinic",
+        "en": "German Dental Clinic",
+        "es": "German Dental Clinic"
+      },
+      "localizedNotes": {
+        "ru": "Баку, Шафаят Мехдиев 148. Пн–сб 09:00–21:00; вс 09:00–18:00. Экстренный профиль; не 24/7",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+994102080104",
+      "internationalNumber": "+994 10 208 01 04",
+      "sourceName": "German Dental Clinic",
+      "sourceURL": "https://germandentalbaku.com/ru/emergency-dentistry",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "by-dental-emergency-1",
+      "countryCode": "BY",
+      "category": "other",
+      "scope": "city",
+      "region": "Минск, Киселева 5",
+      "localizedNames": {
+        "ru": "3-я городская стоматологическая поликлиника",
+        "en": "3-я городская стоматологическая поликлиника",
+        "es": "3-я городская стоматологическая поликлиника"
+      },
+      "localizedNotes": {
+        "ru": "Минск, Киселева 5. Пн–пт 20:00–08:00; сб 15:00–08:00; вс / праздники 24 часа. Неотложная помощь взрослым; условия оплаты уточнить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+375173556497",
+      "internationalNumber": "+375 17 355 64 97",
+      "sourceName": "3-я городская стоматологическая поликлиника",
+      "sourceURL": "https://3gsp.by/index.php/ru/blog/obrashchaem-vashe-vnimanie",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "ge-dental-emergency-1",
+      "countryCode": "GE",
+      "category": "other",
+      "scope": "city",
+      "region": "Тбилиси",
+      "localizedNames": {
+        "ru": "Modern Dental",
+        "en": "Modern Dental",
+        "es": "Modern Dental"
+      },
+      "localizedNotes": {
+        "ru": "Тбилиси. На странице контактов заявлена круглосуточная стоматология. Согласовать фактический срочный прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+995598996633",
+      "internationalNumber": "+995 598 99 66 33",
+      "sourceName": "Modern Dental",
+      "sourceURL": "https://www.moderndental.ge/ru/contact",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "kz-dental-emergency-1",
+      "countryCode": "KZ",
+      "category": "other",
+      "scope": "city",
+      "region": "Алматы",
+      "localizedNames": {
+        "ru": "Dr. Babur",
+        "en": "Dr. Babur",
+        "es": "Dr. Babur"
+      },
+      "localizedNotes": {
+        "ru": "Алматы. На странице контактов указан круглосуточный режим. Подтвердить присутствие дежурного врача и стоимость",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+77470938986",
+      "internationalNumber": "+7 747 093 89 86",
+      "sourceName": "Dr. Babur",
+      "sourceURL": "https://drbabur.kz/contact",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "cy-dental-emergency-1",
+      "countryCode": "CY",
+      "category": "other",
+      "scope": "city",
+      "region": "Никосия",
+      "localizedNames": {
+        "ru": "Smalto Dental Clinic",
+        "en": "Smalto Dental Clinic",
+        "es": "Smalto Dental Clinic"
+      },
+      "localizedNotes": {
+        "ru": "Никосия. Экстренные случаи выходные / праздники 09:00–21:00. Обычная запись +357 22 112112; не 24/7",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+35799252222",
+      "internationalNumber": "+357 99 252222",
+      "sourceName": "Smalto Dental Clinic",
+      "sourceURL": "https://smaltoclinic.com/contact-us/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "kg-dental-emergency-1",
+      "countryCode": "KG",
+      "category": "other",
+      "scope": "city",
+      "region": "Бишкек",
+      "localizedNames": {
+        "ru": "Dr. Sanjarbek / «Круглосуточная стоматология»",
+        "en": "Dr. Sanjarbek / «Круглосуточная стоматология»",
+        "es": "Dr. Sanjarbek / «Круглосуточная стоматология»"
+      },
+      "localizedNotes": {
+        "ru": "Бишкек. Страница указывает пн–пт 08:00–21:00. Название обещает 24 часа, опубликованные часы это не подтверждают; срочный прием уточнить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+996705988007",
+      "internationalNumber": "+996 705 988 007",
+      "sourceName": "Dr. Sanjarbek / «Круглосуточная стоматология»",
+      "sourceURL": "https://kruglosutochnaya-stomatologiya.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "lv-dental-emergency-1",
+      "countryCode": "LV",
+      "category": "other",
+      "scope": "city",
+      "region": "Рига, Brīvības gatve 230",
+      "localizedNames": {
+        "ru": "DENTA",
+        "en": "DENTA",
+        "es": "DENTA"
+      },
+      "localizedNotes": {
+        "ru": "Рига, Brīvības gatve 230. 08:00–20:00, включая выходные и праздники. Прием в порядке очереди; уточнить условия оплаты",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+37167553339",
+      "internationalNumber": "+371 6755 3339",
+      "sourceName": "DENTA",
+      "sourceURL": "https://www.denta.lv/kontakti/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "lt-dental-emergency-1",
+      "countryCode": "LT",
+      "category": "other",
+      "scope": "city",
+      "region": "Вильнюс",
+      "localizedNames": {
+        "ru": "Odontika",
+        "en": "Odontika",
+        "es": "Odontika"
+      },
+      "localizedNotes": {
+        "ru": "Вильнюс. Стараются принять в тот же день; часы уточнить. Предварительная запись; срочный слот не гарантирован",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+37061442098",
+      "internationalNumber": "+370 614 42098",
+      "sourceName": "Odontika",
+      "sourceURL": "https://www.odontika.com/en/emergency-dental-care/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "md-dental-emergency-1",
+      "countryCode": "MD",
+      "category": "other",
+      "scope": "city",
+      "region": "Кишинев, Зелинского 5/8",
+      "localizedNames": {
+        "ru": "Tandem Dent",
+        "en": "Tandem Dent",
+        "es": "Tandem Dent"
+      },
+      "localizedNotes": {
+        "ru": "Кишинев, Зелинского 5/8. Пн–пт 09:00–18:00. Резервируют срочные слоты; звонить заранее, не 24/7",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+37361234555",
+      "internationalNumber": "+373 61 234555",
+      "sourceName": "Tandem Dent",
+      "sourceURL": "https://tandemdent.md/ru/blog/urgenta-stomatologica-chisinau-ce-sa-faci",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "tj-dental-emergency-1",
+      "countryCode": "TJ",
+      "category": "other",
+      "scope": "city",
+      "region": "Душанбе, Сомони 3",
+      "localizedNames": {
+        "ru": "Smile Dental Clinic",
+        "en": "Smile Dental Clinic",
+        "es": "Smile Dental Clinic"
+      },
+      "localizedNotes": {
+        "ru": "Душанбе, Сомони 3. Экстренные часы не подтверждены. Контакт из списка медучреждений GOV.UK; это не подтвержденная дежурная служба",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+992446108800",
+      "internationalNumber": "+992 44 610 88 00",
+      "sourceName": "Smile Dental Clinic",
+      "sourceURL": "https://www.gov.uk/government/publications/tajikistan-doctors/list-of-medical-facilitiespractitioners-in-tajikistan",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "ua-dental-emergency-1",
+      "countryCode": "UA",
+      "category": "other",
+      "scope": "city",
+      "region": "Киев, Теодора Драйзера 19",
+      "localizedNames": {
+        "ru": "КНП «Київська стоматологія»",
+        "en": "КНП «Київська стоматологія»",
+        "es": "КНП «Київська стоматологія»"
+      },
+      "localizedNotes": {
+        "ru": "Киев, Теодора Драйзера 19. Круглосуточная помощь взрослым. Перед поездкой проверить работу с учетом текущих условий",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+380442232139",
+      "internationalNumber": "+380 44 223 21 39",
+      "sourceName": "КНП «Київська стоматологія»",
+      "sourceURL": "https://kyivcity.gov.ua/likarni_ta_medytsyna/stomatolohiia/tsilodobova_stomatolohichna_dopomoha/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "uz-dental-emergency-1",
+      "countryCode": "UZ",
+      "category": "other",
+      "scope": "city",
+      "region": "Ташкент",
+      "localizedNames": {
+        "ru": "Smile Design",
+        "en": "Smile Design",
+        "es": "Smile Design"
+      },
+      "localizedNotes": {
+        "ru": "Ташкент. Круглосуточно заявлено. Предварительный звонок и подтверждение приема",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+998712450027",
+      "internationalNumber": "+998 71 245 00 27",
+      "sourceName": "Smile Design",
+      "sourceURL": "https://smiledesign.uz/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "ee-dental-emergency-1",
+      "countryCode": "EE",
+      "category": "other",
+      "scope": "city",
+      "region": "Таллин",
+      "localizedNames": {
+        "ru": "West Tallinn Central Hospital",
+        "en": "West Tallinn Central Hospital",
+        "es": "West Tallinn Central Hospital"
+      },
+      "localizedNotes": {
+        "ru": "Таллин. Будни; запись на срочные слоты с 07:30. Ограниченное число приемов в тот же день; не 24/7",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+3726090333",
+      "internationalNumber": "+372 609 0333",
+      "sourceName": "West Tallinn Central Hospital",
+      "sourceURL": "https://www.keskhaigla.ee/en/patsiendile-ja-kulastajale/erakorraline-abi",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-al-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Alabama (AL)",
+      "localizedNames": {
+        "ru": "UAB School of Dentistry",
+        "en": "UAB School of Dentistry",
+        "es": "UAB School of Dentistry"
+      },
+      "localizedNotes": {
+        "ru": "Бирмингем. Дневной срочный прием. Основной номер клиники; уточнить прием без записи",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+12059343000",
+      "internationalNumber": "+1 205 934 3000",
+      "sourceName": "UAB School of Dentistry",
+      "sourceURL": "https://www.uab.edu/dentistry/home/patients/our-clinics/all-clinics",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ak-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Alaska (AK)",
+      "localizedNames": {
+        "ru": "Alcan Family Dental",
+        "en": "Alcan Family Dental",
+        "es": "Alcan Family Dental"
+      },
+      "localizedNotes": {
+        "ru": "Анкоридж. В обычные часы клиники. Срочные случаи и новые пациенты; позвонить до приезда",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+19075624774",
+      "internationalNumber": "+1 907 562 4774",
+      "sourceName": "Alcan Family Dental",
+      "sourceURL": "https://www.alcanfamilydental.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-az-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Arizona (AZ)",
+      "localizedNames": {
+        "ru": "Pearl Dental",
+        "en": "Pearl Dental",
+        "es": "Pearl Dental"
+      },
+      "localizedNotes": {
+        "ru": "Финикс. Часы срочных слотов уточнить. Согласовать срочный прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+16028996950",
+      "internationalNumber": "+1 602 899 6950",
+      "sourceName": "Pearl Dental",
+      "sourceURL": "https://pearldentalaz.com/services/emergency-appointments/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ar-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Arkansas (AR)",
+      "localizedNames": {
+        "ru": "Arkansas Family Dental",
+        "en": "Arkansas Family Dental",
+        "es": "Arkansas Family Dental"
+      },
+      "localizedNotes": {
+        "ru": "Литл-Рок. Часы срочных слотов уточнить. Согласовать срочный прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+15012326273",
+      "internationalNumber": "+1 501 232 6273",
+      "sourceName": "Arkansas Family Dental",
+      "sourceURL": "https://www.arkansasfamilydental.com/dental-services/emergency",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ca-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "California (CA)",
+      "localizedNames": {
+        "ru": "UCSF Dental Center",
+        "en": "UCSF Dental Center",
+        "es": "UCSF Dental Center"
+      },
+      "localizedNotes": {
+        "ru": "Сан-Франциско. Дневной прием; часы уточнить. Контакт срочной помощи опубликован в справочнике University of the Pacific",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+14154761891",
+      "internationalNumber": "+1 415 476 1891",
+      "sourceName": "UCSF Dental Center",
+      "sourceURL": "https://dental.pacific.edu/sites/default/files/dugonischool/dentalservices/SanFranciscoDentalClinicReferralEnglish.pdf",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-co-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Colorado (CO)",
+      "localizedNames": {
+        "ru": "CU Anschutz Dental First Aid",
+        "en": "CU Anschutz Dental First Aid",
+        "es": "CU Anschutz Dental First Aid"
+      },
+      "localizedNotes": {
+        "ru": "Орора. В часы клиники. После часов +1 720 848 0000 только для действующих пациентов; основная запись до приезда",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+13037246900",
+      "internationalNumber": "+1 303 724 6900",
+      "sourceName": "CU Anschutz Dental First Aid",
+      "sourceURL": "https://dental.cuanschutz.edu/patient-care/our-clinics/dental-first-aid-clinic",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ct-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Connecticut (CT)",
+      "localizedNames": {
+        "ru": "UConn Health Dental Care Center",
+        "en": "UConn Health Dental Care Center",
+        "es": "UConn Health Dental Care Center"
+      },
+      "localizedNotes": {
+        "ru": "Фармингтон. Днем; вне часов больничная служба. Вечера, выходные, праздники: +1 860 679 2000; попросить стоматологическую помощь",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+18606797600",
+      "internationalNumber": "+1 860 679 7600",
+      "sourceName": "UConn Health Dental Care Center",
+      "sourceURL": "https://www.uconnhealth.org/dental-care/emergency-dental-care",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-de-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Delaware (DE)",
+      "localizedNames": {
+        "ru": "Exceptional Dentistry",
+        "en": "Exceptional Dentistry",
+        "es": "Exceptional Dentistry"
+      },
+      "localizedNotes": {
+        "ru": "Уилмингтон. Часы срочных слотов уточнить. Согласовать срочный прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+13027971212",
+      "internationalNumber": "+1 302 797 1212",
+      "sourceName": "Exceptional Dentistry",
+      "sourceURL": "https://www.exceptionaldentistryde.com/services/emergency-dental-care/20747",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-fl-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Florida (FL)",
+      "localizedNames": {
+        "ru": "University of Florida Student Oral Surgery Clinic",
+        "en": "University of Florida Student Oral Surgery Clinic",
+        "es": "University of Florida Student Oral Surgery Clinic"
+      },
+      "localizedNotes": {
+        "ru": "Гейнсвилл. В часы клиники. Уточнить срочную оценку и возможность приема нового пациента",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+13522736705",
+      "internationalNumber": "+1 352 273 6705",
+      "sourceName": "University of Florida Student Oral Surgery Clinic",
+      "sourceURL": "https://dental.ufl.edu/departments/oral-maxillofacial-surgery/student-oral-surgery-clinic/",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ga-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Georgia (GA)",
+      "localizedNames": {
+        "ru": "Dental College of Georgia",
+        "en": "Dental College of Georgia",
+        "es": "Dental College of Georgia"
+      },
+      "localizedNotes": {
+        "ru": "Огаста. Экстренная маршрутизация; часы уточнить. Номер оператора для пациентов без закрепленного студента / врача",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+17067213893",
+      "internationalNumber": "+1 706 721 3893",
+      "sourceName": "Dental College of Georgia",
+      "sourceURL": "https://www.augusta.edu/dentalmedicine/patientservices/emergencies.php",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-hi-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Hawaii (HI)",
+      "localizedNames": {
+        "ru": "Kahuku Medical Center Dental",
+        "en": "Kahuku Medical Center Dental",
+        "es": "Kahuku Medical Center Dental"
+      },
+      "localizedNotes": {
+        "ru": "Кахуку, Оаху. В часы клиники. Сайт включает экстренные стоматологические услуги; согласовать прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+18082939221",
+      "internationalNumber": "+1 808 293 9221",
+      "sourceName": "Kahuku Medical Center Dental",
+      "sourceURL": "https://www.kmc-hi.org/medical-services/dental/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-id-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Idaho (ID)",
+      "localizedNames": {
+        "ru": "Terry Reilly Dental",
+        "en": "Terry Reilly Dental",
+        "es": "Terry Reilly Dental"
+      },
+      "localizedNotes": {
+        "ru": "Бойсе. Часы срочных слотов уточнить. Контакт срочной помощи взрослым в справочнике Central District Health",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+12083440086",
+      "internationalNumber": "+1 208 344 0086",
+      "sourceName": "Terry Reilly Dental",
+      "sourceURL": "https://cdh.idaho.gov/healthcare-appointments/childrens-dental-health/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-il-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Illinois (IL)",
+      "localizedNames": {
+        "ru": "UIC College of Dentistry Adult Urgent Care",
+        "en": "UIC College of Dentistry Adult Urgent Care",
+        "es": "UIC College of Dentistry Adult Urgent Care"
+      },
+      "localizedNotes": {
+        "ru": "Чикаго. Пн–пт, запись с 08:00 по опубликованной памятке. Памятка 2021 года: актуальные часы и запись перепроверить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+13129968636",
+      "internationalNumber": "+1 312 996 8636",
+      "sourceName": "UIC College of Dentistry Adult Urgent Care",
+      "sourceURL": "https://dentistry.uic.edu/wp-content/uploads/sites/741/2021/09/Clinical-Patient-Information-SheetSept2021_PDF.pdf",
+      "sourceType": "university",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-in-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Indiana (IN)",
+      "localizedNames": {
+        "ru": "IU School of Dentistry Emergency Clinic",
+        "en": "IU School of Dentistry Emergency Clinic",
+        "es": "IU School of Dentistry Emergency Clinic"
+      },
+      "localizedNotes": {
+        "ru": "Индианаполис. В часы экстренной клиники. Прием без записи по условиям клиники; уточнить часы и очередь",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+13172747433",
+      "internationalNumber": "+1 317 274 7433",
+      "sourceName": "IU School of Dentistry Emergency Clinic",
+      "sourceURL": "https://dentistry.iu.edu/patients/clinics/emergency-clinic.html",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ia-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Iowa (IA)",
+      "localizedNames": {
+        "ru": "University of Iowa Health Care",
+        "en": "University of Iowa Health Care",
+        "es": "University of Iowa Health Care"
+      },
+      "localizedNotes": {
+        "ru": "Айова-Сити. После часов клиник. Попросить дежурного стоматологического резидента; доступ для новых пациентов уточнить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+13193561616",
+      "internationalNumber": "+1 319 356 1616",
+      "sourceName": "University of Iowa Health Care",
+      "sourceURL": "https://uihc.org/dentistry-information-patients",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ks-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Kansas (KS)",
+      "localizedNames": {
+        "ru": "Salina Family Healthcare Center Dental",
+        "en": "Salina Family Healthcare Center Dental",
+        "es": "Salina Family Healthcare Center Dental"
+      },
+      "localizedNotes": {
+        "ru": "Салайна. В часы клиники. Есть экстренные стоматологические услуги; согласовать прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+17858269017",
+      "internationalNumber": "+1 785 826 9017",
+      "sourceName": "Salina Family Healthcare Center Dental",
+      "sourceURL": "https://salinahealth.org/clinic/dental-clinic/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ky-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Kentucky (KY)",
+      "localizedNames": {
+        "ru": "UK HealthCare Dentistry",
+        "en": "UK HealthCare Dentistry",
+        "es": "UK HealthCare Dentistry"
+      },
+      "localizedNotes": {
+        "ru": "Лексингтон. Дневная запись / маршрутизация. После часов +1 859 323 5321 только для действующих пациентов UK Dentistry",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+18593233368",
+      "internationalNumber": "+1 859 323 3368",
+      "sourceName": "UK HealthCare Dentistry",
+      "sourceURL": "https://ukhealthcare.uky.edu/dentistry",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-la-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Louisiana (LA)",
+      "localizedNames": {
+        "ru": "Louisiana Dental Center",
+        "en": "Louisiana Dental Center",
+        "es": "Louisiana Dental Center"
+      },
+      "localizedNotes": {
+        "ru": "Метэри. В часы клиники; прием в тот же день. Принимают срочные обращения и walk-in; уточнить доступность",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+15048336825",
+      "internationalNumber": "+1 504 833 6825",
+      "sourceName": "Louisiana Dental Center",
+      "sourceURL": "https://www.ladentalcentermetairie.com/contact/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-me-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Maine (ME)",
+      "localizedNames": {
+        "ru": "UNE Oral Health Center",
+        "en": "UNE Oral Health Center",
+        "es": "UNE Oral Health Center"
+      },
+      "localizedNotes": {
+        "ru": "Портленд. В часы клиники. Срочная помощь в том числе новым пациентам; позвонить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+12072214141",
+      "internationalNumber": "+1 207 221 4141",
+      "sourceName": "UNE Oral Health Center",
+      "sourceURL": "https://www.une.edu/ohc/urgent-care",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-md-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Maryland (MD)",
+      "localizedNames": {
+        "ru": "University of Maryland School of Dentistry Urgent Care",
+        "en": "University of Maryland School of Dentistry Urgent Care",
+        "es": "University of Maryland School of Dentistry Urgent Care"
+      },
+      "localizedNotes": {
+        "ru": "Балтимор. Часы срочного приема уточнить. Прямой номер Urgent Care, не общая приемная",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+14107062716",
+      "internationalNumber": "+1 410 706 2716",
+      "sourceName": "University of Maryland School of Dentistry Urgent Care",
+      "sourceURL": "https://www.dental.umaryland.edu/patients/",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ma-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Massachusetts (MA)",
+      "localizedNames": {
+        "ru": "Tufts Urgent Dental Care / Tufts Medical Center",
+        "en": "Tufts Urgent Dental Care / Tufts Medical Center",
+        "es": "Tufts Urgent Dental Care / Tufts Medical Center"
+      },
+      "localizedNotes": {
+        "ru": "Бостон. Ночи, выходные, праздники. Попросить Emergency Dental Care; это телефон Medical Center вне часов стоматологической клиники",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+16176365114",
+      "internationalNumber": "+1 617 636 5114",
+      "sourceName": "Tufts Urgent Dental Care / Tufts Medical Center",
+      "sourceURL": "https://dental.tufts.edu/patient-care/urgent-dental-care-clinic",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-mi-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Michigan (MI)",
+      "localizedNames": {
+        "ru": "My Community Dental Centers",
+        "en": "My Community Dental Centers",
+        "es": "My Community Dental Centers"
+      },
+      "localizedNotes": {
+        "ru": "Сеть клиник MCDC; город выбрать при звонке. Пн–пт до 16:30, расписание филиала уточнить. Срочные слоты для новых пациентов; не единая служба всего штата",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+18773136232",
+      "internationalNumber": "+1 877 313 6232",
+      "sourceName": "My Community Dental Centers",
+      "sourceURL": "https://mydental.org/new-patients/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-mn-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Minnesota (MN)",
+      "localizedNames": {
+        "ru": "Now Care Dental",
+        "en": "Now Care Dental",
+        "es": "Now Care Dental"
+      },
+      "localizedNotes": {
+        "ru": "Иган. Часы срочных слотов уточнить. Согласовать прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+16516866800",
+      "internationalNumber": "+1 651 686 6800",
+      "sourceName": "Now Care Dental",
+      "sourceURL": "https://www.nowcaredental.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ms-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Mississippi (MS)",
+      "localizedNames": {
+        "ru": "Key Dental Group",
+        "en": "Key Dental Group",
+        "es": "Key Dental Group"
+      },
+      "localizedNotes": {
+        "ru": "Мэдисон / Перл. Часы срочных слотов уточнить. Уточнить филиал и срочный прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+16017079912",
+      "internationalNumber": "+1 601 707 9912",
+      "sourceName": "Key Dental Group",
+      "sourceURL": "https://www.keydentalgrp.com/emergency-dentistry/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-mo-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Missouri (MO)",
+      "localizedNames": {
+        "ru": "South City Dental",
+        "en": "South City Dental",
+        "es": "South City Dental"
+      },
+      "localizedNotes": {
+        "ru": "Спрингфилд. Часы срочных слотов уточнить. Согласовать прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+14178874021",
+      "internationalNumber": "+1 417 887 4021",
+      "sourceName": "South City Dental",
+      "sourceURL": "https://thesouthcitydental.com/emergency-dentist/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-mt-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Montana (MT)",
+      "localizedNames": {
+        "ru": "Laurel Family Dental",
+        "en": "Laurel Family Dental",
+        "es": "Laurel Family Dental"
+      },
+      "localizedNotes": {
+        "ru": "Лорел. Часы срочных слотов уточнить. Согласовать прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+14066286716",
+      "internationalNumber": "+1 406 628 6716",
+      "sourceName": "Laurel Family Dental",
+      "sourceURL": "https://www.laurelfamilydental.com/service/general-family-dentistry/emergency-dental-services/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ne-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Nebraska (NE)",
+      "localizedNames": {
+        "ru": "UNMC Urgent Care Dental Clinic",
+        "en": "UNMC Urgent Care Dental Clinic",
+        "es": "UNMC Urgent Care Dental Clinic"
+      },
+      "localizedNotes": {
+        "ru": "Линкольн. В часы клиники. Предварительный звонок перед визитом",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+14024720206",
+      "internationalNumber": "+1 402 472 0206",
+      "sourceName": "UNMC Urgent Care Dental Clinic",
+      "sourceURL": "https://www.unmc.edu/dentalservices/lincoln-clinics/urgent-care-clinic-in-lincoln/",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-nv-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Nevada (NV)",
+      "localizedNames": {
+        "ru": "UNLV School of Dental Medicine",
+        "en": "UNLV School of Dental Medicine",
+        "es": "UNLV School of Dental Medicine"
+      },
+      "localizedNotes": {
+        "ru": "Лас-Вегас. Пн–пт: walk-in 07:30 и 12:00. После часов +1 702 380 1944 только для действующих пациентов; число слотов ограничено",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+17027742457",
+      "internationalNumber": "+1 702 774 2457",
+      "sourceName": "UNLV School of Dental Medicine",
+      "sourceURL": "https://www.unlv.edu/dental/patients",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-nh-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "New Hampshire (NH)",
+      "localizedNames": {
+        "ru": "Amoskeag Urgent Dental Care",
+        "en": "Amoskeag Urgent Dental Care",
+        "es": "Amoskeag Urgent Dental Care"
+      },
+      "localizedNotes": {
+        "ru": "Манчестер. Прием в тот же день в часы клиники. Позвонить и согласовать слот",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+16036273927",
+      "internationalNumber": "+1 603 627 3927",
+      "sourceName": "Amoskeag Urgent Dental Care",
+      "sourceURL": "https://www.urgentdentalcareofnh.com/contact",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-nj-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "New Jersey (NJ)",
+      "localizedNames": {
+        "ru": "Dental Health Associates",
+        "en": "Dental Health Associates",
+        "es": "Dental Health Associates"
+      },
+      "localizedNotes": {
+        "ru": "Сеть Dental Health Associates; филиал уточнить. Часы филиала уточнить. Срочные случаи и новые пациенты; согласовать адрес",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+18889958095",
+      "internationalNumber": "+1 888 995 8095",
+      "sourceName": "Dental Health Associates",
+      "sourceURL": "https://njdha.com/new-patients/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-nm-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "New Mexico (NM)",
+      "localizedNames": {
+        "ru": "Emergency Dental of Albuquerque",
+        "en": "Emergency Dental of Albuquerque",
+        "es": "Emergency Dental of Albuquerque"
+      },
+      "localizedNotes": {
+        "ru": "Альбукерке. Прием в тот же день в дни работы. Согласовать слот; не подтверждено 24/7",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+15054481912",
+      "internationalNumber": "+1 505 448 1912",
+      "sourceName": "Emergency Dental of Albuquerque",
+      "sourceURL": "https://emergencydentalofalbuquerque.com/book-today/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ny-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "New York (NY)",
+      "localizedNames": {
+        "ru": "Columbia University Dental Teaching Clinics",
+        "en": "Columbia University Dental Teaching Clinics",
+        "es": "Columbia University Dental Teaching Clinics"
+      },
+      "localizedNotes": {
+        "ru": "Манхэттен, Нью-Йорк. Пн–пт 08:30–17:00. Позвонить; инструкции для внерабочих часов через номер клиники",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+12123056100",
+      "internationalNumber": "+1 212 305 6100",
+      "sourceName": "Columbia University Dental Teaching Clinics",
+      "sourceURL": "https://www.dental.columbia.edu/patient-care/teaching-clinics/emergency-care",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-nc-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "North Carolina (NC)",
+      "localizedNames": {
+        "ru": "Carolina Comfort Dental",
+        "en": "Carolina Comfort Dental",
+        "es": "Carolina Comfort Dental"
+      },
+      "localizedNotes": {
+        "ru": "Фейетвилл. Часы срочных слотов уточнить. Согласовать прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+19104850023",
+      "internationalNumber": "+1 910 485 0023",
+      "sourceName": "Carolina Comfort Dental",
+      "sourceURL": "https://www.carolinacomfortdental.com/services/family-dentistry/emergency-dentistry/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-nd-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "North Dakota (ND)",
+      "localizedNames": {
+        "ru": "Vetter Dental",
+        "en": "Vetter Dental",
+        "es": "Vetter Dental"
+      },
+      "localizedNotes": {
+        "ru": "Фарго. Часы срочных слотов уточнить. Согласовать прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+17012357322",
+      "internationalNumber": "+1 701 235 7322",
+      "sourceName": "Vetter Dental",
+      "sourceURL": "https://vetterdentalfargo.com/emergency-dentistry/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-oh-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Ohio (OH)",
+      "localizedNames": {
+        "ru": "Ohio State Dental Center",
+        "en": "Ohio State Dental Center",
+        "es": "Ohio State Dental Center"
+      },
+      "localizedNotes": {
+        "ru": "Колумбус. Пн–чт 07:30–12:00; текущие часы уточнить. В порядке очереди, без направления; звонить до приезда",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+16146883763",
+      "internationalNumber": "+1 614 688 3763, опция 1",
+      "sourceName": "Ohio State Dental Center",
+      "sourceURL": "https://dentalcenter.osu.edu/clinics/dental-emergency",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ok-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Oklahoma (OK)",
+      "localizedNames": {
+        "ru": "Emergency Dental of Oklahoma City",
+        "en": "Emergency Dental of Oklahoma City",
+        "es": "Emergency Dental of Oklahoma City"
+      },
+      "localizedNotes": {
+        "ru": "Оклахома-Сити. Прием в тот же день в дни работы. Согласовать слот; не подтверждено 24/7",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+14058764911",
+      "internationalNumber": "+1 405 876 4911",
+      "sourceName": "Emergency Dental of Oklahoma City",
+      "sourceURL": "https://emergencydentalofoklahomacity.com/book-today/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-or-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Oregon (OR)",
+      "localizedNames": {
+        "ru": "OHSU Dental Clinics",
+        "en": "OHSU Dental Clinics",
+        "es": "OHSU Dental Clinics"
+      },
+      "localizedNotes": {
+        "ru": "Портленд. Будни 08:00–16:30. Срочный прием новых пациентов по согласованию",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+15034948867",
+      "internationalNumber": "+1 503 494 8867",
+      "sourceName": "OHSU Dental Clinics",
+      "sourceURL": "https://www.ohsu.edu/dental-clinics",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-pa-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Pennsylvania (PA)",
+      "localizedNames": {
+        "ru": "Temple University Kornberg School of Dentistry",
+        "en": "Temple University Kornberg School of Dentistry",
+        "es": "Temple University Kornberg School of Dentistry"
+      },
+      "localizedNotes": {
+        "ru": "Филадельфия. Пн–пт 08:00–15:30. Взрослые без закрепленного студента / резидента: предварительная запись",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+12157072900",
+      "internationalNumber": "+1 215 707 2900",
+      "sourceName": "Temple University Kornberg School of Dentistry",
+      "sourceURL": "https://dentistry.temple.edu/patient-care/urgent-and-emergency-care",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ri-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Rhode Island (RI)",
+      "localizedNames": {
+        "ru": "Arrowhead Dental",
+        "en": "Arrowhead Dental",
+        "es": "Arrowhead Dental"
+      },
+      "localizedNotes": {
+        "ru": "Чарлстаун. В обычные часы клиники. Согласовать срочный прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+14013646300",
+      "internationalNumber": "+1 401 364 6300",
+      "sourceName": "Arrowhead Dental",
+      "sourceURL": "https://www.arrowhead-dental.com/emergencies/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-sc-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "South Carolina (SC)",
+      "localizedNames": {
+        "ru": "Complete Dental Care",
+        "en": "Complete Dental Care",
+        "es": "Complete Dental Care"
+      },
+      "localizedNotes": {
+        "ru": "Колумбия. В часы клиники; вне часов инструкции автоответчика. После часов следовать сообщениям клиники; доступ для новых пациентов уточнить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+18037717695",
+      "internationalNumber": "+1 803 771 7695",
+      "sourceName": "Complete Dental Care",
+      "sourceURL": "https://completedentalcarecolumbia.com/emergency",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-sd-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "South Dakota (SD)",
+      "localizedNames": {
+        "ru": "Dental Health Partners",
+        "en": "Dental Health Partners",
+        "es": "Dental Health Partners"
+      },
+      "localizedNotes": {
+        "ru": "Митчелл. В часы клиники. После часов личный номер врача предоставляется пациентам; не публичная линия 24/7",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+16059961316",
+      "internationalNumber": "+1 605 996 1316",
+      "sourceName": "Dental Health Partners",
+      "sourceURL": "https://www.dhpsmiles.com/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-tn-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Tennessee (TN)",
+      "localizedNames": {
+        "ru": "Harpeth Dental Care",
+        "en": "Harpeth Dental Care",
+        "es": "Harpeth Dental Care"
+      },
+      "localizedNotes": {
+        "ru": "Нашвилл. Часы срочных слотов уточнить. Согласовать прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+16156736700",
+      "internationalNumber": "+1 615 673 6700",
+      "sourceName": "Harpeth Dental Care",
+      "sourceURL": "https://www.harpethdentalcare.com/emergency-dental-care/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-tx-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Texas (TX)",
+      "localizedNames": {
+        "ru": "Texas Dental Center",
+        "en": "Texas Dental Center",
+        "es": "Texas Dental Center"
+      },
+      "localizedNotes": {
+        "ru": "Хьюстон. 6 дней в неделю, включая субботу. Срочный прием / walk-in; уточнить текущие часы",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+18328319101",
+      "internationalNumber": "+1 832 831 9101",
+      "sourceName": "Texas Dental Center",
+      "sourceURL": "https://texasdentalcenter.com/emergency-dentist-open-today",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-ut-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Utah (UT)",
+      "localizedNames": {
+        "ru": "Peak 5 Family Dentistry",
+        "en": "Peak 5 Family Dentistry",
+        "es": "Peak 5 Family Dentistry"
+      },
+      "localizedNotes": {
+        "ru": "Саут-Джордан. Часы срочных слотов уточнить. Пытаются принять срочный случай; звонок и подтверждение",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+13853081075",
+      "internationalNumber": "+1 385 308 1075",
+      "sourceName": "Peak 5 Family Dentistry",
+      "sourceURL": "https://peak5familydentistry.com/emergency-care/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-vt-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Vermont (VT)",
+      "localizedNames": {
+        "ru": "Green Mountain Dental",
+        "en": "Green Mountain Dental",
+        "es": "Green Mountain Dental"
+      },
+      "localizedNotes": {
+        "ru": "Саут-Берлингтон. Часы срочных слотов уточнить. Согласовать прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+18028633950",
+      "internationalNumber": "+1 802 863 3950",
+      "sourceName": "Green Mountain Dental",
+      "sourceURL": "https://www.greenmountaindentistry.com/services/general-dentistry/emergency-dentistry/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-va-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Virginia (VA)",
+      "localizedNames": {
+        "ru": "VCU Dental Care Urgent Care",
+        "en": "VCU Dental Care Urgent Care",
+        "es": "VCU Dental Care Urgent Care"
+      },
+      "localizedNotes": {
+        "ru": "Ричмонд. Дневной срочный прием. Вне часов помощь ограничена действующими пациентами; новым пациентам звонить днем",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+18048289190",
+      "internationalNumber": "+1 804 828 9190, опция 2",
+      "sourceName": "VCU Dental Care Urgent Care",
+      "sourceURL": "https://dentistry.vcu.edu/patients/services/urgent-care/",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-wa-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Washington (WA)",
+      "localizedNames": {
+        "ru": "University of Washington Dental Urgent Care",
+        "en": "University of Washington Dental Urgent Care",
+        "es": "University of Washington Dental Urgent Care"
+      },
+      "localizedNotes": {
+        "ru": "Сиэтл. Дневные часы 08:30–16:30; дни уточнить. Предварительный звонок и подтверждение слота",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+12065435850",
+      "internationalNumber": "+1 206 543 5850",
+      "sourceName": "University of Washington Dental Urgent Care",
+      "sourceURL": "https://dental.washington.edu/dental-urgent-care-clinic/",
+      "sourceType": "university",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-wv-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "West Virginia (WV)",
+      "localizedNames": {
+        "ru": "Wylie Dental Care",
+        "en": "Wylie Dental Care",
+        "es": "Wylie Dental Care"
+      },
+      "localizedNotes": {
+        "ru": "Глен-Дейл. Срочные слоты в тот же день. Прием по согласованию",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+13048452480",
+      "internationalNumber": "+1 304 845 2480",
+      "sourceName": "Wylie Dental Care",
+      "sourceURL": "https://wyliedentalcare.com/service/emergency-dental/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-wi-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Wisconsin (WI)",
+      "localizedNames": {
+        "ru": "Progressive Community Health Centers, Lisbon Avenue",
+        "en": "Progressive Community Health Centers, Lisbon Avenue",
+        "es": "Progressive Community Health Centers, Lisbon Avenue"
+      },
+      "localizedNotes": {
+        "ru": "Милуоки, 3522 W. Lisbon Ave.. Пн–пт walk-in с 08:00. Живая очередь; Medicaid и малообеспеченные пациенты, условия уточнить",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+14149358000",
+      "internationalNumber": "+1 414 935 8000",
+      "sourceName": "Progressive Community Health Centers, Lisbon Avenue",
+      "sourceURL": "https://www.dhs.wisconsin.gov/oral-health/find-dental-care.htm",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "us-wy-dental-emergency",
+      "countryCode": "US",
+      "category": "other",
+      "scope": "regional",
+      "region": "Wyoming (WY)",
+      "localizedNames": {
+        "ru": "Afton Family Dental",
+        "en": "Afton Family Dental",
+        "es": "Afton Family Dental"
+      },
+      "localizedNotes": {
+        "ru": "Афтон. Часы срочных слотов уточнить. Согласовать прием",
+        "en": "Call before visiting. Confirm urgent availability, opening hours, eligibility and cost.",
+        "es": "Llame antes de acudir. Confirme la atención de urgencia, el horario, los requisitos y el coste."
+      },
+      "dialString": "+13078854337",
+      "internationalNumber": "+1 307 885 4337",
+      "sourceName": "Afton Family Dental",
+      "sourceURL": "https://www.aftonfamilydentistry.com/service/general-family-dentistry/emergency-dental-services/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-10"
     }
   ]
 }
+
