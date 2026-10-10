@@ -2057,3 +2057,24 @@
 "sponsor.review.confirm" = "Confirm Information";
 "sponsor.review.footer" = "For now, all information is stored only in the separate beneficiary draft and does not change the sponsor's profile.";
 "sponsor.review.saveError" = "The final draft could not be saved. Please try again.";
+
+/* Sponsor purchase */
+"sponsor.purchase.title" = "Subscription for a Loved One";
+"sponsor.purchase.subtitle" = "Choose a plan for one beneficiary.";
+"sponsor.purchase.button" = "Purchase Subscription";
+"sponsor.purchase.restore" = "Restore Purchase";
+"sponsor.purchase.footer" = "The purchase will be linked to this MorningHello installation. The invitation will appear after the server confirms the purchase.";
+"sponsor.purchase.productsUnavailable" = "The plans could not be loaded. Check your internet connection and try again.";
+"sponsor.purchase.failed" = "Setup could not be completed after the purchase. Your App Store purchase is saved; try again on this screen.";
+"sponsor.purchase.pending" = "The purchase is waiting for App Store confirmation.";
+"sponsor.purchase.restoreNotFound" = "No active sponsored subscription was found.";
+"sponsor.purchase.stage.storeKit" = "Confirming the App Store purchase…";
+"sponsor.purchase.stage.backend" = "Verifying the subscription with the server…";
+"sponsor.purchase.stage.beneficiary" = "Saving the beneficiary information…";
+"sponsor.purchase.stage.completed" = "The invitation is ready.";
+"sponsor.purchase.product.monthly.title" = "For a Loved One — 1 Month";
+"sponsor.purchase.product.monthly.description" = "MorningHello access for one beneficiary for one month";
+"sponsor.purchase.product.quarterly.title" = "For a Loved One — 3 Months";
+"sponsor.purchase.product.quarterly.description" = "MorningHello access for one beneficiary for three months";
+"sponsor.purchase.product.annual.title" = "For a Loved One — 1 Year";
+"sponsor.purchase.product.annual.description" = "MorningHello access for one beneficiary for one year";

@@ -113,27 +113,40 @@ struct SubscriptionOverview:
     let sponsored: SponsoredAccess?
 }
 
-// MARK: - POST /users/{appInstanceId}/sponsorships/{originalTransactionId}/beneficiary
+// MARK: - POST /users/{appInstanceId}/subscriptions/{originalTransactionId}/invitation
 
-/// Backend performs this operation only for a previously verified, active
-/// SPONSOR subscription. Saving the draft and creating the invitation must be
-/// idempotent for the pair `originalTransactionId + beneficiaryDraft.id`.
+/// Backend stores `prefill` without interpreting it and returns it unchanged
+/// to the beneficiary. `language` is used by Backend when it creates the
+/// ready-to-share universal link.
 struct SponsoredBeneficiaryProvisioningRequest: Encodable {
-    let beneficiaryDraft: SponsoredBeneficiaryPayload
+    let prefill: SponsoredBeneficiaryPayload
+    let language: String?
 
     init(draft: SponsoredBeneficiaryDraft) {
-        beneficiaryDraft =
+        prefill =
             SponsoredBeneficiaryPayload(
                 draft: draft
             )
+
+        let normalizedLanguage =
+            draft.profile.languageCode
+                .trimmingCharacters(
+                    in: .whitespacesAndNewlines
+                )
+
+        language = normalizedLanguage.isEmpty
+            ? nil
+            : normalizedLanguage
     }
 }
 
 struct SponsoredBeneficiaryProvisioningResponse: Decodable, Equatable {
-    let invitationURL: URL
+    let token: String
+    let url: URL
+    let expiresAt: Date
 
-    private enum CodingKeys: String, CodingKey {
-        case invitationURL = "invitationUrl"
+    var invitationURL: URL {
+        url
     }
 }
 
@@ -153,6 +166,7 @@ enum SponsorshipAPIError:
     case appAccountTokenMismatch
     case invalidSponsoredSubscription
     case invalidBeneficiaryDraft
+    case beneficiaryDraftTooLarge
     case invalidInvitationURL
     case server(
         statusCode: Int,
@@ -180,6 +194,9 @@ enum SponsorshipAPIError:
         case .invalidBeneficiaryDraft:
             return "Проверьте обязательные данные подопечного."
 
+        case .beneficiaryDraftTooLarge:
+            return "Данные подопечного превышают допустимый размер 16 КБ."
+
         case .invalidInvitationURL:
             return "Сервер не вернул действительную ссылку приглашения."
 
@@ -202,6 +219,22 @@ enum SponsorshipAPIError:
 
             if code == "INVALID_TRANSACTION" {
                 return "Сервер не смог подтвердить транзакцию Apple."
+            }
+
+            if code == "INVALID_PREFILL" {
+                return "Сервер не принял данные подопечного."
+            }
+
+            if code == "SUBSCRIPTION_NOT_FOUND" {
+                return "Спонсорская подписка не найдена."
+            }
+
+            if code == "NOT_A_SPONSOR_SUBSCRIPTION" {
+                return "Выбранная подписка не является спонсорской."
+            }
+
+            if code == "SUBSCRIPTION_NOT_ACTIVE" {
+                return "Спонсорская подписка не оплачена или больше не действует."
             }
 
             if code == "SANDBOX_NOT_ACCEPTED" {

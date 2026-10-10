@@ -277,7 +277,7 @@ struct SponsoredBeneficiaryEmergencyContactsView: View {
                     beginEditing(contact)
                 } label: {
                     Label(
-                        localized("Изменить"),
+                        localized("sponsor.action.edit"),
                         systemImage: "pencil"
                     )
                     .frame(

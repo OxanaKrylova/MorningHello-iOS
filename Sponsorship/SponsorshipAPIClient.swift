@@ -76,7 +76,7 @@ actor SponsorshipAPIClient {
     /// Called only after Backend has confirmed an active SPONSOR purchase.
     /// The request contains every saved beneficiary field except the pet food
     /// photo and the local `hasFoodPhoto` flag.
-    func provisionBeneficiary(
+    func createInvitation(
         appInstanceId: UUID,
         originalTransactionId: String,
         draft: SponsoredBeneficiaryDraft
@@ -88,15 +88,15 @@ actor SponsorshipAPIClient {
                 draft: draft
             )
 
-        let url =
-            sponsorshipEndpoint(
-                appInstanceId: appInstanceId,
-                originalTransactionId:
-                    originalTransactionId
-            )
-            .appendingPathComponent(
-                "beneficiary"
-            )
+        let url = endpoint(
+            appInstanceId: appInstanceId
+        )
+        .appendingPathComponent(
+            originalTransactionId
+        )
+        .appendingPathComponent(
+            "invitation"
+        )
 
         return try await send(
             url: url,
@@ -118,22 +118,6 @@ actor SponsorshipAPIClient {
             )
             .appendingPathComponent(
                 "subscriptions"
-            )
-    }
-
-    private func sponsorshipEndpoint(
-        appInstanceId: UUID,
-        originalTransactionId: String
-    ) -> URL {
-
-        baseURL
-            .appendingPathComponent("users")
-            .appendingPathComponent(
-                appInstanceId.uuidString
-            )
-            .appendingPathComponent("sponsorships")
-            .appendingPathComponent(
-                originalTransactionId
             )
     }
 

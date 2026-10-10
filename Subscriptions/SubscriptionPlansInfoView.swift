@@ -12,22 +12,18 @@ enum SubscriptionPaywallMode: Equatable {
     case initialOffer
     case accessEnded
 
-    func backgroundImageName(for language: AppLanguage) -> String {
-        switch self {
-        case .initialOffer:
-            return "Background_Tarifs plans"
+    func backgroundImageName(
+        for language: AppLanguage
+    ) -> String {
+        switch language {
+        case .russian:
+            return "Background_Pricing_RU"
 
-        case .accessEnded:
-            switch language {
-            case .russian:
-                return "Background_WithoutSubscription"
+        case .englishUS:
+            return "Background_Pricing_EN"
 
-            case .englishUS:
-                return "Background_WithoutSubscriptionEN"
-
-            case .spanishLatinAmerica:
-                return "Background_WithoutSubscriptionES"
-            }
+        case .spanishLatinAmerica:
+            return "Background_Pricing_ES"
         }
     }
 

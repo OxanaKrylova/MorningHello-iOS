@@ -17,6 +17,88 @@ struct OlderAdultSupportResource: Identifiable, Hashable {
     let websiteURL: URL
 }
 
+// MARK: - Штаты США
+
+private struct USEmergencyState: Identifiable, Hashable {
+    let code: String
+    let englishName: String
+    let russianName: String
+    let spanishName: String
+
+    var id: String { code }
+
+    func localizedName(for language: AppLanguage) -> String {
+        switch language {
+        case .russian: return russianName
+        case .englishUS: return englishName
+        case .spanishLatinAmerica: return spanishName
+        }
+    }
+
+    func matches(region: String) -> Bool {
+        let value = region
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .lowercased()
+
+        return value == englishName.lowercased()
+            || value.contains("(\(code.lowercased()))")
+    }
+
+    static let all: [USEmergencyState] = [
+        .init(code: "AL", englishName: "Alabama", russianName: "Алабама", spanishName: "Alabama"),
+        .init(code: "AK", englishName: "Alaska", russianName: "Аляска", spanishName: "Alaska"),
+        .init(code: "AZ", englishName: "Arizona", russianName: "Аризона", spanishName: "Arizona"),
+        .init(code: "AR", englishName: "Arkansas", russianName: "Арканзас", spanishName: "Arkansas"),
+        .init(code: "CA", englishName: "California", russianName: "Калифорния", spanishName: "California"),
+        .init(code: "CO", englishName: "Colorado", russianName: "Колорадо", spanishName: "Colorado"),
+        .init(code: "CT", englishName: "Connecticut", russianName: "Коннектикут", spanishName: "Connecticut"),
+        .init(code: "DE", englishName: "Delaware", russianName: "Делавэр", spanishName: "Delaware"),
+        .init(code: "FL", englishName: "Florida", russianName: "Флорида", spanishName: "Florida"),
+        .init(code: "GA", englishName: "Georgia", russianName: "Джорджия", spanishName: "Georgia"),
+        .init(code: "HI", englishName: "Hawaii", russianName: "Гавайи", spanishName: "Hawái"),
+        .init(code: "ID", englishName: "Idaho", russianName: "Айдахо", spanishName: "Idaho"),
+        .init(code: "IL", englishName: "Illinois", russianName: "Иллинойс", spanishName: "Illinois"),
+        .init(code: "IN", englishName: "Indiana", russianName: "Индиана", spanishName: "Indiana"),
+        .init(code: "IA", englishName: "Iowa", russianName: "Айова", spanishName: "Iowa"),
+        .init(code: "KS", englishName: "Kansas", russianName: "Канзас", spanishName: "Kansas"),
+        .init(code: "KY", englishName: "Kentucky", russianName: "Кентукки", spanishName: "Kentucky"),
+        .init(code: "LA", englishName: "Louisiana", russianName: "Луизиана", spanishName: "Luisiana"),
+        .init(code: "ME", englishName: "Maine", russianName: "Мэн", spanishName: "Maine"),
+        .init(code: "MD", englishName: "Maryland", russianName: "Мэриленд", spanishName: "Maryland"),
+        .init(code: "MA", englishName: "Massachusetts", russianName: "Массачусетс", spanishName: "Massachusetts"),
+        .init(code: "MI", englishName: "Michigan", russianName: "Мичиган", spanishName: "Míchigan"),
+        .init(code: "MN", englishName: "Minnesota", russianName: "Миннесота", spanishName: "Minnesota"),
+        .init(code: "MS", englishName: "Mississippi", russianName: "Миссисипи", spanishName: "Misisipi"),
+        .init(code: "MO", englishName: "Missouri", russianName: "Миссури", spanishName: "Misuri"),
+        .init(code: "MT", englishName: "Montana", russianName: "Монтана", spanishName: "Montana"),
+        .init(code: "NE", englishName: "Nebraska", russianName: "Небраска", spanishName: "Nebraska"),
+        .init(code: "NV", englishName: "Nevada", russianName: "Невада", spanishName: "Nevada"),
+        .init(code: "NH", englishName: "New Hampshire", russianName: "Нью-Гэмпшир", spanishName: "Nuevo Hampshire"),
+        .init(code: "NJ", englishName: "New Jersey", russianName: "Нью-Джерси", spanishName: "Nueva Jersey"),
+        .init(code: "NM", englishName: "New Mexico", russianName: "Нью-Мексико", spanishName: "Nuevo México"),
+        .init(code: "NY", englishName: "New York", russianName: "Нью-Йорк", spanishName: "Nueva York"),
+        .init(code: "NC", englishName: "North Carolina", russianName: "Северная Каролина", spanishName: "Carolina del Norte"),
+        .init(code: "ND", englishName: "North Dakota", russianName: "Северная Дакота", spanishName: "Dakota del Norte"),
+        .init(code: "OH", englishName: "Ohio", russianName: "Огайо", spanishName: "Ohio"),
+        .init(code: "OK", englishName: "Oklahoma", russianName: "Оклахома", spanishName: "Oklahoma"),
+        .init(code: "OR", englishName: "Oregon", russianName: "Орегон", spanishName: "Oregón"),
+        .init(code: "PA", englishName: "Pennsylvania", russianName: "Пенсильвания", spanishName: "Pensilvania"),
+        .init(code: "RI", englishName: "Rhode Island", russianName: "Род-Айленд", spanishName: "Rhode Island"),
+        .init(code: "SC", englishName: "South Carolina", russianName: "Южная Каролина", spanishName: "Carolina del Sur"),
+        .init(code: "SD", englishName: "South Dakota", russianName: "Южная Дакота", spanishName: "Dakota del Sur"),
+        .init(code: "TN", englishName: "Tennessee", russianName: "Теннесси", spanishName: "Tennessee"),
+        .init(code: "TX", englishName: "Texas", russianName: "Техас", spanishName: "Texas"),
+        .init(code: "UT", englishName: "Utah", russianName: "Юта", spanishName: "Utah"),
+        .init(code: "VT", englishName: "Vermont", russianName: "Вермонт", spanishName: "Vermont"),
+        .init(code: "VA", englishName: "Virginia", russianName: "Виргиния", spanishName: "Virginia"),
+        .init(code: "WA", englishName: "Washington", russianName: "Вашингтон", spanishName: "Washington"),
+        .init(code: "WV", englishName: "West Virginia", russianName: "Западная Виргиния", spanishName: "Virginia Occidental"),
+        .init(code: "WI", englishName: "Wisconsin", russianName: "Висконсин", spanishName: "Wisconsin"),
+        .init(code: "WY", englishName: "Wyoming", russianName: "Вайоминг", spanishName: "Wyoming"),
+        .init(code: "DC", englishName: "District of Columbia", russianName: "Округ Колумбия", spanishName: "Distrito de Columbia")
+    ]
+}
+
 // MARK: - Локальный каталог
 
 enum CountryEmergencyCatalog {
@@ -589,6 +671,9 @@ struct EmergencyServicesView: View {
     @State
     private var selectedEmergencyMessageContacts:
         [EmergencyContact] = []
+
+    @State
+    private var selectedUSStateCode: String?
     
     private var selectedLanguage: AppLanguage {
         AppLanguage(
@@ -730,6 +815,7 @@ struct EmergencyServicesView: View {
         directory?.services.filter {
             $0.category != .veterinaryEmergency
             && $0.category != .petAftercare
+            && isVisibleForSelectedUSState($0)
         } ?? []
     }
 
@@ -737,9 +823,39 @@ struct EmergencyServicesView: View {
         [CountryEmergencyService] {
 
         directory?.services.filter {
-            $0.category == .veterinaryEmergency
-            || $0.category == .petAftercare
+            ($0.category == .veterinaryEmergency
+            || $0.category == .petAftercare)
+            && isVisibleForSelectedUSState($0)
         } ?? []
+    }
+
+    private var selectedUSState: USEmergencyState? {
+        USEmergencyState.all.first {
+            $0.code == selectedUSStateCode
+        }
+    }
+
+    private func isVisibleForSelectedUSState(
+        _ service: CountryEmergencyService
+    ) -> Bool {
+        guard normalizedCountryCode == "US" else {
+            return true
+        }
+
+        guard service.scope != .national,
+              let region = service.region,
+              !region.trimmingCharacters(
+                in: .whitespacesAndNewlines
+              ).isEmpty
+        else {
+            return true
+        }
+
+        guard let selectedUSState else {
+            return false
+        }
+
+        return selectedUSState.matches(region: region)
     }
     
     private var countrySupportContacts:
@@ -770,6 +886,10 @@ struct EmergencyServicesView: View {
                             }
 
                         introductionCard
+
+                        if normalizedCountryCode == "US" {
+                            usStateSelectionCard
+                        }
 
                         if normalizedCountryCode.isEmpty {
                             countryNotSelectedCard
@@ -824,6 +944,11 @@ struct EmergencyServicesView: View {
                 .easeInOut(duration: 0.2),
                 value: copiedNumber
             )
+        }
+        .onChange(of: normalizedCountryCode) { newValue in
+            if newValue != "US" {
+                selectedUSStateCode = nil
+            }
         }
         .confirmationDialog(
             selectedLanguage.localized(
@@ -1232,6 +1357,151 @@ struct EmergencyServicesView: View {
         )
     }
     
+    // MARK: - Выбор штата США
+
+    private var usStateSelectionCard: some View {
+        VStack(
+            alignment: .leading,
+            spacing: 14
+        ) {
+            Text(usStateSelectionTitle)
+                .font(
+                    .system(
+                        .headline,
+                        design: .rounded
+                    )
+                    .weight(.bold)
+                )
+                .foregroundStyle(
+                    AppAdaptiveColor.text
+                )
+
+            Menu {
+                ForEach(USEmergencyState.all) { state in
+                    Button {
+                        selectedUSStateCode = state.code
+                    } label: {
+                        if selectedUSStateCode == state.code {
+                            Label(
+                                state.localizedName(
+                                    for: selectedLanguage
+                                ),
+                                systemImage: "checkmark"
+                            )
+                        } else {
+                            Text(
+                                state.localizedName(
+                                    for: selectedLanguage
+                                )
+                            )
+                        }
+                    }
+                }
+            } label: {
+                HStack(spacing: 12) {
+                    Text(
+                        selectedUSState?.localizedName(
+                            for: selectedLanguage
+                        ) ?? usStateSelectionPlaceholder
+                    )
+                    .font(
+                        .system(
+                            .body,
+                            design: .rounded
+                        )
+                        .weight(.semibold)
+                    )
+                    .foregroundStyle(
+                        selectedUSState == nil
+                        ? AppAdaptiveColor.secondaryText
+                        : AppAdaptiveColor.text
+                    )
+
+                    Spacer()
+
+                    Image(
+                        systemName:
+                            "chevron.up.chevron.down"
+                    )
+                    .font(
+                        .system(
+                            size: 16,
+                            weight: .bold
+                        )
+                    )
+                    .foregroundStyle(Color.orange)
+                }
+                .padding(.horizontal, 18)
+                .padding(.vertical, 16)
+                .background(
+                    AppAdaptiveColor.warmFormBackground,
+                    in: RoundedRectangle(
+                        cornerRadius: 18,
+                        style: .continuous
+                    )
+                )
+            }
+            .buttonStyle(.plain)
+
+            Text(usStateSelectionExplanation)
+                .font(
+                    .system(
+                        .footnote,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(
+                    AppAdaptiveColor.secondaryText
+                )
+                .lineSpacing(3)
+        }
+        .padding(22)
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+        .background(
+            AppAdaptiveColor.secondaryBackground,
+            in: RoundedRectangle(
+                cornerRadius: 28,
+                style: .continuous
+            )
+        )
+    }
+
+    private var usStateSelectionTitle: String {
+        switch selectedLanguage {
+        case .russian:
+            return "Штат США"
+        case .englishUS:
+            return "U.S. state"
+        case .spanishLatinAmerica:
+            return "Estado de EE. UU."
+        }
+    }
+
+    private var usStateSelectionPlaceholder: String {
+        switch selectedLanguage {
+        case .russian:
+            return "Выберите штат"
+        case .englishUS:
+            return "Select a state"
+        case .spanishLatinAmerica:
+            return "Seleccione un estado"
+        }
+    }
+
+    private var usStateSelectionExplanation: String {
+        switch selectedLanguage {
+        case .russian:
+            return "После выбора будут показаны общенациональные службы и контакты выбранного штата. Выбор не сохраняется."
+        case .englishUS:
+            return "After selection, national services and contacts for the selected state will be shown. Your selection is not saved."
+        case .spanishLatinAmerica:
+            return "Después de seleccionar, se mostrarán los servicios nacionales y los contactos del estado elegido. La selección no se guarda."
+        }
+    }
+
     // MARK: - Вводная карточка
 
     private var introductionCard: some View {

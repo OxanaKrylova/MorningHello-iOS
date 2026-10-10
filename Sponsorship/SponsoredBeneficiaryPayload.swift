@@ -10,7 +10,7 @@ import Foundation
 /// Stable JSON contract sent to Backend after the sponsored purchase has been
 /// confirmed. It intentionally contains neither the pet food photo nor the
 /// local `hasFoodPhoto` flag.
-struct SponsoredBeneficiaryPayload: Encodable, Equatable {
+struct SponsoredBeneficiaryPayload: Codable, Equatable {
 
     let schemaVersion: Int
     let id: UUID
@@ -42,7 +42,7 @@ struct SponsoredBeneficiaryPayload: Encodable, Equatable {
         }
     }
 
-    struct Profile: Encodable, Equatable {
+    struct Profile: Codable, Equatable {
         let displayName: String
         let birthDay: Int
         let birthMonth: Int
@@ -70,7 +70,7 @@ struct SponsoredBeneficiaryPayload: Encodable, Equatable {
         }
     }
 
-    struct EmergencyContact: Encodable, Equatable {
+    struct EmergencyContact: Codable, Equatable {
         let id: UUID
         let name: String
         let surname: String
@@ -91,7 +91,7 @@ struct SponsoredBeneficiaryPayload: Encodable, Equatable {
         }
     }
 
-    struct HolidayPreferences: Encodable, Equatable {
+    struct HolidayPreferences: Codable, Equatable {
         let showProtestantHolidays: Bool
         let showOrthodoxHolidays: Bool
         let showCatholicHolidays: Bool
@@ -115,7 +115,7 @@ struct SponsoredBeneficiaryPayload: Encodable, Equatable {
         }
     }
 
-    struct Pet: Encodable, Equatable {
+    struct Pet: Codable, Equatable {
         let id: UUID
         let name: String
         let speciesRawValue: String?
@@ -147,7 +147,7 @@ struct SponsoredBeneficiaryPayload: Encodable, Equatable {
         }
     }
 
-    struct Reminder: Encodable, Equatable {
+    struct Reminder: Codable, Equatable {
         let id: UUID
         let personName: String
         let personSourceRawValue: String

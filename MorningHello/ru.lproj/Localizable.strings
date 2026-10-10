@@ -562,3 +562,24 @@
 "sponsor.review.confirm" = "Подтвердить данные";
 "sponsor.review.footer" = "Все сведения пока хранятся только в отдельном черновике подопечного и не изменяют профиль спонсора.";
 "sponsor.review.saveError" = "Не удалось сохранить итоговый черновик. Попробуйте ещё раз.";
+
+/* Sponsor purchase */
+"sponsor.purchase.title" = "Спонсорская подписка";
+"sponsor.purchase.subtitle" = "Выберите тариф для одного подопечного.";
+"sponsor.purchase.button" = "Купить подписку";
+"sponsor.purchase.restore" = "Восстановить покупку";
+"sponsor.purchase.footer" = "Покупка будет привязана к этой установке MorningHello. Приглашение появится только после подтверждения покупки сервером.";
+"sponsor.purchase.productsUnavailable" = "Не удалось загрузить спонсорские тарифы. Проверьте подключение к интернету и попробуйте ещё раз.";
+"sponsor.purchase.failed" = "Не удалось завершить настройку после покупки. Покупка сохранена в App Store — повторите попытку на этом экране.";
+"sponsor.purchase.pending" = "Покупка ожидает подтверждения App Store.";
+"sponsor.purchase.restoreNotFound" = "Активная спонсорская подписка не найдена.";
+"sponsor.purchase.stage.storeKit" = "Подтверждаем покупку в App Store…";
+"sponsor.purchase.stage.backend" = "Проверяем подписку на сервере…";
+"sponsor.purchase.stage.beneficiary" = "Сохраняем данные подопечного…";
+"sponsor.purchase.stage.completed" = "Приглашение готово.";
+"sponsor.purchase.product.monthly.title" = "Для близкого — 1 месяц";
+"sponsor.purchase.product.monthly.description" = "Доступ MorningHello для одного подопечного на один месяц";
+"sponsor.purchase.product.quarterly.title" = "Для близкого — 3 месяца";
+"sponsor.purchase.product.quarterly.description" = "Доступ MorningHello для одного подопечного на три месяца";
+"sponsor.purchase.product.annual.title" = "Для близкого — 1 год";
+"sponsor.purchase.product.annual.description" = "Доступ MorningHello для одного подопечного на один год";

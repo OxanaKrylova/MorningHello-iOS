@@ -2023,3 +2023,24 @@
 "sponsor.review.confirm" = "Confirmar datos";
 "sponsor.review.footer" = "Por ahora, toda la información se guarda únicamente en el borrador separado del beneficiario y no modifica el perfil del patrocinador.";
 "sponsor.review.saveError" = "No se pudo guardar el borrador final. Inténtelo nuevamente.";
+
+/* Sponsor purchase */
+"sponsor.purchase.title" = "Suscripción para un ser querido";
+"sponsor.purchase.subtitle" = "Elija un plan para un beneficiario.";
+"sponsor.purchase.button" = "Comprar suscripción";
+"sponsor.purchase.restore" = "Restaurar compra";
+"sponsor.purchase.footer" = "La compra quedará vinculada a esta instalación de MorningHello. La invitación aparecerá después de que el servidor confirme la compra.";
+"sponsor.purchase.productsUnavailable" = "No se pudieron cargar los planes. Compruebe su conexión a internet e inténtelo nuevamente.";
+"sponsor.purchase.failed" = "No se pudo completar la configuración después de la compra. La compra está guardada en App Store; inténtelo nuevamente en esta pantalla.";
+"sponsor.purchase.pending" = "La compra está pendiente de confirmación por App Store.";
+"sponsor.purchase.restoreNotFound" = "No se encontró una suscripción activa para un ser querido.";
+"sponsor.purchase.stage.storeKit" = "Confirmando la compra en App Store…";
+"sponsor.purchase.stage.backend" = "Verificando la suscripción en el servidor…";
+"sponsor.purchase.stage.beneficiary" = "Guardando los datos del beneficiario…";
+"sponsor.purchase.stage.completed" = "La invitación está lista.";
+"sponsor.purchase.product.monthly.title" = "Para un ser querido — 1 mes";
+"sponsor.purchase.product.monthly.description" = "Acceso a MorningHello para un beneficiario durante un mes";
+"sponsor.purchase.product.quarterly.title" = "Para un ser querido — 3 meses";
+"sponsor.purchase.product.quarterly.description" = "Acceso a MorningHello para un beneficiario durante tres meses";
+"sponsor.purchase.product.annual.title" = "Para un ser querido — 1 año";
+"sponsor.purchase.product.annual.description" = "Acceso a MorningHello para un beneficiario durante un año";

@@ -341,8 +341,7 @@ final class SponsoredPurchaseManager: ObservableObject {
 
         guard registeredSubscription.kind == .sponsor,
               registeredSubscription.productId == transaction.productID,
-              registeredSubscription.active,
-              registeredSubscription.expiresAt > Date()
+              registeredSubscription.active
         else {
             throw SponsorshipAPIError.invalidSponsoredSubscription
         }
@@ -350,21 +349,27 @@ final class SponsoredPurchaseManager: ObservableObject {
         lastRegisteredSubscription = registeredSubscription
         processingStage = .sendingBeneficiary
 
-        let response = try await apiClient.provisionBeneficiary(
+        let response = try await apiClient.createInvitation(
             appInstanceId: appInstanceID,
             originalTransactionId:
                 registeredSubscription.originalTransactionId,
             draft: draft
         )
 
-        guard response.invitationURL.scheme?.lowercased() == "https",
-              response.invitationURL.host != nil
+        guard response.url.scheme?.lowercased() == "https",
+              response.url.host != nil
         else {
             throw SponsorshipAPIError.invalidInvitationURL
         }
 
         SponsoredBeneficiaryInvitationStorage.save(
-            serverInvitationURL: response.invitationURL
+            serverInvitationURL: response.url
+        )
+
+        UserDefaults.standard.set(
+            response.expiresAt,
+            forKey:
+                "sponsored_beneficiary_invite_expires_at"
         )
 
         // The StoreKit transaction is finished only after the sponsor received
@@ -373,7 +378,7 @@ final class SponsoredPurchaseManager: ObservableObject {
         await SponsorshipStore.shared.refresh()
 
         processingStage = .completed
-        return response.invitationURL
+        return response.url
     }
 
     private func validate(
@@ -384,6 +389,16 @@ final class SponsoredPurchaseManager: ObservableObject {
               !draft.emergencyContacts.isEmpty
         else {
             throw SponsorshipAPIError.invalidBeneficiaryDraft
+        }
+
+        let payload = SponsoredBeneficiaryPayload(
+            draft: draft
+        )
+
+        guard try payload.encodedJSON().count
+                <= 16 * 1_024
+        else {
+            throw SponsorshipAPIError.beneficiaryDraftTooLarge
         }
     }
 }

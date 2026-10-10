@@ -156,27 +156,8 @@ struct SponsorOnboardingIntroView:
 
         VStack(
             spacing:
-                18
+                14
         ) {
-
-            Image(
-                systemName:
-                    "iphone.gen3"
-            )
-            .font(
-                .system(
-                    size:
-                        54,
-                    weight:
-                        .semibold
-                )
-            )
-            .foregroundStyle(
-                Color.orange
-            )
-            .accessibilityHidden(
-                true
-            )
 
             Text(
                 localized(
@@ -186,7 +167,7 @@ struct SponsorOnboardingIntroView:
             .font(
                 .system(
                     size:
-                        28,
+                        22,
                     weight:
                         .bold,
                     design:
@@ -240,9 +221,9 @@ struct SponsorOnboardingIntroView:
                 .font(
                     .system(
                         size:
-                            20,
+                            17,
                         weight:
-                            .bold,
+                            .semibold,
                         design:
                             .rounded
                     )
