@@ -41,8 +41,7 @@ final class SponsorshipStore:
 
         sponsoringSubscriptions
             .filter {
-                $0.active &&
-                $0.expiresAt > Date()
+                $0.active
             }
     }
 
@@ -59,8 +58,7 @@ final class SponsorshipStore:
             return false
         }
 
-        return sponsoredAccess.active &&
-        sponsoredAccess.expiresAt > Date()
+        return sponsoredAccess.active
     }
 
     func refresh() async {

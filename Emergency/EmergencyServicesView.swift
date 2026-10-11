@@ -841,7 +841,11 @@ struct EmergencyServicesView: View {
         guard normalizedCountryCode == "US" else {
             return true
         }
-
+        if service.category == .poisonControl,
+           service.scope == .national,
+           selectedUSState != nil {
+            return false
+        }
         guard service.scope != .national,
               let region = service.region,
               !region.trimmingCharacters(

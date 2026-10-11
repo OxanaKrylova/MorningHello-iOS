@@ -100,8 +100,7 @@ final class SponsoredPurchaseManager: ObservableObject {
 
         do {
             // Never start a second StoreKit purchase while an earlier sponsor
-            // transaction still needs delivery. Retry the existing transaction
-            // first, even if the user tapped a different plan card.
+            // transaction still needs delivery to Backend.
             for await verificationResult in Transaction.unfinished {
                 guard case let .verified(transaction) = verificationResult,
                       Self.isSponsoredProduct(transaction.productID)
@@ -115,6 +114,20 @@ final class SponsoredPurchaseManager: ObservableObject {
                     expectedProductID: transaction.productID
                 )
 
+                return .completed(invitationURL)
+            }
+
+            /*
+             The purchase may already be confirmed and finished while only
+             invitation creation failed. In that case recover the invitation
+             from the active sponsoring subscription instead of purchasing
+             another StoreKit product.
+             */
+
+            if let invitationURL = try await recoverInvitationIfPossible(
+                draft: draft
+            ) {
+                processingStage = .completed
                 return .completed(invitationURL)
             }
 
@@ -152,8 +165,9 @@ final class SponsoredPurchaseManager: ObservableObject {
         }
     }
 
-    /// Retries delivery for an Apple transaction that was purchased but was
-    /// not finished because Backend confirmation or provisioning failed.
+    /// Retries a StoreKit transaction only when Backend subscription
+    /// confirmation did not finish successfully. If the purchase was already
+    /// confirmed and finished, retries invitation creation separately.
     func recoverUnfinishedPurchase(
         draft: SponsoredBeneficiaryDraft
     ) async -> URL? {
@@ -195,6 +209,18 @@ final class SponsoredPurchaseManager: ObservableObject {
                 lastError = error.localizedDescription
                 return nil
             }
+        }
+
+        do {
+            if let invitationURL = try await recoverInvitationIfPossible(
+                draft: draft
+            ) {
+                processingStage = .completed
+                return invitationURL
+            }
+        } catch {
+            lastError = error.localizedDescription
+            return nil
         }
 
         processingStage = .idle
@@ -347,12 +373,77 @@ final class SponsoredPurchaseManager: ObservableObject {
         }
 
         lastRegisteredSubscription = registeredSubscription
+
+        /*
+         Backend returned 200 and permanently stored the subscription.
+         StoreKit delivery is complete at this point. Invitation creation is
+         a separate, retryable operation and must not keep the transaction in
+         Transaction.unfinished.
+         */
+
+        await transaction.finish()
+        await SponsorshipStore.shared.refresh()
+
+        if let storedInvitationURL = validStoredInvitationURL() {
+            processingStage = .completed
+            return storedInvitationURL
+        }
+
+        return try await createInvitation(
+            appInstanceID: appInstanceID,
+            originalTransactionID:
+                registeredSubscription.originalTransactionId,
+            draft: draft
+        )
+    }
+
+    private func recoverInvitationIfPossible(
+        draft: SponsoredBeneficiaryDraft
+    ) async throws -> URL? {
+
+        if let storedInvitationURL = validStoredInvitationURL() {
+            return storedInvitationURL
+        }
+
+        let appInstanceID =
+            AppInstanceIDProvider.getOrCreate()
+
+        let overview = try await apiClient.subscriptions(
+            appInstanceId: appInstanceID
+        )
+
+        guard let subscription = overview.sponsoring
+            .filter({
+                $0.active &&
+                !$0.hasBeneficiary
+            })
+            .max(by: {
+                $0.expiresAt < $1.expiresAt
+            })
+        else {
+            return nil
+        }
+
+        return try await createInvitation(
+            appInstanceID: appInstanceID,
+            originalTransactionID:
+                subscription.originalTransactionId,
+            draft: draft
+        )
+    }
+
+    private func createInvitation(
+        appInstanceID: UUID,
+        originalTransactionID: String,
+        draft: SponsoredBeneficiaryDraft
+    ) async throws -> URL {
+
         processingStage = .sendingBeneficiary
 
         let response = try await apiClient.createInvitation(
             appInstanceId: appInstanceID,
             originalTransactionId:
-                registeredSubscription.originalTransactionId,
+                originalTransactionID,
             draft: draft
         )
 
@@ -369,16 +460,37 @@ final class SponsoredPurchaseManager: ObservableObject {
         UserDefaults.standard.set(
             response.expiresAt,
             forKey:
-                "sponsored_beneficiary_invite_expires_at"
+                SponsoredBeneficiaryInvitationStorage
+                    .expiresAtKey
         )
 
-        // The StoreKit transaction is finished only after the sponsor received
-        // the content purchased: a server-created beneficiary invitation.
-        await transaction.finish()
         await SponsorshipStore.shared.refresh()
 
         processingStage = .completed
         return response.url
+    }
+
+    private func validStoredInvitationURL() -> URL? {
+        let defaults = UserDefaults.standard
+
+        guard let urlString = defaults.string(
+            forKey:
+                SponsoredBeneficiaryInvitationStorage.urlKey
+        ),
+              let url = URL(string: urlString),
+              url.scheme?.lowercased() == "https",
+              url.host != nil,
+              let expiresAt = defaults.object(
+                forKey:
+                    SponsoredBeneficiaryInvitationStorage
+                        .expiresAtKey
+              ) as? Date,
+              expiresAt > Date()
+        else {
+            return nil
+        }
+
+        return url
     }
 
     private func validate(

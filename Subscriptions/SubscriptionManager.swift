@@ -100,6 +100,13 @@ final class SubscriptionManager:
         "com.morninghello.subscription.annual"
     ]
 
+    private var identityProductIDs: Set<String> {
+        subscriptionProductIDs.union(
+            SponsorshipFeatureConfiguration
+                .sponsoredProductIDs
+        )
+    }
+
     // MARK: - Load Products
 
     func loadProducts() async {
@@ -495,23 +502,18 @@ final class SubscriptionManager:
     ) -> IdentityCandidate? {
 
         /*
-         Спонсорские продукты намеренно исключены.
+         appAccountToken спонсорской покупки принадлежит
+         самому спонсору. Поэтому он также подходит
+         для восстановления appInstanceId спонсора.
 
-         Их appAccountToken относится к покупателю,
-         а не к получателю мониторинга.
+         Это не даёт спонсору личную подписку:
+         SubscriptionSnapshot по-прежнему строится
+         только по subscriptionProductIDs.
          */
 
-        guard subscriptionProductIDs.contains(
+        guard identityProductIDs.contains(
             transaction.productID
         ) else {
-            return nil
-        }
-
-        guard !SponsoredPurchaseManager
-            .isSponsoredProduct(
-                transaction.productID
-            )
-        else {
             return nil
         }
 
@@ -814,6 +816,8 @@ final class SubscriptionManager:
             AppInstanceIDProvider
                 .getOrCreate()
 
+        var didSyncSponsoredSubscription = false
+
         do {
 
             for await verificationResult
@@ -835,16 +839,56 @@ final class SubscriptionManager:
                     continue
                 }
 
-                /*
-                 Спонсорские продукты обрабатываются
-                 отдельным сценарием.
-                 */
-
-                guard !SponsoredPurchaseManager
+                if SponsoredPurchaseManager
                     .isSponsoredProduct(
                         transaction.productID
+                    ) {
+
+                    guard transaction.ownershipType
+                            != .familyShared,
+                          transaction.revocationDate == nil,
+                          !transaction.isUpgraded
+                    else {
+                        continue
+                    }
+
+                    /*
+                     При каждом запуске повторно отправляем
+                     подписанную StoreKit-транзакцию Backend.
+                     Endpoint идемпотентен, новое приглашение
+                     здесь не создаётся.
+
+                     После успешного ответа Backend транзакцию
+                     завершаем. Приглашение от покупки не зависит
+                     и здесь не создаётся.
+                     */
+
+                    _ = try await SponsorshipAPIClient
+                        .shared
+                        .registerSubscription(
+                            appInstanceId:
+                                appInstanceID,
+                            signedTransaction:
+                                verificationResult
+                                    .jwsRepresentation
+                        )
+
+                    await transaction.finish()
+
+                    didSyncSponsoredSubscription = true
+
+#if DEBUG
+
+                    print(
+                        """
+                        [\(appInstanceID.uuidString)] SPONSORED SUBSCRIPTION SENT TO BACKEND
+                        PRODUCT: \(transaction.productID)
+                        ORIGINAL TRANSACTION: \(transaction.originalID)
+                        """
                     )
-                else {
+
+#endif
+
                     continue
                 }
 
@@ -904,6 +948,12 @@ final class SubscriptionManager:
                 )
 
 #endif
+            }
+
+            if didSyncSponsoredSubscription {
+                await SponsorshipStore
+                    .shared
+                    .refresh()
             }
 
         } catch {

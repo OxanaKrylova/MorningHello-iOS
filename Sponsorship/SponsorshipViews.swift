@@ -17,6 +17,9 @@ enum SponsoredBeneficiaryInvitationStorage {
     static let urlKey =
         "sponsored_beneficiary_invite_url"
 
+    static let expiresAtKey =
+        "sponsored_beneficiary_invite_expires_at"
+
     static func save(
         serverInvitationURL: URL
     ) {
@@ -30,12 +33,20 @@ enum SponsoredBeneficiaryInvitationStorage {
         UserDefaults.standard.removeObject(
             forKey: urlKey
         )
+
+        UserDefaults.standard.removeObject(
+            forKey: expiresAtKey
+        )
     }
 }
 
 // MARK: - Sponsor home
 
 struct SponsorHomeView: View {
+
+    @StateObject
+    private var sponsorshipStore =
+        SponsorshipStore.shared
 
     @AppStorage(AppLanguage.storageKey)
     private var selectedLanguageCode =
@@ -57,7 +68,16 @@ struct SponsorHomeView: View {
     private var showBeneficiaryContacts = false
 
     @State
+    private var showBeneficiaryHolidays = false
+
+    @State
+    private var showBeneficiaryReminders = false
+    
+    @State
     private var showInvitationNotReady = false
+
+    @State
+    private var invitationExpiresAt: Date?
 
     private var selectedLanguage: AppLanguage {
         AppLanguage(rawValue: selectedLanguageCode)
@@ -84,6 +104,22 @@ struct SponsorHomeView: View {
         return URL(string: value)
     }
 
+    private var invitationIsExpired: Bool {
+        guard let invitationExpiresAt else {
+            return false
+        }
+
+        return invitationExpiresAt <= Date()
+    }
+
+    private var shareableInvitationURL: URL? {
+        guard !invitationIsExpired else {
+            return nil
+        }
+
+        return invitationURL
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -104,34 +140,66 @@ struct SponsorHomeView: View {
                     invitationCard
                         .frame(maxWidth: 340)
 
-                    HStack(spacing: 24) {
-                        Button {
-                            showBeneficiaryProfile = true
-                        } label: {
-                            sponsorActionLabel(
-                                titleKey:
-                                    "sponsor.home.profile.title",
-                                subtitleKey:
-                                    "sponsor.home.profile.subtitle",
-                                systemImage:
-                                    "person.crop.circle.fill"
-                            )
-                        }
-                        .buttonStyle(.plain)
+                    VStack(spacing: 14) {
+                        HStack(spacing: 24) {
+                            Button {
+                                showBeneficiaryProfile = true
+                            } label: {
+                                sponsorActionLabel(
+                                    titleKey:
+                                        "sponsor.home.profile.title",
+                                    subtitleKey:
+                                        "sponsor.home.profile.subtitle",
+                                    systemImage:
+                                        "person.crop.circle.fill"
+                                )
+                            }
+                            .buttonStyle(.plain)
 
-                        Button {
-                            showBeneficiaryContacts = true
-                        } label: {
-                            sponsorActionLabel(
-                                titleKey:
-                                    "sponsor.home.contacts.title",
-                                subtitleKey:
-                                    "sponsor.home.contacts.subtitle",
-                                systemImage:
-                                    "person.2.fill"
-                            )
+                            Button {
+                                showBeneficiaryContacts = true
+                            } label: {
+                                sponsorActionLabel(
+                                    titleKey:
+                                        "sponsor.home.contacts.title",
+                                    subtitleKey:
+                                        "sponsor.home.contacts.subtitle",
+                                    systemImage:
+                                        "person.2.fill"
+                                )
+                            }
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
+
+                        HStack(spacing: 24) {
+                            Button {
+                                showBeneficiaryHolidays = true
+                            } label: {
+                                sponsorActionLabel(
+                                    titleKey:
+                                        "sponsor.home.holidays.title",
+                                    subtitleKey:
+                                        "sponsor.home.holidays.subtitle",
+                                    systemImage:
+                                        "calendar"
+                                )
+                            }
+                            .buttonStyle(.plain)
+
+                            Button {
+                                showBeneficiaryReminders = true
+                            } label: {
+                                sponsorActionLabel(
+                                    titleKey:
+                                        "sponsor.home.reminders.title",
+                                    subtitleKey:
+                                        "sponsor.home.reminders.subtitle",
+                                    systemImage:
+                                        "list.bullet.rectangle.portrait"
+                                )
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
                     .frame(maxWidth: 340)
 
@@ -172,8 +240,36 @@ struct SponsorHomeView: View {
                 }
             )
         }
+        .sheet(
+            isPresented: $showBeneficiaryHolidays
+        ) {
+            SponsoredBeneficiaryHolidayPreferencesView(
+                draft: $beneficiaryDraft,
+                applySuggestedDefaults: false,
+                onContinue: {
+                    reloadBeneficiaryDraft()
+                    showBeneficiaryHolidays = false
+                }
+            )
+        }
+        .sheet(
+            isPresented: $showBeneficiaryReminders
+        ) {
+            SponsoredBeneficiaryRemindersOnboardingView(
+                draft: $beneficiaryDraft,
+                onContinue: {
+                    reloadBeneficiaryDraft()
+                    showBeneficiaryReminders = false
+                }
+            )
+        }
+        
         .onAppear {
             reloadBeneficiaryDraft()
+            reloadInvitationExpiration()
+        }
+        .task {
+            await sponsorshipStore.refresh()
         }
         .onChange(of: showBeneficiaryProfile) {
             _, isPresented in
@@ -183,6 +279,20 @@ struct SponsorHomeView: View {
             }
         }
         .onChange(of: showBeneficiaryContacts) {
+            _, isPresented in
+
+            if !isPresented {
+                reloadBeneficiaryDraft()
+            }
+        }
+        .onChange(of: showBeneficiaryHolidays) {
+            _, isPresented in
+
+            if !isPresented {
+                reloadBeneficiaryDraft()
+            }
+        }
+        .onChange(of: showBeneficiaryReminders) {
             _, isPresented in
 
             if !isPresented {
@@ -250,14 +360,6 @@ struct SponsorHomeView: View {
     @ViewBuilder
     private var invitationCard: some View {
         VStack(spacing: 12) {
-            Image(systemName: "link.badge.plus")
-                .font(
-                    .system(
-                        size: 28,
-                        weight: .semibold
-                    )
-                )
-
             Text(
                 selectedLanguage.localized(
                     "sponsor.home.invite.title"
@@ -274,7 +376,7 @@ struct SponsorHomeView: View {
 
             Text(
                 selectedLanguage.localized(
-                    invitationURL == nil
+                    shareableInvitationURL == nil
                         ? "sponsor.home.invite.waiting"
                         : "sponsor.home.invite.ready"
                 )
@@ -290,7 +392,28 @@ struct SponsorHomeView: View {
             )
             .multilineTextAlignment(.center)
 
-            if let invitationURL {
+            if let invitationExpiresAt,
+               !invitationIsExpired {
+
+                Text(
+                    invitationExpirationText(
+                        invitationExpiresAt
+                    )
+                )
+                .font(
+                    .system(
+                        .caption,
+                        design: .rounded
+                    )
+                    .weight(.semibold)
+                )
+                .foregroundStyle(
+                    AppAdaptiveColor.secondaryText
+                )
+                .multilineTextAlignment(.center)
+            }
+
+            if let invitationURL = shareableInvitationURL {
                 ShareLink(
                     item:
                         invitationMessage(
@@ -488,6 +611,38 @@ struct SponsorHomeView: View {
     private func reloadBeneficiaryDraft() {
         beneficiaryDraft =
             SponsoredBeneficiaryDraftStorage.loadOrCreate()
+    }
+
+    private func reloadInvitationExpiration() {
+        invitationExpiresAt =
+            UserDefaults.standard.object(
+                forKey:
+                    SponsoredBeneficiaryInvitationStorage
+                        .expiresAtKey
+            ) as? Date
+    }
+
+    private func invitationExpirationText(
+        _ date: Date
+    ) -> String {
+        let formattedDate = date.formatted(
+            Date.FormatStyle(
+                date: .abbreviated,
+                time: .shortened,
+                locale: beneficiaryLanguage.locale
+            )
+        )
+
+        switch selectedLanguage {
+        case .russian:
+            return "Ссылка действует до \(formattedDate)"
+
+        case .englishUS:
+            return "Link valid until \(formattedDate)"
+
+        case .spanishLatinAmerica:
+            return "Enlace válido hasta \(formattedDate)"
+        }
     }
 
     private func invitationMessage(

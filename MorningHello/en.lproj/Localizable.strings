@@ -1733,36 +1733,11 @@
 "emergency.service.text_emergency" = "Text-based emergency service";
 "emergency.service.disaster_assistance" = "Disaster assistance";
 "emergency.service.health_advice" = "Health advice";
-
-"emergency.note.eu.112" = "Número único y gratuito para la policía, la ambulancia y los bomberos en toda la Unión Europea.";
-
-"emergency.note.us.911" = "Policía, ambulancia y bomberos cuando existe un peligro inmediato.";
-"emergency.note.us.988" = "Apoyo gratuito, confidencial y disponible las 24 horas para crisis emocionales o pensamientos suicidas.";
-
-"emergency.note.ca.911" = "Policía, ambulancia y bomberos cuando existe un peligro inmediato.";
-"emergency.note.ca.988" = "Apoyo disponible las 24 horas para crisis suicidas. Se puede llamar o enviar un mensaje de texto.";
-
-"emergency.note.gb.999" = "Número principal para la policía, la ambulancia, los bomberos y la guardia costera.";
-"emergency.note.gb.112" = "Número de emergencia adicional que conecta con los mismos servicios que el 999.";
-"emergency.note.gb.101" = "Para asuntos policiales que no son emergencias.";
-"emergency.note.gb.111" = "Asesoramiento médico urgente cuando la situación no pone en peligro la vida.";
-
-"emergency.note.au.000" = "Número principal para la policía, la ambulancia y los bomberos.";
-"emergency.note.au.112" = "Número de emergencia secundario para teléfonos móviles. El 000 sigue siendo el número principal.";
-"emergency.note.au.106" = "Servicio de emergencia por texto para personas con dificultades auditivas o del habla que utilizan TTY.";
-"emergency.note.au.132500" = "Asistencia del SES durante inundaciones, tormentas y otras situaciones que no ponen la vida en peligro inmediato.";
-"emergency.note.au.medicare" = "Asesoramiento médico gratuito las 24 horas. Si existe peligro para la vida, llama al 000.";
-"emergency.note.au.lifeline" = "Apoyo emocional en situaciones de crisis disponible las 24 horas a través de Lifeline.";
 "emergency.support.country.section.title" = "Support for Older Adults";
 "emergency.support.country.section.description" = "Organizations working with older adults in the selected country. These are not emergency services.";
 "emergency.support.contact.description" = "An organization supporting older adults and advocating for their interests. This is a general contact number, not an emergency hotline.";
 "emergency.support.open_website" = "Open Organization Website";
 "emergency.support.section.title" = "International Directories";
-"emergency.support.country.section.title" = "Ayuda para Personas Mayores";
-"emergency.support.country.section.description" = "Organizaciones que trabajan con personas mayores en el país seleccionado. No son servicios de emergencia.";
-"emergency.support.contact.description" = "Una organización que apoya a las personas mayores y protege sus intereses. Es un número de contacto general, no una línea de emergencia.";
-"emergency.support.open_website" = "Abrir el Sitio de la Organización";
-"emergency.support.section.title" = "Directorios Internacionales";
 "emergency.note.do.coverage" = "911 does not have full coverage across the country. Coverage may be limited outside Santo Domingo.";
 "emergency.note.ht.delay" = "Due to the security situation, emergency services may face long delays or may be unable to respond.";
 "connection.screen.description" = "All saved reminders will appear at the bottom of the postcard after you check in.";
@@ -1827,6 +1802,8 @@
 "emergency.message.messages" = "Messages";
 "emergency.message.send_all_contacts" = "Send to all emergency contacts";
 "emergency.message.choose_messenger" = "Choose a messenger or contact";
+"emergency.service.poison_control" = "Poison Control";
+
 "common.cancel" = "Cancel";
 
 "games.title" = "Games";
@@ -2078,3 +2055,21 @@
 "sponsor.purchase.product.quarterly.description" = "MorningHello access for one beneficiary for three months";
 "sponsor.purchase.product.annual.title" = "For a Loved One — 1 Year";
 "sponsor.purchase.product.annual.description" = "MorningHello access for one beneficiary for one year";
+/* Sponsorship invitation errors */
+"sponsor.invitation.error.ok" = "OK";
+"sponsor.invitation.error.notFound.title" = "Link Not Found";
+"sponsor.invitation.error.notFound.message" = "This link does not work. Ask your loved one to send the invitation again.";
+"sponsor.invitation.error.expired.title" = "Link Expired";
+"sponsor.invitation.error.expired.message" = "The invitation has expired. Ask your loved one to create a new link.";
+"sponsor.invitation.error.cancelled.title" = "Invitation Replaced";
+"sponsor.invitation.error.cancelled.message" = "A newer link has already been created for you. Open the most recent invitation you received.";
+"sponsor.invitation.error.used.title" = "Link Already Used";
+"sponsor.invitation.error.used.message" = "Someone else has already accepted this invitation. Ask your loved one to create a new one.";
+"sponsor.invitation.error.self.title" = "Invitation Intended for Someone Else";
+"sponsor.invitation.error.self.message" = "This link must be opened by the person for whom you purchased MorningHello.";
+"sponsor.invitation.error.subscription.title" = "Subscription Not Active";
+"sponsor.invitation.error.subscription.message" = "The sponsored subscription is unpaid or no longer active. Ask your loved one to check the payment.";
+"sponsor.invitation.error.userDeleted.title" = "Previous Data Was Deleted";
+"sponsor.invitation.error.userDeleted.message" = "Data from a previous MorningHello installation was deleted. The link has not been used. If you had your own purchase, restore it. Otherwise, contact MorningHello support.";
+"sponsor.invitation.error.unknown.title" = "Invitation Could Not Be Accepted";
+"sponsor.invitation.error.unknown.message" = "Check your internet connection and open the link again.";

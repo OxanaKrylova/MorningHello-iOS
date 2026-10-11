@@ -1793,6 +1793,7 @@
 "emergency.message.messages" = "Mensajes";
 "emergency.message.send_all_contacts" = "Enviar a todos los contactos de emergencia";
 "emergency.message.choose_messenger" = "Elegir mensajería o contacto";
+"emergency.service.poison_control" = "Centro de toxicología";
 "common.cancel" = "Cancelar";
 
 "games.title" = "Juegos";
@@ -2044,3 +2045,21 @@
 "sponsor.purchase.product.quarterly.description" = "Acceso a MorningHello para un beneficiario durante tres meses";
 "sponsor.purchase.product.annual.title" = "Para un ser querido — 1 año";
 "sponsor.purchase.product.annual.description" = "Acceso a MorningHello para un beneficiario durante un año";
+/* Sponsorship invitation errors */
+"sponsor.invitation.error.ok" = "Entendido";
+"sponsor.invitation.error.notFound.title" = "No se encontró el enlace";
+"sponsor.invitation.error.notFound.message" = "Este enlace no funciona. Pida a su ser querido que le envíe nuevamente la invitación.";
+"sponsor.invitation.error.expired.title" = "El enlace ha caducado";
+"sponsor.invitation.error.expired.message" = "La invitación ha caducado. Pida a su ser querido que cree un enlace nuevo.";
+"sponsor.invitation.error.cancelled.title" = "La invitación fue reemplazada";
+"sponsor.invitation.error.cancelled.message" = "Ya se creó un enlace más reciente para usted. Abra la última invitación que recibió.";
+"sponsor.invitation.error.used.title" = "El enlace ya fue utilizado";
+"sponsor.invitation.error.used.message" = "Otra persona ya aceptó esta invitación. Pida a su ser querido que cree una nueva.";
+"sponsor.invitation.error.self.title" = "La invitación es para otra persona";
+"sponsor.invitation.error.self.message" = "Este enlace debe abrirlo la persona para quien compró MorningHello.";
+"sponsor.invitation.error.subscription.title" = "La suscripción no está activa";
+"sponsor.invitation.error.subscription.message" = "La suscripción patrocinada no está pagada o ya no está activa. Pida a su ser querido que compruebe el pago.";
+"sponsor.invitation.error.userDeleted.title" = "Se eliminaron los datos anteriores";
+"sponsor.invitation.error.userDeleted.message" = "Los datos de una instalación anterior de MorningHello fueron eliminados. El enlace no se utilizó. Si tenía una compra propia, restáurela. De lo contrario, contacte con el soporte de MorningHello.";
+"sponsor.invitation.error.unknown.title" = "No se pudo aceptar la invitación";
+"sponsor.invitation.error.unknown.message" = "Compruebe su conexión a internet y vuelva a abrir el enlace.";

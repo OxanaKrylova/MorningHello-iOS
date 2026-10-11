@@ -332,6 +332,7 @@
 "emergency.message.messages" = "Сообщения";
 "emergency.message.send_all_contacts" = "Отправить всем тревожным контактам";
 "emergency.message.choose_messenger" = "Выбрать мессенджер или контакт";
+"emergency.service.poison_control" = "Токсикологическая помощь";
 "common.cancel" = "Отмена";
 
 "games.title" = "Игры";
@@ -583,3 +584,22 @@
 "sponsor.purchase.product.quarterly.description" = "Доступ MorningHello для одного подопечного на три месяца";
 "sponsor.purchase.product.annual.title" = "Для близкого — 1 год";
 "sponsor.purchase.product.annual.description" = "Доступ MorningHello для одного подопечного на один год";
+
+/* Sponsorship invitation errors */
+"sponsor.invitation.error.ok" = "Понятно";
+"sponsor.invitation.error.notFound.title" = "Ссылка не найдена";
+"sponsor.invitation.error.notFound.message" = "Эта ссылка не работает. Попросите близкого человека прислать вам приглашение ещё раз.";
+"sponsor.invitation.error.expired.title" = "Ссылка устарела";
+"sponsor.invitation.error.expired.message" = "Срок действия приглашения истёк. Попросите близкого человека создать новую ссылку.";
+"sponsor.invitation.error.cancelled.title" = "Приглашение заменено";
+"sponsor.invitation.error.cancelled.message" = "Для вас уже создана более новая ссылка. Откройте последнее полученное приглашение.";
+"sponsor.invitation.error.used.title" = "Ссылка уже использована";
+"sponsor.invitation.error.used.message" = "Это приглашение уже принял другой человек. Попросите близкого человека создать новое.";
+"sponsor.invitation.error.self.title" = "Приглашение предназначено другому человеку";
+"sponsor.invitation.error.self.message" = "Эту ссылку должен открыть тот, для кого вы оплатили MorningHello.";
+"sponsor.invitation.error.subscription.title" = "Подписка неактивна";
+"sponsor.invitation.error.subscription.message" = "Спонсорская подписка не оплачена или больше не действует. Попросите близкого человека проверить оплату.";
+"sponsor.invitation.error.userDeleted.title" = "Прежние данные удалены";
+"sponsor.invitation.error.userDeleted.message" = "Данные прежней установки MorningHello были удалены. Ссылка не использована. Если у вас была собственная покупка, восстановите её. В ином случае обратитесь в поддержку MorningHello.";
+"sponsor.invitation.error.unknown.title" = "Не удалось принять приглашение";
+"sponsor.invitation.error.unknown.message" = "Проверьте подключение к интернету и откройте ссылку ещё раз.";

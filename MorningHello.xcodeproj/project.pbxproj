@@ -102,6 +102,7 @@
 		29BCCD2B3030533A0027557C /* NovemberPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BCCD2A3030533A0027557C /* NovemberPostcardProvider.swift */; };
 		29BDC65C30082B5D00EEA736 /* CheckInNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */; };
 		29BDC65E30082BA800EEA736 /* NotificationDelegate..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */; };
+		29C28BF5307B9E0A00DD2347 /* SponsorshipUniversalLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C28BF4307B9E0A00DD2347 /* SponsorshipUniversalLinkHandler.swift */; };
 		29C3A9633060727C0031851C /* SubscriptionPlansInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C3A9623060727C0031851C /* SubscriptionPlansInfoView.swift */; };
 		29C3A9BA3061DAAB0031851C /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C3A9B93061DAAB0031851C /* SubscriptionView.swift */; };
 		29CA8E2B2FFEF94500F59ECA /* HolidaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */; };
@@ -225,6 +226,7 @@
 		29BCCD2A3030533A0027557C /* NovemberPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NovemberPostcardProvider.swift; sourceTree = "<group>"; };
 		29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInNotificationManager.swift; sourceTree = "<group>"; };
 		29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate..swift; sourceTree = "<group>"; };
+		29C28BF4307B9E0A00DD2347 /* SponsorshipUniversalLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipUniversalLinkHandler.swift; sourceTree = "<group>"; };
 		29C3A9623060727C0031851C /* SubscriptionPlansInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlansInfoView.swift; sourceTree = "<group>"; };
 		29C3A9B93061DAAB0031851C /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidaySettingsView.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				293CF91D30594601002DACBD /* SponsorshipViews.swift */,
 				29E0059E306E390100222DE6 /* SponsorshipL10n.swift */,
 				291FE03E3079478C00535330 /* SponsoredBeneficiaryDraft.swift */,
+				29C28BF4307B9E0A00DD2347 /* SponsorshipUniversalLinkHandler.swift */,
 			);
 			path = Sponsorship;
 			sourceTree = "<group>";
@@ -696,6 +699,7 @@
 				29BDC65C30082B5D00EEA736 /* CheckInNotificationManager.swift in Sources */,
 				29B76C88301D523900D1D295 /* CatholicHolidayProvider.swift in Sources */,
 				29B76C5D301B704500D1D295 /* ShareSheet.swift in Sources */,
+				29C28BF5307B9E0A00DD2347 /* SponsorshipUniversalLinkHandler.swift in Sources */,
 				297E66A13071766400CF3173 /* RegionalEmergencyCatalog.swift in Sources */,
 				29AFFFBA30390225007FE955 /* PostcardCatalogView..swift in Sources */,
 				29AFFFBC30390243007FE955 /* PostcardCollectionView..swift in Sources */,
@@ -892,7 +896,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -936,7 +940,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 31;
+				CURRENT_PROJECT_VERSION = 32;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

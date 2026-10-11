@@ -150,6 +150,17 @@ struct SponsoredBeneficiaryProvisioningResponse: Decodable, Equatable {
     }
 }
 
+// MARK: - POST /users/{appInstanceId}/sponsorship
+
+struct RedeemSponsorshipInvitationRequest: Encodable {
+    let token: String
+}
+
+struct RedeemSponsorshipInvitationResponse: Codable, Equatable {
+    let sponsored: SponsoredAccess
+    let prefill: SponsoredBeneficiaryPayload?
+}
+
 // MARK: - Ошибки API
 
 struct SponsorshipAPIErrorBody: Decodable {
@@ -235,6 +246,26 @@ enum SponsorshipAPIError:
 
             if code == "SUBSCRIPTION_NOT_ACTIVE" {
                 return "Спонсорская подписка не оплачена или больше не действует."
+            }
+
+            if code == "INVITATION_NOT_FOUND" {
+                return "Ссылка не работает. Попросите спонсора прислать её ещё раз."
+            }
+
+            if code == "INVITATION_EXPIRED" {
+                return "Ссылка устарела. Попросите спонсора создать новую."
+            }
+
+            if code == "INVITATION_CANCELLED" {
+                return "Спонсор уже создал более новую ссылку. Откройте её."
+            }
+
+            if code == "INVITATION_USED" {
+                return "Эту ссылку уже использовал другой человек."
+            }
+
+            if code == "CANNOT_SPONSOR_YOURSELF" {
+                return "Эту ссылку нужно отправить тому, о ком вы заботитесь."
             }
 
             if code == "SANDBOX_NOT_ACCEPTED" {

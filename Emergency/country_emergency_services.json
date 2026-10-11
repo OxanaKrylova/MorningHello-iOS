@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026.10.10.1",
-  "generatedAt": "2026-10-10T12:50:23Z",
+  "catalogVersion": "2026.10.11.1",
+  "generatedAt": "2026-10-11T15:55:00+03:00",
   "countryCodes": [
     "AU",
     "BZ",
@@ -10057,7 +10057,2306 @@
       "sourceType": "officialService",
       "verificationStatus": "verified",
       "verifiedAt": "2026-10-10"
+    },
+    {
+      "id": "au-poison-control-national",
+      "countryCode": "AU",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Poisons Information Centre",
+        "en": "Poisons Information Centre",
+        "es": "Poisons Information Centre"
+      },
+      "localizedNotes": {
+        "ru": "Национальный номер маршрутизации. Набирать внутри Австралии. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "131126",
+      "internationalNumber": "131126",
+      "sourceName": "Poisons Information Centre",
+      "sourceURL": "https://www.health.gov.au/contacts/poisons-information-centre?language=en",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "bz-poison-control-national",
+      "countryCode": "BZ",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Токсикологический центр не подтверждён",
+        "en": "Poison control center not confirmed",
+        "es": "Centro de toxicología no confirmado"
+      },
+      "localizedNotes": {
+        "ru": "Актуальный официальный центр и публичная токсикологическая линия не подтверждены. Это не означает отсутствия токсикологической помощи.",
+        "en": "A current verified public poison control phone number was not found. In an emergency, contact the local emergency service.",
+        "es": "No se encontró un número público vigente y verificado de toxicología. En una emergencia, comuníquese con el servicio local de emergencias."
+      },
+      "noteKey": null,
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": null,
+      "sourceURL": null,
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "gb-poison-control-national",
+      "countryCode": "GB",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National Poisons Information Service (NPIS)",
+        "en": "National Poisons Information Service (NPIS)",
+        "es": "National Poisons Information Service (NPIS)"
+      },
+      "localizedNotes": {
+        "ru": "Прямая линия только для медработников. Для населения NHS 111 в Англии, Шотландии и Уэльсе; это медицинская маршрутизация, а не номер NPIS. Режим работы: 24/7.",
+        "en": "This line is intended for healthcare professionals, not for direct public calls. Available 24/7.",
+        "es": "Esta línea está destinada a profesionales sanitarios, no a llamadas directas del público. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "03448920111",
+      "internationalNumber": "03448920111",
+      "sourceName": "National Poisons Information Service (NPIS)",
+      "sourceURL": "https://www.npis.org/Contact.html",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "gy-poison-control-national",
+      "countryCode": "GY",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Токсикологический центр не подтверждён",
+        "en": "Poison control center not confirmed",
+        "es": "Centro de toxicología no confirmado"
+      },
+      "localizedNotes": {
+        "ru": "Официальная публичная токсикологическая линия не подтверждена. Pharmacy & Poisons Board является регулятором; его административный телефон не включён.",
+        "en": "A current verified public poison control phone number was not found. In an emergency, contact the local emergency service.",
+        "es": "No se encontró un número público vigente y verificado de toxicología. En una emergencia, comuníquese con el servicio local de emergencias."
+      },
+      "noteKey": null,
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": null,
+      "sourceURL": null,
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "il-poison-control-national",
+      "countryCode": "IL",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Israel Poison Information Center, Rambam Health Care Campus",
+        "en": "Israel Poison Information Center, Rambam Health Care Campus",
+        "es": "Israel Poison Information Center, Rambam Health Care Campus"
+      },
+      "localizedNotes": {
+        "ru": "Национальная служба. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+97247771900",
+      "internationalNumber": "+97247771900",
+      "sourceName": "Israel Poison Information Center, Rambam Health Care Campus",
+      "sourceURL": "https://www.rambam.org.il/en/departmentsandclinics/laboratories-division/clinical-pharmacology-and-toxicology/national-center-for-the-treatment-of-poisoning/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "ie-poison-control-national",
+      "countryCode": "IE",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National Poisons Information Centre, Beaumont Hospital",
+        "en": "National Poisons Information Centre, Beaumont Hospital",
+        "es": "National Poisons Information Centre, Beaumont Hospital"
+      },
+      "localizedNotes": {
+        "ru": "Для медработников круглосуточно: +35318092566 или +35318379964. В hours указан график публичного номера. Режим работы: 08:00–22:00 ежедневно.",
+        "en": "Confirm dialing availability from your current phone and location. Available daily from 08:00 to 22:00.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible todos los días de 08:00 a 22:00."
+      },
+      "noteKey": null,
+      "dialString": "+35318092166",
+      "internationalNumber": "+35318092166",
+      "sourceName": "National Poisons Information Centre, Beaumont Hospital",
+      "sourceURL": "https://poisons.ie/contact-us/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "ca-poison-control-national",
+      "countryCode": "CA",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Canadian poison centres – national Poison-X routing",
+        "en": "Canadian poison centres – national Poison-X routing",
+        "es": "Canadian poison centres – national Poison-X routing"
+      },
+      "localizedNotes": {
+        "ru": "1-844-POISON-X внутри Канады; для Квебека отдельный номер Centre antipoison du Québec: +18004635060. Оба номера круглосуточные. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18447647669",
+      "internationalNumber": "+18447647669",
+      "sourceName": "Canadian poison centres – national Poison-X routing",
+      "sourceURL": "https://infopoison.ca/contact/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "mt-poison-control-national",
+      "countryCode": "MT",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Malta National Poisons Centre",
+        "en": "Malta National Poisons Centre",
+        "es": "Malta National Poisons Centre"
+      },
+      "localizedNotes": {
+        "ru": "Включая праздники. Медицинским учреждениям токсикологи оказывают консультации круглосуточно; публичная линия имеет указанный график. Режим работы: 08:00–20:00 ежедневно.",
+        "en": "Confirm dialing availability from your current phone and location. Available daily from 08:00 to 20:00.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible todos los días de 08:00 a 20:00."
+      },
+      "noteKey": null,
+      "dialString": "1774",
+      "internationalNumber": "1774",
+      "sourceName": "Malta National Poisons Centre",
+      "sourceURL": "https://mnpc.gov.mt/en/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-national",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Poison Help – regional poison center network",
+        "en": "Poison Help – regional poison center network",
+        "es": "Poison Help – regional poison center network"
+      },
+      "localizedNotes": {
+        "ru": "Бесплатная линия внутри США соединяет с региональным центром. Все 50 штатов перечислены отдельными записями. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Poison Help – regional poison center network",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "sg-poison-control-national",
+      "countryCode": "SG",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Токсикологический центр не подтверждён",
+        "en": "Poison control center not confirmed",
+        "es": "Centro de toxicología no confirmado"
+      },
+      "localizedNotes": {
+        "ru": "Действующая официальная публичная токсикологическая линия не подтверждена. Исторический Drug and Poison Information Centre и номер 64239119 не включены как действующий контакт.",
+        "en": "A current verified public poison control phone number was not found. In an emergency, contact the local emergency service.",
+        "es": "No se encontró un número público vigente y verificado de toxicología. En una emergencia, comuníquese con el servicio local de emergencias."
+      },
+      "noteKey": null,
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": null,
+      "sourceURL": null,
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "ar-poison-control-national",
+      "countryCode": "AR",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro Nacional de Intoxicaciones, Hospital Nacional Profesor Alejandro Posadas",
+        "en": "Centro Nacional de Intoxicaciones, Hospital Nacional Profesor Alejandro Posadas",
+        "es": "Centro Nacional de Intoxicaciones, Hospital Nacional Profesor Alejandro Posadas"
+      },
+      "localizedNotes": {
+        "ru": "Бесплатный национальный номер внутри Аргентины. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "08003330160",
+      "internationalNumber": "08003330160",
+      "sourceName": "Centro Nacional de Intoxicaciones, Hospital Nacional Profesor Alejandro Posadas",
+      "sourceURL": "https://www.argentina.gob.ar/salud/hospital-nacional-posadas/especialidades-medicas/toxicologia",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "bo-poison-control-national",
+      "countryCode": "BO",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro de Información Toxicológica, Hospital Boliviano Japonés, Santa Cruz",
+        "en": "Centro de Información Toxicológica, Hospital Boliviano Japonés, Santa Cruz",
+        "es": "Centro de Información Toxicológica, Hospital Boliviano Japonés, Santa Cruz"
+      },
+      "localizedNotes": {
+        "ru": "Номер опубликован в руководстве Минздрава 2024, стр. 35. Дополнительный контакт +59173146414. График и прямой доступ населения не уточнены; национальная универсальная линия не подтверждена.",
+        "en": "Direct public access to this service is not confirmed. Opening hours are not confirmed.",
+        "es": "No se ha confirmado el acceso directo del público a este servicio. No se ha confirmado el horario de atención."
+      },
+      "noteKey": null,
+      "dialString": "800106966",
+      "internationalNumber": "800106966",
+      "sourceName": "Centro de Información Toxicológica, Hospital Boliviano Japonés, Santa Cruz",
+      "sourceURL": "https://www.minsalud.gob.bo/component/jdownloads/?Itemid=2415&catid=58&id=886:guia-tecnica-para-la-prevencion-diagnostico-tratamiento-y-vigilancia-de-la-intoxicacion-por-mercurio-en-bolivia&task=download.send",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "ve-poison-control-national",
+      "countryCode": "VE",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro de Información y Asesoramiento Toxicológico (CIATO), Universidad Central de Venezuela",
+        "en": "Centro de Información y Asesoramiento Toxicológico (CIATO), Universidad Central de Venezuela",
+        "es": "Centro de Información y Asesoramiento Toxicológico (CIATO), Universidad Central de Venezuela"
+      },
+      "localizedNotes": {
+        "ru": "Центр указан в историческом национальном профиле. Актуальный телефон и действующий режим работы не подтверждены; номера из неофициальных справочников не перенесены.",
+        "en": "Direct public access to this service is not confirmed. Opening hours are not confirmed.",
+        "es": "No se ha confirmado el acceso directo del público a este servicio. No se ha confirmado el horario de atención."
+      },
+      "noteKey": null,
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": "Centro de Información y Asesoramiento Toxicológico (CIATO), Universidad Central de Venezuela",
+      "sourceURL": "https://cwm.unitar.org/national-profiles/nphomepage/venezuela.html",
+      "sourceType": "unconfirmed",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "gt-poison-control-national",
+      "countryCode": "GT",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro de Información y Asesoría Toxicológica (CIAT), Universidad de San Carlos",
+        "en": "Centro de Información y Asesoría Toxicológica (CIAT), Universidad de San Carlos",
+        "es": "Centro de Información y Asesoría Toxicológica (CIAT), Universidad de San Carlos"
+      },
+      "localizedNotes": {
+        "ru": "На официальной странице указан номер для нерабочих часов и внутренний 1-801-0029832; личный приём 07:00–15:00. Сеть RETOXLAC описывает круглосуточную линию, но график конкретного номера отдельно не подтверждён.",
+        "en": "Confirm dialing availability from your current phone and location. Opening hours are not confirmed.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. No se ha confirmado el horario de atención."
+      },
+      "noteKey": null,
+      "dialString": "+50222300807",
+      "internationalNumber": "+50222300807",
+      "sourceName": "Centro de Información y Asesoría Toxicológica (CIAT), Universidad de San Carlos",
+      "sourceURL": "https://edc-ccqqfar.usac.edu.gt/toxicologia/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "hn-poison-control-national",
+      "countryCode": "HN",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro de Información Toxicológica (CENTOX), Universidad Nacional Autónoma de Honduras",
+        "en": "Centro de Información Toxicológica (CENTOX), Universidad Nacional Autónoma de Honduras",
+        "es": "Centro de Información Toxicológica (CENTOX), Universidad Nacional Autónoma de Honduras"
+      },
+      "localizedNotes": {
+        "ru": "Официальный сайт указывает WhatsApp 24/7; альтернативный WhatsApp +50432767679. Приём обычных голосовых звонков не подтверждён. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+50433924403",
+      "internationalNumber": "+50433924403",
+      "sourceName": "Centro de Información Toxicológica (CENTOX), Universidad Nacional Autónoma de Honduras",
+      "sourceURL": "https://centox.unah.edu.hn/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "do-poison-control-national",
+      "countryCode": "DO",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro de Información y Asesoramiento Toxicológico / INTOXDOM, Hospital General Plaza de la Salud",
+        "en": "Centro de Información y Asesoramiento Toxicológico / INTOXDOM, Hospital General Plaza de la Salud",
+        "es": "Centro de Información y Asesoramiento Toxicológico / INTOXDOM, Hospital General Plaza de la Salud"
+      },
+      "localizedNotes": {
+        "ru": "Создание центра подтверждено правительством в 2024. Публичный номер в официальном источнике не найден; телефоны из публикаций СМИ не включены.",
+        "en": "Direct public access to this service is not confirmed. Opening hours are not confirmed.",
+        "es": "No se ha confirmado el acceso directo del público a este servicio. No se ha confirmado el horario de atención."
+      },
+      "noteKey": null,
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": "Centro de Información y Asesoramiento Toxicológico / INTOXDOM, Hospital General Plaza de la Salud",
+      "sourceURL": "https://www.presidencia.gob.do/noticias/ministerio-de-salud-publica-lanza-centro-de-asesoria-para-toxicologia",
+      "sourceType": "unconfirmed",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "es-poison-control-national",
+      "countryCode": "ES",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Servicio de Información Toxicológica (SIT), Instituto Nacional de Toxicología y Ciencias Forenses",
+        "en": "Servicio de Información Toxicológica (SIT), Instituto Nacional de Toxicología y Ciencias Forenses",
+        "es": "Servicio de Información Toxicológica (SIT), Instituto Nacional de Toxicología y Ciencias Forenses"
+      },
+      "localizedNotes": {
+        "ru": "Для медработников отдельный номер +34914112676. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+34915620420",
+      "internationalNumber": "+34915620420",
+      "sourceName": "Servicio de Información Toxicológica (SIT), Instituto Nacional de Toxicología y Ciencias Forenses",
+      "sourceURL": "https://www.mjusticia.gob.es/es/institucional/organismos/instituto-nacional/servicios/servicio-informacion/servicio-informacion1",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "co-poison-control-national",
+      "countryCode": "CO",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Línea Nacional de Toxicología, Ministerio de Salud / CISPROQUIM",
+        "en": "Línea Nacional de Toxicología, Ministerio de Salud / CISPROQUIM",
+        "es": "Línea Nacional de Toxicología, Ministerio de Salud / CISPROQUIM"
+      },
+      "localizedNotes": {
+        "ru": "Национальный бесплатный номер внутри Колумбии. Сохранён формат набора, опубликованный Минздравом. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "018000916012",
+      "internationalNumber": "018000916012",
+      "sourceName": "Línea Nacional de Toxicología, Ministerio de Salud / CISPROQUIM",
+      "sourceURL": "https://www.minsalud.gov.co/salud/prestacion-servicios/Paginas/linea-nacional-de-toxicologia.aspx",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "cr-poison-control-national",
+      "countryCode": "CR",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro Nacional de Control de Intoxicaciones, Hospital Nacional de Niños / CCSS",
+        "en": "Centro Nacional de Control de Intoxicaciones, Hospital Nacional de Niños / CCSS",
+        "es": "Centro Nacional de Control de Intoxicaciones, Hospital Nacional de Niños / CCSS"
+      },
+      "localizedNotes": {
+        "ru": "Национальная служба для населения всех возрастов, несмотря на размещение в детской больнице. Альтернативный внутренний бесплатный номер 80046869422. Контакт опубликован в профильной сети; отдельное подтверждение номера на сайте CCSS не получено. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+50622231028",
+      "internationalNumber": "+50622231028",
+      "sourceName": "Centro Nacional de Control de Intoxicaciones, Hospital Nacional de Niños / CCSS",
+      "sourceURL": "https://retoxlac.org/redes/redciatox/centro-nacional-de-control-de-intoxicaciones-de-costa-rica/",
+      "sourceType": "directory",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "mx-poison-control-national",
+      "countryCode": "MX",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro de Información Toxicológica, Facultad de Medicina, Universidad Autónoma de Nuevo León",
+        "en": "Centro de Información Toxicológica, Facultad de Medicina, Universidad Autónoma de Nuevo León",
+        "es": "Centro de Información Toxicológica, Facultad de Medicina, Universidad Autónoma de Nuevo León"
+      },
+      "localizedNotes": {
+        "ru": "Официальный государственный справочник в приложении II к NOM-003-STPS-2023. Альтернативный номер +528183486883. Центр в Монтеррее; наличие единой публичной национальной линии и условия доступа не подтверждены. Режим работы: 24/7.",
+        "en": "Direct public access to this service is not confirmed. Available 24/7.",
+        "es": "No se ha confirmado el acceso directo del público a este servicio. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+528183486936",
+      "internationalNumber": "+528183486936",
+      "sourceName": "Centro de Información Toxicológica, Facultad de Medicina, Universidad Autónoma de Nuevo León",
+      "sourceURL": "https://sidof.segob.gob.mx/notas/docFuente/5715162",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "ni-poison-control-national",
+      "countryCode": "NI",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Departamento de Toxicología, Dirección de Regulación Sanitaria, Ministerio de Salud",
+        "en": "Departamento de Toxicología, Dirección de Regulación Sanitaria, Ministerio de Salud",
+        "es": "Departamento de Toxicología, Dirección de Regulación Sanitaria, Ministerio de Salud"
+      },
+      "localizedNotes": {
+        "ru": "Общий номер MINSA. Добавочный 1294 для токсикологии указан только в RETOXLAC 2024; подтвердить переключение. Это не проверенная экстренная токсикологическая линия. Режим работы: В рабочие часы; точный график не указан.",
+        "en": "This is an institutional contact. Direct poison advice for the public is not confirmed. Available during working hours; the exact schedule is not published.",
+        "es": "Este es un contacto institucional. No se ha confirmado la consulta toxicológica directa para el público. Disponible en horario laboral; no se ha publicado el horario exacto."
+      },
+      "noteKey": null,
+      "dialString": "+50522647630,1294",
+      "internationalNumber": "+50522647630 ext. 1294",
+      "sourceName": "Departamento de Toxicología, Dirección de Regulación Sanitaria, Ministerio de Salud",
+      "sourceURL": "https://www.minsa.gob.ni/contactenos",
+      "sourceType": "unconfirmed",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "pa-poison-control-national",
+      "countryCode": "PA",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro de Investigación e Información de Medicamentos y Tóxicos (CIIMET), Universidad de Panamá",
+        "en": "Centro de Investigación e Información de Medicamentos y Tóxicos (CIIMET), Universidad de Panamá",
+        "es": "Centro de Investigación e Información de Medicamentos y Tóxicos (CIIMET), Universidad de Panamá"
+      },
+      "localizedNotes": {
+        "ru": "Официальный контакт центра. Круглосуточная экстренная линия и порядок срочных консультаций населения не подтверждены.",
+        "en": "This is an institutional contact. Direct poison advice for the public is not confirmed. Opening hours are not confirmed.",
+        "es": "Este es un contacto institucional. No se ha confirmado la consulta toxicológica directa para el público. No se ha confirmado el horario de atención."
+      },
+      "noteKey": null,
+      "dialString": "+5075236312",
+      "internationalNumber": "+5075236312",
+      "sourceName": "Centro de Investigación e Información de Medicamentos y Tóxicos (CIIMET), Universidad de Panamá",
+      "sourceURL": "https://centromedicamentosytoxicos.up.ac.pa/contactenos",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "py-poison-control-national",
+      "countryCode": "PY",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro Nacional de Toxicología, Hospital de Trauma",
+        "en": "Centro Nacional de Toxicología, Hospital de Trauma",
+        "es": "Centro Nacional de Toxicología, Hospital de Trauma"
+      },
+      "localizedNotes": {
+        "ru": "Официально рекомендованный токсикологический контакт; центр в Асунсьоне. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+59521220418",
+      "internationalNumber": "+59521220418",
+      "sourceName": "Centro Nacional de Toxicología, Hospital de Trauma",
+      "sourceURL": "https://dgvs.mspbs.gov.py/enfermedades/intoxicaciones-agudas-por-plaguicidas/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "pe-poison-control-national",
+      "countryCode": "PE",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro de Información, Control Toxicológico y Apoyo a la Gestión Ambiental (CICOTOX), UNMSM",
+        "en": "Centro de Información, Control Toxicológico y Apoyo a la Gestión Ambiental (CICOTOX), UNMSM",
+        "es": "Centro de Información, Control Toxicológico y Apoyo a la Gestión Ambiental (CICOTOX), UNMSM"
+      },
+      "localizedNotes": {
+        "ru": "Номер опубликован университетом в 2023, там же +51956740869 и график 07:00–22:00. Протокол совета 31.07.2025 сообщал, что телефонная линия не работала. В марте 2026 подтверждено возобновление лабораторных работ, но не работы линии. Актуальность телефона и графика требует подтверждения.",
+        "en": "Confirm dialing availability from your current phone and location. Opening hours are not confirmed.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. No se ha confirmado el horario de atención."
+      },
+      "noteKey": null,
+      "dialString": "+5113287700",
+      "internationalNumber": "+5113287700",
+      "sourceName": "Centro de Información, Control Toxicológico y Apoyo a la Gestión Ambiental (CICOTOX), UNMSM",
+      "sourceURL": "https://farmacia.unmsm.edu.pe/noticias/cicotox-de-unmsm-el-primer-centro-toxicologico-del-peru-disponible-las-24-horas-del-dia-1679075194411",
+      "sourceType": "unconfirmed",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "sv-poison-control-national",
+      "countryCode": "SV",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro de Información y Asesoría en Toxicología (CIATOX), Hospital Nacional Zacamil",
+        "en": "Centro de Información y Asesoría en Toxicología (CIATOX), Hospital Nacional Zacamil",
+        "es": "Centro de Información y Asesoría en Toxicología (CIATOX), Hospital Nacional Zacamil"
+      },
+      "localizedNotes": {
+        "ru": "Институциональный мобильный номер в профильной сети. Минздрав подтверждает функцию консультирования населения, но номер отдельно не подтверждён на его сайте. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+50360271459",
+      "internationalNumber": "+50360271459",
+      "sourceName": "Centro de Información y Asesoría en Toxicología (CIATOX), Hospital Nacional Zacamil",
+      "sourceURL": "https://retoxlac.org/redes/redciatox/el-salvador/",
+      "sourceType": "directory",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "uy-poison-control-national",
+      "countryCode": "UY",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro de Información y Asesoramiento Toxicológico (CIAT), Hospital de Clínicas, Universidad de la República",
+        "en": "Centro de Información y Asesoramiento Toxicológico (CIAT), Hospital de Clínicas, Universidad de la República",
+        "es": "Centro de Información y Asesoramiento Toxicológico (CIAT), Hospital de Clínicas, Universidad de la República"
+      },
+      "localizedNotes": {
+        "ru": "Короткий национальный номер внутри Уругвая. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "1722",
+      "internationalNumber": "1722",
+      "sourceName": "Centro de Información y Asesoramiento Toxicológico (CIAT), Hospital de Clínicas, Universidad de la República",
+      "sourceURL": "https://www.hc.edu.uy/Varios/Horarios-y-telefonos-de-Interes-uc19",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "cl-poison-control-national",
+      "countryCode": "CL",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro de Información Toxicológica de la Universidad Católica (CITUC)",
+        "en": "Centro de Información Toxicológica de la Universidad Católica (CITUC)",
+        "es": "Centro de Información Toxicológica de la Universidad Católica (CITUC)"
+      },
+      "localizedNotes": {
+        "ru": "Номер для отравлений. Отдельная линия химических аварий +56222473600 не подменяет номер токсикологической консультации. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+56226353800",
+      "internationalNumber": "+56226353800",
+      "sourceName": "Centro de Información Toxicológica de la Universidad Católica (CITUC)",
+      "sourceURL": "https://cituc.uc.cl/cituc-asistrencial/cituc-toxicologico/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "ec-poison-control-national",
+      "countryCode": "EC",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Centro de Información y Asesoramiento Toxicológico (CIATOX), Ministerio de Salud Pública",
+        "en": "Centro de Información y Asesoramiento Toxicológico (CIATOX), Ministerio de Salud Pública",
+        "es": "Centro de Información y Asesoramiento Toxicológico (CIATOX), Ministerio de Salud Pública"
+      },
+      "localizedNotes": {
+        "ru": "Бесплатный национальный номер внутри Эквадора. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "1800836366",
+      "internationalNumber": "1800836366",
+      "sourceName": "Centro de Información y Asesoramiento Toxicológico (CIATOX), Ministerio de Salud Pública",
+      "sourceURL": "https://www.salud.gob.ec/centro-de-informacion-y-asesoramiento-toxiocologico/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "am-poison-control-national",
+      "countryCode": "AM",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Клиника токсикологии и детской реанимации, университетский комплекс «Мурацан»",
+        "en": "Клиника токсикологии и детской реанимации, университетский комплекс «Мурацан»",
+        "es": "Клиника токсикологии и детской реанимации, университетский комплекс «Мурацан»"
+      },
+      "localizedNotes": {
+        "ru": "Короткий номер 82-82 внутри Армении. Служба детской токсикологии; не использовать как подтверждённый контакт для взрослых. Режим работы: 24/7.",
+        "en": "This service is intended for poisoning involving children. Available 24/7.",
+        "es": "Este servicio está destinado a intoxicaciones que afectan a menores. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "8282",
+      "internationalNumber": "8282",
+      "sourceName": "Клиника токсикологии и детской реанимации, университетский комплекс «Мурацан»",
+      "sourceURL": "https://muratsan.am/ru/departments-ru/toxicology-1/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "az-poison-control-national",
+      "countryCode": "AZ",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Poison Information Unit / Toxicology Department, Clinical Medicine Center, Baku",
+        "en": "Poison Information Unit / Toxicology Department, Clinical Medicine Center, Baku",
+        "es": "Poison Information Unit / Toxicology Department, Clinical Medicine Center, Baku"
+      },
+      "localizedNotes": {
+        "ru": "Номер и часы указаны в справочнике EAPCCT. Дополнительный контакт +994502149018. Прямой доступ населения отдельно не подтверждён. Режим работы: 24/7.",
+        "en": "Direct public access to this service is not confirmed. Available 24/7.",
+        "es": "No se ha confirmado el acceso directo del público a este servicio. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+994125979924",
+      "internationalNumber": "+994125979924",
+      "sourceName": "Poison Information Unit / Toxicology Department, Clinical Medicine Center, Baku",
+      "sourceURL": "https://eapcct.org/azerbaijan/",
+      "sourceType": "directory",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "by-poison-control-national",
+      "countryCode": "BY",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Токсикологическое отделение, Гродненская больница скорой медицинской помощи",
+        "en": "Токсикологическое отделение, Гродненская больница скорой медицинской помощи",
+        "es": "Токсикологическое отделение, Гродненская больница скорой медицинской помощи"
+      },
+      "localizedNotes": {
+        "ru": "Региональная служба Гродненской области для взрослых. Номер отделения; общенациональная публичная горячая линия и круглосуточное консультирование по этому номеру не подтверждены.",
+        "en": "This is an institutional contact. Direct poison advice for the public is not confirmed. Opening hours are not confirmed.",
+        "es": "Este es un contacto institucional. No se ha confirmado la consulta toxicológica directa para el público. No se ha confirmado el horario de atención."
+      },
+      "noteKey": null,
+      "dialString": "+375152681955",
+      "internationalNumber": "+375152681955",
+      "sourceName": "Токсикологическое отделение, Гродненская больница скорой медицинской помощи",
+      "sourceURL": "https://bsmpgrodno.by/struktura/lechebnye-otdeleniya/toksikologicheskoe-otdelenie/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "ge-poison-control-national",
+      "countryCode": "GE",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Токсикологический центр не подтверждён",
+        "en": "Poison control center not confirmed",
+        "es": "Centro de toxicología no confirmado"
+      },
+      "localizedNotes": {
+        "ru": "Актуальный официальный центр и публичный контакт не подтверждены. Историческое упоминание Toxicology National Information-Advisory Center of Georgia не использовано как доказательство действующей линии.",
+        "en": "A current verified public poison control phone number was not found. In an emergency, contact the local emergency service.",
+        "es": "No se encontró un número público vigente y verificado de toxicología. En una emergencia, comuníquese con el servicio local de emergencias."
+      },
+      "noteKey": null,
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": null,
+      "sourceURL": null,
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "kz-poison-control-national",
+      "countryCode": "KZ",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Токсикологическое отделение, Многопрофильная больница имени профессора Х. Ж. Макажанова, Караганда",
+        "en": "Токсикологическое отделение, Многопрофильная больница имени профессора Х. Ж. Макажанова, Караганда",
+        "es": "Токсикологическое отделение, Многопрофильная больница имени профессора Х. Ж. Макажанова, Караганда"
+      },
+      "localizedNotes": {
+        "ru": "Общий контакт больницы с официального сайта. Токсикологическое отделение оказывает экстренную помощь взрослым в Карагандинской области; национальная линия и график телефонной консультации не подтверждены.",
+        "en": "This is an institutional contact. Direct poison advice for the public is not confirmed. Opening hours are not confirmed.",
+        "es": "Este es un contacto institucional. No se ha confirmado la consulta toxicológica directa para el público. No se ha confirmado el horario de atención."
+      },
+      "noteKey": null,
+      "dialString": "+77212507676",
+      "internationalNumber": "+77212507676",
+      "sourceName": "Токсикологическое отделение, Многопрофильная больница имени профессора Х. Ж. Макажанова, Караганда",
+      "sourceURL": "https://maqajanov.kz/?page_id=5161",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "cy-poison-control-national",
+      "countryCode": "CY",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Cyprus Poison Centre",
+        "en": "Cyprus Poison Centre",
+        "es": "Cyprus Poison Centre"
+      },
+      "localizedNotes": {
+        "ru": "Короткий номер внутри Республики Кипр. Обслуживание северной части острова не подтверждено. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "1401",
+      "internationalNumber": "1401",
+      "sourceName": "Cyprus Poison Centre",
+      "sourceURL": "https://www.mlsi.gov.cy/mlsi/dli/dliup.nsf/All/C4A3C04B18DFF593C2257E370044E566",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "kg-poison-control-national",
+      "countryCode": "KG",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Токсикологическое отделение Бишкекского научно-исследовательского центра травматологии и ортопедии",
+        "en": "Токсикологическое отделение Бишкекского научно-исследовательского центра травматологии и ортопедии",
+        "es": "Токсикологическое отделение Бишкекского научно-исследовательского центра травматологии и ортопедии"
+      },
+      "localizedNotes": {
+        "ru": "Отделение подтверждается исторической публикацией государственного агентства. Современное название учреждения, прямой телефон и условия обращения требуют проверки.",
+        "en": "Direct public access to this service is not confirmed. Opening hours are not confirmed.",
+        "es": "No se ha confirmado el acceso directo del público a este servicio. No se ha confirmado el horario de atención."
+      },
+      "noteKey": null,
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": "Токсикологическое отделение Бишкекского научно-исследовательского центра травматологии и ортопедии",
+      "sourceURL": "https://ru.archive.kabar.kg/news/chem-bol-she-traviatsia-bishkekchane-rasskazal-zavotdeleniem-toksikologii-bnitctio/",
+      "sourceType": "unconfirmed",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "lv-poison-control-national",
+      "countryCode": "LV",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Saindēšanās un zāļu informācijas centrs, Rīgas Austrumu klīniskā universitātes slimnīca",
+        "en": "Saindēšanās un zāļu informācijas centrs, Rīgas Austrumu klīniskā universitātes slimnīca",
+        "es": "Saindēšanās un zāļu informācijas centrs, Rīgas Austrumu klīniskā universitātes slimnīca"
+      },
+      "localizedNotes": {
+        "ru": "Национальная информационная служба. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+37167042473",
+      "internationalNumber": "+37167042473",
+      "sourceName": "Saindēšanās un zāļu informācijas centrs, Rīgas Austrumu klīniskā universitātes slimnīca",
+      "sourceURL": "https://aslimnica.lv/stacionari/gailezers/intensivas-terapijas-klinika/saindesanas-un-zalu-informacijas-centrs/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "lt-poison-control-national",
+      "countryCode": "LT",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Poison Information specialists, State Medicines Control Agency (VVKT)",
+        "en": "Poison Information specialists, State Medicines Control Agency (VVKT)",
+        "es": "Poison Information specialists, State Medicines Control Agency (VVKT)"
+      },
+      "localizedNotes": {
+        "ru": "Официальные консультации населению и медицинским работникам. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+37052362052",
+      "internationalNumber": "+37052362052",
+      "sourceName": "Poison Information specialists, State Medicines Control Agency (VVKT)",
+      "sourceURL": "https://vvkt.lrv.lt/lt/informacija-apie-apsinuodijimus/konsultacijos-apsinuodijimu-klausimais/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "md-poison-control-national",
+      "countryCode": "MD",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "TOXAPEL, Institutul Mamei și Copilului",
+        "en": "TOXAPEL, Institutul Mamei și Copilului",
+        "es": "TOXAPEL, Institutul Mamei și Copilului"
+      },
+      "localizedNotes": {
+        "ru": "Линия для родителей при отравлении ребёнка; не использовать как подтверждённую службу для взрослых. Режим работы: 24/7.",
+        "en": "This service is intended for poisoning involving children. Available 24/7.",
+        "es": "Este servicio está destinado a intoxicaciones que afectan a menores. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+37322555220",
+      "internationalNumber": "+37322555220",
+      "sourceName": "TOXAPEL, Institutul Mamei și Copilului",
+      "sourceURL": "https://www.mama-copilul.md/comunicare/ultimele-stiri/51-ultimele-stiri/761-022-555-220-toxapel-teledfonul-de-urgen-pentru-p-rin-i-n-caz-de-intoxica-ii",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "tj-poison-control-national",
+      "countryCode": "TJ",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Токсикологический центр не подтверждён",
+        "en": "Poison control center not confirmed",
+        "es": "Centro de toxicología no confirmado"
+      },
+      "localizedNotes": {
+        "ru": "Актуальный официальный токсикологический центр с публичной линией не подтверждён. Номера лабораторий и регуляторных органов не включены.",
+        "en": "A current verified public poison control phone number was not found. In an emergency, contact the local emergency service.",
+        "es": "No se encontró un número público vigente y verificado de toxicología. En una emergencia, comuníquese con el servicio local de emergencias."
+      },
+      "noteKey": null,
+      "dialString": null,
+      "internationalNumber": null,
+      "sourceName": null,
+      "sourceURL": null,
+      "sourceType": "unconfirmed",
+      "verificationStatus": "unavailable",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "ua-poison-control-national",
+      "countryCode": "UA",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Токсикологическое отделение с палатой интенсивной терапии, Киевская городская клиническая больница скорой медицинской помощи",
+        "en": "Токсикологическое отделение с палатой интенсивной терапии, Киевская городская клиническая больница скорой медицинской помощи",
+        "es": "Токсикологическое отделение с палатой интенсивной терапии, Киевская городская клиническая больница скорой медицинской помощи"
+      },
+      "localizedNotes": {
+        "ru": "Контакт опубликован в разделе заведующего отделением; дополнительный +380445276916. Клиническая помощь в Киеве круглосуточная, но круглосуточная публичная консультация по указанным телефонам не подтверждена.",
+        "en": "This is an institutional contact. Direct poison advice for the public is not confirmed. Opening hours are not confirmed.",
+        "es": "Este es un contacto institucional. No se ha confirmado la consulta toxicológica directa para el público. No se ha confirmado el horario de atención."
+      },
+      "noteKey": null,
+      "dialString": "+380445276981",
+      "internationalNumber": "+380445276981",
+      "sourceName": "Токсикологическое отделение с палатой интенсивной терапии, Киевская городская клиническая больница скорой медицинской помощи",
+      "sourceURL": "https://emergency-hospital-kyiv.org.ua/токсикологічне-відділення/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "uz-poison-control-national",
+      "countryCode": "UZ",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Отделение токсикологии, Республиканский научный центр экстренной медицинской помощи, Ташкент",
+        "en": "Отделение токсикологии, Республиканский научный центр экстренной медицинской помощи, Ташкент",
+        "es": "Отделение токсикологии, Республиканский научный центр экстренной медицинской помощи, Ташкент"
+      },
+      "localizedNotes": {
+        "ru": "Телефон заведующего отделением с официальной страницы. Это клиническое подразделение; национальная публичная горячая линия и часы телефонного консультирования не подтверждены.",
+        "en": "This is an institutional contact. Direct poison advice for the public is not confirmed. Opening hours are not confirmed.",
+        "es": "Este es un contacto institucional. No se ha confirmado la consulta toxicológica directa para el público. No se ha confirmado el horario de atención."
+      },
+      "noteKey": null,
+      "dialString": "+998711503905",
+      "internationalNumber": "+998711503905",
+      "sourceName": "Отделение токсикологии, Республиканский научный центр экстренной медицинской помощи, Ташкент",
+      "sourceURL": "https://emerge-centre.uz/xirurgicheskiy-blok/ekstrenniy-toksikologiya/",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "ee-poison-control-national",
+      "countryCode": "EE",
+      "category": "poisonControl",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Mürgistusteabekeskus / Poison Information Centre, Health Board",
+        "en": "Mürgistusteabekeskus / Poison Information Centre, Health Board",
+        "es": "Mürgistusteabekeskus / Poison Information Centre, Health Board"
+      },
+      "localizedNotes": {
+        "ru": "Короткий номер внутри Эстонии; из-за рубежа +3727943794. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "16662",
+      "internationalNumber": "16662",
+      "sourceName": "Mürgistusteabekeskus / Poison Information Centre, Health Board",
+      "sourceURL": "https://www.terviseamet.ee/en/healthcare/crisis-management",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-al",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Alabama (AL)",
+      "localizedNames": {
+        "ru": "Alabama Poison Information Center, Children's of Alabama",
+        "en": "Alabama Poison Information Center, Children's of Alabama",
+        "es": "Alabama Poison Information Center, Children's of Alabama"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Alabama Poison Information Center, Children's of Alabama",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ak",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Alaska (AK)",
+      "localizedNames": {
+        "ru": "University of Kansas Hospital Poison Control Center / Kansas Poison Center",
+        "en": "University of Kansas Hospital Poison Control Center / Kansas Poison Center",
+        "es": "University of Kansas Hospital Poison Control Center / Kansas Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Обслуживающий центр находится в Канзасе. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "University of Kansas Hospital Poison Control Center / Kansas Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-az",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Arizona (AZ)",
+      "localizedNames": {
+        "ru": "Arizona Poison and Drug Information Center; Banner Poison Control Center",
+        "en": "Arizona Poison and Drug Information Center; Banner Poison Control Center",
+        "es": "Arizona Poison and Drug Information Center; Banner Poison Control Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Arizona Poison and Drug Information Center; Banner Poison Control Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ar",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Arkansas (AR)",
+      "localizedNames": {
+        "ru": "Arkansas Poison & Drug Information Center",
+        "en": "Arkansas Poison & Drug Information Center",
+        "es": "Arkansas Poison & Drug Information Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Arkansas Poison & Drug Information Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ca",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "California (CA)",
+      "localizedNames": {
+        "ru": "California Poison Control System",
+        "en": "California Poison Control System",
+        "es": "California Poison Control System"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "California Poison Control System",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-co",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Colorado (CO)",
+      "localizedNames": {
+        "ru": "Rocky Mountain Poison & Drug Safety (RMPDS)",
+        "en": "Rocky Mountain Poison & Drug Safety (RMPDS)",
+        "es": "Rocky Mountain Poison & Drug Safety (RMPDS)"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Rocky Mountain Poison & Drug Safety (RMPDS)",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ct",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Connecticut (CT)",
+      "localizedNames": {
+        "ru": "Connecticut Poison Control Center",
+        "en": "Connecticut Poison Control Center",
+        "es": "Connecticut Poison Control Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Connecticut Poison Control Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-de",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Delaware (DE)",
+      "localizedNames": {
+        "ru": "Poison Control Center, Children's Hospital of Philadelphia",
+        "en": "Poison Control Center, Children's Hospital of Philadelphia",
+        "es": "Poison Control Center, Children's Hospital of Philadelphia"
+      },
+      "localizedNotes": {
+        "ru": "Обслуживающий центр находится в Пенсильвании. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Poison Control Center, Children's Hospital of Philadelphia",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-fl",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Florida (FL)",
+      "localizedNames": {
+        "ru": "Florida Poison Information Centers: Jacksonville, Miami, Tampa",
+        "en": "Florida Poison Information Centers: Jacksonville, Miami, Tampa",
+        "es": "Florida Poison Information Centers: Jacksonville, Miami, Tampa"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Florida Poison Information Centers: Jacksonville, Miami, Tampa",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ga",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Georgia (GA)",
+      "localizedNames": {
+        "ru": "Georgia Poison Center",
+        "en": "Georgia Poison Center",
+        "es": "Georgia Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Georgia Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-hi",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Hawaii (HI)",
+      "localizedNames": {
+        "ru": "Rocky Mountain Poison & Drug Safety (RMPDS)",
+        "en": "Rocky Mountain Poison & Drug Safety (RMPDS)",
+        "es": "Rocky Mountain Poison & Drug Safety (RMPDS)"
+      },
+      "localizedNotes": {
+        "ru": "Обслуживающий центр находится в Колорадо. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Rocky Mountain Poison & Drug Safety (RMPDS)",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-id",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Idaho (ID)",
+      "localizedNames": {
+        "ru": "Nebraska Regional Poison Center",
+        "en": "Nebraska Regional Poison Center",
+        "es": "Nebraska Regional Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Обслуживающий центр находится в Небраске. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Nebraska Regional Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-il",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Illinois (IL)",
+      "localizedNames": {
+        "ru": "Illinois Poison Center",
+        "en": "Illinois Poison Center",
+        "es": "Illinois Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Illinois Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-in",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Indiana (IN)",
+      "localizedNames": {
+        "ru": "Indiana Poison Center, IU Health Methodist Hospital",
+        "en": "Indiana Poison Center, IU Health Methodist Hospital",
+        "es": "Indiana Poison Center, IU Health Methodist Hospital"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Indiana Poison Center, IU Health Methodist Hospital",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ia",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Iowa (IA)",
+      "localizedNames": {
+        "ru": "Iowa Poison Control Center",
+        "en": "Iowa Poison Control Center",
+        "es": "Iowa Poison Control Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Iowa Poison Control Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ks",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Kansas (KS)",
+      "localizedNames": {
+        "ru": "University of Kansas Hospital Poison Control Center / Kansas Poison Center",
+        "en": "University of Kansas Hospital Poison Control Center / Kansas Poison Center",
+        "es": "University of Kansas Hospital Poison Control Center / Kansas Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "University of Kansas Hospital Poison Control Center / Kansas Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ky",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Kentucky (KY)",
+      "localizedNames": {
+        "ru": "Kentucky Regional Poison Center",
+        "en": "Kentucky Regional Poison Center",
+        "es": "Kentucky Regional Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Kentucky Regional Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-la",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Louisiana (LA)",
+      "localizedNames": {
+        "ru": "Louisiana Poison Center",
+        "en": "Louisiana Poison Center",
+        "es": "Louisiana Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Louisiana Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-me",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Maine (ME)",
+      "localizedNames": {
+        "ru": "Northern New England Poison Center",
+        "en": "Northern New England Poison Center",
+        "es": "Northern New England Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Northern New England Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-md",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Maryland (MD)",
+      "localizedNames": {
+        "ru": "Maryland Poison Center",
+        "en": "Maryland Poison Center",
+        "es": "Maryland Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Maryland Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ma",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Massachusetts (MA)",
+      "localizedNames": {
+        "ru": "Regional Center for Poison Control and Prevention, Massachusetts and Rhode Island",
+        "en": "Regional Center for Poison Control and Prevention, Massachusetts and Rhode Island",
+        "es": "Regional Center for Poison Control and Prevention, Massachusetts and Rhode Island"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Regional Center for Poison Control and Prevention, Massachusetts and Rhode Island",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-mi",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Michigan (MI)",
+      "localizedNames": {
+        "ru": "Michigan Poison Center, Wayne State University",
+        "en": "Michigan Poison Center, Wayne State University",
+        "es": "Michigan Poison Center, Wayne State University"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Michigan Poison Center, Wayne State University",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-mn",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Minnesota (MN)",
+      "localizedNames": {
+        "ru": "Hennepin Regional Poison Center / Minnesota Poison Control System",
+        "en": "Hennepin Regional Poison Center / Minnesota Poison Control System",
+        "es": "Hennepin Regional Poison Center / Minnesota Poison Control System"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Hennepin Regional Poison Center / Minnesota Poison Control System",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ms",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Mississippi (MS)",
+      "localizedNames": {
+        "ru": "Mississippi Poison Control Center",
+        "en": "Mississippi Poison Control Center",
+        "es": "Mississippi Poison Control Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Mississippi Poison Control Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-mo",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Missouri (MO)",
+      "localizedNames": {
+        "ru": "Missouri Poison Center, SSM Cardinal Glennon Children's Medical Center",
+        "en": "Missouri Poison Center, SSM Cardinal Glennon Children's Medical Center",
+        "es": "Missouri Poison Center, SSM Cardinal Glennon Children's Medical Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Missouri Poison Center, SSM Cardinal Glennon Children's Medical Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-mt",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Montana (MT)",
+      "localizedNames": {
+        "ru": "Rocky Mountain Poison & Drug Safety (RMPDS)",
+        "en": "Rocky Mountain Poison & Drug Safety (RMPDS)",
+        "es": "Rocky Mountain Poison & Drug Safety (RMPDS)"
+      },
+      "localizedNotes": {
+        "ru": "Обслуживающий центр находится в Колорадо. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Rocky Mountain Poison & Drug Safety (RMPDS)",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ne",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Nebraska (NE)",
+      "localizedNames": {
+        "ru": "Nebraska Regional Poison Center",
+        "en": "Nebraska Regional Poison Center",
+        "es": "Nebraska Regional Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Nebraska Regional Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-nv",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Nevada (NV)",
+      "localizedNames": {
+        "ru": "Rocky Mountain Poison & Drug Safety (RMPDS)",
+        "en": "Rocky Mountain Poison & Drug Safety (RMPDS)",
+        "es": "Rocky Mountain Poison & Drug Safety (RMPDS)"
+      },
+      "localizedNotes": {
+        "ru": "Обслуживающий центр находится в Колорадо. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Rocky Mountain Poison & Drug Safety (RMPDS)",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-nh",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "New Hampshire (NH)",
+      "localizedNames": {
+        "ru": "Northern New England Poison Center",
+        "en": "Northern New England Poison Center",
+        "es": "Northern New England Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Обслуживающий центр находится в Мэне. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Northern New England Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-nj",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "New Jersey (NJ)",
+      "localizedNames": {
+        "ru": "New Jersey Poison Information and Education System (NJPIES)",
+        "en": "New Jersey Poison Information and Education System (NJPIES)",
+        "es": "New Jersey Poison Information and Education System (NJPIES)"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "New Jersey Poison Information and Education System (NJPIES)",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-nm",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "New Mexico (NM)",
+      "localizedNames": {
+        "ru": "New Mexico Poison and Drug Information Center",
+        "en": "New Mexico Poison and Drug Information Center",
+        "es": "New Mexico Poison and Drug Information Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "New Mexico Poison and Drug Information Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ny",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "New York (NY)",
+      "localizedNames": {
+        "ru": "New York City Poison Control Center; Upstate New York Poison Center",
+        "en": "New York City Poison Control Center; Upstate New York Poison Center",
+        "es": "New York City Poison Control Center; Upstate New York Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "New York City Poison Control Center; Upstate New York Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-nc",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "North Carolina (NC)",
+      "localizedNames": {
+        "ru": "North Carolina Poison Control",
+        "en": "North Carolina Poison Control",
+        "es": "North Carolina Poison Control"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "North Carolina Poison Control",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-nd",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "North Dakota (ND)",
+      "localizedNames": {
+        "ru": "North Dakota Poison Center, served by Hennepin Regional Poison Center",
+        "en": "North Dakota Poison Center, served by Hennepin Regional Poison Center",
+        "es": "North Dakota Poison Center, served by Hennepin Regional Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Обслуживается центром Hennepin в Миннесоте. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "North Dakota Poison Center, served by Hennepin Regional Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-oh",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Ohio (OH)",
+      "localizedNames": {
+        "ru": "Central Ohio Poison Center; Cincinnati Drug and Poison Information Center",
+        "en": "Central Ohio Poison Center; Cincinnati Drug and Poison Information Center",
+        "es": "Central Ohio Poison Center; Cincinnati Drug and Poison Information Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Central Ohio Poison Center; Cincinnati Drug and Poison Information Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ok",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Oklahoma (OK)",
+      "localizedNames": {
+        "ru": "Oklahoma Poison Control Center",
+        "en": "Oklahoma Poison Control Center",
+        "es": "Oklahoma Poison Control Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Oklahoma Poison Control Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-or",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Oregon (OR)",
+      "localizedNames": {
+        "ru": "Oregon Poison Center",
+        "en": "Oregon Poison Center",
+        "es": "Oregon Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Oregon Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-pa",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Pennsylvania (PA)",
+      "localizedNames": {
+        "ru": "Pittsburgh Poison Center; Poison Control Center, Children's Hospital of Philadelphia",
+        "en": "Pittsburgh Poison Center; Poison Control Center, Children's Hospital of Philadelphia",
+        "es": "Pittsburgh Poison Center; Poison Control Center, Children's Hospital of Philadelphia"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Pittsburgh Poison Center; Poison Control Center, Children's Hospital of Philadelphia",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ri",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Rhode Island (RI)",
+      "localizedNames": {
+        "ru": "Regional Center for Poison Control and Prevention, Massachusetts and Rhode Island",
+        "en": "Regional Center for Poison Control and Prevention, Massachusetts and Rhode Island",
+        "es": "Regional Center for Poison Control and Prevention, Massachusetts and Rhode Island"
+      },
+      "localizedNotes": {
+        "ru": "Обслуживающий центр находится в Массачусетсе. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Regional Center for Poison Control and Prevention, Massachusetts and Rhode Island",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-sc",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "South Carolina (SC)",
+      "localizedNames": {
+        "ru": "Palmetto Poison Center",
+        "en": "Palmetto Poison Center",
+        "es": "Palmetto Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Palmetto Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-sd",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "South Dakota (SD)",
+      "localizedNames": {
+        "ru": "Sanford Poison Center, served by Hennepin Regional Poison Center",
+        "en": "Sanford Poison Center, served by Hennepin Regional Poison Center",
+        "es": "Sanford Poison Center, served by Hennepin Regional Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Обслуживается центром Hennepin в Миннесоте. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Sanford Poison Center, served by Hennepin Regional Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-tn",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Tennessee (TN)",
+      "localizedNames": {
+        "ru": "Tennessee Poison Center",
+        "en": "Tennessee Poison Center",
+        "es": "Tennessee Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Tennessee Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-tx",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Texas (TX)",
+      "localizedNames": {
+        "ru": "Texas Poison Center Network: Central, North, South, Southeast, Panhandle, West Texas",
+        "en": "Texas Poison Center Network: Central, North, South, Southeast, Panhandle, West Texas",
+        "es": "Texas Poison Center Network: Central, North, South, Southeast, Panhandle, West Texas"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Texas Poison Center Network: Central, North, South, Southeast, Panhandle, West Texas",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-ut",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Utah (UT)",
+      "localizedNames": {
+        "ru": "Utah Poison Control Center",
+        "en": "Utah Poison Control Center",
+        "es": "Utah Poison Control Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Utah Poison Control Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-vt",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Vermont (VT)",
+      "localizedNames": {
+        "ru": "Northern New England Poison Center",
+        "en": "Northern New England Poison Center",
+        "es": "Northern New England Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Обслуживающий центр находится в Мэне. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Northern New England Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-va",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Virginia (VA)",
+      "localizedNames": {
+        "ru": "Blue Ridge Poison Center; Virginia Poison Center",
+        "en": "Blue Ridge Poison Center; Virginia Poison Center",
+        "es": "Blue Ridge Poison Center; Virginia Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Blue Ridge Poison Center; Virginia Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-wa",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Washington (WA)",
+      "localizedNames": {
+        "ru": "Washington Poison Center",
+        "en": "Washington Poison Center",
+        "es": "Washington Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Washington Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-wv",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "West Virginia (WV)",
+      "localizedNames": {
+        "ru": "West Virginia Poison Center",
+        "en": "West Virginia Poison Center",
+        "es": "West Virginia Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "West Virginia Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-wi",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Wisconsin (WI)",
+      "localizedNames": {
+        "ru": "Wisconsin Poison Center",
+        "en": "Wisconsin Poison Center",
+        "es": "Wisconsin Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Региональные центры перечислены по справочнику HRSA. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Wisconsin Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "us-poison-control-wy",
+      "countryCode": "US",
+      "category": "poisonControl",
+      "scope": "regional",
+      "region": "Wyoming (WY)",
+      "localizedNames": {
+        "ru": "Nebraska Regional Poison Center",
+        "en": "Nebraska Regional Poison Center",
+        "es": "Nebraska Regional Poison Center"
+      },
+      "localizedNotes": {
+        "ru": "Обслуживающий центр находится в Небраске. Бесплатный национальный номер внутри США; фактический центр определяется маршрутизацией вызова. Режим работы: 24/7.",
+        "en": "Confirm dialing availability from your current phone and location. Available 24/7.",
+        "es": "Confirme la disponibilidad de la llamada desde su teléfono y ubicación actuales. Disponible las 24 horas."
+      },
+      "noteKey": null,
+      "dialString": "+18002221222",
+      "internationalNumber": "+18002221222",
+      "sourceName": "Nebraska Regional Poison Center",
+      "sourceURL": "https://poisonhelp.hrsa.gov/poison-centers/find-poison-center",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-11"
     }
   ]
 }
-

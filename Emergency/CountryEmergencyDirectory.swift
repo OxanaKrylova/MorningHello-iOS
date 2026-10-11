@@ -27,6 +27,7 @@ enum EmergencyServiceCategory: String, Codable, CaseIterable {
     case healthAdvice
     case diabetesSupport
     case traumaCare
+    case poisonControl
     case veterinaryEmergency
     case petAftercare
     case seniorSupport
@@ -50,6 +51,8 @@ enum EmergencyServiceCategory: String, Codable, CaseIterable {
         case .healthAdvice: return "emergency.service.health_advice"
         case .diabetesSupport: return "emergency.service.diabetes_support"
         case .traumaCare: return "emergency.service.trauma_care"
+        case .poisonControl:
+            return "emergency.service.poison_control"
         case .veterinaryEmergency: return "emergency.service.veterinary_emergency"
         case .petAftercare: return "emergency.service.pet_aftercare"
         case .seniorSupport: return "emergency.service.senior_support"
@@ -75,6 +78,8 @@ enum EmergencyServiceCategory: String, Codable, CaseIterable {
         case .healthAdvice: return "stethoscope"
         case .diabetesSupport: return "cross.case.fill"
         case .traumaCare: return "bandage.fill"
+        case .poisonControl:
+            return "cross.case.fill"
         case .veterinaryEmergency: return "pawprint.fill"
         case .petAftercare: return "pawprint.circle.fill"
         case .other: return "phone.fill"
@@ -212,13 +217,16 @@ struct CountryEmergencyService: Identifiable, Codable {
             .first
             .map(String.init)
 
-        let candidates = [
-            normalized,
-            base,
-            "en",
-            "ru",
-            "es"
-        ].compactMap { $0 }
+        var candidates = [normalized]
+
+        if let base,
+           !candidates.contains(base) {
+            candidates.append(base)
+        }
+
+        if !candidates.contains("en") {
+            candidates.append("en")
+        }
 
         for key in candidates {
             if let value = values[key], !value.isEmpty {
@@ -226,7 +234,7 @@ struct CountryEmergencyService: Identifiable, Codable {
             }
         }
 
-        return values.values.first(where: { !$0.isEmpty })
+        return nil
     }
 }
 

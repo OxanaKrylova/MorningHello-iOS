@@ -18,7 +18,60 @@ final class SponsorshipUniversalLinkHandler:
         case idle
         case redeeming
         case redeemed
-        case failed(String)
+        case failed(InvitationFailure)
+    }
+
+    enum InvitationFailure: Equatable {
+        case notFound
+        case expired
+        case cancelled
+        case used
+        case cannotSponsorYourself
+        case subscriptionNotActive
+        case userDeleted
+        case unknown
+
+        var titleKey: String {
+            switch self {
+            case .notFound:
+                return "sponsor.invitation.error.notFound.title"
+            case .expired:
+                return "sponsor.invitation.error.expired.title"
+            case .cancelled:
+                return "sponsor.invitation.error.cancelled.title"
+            case .used:
+                return "sponsor.invitation.error.used.title"
+            case .cannotSponsorYourself:
+                return "sponsor.invitation.error.self.title"
+            case .subscriptionNotActive:
+                return "sponsor.invitation.error.subscription.title"
+            case .userDeleted:
+                return "sponsor.invitation.error.userDeleted.title"
+            case .unknown:
+                return "sponsor.invitation.error.unknown.title"
+            }
+        }
+
+        var messageKey: String {
+            switch self {
+            case .notFound:
+                return "sponsor.invitation.error.notFound.message"
+            case .expired:
+                return "sponsor.invitation.error.expired.message"
+            case .cancelled:
+                return "sponsor.invitation.error.cancelled.message"
+            case .used:
+                return "sponsor.invitation.error.used.message"
+            case .cannotSponsorYourself:
+                return "sponsor.invitation.error.self.message"
+            case .subscriptionNotActive:
+                return "sponsor.invitation.error.subscription.message"
+            case .userDeleted:
+                return "sponsor.invitation.error.userDeleted.message"
+            case .unknown:
+                return "sponsor.invitation.error.unknown.message"
+            }
+        }
     }
 
     @Published private(set)
@@ -73,6 +126,14 @@ final class SponsorshipUniversalLinkHandler:
 
         SponsoredInvitationRedemptionStorage
             .clear()
+    }
+
+    func dismissError() {
+        guard case .failed = state else {
+            return
+        }
+
+        state = .idle
     }
 
     static func token(
@@ -140,8 +201,52 @@ final class SponsorshipUniversalLinkHandler:
 
         } catch {
             state = .failed(
-                error.localizedDescription
+                invitationFailure(
+                    from: error
+                )
             )
+        }
+    }
+
+    private func invitationFailure(
+        from error: Error
+    ) -> InvitationFailure {
+
+        guard let apiError =
+                error as? SponsorshipAPIError,
+              case let .server(
+                _,
+                code,
+                _
+              ) = apiError
+        else {
+            return .unknown
+        }
+
+        switch code {
+        case "INVITATION_NOT_FOUND":
+            return .notFound
+
+        case "INVITATION_EXPIRED":
+            return .expired
+
+        case "INVITATION_CANCELLED":
+            return .cancelled
+
+        case "INVITATION_USED":
+            return .used
+
+        case "CANNOT_SPONSOR_YOURSELF":
+            return .cannotSponsorYourself
+
+        case "SUBSCRIPTION_NOT_ACTIVE":
+            return .subscriptionNotActive
+
+        case "USER_DELETED":
+            return .userDeleted
+
+        default:
+            return .unknown
         }
     }
 }
@@ -200,15 +305,86 @@ enum SponsoredInvitationRedemptionStorage {
     }
 }
 
+private struct SponsorshipUniversalLinkModifier:
+    ViewModifier {
+
+    @StateObject
+    private var handler =
+        SponsorshipUniversalLinkHandler.shared
+
+    private var failure:
+        SponsorshipUniversalLinkHandler
+            .InvitationFailure? {
+
+        guard case let .failed(failure) =
+                handler.state
+        else {
+            return nil
+        }
+
+        return failure
+    }
+
+    private var isShowingError:
+        Binding<Bool> {
+
+        Binding(
+            get: {
+                failure != nil
+            },
+            set: { isPresented in
+                if !isPresented {
+                    handler.dismissError()
+                }
+            }
+        )
+    }
+
+    func body(
+        content: Content
+    ) -> some View {
+
+        content
+            .onOpenURL { url in
+                _ = handler.handle(
+                    url: url
+                )
+            }
+            .alert(
+                failure.map {
+                    SponsorshipL10n.text(
+                        $0.titleKey
+                    )
+                } ?? "",
+                isPresented: isShowingError
+            ) {
+                Button(
+                    SponsorshipL10n.text(
+                        "sponsor.invitation.error.ok"
+                    ),
+                    role: .cancel
+                ) {
+                    handler.dismissError()
+                }
+            } message: {
+                if let failure {
+                    Text(
+                        SponsorshipL10n.text(
+                            failure.messageKey
+                        )
+                    )
+                }
+            }
+    }
+}
+
 extension View {
 
     func handlesSponsorshipUniversalLinks()
     -> some View {
 
-        onOpenURL { url in
-            _ = SponsorshipUniversalLinkHandler
-                .shared
-                .handle(url: url)
-        }
+        modifier(
+            SponsorshipUniversalLinkModifier()
+        )
     }
 }

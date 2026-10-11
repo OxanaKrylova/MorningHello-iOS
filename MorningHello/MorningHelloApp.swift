@@ -39,6 +39,7 @@ struct MorningHelloApp: App {
                 } else {
                     PendingContactReminderHost {
                         SponsorshipRootView()
+                            .handlesSponsorshipUniversalLinks()
                             .task {
                                 _ = await CheckInNotificationManager
                                     .shared

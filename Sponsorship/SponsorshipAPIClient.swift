@@ -105,6 +105,31 @@ actor SponsorshipAPIClient {
         )
     }
 
+    func redeemInvitation(
+        appInstanceId: UUID,
+        token: String
+    ) async throws
+    -> RedeemSponsorshipInvitationResponse {
+
+        let body =
+            RedeemSponsorshipInvitationRequest(
+                token: token
+            )
+
+        let url = baseURL
+            .appendingPathComponent("users")
+            .appendingPathComponent(
+                appInstanceId.uuidString
+            )
+            .appendingPathComponent("sponsorship")
+
+        return try await send(
+            url: url,
+            method: "POST",
+            body: body
+        )
+    }
+
     private func endpoint(
         appInstanceId: UUID
     ) -> URL {
