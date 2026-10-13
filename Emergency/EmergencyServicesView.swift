@@ -758,17 +758,6 @@ struct EmergencyServicesView: View {
     private var directory:
         CountryEmergencyDirectory? {
 
-        guard
-            emergencyDirectoryStore
-                .document
-                .countryCodes
-                .contains(
-                    normalizedCountryCode
-                )
-        else {
-            return nil
-        }
-
         let publicServicesDirectory =
             CountryEmergencyCatalog.directory(
                 for: normalizedCountryCode

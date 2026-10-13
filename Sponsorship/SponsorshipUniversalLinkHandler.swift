@@ -181,6 +181,10 @@ final class SponsorshipUniversalLinkHandler:
                 AppInstanceIDProvider
                     .getOrCreate()
 
+            // Capture BEFORE redemption or any imported onboarding flags change.
+            let wasNewInstallation =
+                SponsoredInvitationRedemptionStorage.isNewInstallation
+
             let response = try await apiClient
                 .redeemInvitation(
                     appInstanceId:
@@ -190,7 +194,10 @@ final class SponsorshipUniversalLinkHandler:
                 )
 
             try SponsoredInvitationRedemptionStorage
-                .save(response)
+                .save(
+                    response,
+                    wasNewInstallation: wasNewInstallation
+                )
 
             redeemedInvitation = response
             state = .redeemed
@@ -252,39 +259,48 @@ final class SponsorshipUniversalLinkHandler:
 }
 
 enum SponsoredInvitationRedemptionStorage {
+    private static let newInstallationSnapshotKey =
+        "sponsored_invitation_new_installation_at_redemption_v1"
+
+    /// While a response is pending, use the PRE-redemption snapshot.
+    /// Do not reevaluate this after onboarding flags have changed.
     static var isNewInstallation: Bool {
         let defaults = UserDefaults.standard
-
-        let hasSelectedRole = defaults.bool(
-            forKey: "onboarding_role_selection_completed"
-        )
-
-        let hasPersonalOnboarding = defaults.bool(
-            forKey: "contacts_onboarding_completed"
-        ) || defaults.bool(
-            forKey: "holiday_onboarding_completed"
-        ) || defaults.bool(
-            forKey: "optional_setup_onboarding_completed"
-        )
-
-        let hasExistingProfile =
-            !(defaults.string(
-                forKey: "profile_display_name"
-            ) ?? "").trimmingCharacters(
-                in: .whitespacesAndNewlines
-            ).isEmpty
-
-        let hasExistingMode =
-            !(defaults.string(
-                forKey: "morninghello_usage_mode"
-            ) ?? "").isEmpty
-
-        return !hasSelectedRole
-            && !hasPersonalOnboarding
-            && !hasExistingProfile
-            && !hasExistingMode
+        if defaults.data(forKey: responseKey) != nil {
+            // Older pending redemptions with no snapshot must fail closed.
+            return defaults.bool(forKey: newInstallationSnapshotKey)
+        }
+        return isEligibleBeforeRedemption(defaults)
     }
-    
+
+    private static func isEligibleBeforeRedemption(
+        _ defaults: UserDefaults
+    ) -> Bool {
+        let completedKeys = [
+            "onboarding_role_selection_completed",
+            "contacts_onboarding_completed",
+            "holiday_onboarding_completed",
+            "optional_setup_onboarding_completed",
+            "monitoring_setup_intro_completed",
+            "check_in_interval_confirmed",
+            "sponsor_onboarding_intro_completed",
+            "sponsor_beneficiary_profile_completed"
+        ]
+        if completedKeys.contains(where: { defaults.bool(forKey: $0) }) {
+            return false
+        }
+        let name = defaults.string(forKey: "profile_display_name")?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let mode = defaults.string(forKey: "morninghello_usage_mode")?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let phone = defaults.string(forKey: "profile_phone")?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let country = defaults.string(forKey: "profile_country_code")?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        return name.isEmpty && mode.isEmpty && phone.isEmpty && country.isEmpty
+            && defaults.data(forKey: "emergency_contacts") == nil
+    }
+
     private static let responseKey =
         "sponsored_invitation_redemption_response"
 
@@ -301,14 +317,19 @@ enum SponsoredInvitationRedemptionStorage {
     }()
 
     static func save(
-        _ response:
-            RedeemSponsorshipInvitationResponse
+        _ response: RedeemSponsorshipInvitationResponse,
+        wasNewInstallation: Bool
     ) throws {
 
         let data = try encoder.encode(
             response
         )
 
+        // Store snapshot first so restored redemptions cannot lose eligibility.
+        UserDefaults.standard.set(
+            wasNewInstallation,
+            forKey: newInstallationSnapshotKey
+        )
         UserDefaults.standard.set(
             data,
             forKey: responseKey
@@ -333,6 +354,9 @@ enum SponsoredInvitationRedemptionStorage {
     static func clear() {
         UserDefaults.standard.removeObject(
             forKey: responseKey
+        )
+        UserDefaults.standard.removeObject(
+            forKey: newInstallationSnapshotKey
         )
     }
 }

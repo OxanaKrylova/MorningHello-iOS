@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026.10.13.1",
-  "generatedAt": "2026-10-13T19:15:00+03:00",
+  "catalogVersion": "2026.10.13.2",
+  "generatedAt": "2026-10-13T20:30:00+03:00",
   "countryCodes": [
     "AU",
     "BZ",
@@ -10380,7 +10380,7 @@
       "sourceName": "Centro de Información y Asesoramiento Toxicológico (CIATO), Universidad Central de Venezuela",
       "sourceURL": "https://cwm.unitar.org/national-profiles/nphomepage/venezuela.html",
       "sourceType": "unconfirmed",
-      "verificationStatus": "needsVerification",
+      "verificationStatus": "unavailable",
       "verifiedAt": "2026-10-11"
     },
     {
@@ -10455,7 +10455,7 @@
       "sourceName": "Centro de Información y Asesoramiento Toxicológico / INTOXDOM, Hospital General Plaza de la Salud",
       "sourceURL": "https://www.presidencia.gob.do/noticias/ministerio-de-salud-publica-lanza-centro-de-asesoria-para-toxicologia",
       "sourceType": "unconfirmed",
-      "verificationStatus": "needsVerification",
+      "verificationStatus": "unavailable",
       "verifiedAt": "2026-10-11"
     },
     {
@@ -10930,7 +10930,7 @@
       "sourceName": "Токсикологическое отделение Бишкекского научно-исследовательского центра травматологии и ортопедии",
       "sourceURL": "https://ru.archive.kabar.kg/news/chem-bol-she-traviatsia-bishkekchane-rasskazal-zavotdeleniem-toksikologii-bnitctio/",
       "sourceType": "unconfirmed",
-      "verificationStatus": "needsVerification",
+      "verificationStatus": "unavailable",
       "verifiedAt": "2026-10-11"
     },
     {

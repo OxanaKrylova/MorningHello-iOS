@@ -275,13 +275,10 @@ struct ConnectionReminderFormView: View {
             }
             .scrollContentBackground(.hidden)
             .background(
-                Color(
-                    red: 1.00,
-                    green: 0.97,
-                    blue: 0.87
-                )
-                .ignoresSafeArea()
+                AppAdaptiveColor.warmFormBackground
+                    .ignoresSafeArea()
             )
+            .tint(.orange)
             .navigationBarTitleDisplayMode(
                 .inline
             )
