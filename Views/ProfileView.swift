@@ -220,9 +220,6 @@ struct ProfileView: View {
 
                             birthdaySection
 
-                            if SponsorshipFeatureConfiguration.isEnabled {
-                                sponsorshipSection
-                            }
 
                             Text(
                                 "Данные профиля сохраняются на устройстве и синхронизируются с защищённым сервером MorningHello."

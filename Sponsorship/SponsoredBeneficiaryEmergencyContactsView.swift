@@ -511,7 +511,8 @@ struct SponsoredBeneficiaryEmergencyContactsView: View {
         contentType: UITextContentType?,
         keyboardType: UIKeyboardType = .default
     ) -> some View {
-        TextField(title, text: text)
+        TextField("", text: text)
+            .accessibilityLabel(title)
             .focused(
                 $focusedField,
                 equals: field

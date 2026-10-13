@@ -138,7 +138,7 @@ struct SponsorHomeView: View {
                 }
 
                 VStack(spacing: 22) {
-                    HStack(alignment: .center, spacing: 8) {
+                    HStack(alignment: .center, spacing: 10) {
                         greetingHeader
                         Button {
                             showSponsorSettings = true
@@ -153,6 +153,7 @@ struct SponsorHomeView: View {
                         .buttonStyle(.plain)
                         .accessibilityLabel(settingsAccessibilityLabel)
                     }
+                    .frame(maxWidth: .infinity, alignment: .center)
 
                     invitationCard
                         .frame(maxWidth: 340)
@@ -378,7 +379,9 @@ struct SponsorHomeView: View {
             .foregroundStyle(headerSecondaryColor)
             .multilineTextAlignment(.center)
         }
-        .frame(maxWidth: .infinity)
+        // Do not expand within the HStack: the Settings button should
+        // sit next to the greeting instead of at the screen edge.
+        .fixedSize(horizontal: false, vertical: true)
     }
 
     @ViewBuilder

@@ -1767,8 +1767,7 @@ struct ContentView: View {
                                 height: 78
                             )
                             .background(
-                                AppAdaptiveColor
-                                    .warmCardBackground,
+                                Color.white.opacity(0.94),
                                 in: RoundedRectangle(
                                     cornerRadius: 22,
                                     style: .continuous
@@ -1832,8 +1831,7 @@ struct ContentView: View {
                                 height: 78
                             )
                             .background(
-                                AppAdaptiveColor
-                                    .warmCardBackground,
+                                Color.white.opacity(0.94),
                                 in: RoundedRectangle(
                                     cornerRadius: 22,
                                     style: .continuous
