@@ -35,9 +35,11 @@ struct SponsoredInvitationEntryView: View {
                     Spacer()
                 }
 
-                Image(systemName: "envelope.open.fill")
-                    .font(.system(size: 54))
-                    .foregroundStyle(.orange)
+                Image("icon_Invitation")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+                    .accessibilityHidden(true)
 
                 Text(tr("Activate Your Invitation", "Активировать приглашение", "Activar tu invitación"))
                     .font(.system(size: 30, weight: .bold, design: .rounded))
@@ -50,7 +52,7 @@ struct SponsoredInvitationEntryView: View {
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
 
-                TextField("https://api.morninghelloapp.com/s/...", text: $invitationURL, axis: .vertical)
+                TextField(tr("Paste invitation link here", "Вставьте ссылку приглашения", "Pega aquí el enlace de invitación"), text: $invitationURL, axis: .vertical)
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
                     .keyboardType(.URL)

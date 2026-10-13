@@ -8,14 +8,16 @@
 import Foundation
 import SwiftUI
 
-struct SponsoredBeneficiaryHolidayPreferencesView: View {
-
+struct SponsoredBeneficiaryHolidayPreferencesView:
+    View {
+    private let showsCloseButton: Bool
+    
     @Binding
     var draft: SponsoredBeneficiaryDraft
 
     let applySuggestedDefaults: Bool
     let onContinue: () -> Void
-
+    
     @AppStorage(AppLanguage.storageKey)
     private var selectedLanguageCode =
         AppLanguage.initial.rawValue
@@ -30,30 +32,42 @@ struct SponsoredBeneficiaryHolidayPreferencesView: View {
     init(
         draft: Binding<SponsoredBeneficiaryDraft>,
         applySuggestedDefaults: Bool = false,
+        showsCloseButton: Bool = false,
         onContinue: @escaping () -> Void
     ) {
-        _draft = draft
-        self.applySuggestedDefaults =
-            applySuggestedDefaults
+        self._draft = draft
+        self.applySuggestedDefaults = applySuggestedDefaults
+        self.showsCloseButton = showsCloseButton
         self.onContinue = onContinue
 
-        var initialValue =
-            draft.wrappedValue.holidayPreferences
+        var initialValue = draft.wrappedValue.holidayPreferences
 
-        if applySuggestedDefaults,
-           !Self.hasAnySelection(initialValue) {
+        let hasSelection =
+            initialValue.showProtestantHolidays ||
+            initialValue.showOrthodoxHolidays ||
+            initialValue.showCatholicHolidays ||
+            initialValue.showJewishHolidays ||
+            initialValue.showLatinAmericanHolidays
 
-            initialValue =
-                Self.suggestedPreferences(
-                    languageCode:
-                        draft.wrappedValue
-                            .profile.languageCode
+        if applySuggestedDefaults && !hasSelection {
+            let languageCode = draft.wrappedValue.profile.languageCode
+
+            switch AppLanguage(rawValue: languageCode) {
+            case .russian:
+                initialValue = .init(showOrthodoxHolidays: true)
+
+            case .spanishLatinAmerica:
+                initialValue = .init(
+                    showCatholicHolidays: true,
+                    showLatinAmericanHolidays: true
                 )
+
+            case .englishUS, .none:
+                initialValue = .init(showProtestantHolidays: true)
+            }
         }
 
-        _preferences = State(
-            initialValue: initialValue
-        )
+        self._preferences = State(initialValue: initialValue)
     }
 
     private var selectedLanguage: AppLanguage {
@@ -183,6 +197,11 @@ struct SponsoredBeneficiaryHolidayPreferencesView: View {
                     .ignoresSafeArea()
             )
             .toolbar(.hidden, for: .navigationBar)
+            .safeAreaInset(edge: .top, spacing: 0) {
+                if showsCloseButton {
+                    SponsorFormCloseButton()
+                }
+            }
         }
         .environment(
             \.locale,
@@ -192,6 +211,12 @@ struct SponsoredBeneficiaryHolidayPreferencesView: View {
 
     private var header: some View {
         VStack(spacing: 12) {
+            Image("icon_Holidays")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 70, height: 70)
+                .accessibilityHidden(true)
+
             Text(
                 selectedLanguage.localized(
                     "sponsor.holidays.title"

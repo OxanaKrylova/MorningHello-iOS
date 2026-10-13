@@ -53,8 +53,9 @@ enum SponsoredBeneficiaryPrefillImporter {
         // user data against an accidental import.
         let existingName = defaults.string(forKey: "profile_display_name")?
             .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        guard existingName.isEmpty ||
-              defaults.string(forKey: "sponsored_prefill_imported_id_v1") == payload.id.uuidString
+        let isResumingInterruptedImport =
+            defaults.string(forKey: "sponsored_prefill_import_in_progress_v1") == payload.id.uuidString
+        guard existingName.isEmpty || isResumingInterruptedImport
         else { throw ImportError.existingUserData }
 
         let contacts: [EmergencyContact] = try payload.emergencyContacts.prefix(2).map { source in
@@ -127,6 +128,10 @@ enum SponsoredBeneficiaryPrefillImporter {
             return reminder
         }
 
+        // Crash recovery: the same invitation is allowed to resume after a
+        // partial write. Never allow a different invitation to overwrite data.
+        defaults.set(payload.id.uuidString, forKey: "sponsored_prefill_import_in_progress_v1")
+
         // Persist the fallible stores before marking onboarding complete.
         // Same UUIDs protect reminders from duplication on an interrupted retry.
         let alreadySavedReminders = try context.fetch(FetchDescriptor<ConnectionReminder>())
@@ -165,5 +170,6 @@ enum SponsoredBeneficiaryPrefillImporter {
         defaults.set(true, forKey: "contacts_onboarding_completed")
         defaults.set(true, forKey: "holiday_onboarding_completed")
         defaults.set(true, forKey: "optional_setup_onboarding_completed")
+        defaults.removeObject(forKey: "sponsored_prefill_import_in_progress_v1")
     }
 }

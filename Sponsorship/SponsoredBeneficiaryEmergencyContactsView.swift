@@ -10,7 +10,8 @@ import SwiftUI
 import UIKit
 
 struct SponsoredBeneficiaryEmergencyContactsView: View {
-
+    private let showsCloseButton: Bool
+    
     @Binding
     private var draft: SponsoredBeneficiaryDraft
 
@@ -55,10 +56,13 @@ struct SponsoredBeneficiaryEmergencyContactsView: View {
 
     init(
         draft: Binding<SponsoredBeneficiaryDraft>,
+        showsCloseButton: Bool = false,
         onContinue: @escaping () -> Void
     ) {
         self._draft = draft
+        self.showsCloseButton = showsCloseButton
         self.onContinue = onContinue
+
         self._contacts = State(
             initialValue: Array(
                 draft.wrappedValue.emergencyContacts
@@ -150,6 +154,11 @@ struct SponsoredBeneficiaryEmergencyContactsView: View {
                 .scrollDismissesKeyboard(.interactively)
             }
             .toolbar(.hidden, for: .navigationBar)
+            .safeAreaInset(edge: .top, spacing: 0) {
+                if showsCloseButton {
+                    SponsorFormCloseButton()
+                }
+            }
         }
         .interactiveDismissDisabled()
         .alert(
@@ -204,6 +213,12 @@ struct SponsoredBeneficiaryEmergencyContactsView: View {
 
     private var header: some View {
         VStack(spacing: 10) {
+            Image("icon_Emergency Contacts")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 70, height: 70)
+                .accessibilityHidden(true)
+
             Text(
                 localized(
                     "Тревожные контакты подопечного"
@@ -262,15 +277,21 @@ struct SponsoredBeneficiaryEmergencyContactsView: View {
                 AppAdaptiveColor.text
             )
 
-            Label(
-                contact.phone,
-                systemImage: "phone.fill"
-            )
+            Label { Text(contact.phone) } icon: {
+                Image("icon_telephone")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+                .accessibilityHidden(true)
+            }
 
-            Label(
-                contact.email,
-                systemImage: "envelope.fill"
-            )
+            Label { Text(contact.email) } icon: {
+                Image("icon_email")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+                .accessibilityHidden(true)
+            }
 
             HStack(spacing: 12) {
                 Button {

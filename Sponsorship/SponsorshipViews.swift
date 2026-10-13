@@ -74,6 +74,9 @@ struct SponsorHomeView: View {
     private var showBeneficiaryReminders = false
     
     @State
+    private var showSponsorSettings = false
+
+    @State
     private var showInvitationNotReady = false
 
     @State
@@ -135,7 +138,21 @@ struct SponsorHomeView: View {
                 }
 
                 VStack(spacing: 22) {
-                    greetingHeader
+                    HStack(alignment: .center, spacing: 8) {
+                        greetingHeader
+                        Button {
+                            showSponsorSettings = true
+                        } label: {
+                            Image("icon_Settings")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 32, height: 32)
+                                .frame(width: 48, height: 48)
+                                .background(AppAdaptiveColor.warmCardBackground, in: Circle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(settingsAccessibilityLabel)
+                    }
 
                     invitationCard
                         .frame(maxWidth: 340)
@@ -151,7 +168,7 @@ struct SponsorHomeView: View {
                                     subtitleKey:
                                         "sponsor.home.profile.subtitle",
                                     systemImage:
-                                        "person.crop.circle.fill"
+                                        "icon_Profile"
                                 )
                             }
                             .buttonStyle(.plain)
@@ -165,7 +182,7 @@ struct SponsorHomeView: View {
                                     subtitleKey:
                                         "sponsor.home.contacts.subtitle",
                                     systemImage:
-                                        "person.2.fill"
+                                        "icon_Emergency Contacts"
                                 )
                             }
                             .buttonStyle(.plain)
@@ -181,7 +198,7 @@ struct SponsorHomeView: View {
                                     subtitleKey:
                                         "sponsor.home.holidays.subtitle",
                                     systemImage:
-                                        "calendar"
+                                        "icon_Holidays"
                                 )
                             }
                             .buttonStyle(.plain)
@@ -195,7 +212,7 @@ struct SponsorHomeView: View {
                                     subtitleKey:
                                         "sponsor.home.reminders.subtitle",
                                     systemImage:
-                                        "list.bullet.rectangle.portrait"
+                                        "icon_Reminders"
                                 )
                             }
                             .buttonStyle(.plain)
@@ -218,11 +235,15 @@ struct SponsorHomeView: View {
             \.locale,
             selectedLanguage.locale
         )
+        .sheet(isPresented: $showSponsorSettings) {
+            SponsorLanguageSettingsView()
+        }
         .sheet(
             isPresented: $showBeneficiaryProfile
         ) {
             SponsoredBeneficiaryProfileView(
                 draft: $beneficiaryDraft,
+                showsCloseButton: true,
                 onContinue: {
                     reloadBeneficiaryDraft()
                     showBeneficiaryProfile = false
@@ -234,6 +255,7 @@ struct SponsorHomeView: View {
         ) {
             SponsoredBeneficiaryEmergencyContactsView(
                 draft: $beneficiaryDraft,
+                showsCloseButton: true,
                 onContinue: {
                     reloadBeneficiaryDraft()
                     showBeneficiaryContacts = false
@@ -246,6 +268,7 @@ struct SponsorHomeView: View {
             SponsoredBeneficiaryHolidayPreferencesView(
                 draft: $beneficiaryDraft,
                 applySuggestedDefaults: false,
+                showsCloseButton: true,
                 onContinue: {
                     reloadBeneficiaryDraft()
                     showBeneficiaryHolidays = false
@@ -257,6 +280,7 @@ struct SponsorHomeView: View {
         ) {
             SponsoredBeneficiaryRemindersOnboardingView(
                 draft: $beneficiaryDraft,
+                showsCloseButton: true,
                 onContinue: {
                     reloadBeneficiaryDraft()
                     showBeneficiaryReminders = false
@@ -489,6 +513,27 @@ struct SponsorHomeView: View {
         )
     }
 
+    // Localized fallback for sponsor home labels missing from AppLanguage tables.
+    // Other keys continue to use the existing application localization.
+    private func sponsorHomeLocalized(_ key: String) -> String {
+        let language = selectedLanguageCode.lowercased()
+        let isRussian = language.hasPrefix("ru")
+        let isSpanish = language.hasPrefix("es")
+
+        switch key {
+        case "sponsor.home.holidays.title":
+            return isRussian ? "Праздники" : (isSpanish ? "Festividades" : "Holidays")
+        case "sponsor.home.holidays.subtitle":
+            return isRussian ? "Выбор праздников" : (isSpanish ? "Preferencias festivas" : "Holiday preferences")
+        case "sponsor.home.reminders.title":
+            return isRussian ? "Напоминания" : (isSpanish ? "Recordatorios" : "Reminders")
+        case "sponsor.home.reminders.subtitle":
+            return isRussian ? "Напоминания об общении" : (isSpanish ? "Recordatorios para conectar" : "Stay-in-touch reminders")
+        default:
+            return selectedLanguage.localized(key)
+        }
+    }
+
     private func sponsorActionLabel(
         titleKey: String,
         subtitleKey: String,
@@ -496,19 +541,14 @@ struct SponsorHomeView: View {
     ) -> some View {
         VStack(spacing: 7) {
             HStack(spacing: 7) {
-                Image(systemName: systemImage)
-                    .font(
-                        .system(
-                            size: 25,
-                            weight: .semibold
-                        )
-                    )
-                    .fixedSize()
+                Image(systemImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 34, height: 34)
+                    .accessibilityHidden(true)
 
                 Text(
-                    selectedLanguage.localized(
-                        titleKey
-                    )
+                    sponsorHomeLocalized(titleKey)
                 )
                 .font(
                     .system(
@@ -527,9 +567,7 @@ struct SponsorHomeView: View {
             )
 
             Text(
-                selectedLanguage.localized(
-                    subtitleKey
-                )
+                sponsorHomeLocalized(subtitleKey)
             )
             .font(
                 .system(
@@ -555,6 +593,14 @@ struct SponsorHomeView: View {
                 style: .continuous
             )
         )
+    }
+
+    private var settingsAccessibilityLabel: String {
+        switch selectedLanguage {
+        case .russian: return "Настройки"
+        case .englishUS: return "Settings"
+        case .spanishLatinAmerica: return "Configuración"
+        }
     }
 
     private var timeGreeting: String {
@@ -629,7 +675,7 @@ struct SponsorHomeView: View {
             Date.FormatStyle(
                 date: .abbreviated,
                 time: .shortened,
-                locale: beneficiaryLanguage.locale
+                locale: selectedLanguage.locale
             )
         )
 
@@ -704,6 +750,56 @@ struct SponsorHomeView: View {
             No compartas este enlace con otras personas.
             """
         }
+    }
+}
+
+// MARK: - Sponsor language settings (no monitoring or beneficiary profile actions)
+private struct SponsorLanguageSettingsView: View {
+    @Environment(\.dismiss) private var dismiss
+    @AppStorage(AppLanguage.storageKey) private var selectedLanguageCode = AppLanguage.initial.rawValue
+    private var selectedLanguage: AppLanguage {
+        AppLanguage(rawValue: selectedLanguageCode) ?? .initial
+    }
+    private var title: String {
+        switch selectedLanguage {
+        case .russian: return "Настройки"
+        case .englishUS: return "Settings"
+        case .spanishLatinAmerica: return "Configuración"
+        }
+    }
+    private var languageTitle: String {
+        switch selectedLanguage {
+        case .russian: return "Язык приложения"
+        case .englishUS: return "App language"
+        case .spanishLatinAmerica: return "Idioma de la aplicación"
+        }
+    }
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section {
+                    Picker(languageTitle, selection: $selectedLanguageCode) {
+                        ForEach(AppLanguage.allCases) { language in
+                            Text(language.titleKey).tag(language.rawValue)
+                        }
+                    }
+                }
+            }
+            .scrollContentBackground(.hidden)
+            .background(AppAdaptiveColor.warmFormBackground.ignoresSafeArea())
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text(selectedLanguage == .russian ? "Готово" : (selectedLanguage == .spanishLatinAmerica ? "Listo" : "Done"))
+                    }
+                }
+            }
+        }
+        .environment(\.locale, selectedLanguage.locale)
     }
 }
 

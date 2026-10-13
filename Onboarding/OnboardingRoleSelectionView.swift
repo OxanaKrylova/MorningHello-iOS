@@ -13,6 +13,12 @@ struct OnboardingRoleSelectionView:
     let onContinue:
         (MorningHelloUsageMode) -> Void
 
+    var onInvitation: () -> Void = {}
+
+    private enum Selection: Equatable {
+        case personal, sponsor, invitation
+    }
+
     @AppStorage(
         AppLanguage.storageKey
     )
@@ -21,7 +27,7 @@ struct OnboardingRoleSelectionView:
 
     @State
     private var selectedRole:
-        MorningHelloUsageMode?
+        Selection?
 
     private var selectedLanguage:
         AppLanguage {
@@ -32,13 +38,19 @@ struct OnboardingRoleSelectionView:
         ) ?? .initial
     }
 
-    private func localized(
-        _ key: String
-    ) -> String {
-
-        selectedLanguage.localized(
-            key
-        )
+    private func localized(_ key: String) -> String {
+        if key == "invite.role.title" || key == "invite.role.description" {
+            let language = selectedLanguageCode.lowercased()
+            let isTitle = key == "invite.role.title"
+            if language.hasPrefix("ru") {
+                return isTitle ? "Я получил(а) приглашение" : "Близкий человек уже настроил для меня MorningHello. У меня есть персональная ссылка."
+            }
+            if language.hasPrefix("es") {
+                return isTitle ? "He recibido una invitación" : "Un ser querido ya ha configurado MorningHello para mí. Tengo un enlace de invitación."
+            }
+            return isTitle ? "I've received an invitation" : "Someone has already set up MorningHello for me. I have a personal invitation link."
+        }
+        return selectedLanguage.localized(key)
     }
 
     var body:
@@ -60,7 +72,7 @@ struct OnboardingRoleSelectionView:
 
                     roleCard(
                         role:
-                            .selfUse,
+                            .personal,
                         icon:
                             "person.crop.circle.fill",
                         titleKey:
@@ -78,6 +90,13 @@ struct OnboardingRoleSelectionView:
                             "onboarding.role.sponsor.title",
                         descriptionKey:
                             "onboarding.role.sponsor.description"
+                    )
+
+                    roleCard(
+                        role: .invitation,
+                        icon: "envelope.open.fill",
+                        titleKey: "invite.role.title",
+                        descriptionKey: "invite.role.description"
                     )
                 }
 
@@ -182,7 +201,7 @@ struct OnboardingRoleSelectionView:
 
     private func roleCard(
         role:
-            MorningHelloUsageMode,
+            Selection,
         icon:
             String,
         titleKey:
@@ -201,129 +220,30 @@ struct OnboardingRoleSelectionView:
 
         } label: {
 
-            HStack(
-                alignment:
-                    .top,
-                spacing:
-                    16
-            ) {
-
-                Image(
-                    systemName:
-                        icon
-                )
-                .font(
-                    .system(
-                        size:
-                            42,
-                        weight:
-                            .semibold
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(alignment: .top, spacing: 10) {
+                    MorningHelloArtwork(
+                        name: role == .personal ? "icon_Profile" :
+                              role == .sponsor ? "icon_trusted_person" : "icon_Invitation",
+                        size: 46
                     )
-                )
-                .foregroundStyle(
-                    Color.orange
-                )
-                .frame(
-                    width:
-                        52,
-                    height:
-                        52
-                )
-                .accessibilityHidden(
-                    true
-                )
-
-                VStack(
-                    alignment:
-                        .leading,
-                    spacing:
-                        8
-                ) {
-
-                    Text(
-                        localized(
-                            titleKey
-                        )
-                    )
-                    .font(
-                        .system(
-                            size:
-                                22,
-                            weight:
-                                .bold,
-                            design:
-                                .rounded
-                        )
-                    )
-                    .foregroundStyle(
-                        AppAdaptiveColor.text
-                    )
-                    .multilineTextAlignment(
-                        .leading
-                    )
-                    .fixedSize(
-                        horizontal:
-                            false,
-                        vertical:
-                            true
-                    )
-
-                    Text(
-                        localized(
-                            descriptionKey
-                        )
-                    )
-                    .font(
-                        .system(
-                            size:
-                                17,
-                            weight:
-                                .regular,
-                            design:
-                                .rounded
-                        )
-                    )
-                    .foregroundStyle(
-                        AppAdaptiveColor.secondaryText
-                    )
-                    .multilineTextAlignment(
-                        .leading
-                    )
-                    .fixedSize(
-                        horizontal:
-                            false,
-                        vertical:
-                            true
-                    )
+                    Text(localized(titleKey))
+                        .font(.system(size: 19, weight: .bold, design: .rounded))
+                        .foregroundStyle(AppAdaptiveColor.text)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                        .font(.system(size: 26, weight: .semibold))
+                        .foregroundStyle(isSelected ? Color.orange : AppAdaptiveColor.secondaryText)
+                        .accessibilityHidden(true)
                 }
-
-                Spacer(
-                    minLength:
-                        8
-                )
-
-                Image(
-                    systemName:
-                        isSelected
-                        ? "checkmark.circle.fill"
-                        : "circle"
-                )
-                .font(
-                    .system(
-                        size:
-                            30,
-                        weight:
-                            .semibold
-                    )
-                )
-                .foregroundStyle(
-                    isSelected
-                    ? Color.orange
-                    : AppAdaptiveColor.secondaryText
-                )
-                .accessibilityHidden(
-                    true
-                )
+                Text(localized(descriptionKey))
+                    .font(.system(size: 16, design: .rounded))
+                    .foregroundStyle(AppAdaptiveColor.secondaryText)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .padding(
                 22
@@ -402,9 +322,14 @@ struct OnboardingRoleSelectionView:
                 return
             }
 
-            onContinue(
-                selectedRole
-            )
+            switch selectedRole {
+            case .personal:
+                onContinue(.selfUse)
+            case .sponsor:
+                onContinue(.sponsor)
+            case .invitation:
+                onInvitation()
+            }
 
         } label: {
 

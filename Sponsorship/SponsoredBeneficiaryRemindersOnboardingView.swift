@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 struct SponsoredBeneficiaryRemindersOnboardingView: View {
-
+    private let showsCloseButton: Bool
+    
     @Binding
     var draft: SponsoredBeneficiaryDraft
 
@@ -32,9 +33,11 @@ struct SponsoredBeneficiaryRemindersOnboardingView: View {
 
     init(
         draft: Binding<SponsoredBeneficiaryDraft>,
+        showsCloseButton: Bool = false,
         onContinue: @escaping () -> Void
     ) {
-        _draft = draft
+        self._draft = draft
+        self.showsCloseButton = showsCloseButton
         self.onContinue = onContinue
 
         _reminders = State(
@@ -135,6 +138,11 @@ struct SponsoredBeneficiaryRemindersOnboardingView: View {
                     .ignoresSafeArea()
             )
             .toolbar(.hidden, for: .navigationBar)
+            .safeAreaInset(edge: .top, spacing: 0) {
+                if showsCloseButton {
+                    SponsorFormCloseButton()
+                }
+            }
         }
         .environment(
             \.locale,
@@ -157,6 +165,12 @@ struct SponsoredBeneficiaryRemindersOnboardingView: View {
 
     private var header: some View {
         VStack(spacing: 12) {
+            Image("icon_Reminders")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 82, height: 82)
+                .accessibilityHidden(true)
+
             Text(
                 selectedLanguage.localized(
                     "sponsor.reminders.title"
@@ -187,9 +201,11 @@ struct SponsoredBeneficiaryRemindersOnboardingView: View {
 
     private var emptyState: some View {
         VStack(spacing: 14) {
-            Image(systemName: "calendar.badge.plus")
-                .font(.system(size: 42))
-                .foregroundStyle(.orange)
+            Image("icon_Reminders")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 72, height: 72)
+                .accessibilityHidden(true)
 
             Text(
                 selectedLanguage.localized(

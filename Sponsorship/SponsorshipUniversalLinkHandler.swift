@@ -252,7 +252,39 @@ final class SponsorshipUniversalLinkHandler:
 }
 
 enum SponsoredInvitationRedemptionStorage {
+    static var isNewInstallation: Bool {
+        let defaults = UserDefaults.standard
 
+        let hasSelectedRole = defaults.bool(
+            forKey: "onboarding_role_selection_completed"
+        )
+
+        let hasPersonalOnboarding = defaults.bool(
+            forKey: "contacts_onboarding_completed"
+        ) || defaults.bool(
+            forKey: "holiday_onboarding_completed"
+        ) || defaults.bool(
+            forKey: "optional_setup_onboarding_completed"
+        )
+
+        let hasExistingProfile =
+            !(defaults.string(
+                forKey: "profile_display_name"
+            ) ?? "").trimmingCharacters(
+                in: .whitespacesAndNewlines
+            ).isEmpty
+
+        let hasExistingMode =
+            !(defaults.string(
+                forKey: "morninghello_usage_mode"
+            ) ?? "").isEmpty
+
+        return !hasSelectedRole
+            && !hasPersonalOnboarding
+            && !hasExistingProfile
+            && !hasExistingMode
+    }
+    
     private static let responseKey =
         "sponsored_invitation_redemption_response"
 
@@ -351,10 +383,15 @@ private struct SponsorshipUniversalLinkModifier:
                 )
             }
             .alert(
-                failure.map {
-                    SponsorshipL10n.text(
-                        $0.titleKey
-                    )
+                failure.map { failure in
+                    if failure == .cannotSponsorYourself {
+                        switch AppLanguage.selected {
+                        case .russian: return "Откройте ссылку на iPhone близкого"
+                        case .englishUS: return "Open on Your Loved One’s iPhone"
+                        case .spanishLatinAmerica: return "Abre el enlace en el iPhone de tu ser querido"
+                        }
+                    }
+                    return SponsorshipL10n.text(failure.titleKey)
                 } ?? "",
                 isPresented: isShowingError
             ) {
@@ -368,11 +405,18 @@ private struct SponsorshipUniversalLinkModifier:
                 }
             } message: {
                 if let failure {
-                    Text(
-                        SponsorshipL10n.text(
-                            failure.messageKey
-                        )
-                    )
+                    if failure == .cannotSponsorYourself {
+                        switch AppLanguage.selected {
+                        case .russian:
+                            Text("Вы открыли приглашение на iPhone спонсора. Отправьте ссылку близкому человеку: он должен открыть её в MorningHello на своём iPhone.")
+                        case .englishUS:
+                            Text("This invitation was opened on the sponsor’s iPhone. Send the link to your loved one so they can activate MorningHello on their own iPhone.")
+                        case .spanishLatinAmerica:
+                            Text("Has abierto la invitación en el iPhone del patrocinador. Envía el enlace a tu ser querido para que active MorningHello en su propio iPhone.")
+                        }
+                    } else {
+                        Text(SponsorshipL10n.text(failure.messageKey))
+                    }
                 }
             }
     }

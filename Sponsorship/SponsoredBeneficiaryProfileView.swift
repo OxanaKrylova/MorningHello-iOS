@@ -11,7 +11,8 @@ import SwiftUI
 // MARK: - Профиль подопечного
 
 struct SponsoredBeneficiaryProfileView: View {
-
+    private let showsCloseButton: Bool
+    
     @Binding
     private var draft: SponsoredBeneficiaryDraft
 
@@ -58,9 +59,11 @@ struct SponsoredBeneficiaryProfileView: View {
 
     init(
         draft: Binding<SponsoredBeneficiaryDraft>,
+        showsCloseButton: Bool = false,
         onContinue: @escaping () -> Void
     ) {
         self._draft = draft
+        self.showsCloseButton = showsCloseButton
         self.onContinue = onContinue
 
         let profile = draft.wrappedValue.profile
@@ -246,6 +249,11 @@ struct SponsoredBeneficiaryProfileView: View {
                 .hidden,
                 for: .navigationBar
             )
+            .safeAreaInset(edge: .top, spacing: 0) {
+                if showsCloseButton {
+                    SponsorFormCloseButton()
+                }
+            }
         }
         .interactiveDismissDisabled()
         .sheet(
@@ -291,6 +299,12 @@ struct SponsoredBeneficiaryProfileView: View {
 
     private var header: some View {
         VStack(spacing: 10) {
+            Image("icon_Profile")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 70, height: 70)
+                .accessibilityHidden(true)
+
             Text(
                 localized("Профиль подопечного")
             )
@@ -342,8 +356,11 @@ struct SponsoredBeneficiaryProfileView: View {
                         )
                     )
                 } icon: {
-                    Image(systemName: "person.fill")
-                        .foregroundStyle(.orange)
+                    Image("icon_Profile")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+                .accessibilityHidden(true)
                 }
                 .font(
                     .system(
@@ -470,8 +487,11 @@ struct SponsoredBeneficiaryProfileView: View {
                     )
                 )
             } icon: {
-                Image(systemName: "character.bubble.fill")
-                    .foregroundStyle(.orange)
+                Image("icon_Language")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+                .accessibilityHidden(true)
             }
             .font(
                 .system(
@@ -617,8 +637,11 @@ struct SponsoredBeneficiaryProfileView: View {
                     )
                 )
             } icon: {
-                Image(systemName: "phone.fill")
-                    .foregroundStyle(.orange)
+                Image("icon_telephone")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+                .accessibilityHidden(true)
             }
             .font(
                 .system(
@@ -698,8 +721,11 @@ struct SponsoredBeneficiaryProfileView: View {
                     localized("Страна проживания")
                 )
             } icon: {
-                Image(systemName: "globe")
-                    .foregroundStyle(.orange)
+                Image("icon_Country")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+                .accessibilityHidden(true)
             }
             .font(
                 .system(
@@ -784,8 +810,11 @@ struct SponsoredBeneficiaryProfileView: View {
                     )
                 )
             } icon: {
-                Image(systemName: "birthday.cake.fill")
-                    .foregroundStyle(.orange)
+                Image("icon_Postcard")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
+                .accessibilityHidden(true)
             }
             .font(
                 .system(

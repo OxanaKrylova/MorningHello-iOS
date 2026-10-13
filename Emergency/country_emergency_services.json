@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026.10.11.1",
-  "generatedAt": "2026-10-11T15:55:00+03:00",
+  "catalogVersion": "2026.10.13.1",
+  "generatedAt": "2026-10-13T19:15:00+03:00",
   "countryCodes": [
     "AU",
     "BZ",
@@ -12357,6 +12357,256 @@
       "sourceType": "officialService",
       "verificationStatus": "verified",
       "verifiedAt": "2026-10-11"
+    },
+    {
+      "id": "sg-emergency-scdf-995",
+      "countryCode": "SG",
+      "category": "ambulance",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Singapore Civil Defence Force — Emergency Ambulance",
+        "en": "Singapore Civil Defence Force — Emergency Ambulance",
+        "es": "Singapore Civil Defence Force — Emergency Ambulance"
+      },
+      "localizedNotes": {
+        "ru": "Экстренная скорая помощь, пожарные и спасатели, 24/7. Только для вызовов внутри Сингапура.",
+        "en": "Emergency ambulance, fire and rescue, 24/7. Local emergency number for calls within Singapore.",
+        "es": "Ambulancia, bomberos y rescate, 24 horas. Número de emergencia para llamadas dentro de Singapur."
+      },
+      "noteKey": null,
+      "dialString": "995",
+      "internationalNumber": null,
+      "sourceName": "Singapore Civil Defence Force",
+      "sourceURL": "https://www.scdf.gov.sg/home/about-scdf/emergency-medical-services",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-13"
+    },
+    {
+      "id": "sg-emergency-police-999",
+      "countryCode": "SG",
+      "category": "general",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Singapore Police Force — Emergency",
+        "en": "Singapore Police Force — Emergency",
+        "es": "Singapore Police Force — Emergency"
+      },
+      "localizedNotes": {
+        "ru": "Экстренный вызов полиции внутри Сингапура.",
+        "en": "Police emergency number for calls within Singapore.",
+        "es": "Número de emergencias policiales para llamadas dentro de Singapur."
+      },
+      "noteKey": null,
+      "dialString": "999",
+      "internationalNumber": null,
+      "sourceName": "Singapore Police Force",
+      "sourceURL": "https://www.police.gov.sg/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-13"
+    },
+    {
+      "id": "sg-lentor-ambulance",
+      "countryCode": "SG",
+      "category": "ambulance",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Lentor Ambulance",
+        "en": "Lentor Ambulance",
+        "es": "Lentor Ambulance"
+      },
+      "localizedNotes": {
+        "ru": "Частная медицинская перевозка, круглосуточно при наличии машины. При угрозе жизни звоните 995. Это не государственная экстренная диспетчерская.",
+        "en": "Private ambulance and medical transport, 24/7 subject to vehicle availability. For life-threatening emergencies call 995. Not public emergency dispatch.",
+        "es": "Ambulancia privada y transporte médico, 24 horas según disponibilidad. En peligro de vida llame al 995. No es el servicio público de despacho."
+      },
+      "noteKey": null,
+      "dialString": "+6562301777",
+      "internationalNumber": "+65 62301777",
+      "sourceName": "Lentor Ambulance",
+      "sourceURL": "https://lentorambulance.sg/",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": null
+    },
+    {
+      "id": "sg-nursefirst",
+      "countryCode": "SG",
+      "category": "general",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "NurseFirst",
+        "en": "NurseFirst",
+        "es": "NurseFirst"
+      },
+      "localizedNotes": {
+        "ru": "Медицинская консультация и выбор места обращения, 24/7 (английский). Не экстренная диспетчерская. При угрозе жизни звоните 995.",
+        "en": "24/7 medical triage advice in English, not an emergency dispatch line. For life-threatening emergencies call 995.",
+        "es": "Orientación médica 24 horas en inglés, no es despacho de emergencias. Para peligro de vida llame al 995."
+      },
+      "noteKey": null,
+      "dialString": "+6562626262",
+      "internationalNumber": "+65 62626262",
+      "sourceName": "NHG Health / Woodlands Hospital",
+      "sourceURL": "https://www.nhghealth.com.sg/wh/clinical-care-services/nursefirst-helpline",
+      "sourceType": "government",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": null
+    },
+    {
+      "id": "sg-sgh-trauma",
+      "countryCode": "SG",
+      "category": "traumaCare",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Singapore General Hospital — General Enquiries",
+        "en": "Singapore General Hospital — General Enquiries",
+        "es": "Singapore General Hospital — General Enquiries"
+      },
+      "localizedNotes": {
+        "ru": "Общий телефон больницы, а не прямой номер травматологии или вызова скорой. Уточните работу Emergency Department. При угрозе жизни — 995.",
+        "en": "Hospital general enquiries; not direct trauma dispatch or an ambulance number. Ask about the Emergency Department. Life-threatening emergencies: 995.",
+        "es": "Consultas generales del hospital, no es despacho de trauma ni ambulancia. Pregunte por Urgencias. Emergencias vitales: 995."
+      },
+      "noteKey": null,
+      "dialString": "+6562223322",
+      "internationalNumber": "+65 62223322",
+      "sourceName": "Singapore General Hospital",
+      "sourceURL": "https://www.sgh.com.sg/patient-services/contact-us",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": null
+    },
+    {
+      "id": "sg-sos-1767",
+      "countryCode": "SG",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Samaritans of Singapore — Hotline",
+        "en": "Samaritans of Singapore — Hotline",
+        "es": "Samaritans of Singapore — Hotline"
+      },
+      "localizedNotes": {
+        "ru": "Голосовая кризисная поддержка 24/7, короткий номер внутри Сингапура. WhatsApp CareText: +65 9151 1767 (только сообщения, НЕ звонок). При немедленной опасности — 995 или 999.",
+        "en": "24/7 emotional crisis support by voice within Singapore. WhatsApp CareText: +65 9151 1767 (MESSAGES ONLY, not calls). Immediate danger: 995 or 999.",
+        "es": "Apoyo en crisis por llamada 24 horas en Singapur. WhatsApp CareText: +65 9151 1767 (SOLO MENSAJES, no llamadas). Peligro inmediato: 995 o 999."
+      },
+      "noteKey": null,
+      "dialString": "1767",
+      "internationalNumber": null,
+      "sourceName": "Samaritans of Singapore",
+      "sourceURL": "https://www.sos.org.sg/contact-us",
+      "sourceType": "nonprofit",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-13"
+    },
+    {
+      "id": "sg-mindline-1771",
+      "countryCode": "SG",
+      "category": "crisisSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "National Mindline 1771",
+        "en": "National Mindline 1771",
+        "es": "National Mindline 1771"
+      },
+      "localizedNotes": {
+        "ru": "Голосовая поддержка психического здоровья, 24/7, короткий номер внутри Сингапура. WhatsApp +65 6669 1771 предназначен для сообщений, не звонков.",
+        "en": "24/7 mental health support by voice within Singapore. WhatsApp +65 6669 1771 is for messages, not calls.",
+        "es": "Apoyo a la salud mental por llamada 24 horas en Singapur. WhatsApp +65 6669 1771 es solo para mensajes, no llamadas."
+      },
+      "noteKey": null,
+      "dialString": "1771",
+      "internationalNumber": null,
+      "sourceName": "Singapore Ministry of Health",
+      "sourceURL": "https://www.moh.gov.sg/newsroom/national-mindline-1771-to-provide--round-the-clock-support-for-mental-health/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-13"
+    },
+    {
+      "id": "sg-diabetes-singapore",
+      "countryCode": "SG",
+      "category": "diabetesSupport",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Diabetes Singapore",
+        "en": "Diabetes Singapore",
+        "es": "Diabetes Singapore"
+      },
+      "localizedNotes": {
+        "ru": "Информация и поддержка при диабете, не экстренная линия; часы приёма звонков уточняйте у организации.",
+        "en": "Diabetes information and support, not an emergency line; confirm telephone hours with the organisation.",
+        "es": "Información y apoyo sobre diabetes, no es línea de emergencias; confirme el horario de atención."
+      },
+      "noteKey": null,
+      "dialString": "+6565649818",
+      "internationalNumber": "+65 65649818",
+      "sourceName": "Diabetes Singapore",
+      "sourceURL": "https://www.diabetes.org.sg/contact-us/",
+      "sourceType": "nonprofit",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": null
+    },
+    {
+      "id": "sg-ves-whitley",
+      "countryCode": "SG",
+      "category": "veterinaryEmergency",
+      "scope": "city",
+      "region": "Whitley Road, Singapore",
+      "localizedNames": {
+        "ru": "Veterinary Emergency & Specialty Hospital — Whitley",
+        "en": "Veterinary Emergency & Specialty Hospital — Whitley",
+        "es": "Veterinary Emergency & Specialty Hospital — Whitley"
+      },
+      "localizedNotes": {
+        "ru": "Экстренная ветеринарная помощь, заявлена работа 24/7. Адрес: 232 Whitley Road, Singapore 297824. Позвоните перед поездкой.",
+        "en": "Emergency veterinary care, advertised 24/7. Address: 232 Whitley Road, Singapore 297824. Call before travelling.",
+        "es": "Atención veterinaria urgente, anunciada 24 horas. Dirección: 232 Whitley Road, Singapore 297824. Llame antes de acudir."
+      },
+      "noteKey": null,
+      "dialString": "+6562660232",
+      "internationalNumber": "+65 62660232",
+      "sourceName": "Veterinary Emergency & Specialty Hospital",
+      "sourceURL": "https://www.veshospital.com.sg/contact/",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": null
+    },
+    {
+      "id": "sg-mobile-pet-cremation",
+      "countryCode": "SG",
+      "category": "petAftercare",
+      "scope": "national",
+      "region": null,
+      "localizedNames": {
+        "ru": "Mobile Pet Cremation Services",
+        "en": "Mobile Pet Cremation Services",
+        "es": "Mobile Pet Cremation Services"
+      },
+      "localizedNotes": {
+        "ru": "Забор умершего питомца и услуги кремации; служба заявляет круглосуточное обслуживание по Сингапуру. Не экстренная ветеринарная помощь.",
+        "en": "Pet collection and cremation; provider advertises 24-hour island-wide availability. Not emergency veterinary care.",
+        "es": "Recogida y cremación de mascotas; el proveedor anuncia atención 24 horas en toda la isla. No es atención veterinaria urgente."
+      },
+      "noteKey": null,
+      "dialString": "+6594556355",
+      "internationalNumber": "+65 94556355",
+      "sourceName": "Mobile Pet Cremation Services",
+      "sourceURL": "https://mobilepetcremation.com.sg/",
+      "sourceType": "officialService",
+      "verificationStatus": "needsVerification",
+      "verifiedAt": null
     }
   ]
 }

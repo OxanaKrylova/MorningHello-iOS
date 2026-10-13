@@ -870,19 +870,12 @@ struct PetProfileView: View {
                 ToolbarItem(
                     placement: .principal
                 ) {
-                    Text(
-                        localized("Питомец")
-                    )
-                    .font(
-                        .system(
-                            size: 34,
-                            weight: .bold,
-                            design: .rounded
-                        )
-                    )
-                    .foregroundStyle(
-                        AppAdaptiveColor.text
-                    )
+                    HStack(spacing: 8) {
+                        MorningHelloArtwork(name: "icon_Pet", size: 40)
+                        Text(localized("Питомец"))
+                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .foregroundStyle(AppAdaptiveColor.text)
+                    }
                 }
 
                 ToolbarItem(

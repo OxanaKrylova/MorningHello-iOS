@@ -14,6 +14,7 @@
 		290E252C304E13A6000D4A2D /* Breathing_Square_4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 290E2529304E13A6000D4A2D /* Breathing_Square_4.wav */; };
 		290E252D304E13A6000D4A2D /* Breathing_Square_1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 290E2526304E13A6000D4A2D /* Breathing_Square_1.wav */; };
 		290E2545304F655D000D4A2D /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 290E2544304F655C000D4A2D /* StoreKit.framework */; };
+		2916011B307C3B7200E97B5D /* SponsoredBeneficiaryPrefillImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2916011A307C3B7200E97B5D /* SponsoredBeneficiaryPrefillImporter.swift */; };
 		2916AEA3305C9603007248C3 /* ProtestantHolidayProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2916AEA2305C9603007248C3 /* ProtestantHolidayProvider.swift */; };
 		2916AEC0305D90C0007248C3 /* MonitoringSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */; };
 		291B30BD3050AD70002C3689 /* open_form.wav in Resources */ = {isa = PBXBuildFile; fileRef = 291B30BC3050AD70002C3689 /* open_form.wav */; };
@@ -115,6 +116,8 @@
 		29CB1C4B306EFF30009EB187 /* OptionalSetupOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB1C4A306EFF30009EB187 /* OptionalSetupOnboardingView.swift */; };
 		29CB1C4D30705D94009EB187 /* MonitoringSetupIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CB1C4C30705D94009EB187 /* MonitoringSetupIntroView.swift */; };
 		29CD29F63023DBB800C72D5D /* PostcardRenderer..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */; };
+		29CD4FAD307CC200009860A6 /* SponsorFormCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD4FAC307CC200009860A6 /* SponsorFormCloseButton.swift */; };
+		29CD4FAF307CC611009860A6 /* SponsoredInvitationEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD4FAE307CC611009860A6 /* SponsoredInvitationEntryView.swift */; };
 		29D0C197304CAC8C0061569D /* EmergencyContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0C196304CAC8C0061569D /* EmergencyContactsView.swift */; };
 		29DD590C30350B360067B04F /* OctoberPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DD590B30350B360067B04F /* OctoberPostcardProvider.swift */; };
 		29DD59203035DCCB0067B04F /* TrialNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DD591F3035DCCB0067B04F /* TrialNotificationManager.swift */; };
@@ -138,6 +141,7 @@
 		290E2528304E13A6000D4A2D /* Breathing_Square_3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Breathing_Square_3.wav; sourceTree = "<group>"; };
 		290E2529304E13A6000D4A2D /* Breathing_Square_4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Breathing_Square_4.wav; sourceTree = "<group>"; };
 		290E2544304F655C000D4A2D /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		2916011A307C3B7200E97B5D /* SponsoredBeneficiaryPrefillImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredBeneficiaryPrefillImporter.swift; sourceTree = "<group>"; };
 		2916AEA2305C9603007248C3 /* ProtestantHolidayProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtestantHolidayProvider.swift; sourceTree = "<group>"; };
 		2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringSnapshot.swift; sourceTree = "<group>"; };
 		291B30BC3050AD70002C3689 /* open_form.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = open_form.wav; sourceTree = "<group>"; };
@@ -239,6 +243,8 @@
 		29CB1C4A306EFF30009EB187 /* OptionalSetupOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalSetupOnboardingView.swift; sourceTree = "<group>"; };
 		29CB1C4C30705D94009EB187 /* MonitoringSetupIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringSetupIntroView.swift; sourceTree = "<group>"; };
 		29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostcardRenderer..swift; sourceTree = "<group>"; };
+		29CD4FAC307CC200009860A6 /* SponsorFormCloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorFormCloseButton.swift; sourceTree = "<group>"; };
+		29CD4FAE307CC611009860A6 /* SponsoredInvitationEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredInvitationEntryView.swift; sourceTree = "<group>"; };
 		29D0C196304CAC8C0061569D /* EmergencyContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContactsView.swift; sourceTree = "<group>"; };
 		29DD590B30350B360067B04F /* OctoberPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OctoberPostcardProvider.swift; sourceTree = "<group>"; };
 		29DD591F3035DCCB0067B04F /* TrialNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationManager.swift; sourceTree = "<group>"; };
@@ -333,6 +339,9 @@
 			children = (
 				293CF91730594601002DACBD /* AccountSession.swift */,
 				293CF91930594601002DACBD /* SponsorshipAPIClient.swift */,
+				29CD4FAC307CC200009860A6 /* SponsorFormCloseButton.swift */,
+				291FE03E3079478C00535330 /* SponsoredBeneficiaryDraft.swift */,
+				2916011A307C3B7200E97B5D /* SponsoredBeneficiaryPrefillImporter.swift */,
 				291FE0403079556700535330 /* SponsoredBeneficiaryProfileView.swift */,
 				291FE04A307A26E400535330 /* SponsoredBeneficiaryReviewView.swift */,
 				291FE044307A268E00535330 /* SponsoredBeneficiaryHolidayPreferencesView.swift */,
@@ -340,6 +349,7 @@
 				291FE048307A26C200535330 /* SponsoredBeneficiaryRemindersOnboardingView.swift */,
 				291FE042307A1AAE00535330 /* SponsoredBeneficiaryEmergencyContactsView.swift */,
 				291FE04C307A2EC300535330 /* SponsoredBeneficiaryPurchaseView.swift */,
+				29CD4FAE307CC611009860A6 /* SponsoredInvitationEntryView.swift */,
 				293CF91830594601002DACBD /* SponsoredPurchaseManager.swift */,
 				291FE04E307A2FD600535330 /* SponsoredBeneficiaryPayload.swift */,
 				293CF91A30594601002DACBD /* SponsorshipModels.swift */,
@@ -347,7 +357,6 @@
 				293CF91C30594601002DACBD /* SponsorshipStore.swift */,
 				293CF91D30594601002DACBD /* SponsorshipViews.swift */,
 				29E0059E306E390100222DE6 /* SponsorshipL10n.swift */,
-				291FE03E3079478C00535330 /* SponsoredBeneficiaryDraft.swift */,
 				29C28BF4307B9E0A00DD2347 /* SponsorshipUniversalLinkHandler.swift */,
 			);
 			path = Sponsorship;
@@ -671,6 +680,7 @@
 				297E669D30712BFD00CF3173 /* EmergencyServicesView.swift in Sources */,
 				29FAEAF23040DE51003CFA12 /* MarchPostcardProvider.swift in Sources */,
 				29EC924F3053144800D9BD71 /* SwiftDataMoodRepository.swift in Sources */,
+				29CD4FAF307CC611009860A6 /* SponsoredInvitationEntryView.swift in Sources */,
 				291FE04F307A2FD600535330 /* SponsoredBeneficiaryPayload.swift in Sources */,
 				2916AEC0305D90C0007248C3 /* MonitoringSnapshot.swift in Sources */,
 				29AFFFB8303901FA007FE955 /* PostcardCollection.swift in Sources */,
@@ -727,6 +737,7 @@
 				293CF92530594601002DACBD /* SponsorshipModels.swift in Sources */,
 				291FE047307A26AA00535330 /* SponsoredBeneficiaryPetOnboardingView.swift in Sources */,
 				29EC92493053143A00D9BD71 /* MoodStore.swift in Sources */,
+				2916011B307C3B7200E97B5D /* SponsoredBeneficiaryPrefillImporter.swift in Sources */,
 				29EC924A3053143A00D9BD71 /* MoodLevel.swift in Sources */,
 				2988741B3062A10500361B7D /* SubscriptionPaywallView.swift in Sources */,
 				291FE0393078CCA000535330 /* GameHubView.swift in Sources */,
@@ -745,6 +756,7 @@
 				291FE049307A26C200535330 /* SponsoredBeneficiaryRemindersOnboardingView.swift in Sources */,
 				29CB1C2B306ED220009EB187 /* DiagnosticLogShareSheet.swift in Sources */,
 				291FE04D307A2EC300535330 /* SponsoredBeneficiaryPurchaseView.swift in Sources */,
+				29CD4FAD307CC200009860A6 /* SponsorFormCloseButton.swift in Sources */,
 				29CD29F63023DBB800C72D5D /* PostcardRenderer..swift in Sources */,
 				29B76C8A301E91C000D1D295 /*  BirthdayPostcardProvider.swift in Sources */,
 				29B76C5B301B6DA500D1D295 /* BirthdayGreetingView.swift in Sources */,
@@ -896,7 +908,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 34;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -940,7 +952,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 34;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

@@ -43,15 +43,14 @@ struct SponsoredBeneficiaryReviewView: View {
 
                     reviewCard(
                         titleKey: "sponsor.review.profile",
-                        systemImage:
-                            "person.crop.circle.fill",
+                        assetName: "icon_Profile",
                         detail: profileSummary,
                         editor: .profile
                     )
 
                     reviewCard(
                         titleKey: "sponsor.review.contacts",
-                        systemImage: "person.2.fill",
+                        assetName: "icon_Emergency Contacts",
                         detail:
                             String(
                                 format:
@@ -67,21 +66,21 @@ struct SponsoredBeneficiaryReviewView: View {
 
                     reviewCard(
                         titleKey: "sponsor.review.holidays",
-                        systemImage: "sparkles",
+                        assetName: "icon_Holidays",
                         detail: holidaySummary,
                         editor: .holidays
                     )
 
                     reviewCard(
                         titleKey: "sponsor.review.pets",
-                        systemImage: "pawprint.fill",
+                        assetName: "icon_Pet",
                         detail: petsSummary,
                         editor: .pets
                     )
 
                     reviewCard(
                         titleKey: "sponsor.review.reminders",
-                        systemImage: "calendar.badge.clock",
+                        assetName: "icon_Reminders",
                         detail:
                             String(
                                 format:
@@ -157,7 +156,6 @@ struct SponsoredBeneficiaryReviewView: View {
                     .ignoresSafeArea()
             )
             .toolbar(.hidden, for: .navigationBar)
-        }
         .environment(
             \.locale,
             selectedLanguage.locale
@@ -171,9 +169,16 @@ struct SponsoredBeneficiaryReviewView: View {
             }
         }
     }
+}
 
-    private var header: some View {
+private var header: some View {
         VStack(spacing: 12) {
+            Image("icon_Invitation")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 64, height: 64)
+                .accessibilityHidden(true)
+
             Text(
                 selectedLanguage.localized(
                     "sponsor.review.title"
@@ -204,15 +209,16 @@ struct SponsoredBeneficiaryReviewView: View {
 
     private func reviewCard(
         titleKey: String,
-        systemImage: String,
+        assetName: String,
         detail: String,
         editor: SponsoredReviewEditor
     ) -> some View {
         HStack(alignment: .top, spacing: 14) {
-            Image(systemName: systemImage)
-                .font(.system(size: 24))
-                .foregroundStyle(.orange)
-                .frame(width: 32)
+            Image(assetName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 34, height: 34)
+                .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(

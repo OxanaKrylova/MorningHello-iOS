@@ -31,12 +31,11 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
 
     @State
     private var saveErrorMessage: String?
-
     init(
         draft: Binding<SponsoredBeneficiaryDraft>,
         onContinue: @escaping () -> Void
     ) {
-        _draft = draft
+        self._draft = draft
         self.onContinue = onContinue
 
         let savedPets =
@@ -133,6 +132,12 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
 
     private var header: some View {
         VStack(spacing: 12) {
+            Image("icon_Pet")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 70, height: 70)
+                .accessibilityHidden(true)
+
             Text(
                 selectedLanguage.localized(
                     "sponsor.pet.title"
@@ -176,8 +181,11 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
                     showValidation = false
                 } label: {
                     HStack {
-                        Image(systemName: "pawprint.fill")
-                            .foregroundStyle(.orange)
+                        Image("icon_Pet")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 25, height: 25)
+                .accessibilityHidden(true)
 
                         Text(
                             trimmed(pet.name).isEmpty

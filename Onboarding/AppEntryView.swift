@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 struct AppEntryView:
     View {
@@ -162,6 +163,21 @@ struct AppEntryView:
     private var subscriptionManager =
         SubscriptionManager.shared
 
+    @Environment(\.modelContext)
+    private var modelContext
+
+    @StateObject
+    private var sponsorshipStore = SponsorshipStore.shared
+
+    @StateObject
+    private var invitationHandler = SponsorshipUniversalLinkHandler.shared
+
+    @State
+    private var showingInvitationEntry = false
+    
+    @State private var prefillImportError: String?
+    @State private var isApplyingPrefill = false
+
     @State
     private var hasEmergencyContacts =
         false
@@ -189,7 +205,8 @@ struct AppEntryView:
 
                 subscriptionLoadingView
 
-            } else if shouldShowSubscriptionRetry {
+            } else if shouldShowSubscriptionRetry && !hasPendingInvitation &&
+                        !sponsorshipStore.hasActiveSponsoredAccess {
 
                 subscriptionRetryView
 
@@ -203,17 +220,40 @@ struct AppEntryView:
                         currentTermsVersion
                 }
 
+            // Invitation redemption may have completed before the Terms screen.
+            // Never display role selection/paywall while new-user data is pending.
+            } else if hasPendingInvitation {
+
+                beneficiaryImportView
+
             // Шаг 2 – Обязательный выбор роли
-            } else if shouldShowRoleSelection {
+                // Шаг 2 – Выбор способа использования MorningHello
+                } else if shouldShowRoleSelection {
 
-                OnboardingRoleSelectionView {
-                    selectedMode in
+                    if showingInvitationEntry {
 
-                    completeRoleSelection(
-                        with:
-                            selectedMode
-                    )
-                }
+                        SponsoredInvitationEntryView(
+                            onBack: {
+                                showingInvitationEntry = false
+                            }
+                        )
+
+                    } else {
+
+                        OnboardingRoleSelectionView(
+                            onContinue: { selectedMode in
+
+                                completeRoleSelection(
+                                    with: selectedMode
+                                )
+
+                            },
+                            onInvitation: {
+
+                                showingInvitationEntry = true
+                            }
+                        )
+                    }
 
             // Шаг 3 – Раздельные сценарии
             } else if selectedUsageMode
@@ -232,11 +272,18 @@ struct AppEntryView:
         )
         .onAppear {
 
+            processRedeemedInvitationIfNeeded()
             migrateRoleSelectionIfNeeded()
 
             migrateMonitoringSetupIntroIfNeeded()
 
             refreshEmergencyContacts()
+        }
+        .onChange(of: acceptedTermsVersion) { _, _ in
+            processRedeemedInvitationIfNeeded()
+        }
+        .onChange(of: invitationHandler.redeemedInvitation) { _, _ in
+            processRedeemedInvitationIfNeeded()
         }
         .onReceive(
             NotificationCenter
@@ -249,6 +296,105 @@ struct AppEntryView:
         ) { _ in
 
             refreshEmergencyContacts()
+        }
+    }
+
+    // MARK: - Sponsored beneficiary activation
+
+    private var hasPendingInvitation: Bool {
+        invitationHandler.redeemedInvitation != nil
+    }
+
+    private var needsBeneficiaryImport: Bool {
+        guard let payload = invitationHandler.redeemedInvitation?.prefill,
+              SponsoredInvitationRedemptionStorage.isNewInstallation else {
+            return false
+        }
+        return UserDefaults.standard.string(
+            forKey: "sponsored_prefill_imported_id_v1"
+        ) != payload.id.uuidString
+    }
+
+    private var beneficiaryImportView: some View {
+        VStack(spacing: 20) {
+            if let prefillImportError {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.largeTitle)
+                    .foregroundStyle(.orange)
+                Text("Не удалось применить настройки приглашения")
+                    .font(.title3.bold())
+                Text(prefillImportError)
+                    .multilineTextAlignment(.center)
+                Button("Повторить") {
+                    self.prefillImportError = nil
+                    processRedeemedInvitationIfNeeded()
+                }
+                .buttonStyle(.borderedProminent)
+            } else {
+                ProgressView("Настраиваем MorningHello…")
+            }
+        }
+        .padding(28)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private func processRedeemedInvitationIfNeeded() {
+        guard acceptedTermsVersion == currentTermsVersion,
+              invitationHandler.redeemedInvitation != nil,
+              !isApplyingPrefill else { return }
+        isApplyingPrefill = true
+        Task { @MainActor in
+            await completeBeneficiaryActivation()
+        }
+    }
+
+    @MainActor
+    private func completeBeneficiaryActivation() async {
+        defer { isApplyingPrefill = false }
+        guard let response = invitationHandler.redeemedInvitation else { return }
+        do {
+            if let prefill = response.prefill,
+               SponsoredInvitationRedemptionStorage.isNewInstallation {
+                if needsBeneficiaryImport {
+                    try SponsoredBeneficiaryPrefillImporter.applyForNewUser(
+                        prefill,
+                        context: modelContext
+                    )
+                }
+                usageModeValue = MorningHelloUsageMode.selfUse.rawValue
+                roleSelectionCompleted = true
+                monitoringSetupIntroCompleted = true
+                contactsOnboardingCompleted = true
+                holidayOnboardingCompleted = true
+                optionalSetupOnboardingCompleted = true
+                displayName = prefill.profile.displayName
+                birthDay = prefill.profile.birthDay
+                birthMonth = prefill.profile.birthMonth
+                savedSalutation = prefill.profile.salutation
+                checkInIntervalHours = prefill.profile.checkInIntervalHours
+                checkInIntervalConfirmed = true
+                selectedLanguageCode = prefill.profile.languageCode
+
+                // Contact synchronization does not send a heartbeat.
+                guard let data = UserDefaults.standard.data(forKey: "emergency_contacts") else {
+                    throw SponsoredBeneficiaryPrefillImporter.ImportError.invalidContact
+                }
+                let contacts = try JSONDecoder().decode([EmergencyContact].self, from: data)
+                try await EmergencyContactAPIClient.shared.replaceContacts(contacts)
+                await PendingContactReminderManager.shared.synchronize(contacts: contacts)
+                ProfileDataSyncService.shared.scheduleSync()
+            }
+
+            await sponsorshipStore.refresh()
+            guard sponsorshipStore.hasActiveSponsoredAccess else {
+                prefillImportError = sponsorshipStore.errorMessage ??
+                    "Спонсорский доступ пока не подтверждён сервером. Повторите попытку."
+                return
+            }
+            prefillImportError = nil
+            invitationHandler.clearCompletedRedemption()
+        } catch {
+            prefillImportError = error.localizedDescription
         }
     }
 
@@ -310,8 +456,8 @@ struct AppEntryView:
             }
 
         // Личный онбординг завершён
-        } else if subscriptionManager
-            .hasActiveSubscription {
+        } else if subscriptionManager.hasActiveSubscription ||
+                    sponsorshipStore.hasActiveSponsoredAccess {
 
             ContentView()
 

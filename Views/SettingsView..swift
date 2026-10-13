@@ -539,6 +539,18 @@ struct SettingsView: View {
     
     // MARK: - Элементы интерфейса
     
+    private func settingsArtworkName(for systemImage: String) -> String? {
+        switch systemImage {
+        case "person.crop.circle.fill": return "icon_Profile"
+        case "pawprint.fill": return "icon_Pet"
+        case "person.2.fill": return "icon_Emergency Contacts"
+        case "calendar": return "icon_Holidays"
+        case "creditcard.fill": return "icon_Subscription"
+        case "envelope.fill": return "icon_email"
+        default: return nil
+        }
+    }
+
     private func settingsRow(
         title: LocalizedStringKey,
         subtitle: LocalizedStringKey,
@@ -547,10 +559,15 @@ struct SettingsView: View {
     ) -> some View {
         Button(action: action) {
             HStack(spacing: 14) {
-                Image(systemName: systemImage)
-                    .font(.title3)
-                    .foregroundStyle(.orange)
-                    .frame(width: 30)
+                if let artworkName = settingsArtworkName(for: systemImage) {
+                    MorningHelloArtwork(name: artworkName, size: 38)
+                        .frame(width: 42)
+                } else {
+                    Image(systemName: systemImage)
+                        .font(.title3)
+                        .foregroundStyle(.orange)
+                        .frame(width: 42)
+                }
                 
                 VStack(
                     alignment: .leading,

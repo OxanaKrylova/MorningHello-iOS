@@ -98,17 +98,7 @@ struct OptionalSetupOnboardingView: View {
         VStack(
             spacing: 12
         ) {
-            Image(
-                systemName:
-                    "checkmark.circle.fill"
-            )
-            .font(
-                .system(size: 58)
-            )
-            .foregroundStyle(
-                .orange,
-                .orange.opacity(0.25)
-            )
+            MorningHelloArtwork(name: "icon_morning", size: 82)
 
             Text(
                 localized(
@@ -200,26 +190,7 @@ struct OptionalSetupOnboardingView: View {
                 HStack(
                     spacing: 14
                 ) {
-                    Image(
-                        systemName:
-                            "pawprint.fill"
-                    )
-                    .font(
-                        .system(
-                            size: 30,
-                            weight: .semibold
-                        )
-                    )
-                    .foregroundStyle(.orange)
-                    .frame(
-                        width: 48,
-                        height: 48
-                    )
-                    .background(
-                        Color.orange
-                            .opacity(0.12),
-                        in: Circle()
-                    )
+                    MorningHelloArtwork(name: "icon_Pet", size: 54)
 
                     Text(
                         localized(
@@ -307,26 +278,7 @@ struct OptionalSetupOnboardingView: View {
                 HStack(
                     spacing: 14
                 ) {
-                    Image(
-                        systemName:
-                            "person.2.wave.2.fill"
-                    )
-                    .font(
-                        .system(
-                            size: 29,
-                            weight: .semibold
-                        )
-                    )
-                    .foregroundStyle(.orange)
-                    .frame(
-                        width: 48,
-                        height: 48
-                    )
-                    .background(
-                        Color.orange
-                            .opacity(0.12),
-                        in: Circle()
-                    )
+                    MorningHelloArtwork(name: "icon_Reminders", size: 54)
 
                     Text(
                         localized(

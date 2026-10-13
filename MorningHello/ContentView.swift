@@ -336,7 +336,7 @@ struct ContentView: View {
         return formatter.string(
             from: event.startDate
         )
-    }    
+    }
     
     private let monitoringSnapshotKey = "monitoring_snapshot"
     private let serverClockOffsetKey = "monitoring_server_clock_offset"
@@ -1537,14 +1537,7 @@ struct ContentView: View {
                         AppSoundPlayer.shared.play(.openForm)
                         showSettings = true
                     } label: {
-                        Image(systemName: "gearshape.fill")
-                            .font(
-                                .system(
-                                    size: 20,
-                                    weight: .semibold
-                                )
-                            )
-                            .foregroundStyle(AppAdaptiveColor.text)
+                        MorningHelloArtwork(name: "icon_Settings", size: 36)
                             .frame(width: 44, height: 44)
                             .background(
                                 AppAdaptiveColor.warmCardBackground,
@@ -2222,17 +2215,7 @@ struct ContentView: View {
 
     private func connectionActionLabel() -> some View {
         HStack(spacing: 8) {
-            Image(
-                systemName: "person.2.wave.2.fill"
-            )
-            .font(
-                .system(
-                    size: 25,
-                    weight: .semibold
-                )
-            )
-            .foregroundStyle(Color.black)
-            .fixedSize()
+            MorningHelloArtwork(name: "icon_Reminders", size: 42)
 
             Text(
                 selectedLanguage.localized(
@@ -2270,9 +2253,10 @@ struct ContentView: View {
         ) -> some View {
             VStack(spacing: 7) {
                 HStack(spacing: 7) {
-                    Image(systemName: systemImage)
-                        .font(.system(size: 25, weight: .semibold))
-                        .fixedSize()
+                    MorningHelloArtwork(
+                        name: systemImage == "face.smiling" ? "icon_Mood" : "icon_Postcard",
+                        size: 38
+                    )
 
                     Text(selectedLanguage.localized(title))
                         .font(
@@ -2761,7 +2745,9 @@ struct ContentView: View {
                         isPresented:
                             $showConnectionCalendar
                     ) {
-                        ConnectionCalendarView()
+                        ConnectionCalendarView(
+                            iPhoneCalendarService: iPhoneCalendarService
+                        )
                     }
                     .sheet(
                         isPresented: $showBirthdayGreeting
@@ -2834,6 +2820,9 @@ struct ContentView: View {
                     }
                     .onChange(of: scenePhase) { _, newPhase in
                         guard newPhase == .active else { return }
+
+                        iPhoneCalendarService.refreshAuthorizationAndCalendars()
+                        iPhoneCalendarService.loadEvents(for: Date())
 
                         Task {
                             await refreshMonitoringStatus()

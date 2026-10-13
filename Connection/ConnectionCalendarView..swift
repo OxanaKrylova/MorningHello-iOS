@@ -28,9 +28,9 @@ struct ConnectionCalendarView: View {
     private var reminders:
         [ConnectionReminder]
 
-    @StateObject
-    private var iPhoneCalendarService =
-        IPhoneCalendarService()
+    // Reuse ContentView's calendar service so postcard events stay in sync.
+    @ObservedObject
+    var iPhoneCalendarService: IPhoneCalendarService
 
     // MARK: - Language
 
@@ -457,6 +457,14 @@ struct ConnectionCalendarView: View {
         }
         .onAppear {
             refreshIPhoneCalendarEvents()
+        }
+        .onChange(of: iPhoneCalendarService.authorizationStatus) { _, _ in
+            refreshIPhoneCalendarEvents()
+        }
+        .onChange(of: showIPhoneCalendarSelection) { _, isPresented in
+            if !isPresented {
+                refreshIPhoneCalendarEvents()
+            }
         }
         .onChange(
             of: normalizedDisplayedMonth

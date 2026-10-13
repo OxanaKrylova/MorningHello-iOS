@@ -315,12 +315,7 @@ struct ProfileView: View {
     
     private var profileHeader: some View {
         VStack(spacing: 8) {
-            Image(systemName: "person.crop.circle.fill")
-                .font(.system(size: 58))
-                .foregroundStyle(
-                    .orange.opacity(0.78),
-                    .brown.opacity(0.62)
-                )
+            MorningHelloArtwork(name: "icon_Profile", size: 86)
             
             Text("Профиль")
                 .font(
@@ -413,8 +408,7 @@ struct ProfileView: View {
                 Label {
                     Text("Как нам к вам обращаться?")
                 } icon: {
-                    Image(systemName: "person.fill")
-                        .foregroundColor(.orange)
+                    MorningHelloArtwork(name: "icon_Profile", size: 28)
                 }
                 .font(
                     .system(
@@ -644,10 +638,7 @@ struct ProfileView: View {
                         )
                 }
             } icon: {
-                Image(
-                    systemName: "phone.fill"
-                )
-                .foregroundColor(.orange)
+                MorningHelloArtwork(name: "icon_telephone", size: 30)
             }
             .font(
                 .system(
@@ -829,8 +820,7 @@ struct ProfileView: View {
                     )
                 )
             } icon: {
-                Image(systemName: "globe")
-                    .foregroundColor(.orange)
+                MorningHelloArtwork(name: "icon_Country", size: 30)
             }
             .font(
                 .system(
@@ -1086,9 +1076,7 @@ struct ProfileView: View {
             dismiss()
         } label: {
             HStack(spacing: 14) {
-                Image(systemName: "heart.fill")
-                    .font(.title3)
-                    .foregroundColor(.orange)
+                MorningHelloArtwork(name: "icon_Subscription", size: 38)
 
                 VStack(alignment: .leading, spacing: 3) {
                     Text("Оплатить для близкого")

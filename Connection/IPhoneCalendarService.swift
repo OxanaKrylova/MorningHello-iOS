@@ -205,6 +205,9 @@ final class IPhoneCalendarService:
                 .requestFullAccessToEvents()
 
             refreshAuthorizationAndCalendars()
+            if hasReadAccess {
+                loadEvents(for: Date())
+            }
 
         } catch {
             authorizationStatus =
@@ -241,6 +244,7 @@ final class IPhoneCalendarService:
         }
 
         saveSelectedCalendarIdentifiers()
+        loadEvents(for: Date())
     }
 
     func selectAllCalendars() {
@@ -250,6 +254,7 @@ final class IPhoneCalendarService:
             )
 
         saveSelectedCalendarIdentifiers()
+        loadEvents(for: Date())
     }
 
     func clearCalendarSelection() {
