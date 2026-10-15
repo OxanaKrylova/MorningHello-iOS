@@ -2073,3 +2073,15 @@
 "sponsor.invitation.error.userDeleted.message" = "Data from a previous MorningHello installation was deleted. The link has not been used. If you had your own purchase, restore it. Otherwise, contact MorningHello support.";
 "sponsor.invitation.error.unknown.title" = "Invitation Could Not Be Accepted";
 "sponsor.invitation.error.unknown.message" = "Check your internet connection and open the link again.";
+"subscription.terms.title" = "Subscription Terms";
+"subscription.terms.renewal" = "Subscriptions are purchased through the Apple App Store and renew automatically unless auto-renewal is turned off in your Apple Account settings.";
+"subscription.terms.deletion" = "Deleting MorningHello does not cancel your subscription or stop server monitoring.";
+"subscription.links.terms" = "MorningHello Terms of Use";
+"subscription.links.apple" = "Apple Terms of Use (EULA)";
+"subscription.links.privacy" = "Privacy Policy";
+"paywall.header" = "MorningHello Subscription Plans";
+"paywall.trial" = "Try MorningHello free for 30 days";
+"paywall.ended" = "Continue using MorningHello";
+"paywall.links.apple" = "Apple Standard Terms of Use";
+"paywall.links.terms" = "MorningHello Terms of Use";
+"paywall.links.privacy" = "Privacy Policy";

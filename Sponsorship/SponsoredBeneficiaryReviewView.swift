@@ -43,14 +43,15 @@ struct SponsoredBeneficiaryReviewView: View {
 
                     reviewCard(
                         titleKey: "sponsor.review.profile",
-                        assetName: "icon_Profile",
+                        systemImage:
+                            "person.crop.circle.fill",
                         detail: profileSummary,
                         editor: .profile
                     )
 
                     reviewCard(
                         titleKey: "sponsor.review.contacts",
-                        assetName: "icon_Emergency Contacts",
+                        systemImage: "person.2.fill",
                         detail:
                             String(
                                 format:
@@ -66,21 +67,21 @@ struct SponsoredBeneficiaryReviewView: View {
 
                     reviewCard(
                         titleKey: "sponsor.review.holidays",
-                        assetName: "icon_Holidays",
+                        systemImage: "sparkles",
                         detail: holidaySummary,
                         editor: .holidays
                     )
 
                     reviewCard(
                         titleKey: "sponsor.review.pets",
-                        assetName: "icon_Pet",
+                        systemImage: "pawprint.fill",
                         detail: petsSummary,
                         editor: .pets
                     )
 
                     reviewCard(
                         titleKey: "sponsor.review.reminders",
-                        assetName: "icon_Reminders",
+                        systemImage: "calendar.badge.clock",
                         detail:
                             String(
                                 format:
@@ -152,8 +153,7 @@ struct SponsoredBeneficiaryReviewView: View {
                 .padding(.vertical, 28)
             }
             .background(
-                AppAdaptiveColor.warmFormBackground
-                    .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_Onboarding")
             )
             .toolbar(.hidden, for: .navigationBar)
         .environment(
@@ -173,12 +173,6 @@ struct SponsoredBeneficiaryReviewView: View {
 
 private var header: some View {
         VStack(spacing: 12) {
-            Image("icon_Invitation")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 64, height: 64)
-                .accessibilityHidden(true)
-
             Text(
                 selectedLanguage.localized(
                     "sponsor.review.title"
@@ -209,16 +203,15 @@ private var header: some View {
 
     private func reviewCard(
         titleKey: String,
-        assetName: String,
+        systemImage: String,
         detail: String,
         editor: SponsoredReviewEditor
     ) -> some View {
         HStack(alignment: .top, spacing: 14) {
-            Image(assetName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 34, height: 34)
-                .accessibilityHidden(true)
+            Image(systemName: systemImage)
+                .font(.system(size: 24))
+                .foregroundStyle(.orange)
+                .frame(width: 32)
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(

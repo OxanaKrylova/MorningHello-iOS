@@ -1726,52 +1726,10 @@ struct ContentView: View {
 
                             showEmergencyServices = true
                         } label: {
-                            VStack(spacing: 5) {
-                                Image(
-                                    systemName:
-                                        "cross.case.fill"
-                                )
-                                .font(
-                                    .system(
-                                        size: 25,
-                                        weight: .semibold
-                                    )
-                                )
-                                .foregroundStyle(
-                                    Color.black
-                                )
-
-                                Text(
-                                    selectedLanguage.localized(
-                                        "emergency.home.title"
-                                    )
-                                )
-                                .font(
-                                    .system(
-                                        size: 15,
-                                        weight: .bold,
-                                        design: .rounded
-                                    )
-                                )
-                                .foregroundStyle(
-                                    Color.black
-                                )
-                                .multilineTextAlignment(
-                                    .center
-                                )
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.75)
-                            }
-                            .frame(
-                                width: 158,
-                                height: 78
-                            )
-                            .background(
-                                Color.white.opacity(0.94),
-                                in: RoundedRectangle(
-                                    cornerRadius: 22,
-                                    style: .continuous
-                                )
+                            utilityActionLabel(
+                                title: selectedLanguage.localized("emergency.home.title"),
+                                subtitle: selectedLanguage.localized("emergency.home.hint"),
+                                artworkName: "icon_EmergencyServices"
                             )
                         }
                         .buttonStyle(.plain)
@@ -1785,7 +1743,6 @@ struct ContentView: View {
                                 "emergency.home.hint"
                             )
                         )
-
                         Button {
                             AppSoundPlayer.shared.play(
                                 .openForm
@@ -1793,49 +1750,10 @@ struct ContentView: View {
 
                             showConnectionCalendar = true
                         } label: {
-                            VStack(spacing: 7) {
-                                Image(
-                                    systemName:
-                                        "person.2.wave.2.fill"
-                                )
-                                .font(
-                                    .system(
-                                        size: 27,
-                                        weight: .semibold
-                                    )
-                                )
-                                .foregroundStyle(
-                                    Color.black
-                                )
-
-                                Text(
-                                    selectedLanguage.localized(
-                                        "connection.home.title"
-                                    )
-                                )
-                                .font(
-                                    .system(
-                                        size: 17,
-                                        weight: .bold,
-                                        design: .rounded
-                                    )
-                                )
-                                .foregroundStyle(
-                                    Color.black
-                                )
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.8)
-                            }
-                            .frame(
-                                width: 158,
-                                height: 78
-                            )
-                            .background(
-                                Color.white.opacity(0.94),
-                                in: RoundedRectangle(
-                                    cornerRadius: 22,
-                                    style: .continuous
-                                )
+                            utilityActionLabel(
+                                title: selectedLanguage.localized("connection.home.title"),
+                                subtitle: selectedLanguage.localized("connection.home.subtitle"),
+                                artworkName: "icon_Reminders"
                             )
                         }
                         .buttonStyle(.plain)
@@ -2210,6 +2128,51 @@ struct ContentView: View {
                 )
             )
         }
+
+    private func utilityActionLabel(
+        title: String,
+        subtitle: String,
+        artworkName: String
+    ) -> some View {
+        VStack(spacing: 7) {
+            HStack(spacing: 7) {
+                MorningHelloArtwork(name: artworkName, size: 38)
+
+                Text(title)
+                    .font(
+                        .system(
+                            .headline,
+                            design: .rounded
+                        )
+                        .weight(.semibold)
+                    )
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.75)
+                    .allowsTightening(true)
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+
+            Text(subtitle)
+                .font(
+                    .system(
+                        .caption2,
+                        design: .rounded
+                    )
+                )
+                .foregroundStyle(AppAdaptiveColor.secondaryText)
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
+        }
+        .foregroundStyle(AppAdaptiveColor.text)
+        .frame(width: 158, height: 78)
+        .background(
+            AppAdaptiveColor.warmCardBackground,
+            in: RoundedRectangle(
+                cornerRadius: 22,
+                style: .continuous
+            )
+        )
+    }
 
     private func connectionActionLabel() -> some View {
         HStack(spacing: 8) {

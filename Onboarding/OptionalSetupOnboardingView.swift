@@ -44,9 +44,7 @@ struct OptionalSetupOnboardingView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                AppAdaptiveColor
-                    .warmFormBackground
-                    .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_Onboarding")
 
                 ScrollView {
                     VStack(
@@ -98,7 +96,8 @@ struct OptionalSetupOnboardingView: View {
         VStack(
             spacing: 12
         ) {
-            MorningHelloArtwork(name: "icon_morning", size: 82)
+            MorningHelloArtwork(name: "icon_morning", size: 70)
+                .accessibilityHidden(true)
 
             Text(
                 localized(
@@ -190,7 +189,9 @@ struct OptionalSetupOnboardingView: View {
                 HStack(
                     spacing: 14
                 ) {
-                    MorningHelloArtwork(name: "icon_Pet", size: 54)
+                    MorningHelloArtwork(name: "icon_Pet", size: 46)
+                        .frame(width: 48, height: 48)
+                        .accessibilityHidden(true)
 
                     Text(
                         localized(
@@ -278,7 +279,9 @@ struct OptionalSetupOnboardingView: View {
                 HStack(
                     spacing: 14
                 ) {
-                    MorningHelloArtwork(name: "icon_Reminders", size: 54)
+                    MorningHelloArtwork(name: "icon_Reminders", size: 46)
+                        .frame(width: 48, height: 48)
+                        .accessibilityHidden(true)
 
                     Text(
                         localized(

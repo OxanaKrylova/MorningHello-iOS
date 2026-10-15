@@ -111,8 +111,7 @@ struct SponsoredBeneficiaryEmergencyContactsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                AppAdaptiveColor.warmFormBackground
-                    .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_Onboarding")
 
                 ScrollView {
                     VStack(spacing: 20) {
@@ -409,35 +408,10 @@ struct SponsoredBeneficiaryEmergencyContactsView: View {
 
     private var contactFields: some View {
         VStack(spacing: 12) {
-            contactTextField(
-                localized("Имя"),
-                text: $name,
-                field: .name,
-                contentType: .givenName
-            )
-
-            contactTextField(
-                localized("Фамилия"),
-                text: $surname,
-                field: .surname,
-                contentType: .familyName
-            )
-
-            contactTextField(
-                localized("Телефон"),
-                text: $phone,
-                field: .phone,
-                contentType: .telephoneNumber,
-                keyboardType: .phonePad
-            )
-
-            contactTextField(
-                localized("Email"),
-                text: $email,
-                field: .email,
-                contentType: .emailAddress,
-                keyboardType: .emailAddress
-            )
+            labeledContactField("Имя", text: $name, field: .name, contentType: .givenName)
+            labeledContactField("Фамилия", text: $surname, field: .surname, contentType: .familyName)
+            labeledContactField("Телефон в международном формате", text: $phone, field: .phone, contentType: .telephoneNumber, keyboardType: .phonePad)
+            labeledContactField("Email", text: $email, field: .email, contentType: .emailAddress, keyboardType: .emailAddress)
 
             Picker(
                 localized("Форма обращения"),
@@ -501,6 +475,60 @@ struct SponsoredBeneficiaryEmergencyContactsView: View {
                 }
                 .buttonStyle(.plain)
             }
+        }
+    }
+
+    private func labeledContactField(
+        _ key: String,
+        text: Binding<String>,
+        field: ContactField,
+        contentType: UITextContentType?,
+        keyboardType: UIKeyboardType = .default
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 7) {
+            Text(contactFieldLabel(for: key))
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(AppAdaptiveColor.text)
+            contactTextField("", text: text, field: field,
+                             contentType: contentType, keyboardType: keyboardType)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private func contactFieldLabel(for key: String) -> String {
+        switch AppLanguage.selected {
+        case .russian:
+            switch key {
+            case "Имя": return "Имя"
+            case "Фамилия": return "Фамилия"
+            case "Телефон в международном формате": return "Телефон в международном формате"
+            case "Email": return "Электронная почта"
+            default: return localized(key)
+            }
+        case .englishUS:
+            switch key {
+            case "Имя": return "First name"
+            case "Фамилия": return "Last name"
+            case "Телефон в международном формате": return "Phone (international format)"
+            case "Email": return "Email"
+            default: return localized(key)
+            }
+        case .spanishLatinAmerica:
+            switch key {
+            case "Имя": return "Nombre"
+            case "Фамилия": return "Apellido"
+            case "Телефон в международном формате": return "Teléfono (formato internacional)"
+            case "Email": return "Correo electrónico"
+            default: return localized(key)
+            }
+        }
+    }
+
+    private var internationalPhoneLabel: String {
+        switch AppLanguage.selected {
+        case .russian: return "Телефон в международном формате"
+        case .englishUS: return "Phone (international format)"
+        case .spanishLatinAmerica: return "Teléfono (formato internacional)"
         }
     }
 

@@ -134,8 +134,7 @@ struct SponsoredBeneficiaryRemindersOnboardingView: View {
                 .padding(.vertical, 28)
             }
             .background(
-                AppAdaptiveColor.warmFormBackground
-                    .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_Onboarding")
             )
             .toolbar(.hidden, for: .navigationBar)
             .safeAreaInset(edge: .top, spacing: 0) {
@@ -165,12 +164,6 @@ struct SponsoredBeneficiaryRemindersOnboardingView: View {
 
     private var header: some View {
         VStack(spacing: 12) {
-            Image("icon_Reminders")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 82, height: 82)
-                .accessibilityHidden(true)
-
             Text(
                 selectedLanguage.localized(
                     "sponsor.reminders.title"
@@ -620,8 +613,7 @@ private struct SponsoredBeneficiaryReminderEditorView:
             }
             .scrollContentBackground(.hidden)
             .background(
-                AppAdaptiveColor.warmFormBackground
-                    .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_Onboarding")
             )
             .navigationTitle(
                 selectedLanguage.localized(

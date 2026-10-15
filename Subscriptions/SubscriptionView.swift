@@ -8,7 +8,18 @@
 import SwiftUI
 import StoreKit
 
+enum SubscriptionPresentationMode {
+    case personal
+    case sponsored
+}
+
 struct SubscriptionView: View {
+    let mode: SubscriptionPresentationMode
+
+    init(mode: SubscriptionPresentationMode = .personal) {
+        self.mode = mode
+    }
+
 
     @Environment(\.dismiss)
     private var dismiss
@@ -21,6 +32,10 @@ struct SubscriptionView: View {
     @State private var showSubscriptionPlansInfo = false
     @State private var isRestoring = false
     @State private var subscriptionMessage: String?
+    @StateObject private var sponsorshipStore = SponsorshipStore.shared
+    @State private var showSponsorPlanInfo = false
+    @State private var sponsoredIsRestoring = false
+
 
     @AppStorage(AppLanguage.storageKey)
     private var selectedLanguageCode =
@@ -103,7 +118,7 @@ struct SubscriptionView: View {
     }
 
     private var subscriptionBackground: some View {
-        AppAdaptiveColor.warmFormBackground.ignoresSafeArea()
+        MorningHelloScreenBackground(name: "BG_Subscription")
     }
 
     private var morningHelloTermsURL: URL {
@@ -153,8 +168,13 @@ struct SubscriptionView: View {
                         alignment: .leading,
                         spacing: 20
                     ) {
-                        currentSubscriptionCard
-                        actionsSection
+                        if mode == .sponsored {
+                            sponsoredSubscriptionCard
+                            sponsoredActionsSection
+                        } else {
+                            currentSubscriptionCard
+                            actionsSection
+                        }
                         legalSection
                     }
                     .padding(.horizontal, 20)
@@ -184,6 +204,16 @@ struct SubscriptionView: View {
         ) {
             SubscriptionPlansInfoView()
         }
+        .alert(sponsorLocalized("О спонсорском тарифе", "Sponsored plan details", "Detalles del plan patrocinado"),
+               isPresented: $showSponsorPlanInfo) {
+            Button(sponsorLocalized("Понятно", "OK", "Entendido"), role: .cancel) {}
+        } message: {
+            Text(sponsorLocalized(
+                "Подписка предоставляет доступ одному подопечному. Управление оплатой и автопродлением выполняется через Apple. Отключение автопродления не прекращает оплаченный период.",
+                "This subscription provides access for one beneficiary. Manage payment and auto-renewal through Apple. Turning off auto-renewal does not end the paid period.",
+                "La suscripción proporciona acceso a una persona beneficiaria. Administra el pago y la renovación automática mediante Apple. Desactivar la renovación no finaliza el período pagado."
+            ))
+        }
         .sheet(
             isPresented: $showSubscriptionPlans,
             onDismiss: refreshAfterPlanSelection
@@ -193,8 +223,11 @@ struct SubscriptionView: View {
             )
         }
         .task {
-            await subscriptionManager
-                .refreshSubscriptionStatus()
+            if mode == .sponsored {
+                await sponsorshipStore.refresh()
+            } else {
+                await subscriptionManager.refreshSubscriptionStatus()
+            }
         }
         .alert(
             localized("Подписка"),
@@ -426,9 +459,13 @@ struct SubscriptionView: View {
         showsChevron: Bool
     ) -> some View {
         HStack(spacing: 14) {
-            Image(systemName: systemImage)
-                .font(.title3)
-                .foregroundColor(imageColor)
+            if systemImage == "creditcard.fill" {
+                MorningHelloArtwork(name: "icon_Subscription", size: 26)
+            } else {
+                Image(systemName: systemImage)
+                    .font(.title3)
+                    .foregroundColor(imageColor)
+            }
 
             Text(title)
                 .font(
@@ -458,6 +495,146 @@ struct SubscriptionView: View {
         .contentShape(Rectangle())
     }
 
+    private func sponsorLocalized(_ ru: String, _ en: String, _ es: String) -> String {
+        switch selectedLanguage {
+        case .russian: return ru
+        case .englishUS: return en
+        case .spanishLatinAmerica: return es
+        }
+    }
+
+    private var currentSponsoringSubscription: SponsoringSubscription? {
+        sponsorshipStore.activeSponsoringSubscriptions
+            .max(by: { $0.expiresAt < $1.expiresAt })
+        ?? sponsorshipStore.sponsoringSubscriptions
+            .max(by: { $0.expiresAt < $1.expiresAt })
+    }
+
+    private var sponsoredPlanName: String {
+        guard let subscription = currentSponsoringSubscription else {
+            return sponsorLocalized("Нет спонсорской подписки", "No sponsored subscription", "Sin suscripción patrocinada")
+        }
+        switch subscription.productId {
+        case "com.morninghello.sponsored.monthly":
+            return sponsorLocalized("Для близкого — 1 месяц", "For a Loved One — 1 Month", "Para un ser querido — 1 mes")
+        case "com.morninghello.sponsored.quarterly":
+            return sponsorLocalized("Для близкого — 3 месяца", "For a Loved One — 3 Months", "Para un ser querido — 3 meses")
+        case "com.morninghello.sponsored.annual":
+            return sponsorLocalized("Для близкого — 1 год", "For a Loved One — 1 Year", "Para un ser querido — 1 año")
+        default:
+            return sponsorLocalized("Спонсорская подписка", "Sponsored subscription", "Suscripción patrocinada")
+        }
+    }
+
+    private var sponsoredSubscriptionCard: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(sponsorLocalized("Текущая подписка", "Current Subscription", "Suscripción actual"))
+                        .font(.headline)
+                    Text(sponsoredPlanName)
+                        .font(.system(size: 26, weight: .bold, design: .rounded))
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 8)
+                Text(currentSponsoringSubscription?.active == true
+                     ? sponsorLocalized("Активна", "Active", "Activa")
+                     : sponsorLocalized("Не подтверждена", "Not confirmed", "No confirmada"))
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(currentSponsoringSubscription?.active == true ? Color.green : Color.orange)
+                    .padding(8)
+                    .background((currentSponsoringSubscription?.active == true ? Color.green : Color.orange).opacity(0.12), in: Capsule())
+            }
+            Divider()
+            if let subscription = currentSponsoringSubscription {
+                HStack(alignment: .firstTextBaseline) {
+                    Text(sponsorLocalized("Доступ до", "Access until", "Acceso hasta"))
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Text(subscription.expiresAt, format: .dateTime.day().month(.wide).year())
+                        .fontWeight(.semibold)
+                }
+            } else if sponsorshipStore.isLoading {
+                ProgressView()
+            } else {
+                Text(sponsorLocalized("Данные подписки пока недоступны. Попробуйте обновить экран.",
+                                      "Subscription details are unavailable. Please try again.",
+                                      "Los datos de la suscripción no están disponibles. Inténtalo de nuevo."))
+                    .foregroundStyle(.secondary)
+            }
+            // The backend overview doesn't expose auto-renewal. Do not invent its status.
+        }
+        .padding(18)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(AppAdaptiveColor.warmCardBackground, in: RoundedRectangle(cornerRadius: 28))
+    }
+
+    private var sponsoredActionsSection: some View {
+        VStack(spacing: 12) {
+            Button {
+                showManageSubscriptions = true
+            } label: {
+                actionButtonLabel(
+                    title: sponsorLocalized("Управлять подпиской", "Manage Subscription", "Gestionar suscripción"),
+                    systemImage: "gearshape", imageColor: .primary, showsChevron: true)
+            }
+            .buttonStyle(SubscriptionActionButtonStyle())
+
+            Button { showSponsorPlanInfo = true } label: {
+                actionButtonLabel(
+                    title: sponsorLocalized("О тарифе", "Plan Details", "Detalles del plan"),
+                    systemImage: "list.bullet.rectangle.portrait", imageColor: .orange, showsChevron: true)
+            }
+            .buttonStyle(SubscriptionActionButtonStyle())
+
+            Button {
+                Task { await restoreSponsoredPurchases() }
+            } label: {
+                actionButtonLabel(
+                    title: sponsoredIsRestoring
+                        ? sponsorLocalized("Восстанавливаем…", "Restoring…", "Restaurando…")
+                        : sponsorLocalized("Восстановить покупки", "Restore Purchases", "Restaurar compras"),
+                    systemImage: "arrow.clockwise", imageColor: .primary, showsChevron: false)
+            }
+            .buttonStyle(SubscriptionActionButtonStyle())
+            .disabled(sponsoredIsRestoring)
+        }
+    }
+
+    @MainActor
+    private func restoreSponsoredPurchases() async {
+        guard !sponsoredIsRestoring else { return }
+        sponsoredIsRestoring = true
+        defer { sponsoredIsRestoring = false }
+        do {
+            try await AppStore.sync()
+            await sponsorshipStore.refresh()
+            subscriptionMessage = sponsorshipStore.activeSponsoringSubscriptions.isEmpty
+                ? sponsorLocalized("Активная спонсорская подписка на сервере пока не найдена.",
+                                   "No active sponsored subscription is currently confirmed by the server.",
+                                   "El servidor aún no confirma una suscripción patrocinada activa.")
+                : sponsorLocalized("Данные спонсорской подписки обновлены.",
+                                   "Sponsored subscription details updated.",
+                                   "Se actualizaron los datos de la suscripción patrocinada.")
+        } catch {
+            subscriptionMessage = error.localizedDescription
+        }
+    }
+
+
+    // Subscription-specific strings are stored in RU/EN/ES .lproj resources.
+    private func subscriptionText(_ key: String, fallback: String) -> String {
+        let code: String
+        switch selectedLanguage {
+        case .russian: code = "ru"
+        case .englishUS: code = "en"
+        case .spanishLatinAmerica: code = "es"
+        }
+        guard let path = Bundle.main.path(forResource: code, ofType: "lproj"),
+              let bundle = Bundle(path: path) else { return fallback }
+        return bundle.localizedString(forKey: key, value: fallback, table: "SubscriptionScreens")
+    }
+
     private var legalSection: some View {
         VStack(
             alignment: .leading,
@@ -467,9 +644,7 @@ struct SubscriptionView: View {
                 .padding(.vertical, 4)
 
             Text(
-                AppLanguage.selected.localized(
-                    "Условия подписки"
-                )
+                subscriptionText("subscription.terms.title", fallback: "Условия подписки")
             )
             .font(
                 .system(
@@ -483,24 +658,20 @@ struct SubscriptionView: View {
             )
 
             Text(
-                AppLanguage.selected.localized(
-                    "Подписка оформляется через Apple App Store и автоматически продлевается, если автопродление не отключено в настройках Apple."
-                )
+                subscriptionText("subscription.terms.renewal", fallback: "Подписка оформляется через Apple App Store и автоматически продлевается, если автопродление не отключено в настройках Apple.")
             )
-            .font(.footnote)
-            .foregroundColor(.secondary)
+            .font(.system(size: 16, weight: .bold, design: .rounded))
+            .foregroundStyle(AppAdaptiveColor.text)
             .fixedSize(
                 horizontal: false,
                 vertical: true
             )
 
             Text(
-                AppLanguage.selected.localized(
-                    "Удаление приложения MorningHello не отменяет подписку и не останавливает серверный мониторинг."
-                )
+                subscriptionText("subscription.terms.deletion", fallback: "Удаление приложения MorningHello не отменяет подписку и не останавливает серверный мониторинг.")
             )
-            .font(.footnote)
-            .foregroundColor(.secondary)
+            .font(.system(size: 16, weight: .bold, design: .rounded))
+            .foregroundStyle(AppAdaptiveColor.text)
             .fixedSize(
                 horizontal: false,
                 vertical: true
@@ -508,27 +679,21 @@ struct SubscriptionView: View {
 
             legalLink(
                 title:
-                    AppLanguage.selected.localized(
-                        "Условия использования MorningHello"
-                    ),
+                    subscriptionText("subscription.links.terms", fallback: "Условия использования MorningHello"),
                 destination:
                     morningHelloTermsURL
             )
 
             legalLink(
                 title:
-                    AppLanguage.selected.localized(
-                        "Условия использования Apple (EULA)"
-                    ),
+                    subscriptionText("subscription.links.apple", fallback: "Условия использования Apple (EULA)"),
                 destination:
                     appleEULAURL
             )
 
             legalLink(
                 title:
-                    AppLanguage.selected.localized(
-                        "Политика конфиденциальности"
-                    ),
+                    subscriptionText("subscription.links.privacy", fallback: "Политика конфиденциальности"),
                 destination:
                     privacyPolicyURL
             )

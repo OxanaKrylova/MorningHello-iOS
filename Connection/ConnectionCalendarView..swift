@@ -286,8 +286,7 @@ struct ConnectionCalendarView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                backgroundColor
-                    .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_Reminders")
 
                 ScrollView(
                     .vertical,
@@ -1195,11 +1194,8 @@ struct ConnectionCalendarView: View {
                     )
                     .font(
                         .system(
-                            size: 17,
-                            weight:
-                                isSelected
-                                    ? .bold
-                                    : .semibold,
+                            size: 19,
+                            weight: .bold,
                             design: .rounded
                         )
                     )
@@ -1236,7 +1232,7 @@ struct ConnectionCalendarView: View {
                     }
                 }
                 .foregroundStyle(
-                    Color.primary
+                    Color.black
                 )
                 .frame(
                     maxWidth: .infinity,

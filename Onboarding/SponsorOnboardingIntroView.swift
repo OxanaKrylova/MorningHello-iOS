@@ -86,9 +86,7 @@ struct SponsorOnboardingIntroView:
             .hidden
         )
         .background(
-            AppAdaptiveColor
-                .warmFormBackground
-                .ignoresSafeArea()
+            MorningHelloScreenBackground(name: "BG_Onboarding")
         )
     }
 
@@ -158,33 +156,18 @@ struct SponsorOnboardingIntroView:
         }
     }
 
-  
     private var deviceRequirementCard: some View {
         VStack(spacing: 18) {
-
-            Image("icon_telephone")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 64, height: 64)
+            MorningHelloArtwork(name: "icon_telephone", size: 56)
                 .accessibilityHidden(true)
-
             Text(deviceQuestion)
                 .font(.system(size: 22, weight: .bold, design: .rounded))
                 .foregroundStyle(AppAdaptiveColor.text)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
 
-            deviceOption(
-                .iPhone,
-                title: "iPhone",
-                icon: "iphone.gen3"
-            )
-
-            deviceOption(
-                .other,
-                title: otherPhoneTitle,
-                icon: "smartphone"
-            )
+            deviceOption(.iPhone, title: "iPhone", icon: "iphone.gen3")
+            deviceOption(.other, title: otherPhoneTitle, icon: "smartphone")
 
             if selectedDevice == .other {
                 Label {
@@ -212,7 +195,6 @@ struct SponsorOnboardingIntroView:
         }
         .shadow(color: .black.opacity(0.06), radius: 10, y: 5)
     }
-
 
     private func deviceOption(
         _ type: BeneficiaryPhoneType,

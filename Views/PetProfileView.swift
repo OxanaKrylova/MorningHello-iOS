@@ -850,9 +850,7 @@ struct PetProfileView: View {
             }
             .scrollContentBackground(.hidden)
             .background(
-                AppAdaptiveColor
-                    .warmFormBackground
-                    .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_Pet")
             )
             .navigationBarTitleDisplayMode(
                 .inline
@@ -870,12 +868,19 @@ struct PetProfileView: View {
                 ToolbarItem(
                     placement: .principal
                 ) {
-                    HStack(spacing: 8) {
-                        MorningHelloArtwork(name: "icon_Pet", size: 40)
-                        Text(localized("Питомец"))
-                            .font(.system(size: 28, weight: .bold, design: .rounded))
-                            .foregroundStyle(AppAdaptiveColor.text)
-                    }
+                    Text(
+                        localized("Питомец")
+                    )
+                    .font(
+                        .system(
+                            size: 34,
+                            weight: .bold,
+                            design: .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        AppAdaptiveColor.text
+                    )
                 }
 
                 ToolbarItem(

@@ -862,9 +862,7 @@ struct EmergencyServicesView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                AppAdaptiveColor
-                    .warmFormBackground
-                    .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_EmergencyServices")
 
                 ScrollView {
                     LazyVStack(
@@ -1126,19 +1124,7 @@ struct EmergencyServicesView: View {
                     alignment: .center,
                     spacing: 12
                 ) {
-                    Image(
-                        systemName:
-                            "message.badge.waveform.fill"
-                    )
-                    .font(
-                        .system(
-                            size: 28,
-                            weight: .semibold
-                        )
-                    )
-                    .foregroundStyle(
-                        Color.orange
-                    )
+                    MorningHelloArtwork(name: "icon_email", size: 34)
 
                     Text(
                         selectedLanguage.localized(
@@ -1503,19 +1489,7 @@ struct EmergencyServicesView: View {
             spacing: 14
         ) {
             HStack(spacing: 14) {
-                Image(
-                    systemName:
-                        "phone.badge.waveform.fill"
-                )
-                .font(
-                    .system(
-                        size: 28,
-                        weight: .semibold
-                    )
-                )
-                .foregroundStyle(
-                    Color.orange
-                )
+                MorningHelloArtwork(name: "icon_telephone", size: 34)
 
                 VStack(
                     alignment: .leading,
@@ -1593,10 +1567,10 @@ struct EmergencyServicesView: View {
             alignment: .leading,
             spacing: 12
         ) {
-            sectionTitle(
-                key:
-                    "emergency.services.section.title"
-            )
+            HStack(spacing: 12) {
+                MorningHelloArtwork(name: "icon_SOS", size: 36)
+                sectionTitle(key: "emergency.services.section.title")
+            }
 
             ForEach(services) { service in
                 emergencyServiceCard(
@@ -1614,9 +1588,7 @@ struct EmergencyServicesView: View {
             spacing: 12
         ) {
             HStack(spacing: 12) {
-                Image(
-                    systemName: "pawprint.fill"
-                )
+                MorningHelloArtwork(name: "icon_Pet", size: 34)
                 .font(
                     .system(
                         size: 24,

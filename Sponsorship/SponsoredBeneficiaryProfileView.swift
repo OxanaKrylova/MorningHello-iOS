@@ -204,8 +204,7 @@ struct SponsoredBeneficiaryProfileView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                AppAdaptiveColor.warmFormBackground
-                    .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_Onboarding")
 
                 ScrollView(
                     .vertical,
@@ -299,12 +298,6 @@ struct SponsoredBeneficiaryProfileView: View {
 
     private var header: some View {
         VStack(spacing: 10) {
-            Image("icon_Profile")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 70, height: 70)
-                .accessibilityHidden(true)
-
             Text(
                 localized("Профиль подопечного")
             )
@@ -356,11 +349,8 @@ struct SponsoredBeneficiaryProfileView: View {
                         )
                     )
                 } icon: {
-                    Image("icon_Profile")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24, height: 24)
-                .accessibilityHidden(true)
+                    Image(systemName: "person.fill")
+                        .foregroundStyle(.orange)
                 }
                 .font(
                     .system(
@@ -487,11 +477,8 @@ struct SponsoredBeneficiaryProfileView: View {
                     )
                 )
             } icon: {
-                Image("icon_Language")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24, height: 24)
-                .accessibilityHidden(true)
+                Image(systemName: "character.bubble.fill")
+                    .foregroundStyle(.orange)
             }
             .font(
                 .system(
@@ -637,11 +624,8 @@ struct SponsoredBeneficiaryProfileView: View {
                     )
                 )
             } icon: {
-                Image("icon_telephone")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24, height: 24)
-                .accessibilityHidden(true)
+                Image(systemName: "phone.fill")
+                    .foregroundStyle(.orange)
             }
             .font(
                 .system(
@@ -721,11 +705,8 @@ struct SponsoredBeneficiaryProfileView: View {
                     localized("Страна проживания")
                 )
             } icon: {
-                Image("icon_Country")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24, height: 24)
-                .accessibilityHidden(true)
+                Image(systemName: "globe")
+                    .foregroundStyle(.orange)
             }
             .font(
                 .system(
@@ -810,11 +791,8 @@ struct SponsoredBeneficiaryProfileView: View {
                     )
                 )
             } icon: {
-                Image("icon_Postcard")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 24, height: 24)
-                .accessibilityHidden(true)
+                Image(systemName: "birthday.cake.fill")
+                    .foregroundStyle(.orange)
             }
             .font(
                 .system(

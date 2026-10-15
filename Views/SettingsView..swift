@@ -11,6 +11,9 @@ struct SettingsView: View {
     
     @Environment(\.dismiss)
     private var dismiss
+
+    @Environment(\.colorScheme)
+    private var colorScheme
     
     @AppStorage("app_sounds_enabled")
     private var areSoundsEnabled = true
@@ -18,6 +21,45 @@ struct SettingsView: View {
     @AppStorage(AppLanguage.storageKey)
     private var selectedLanguageRawValue = AppLanguage.initial.rawValue
     
+    // The beneficiary keeps sponsored status even when the sponsor's access expires.
+    // The importer currently saves .selfUse as usage mode, so that flag cannot
+    // distinguish a beneficiary from a self-paying user.
+    @AppStorage("sponsored_prefill_imported_id_v1")
+    private var sponsoredPrefillImportedID = ""
+
+    @StateObject private var sponsorshipStore = SponsorshipStore.shared
+
+    private var isSponsoredBeneficiary: Bool {
+        !sponsoredPrefillImportedID.isEmpty ||
+        sponsorshipStore.sponsoredAccess != nil
+    }
+
+    private var sponsoredAccessMessage: String {
+        let active = sponsorshipStore.hasActiveSponsoredAccess
+        switch selectedLanguage {
+        case .russian:
+            return active
+                ? "Доступ к MorningHello оплачивает ваш близкий человек. Управление подпиской находится у спонсора."
+                : "Ваш спонсорский доступ сейчас не подтверждён. Свяжитесь с человеком, который оформил подписку."
+        case .englishUS:
+            return active
+                ? "Your loved one pays for your MorningHello access. The sponsor manages the subscription."
+                : "Your sponsored access is not currently confirmed. Please contact the person who purchased the subscription."
+        case .spanishLatinAmerica:
+            return active
+                ? "Tu ser querido paga tu acceso a MorningHello. El patrocinador administra la suscripción."
+                : "Tu acceso patrocinado no está confirmado actualmente. Comunícate con la persona que contrató la suscripción."
+        }
+    }
+
+    private var sponsoredAccessTitle: String {
+        switch selectedLanguage {
+        case .russian: return "Спонсорский доступ"
+        case .englishUS: return "Sponsored access"
+        case .spanishLatinAmerica: return "Acceso patrocinado"
+        }
+    }
+
     @State private var showProfile = false
     @State private var showContacts = false
     @State private var showHolidaySettings = false
@@ -38,17 +80,19 @@ struct SettingsView: View {
         blue: 0.88
     )
     
-    private let titleColor = Color(
-        red: 0.55,
-        green: 0.30,
-        blue: 0.14
-    )
-    
-    private let textColor = Color(
-        red: 0.12,
-        green: 0.16,
-        blue: 0.28
-    )
+    private var titleColor: Color {
+        colorScheme == .dark
+        ? Color(red: 0.47, green: 0.28, blue: 0.12)
+        : Color(red: 0.55, green: 0.30, blue: 0.14)
+    }
+
+    private var textColor: Color {
+        Color(red: 0.12, green: 0.16, blue: 0.28)
+    }
+
+    private var secondaryForegroundColor: Color {
+        Color(red: 0.35, green: 0.37, blue: 0.45)
+    }
     
     private var selectedLanguage: AppLanguage {
         AppLanguage(rawValue: selectedLanguageRawValue) ?? .initial
@@ -68,8 +112,7 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                backgroundColor
-                    .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_Settings")
 
                 ScrollViewReader { proxy in
                     ScrollView(.vertical) {
@@ -79,7 +122,11 @@ struct SettingsView: View {
                                 .id("settings_top")
 
                             monitoringSection
-                            subscriptionSection
+                            if isSponsoredBeneficiary {
+                                sponsoredAccessSection
+                            } else {
+                                subscriptionSection
+                            }
                             soundSection
                             languageSection
                             feedbackSection
@@ -152,7 +199,12 @@ struct SettingsView: View {
             HolidaySettingsView()
         }
         .sheet(isPresented: $showSubscription) {
-            SubscriptionView()
+            if !isSponsoredBeneficiary {
+                SubscriptionView()
+            } else {
+                Text(sponsoredAccessMessage)
+                    .padding(24)
+            }
         }
         .sheet(isPresented: $showFeedback) {
             FeedbackView()
@@ -335,6 +387,27 @@ struct SettingsView: View {
         }
     }
     
+    // MARK: - Информация о спонсорском доступе (без покупок)
+
+    private var sponsoredAccessSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(sponsoredAccessTitle)
+                .font(.system(.headline, design: .rounded).weight(.bold))
+                .foregroundStyle(titleColor)
+                .padding(.horizontal, 28)
+
+            HStack(alignment: .top, spacing: 14) {
+                MorningHelloArtwork(name: "icon_morning", size: 40)
+                    .frame(width: 42)
+                Text(sponsoredAccessMessage)
+                    .font(.system(.body, design: .rounded))
+                    .foregroundStyle(textColor)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .settingsCard()
+        }
+    }
+
     // MARK: - Звук
     
     private var soundSection: some View {
@@ -363,7 +436,7 @@ struct SettingsView: View {
                     "Звуки сопровождают отметку «Я в порядке» и открытие экранов приложения."
                 )
                 .font(.footnote)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(secondaryForegroundColor)
                 .frame(
                     maxWidth: .infinity,
                     alignment: .leading
@@ -409,7 +482,7 @@ struct SettingsView: View {
                     "Язык применяется сразу ко всем экранам приложения."
                 )
                 .font(.footnote)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(secondaryForegroundColor)
                 .frame(
                     maxWidth: .infinity,
                     alignment: .leading
@@ -444,7 +517,7 @@ struct SettingsView: View {
                             design: .rounded
                         )
                     )
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(secondaryForegroundColor)
                     .frame(
                         maxWidth: .infinity,
                         alignment: .leading
@@ -470,7 +543,7 @@ struct SettingsView: View {
                     Text("Версия")
                     Spacer()
                     Text(Bundle.main.appVersion)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(secondaryForegroundColor)
                 }
                 
                 Divider()
@@ -479,7 +552,7 @@ struct SettingsView: View {
                     Text("Номер сборки")
                     Spacer()
                     Text(Bundle.main.buildNumber)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(secondaryForegroundColor)
                 }
             }
             .foregroundStyle(textColor)
@@ -584,7 +657,7 @@ struct SettingsView: View {
                     
                     Text(subtitle)
                         .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(secondaryForegroundColor)
                         .multilineTextAlignment(.leading)
                 }
                 
@@ -597,7 +670,7 @@ struct SettingsView: View {
                             weight: .semibold
                         )
                     )
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(secondaryForegroundColor)
             }
             .frame(
                 maxWidth: .infinity,
@@ -640,7 +713,7 @@ private extension View {
         self
             .padding(.horizontal, 20)
             .padding(.vertical, 18)
-            .background(.white.opacity(0.72))
+            .background(.white.opacity(0.90))
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: 28,

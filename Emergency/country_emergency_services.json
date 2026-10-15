@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "catalogVersion": "2026.10.13.2",
-  "generatedAt": "2026-10-13T20:30:00+03:00",
+  "catalogVersion": "2026.10.14.1",
+  "generatedAt": "2026-10-14T15:49:00+03:00",
   "countryCodes": [
     "AU",
     "BZ",
@@ -12607,6 +12607,2706 @@
       "sourceType": "officialService",
       "verificationStatus": "needsVerification",
       "verifiedAt": null
+    },
+    {
+      "id": "au-coast-national-amsa-joint-rescue-coordination-centre",
+      "countryCode": "AU",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Морской поисково-спасательный район Австралии",
+      "localizedNames": {
+        "ru": "AMSA – Joint Rescue Coordination Centre",
+        "en": "AMSA – Joint Rescue Coordination Centre",
+        "es": "AMSA – Joint Rescue Coordination Centre"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Морской поисково-спасательный район Австралии. Время работы: 24/7. Примечание источника: Внутри Австралии также 1800641792.",
+        "en": "Maritime rescue or coordination contact. Coverage: Морской поисково-спасательный район Австралии. Hours: 24/7. Source note (Russian): Внутри Австралии также 1800641792.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Морской поисково-спасательный район Австралии. Horario: 24/7. Source note (Russian): Внутри Австралии также 1800641792."
+      },
+      "noteKey": null,
+      "dialString": "+61262306811",
+      "internationalNumber": "+61262306811",
+      "sourceName": "AMSA",
+      "sourceURL": "https://www.amsa.gov.au/about/contact-us",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "bz-coast-national-belize-coast-guard-operational-line",
+      "countryCode": "BZ",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Воды Белиза",
+      "localizedNames": {
+        "ru": "Belize Coast Guard – Operational line",
+        "en": "Belize Coast Guard – Operational line",
+        "es": "Belize Coast Guard – Operational line"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Воды Белиза.  Примечание источника: Оперативная линия в собственном бюллетене BCG, июнь 2025, опубликованном в 2026.",
+        "en": "Maritime rescue or coordination contact. Coverage: Воды Белиза.  Source note (Russian): Оперативная линия в собственном бюллетене BCG, июнь 2025, опубликованном в 2026.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Воды Белиза.  Source note (Russian): Оперативная линия в собственном бюллетене BCG, июнь 2025, опубликованном в 2026."
+      },
+      "noteKey": null,
+      "dialString": "+5016771652",
+      "internationalNumber": "+5016771652",
+      "sourceName": "Belize Coast Guard",
+      "sourceURL": "https://bcg.gov.bz/wp-content/uploads/2026/03/bcg-watchstander-june-2025.pdf",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "bz-coast-national-belize-coast-guard-maritime-emergency",
+      "countryCode": "BZ",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Белиз; короткий номер",
+      "localizedNames": {
+        "ru": "Belize Coast Guard – Maritime Emergency",
+        "en": "Belize Coast Guard – Maritime Emergency",
+        "es": "Belize Coast Guard – Maritime Emergency"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Белиз; короткий номер.",
+        "en": "Maritime rescue or coordination contact. Coverage: Белиз; короткий номер.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Белиз; короткий номер."
+      },
+      "noteKey": null,
+      "dialString": "999",
+      "internationalNumber": null,
+      "sourceName": "Belize Coast Guard",
+      "sourceURL": "https://bcg.gov.bz/wp-content/uploads/2026/03/bcg-watchstander-june-2025.pdf",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "gy-coast-national-guyana-police",
+      "countryCode": "GY",
+      "category": "rescue",
+      "scope": "national",
+      "region": "Гайана",
+      "localizedNames": {
+        "ru": "Guyana Police – общий экстренный вызов",
+        "en": "Guyana Police – общий экстренный вызов",
+        "es": "Guyana Police – общий экстренный вызов"
+      },
+      "localizedNotes": {
+        "ru": "Общий экстренный номер для происшествий на воде, не прямая линия береговой охраны. Зона обслуживания: Гайана.  Примечание источника: Общий экстренный маршрут, не прямая береговая охрана.",
+        "en": "General emergency contact for water incidents; not a direct coast guard line. Coverage: Гайана.  Source note (Russian): Общий экстренный маршрут, не прямая береговая охрана.",
+        "es": "Número general de emergencias para incidentes en el agua; no es una línea directa de guardacostas. Zona de cobertura: Гайана.  Source note (Russian): Общий экстренный маршрут, не прямая береговая охрана."
+      },
+      "noteKey": null,
+      "dialString": "911",
+      "internationalNumber": null,
+      "sourceName": "Guyana Police",
+      "sourceURL": "https://labour.gov.gy/wp-content/uploads/2024/08/SERVICES-BOOKLET-new-layout_unlocked.pdf",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "il-coast-national-rcc-haifa",
+      "countryCode": "IL",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Морской поисково-спасательный район Израиля",
+      "localizedNames": {
+        "ru": "RCC Haifa – מרכז תאום והצלה בים",
+        "en": "RCC Haifa – מרכז תאום והצלה בים",
+        "es": "RCC Haifa – מרכז תאום והצלה בים"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Морской поисково-спасательный район Израиля.  Примечание источника: Контакт опубликован в извещении мореплавателям №119/2025 от 17.11.2025; более новые номера, чем на старой странице RCC.",
+        "en": "Maritime rescue or coordination contact. Coverage: Морской поисково-спасательный район Израиля.  Source note (Russian): Контакт опубликован в извещении мореплавателям №119/2025 от 17.11.2025; более новые номера, чем на старой странице RCC.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Морской поисково-спасательный район Израиля.  Source note (Russian): Контакт опубликован в извещении мореплавателям №119/2025 от 17.11.2025; более новые номера, чем на старой странице RCC."
+      },
+      "noteKey": null,
+      "dialString": "+97248235591",
+      "internationalNumber": "+97248235591",
+      "sourceName": "RCC Haifa",
+      "sourceURL": "https://www.gov.il/he/pages/119-20-25",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "il-coast-national-rcc-haifa-2",
+      "countryCode": "IL",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Морской поисково-спасательный район Израиля",
+      "localizedNames": {
+        "ru": "RCC Haifa – дополнительная линия",
+        "en": "RCC Haifa – дополнительная линия",
+        "es": "RCC Haifa – дополнительная линия"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Морской поисково-спасательный район Израиля.",
+        "en": "Maritime rescue or coordination contact. Coverage: Морской поисково-спасательный район Израиля.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Морской поисково-спасательный район Израиля."
+      },
+      "noteKey": null,
+      "dialString": "+97249129731",
+      "internationalNumber": "+97249129731",
+      "sourceName": "RCC Haifa",
+      "sourceURL": "https://www.gov.il/he/pages/119-20-25",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ie-coast-national-irish-coast-guard-mrcc-dublin",
+      "countryCode": "IE",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Dublin MRCC; центральная координация",
+      "localizedNames": {
+        "ru": "Irish Coast Guard – MRCC Dublin",
+        "en": "Irish Coast Guard – MRCC Dublin",
+        "es": "Irish Coast Guard – MRCC Dublin"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Dublin MRCC; центральная координация.  Примечание источника: При экстренном вызове внутри Ирландии также 112/999, попросить Coast Guard.",
+        "en": "Maritime rescue or coordination contact. Coverage: Dublin MRCC; центральная координация.  Source note (Russian): При экстренном вызове внутри Ирландии также 112/999, попросить Coast Guard.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Dublin MRCC; центральная координация.  Source note (Russian): При экстренном вызове внутри Ирландии также 112/999, попросить Coast Guard."
+      },
+      "noteKey": null,
+      "dialString": "+35316620922",
+      "internationalNumber": "+35316620922",
+      "sourceName": "Irish Coast Guard",
+      "sourceURL": "https://www.gov.ie/en/department-of-transport/organisation-information/irish-coast-guard-contact-information/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ie-coast-national-irish-coast-guard-mrcc-dublin-2",
+      "countryCode": "IE",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Dublin MRCC",
+      "localizedNames": {
+        "ru": "Irish Coast Guard – MRCC Dublin, дополнительная линия",
+        "en": "Irish Coast Guard – MRCC Dublin, дополнительная линия",
+        "es": "Irish Coast Guard – MRCC Dublin, дополнительная линия"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Dublin MRCC.",
+        "en": "Maritime rescue or coordination contact. Coverage: Dublin MRCC.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Dublin MRCC."
+      },
+      "noteKey": null,
+      "dialString": "+35316782313",
+      "internationalNumber": "+35316782313",
+      "sourceName": "Irish Coast Guard",
+      "sourceURL": "https://www.gov.ie/en/department-of-transport/organisation-information/irish-coast-guard-contact-information/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ie-coast-national-irish-coast-guard-mrsc-malin",
+      "countryCode": "IE",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Северное и северо-западное побережье; Malin MRSC",
+      "localizedNames": {
+        "ru": "Irish Coast Guard – MRSC Malin",
+        "en": "Irish Coast Guard – MRSC Malin",
+        "es": "Irish Coast Guard – MRSC Malin"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Северное и северо-западное побережье; Malin MRSC.",
+        "en": "Maritime rescue or coordination contact. Coverage: Северное и северо-западное побережье; Malin MRSC.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Северное и северо-западное побережье; Malin MRSC."
+      },
+      "noteKey": null,
+      "dialString": "+353749370103",
+      "internationalNumber": "+353749370103",
+      "sourceName": "Irish Coast Guard",
+      "sourceURL": "https://www.gov.ie/en/department-of-transport/organisation-information/irish-coast-guard-contact-information/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ie-coast-national-irish-coast-guard-mrsc-valentia",
+      "countryCode": "IE",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Западное и юго-западное побережье; Valentia MRSC",
+      "localizedNames": {
+        "ru": "Irish Coast Guard – MRSC Valentia",
+        "en": "Irish Coast Guard – MRSC Valentia",
+        "es": "Irish Coast Guard – MRSC Valentia"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Западное и юго-западное побережье; Valentia MRSC.  Примечание источника: В источнике написано +353 066; международный формат нормализован удалением внутреннего 0.",
+        "en": "Maritime rescue or coordination contact. Coverage: Западное и юго-западное побережье; Valentia MRSC.  Source note (Russian): В источнике написано +353 066; международный формат нормализован удалением внутреннего 0.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Западное и юго-западное побережье; Valentia MRSC.  Source note (Russian): В источнике написано +353 066; международный формат нормализован удалением внутреннего 0."
+      },
+      "noteKey": null,
+      "dialString": "+353669476109",
+      "internationalNumber": "+353669476109",
+      "sourceName": "Irish Coast Guard",
+      "sourceURL": "https://www.gov.ie/en/department-of-transport/organisation-information/irish-coast-guard-contact-information/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ca-coast-national-jrcc-victoria",
+      "countryCode": "CA",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Западная Канада; зона JRCC Victoria",
+      "localizedNames": {
+        "ru": "JRCC Victoria",
+        "en": "JRCC Victoria",
+        "es": "JRCC Victoria"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Западная Канада; зона JRCC Victoria.  Примечание источника: Внутри British Columbia/Yukon также 18005675111.",
+        "en": "Maritime rescue or coordination contact. Coverage: Западная Канада; зона JRCC Victoria.  Source note (Russian): Внутри British Columbia/Yukon также 18005675111.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Западная Канада; зона JRCC Victoria.  Source note (Russian): Внутри British Columbia/Yukon также 18005675111."
+      },
+      "noteKey": null,
+      "dialString": "+12504138933",
+      "internationalNumber": "+12504138933",
+      "sourceName": "JRCC Victoria",
+      "sourceURL": "https://www.canada.ca/en/canadian-coast-guard/corporate/publications/radio-aids-marine-navigation/foreword.html",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ca-coast-national-jrcc-trenton",
+      "countryCode": "CA",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Центральная Канада; зона JRCC Trenton",
+      "localizedNames": {
+        "ru": "JRCC Trenton",
+        "en": "JRCC Trenton",
+        "es": "JRCC Trenton"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Центральная Канада; зона JRCC Trenton.  Примечание источника: Внутри Канады также 18002677270; выбирать центр по зоне.",
+        "en": "Maritime rescue or coordination contact. Coverage: Центральная Канада; зона JRCC Trenton.  Source note (Russian): Внутри Канады также 18002677270; выбирать центр по зоне.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Центральная Канада; зона JRCC Trenton.  Source note (Russian): Внутри Канады также 18002677270; выбирать центр по зоне."
+      },
+      "noteKey": null,
+      "dialString": "+16139653870",
+      "internationalNumber": "+16139653870",
+      "sourceName": "JRCC Trenton",
+      "sourceURL": "https://www.canada.ca/en/canadian-coast-guard/corporate/publications/radio-aids-marine-navigation/foreword.html",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ca-coast-national-jrcc-halifax",
+      "countryCode": "CA",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Восточная Канада; зона JRCC Halifax",
+      "localizedNames": {
+        "ru": "JRCC Halifax",
+        "en": "JRCC Halifax",
+        "es": "JRCC Halifax"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Восточная Канада; зона JRCC Halifax.  Примечание источника: Maritimes: 18005651582; Newfoundland/Labrador: 18005632444.",
+        "en": "Maritime rescue or coordination contact. Coverage: Восточная Канада; зона JRCC Halifax.  Source note (Russian): Maritimes: 18005651582; Newfoundland/Labrador: 18005632444.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Восточная Канада; зона JRCC Halifax.  Source note (Russian): Maritimes: 18005651582; Newfoundland/Labrador: 18005632444."
+      },
+      "noteKey": null,
+      "dialString": "+19024278200",
+      "internationalNumber": "+19024278200",
+      "sourceName": "JRCC Halifax",
+      "sourceURL": "https://www.canada.ca/en/canadian-coast-guard/corporate/publications/radio-aids-marine-navigation/foreword.html",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ca-coast-national-mrsc-qu-bec",
+      "countryCode": "CA",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Québec; зона MRSC Québec",
+      "localizedNames": {
+        "ru": "MRSC Québec",
+        "en": "MRSC Québec",
+        "es": "MRSC Québec"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Québec; зона MRSC Québec.",
+        "en": "Maritime rescue or coordination contact. Coverage: Québec; зона MRSC Québec.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Québec; зона MRSC Québec."
+      },
+      "noteKey": null,
+      "dialString": "+14186483599",
+      "internationalNumber": "+14186483599",
+      "sourceName": "MRSC Québec",
+      "sourceURL": "https://www.canada.ca/en/canadian-coast-guard/corporate/publications/radio-aids-marine-navigation/foreword.html",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ca-coast-national-mrsc-st-john-s",
+      "countryCode": "CA",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Newfoundland and Labrador; зона MRSC St. John's",
+      "localizedNames": {
+        "ru": "MRSC St. John's",
+        "en": "MRSC St. John's",
+        "es": "MRSC St. John's"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Newfoundland and Labrador; зона MRSC St. John's.",
+        "en": "Maritime rescue or coordination contact. Coverage: Newfoundland and Labrador; зона MRSC St. John's.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Newfoundland and Labrador; зона MRSC St. John's."
+      },
+      "noteKey": null,
+      "dialString": "+17097725151",
+      "internationalNumber": "+17097725151",
+      "sourceName": "MRSC St. John's",
+      "sourceURL": "https://www.canada.ca/en/canadian-coast-guard/corporate/publications/radio-aids-marine-navigation/foreword.html",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "mt-coast-national-armed-forces-of-malta-rcc-malta",
+      "countryCode": "MT",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Мальтийский поисково-спасательный район",
+      "localizedNames": {
+        "ru": "Armed Forces of Malta – RCC Malta",
+        "en": "Armed Forces of Malta – RCC Malta",
+        "es": "Armed Forces of Malta – RCC Malta"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Мальтийский поисково-спасательный район.  Примечание источника: Номер RCC из официального навигационного справочника NGA.",
+        "en": "Maritime rescue or coordination contact. Coverage: Мальтийский поисково-спасательный район.  Source note (Russian): Номер RCC из официального навигационного справочника NGA.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Мальтийский поисково-спасательный район.  Source note (Russian): Номер RCC из официального навигационного справочника NGA."
+      },
+      "noteKey": null,
+      "dialString": "+35621257267",
+      "internationalNumber": "+35621257267",
+      "sourceName": "Armed Forces of Malta",
+      "sourceURL": "https://msi.nga.mil/api/publications/download?key=16694492%2FSFH00000%2FPub140bk.pdf&type=view",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-national-uscg-atlantic-area-sar-coordinator",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Атлантическая зона USCG, Gulf, Great Lakes и обслуживаемые внутренние реки",
+      "localizedNames": {
+        "ru": "USCG – Atlantic Area SAR Coordinator",
+        "en": "USCG – Atlantic Area SAR Coordinator",
+        "es": "USCG – Atlantic Area SAR Coordinator"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Атлантическая зона USCG, Gulf, Great Lakes и обслуживаемые внутренние реки. Время работы: 24/7. Примечание источника: Региональный координатор, не отдельный центр для каждого штата. Toll-free номер; доступ из-за рубежа не подтверждён.",
+        "en": "Maritime rescue or coordination contact. Coverage: Атлантическая зона USCG, Gulf, Great Lakes и обслуживаемые внутренние реки. Hours: 24/7. Source note (Russian): Региональный координатор, не отдельный центр для каждого штата. Toll-free номер; доступ из-за рубежа не подтверждён.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Атлантическая зона USCG, Gulf, Great Lakes и обслуживаемые внутренние реки. Horario: 24/7. Source note (Russian): Региональный координатор, не отдельный центр для каждого штата. Toll-free номер; доступ из-за рубежа не подтверждён."
+      },
+      "noteKey": null,
+      "dialString": "+18334531009",
+      "internationalNumber": null,
+      "sourceName": "USCG",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-national-uscg-pacific-sar-coordinator",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Тихоокеанская зона USCG",
+      "localizedNames": {
+        "ru": "USCG – Pacific SAR Coordinator",
+        "en": "USCG – Pacific SAR Coordinator",
+        "es": "USCG – Pacific SAR Coordinator"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Тихоокеанская зона USCG. Время работы: 24/7. Примечание источника: Toll-free номер; доступ из-за рубежа не подтверждён.",
+        "en": "Maritime rescue or coordination contact. Coverage: Тихоокеанская зона USCG. Hours: 24/7. Source note (Russian): Toll-free номер; доступ из-за рубежа не подтверждён.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Тихоокеанская зона USCG. Horario: 24/7. Source note (Russian): Toll-free номер; доступ из-за рубежа не подтверждён."
+      },
+      "noteKey": null,
+      "dialString": "+18002467236",
+      "internationalNumber": null,
+      "sourceName": "USCG",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "sg-coast-national-mpa-maritime-rescue-coordination-centr",
+      "countryCode": "SG",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Сингапурский морской поисково-спасательный район",
+      "localizedNames": {
+        "ru": "MPA – Maritime Rescue Coordination Centre / POCC",
+        "en": "MPA – Maritime Rescue Coordination Centre / POCC",
+        "es": "MPA – Maritime Rescue Coordination Centre / POCC"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Сингапурский морской поисково-спасательный район. Время работы: 24/7. Примечание источника: Прямой 24-hour emergency contact.",
+        "en": "Maritime rescue or coordination contact. Coverage: Сингапурский морской поисково-спасательный район. Hours: 24/7. Source note (Russian): Прямой 24-hour emergency contact.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Сингапурский морской поисково-спасательный район. Horario: 24/7. Source note (Russian): Прямой 24-hour emergency contact."
+      },
+      "noteKey": null,
+      "dialString": "+6562265539",
+      "internationalNumber": "+6562265539",
+      "sourceName": "MPA",
+      "sourceURL": "https://www.mpa.gov.sg/port-marine-ops/port-safety-security/search-rescue",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "sg-coast-national-mpa-mrcc-pocc",
+      "countryCode": "SG",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Сингапурский морской поисково-спасательный район",
+      "localizedNames": {
+        "ru": "MPA – MRCC / POCC, дополнительная линия",
+        "en": "MPA – MRCC / POCC, дополнительная линия",
+        "es": "MPA – MRCC / POCC, дополнительная линия"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Сингапурский морской поисково-спасательный район. Время работы: 24/7. Примечание источника: Прямой 24-hour emergency contact.",
+        "en": "Maritime rescue or coordination contact. Coverage: Сингапурский морской поисково-спасательный район. Hours: 24/7. Source note (Russian): Прямой 24-hour emergency contact.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Сингапурский морской поисково-спасательный район. Horario: 24/7. Source note (Russian): Прямой 24-hour emergency contact."
+      },
+      "noteKey": null,
+      "dialString": "+6563252493",
+      "internationalNumber": "+6563252493",
+      "sourceName": "MPA",
+      "sourceURL": "https://www.mpa.gov.sg/port-marine-ops/port-safety-security/search-rescue",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ar-coast-national-prefectura-naval-argentina-comando-rad",
+      "countryCode": "AR",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Зона деятельности Prefectura: морские, речные и озёрные воды",
+      "localizedNames": {
+        "ru": "Prefectura Naval Argentina – Comando Radioeléctrico",
+        "en": "Prefectura Naval Argentina – Comando Radioeléctrico",
+        "es": "Prefectura Naval Argentina – Comando Radioeléctrico"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Зона деятельности Prefectura: морские, речные и озёрные воды.",
+        "en": "Maritime rescue or coordination contact. Coverage: Зона деятельности Prefectura: морские, речные и озёрные воды.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Зона деятельности Prefectura: морские, речные и озёрные воды."
+      },
+      "noteKey": null,
+      "dialString": "+541145767658",
+      "internationalNumber": "+541145767658",
+      "sourceName": "Prefectura Naval Argentina",
+      "sourceURL": "https://www.argentina.gob.ar/prefecturanaval/emergencias",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ar-coast-national-prefectura-naval-emergencia-n-utica",
+      "countryCode": "AR",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Зона деятельности Prefectura",
+      "localizedNames": {
+        "ru": "Prefectura Naval – Emergencia náutica",
+        "en": "Prefectura Naval – Emergencia náutica",
+        "es": "Prefectura Naval – Emergencia náutica"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Зона деятельности Prefectura.",
+        "en": "Maritime rescue or coordination contact. Coverage: Зона деятельности Prefectura.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Зона деятельности Prefectura."
+      },
+      "noteKey": null,
+      "dialString": "106",
+      "internationalNumber": null,
+      "sourceName": "Prefectura Naval",
+      "sourceURL": "https://www.argentina.gob.ar/prefecturanaval/emergencias",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "gt-coast-national-conred-centro-de-operaciones-de-emerge",
+      "countryCode": "GT",
+      "category": "rescue",
+      "scope": "national",
+      "region": "Гватемала",
+      "localizedNames": {
+        "ru": "CONRED – Centro de Operaciones de Emergencia",
+        "en": "CONRED – Centro de Operaciones de Emergencia",
+        "es": "CONRED – Centro de Operaciones de Emergencia"
+      },
+      "localizedNotes": {
+        "ru": "Общий экстренный номер для происшествий на воде, не прямая линия береговой охраны. Зона обслуживания: Гватемала. Время работы: 24/7. Примечание источника: Общая служба координации чрезвычайных ситуаций, официальный маршрут при угрозе на побережье; не прямой номер береговой охраны.",
+        "en": "General emergency contact for water incidents; not a direct coast guard line. Coverage: Гватемала. Hours: 24/7. Source note (Russian): Общая служба координации чрезвычайных ситуаций, официальный маршрут при угрозе на побережье; не прямой номер береговой охраны.",
+        "es": "Número general de emergencias para incidentes en el agua; no es una línea directa de guardacostas. Zona de cobertura: Гватемала. Horario: 24/7. Source note (Russian): Общая служба координации чрезвычайных ситуаций, официальный маршрут при угрозе на побережье; не прямой номер береговой охраны."
+      },
+      "noteKey": null,
+      "dialString": "119",
+      "internationalNumber": null,
+      "sourceName": "CONRED",
+      "sourceURL": "https://conred.gob.gt/recomendaciones-ante-seguimiento-a-alerta-por-tsunami/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "do-coast-national-armada-centro-de-operaciones-mar-timas",
+      "countryCode": "DO",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Доминиканская Республика",
+      "localizedNames": {
+        "ru": "Armada – Centro de Operaciones Marítimas (COM)",
+        "en": "Armada – Centro de Operaciones Marítimas (COM)",
+        "es": "Armada – Centro de Operaciones Marítimas (COM)"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Доминиканская Республика.  Примечание источника: Номер Maritime Operations Center в официальном AIP, GEN 3.6, действующем с 20.02.2025.",
+        "en": "Maritime rescue or coordination contact. Coverage: Доминиканская Республика.  Source note (Russian): Номер Maritime Operations Center в официальном AIP, GEN 3.6, действующем с 20.02.2025.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Доминиканская Республика.  Source note (Russian): Номер Maritime Operations Center в официальном AIP, GEN 3.6, действующем с 20.02.2025."
+      },
+      "noteKey": null,
+      "dialString": "+18096046506",
+      "internationalNumber": "+18096046506",
+      "sourceName": "Armada",
+      "sourceURL": "https://aip.sna.gob.do/Datos/3GEN/gen_3-6.pdf",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "es-coast-national-salvamento-mar-timo",
+      "countryCode": "ES",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Испания; внутренний бесплатный номер",
+      "localizedNames": {
+        "ru": "Salvamento Marítimo",
+        "en": "Salvamento Marítimo",
+        "es": "Salvamento Marítimo"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Испания; внутренний бесплатный номер.  Примечание источника: Международный доступ к 900202202 не подтверждён.",
+        "en": "Maritime rescue or coordination contact. Coverage: Испания; внутренний бесплатный номер.  Source note (Russian): Международный доступ к 900202202 не подтверждён.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Испания; внутренний бесплатный номер.  Source note (Russian): Международный доступ к 900202202 не подтверждён."
+      },
+      "noteKey": null,
+      "dialString": "900202202",
+      "internationalNumber": null,
+      "sourceName": "Salvamento Marítimo",
+      "sourceURL": "https://www.salvamentomaritimo.es/conocenos/nuestra-empresa/contacto",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "co-coast-national-armada-nacional-guardacostas-emergenci",
+      "countryCode": "CO",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Колумбия",
+      "localizedNames": {
+        "ru": "Armada Nacional / Guardacostas – Emergencias en el mar",
+        "en": "Armada Nacional / Guardacostas – Emergencias en el mar",
+        "es": "Armada Nacional / Guardacostas – Emergencias en el mar"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Колумбия.  Примечание источника: Местная маршрутизация: Cartagena/Atlantico, Buenaventura/Pacifico или Bogotá. Короткий номер, не добавлять +57.",
+        "en": "Maritime rescue or coordination contact. Coverage: Колумбия.  Source note (Russian): Местная маршрутизация: Cartagena/Atlantico, Buenaventura/Pacifico или Bogotá. Короткий номер, не добавлять +57.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Колумбия.  Source note (Russian): Местная маршрутизация: Cartagena/Atlantico, Buenaventura/Pacifico или Bogotá. Короткий номер, не добавлять +57."
+      },
+      "noteKey": null,
+      "dialString": "146",
+      "internationalNumber": null,
+      "sourceName": "Armada Nacional / Guardacostas",
+      "sourceURL": "https://www.armada.mil.co/es/content/armada-pone-en-funcionamiento-l%C3%ADnea-de-atenci%C3%B3n-de-emergencias-en-el-mar",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "mx-coast-national-semar-centro-coordinador-nacional-de-b",
+      "countryCode": "MX",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Мексика; национальный морской SAR",
+      "localizedNames": {
+        "ru": "SEMAR – Centro Coordinador Nacional de Búsqueda y Rescate Marítimo",
+        "en": "SEMAR – Centro Coordinador Nacional de Búsqueda y Rescate Marítimo",
+        "es": "SEMAR – Centro Coordinador Nacional de Búsqueda y Rescate Marítimo"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Мексика; национальный морской SAR. Время работы: 24/7. Примечание источника: Внутри страны также 8006274621 (800 MARINA1).",
+        "en": "Maritime rescue or coordination contact. Coverage: Мексика; национальный морской SAR. Hours: 24/7. Source note (Russian): Внутри страны также 8006274621 (800 MARINA1).",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Мексика; национальный морской SAR. Horario: 24/7. Source note (Russian): Внутри страны также 8006274621 (800 MARINA1)."
+      },
+      "noteKey": null,
+      "dialString": "+525556246004",
+      "internationalNumber": "+525556246004",
+      "sourceName": "SEMAR",
+      "sourceURL": "https://www.gob.mx/semar/articulos/sistema-de-busqueda-rescate-y-vigilancia-maritimo",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "pa-coast-national-servicio-nacional-aeronaval-senan",
+      "countryCode": "PA",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Панама",
+      "localizedNames": {
+        "ru": "Servicio Nacional Aeronaval – SENAN",
+        "en": "Servicio Nacional Aeronaval – SENAN",
+        "es": "Servicio Nacional Aeronaval – SENAN"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Панама.  Примечание источника: Линия морских чрезвычайных ситуаций подтверждена собственным сообщением о спасении от 15.09.2026.",
+        "en": "Maritime rescue or coordination contact. Coverage: Панама.  Source note (Russian): Линия морских чрезвычайных ситуаций подтверждена собственным сообщением о спасении от 15.09.2026.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Панама.  Source note (Russian): Линия морских чрезвычайных ситуаций подтверждена собственным сообщением о спасении от 15.09.2026."
+      },
+      "noteKey": null,
+      "dialString": "108",
+      "internationalNumber": null,
+      "sourceName": "Servicio Nacional Aeronaval",
+      "sourceURL": "https://www.aeronaval.gob.pa/default.asp?aid=noticias&n=articulos-noticias-2026-20260915.html",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "py-coast-national-prefectura-general-naval-emergencias",
+      "countryCode": "PY",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Внутренние водные пути Парагвая; Tigo и Personal",
+      "localizedNames": {
+        "ru": "Prefectura General Naval – Emergencias",
+        "en": "Prefectura General Naval – Emergencias",
+        "es": "Prefectura General Naval – Emergencias"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Внутренние водные пути Парагвая; Tigo и Personal.  Примечание источника: Для Claro набирать *143. Парагвай без морского побережья, но с речной Prefectura.",
+        "en": "Maritime rescue or coordination contact. Coverage: Внутренние водные пути Парагвая; Tigo и Personal.  Source note (Russian): Для Claro набирать *143. Парагвай без морского побережья, но с речной Prefectura.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Внутренние водные пути Парагвая; Tigo и Personal.  Source note (Russian): Для Claro набирать *143. Парагвай без морского побережья, но с речной Prefectura."
+      },
+      "noteKey": null,
+      "dialString": "143",
+      "internationalNumber": null,
+      "sourceName": "Prefectura General Naval",
+      "sourceURL": "https://prefecturanaval.mil.py/denuncias/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "py-coast-national-prefectura-general-naval-emergencias-c",
+      "countryCode": "PY",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Внутренние водные пути Парагвая; Claro",
+      "localizedNames": {
+        "ru": "Prefectura General Naval – Emergencias, Claro",
+        "en": "Prefectura General Naval – Emergencias, Claro",
+        "es": "Prefectura General Naval – Emergencias, Claro"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Внутренние водные пути Парагвая; Claro.",
+        "en": "Maritime rescue or coordination contact. Coverage: Внутренние водные пути Парагвая; Claro.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Внутренние водные пути Парагвая; Claro."
+      },
+      "noteKey": null,
+      "dialString": "*143",
+      "internationalNumber": null,
+      "sourceName": "Prefectura General Naval",
+      "sourceURL": "https://prefecturanaval.mil.py/denuncias/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "pe-coast-national-dicapi-emergencia-guardacostas",
+      "countryCode": "PE",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Морские, речные и озёрные воды Перу",
+      "localizedNames": {
+        "ru": "DICAPI – Emergencia Guardacostas",
+        "en": "DICAPI – Emergencia Guardacostas",
+        "es": "DICAPI – Emergencia Guardacostas"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Морские, речные и озёрные воды Перу.  Примечание источника: MTC повторно подтвердило 118 как бесплатный номер Guardacostas в публикации от 23.01.2026. Только внутренний короткий номер.",
+        "en": "Maritime rescue or coordination contact. Coverage: Морские, речные и озёрные воды Перу.  Source note (Russian): MTC повторно подтвердило 118 как бесплатный номер Guardacostas в публикации от 23.01.2026. Только внутренний короткий номер.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Морские, речные и озёрные воды Перу.  Source note (Russian): MTC повторно подтвердило 118 как бесплатный номер Guardacostas в публикации от 23.01.2026. Только внутренний короткий номер."
+      },
+      "noteKey": null,
+      "dialString": "118",
+      "internationalNumber": null,
+      "sourceName": "DICAPI",
+      "sourceURL": "https://www.gob.pe/institucion/mtc/noticias/1339625-mtc-empresas-operadoras-de-telefonia-deben-brindar-llamadas-y-mensajes-gratuitos-en-situaciones-de-emergencia",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "sv-coast-national-protecci-n-civil-centro-de-operaciones",
+      "countryCode": "SV",
+      "category": "rescue",
+      "scope": "national",
+      "region": "Сальвадор",
+      "localizedNames": {
+        "ru": "Protección Civil – Centro de Operaciones de Emergencia Nacional",
+        "en": "Protección Civil – Centro de Operaciones de Emergencia Nacional",
+        "es": "Protección Civil – Centro de Operaciones de Emergencia Nacional"
+      },
+      "localizedNotes": {
+        "ru": "Общий экстренный номер для происшествий на воде, не прямая линия береговой охраны. Зона обслуживания: Сальвадор.  Примечание источника: Общий координационный центр чрезвычайных ситуаций и водных спасательных работ; номер также на актуальном сайте Proteccion Civil.",
+        "en": "General emergency contact for water incidents; not a direct coast guard line. Coverage: Сальвадор.  Source note (Russian): Общий координационный центр чрезвычайных ситуаций и водных спасательных работ; номер также на актуальном сайте Proteccion Civil.",
+        "es": "Número general de emergencias para incidentes en el agua; no es una línea directa de guardacostas. Zona de cobertura: Сальвадор.  Source note (Russian): Общий координационный центр чрезвычайных ситуаций и водных спасательных работ; номер также на актуальном сайте Proteccion Civil."
+      },
+      "noteKey": null,
+      "dialString": "+50322810888",
+      "internationalNumber": "+50322810888",
+      "sourceName": "Protección Civil",
+      "sourceURL": "https://www.proteccioncivil.gob.sv/2022/03/28/proteccion-civil-consolida-capacidades-de-rescate-del-personal-de-la-fuerza-naval-28-marzo-2022/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "uy-coast-national-armada-nacional-prefectura-en-la-costa",
+      "countryCode": "UY",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Побережье Уругвая",
+      "localizedNames": {
+        "ru": "Armada Nacional / Prefectura – En la costa",
+        "en": "Armada Nacional / Prefectura – En la costa",
+        "es": "Armada Nacional / Prefectura – En la costa"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Побережье Уругвая. Время работы: 24/7. Примечание источника: В источнике обозначено En la costa.",
+        "en": "Maritime rescue or coordination contact. Coverage: Побережье Уругвая. Hours: 24/7. Source note (Russian): В источнике обозначено En la costa.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Побережье Уругвая. Horario: 24/7. Source note (Russian): В источнике обозначено En la costa."
+      },
+      "noteKey": null,
+      "dialString": "106",
+      "internationalNumber": null,
+      "sourceName": "Armada Nacional / Prefectura",
+      "sourceURL": "https://www.armada.mil.uy/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "uy-coast-national-armada-nacional-en-el-mar",
+      "countryCode": "UY",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Морские чрезвычайные ситуации",
+      "localizedNames": {
+        "ru": "Armada Nacional – En el mar",
+        "en": "Armada Nacional – En el mar",
+        "es": "Armada Nacional – En el mar"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Морские чрезвычайные ситуации. Время работы: 24/7. Примечание источника: В источнике обозначено En el mar. Не подменять старым номером 1767 из сторонних справочников.",
+        "en": "Maritime rescue or coordination contact. Coverage: Морские чрезвычайные ситуации. Hours: 24/7. Source note (Russian): В источнике обозначено En el mar. Не подменять старым номером 1767 из сторонних справочников.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Морские чрезвычайные ситуации. Horario: 24/7. Source note (Russian): В источнике обозначено En el mar. Не подменять старым номером 1767 из сторонних справочников."
+      },
+      "noteKey": null,
+      "dialString": "1701",
+      "internationalNumber": null,
+      "sourceName": "Armada Nacional",
+      "sourceURL": "https://www.armada.mil.uy/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "cl-coast-national-directemar-mrcc-chile-supervisor-de-gu",
+      "countryCode": "CL",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Национальный морской SAR",
+      "localizedNames": {
+        "ru": "DIRECTEMAR – MRCC Chile, Supervisor de Guardia",
+        "en": "DIRECTEMAR – MRCC Chile, Supervisor de Guardia",
+        "es": "DIRECTEMAR – MRCC Chile, Supervisor de Guardia"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Национальный морской SAR.  Примечание источника: Дополнительные телефоны операторов +56322208638 и +56322208637.",
+        "en": "Maritime rescue or coordination contact. Coverage: Национальный морской SAR.  Source note (Russian): Дополнительные телефоны операторов +56322208638 и +56322208637.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Национальный морской SAR.  Source note (Russian): Дополнительные телефоны операторов +56322208638 и +56322208637."
+      },
+      "noteKey": null,
+      "dialString": "+56322208639",
+      "internationalNumber": "+56322208639",
+      "sourceName": "DIRECTEMAR",
+      "sourceURL": "https://www.directemar.cl/directemar/seguridad-maritima/mrcc-chile/contactos-mrcc-mrsc",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "cl-coast-national-directemar-emergencias-mar-timas",
+      "countryCode": "CL",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Чили; национальная локальная маршрутизация",
+      "localizedNames": {
+        "ru": "DIRECTEMAR – Emergencias marítimas",
+        "en": "DIRECTEMAR – Emergencias marítimas",
+        "es": "DIRECTEMAR – Emergencias marítimas"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Чили; национальная локальная маршрутизация.",
+        "en": "Maritime rescue or coordination contact. Coverage: Чили; национальная локальная маршрутизация.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Чили; национальная локальная маршрутизация."
+      },
+      "noteKey": null,
+      "dialString": "137",
+      "internationalNumber": null,
+      "sourceName": "DIRECTEMAR",
+      "sourceURL": "https://www.directemar.cl/directemar/preguntas-frecuentes/mrcc/1-existe-algun-numero-unico-para-comunicarse-con-la-autoridad-maritima",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ec-coast-national-dirnea-guayaquil-radio",
+      "countryCode": "EC",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Континентальная морская зона Эквадора",
+      "localizedNames": {
+        "ru": "DIRNEA – Guayaquil Radio",
+        "en": "DIRNEA – Guayaquil Radio",
+        "es": "DIRNEA – Guayaquil Radio"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Континентальная морская зона Эквадора. Время работы: 24/7. Примечание источника: Только морские чрезвычайные ситуации. Старый номер 149 упразднён и не включён.",
+        "en": "Maritime rescue or coordination contact. Coverage: Континентальная морская зона Эквадора. Hours: 24/7. Source note (Russian): Только морские чрезвычайные ситуации. Старый номер 149 упразднён и не включён.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Континентальная морская зона Эквадора. Horario: 24/7. Source note (Russian): Только морские чрезвычайные ситуации. Старый номер 149 упразднён и не включён."
+      },
+      "noteKey": null,
+      "dialString": "+59342480176",
+      "internationalNumber": "+59342480176",
+      "sourceName": "DIRNEA",
+      "sourceURL": "https://www.dirnea.org/servicio-maritimo",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ec-coast-national-dirnea-guayaquil-radio-2",
+      "countryCode": "EC",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Континентальная морская зона Эквадора",
+      "localizedNames": {
+        "ru": "DIRNEA – Guayaquil Radio, мобильный",
+        "en": "DIRNEA – Guayaquil Radio, мобильный",
+        "es": "DIRNEA – Guayaquil Radio, мобильный"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Континентальная морская зона Эквадора. Время работы: 24/7.",
+        "en": "Maritime rescue or coordination contact. Coverage: Континентальная морская зона Эквадора. Hours: 24/7.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Континентальная морская зона Эквадора. Horario: 24/7."
+      },
+      "noteKey": null,
+      "dialString": "+593979655748",
+      "internationalNumber": "+593979655748",
+      "sourceName": "DIRNEA",
+      "sourceURL": "https://www.dirnea.org/servicio-maritimo",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ec-coast-national-dirnea-puerto-ayora-radio",
+      "countryCode": "EC",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Островная зона; Galápagos",
+      "localizedNames": {
+        "ru": "DIRNEA – Puerto Ayora Radio",
+        "en": "DIRNEA – Puerto Ayora Radio",
+        "es": "DIRNEA – Puerto Ayora Radio"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Островная зона; Galápagos. Время работы: 24/7. Примечание источника: Только морские чрезвычайные ситуации.",
+        "en": "Maritime rescue or coordination contact. Coverage: Островная зона; Galápagos. Hours: 24/7. Source note (Russian): Только морские чрезвычайные ситуации.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Островная зона; Galápagos. Horario: 24/7. Source note (Russian): Только морские чрезвычайные ситуации."
+      },
+      "noteKey": null,
+      "dialString": "+59352527473",
+      "internationalNumber": "+59352527473",
+      "sourceName": "DIRNEA",
+      "sourceURL": "https://www.dirnea.org/servicio-maritimo",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "az-coast-national-112",
+      "countryCode": "AZ",
+      "category": "rescue",
+      "scope": "national",
+      "region": "Каспийское море и внутренние водоёмы Азербайджана",
+      "localizedNames": {
+        "ru": "МЧС – водное спасение / 112",
+        "en": "МЧС – водное спасение / 112",
+        "es": "МЧС – водное спасение / 112"
+      },
+      "localizedNotes": {
+        "ru": "Общий экстренный номер для происшествий на воде, не прямая линия береговой охраны. Зона обслуживания: Каспийское море и внутренние водоёмы Азербайджана.  Примечание источника: МЧС прямо подтверждает получение через 112 сообщений о происшествиях на Каспии. Это не прямой номер пограничной береговой охраны.",
+        "en": "General emergency contact for water incidents; not a direct coast guard line. Coverage: Каспийское море и внутренние водоёмы Азербайджана.  Source note (Russian): МЧС прямо подтверждает получение через 112 сообщений о происшествиях на Каспии. Это не прямой номер пограничной береговой охраны.",
+        "es": "Número general de emergencias para incidentes en el agua; no es una línea directa de guardacostas. Zona de cobertura: Каспийское море и внутренние водоёмы Азербайджана.  Source note (Russian): МЧС прямо подтверждает получение через 112 сообщений о происшествиях на Каспии. Это не прямой номер пограничной береговой охраны."
+      },
+      "noteKey": null,
+      "dialString": "112",
+      "internationalNumber": null,
+      "sourceName": "МЧС",
+      "sourceURL": "https://fhn.gov.az/en/information/information-of-mess-press-service-video-2229f53e",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "by-coast-national-contact",
+      "countryCode": "BY",
+      "category": "rescue",
+      "scope": "national",
+      "region": "Внутренние водоёмы Беларуси",
+      "localizedNames": {
+        "ru": "МЧС – спасение на воде",
+        "en": "МЧС – спасение на воде",
+        "es": "МЧС – спасение на воде"
+      },
+      "localizedNotes": {
+        "ru": "Общий экстренный номер для происшествий на воде, не прямая линия береговой охраны. Зона обслуживания: Внутренние водоёмы Беларуси.  Примечание источника: МЧС прямо рекомендует 112 при утоплении. Морского побережья нет.",
+        "en": "General emergency contact for water incidents; not a direct coast guard line. Coverage: Внутренние водоёмы Беларуси.  Source note (Russian): МЧС прямо рекомендует 112 при утоплении. Морского побережья нет.",
+        "es": "Número general de emergencias para incidentes en el agua; no es una línea directa de guardacostas. Zona de cobertura: Внутренние водоёмы Беларуси.  Source note (Russian): МЧС прямо рекомендует 112 при утоплении. Морского побережья нет."
+      },
+      "noteKey": null,
+      "dialString": "112",
+      "internationalNumber": null,
+      "sourceName": "МЧС",
+      "sourceURL": "https://mchs.gov.by/upload/iblock/aef/6c391nquidp7p2lvyn90ku46k29zf1h0/Bezopasnost-na-vode-02.09-web-_1_.pdf",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ge-coast-national-maritime-rescue-coordination-centre-ge",
+      "countryCode": "GE",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Морской SAR-район Грузии",
+      "localizedNames": {
+        "ru": "Maritime Rescue Coordination Centre Georgia, Batumi",
+        "en": "Maritime Rescue Coordination Centre Georgia, Batumi",
+        "es": "Maritime Rescue Coordination Centre Georgia, Batumi"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Морской SAR-район Грузии.  Примечание источника: Номер специализированного MRCC на форме MTA; также подтверждён официальным справочником NGA. Дополнительный мобильный +995599293736.",
+        "en": "Maritime rescue or coordination contact. Coverage: Морской SAR-район Грузии.  Source note (Russian): Номер специализированного MRCC на форме MTA; также подтверждён официальным справочником NGA. Дополнительный мобильный +995599293736.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Морской SAR-район Грузии.  Source note (Russian): Номер специализированного MRCC на форме MTA; также подтверждён официальным справочником NGA. Дополнительный мобильный +995599293736."
+      },
+      "noteKey": null,
+      "dialString": "+995422273913",
+      "internationalNumber": "+995422273913",
+      "sourceName": "Maritime Rescue Coordination Centre Georgia, Batumi",
+      "sourceURL": "https://www.mta.gov.ge/uploads/626_-_Registration_Form__EPIRB_ENG_Rev_2.pdf",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "kz-coast-national-contact",
+      "countryCode": "KZ",
+      "category": "rescue",
+      "scope": "national",
+      "region": "Казахстан: Каспийское море и внутренние водоёмы",
+      "localizedNames": {
+        "ru": "МЧС – единая дежурная диспетчерская служба",
+        "en": "МЧС – единая дежурная диспетчерская служба",
+        "es": "МЧС – единая дежурная диспетчерская служба"
+      },
+      "localizedNotes": {
+        "ru": "Общий экстренный номер для происшествий на воде, не прямая линия береговой охраны. Зона обслуживания: Казахстан: Каспийское море и внутренние водоёмы.  Примечание источника: Общая служба спасения. Прямая публичная морская экстренная линия береговой охраны отдельно не подтверждена.",
+        "en": "General emergency contact for water incidents; not a direct coast guard line. Coverage: Казахстан: Каспийское море и внутренние водоёмы.  Source note (Russian): Общая служба спасения. Прямая публичная морская экстренная линия береговой охраны отдельно не подтверждена.",
+        "es": "Número general de emergencias para incidentes en el agua; no es una línea directa de guardacostas. Zona de cobertura: Казахстан: Каспийское море и внутренние водоёмы.  Source note (Russian): Общая служба спасения. Прямая публичная морская экстренная линия береговой охраны отдельно не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "112",
+      "internationalNumber": null,
+      "sourceName": "МЧС",
+      "sourceURL": "https://www.gov.kz/memleket/entities/emer/press/news/details/1135848?lang=ru",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "cy-coast-national-jrcc-larnaca-accident-reporting-line",
+      "countryCode": "CY",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Поисково-спасательный район Республики Кипр",
+      "localizedNames": {
+        "ru": "JRCC Larnaca – Accident Reporting Line",
+        "en": "JRCC Larnaca – Accident Reporting Line",
+        "es": "JRCC Larnaca – Accident Reporting Line"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Поисково-спасательный район Республики Кипр. Время работы: 24/7. Примечание источника: 24 Hour Accident Reporting Line.",
+        "en": "Maritime rescue or coordination contact. Coverage: Поисково-спасательный район Республики Кипр. Hours: 24/7. Source note (Russian): 24 Hour Accident Reporting Line.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Поисково-спасательный район Республики Кипр. Horario: 24/7. Source note (Russian): 24 Hour Accident Reporting Line."
+      },
+      "noteKey": null,
+      "dialString": "+35724304723",
+      "internationalNumber": "+35724304723",
+      "sourceName": "JRCC Larnaca",
+      "sourceURL": "https://www.gov.cy/dms/en/reporting-an-accident/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "cy-coast-national-jrcc-larnaca",
+      "countryCode": "CY",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Поисково-спасательный район Республики Кипр",
+      "localizedNames": {
+        "ru": "JRCC Larnaca – дополнительная линия",
+        "en": "JRCC Larnaca – дополнительная линия",
+        "es": "JRCC Larnaca – дополнительная линия"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Поисково-спасательный район Республики Кипр. Время работы: 24/7.",
+        "en": "Maritime rescue or coordination contact. Coverage: Поисково-спасательный район Республики Кипр. Hours: 24/7.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Поисково-спасательный район Республики Кипр. Horario: 24/7."
+      },
+      "noteKey": null,
+      "dialString": "+35724304737",
+      "internationalNumber": "+35724304737",
+      "sourceName": "JRCC Larnaca",
+      "sourceURL": "https://www.gov.cy/dms/en/reporting-an-accident/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "cy-coast-national-jrcc-national-call-number",
+      "countryCode": "CY",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Республика Кипр",
+      "localizedNames": {
+        "ru": "JRCC – National Call Number",
+        "en": "JRCC – National Call Number",
+        "es": "JRCC – National Call Number"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Республика Кипр.",
+        "en": "Maritime rescue or coordination contact. Coverage: Республика Кипр.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Республика Кипр."
+      },
+      "noteKey": null,
+      "dialString": "1441",
+      "internationalNumber": null,
+      "sourceName": "JRCC",
+      "sourceURL": "https://www.gov.cy/jrcc/en/contact/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "kg-coast-national-112",
+      "countryCode": "KG",
+      "category": "rescue",
+      "scope": "national",
+      "region": "Внутренние водоёмы Кыргызстана",
+      "localizedNames": {
+        "ru": "МЧС – служба 112",
+        "en": "МЧС – служба 112",
+        "es": "МЧС – служба 112"
+      },
+      "localizedNotes": {
+        "ru": "Общий экстренный номер для происшествий на воде, не прямая линия береговой охраны. Зона обслуживания: Внутренние водоёмы Кыргызстана.  Примечание источника: Морского побережья нет; общий спасательный маршрут.",
+        "en": "General emergency contact for water incidents; not a direct coast guard line. Coverage: Внутренние водоёмы Кыргызстана.  Source note (Russian): Морского побережья нет; общий спасательный маршрут.",
+        "es": "Número general de emergencias para incidentes en el agua; no es una línea directa de guardacostas. Zona de cobertura: Внутренние водоёмы Кыргызстана.  Source note (Russian): Морского побережья нет; общий спасательный маршрут."
+      },
+      "noteKey": null,
+      "dialString": "112",
+      "internationalNumber": null,
+      "sourceName": "МЧС",
+      "sourceURL": "https://www.mchs.gov.kg/en/contacts/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "lv-coast-national-mrcc-riga-emergency-line",
+      "countryCode": "LV",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Морской SAR-район Латвии",
+      "localizedNames": {
+        "ru": "MRCC Riga – emergency line",
+        "en": "MRCC Riga – emergency line",
+        "es": "MRCC Riga – emergency line"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Морской SAR-район Латвии.  Примечание источника: В официальных извещениях LJA обозначен как trauksmes/emergency.",
+        "en": "Maritime rescue or coordination contact. Coverage: Морской SAR-район Латвии.  Source note (Russian): В официальных извещениях LJA обозначен как trauksmes/emergency.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Морской SAR-район Латвии.  Source note (Russian): В официальных извещениях LJA обозначен как trauksmes/emergency."
+      },
+      "noteKey": null,
+      "dialString": "+37167323103",
+      "internationalNumber": "+37167323103",
+      "sourceName": "MRCC Riga",
+      "sourceURL": "https://www.lja.lv/atonlv/getNMFile/?atonlv_action=getNMFile&lang=&month=5&year=2025",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "lv-coast-national-mrcc-riga",
+      "countryCode": "LV",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Латвия",
+      "localizedNames": {
+        "ru": "MRCC Riga – короткий экстренный номер",
+        "en": "MRCC Riga – короткий экстренный номер",
+        "es": "MRCC Riga – короткий экстренный номер"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Латвия.  Примечание источника: Звонить при происшествии на воде или если человек не вернулся с воды.",
+        "en": "Maritime rescue or coordination contact. Coverage: Латвия.  Source note (Russian): Звонить при происшествии на воде или если человек не вернулся с воды.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Латвия.  Source note (Russian): Звонить при происшествии на воде или если человек не вернулся с воды."
+      },
+      "noteKey": null,
+      "dialString": "115",
+      "internationalNumber": null,
+      "sourceName": "MRCC Riga",
+      "sourceURL": "https://www.vugd.gov.lv/en/recommendations-field-civil-protection",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "lt-coast-national-lithuanian-naval-forces-mrcc-klaip-da",
+      "countryCode": "LT",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Морской SAR-район Литвы",
+      "localizedNames": {
+        "ru": "Lithuanian Naval Forces – MRCC Klaipėda",
+        "en": "Lithuanian Naval Forces – MRCC Klaipėda",
+        "es": "Lithuanian Naval Forces – MRCC Klaipėda"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Морской SAR-район Литвы. Время работы: 24/7. Примечание источника: Обозначен как emergency number в официальном реестре ЕС.",
+        "en": "Maritime rescue or coordination contact. Coverage: Морской SAR-район Литвы. Hours: 24/7. Source note (Russian): Обозначен как emergency number в официальном реестре ЕС.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Морской SAR-район Литвы. Horario: 24/7. Source note (Russian): Обозначен как emergency number в официальном реестре ЕС."
+      },
+      "noteKey": null,
+      "dialString": "+37046391257",
+      "internationalNumber": "+37046391257",
+      "sourceName": "Lithuanian Naval Forces",
+      "sourceURL": "https://coastguard.europa.eu/national-authorities/lithuania",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "lt-coast-national-mrcc-klaip-da",
+      "countryCode": "LT",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Морской SAR-район Литвы",
+      "localizedNames": {
+        "ru": "MRCC Klaipėda – дополнительная линия",
+        "en": "MRCC Klaipėda – дополнительная линия",
+        "es": "MRCC Klaipėda – дополнительная линия"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Морской SAR-район Литвы.",
+        "en": "Maritime rescue or coordination contact. Coverage: Морской SAR-район Литвы.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Морской SAR-район Литвы."
+      },
+      "noteKey": null,
+      "dialString": "+37046391258",
+      "internationalNumber": "+37046391258",
+      "sourceName": "MRCC Klaipėda",
+      "sourceURL": "https://portal2.emsa.europa.eu/web/dona/country-profiles/lithuania/search-and-rescue",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "tj-coast-national-112",
+      "countryCode": "TJ",
+      "category": "rescue",
+      "scope": "national",
+      "region": "Внутренние водоёмы Таджикистана",
+      "localizedNames": {
+        "ru": "Комитет по чрезвычайным ситуациям – 112",
+        "en": "Комитет по чрезвычайным ситуациям – 112",
+        "es": "Комитет по чрезвычайным ситуациям – 112"
+      },
+      "localizedNotes": {
+        "ru": "Общий экстренный номер для происшествий на воде, не прямая линия береговой охраны. Зона обслуживания: Внутренние водоёмы Таджикистана.  Примечание источника: Общий спасательный маршрут; морского побережья нет. Назначение 112 также подтверждено нормативной базой ADLIA.",
+        "en": "General emergency contact for water incidents; not a direct coast guard line. Coverage: Внутренние водоёмы Таджикистана.  Source note (Russian): Общий спасательный маршрут; морского побережья нет. Назначение 112 также подтверждено нормативной базой ADLIA.",
+        "es": "Número general de emergencias para incidentes en el agua; no es una línea directa de guardacostas. Zona de cobertura: Внутренние водоёмы Таджикистана.  Source note (Russian): Общий спасательный маршрут; морского побережья нет. Назначение 112 также подтверждено нормативной базой ADLIA."
+      },
+      "noteKey": null,
+      "dialString": "112",
+      "internationalNumber": null,
+      "sourceName": "Комитет по чрезвычайным ситуациям",
+      "sourceURL": "https://www.mvd.tj/1064-advert.html",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "uz-coast-national-contact",
+      "countryCode": "UZ",
+      "category": "rescue",
+      "scope": "national",
+      "region": "Внутренние водоёмы Узбекистана",
+      "localizedNames": {
+        "ru": "Единая диспетчерская служба / пожарно-спасательная служба",
+        "en": "Единая диспетчерская служба / пожарно-спасательная служба",
+        "es": "Единая диспетчерская служба / пожарно-спасательная служба"
+      },
+      "localizedNotes": {
+        "ru": "Общий экстренный номер для происшествий на воде, не прямая линия береговой охраны. Зона обслуживания: Внутренние водоёмы Узбекистана.  Примечание источника: Морского побережья нет; общий спасательный маршрут.",
+        "en": "General emergency contact for water incidents; not a direct coast guard line. Coverage: Внутренние водоёмы Узбекистана.  Source note (Russian): Морского побережья нет; общий спасательный маршрут.",
+        "es": "Número general de emergencias para incidentes en el agua; no es una línea directa de guardacostas. Zona de cobertura: Внутренние водоёмы Узбекистана.  Source note (Russian): Морского побережья нет; общий спасательный маршрут."
+      },
+      "noteKey": null,
+      "dialString": "112",
+      "internationalNumber": null,
+      "sourceName": "Единая диспетчерская служба / пожарно-спасательная служба",
+      "sourceURL": "https://advice.adliya.uz/ru/document/3256",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "uz-coast-national-contact-2",
+      "countryCode": "UZ",
+      "category": "rescue",
+      "scope": "national",
+      "region": "Узбекистан",
+      "localizedNames": {
+        "ru": "Пожарно-спасательная служба",
+        "en": "Пожарно-спасательная служба",
+        "es": "Пожарно-спасательная служба"
+      },
+      "localizedNotes": {
+        "ru": "Общий экстренный номер для происшествий на воде, не прямая линия береговой охраны. Зона обслуживания: Узбекистан.  Примечание источника: Дополнительный спасательный номер, опубликованный МЧС.",
+        "en": "General emergency contact for water incidents; not a direct coast guard line. Coverage: Узбекистан.  Source note (Russian): Дополнительный спасательный номер, опубликованный МЧС.",
+        "es": "Número general de emergencias para incidentes en el agua; no es una línea directa de guardacostas. Zona de cobertura: Узбекистан.  Source note (Russian): Дополнительный спасательный номер, опубликованный МЧС."
+      },
+      "noteKey": null,
+      "dialString": "1050",
+      "internationalNumber": null,
+      "sourceName": "Пожарно-спасательная служба",
+      "sourceURL": "https://gov.uz/en/fvv/pages/contacts",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "ee-coast-national-jrcc-tallinn-tallinn-rescue",
+      "countryCode": "EE",
+      "category": "coastGuard",
+      "scope": "facility",
+      "region": "Морской SAR-район Эстонии",
+      "localizedNames": {
+        "ru": "JRCC Tallinn – Tallinn Rescue",
+        "en": "JRCC Tallinn – Tallinn Rescue",
+        "es": "JRCC Tallinn – Tallinn Rescue"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Морской SAR-район Эстонии. Время работы: 24/7. Примечание источника: Из официального Sailing Directions 2026.",
+        "en": "Maritime rescue or coordination contact. Coverage: Морской SAR-район Эстонии. Hours: 24/7. Source note (Russian): Из официального Sailing Directions 2026.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Морской SAR-район Эстонии. Horario: 24/7. Source note (Russian): Из официального Sailing Directions 2026."
+      },
+      "noteKey": null,
+      "dialString": "+3726191224",
+      "internationalNumber": "+3726191224",
+      "sourceName": "JRCC Tallinn",
+      "sourceURL": "https://transpordiamet.ee/sites/default/files/documents/2026-01/SD_4.2.pdf",
+      "sourceType": "officialService",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-al-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Alabama (AL)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ak-uscg-jrcc-juneau",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Alaska (AK)",
+      "localizedNames": {
+        "ru": "USCG JRCC Juneau",
+        "en": "USCG JRCC Juneau",
+        "es": "USCG JRCC Juneau"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Arctic; Alaska, север Тихого океана, Bering Sea и Arctic Ocean. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Arctic; Alaska, север Тихого океана, Bering Sea и Arctic Ocean. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Arctic; Alaska, север Тихого океана, Bering Sea и Arctic Ocean. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18004785555",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Juneau",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ar-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Arkansas (AR)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ca-uscg-jrcc-alameda",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "California (CA)",
+      "localizedNames": {
+        "ru": "USCG JRCC Alameda",
+        "en": "USCG JRCC Alameda",
+        "es": "USCG JRCC Alameda"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Southwest; California и назначенная USCG зона восточного Тихого океана. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Southwest; California и назначенная USCG зона восточного Тихого океана. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Southwest; California и назначенная USCG зона восточного Тихого океана. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18002467236",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Alameda",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ct-uscg-jrcc-boston",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Connecticut (CT)",
+      "localizedNames": {
+        "ru": "USCG JRCC Boston",
+        "en": "USCG JRCC Boston",
+        "es": "USCG JRCC Boston"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Northeast; New England, часть северного New Jersey и Lake Champlain. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Northeast; New England, часть северного New Jersey и Lake Champlain. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Northeast; New England, часть северного New Jersey и Lake Champlain. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18668421560",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Boston",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-de-uscg-jrcc-norfolk",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Delaware (DE)",
+      "localizedNames": {
+        "ru": "USCG JRCC Norfolk",
+        "en": "USCG JRCC Norfolk",
+        "es": "USCG JRCC Norfolk"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18334531269",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Norfolk",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-fl-uscg-jrcc-miami",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Florida (FL)",
+      "localizedNames": {
+        "ru": "USCG JRCC Miami",
+        "en": "USCG JRCC Miami",
+        "es": "USCG JRCC Miami"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Southeast; South Carolina, Georgia, Florida кроме западной зоны Panhandle. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Southeast; South Carolina, Georgia, Florida кроме западной зоны Panhandle. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Southeast; South Carolina, Georgia, Florida кроме западной зоны Panhandle. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18008747561",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Miami",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-fl-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Florida (FL)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ga-uscg-jrcc-miami",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Georgia (GA)",
+      "localizedNames": {
+        "ru": "USCG JRCC Miami",
+        "en": "USCG JRCC Miami",
+        "es": "USCG JRCC Miami"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Southeast; South Carolina, Georgia, Florida кроме западной зоны Panhandle. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Southeast; South Carolina, Georgia, Florida кроме западной зоны Panhandle. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Southeast; South Carolina, Georgia, Florida кроме западной зоны Panhandle. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18008747561",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Miami",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-hi-uscg-jrcc-honolulu",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Hawaii (HI)",
+      "localizedNames": {
+        "ru": "USCG JRCC Honolulu",
+        "en": "USCG JRCC Honolulu",
+        "es": "USCG JRCC Honolulu"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Oceania; Hawaii и назначенные тихоокеанские воды. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Oceania; Hawaii и назначенные тихоокеанские воды. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Oceania; Hawaii и назначенные тихоокеанские воды. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18003316176",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Honolulu",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-il-uscg-jrcc-cleveland",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Illinois (IL)",
+      "localizedNames": {
+        "ru": "USCG JRCC Cleveland",
+        "en": "USCG JRCC Cleveland",
+        "es": "USCG JRCC Cleveland"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18003214400",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Cleveland",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-il-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Illinois (IL)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-in-uscg-jrcc-cleveland",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Indiana (IN)",
+      "localizedNames": {
+        "ru": "USCG JRCC Cleveland",
+        "en": "USCG JRCC Cleveland",
+        "es": "USCG JRCC Cleveland"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18003214400",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Cleveland",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-in-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Indiana (IN)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ia-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Iowa (IA)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ks-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Kansas (KS)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ky-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Kentucky (KY)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-la-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Louisiana (LA)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-me-uscg-jrcc-boston",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Maine (ME)",
+      "localizedNames": {
+        "ru": "USCG JRCC Boston",
+        "en": "USCG JRCC Boston",
+        "es": "USCG JRCC Boston"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Northeast; New England, часть северного New Jersey и Lake Champlain. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Northeast; New England, часть северного New Jersey и Lake Champlain. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Northeast; New England, часть северного New Jersey и Lake Champlain. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18668421560",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Boston",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-md-uscg-jrcc-norfolk",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Maryland (MD)",
+      "localizedNames": {
+        "ru": "USCG JRCC Norfolk",
+        "en": "USCG JRCC Norfolk",
+        "es": "USCG JRCC Norfolk"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18334531269",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Norfolk",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ma-uscg-jrcc-boston",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Massachusetts (MA)",
+      "localizedNames": {
+        "ru": "USCG JRCC Boston",
+        "en": "USCG JRCC Boston",
+        "es": "USCG JRCC Boston"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Northeast; New England, часть северного New Jersey и Lake Champlain. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Northeast; New England, часть северного New Jersey и Lake Champlain. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Northeast; New England, часть северного New Jersey и Lake Champlain. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18668421560",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Boston",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-mi-uscg-jrcc-cleveland",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Michigan (MI)",
+      "localizedNames": {
+        "ru": "USCG JRCC Cleveland",
+        "en": "USCG JRCC Cleveland",
+        "es": "USCG JRCC Cleveland"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18003214400",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Cleveland",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-mn-uscg-jrcc-cleveland",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Minnesota (MN)",
+      "localizedNames": {
+        "ru": "USCG JRCC Cleveland",
+        "en": "USCG JRCC Cleveland",
+        "es": "USCG JRCC Cleveland"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18003214400",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Cleveland",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-mn-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Minnesota (MN)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ms-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Mississippi (MS)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-mo-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Missouri (MO)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-mt-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Montana (MT)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ne-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Nebraska (NE)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-nh-uscg-jrcc-boston",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "New Hampshire (NH)",
+      "localizedNames": {
+        "ru": "USCG JRCC Boston",
+        "en": "USCG JRCC Boston",
+        "es": "USCG JRCC Boston"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Northeast; New England, часть северного New Jersey и Lake Champlain. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Northeast; New England, часть северного New Jersey и Lake Champlain. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Northeast; New England, часть северного New Jersey и Lake Champlain. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18668421560",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Boston",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-nj-uscg-jrcc-norfolk",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "New Jersey (NJ)",
+      "localizedNames": {
+        "ru": "USCG JRCC Norfolk",
+        "en": "USCG JRCC Norfolk",
+        "es": "USCG JRCC Norfolk"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18334531269",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Norfolk",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-nj-uscg-jrcc-boston",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "New Jersey (NJ)",
+      "localizedNames": {
+        "ru": "USCG JRCC Boston",
+        "en": "USCG JRCC Boston",
+        "es": "USCG JRCC Boston"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Northeast; New England, часть северного New Jersey и Lake Champlain. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Northeast; New England, часть северного New Jersey и Lake Champlain. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Northeast; New England, часть северного New Jersey и Lake Champlain. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18668421560",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Boston",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ny-uscg-jrcc-boston",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "New York (NY)",
+      "localizedNames": {
+        "ru": "USCG JRCC Boston",
+        "en": "USCG JRCC Boston",
+        "es": "USCG JRCC Boston"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Northeast; New England, часть северного New Jersey и Lake Champlain. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Northeast; New England, часть северного New Jersey и Lake Champlain. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Northeast; New England, часть северного New Jersey и Lake Champlain. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18668421560",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Boston",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ny-uscg-jrcc-cleveland",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "New York (NY)",
+      "localizedNames": {
+        "ru": "USCG JRCC Cleveland",
+        "en": "USCG JRCC Cleveland",
+        "es": "USCG JRCC Cleveland"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18003214400",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Cleveland",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-nc-uscg-jrcc-norfolk",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "North Carolina (NC)",
+      "localizedNames": {
+        "ru": "USCG JRCC Norfolk",
+        "en": "USCG JRCC Norfolk",
+        "es": "USCG JRCC Norfolk"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18334531269",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Norfolk",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-nd-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "North Dakota (ND)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-oh-uscg-jrcc-cleveland",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Ohio (OH)",
+      "localizedNames": {
+        "ru": "USCG JRCC Cleveland",
+        "en": "USCG JRCC Cleveland",
+        "es": "USCG JRCC Cleveland"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18003214400",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Cleveland",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-oh-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Ohio (OH)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ok-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Oklahoma (OK)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-or-uscg-jrcc-seattle",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Oregon (OR)",
+      "localizedNames": {
+        "ru": "USCG JRCC Seattle",
+        "en": "USCG JRCC Seattle",
+        "es": "USCG JRCC Seattle"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Northwest; Oregon и Washington. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Northwest; Oregon и Washington. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Northwest; Oregon и Washington. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18664980713",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Seattle",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-pa-uscg-jrcc-cleveland",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Pennsylvania (PA)",
+      "localizedNames": {
+        "ru": "USCG JRCC Cleveland",
+        "en": "USCG JRCC Cleveland",
+        "es": "USCG JRCC Cleveland"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18003214400",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Cleveland",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-pa-uscg-jrcc-norfolk",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Pennsylvania (PA)",
+      "localizedNames": {
+        "ru": "USCG JRCC Norfolk",
+        "en": "USCG JRCC Norfolk",
+        "es": "USCG JRCC Norfolk"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18334531269",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Norfolk",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-pa-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Pennsylvania (PA)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-ri-uscg-jrcc-boston",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Rhode Island (RI)",
+      "localizedNames": {
+        "ru": "USCG JRCC Boston",
+        "en": "USCG JRCC Boston",
+        "es": "USCG JRCC Boston"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Northeast; New England, часть северного New Jersey и Lake Champlain. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Northeast; New England, часть северного New Jersey и Lake Champlain. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Northeast; New England, часть северного New Jersey и Lake Champlain. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18668421560",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Boston",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-sc-uscg-jrcc-miami",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "South Carolina (SC)",
+      "localizedNames": {
+        "ru": "USCG JRCC Miami",
+        "en": "USCG JRCC Miami",
+        "es": "USCG JRCC Miami"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Southeast; South Carolina, Georgia, Florida кроме западной зоны Panhandle. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Southeast; South Carolina, Georgia, Florida кроме западной зоны Panhandle. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Southeast; South Carolina, Georgia, Florida кроме западной зоны Panhandle. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18008747561",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Miami",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-sd-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "South Dakota (SD)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-tn-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Tennessee (TN)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-tx-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Texas (TX)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-vt-uscg-jrcc-boston",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Vermont (VT)",
+      "localizedNames": {
+        "ru": "USCG JRCC Boston",
+        "en": "USCG JRCC Boston",
+        "es": "USCG JRCC Boston"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Northeast; New England, часть северного New Jersey и Lake Champlain. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Northeast; New England, часть северного New Jersey и Lake Champlain. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Northeast; New England, часть северного New Jersey и Lake Champlain. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18668421560",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Boston",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-va-uscg-jrcc-norfolk",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Virginia (VA)",
+      "localizedNames": {
+        "ru": "USCG JRCC Norfolk",
+        "en": "USCG JRCC Norfolk",
+        "es": "USCG JRCC Norfolk"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Eastern; Mid-Atlantic, большая часть New Jersey до границы North Carolina/South Carolina. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18334531269",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Norfolk",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-wa-uscg-jrcc-seattle",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Washington (WA)",
+      "localizedNames": {
+        "ru": "USCG JRCC Seattle",
+        "en": "USCG JRCC Seattle",
+        "es": "USCG JRCC Seattle"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Northwest; Oregon и Washington. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Northwest; Oregon и Washington. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Northwest; Oregon и Washington. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18664980713",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Seattle",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-wv-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "West Virginia (WV)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-wi-uscg-jrcc-cleveland",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Wisconsin (WI)",
+      "localizedNames": {
+        "ru": "USCG JRCC Cleveland",
+        "en": "USCG JRCC Cleveland",
+        "es": "USCG JRCC Cleveland"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Great Lakes; воды Великих озёр, соединяющие реки и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18003214400",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC Cleveland",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
+    },
+    {
+      "id": "us-coast-wi-uscg-jrcc-new-orleans",
+      "countryCode": "US",
+      "category": "coastGuard",
+      "scope": "regional",
+      "region": "Wisconsin (WI)",
+      "localizedNames": {
+        "ru": "USCG JRCC New Orleans",
+        "en": "USCG JRCC New Orleans",
+        "es": "USCG JRCC New Orleans"
+      },
+      "localizedNotes": {
+        "ru": "Морской спасательный или координационный контакт. Зона обслуживания: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Время работы: 24/7. Примечание источника: Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "en": "Maritime rescue or coordination contact. Coverage: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Hours: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена.",
+        "es": "Contacto de rescate o coordinación marítima. Zona de cobertura: Heartland; Gulf Coast/Florida Panhandle и судоходные Mississippi, Missouri, Ohio и притоки. Horario: 24/7. Source note (Russian): Региональный JRCC, не отдельная служба штата. Toll-free номер внутри NANP; международная доступность не подтверждена."
+      },
+      "noteKey": null,
+      "dialString": "+18554853727",
+      "internationalNumber": null,
+      "sourceName": "USCG JRCC New Orleans",
+      "sourceURL": "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Response-Policy-CG-5R/Office-of-Incident-Management-Preparedness-CG-5RI/US-Coast-Guard-Office-of-Search-and-Rescue-CG-SAR/RCC-Numbers/",
+      "sourceType": "government",
+      "verificationStatus": "verified",
+      "verifiedAt": "2026-10-14"
     }
   ]
 }

@@ -603,3 +603,15 @@
 "sponsor.invitation.error.userDeleted.message" = "Данные прежней установки MorningHello были удалены. Ссылка не использована. Если у вас была собственная покупка, восстановите её. В ином случае обратитесь в поддержку MorningHello.";
 "sponsor.invitation.error.unknown.title" = "Не удалось принять приглашение";
 "sponsor.invitation.error.unknown.message" = "Проверьте подключение к интернету и откройте ссылку ещё раз.";
+"subscription.terms.title" = "Условия подписки";
+"subscription.terms.renewal" = "Подписка оформляется через Apple App Store и автоматически продлевается, если автопродление не отключено в настройках Apple.";
+"subscription.terms.deletion" = "Удаление приложения MorningHello не отменяет подписку и не останавливает серверный мониторинг.";
+"subscription.links.terms" = "Условия использования MorningHello";
+"subscription.links.apple" = "Условия использования Apple (EULA)";
+"subscription.links.privacy" = "Политика конфиденциальности";
+"paywall.header" = "Тарифные планы MorningHello";
+"paywall.trial" = "Попробуйте MorningHello бесплатно в течение 30 дней";
+"paywall.ended" = "Продолжите пользоваться MorningHello";
+"paywall.links.apple" = "Стандартные условия использования Apple";
+"paywall.links.terms" = "Условия использования MorningHello";
+"paywall.links.privacy" = "Политика конфиденциальности";

@@ -14,8 +14,7 @@ struct MoodCheckInView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            backgroundColor
-                .ignoresSafeArea()
+            MorningHelloScreenBackground(name: "BG_Mood")
 
             VStack(spacing: 0) {
                 closeButton

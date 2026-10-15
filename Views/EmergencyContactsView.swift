@@ -270,10 +270,23 @@ struct EmergencyContactsView: View {
    }
 }
 
+    private let headerTitleColor = Color(
+        red: 0.12,
+        green: 0.16,
+        blue: 0.28
+    )
+
+    private let headerSecondaryColor = Color(
+        red: 0.29,
+        green: 0.31,
+        blue: 0.39
+    )
+
+    private let cardFillColor = Color.white.opacity(0.84)
+
     var body: some View {
         ZStack {
-            AppAdaptiveColor.warmFormBackground
-                .ignoresSafeArea()
+            MorningHelloScreenBackground(name: "BG_Contacts")
             
             ScrollView {
                 VStack(spacing: 20) {
@@ -288,7 +301,7 @@ struct EmergencyContactsView: View {
                                     design: .rounded
                                 )
                             )
-                            .foregroundColor(AppAdaptiveColor.text)
+                            .foregroundColor(headerTitleColor)
                             .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.center)
                             .lineLimit(1)
@@ -310,12 +323,12 @@ struct EmergencyContactsView: View {
                                                 weight: .bold
                                             )
                                         )
-                                        .foregroundColor(AppAdaptiveColor.text)
+                                        .foregroundColor(headerTitleColor)
                                         .frame(
                                             width: 42,
                                             height: 42
                                         )
-                                        .background(AppAdaptiveColor.warmCardBackground)
+                                        .background(cardFillColor)
                                         .clipShape(Circle())
                                 }
                             }
@@ -348,7 +361,7 @@ struct EmergencyContactsView: View {
                                     design: .rounded
                                 )
                             )
-                            .foregroundColor(AppAdaptiveColor.secondaryText)
+                            .foregroundColor(headerSecondaryColor)
                             .fixedSize(
                                 horizontal: false,
                                 vertical: true
@@ -414,10 +427,10 @@ struct EmergencyContactsView: View {
                             )
                             .weight(.semibold)
                         )
-                        .foregroundColor(AppAdaptiveColor.text)
+                        .foregroundColor(headerTitleColor)
                         .padding(.horizontal, 18)
                         .frame(height: 56)
-                        .background(AppAdaptiveColor.warmCardBackground)
+                        .background(cardFillColor)
                         .clipShape(
                             RoundedRectangle(
                                 cornerRadius: 18,
@@ -554,7 +567,7 @@ struct EmergencyContactsView: View {
                                         design: .rounded
                                     )
                                 )
-                                .foregroundColor(AppAdaptiveColor.secondaryText)
+                                .foregroundColor(headerSecondaryColor)
                                 .fixedSize(
                                     horizontal: false,
                                     vertical: true
@@ -941,11 +954,11 @@ struct EmergencyContactsView: View {
                         
                         Text("Выберите время, через которое мы сообщим вашим близким, если вы не отметитесь.")
                             .font(.footnote)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(headerSecondaryColor)
                         
                     }
                     .padding()
-                    .background(Color(.systemGray6))
+                    .background(cardFillColor)
                     .cornerRadius(16)
                     // MARK: - Список контактов
                     
@@ -957,7 +970,7 @@ struct EmergencyContactsView: View {
                             )
                             .weight(.bold)
                         )
-                        .foregroundColor(AppAdaptiveColor.text)
+                        .foregroundColor(headerTitleColor)
                         .frame(
                             maxWidth: .infinity,
                             alignment: .leading
@@ -991,7 +1004,7 @@ struct EmergencyContactsView: View {
                         )
                         .weight(.semibold)
                     )
-                    .foregroundColor(AppAdaptiveColor.text)
+                    .foregroundColor(headerTitleColor)
                     .frame(
                         maxWidth: .infinity,
                         alignment: .leading

@@ -73,8 +73,6 @@ struct OnboardingRoleSelectionView:
                     roleCard(
                         role:
                             .personal,
-                        icon:
-                            "person.crop.circle.fill",
                         titleKey:
                             "onboarding.role.personal.title",
                         descriptionKey:
@@ -84,8 +82,6 @@ struct OnboardingRoleSelectionView:
                     roleCard(
                         role:
                             .sponsor,
-                        icon:
-                            "heart.circle.fill",
                         titleKey:
                             "onboarding.role.sponsor.title",
                         descriptionKey:
@@ -94,7 +90,6 @@ struct OnboardingRoleSelectionView:
 
                     roleCard(
                         role: .invitation,
-                        icon: "envelope.open.fill",
                         titleKey: "invite.role.title",
                         descriptionKey: "invite.role.description"
                     )
@@ -127,9 +122,7 @@ struct OnboardingRoleSelectionView:
             .hidden
         )
         .background(
-            AppAdaptiveColor
-                .warmFormBackground
-                .ignoresSafeArea()
+            MorningHelloScreenBackground(name: "BG_Onboarding")
         )
     }
 
@@ -202,8 +195,6 @@ struct OnboardingRoleSelectionView:
     private func roleCard(
         role:
             Selection,
-        icon:
-            String,
         titleKey:
             String,
         descriptionKey:
@@ -220,30 +211,104 @@ struct OnboardingRoleSelectionView:
 
         } label: {
 
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(alignment: .top, spacing: 10) {
-                    MorningHelloArtwork(
-                        name: role == .personal ? "icon_Profile" :
-                              role == .sponsor ? "icon_trusted_person" : "icon_Invitation",
-                        size: 46
+            HStack(
+                alignment:
+                    .top,
+                spacing:
+                    12
+            ) {
+
+                VStack(
+                    alignment:
+                        .leading,
+                    spacing:
+                        8
+                ) {
+
+                    Text(
+                        localized(
+                            titleKey
+                        )
                     )
-                    Text(localized(titleKey))
-                        .font(.system(size: 19, weight: .bold, design: .rounded))
-                        .foregroundStyle(AppAdaptiveColor.text)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                        .font(.system(size: 26, weight: .semibold))
-                        .foregroundStyle(isSelected ? Color.orange : AppAdaptiveColor.secondaryText)
-                        .accessibilityHidden(true)
+                    .font(
+                        .system(
+                            size:
+                                22,
+                            weight:
+                                .bold,
+                            design:
+                                .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        AppAdaptiveColor.text
+                    )
+                    .multilineTextAlignment(
+                        .leading
+                    )
+                    .fixedSize(
+                        horizontal:
+                            false,
+                        vertical:
+                            true
+                    )
+
+                    Text(
+                        localized(
+                            descriptionKey
+                        )
+                    )
+                    .font(
+                        .system(
+                            size:
+                                17,
+                            weight:
+                                .regular,
+                            design:
+                                .rounded
+                        )
+                    )
+                    .foregroundStyle(
+                        AppAdaptiveColor.secondaryText
+                    )
+                    .multilineTextAlignment(
+                        .leading
+                    )
+                    .fixedSize(
+                        horizontal:
+                            false,
+                        vertical:
+                            true
+                    )
                 }
-                Text(localized(descriptionKey))
-                    .font(.system(size: 16, design: .rounded))
-                    .foregroundStyle(AppAdaptiveColor.secondaryText)
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .fixedSize(horizontal: false, vertical: true)
+
+                Spacer(
+                    minLength:
+                        8
+                )
+
+                Image(
+                    systemName:
+                        isSelected
+                        ? "checkmark.circle.fill"
+                        : "circle"
+                )
+                .font(
+                    .system(
+                        size:
+                            30,
+                        weight:
+                            .semibold
+                    )
+                )
+                .foregroundStyle(
+                    isSelected
+                    ? Color.orange
+                    : AppAdaptiveColor.secondaryText
+                )
+                .accessibilityHidden(
+                    true
+                )
             }
             .padding(
                 22

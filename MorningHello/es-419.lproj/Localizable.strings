@@ -2063,3 +2063,15 @@
 "sponsor.invitation.error.userDeleted.message" = "Los datos de una instalación anterior de MorningHello fueron eliminados. El enlace no se utilizó. Si tenía una compra propia, restáurela. De lo contrario, contacte con el soporte de MorningHello.";
 "sponsor.invitation.error.unknown.title" = "No se pudo aceptar la invitación";
 "sponsor.invitation.error.unknown.message" = "Compruebe su conexión a internet y vuelva a abrir el enlace.";
+"subscription.terms.title" = "Condiciones de suscripción";
+"subscription.terms.renewal" = "Las suscripciones se compran a través de Apple App Store y se renuevan automáticamente, salvo que desactives la renovación automática en la configuración de tu cuenta de Apple.";
+"subscription.terms.deletion" = "Eliminar MorningHello no cancela la suscripción ni detiene el monitoreo del servidor.";
+"subscription.links.terms" = "Términos de uso de MorningHello";
+"subscription.links.apple" = "Términos de uso de Apple (EULA)";
+"subscription.links.privacy" = "Política de privacidad";
+"paywall.header" = "Planes de suscripción de MorningHello";
+"paywall.trial" = "Prueba MorningHello gratis durante 30 días";
+"paywall.ended" = "Sigue usando MorningHello";
+"paywall.links.apple" = "Condiciones de uso estándar de Apple";
+"paywall.links.terms" = "Términos de uso de MorningHello";
+"paywall.links.privacy" = "Política de privacidad";

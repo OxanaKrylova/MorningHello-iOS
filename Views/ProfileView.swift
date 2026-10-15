@@ -43,9 +43,6 @@ enum ProfileSalutation: String, CaseIterable, Identifiable {
 // MARK: - Экран профиля
 
 struct ProfileView: View {
-    @AppStorage("morninghello_usage_mode")
-    private var morningHelloUsageMode = ""
-    
     @AppStorage("check_in_interval_hours")
     private var checkInIntervalHours = 0
     
@@ -73,6 +70,19 @@ struct ProfileView: View {
             rawValue: selectedLanguageCode
         ) ?? .initial
     }
+
+    private let headerTitleColor = Color(
+        red: 0.12,
+        green: 0.16,
+        blue: 0.28
+    )
+
+    private let headerSecondaryColor = Color(
+        red: 0.28,
+        green: 0.30,
+        blue: 0.38
+    )
+
     
     // MARK: Сохранённые данные
     
@@ -220,7 +230,6 @@ struct ProfileView: View {
 
                             birthdaySection
 
-
                             Text(
                                 "Данные профиля сохраняются на устройстве и синхронизируются с защищённым сервером MorningHello."
                             )
@@ -304,8 +313,7 @@ struct ProfileView: View {
     // MARK: - Фон
     
     private var profileBackground: some View {
-        AppAdaptiveColor.warmFormBackground
-            .ignoresSafeArea()
+        MorningHelloScreenBackground(name: "BG_Profile")
     }
     
     // MARK: - Заголовок
@@ -322,7 +330,7 @@ struct ProfileView: View {
                         design: .rounded
                     )
                 )
-                .foregroundColor(AppAdaptiveColor.text)
+                .foregroundColor(headerTitleColor)
             
             Text(
                 "Эти данные помогут персонализировать открытки и тревожные сообщения."
@@ -333,7 +341,7 @@ struct ProfileView: View {
                     design: .rounded
                 )
             )
-            .foregroundColor(AppAdaptiveColor.secondaryText)
+            .foregroundColor(headerSecondaryColor)
             .multilineTextAlignment(.center)
             .padding(.horizontal, 42)
         }
@@ -1064,47 +1072,6 @@ struct ProfileView: View {
             }
         }
         .frame(maxWidth: .infinity)
-    }
-        
-    private var sponsorshipSection: some View {
-        Button {
-            morningHelloUsageMode =
-                MorningHelloUsageMode.sponsor.rawValue
-            dismiss()
-        } label: {
-            HStack(spacing: 14) {
-                MorningHelloArtwork(name: "icon_Subscription", size: 38)
-
-                VStack(alignment: .leading, spacing: 3) {
-                    Text("Оплатить для близкого")
-                        .font(
-                            .system(
-                                .headline,
-                                design: .rounded
-                            )
-                        )
-
-                    Text("Приглашение и отдельная подписка")
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                }
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .font(
-                        .system(
-                            size: 17,
-                            weight: .semibold
-                        )
-                    )
-                    .foregroundColor(.secondary)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .profileCard()
     }
         
         // MARK: - Проверка имени

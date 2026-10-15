@@ -50,8 +50,7 @@ struct MoodCalendarView: View {
                 .padding(.bottom, 30)
             }
             .background(
-                AppAdaptiveColor.warmFormBackground
-                    .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_Mood")
             )
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

@@ -36,13 +36,13 @@ struct MonitoringSetupIntroView: View {
 
         switch selectedLanguage {
         case .russian:
-            return "Background_Onboarding_RU"
+            return "BG_Onboarding"
 
         case .englishUS:
-            return "Background_Onboarding_EN"
+            return "BG_Onboarding"
 
         case .spanishLatinAmerica:
-            return "Background_Onboarding_ES"
+            return "BG_Onboarding"
         }
     }
 
@@ -299,10 +299,25 @@ struct MonitoringSetupIntroView: View {
             alignment: .top,
             spacing: 13
         ) {
-            MorningHelloArtwork(
-                name: icon == "pawprint.fill" ? "icon_Pet" :
-                      icon == "person.2.fill" ? "icon_Emergency Contacts" : "icon_Profile",
-                size: 48
+            Image(
+                systemName: icon
+            )
+            .font(
+                .system(
+                    size: 23,
+                    weight: .semibold
+                )
+            )
+            .foregroundStyle(
+                Color.orange
+            )
+            .frame(
+                width: 42,
+                height: 42
+            )
+            .background(
+                Color.orange.opacity(0.12),
+                in: Circle()
             )
 
             VStack(

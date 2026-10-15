@@ -653,9 +653,7 @@ struct AppEntryView:
                 .infinity
         )
         .background(
-            AppAdaptiveColor
-                .warmFormBackground
-                .ignoresSafeArea()
+            MorningHelloScreenBackground(name: "BG_Onboarding")
         )
     }
 
@@ -849,9 +847,7 @@ struct AppEntryView:
                 .infinity
         )
         .background(
-            AppAdaptiveColor
-                .warmFormBackground
-                .ignoresSafeArea()
+            MorningHelloScreenBackground(name: "BG_Onboarding")
         )
     }
 

@@ -259,36 +259,6 @@ struct PostcardCatalogView: View {
     // MARK: - Фон
 
     private var catalogBackground: some View {
-        LinearGradient(
-            colors: [
-                AppAdaptiveColor.background,
-                AppAdaptiveColor.secondaryBackground,
-                AppAdaptiveColor.groupedBackground
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
+        MorningHelloScreenBackground(name: "BG_PostcardCatalog")
     }
-    }
-        
-        
-        // MARK: - Фон
-        
-        var catalogBackground: some View {
-            AppAdaptiveColor.warmFormBackground
-                .ignoresSafeArea()
-        }
-        
-        func loadEmergencyContacts() -> [EmergencyContact] {
-            guard let data = UserDefaults.standard.data(
-                forKey: "emergency_contacts"
-            ) else {
-                return []
-            }
-            
-            return (try? JSONDecoder().decode(
-                [EmergencyContact].self,
-                from: data
-            )) ?? []
-        }
+}

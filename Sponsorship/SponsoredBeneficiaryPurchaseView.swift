@@ -68,14 +68,12 @@ struct SponsoredBeneficiaryPurchaseView: View {
                             statusMessageKey
                         )
                     )
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(
-                        statusMessageKey ==
-                            "sponsor.purchase.pending"
-                            ? Color.orange
-                            : Color.red
-                    )
+                    .font(.footnote.weight(.bold))
+                    .foregroundStyle(Color.white)
                     .multilineTextAlignment(.center)
+                    .padding(12)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.black.opacity(0.62), in: RoundedRectangle(cornerRadius: 14))
                 } else if purchaseManager.lastError != nil {
 
                     Text(
@@ -85,9 +83,12 @@ struct SponsoredBeneficiaryPurchaseView: View {
                             : "sponsor.purchase.failed"
                         )
                     )
-                        .font(.footnote.weight(.semibold))
-                        .foregroundStyle(.red)
+                        .font(.footnote.weight(.bold))
+                        .foregroundStyle(Color.white)
                         .multilineTextAlignment(.center)
+                        .padding(12)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.black.opacity(0.62), in: RoundedRectangle(cornerRadius: 14))
                 }
 
                 purchaseButton
@@ -100,8 +101,11 @@ struct SponsoredBeneficiaryPurchaseView: View {
                             "sponsor.purchase.restore"
                         )
                     )
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(.orange)
+                    .font(.subheadline.weight(.bold))
+                    .foregroundStyle(Color.white)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 12)
+                    .background(Color.black.opacity(0.62), in: Capsule())
                 }
                 .buttonStyle(.plain)
                 .disabled(purchaseManager.isProcessing)
@@ -111,18 +115,18 @@ struct SponsoredBeneficiaryPurchaseView: View {
                         "sponsor.purchase.footer"
                     )
                 )
-                .font(.caption)
-                .foregroundStyle(
-                    AppAdaptiveColor.secondaryText
-                )
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(Color.white)
                 .multilineTextAlignment(.center)
+                .padding(12)
+                .frame(maxWidth: .infinity)
+                .background(Color.black.opacity(0.62), in: RoundedRectangle(cornerRadius: 14))
             }
             .padding(.horizontal, 22)
             .padding(.vertical, 28)
         }
         .background(
-            AppAdaptiveColor.warmFormBackground
-                .ignoresSafeArea()
+            MorningHelloScreenBackground(name: "BG_Onboarding")
         )
         .environment(
             \.locale,
@@ -163,6 +167,35 @@ struct SponsoredBeneficiaryPurchaseView: View {
         }
     }
 
+    private func sponsoredDuration(for product: Product) -> String? {
+        let id = product.id.lowercased()
+        if id.hasSuffix(".monthly") { return "month" }
+        if id.hasSuffix(".quarterly") { return "quarter" }
+        if id.hasSuffix(".annual") { return "year" }
+        return nil
+    }
+
+    private func localizedProductName(for product: Product) -> String {
+        guard let duration = sponsoredDuration(for: product) else { return product.displayName }
+        switch selectedLanguage {
+        case .russian:
+            return "Для близкого — " + (duration == "month" ? "1 месяц" : duration == "quarter" ? "3 месяца" : "1 год")
+        case .englishUS:
+            return "For a Loved One — " + (duration == "month" ? "1 Month" : duration == "quarter" ? "3 Months" : "1 Year")
+        case .spanishLatinAmerica:
+            return "Para un ser querido — " + (duration == "month" ? "1 mes" : duration == "quarter" ? "3 meses" : "1 año")
+        }
+    }
+
+    private func localizedProductDescription(for product: Product) -> String {
+        guard sponsoredDuration(for: product) != nil else { return product.description }
+        switch selectedLanguage {
+        case .russian: return "Доступ к MorningHello для одного близкого"
+        case .englishUS: return "MorningHello access for one loved one"
+        case .spanishLatinAmerica: return "Acceso a MorningHello para un ser querido"
+        }
+    }
+
     private func productCard(
         _ product: Product
     ) -> some View {
@@ -175,14 +208,14 @@ struct SponsoredBeneficiaryPurchaseView: View {
         } label: {
             HStack(spacing: 14) {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(product.displayName)
+                    Text(localizedProductName(for: product))
                         .font(.headline)
                         .foregroundStyle(
                             AppAdaptiveColor.text
                         )
 
-                    if !product.description.isEmpty {
-                        Text(product.description)
+                    if !localizedProductDescription(for: product).isEmpty {
+                        Text(localizedProductDescription(for: product))
                             .font(.subheadline)
                             .foregroundStyle(
                                 AppAdaptiveColor.secondaryText

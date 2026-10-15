@@ -39,8 +39,7 @@ struct HolidaySettingsView: View {
     
     var body: some View {
         ZStack {
-            AppAdaptiveColor.warmFormBackground
-                .ignoresSafeArea()
+            MorningHelloScreenBackground(name: "BG_Holidays")
             
             ScrollViewReader { proxy in
                 ScrollView {
@@ -267,11 +266,12 @@ struct HolidaySettingsView: View {
         }
         .font(
             .system(
-                .subheadline,
+                size: 16,
+                weight: .bold,
                 design: .rounded
             )
         )
-        .foregroundColor(AppAdaptiveColor.secondaryText)
+        .foregroundColor(AppAdaptiveColor.text)
         .multilineTextAlignment(.center)
         .padding(.horizontal, 34)
     }

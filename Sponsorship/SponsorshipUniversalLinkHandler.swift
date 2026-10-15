@@ -77,6 +77,8 @@ final class SponsorshipUniversalLinkHandler:
     @Published private(set)
     var state: State = .idle
 
+    @Published private(set) var pendingInvitationToken: String?
+
     @Published private(set)
     var redeemedInvitation:
         RedeemSponsorshipInvitationResponse?
@@ -93,31 +95,29 @@ final class SponsorshipUniversalLinkHandler:
                 .load()
     }
 
-    /// Returns true only for a valid MorningHello sponsorship link.
-    /// Redemption starts immediately and does not wait for onboarding.
+    /// A link only opens the invitation preview. Redemption requires a tap.
     @discardableResult
-    func handle(
-        url: URL
-    ) -> Bool {
-
-        guard let token = Self.token(
-            from: url
-        ) else {
-            return false
-        }
-
-        guard tokenBeingRedeemed != token else {
-            return true
-        }
-
-        tokenBeingRedeemed = token
-        state = .redeeming
-
-        Task {
-            await redeem(token: token)
-        }
-
+    func handle(url: URL) -> Bool {
+        guard let token = Self.token(from: url) else { return false }
+        // Never replace an invitation while its server request is in progress.
+        guard tokenBeingRedeemed == nil else { return true }
+        pendingInvitationToken = token
         return true
+    }
+
+    /// Called only by the explicit Accept Invitation button.
+    func acceptPendingInvitation() {
+        guard tokenBeingRedeemed == nil,
+              let token = pendingInvitationToken else { return }
+        tokenBeingRedeemed = token
+        pendingInvitationToken = nil
+        state = .redeeming
+        Task { await redeem(token: token) }
+    }
+
+    func dismissPendingInvitation() {
+        guard tokenBeingRedeemed == nil else { return }
+        pendingInvitationToken = nil
     }
 
     func clearCompletedRedemption() {
@@ -181,10 +181,6 @@ final class SponsorshipUniversalLinkHandler:
                 AppInstanceIDProvider
                     .getOrCreate()
 
-            // Capture BEFORE redemption or any imported onboarding flags change.
-            let wasNewInstallation =
-                SponsoredInvitationRedemptionStorage.isNewInstallation
-
             let response = try await apiClient
                 .redeemInvitation(
                     appInstanceId:
@@ -194,10 +190,7 @@ final class SponsorshipUniversalLinkHandler:
                 )
 
             try SponsoredInvitationRedemptionStorage
-                .save(
-                    response,
-                    wasNewInstallation: wasNewInstallation
-                )
+                .save(response)
 
             redeemedInvitation = response
             state = .redeemed
@@ -259,48 +252,39 @@ final class SponsorshipUniversalLinkHandler:
 }
 
 enum SponsoredInvitationRedemptionStorage {
-    private static let newInstallationSnapshotKey =
-        "sponsored_invitation_new_installation_at_redemption_v1"
-
-    /// While a response is pending, use the PRE-redemption snapshot.
-    /// Do not reevaluate this after onboarding flags have changed.
     static var isNewInstallation: Bool {
         let defaults = UserDefaults.standard
-        if defaults.data(forKey: responseKey) != nil {
-            // Older pending redemptions with no snapshot must fail closed.
-            return defaults.bool(forKey: newInstallationSnapshotKey)
-        }
-        return isEligibleBeforeRedemption(defaults)
-    }
 
-    private static func isEligibleBeforeRedemption(
-        _ defaults: UserDefaults
-    ) -> Bool {
-        let completedKeys = [
-            "onboarding_role_selection_completed",
-            "contacts_onboarding_completed",
-            "holiday_onboarding_completed",
-            "optional_setup_onboarding_completed",
-            "monitoring_setup_intro_completed",
-            "check_in_interval_confirmed",
-            "sponsor_onboarding_intro_completed",
-            "sponsor_beneficiary_profile_completed"
-        ]
-        if completedKeys.contains(where: { defaults.bool(forKey: $0) }) {
-            return false
-        }
-        let name = defaults.string(forKey: "profile_display_name")?
-            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let mode = defaults.string(forKey: "morninghello_usage_mode")?
-            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let phone = defaults.string(forKey: "profile_phone")?
-            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let country = defaults.string(forKey: "profile_country_code")?
-            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        return name.isEmpty && mode.isEmpty && phone.isEmpty && country.isEmpty
-            && defaults.data(forKey: "emergency_contacts") == nil
-    }
+        let hasSelectedRole = defaults.bool(
+            forKey: "onboarding_role_selection_completed"
+        )
 
+        let hasPersonalOnboarding = defaults.bool(
+            forKey: "contacts_onboarding_completed"
+        ) || defaults.bool(
+            forKey: "holiday_onboarding_completed"
+        ) || defaults.bool(
+            forKey: "optional_setup_onboarding_completed"
+        )
+
+        let hasExistingProfile =
+            !(defaults.string(
+                forKey: "profile_display_name"
+            ) ?? "").trimmingCharacters(
+                in: .whitespacesAndNewlines
+            ).isEmpty
+
+        let hasExistingMode =
+            !(defaults.string(
+                forKey: "morninghello_usage_mode"
+            ) ?? "").isEmpty
+
+        return !hasSelectedRole
+            && !hasPersonalOnboarding
+            && !hasExistingProfile
+            && !hasExistingMode
+    }
+    
     private static let responseKey =
         "sponsored_invitation_redemption_response"
 
@@ -317,19 +301,14 @@ enum SponsoredInvitationRedemptionStorage {
     }()
 
     static func save(
-        _ response: RedeemSponsorshipInvitationResponse,
-        wasNewInstallation: Bool
+        _ response:
+            RedeemSponsorshipInvitationResponse
     ) throws {
 
         let data = try encoder.encode(
             response
         )
 
-        // Store snapshot first so restored redemptions cannot lose eligibility.
-        UserDefaults.standard.set(
-            wasNewInstallation,
-            forKey: newInstallationSnapshotKey
-        )
         UserDefaults.standard.set(
             data,
             forKey: responseKey
@@ -354,9 +333,6 @@ enum SponsoredInvitationRedemptionStorage {
     static func clear() {
         UserDefaults.standard.removeObject(
             forKey: responseKey
-        )
-        UserDefaults.standard.removeObject(
-            forKey: newInstallationSnapshotKey
         )
     }
 }
@@ -396,11 +372,82 @@ private struct SponsorshipUniversalLinkModifier:
         )
     }
 
+    private var invitationIsPresented: Binding<Bool> {
+        Binding(
+            get: { handler.pendingInvitationToken != nil },
+            set: { if !$0 { handler.dismissPendingInvitation() } }
+        )
+    }
+
+    private func copy(_ ru: String, _ en: String, _ es: String) -> String {
+        switch AppLanguage.selected {
+        case .russian: return ru
+        case .englishUS: return en
+        case .spanishLatinAmerica: return es
+        }
+    }
+
     func body(
         content: Content
     ) -> some View {
 
         content
+            .sheet(isPresented: invitationIsPresented) {
+                NavigationStack {
+                    ScrollView {
+                        VStack(spacing: 20) {
+                            Image("icon_morning")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
+                                .accessibilityHidden(true)
+                            Text(copy("Вас приглашают в MorningHello",
+                                      "You're Invited to MorningHello",
+                                      "Te invitan a MorningHello"))
+                                .font(.system(size: 28, weight: .bold, design: .rounded))
+                                .multilineTextAlignment(.center)
+                            Text(copy("Ваш близкий человек подготовил для вас приглашение. Подписку оплачивает спонсор, а ваши личные данные остаются отдельными.",
+                                      "A loved one has prepared an invitation for you. Your sponsor pays for access, while your personal information stays separate.",
+                                      "Un ser querido ha preparado una invitación para ti. Tu patrocinador paga el acceso y tus datos personales permanecen separados."))
+                                .font(.system(.body, design: .rounded))
+                                .multilineTextAlignment(.center)
+                            Text(copy("Приглашение будет проверено сервером после вашего подтверждения. Если вы уже пользуетесь MorningHello, ваши существующие данные не должны заменяться данными приглашения.",
+                                      "The server will verify the invitation after you confirm. If you already use MorningHello, your existing details should not be replaced by invitation details.",
+                                      "El servidor verificará la invitación después de tu confirmación. Si ya usas MorningHello, tus datos actuales no deben sustituirse por los de la invitación."))
+                                .font(.system(.footnote, design: .rounded))
+                                .foregroundStyle(.secondary)
+                                .multilineTextAlignment(.center)
+                            Button {
+                                handler.acceptPendingInvitation()
+                            } label: {
+                                Text(copy("Принять приглашение", "Accept Invitation", "Aceptar invitación"))
+                                    .font(.system(.headline, design: .rounded))
+                                    .frame(maxWidth: .infinity, minHeight: 54)
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .tint(.orange)
+                            Button {
+                                handler.dismissPendingInvitation()
+                            } label: {
+                                Text(copy("Не сейчас", "Not Now", "Ahora no"))
+                                    .frame(maxWidth: .infinity, minHeight: 44)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .padding(24)
+                        .frame(maxWidth: .infinity)
+                    }
+                    .background(MorningHelloScreenBackground(name: "BG_Onboarding"))
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button(copy("Закрыть", "Close", "Cerrar")) {
+                                handler.dismissPendingInvitation()
+                            }
+                        }
+                    }
+                }
+                .environment(\.locale, AppLanguage.selected.locale)
+            }
             .onOpenURL { url in
                 _ = handler.handle(
                     url: url
@@ -410,9 +457,9 @@ private struct SponsorshipUniversalLinkModifier:
                 failure.map { failure in
                     if failure == .cannotSponsorYourself {
                         switch AppLanguage.selected {
-                        case .russian: return "Откройте ссылку на iPhone близкого"
-                        case .englishUS: return "Open on Your Loved One’s iPhone"
-                        case .spanishLatinAmerica: return "Abre el enlace en el iPhone de tu ser querido"
+                        case .russian: return "Невозможно принять приглашение для текущего профиля"
+                        case .englishUS: return "Cannot Accept Invitation for This Profile"
+                        case .spanishLatinAmerica: return "No se puede aceptar la invitación con este perfil"
                         }
                     }
                     return SponsorshipL10n.text(failure.titleKey)
@@ -432,11 +479,11 @@ private struct SponsorshipUniversalLinkModifier:
                     if failure == .cannotSponsorYourself {
                         switch AppLanguage.selected {
                         case .russian:
-                            Text("Вы открыли приглашение на iPhone спонсора. Отправьте ссылку близкому человеку: он должен открыть её в MorningHello на своём iPhone.")
+                            Text("Сервер распознал текущий профиль как плательщика этой подписки. Для активации подопечному требуется отдельная идентичность в MorningHello. Удаление приложения может не сбросить идентификатор.")
                         case .englishUS:
-                            Text("This invitation was opened on the sponsor’s iPhone. Send the link to your loved one so they can activate MorningHello on their own iPhone.")
+                            Text("The server recognizes this profile as the subscription purchaser. The beneficiary needs a separate MorningHello identity to activate access. Reinstalling the app may preserve the identifier.")
                         case .spanishLatinAmerica:
-                            Text("Has abierto la invitación en el iPhone del patrocinador. Envía el enlace a tu ser querido para que active MorningHello en su propio iPhone.")
+                            Text("El servidor reconoce este perfil como el comprador de la suscripción. La persona beneficiaria necesita una identidad distinta en MorningHello. Reinstalar la aplicación puede conservar el identificador.")
                         }
                     } else {
                         Text(SponsorshipL10n.text(failure.messageKey))

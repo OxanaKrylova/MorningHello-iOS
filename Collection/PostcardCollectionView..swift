@@ -26,16 +26,7 @@ struct PostcardCollectionView: View {
 
         ZStack {
 
-            LinearGradient(
-                colors: [
-                    AppAdaptiveColor.background,
-                    AppAdaptiveColor.secondaryBackground,
-                    AppAdaptiveColor.groupedBackground
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            MorningHelloScreenBackground(name: "BG_PostcardCatalog")
 
             if collection.assetNames.isEmpty {
 

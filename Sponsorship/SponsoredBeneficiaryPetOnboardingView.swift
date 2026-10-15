@@ -119,8 +119,7 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
                 .padding(.vertical, 28)
             }
             .background(
-                AppAdaptiveColor.warmFormBackground
-                    .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_Onboarding")
             )
             .toolbar(.hidden, for: .navigationBar)
         }
@@ -132,12 +131,6 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
 
     private var header: some View {
         VStack(spacing: 12) {
-            Image("icon_Pet")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 70, height: 70)
-                .accessibilityHidden(true)
-
             Text(
                 selectedLanguage.localized(
                     "sponsor.pet.title"
@@ -181,11 +174,8 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
                     showValidation = false
                 } label: {
                     HStack {
-                        Image("icon_Pet")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 25, height: 25)
-                .accessibilityHidden(true)
+                        Image(systemName: "pawprint.fill")
+                            .foregroundStyle(.orange)
 
                         Text(
                             trimmed(pet.name).isEmpty

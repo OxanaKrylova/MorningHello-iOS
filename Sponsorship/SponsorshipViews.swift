@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 // MARK: - Server invitation URL
 
@@ -697,21 +698,7 @@ struct SponsorHomeView: View {
     private func invitationMessage(
         invitationURL: URL
     ) -> String {
-        let websiteURL: String
-
-        switch beneficiaryLanguage {
-        case .russian:
-            websiteURL =
-                "https://www.morninghelloapp.com/ru"
-
-        case .englishUS:
-            websiteURL =
-                "https://www.morninghelloapp.com"
-
-        case .spanishLatinAmerica:
-            websiteURL =
-                "https://www.morninghelloapp.com/es"
-        }
+        let websiteURL = "https://apps.apple.com/app/id6804500278"
 
         switch beneficiaryLanguage {
         case .russian:
@@ -760,49 +747,104 @@ struct SponsorHomeView: View {
 private struct SponsorLanguageSettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage(AppLanguage.storageKey) private var selectedLanguageCode = AppLanguage.initial.rawValue
+    @State private var showFeedback = false
+    @State private var showSponsorSubscription = false
+
     private var selectedLanguage: AppLanguage {
         AppLanguage(rawValue: selectedLanguageCode) ?? .initial
     }
-    private var title: String {
+
+    private func tr(_ ru: String, _ en: String, _ es: String) -> String {
         switch selectedLanguage {
-        case .russian: return "Настройки"
-        case .englishUS: return "Settings"
-        case .spanishLatinAmerica: return "Configuración"
+        case .russian: return ru
+        case .englishUS: return en
+        case .spanishLatinAmerica: return es
         }
     }
-    private var languageTitle: String {
-        switch selectedLanguage {
-        case .russian: return "Язык приложения"
-        case .englishUS: return "App language"
-        case .spanishLatinAmerica: return "Idioma de la aplicación"
-        }
-    }
+
     var body: some View {
         NavigationStack {
             Form {
                 Section {
-                    Picker(languageTitle, selection: $selectedLanguageCode) {
-                        ForEach(AppLanguage.allCases) { language in
-                            Text(language.titleKey).tag(language.rawValue)
+                    HStack(spacing: 12) {
+                        Image("icon_Language")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .accessibilityHidden(true)
+                        Picker(tr("Язык приложения", "App language", "Idioma de la aplicación"),
+                               selection: $selectedLanguageCode) {
+                            ForEach(AppLanguage.allCases) { language in
+                                Text(language.titleKey).tag(language.rawValue)
+                            }
                         }
                     }
                 }
+
+                Section {
+                    Button {
+                        showSponsorSubscription = true
+                    } label: {
+                        sponsorSettingsAction(
+                            iconName: "icon_Subscription",
+                            title: tr("Управление подпиской", "Manage subscription", "Gestionar suscripción")
+                        )
+                    }
+                } header: {
+                    Text(tr("Подписка", "Subscription", "Suscripción"))
+                } footer: {
+                    Text(tr("Управление и отмена подписки выполняются через Apple.",
+                            "Manage or cancel your subscription through Apple.",
+                            "Gestiona o cancela tu suscripción a través de Apple."))
+                }
+
+                Section {
+                    Button {
+                        showFeedback = true
+                    } label: {
+                        sponsorSettingsAction(
+                            iconName: "icon_email",
+                            title: tr("Связаться с разработчиком", "Contact developer", "Contactar al desarrollador")
+                        )
+                    }
+                }
+
+                Section(tr("О приложении", "About the app", "Acerca de la aplicación")) {
+                    LabeledContent(tr("Версия", "Version", "Versión"),
+                                   value: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "—")
+                    LabeledContent(tr("Номер сборки", "Build number", "Número de compilación"),
+                                   value: Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "—")
+                }
             }
             .scrollContentBackground(.hidden)
-            .background(AppAdaptiveColor.warmFormBackground.ignoresSafeArea())
-            .navigationTitle(title)
+            .background(MorningHelloScreenBackground(name: "BG_Settings"))
+            .navigationTitle(tr("Настройки", "Settings", "Configuración"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Text(selectedLanguage == .russian ? "Готово" : (selectedLanguage == .spanishLatinAmerica ? "Listo" : "Done"))
-                    }
+                    Button(tr("Готово", "Done", "Listo")) { dismiss() }
                 }
+            }
+            .sheet(isPresented: $showFeedback) {
+                FeedbackView()
+            }
+            .sheet(isPresented: $showSponsorSubscription) {
+                SubscriptionView(mode: .sponsored)
             }
         }
         .environment(\.locale, selectedLanguage.locale)
+    }
+
+    private func sponsorSettingsAction(iconName: String, title: String) -> some View {
+        HStack(spacing: 12) {
+            Image(iconName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 30, height: 30)
+                .accessibilityHidden(true)
+            Text(title)
+                .foregroundStyle(AppAdaptiveColor.text)
+        }
     }
 }
 
