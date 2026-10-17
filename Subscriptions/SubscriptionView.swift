@@ -33,7 +33,6 @@ struct SubscriptionView: View {
     @State private var isRestoring = false
     @State private var subscriptionMessage: String?
     @StateObject private var sponsorshipStore = SponsorshipStore.shared
-    @State private var showSponsorPlanInfo = false
     @State private var sponsoredIsRestoring = false
 
 
@@ -182,7 +181,7 @@ struct SubscriptionView: View {
                     .padding(.bottom, 40)
                 }
             }
-            .navigationTitle("Подписка")
+            .navigationTitle(sponsorLocalized("Подписка", "Subscription", "Suscripción"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(
@@ -202,17 +201,7 @@ struct SubscriptionView: View {
         .sheet(
             isPresented: $showSubscriptionPlansInfo
         ) {
-            SubscriptionPlansInfoView()
-        }
-        .alert(sponsorLocalized("О спонсорском тарифе", "Sponsored plan details", "Detalles del plan patrocinado"),
-               isPresented: $showSponsorPlanInfo) {
-            Button(sponsorLocalized("Понятно", "OK", "Entendido"), role: .cancel) {}
-        } message: {
-            Text(sponsorLocalized(
-                "Подписка предоставляет доступ одному подопечному. Управление оплатой и автопродлением выполняется через Apple. Отключение автопродления не прекращает оплаченный период.",
-                "This subscription provides access for one beneficiary. Manage payment and auto-renewal through Apple. Turning off auto-renewal does not end the paid period.",
-                "La suscripción proporciona acceso a una persona beneficiaria. Administra el pago y la renovación automática mediante Apple. Desactivar la renovación no finaliza el período pagado."
-            ))
+            SubscriptionPlansInfoView(showsSponsoredPlansOnly: mode == .sponsored)
         }
         .sheet(
             isPresented: $showSubscriptionPlans,
@@ -459,13 +448,9 @@ struct SubscriptionView: View {
         showsChevron: Bool
     ) -> some View {
         HStack(spacing: 14) {
-            if systemImage == "creditcard.fill" {
-                MorningHelloArtwork(name: "icon_Subscription", size: 26)
-            } else {
-                Image(systemName: systemImage)
-                    .font(.title3)
-                    .foregroundColor(imageColor)
-            }
+            Image(systemName: systemImage)
+                .font(.title3)
+                .foregroundColor(imageColor)
 
             Text(title)
                 .font(
@@ -521,6 +506,8 @@ struct SubscriptionView: View {
             return sponsorLocalized("Для близкого — 3 месяца", "For a Loved One — 3 Months", "Para un ser querido — 3 meses")
         case "com.morninghello.sponsored.annual":
             return sponsorLocalized("Для близкого — 1 год", "For a Loved One — 1 Year", "Para un ser querido — 1 año")
+        case "com.morninghello.sponsored.assisted.annual":
+            return sponsorLocalized("Для близкого — 1 год с помощью в настройке", "For a Loved One — Annual with Setup Support", "Para un ser querido — anual con ayuda para la configuración")
         default:
             return sponsorLocalized("Спонсорская подписка", "Sponsored subscription", "Suscripción patrocinada")
         }
@@ -580,7 +567,7 @@ struct SubscriptionView: View {
             }
             .buttonStyle(SubscriptionActionButtonStyle())
 
-            Button { showSponsorPlanInfo = true } label: {
+            Button { showSubscriptionPlansInfo = true } label: {
                 actionButtonLabel(
                     title: sponsorLocalized("О тарифе", "Plan Details", "Detalles del plan"),
                     systemImage: "list.bullet.rectangle.portrait", imageColor: .orange, showsChevron: true)
@@ -621,18 +608,48 @@ struct SubscriptionView: View {
         }
     }
 
-
-    // Subscription-specific strings are stored in RU/EN/ES .lproj resources.
-    private func subscriptionText(_ key: String, fallback: String) -> String {
-        let code: String
-        switch selectedLanguage {
-        case .russian: code = "ru"
-        case .englishUS: code = "en"
-        case .spanishLatinAmerica: code = "es"
+    private func localizedSubscriptionTerms(_ key: String, _ russianFallback: String) -> String {
+        guard mode == .sponsored else {
+            return selectedLanguage.localized(russianFallback)
         }
-        guard let path = Bundle.main.path(forResource: code, ofType: "lproj"),
-              let bundle = Bundle(path: path) else { return fallback }
-        return bundle.localizedString(forKey: key, value: fallback, table: "SubscriptionScreens")
+        let languageCode: String
+        switch selectedLanguage {
+        case .russian: languageCode = "ru"
+        case .englishUS: languageCode = "en"
+        case .spanishLatinAmerica: languageCode = "es"
+        }
+        if let folder = Bundle.main.path(forResource: languageCode, ofType: "lproj"),
+           let localizationBundle = Bundle(path: folder) {
+            let translated = localizationBundle.localizedString(
+                forKey: key,
+                value: nil,
+                table: "SponsorSubscription"
+            )
+            if translated != key { return translated }
+        }
+        switch selectedLanguage {
+        case .russian: return russianFallback
+        case .englishUS:
+            switch key {
+            case "sponsor.terms.title": return "Subscription Terms"
+            case "sponsor.terms.renewal": return "Subscriptions are purchased through the Apple App Store and renew automatically unless auto-renewal is turned off in Apple settings."
+            case "sponsor.terms.deletion": return "Deleting MorningHello does not cancel your subscription or stop server-based monitoring."
+            case "sponsor.terms.morninghello": return "MorningHello Terms of Use"
+            case "sponsor.terms.apple": return "Apple Terms of Use (EULA)"
+            case "sponsor.terms.privacy": return "Privacy Policy"
+            default: return russianFallback
+            }
+        case .spanishLatinAmerica:
+            switch key {
+            case "sponsor.terms.title": return "Condiciones de la suscripción"
+            case "sponsor.terms.renewal": return "Las suscripciones se realizan a través de Apple App Store y se renuevan automáticamente, salvo que se desactive la renovación automática en los ajustes de Apple."
+            case "sponsor.terms.deletion": return "Eliminar MorningHello no cancela la suscripción ni detiene el monitoreo del servidor."
+            case "sponsor.terms.morninghello": return "Condiciones de uso de MorningHello"
+            case "sponsor.terms.apple": return "Condiciones de uso de Apple (EULA)"
+            case "sponsor.terms.privacy": return "Política de privacidad"
+            default: return russianFallback
+            }
+        }
     }
 
     private var legalSection: some View {
@@ -644,7 +661,7 @@ struct SubscriptionView: View {
                 .padding(.vertical, 4)
 
             Text(
-                subscriptionText("subscription.terms.title", fallback: "Условия подписки")
+                localizedSubscriptionTerms("sponsor.terms.title", "Условия подписки")
             )
             .font(
                 .system(
@@ -658,7 +675,7 @@ struct SubscriptionView: View {
             )
 
             Text(
-                subscriptionText("subscription.terms.renewal", fallback: "Подписка оформляется через Apple App Store и автоматически продлевается, если автопродление не отключено в настройках Apple.")
+                localizedSubscriptionTerms("sponsor.terms.renewal", "Подписка оформляется через Apple App Store и автоматически продлевается, если автопродление не отключено в настройках Apple.")
             )
             .font(.system(size: 16, weight: .bold, design: .rounded))
             .foregroundStyle(AppAdaptiveColor.text)
@@ -668,7 +685,7 @@ struct SubscriptionView: View {
             )
 
             Text(
-                subscriptionText("subscription.terms.deletion", fallback: "Удаление приложения MorningHello не отменяет подписку и не останавливает серверный мониторинг.")
+                localizedSubscriptionTerms("sponsor.terms.deletion", "Удаление приложения MorningHello не отменяет подписку и не останавливает серверный мониторинг.")
             )
             .font(.system(size: 16, weight: .bold, design: .rounded))
             .foregroundStyle(AppAdaptiveColor.text)
@@ -679,21 +696,21 @@ struct SubscriptionView: View {
 
             legalLink(
                 title:
-                    subscriptionText("subscription.links.terms", fallback: "Условия использования MorningHello"),
+                    localizedSubscriptionTerms("sponsor.terms.morninghello", "Условия использования MorningHello"),
                 destination:
                     morningHelloTermsURL
             )
 
             legalLink(
                 title:
-                    subscriptionText("subscription.links.apple", fallback: "Условия использования Apple (EULA)"),
+                    localizedSubscriptionTerms("sponsor.terms.apple", "Условия использования Apple (EULA)"),
                 destination:
                     appleEULAURL
             )
 
             legalLink(
                 title:
-                    subscriptionText("subscription.links.privacy", fallback: "Политика конфиденциальности"),
+                    localizedSubscriptionTerms("sponsor.terms.privacy", "Политика конфиденциальности"),
                 destination:
                     privacyPolicyURL
             )

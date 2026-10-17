@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct SubscriptionPlansInfoView: View {
+
+    var showsSponsoredPlansOnly: Bool = false
     
     private enum InfoSection: Hashable {
         case included
@@ -55,7 +57,7 @@ struct SubscriptionPlansInfoView: View {
                         alignment: .leading,
                         spacing: 18
                     ) {
-                        introductionCard
+                        if !showsSponsoredPlansOnly { introductionCard }
                         
                         collapsibleSection(
                             section: .included,
@@ -68,7 +70,7 @@ struct SubscriptionPlansInfoView: View {
                             bulletList(includedFeatures)
                         }
                         
-                        collapsibleSection(
+                        if !showsSponsoredPlansOnly { collapsibleSection(
                             section: .personal,
                             title: text(
                                 ru: "ПОДПИСКИ ДЛЯ СЕБЯ",
@@ -80,7 +82,7 @@ struct SubscriptionPlansInfoView: View {
                                 introduction: nil,
                                 plans: personalPlans
                             )
-                        }
+                        } }
                         
                         collapsibleSection(
                             section: .lovedOne,
@@ -124,10 +126,9 @@ struct SubscriptionPlansInfoView: View {
                 }
             }
             .navigationTitle(
-                text(
-                    ru: "Тарифные планы",
-                    en: "Subscription Plans"
-                )
+                showsSponsoredPlansOnly
+                    ? text(ru: "Подписки для близкого", en: "Plans for a Loved One")
+                    : text(ru: "Тарифные планы", en: "Subscription Plans")
             )
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -156,8 +157,12 @@ struct SubscriptionPlansInfoView: View {
             spacing: 14
         ) {
             HStack(spacing: 12) {
-                MorningHelloArtwork(name: "icon_Subscription", size: 42)
-                    .accessibilityHidden(true)
+                Image(
+                    systemName:
+                        "creditcard.circle.fill"
+                )
+                .font(.system(size: 38))
+                .foregroundStyle(.orange)
                 
                 Text(
                     text(
@@ -260,8 +265,8 @@ struct SubscriptionPlansInfoView: View {
         ) {
             Text(
                 text(
-                    ru: "7. Годовой доступ для близкого с настройкой",
-                    en: "7. Annual Access for a Loved One with Setup Support"
+                    ru: "7. Отдельная годовая подписка с персональной помощью",
+                    en: "7. Separate Annual Plan with Setup Support"
                 )
             )
             .font(
@@ -539,7 +544,7 @@ struct SubscriptionPlansInfoView: View {
             "каталог сезонных, праздничных и тематических открыток;",
             "возможность добавить к открытке собственное пожелание и отправить её близким;",
             "ежедневная оценка эмоционального состояния;",
-            "календарь эмоционального состояния за месяц;",
+            "месячный календарь эмоциональных оценок;",
             "поддерживающие советы при тревожных состояниях;",
             "упражнение «Квадрат дыхания»."
         ]
@@ -632,28 +637,27 @@ struct SubscriptionPlansInfoView: View {
     }
     
     private var lovedOneIntroduction: [String] {
-        if isSpanish {
-            return [
-                "Estos planes permiten pagar MorningHello para un familiar mayor u otro ser querido.",
-                "Puedes preparar su perfil, sus contactos de confianza y sus preferencias. Después de la compra, envía el enlace de invitación. La persona destinataria revisa y acepta la invitación en su iPhone y puede completar su configuración.",
-                "Cada suscripción brinda acceso a una persona. Quien paga gestiona la suscripción, pero no tiene acceso a los registros emocionales, las postales ni otros datos privados de la persona destinataria."
-            ]
-        }
         if isEnglish {
             return [
-                "These plans allow you to pay for MorningHello access for an older parent or another loved one.",
-                "You can prepare your loved one’s profile, trusted contacts, and preferences before purchasing. After purchase, send the invitation link. The recipient reviews and accepts it on their iPhone, then checks and completes their own settings.",
-                "Each subscription provides access for one recipient. The purchaser manages the payment but does not receive access to the recipient’s profile, emotional check-ins, postcards, trusted contacts, or other personal information."
+                "These plans let you pay for MorningHello access for an older parent or another loved one.",
+                "The sponsor prepares an invitation and may prefill the beneficiary's details. The beneficiary accepts the invitation on their iPhone; existing local data is not overwritten.",
+                "Each subscription is for one beneficiary. The sponsor manages payments, while the beneficiary controls their own check-ins and personal information."
             ]
         }
-        
+        if isSpanish {
+            return [
+                "Estos planes permiten pagar el acceso a MorningHello de un familiar mayor u otro ser querido.",
+                "Quien patrocina prepara una invitación y puede completar los datos iniciales. La persona beneficiaria acepta la invitación en su iPhone; sus datos existentes no se sobrescriben.",
+                "Cada suscripción es para una persona beneficiaria. Quien patrocina administra los pagos y la persona beneficiaria controla sus registros y datos personales."
+            ]
+        }
         return [
             "Эти планы позволяют оплатить MorningHello для пожилого родителя или другого близкого человека.",
-            "Вы можете заранее подготовить профиль, тревожные контакты и настройки близкого. После покупки отправьте персональную ссылку. Получатель проверит и примет приглашение в MorningHello на своём iPhone, затем сможет уточнить свои данные.",
-            "Одна подписка предназначена для одного получателя. Плательщик управляет оплатой, но не получает доступ к профилю получателя, его эмоциональным оценкам, открыткам, тревожным контактам и другой личной информации."
+            "Спонсор готовит приглашение и может предварительно заполнить данные. Подопечный принимает приглашение на своём iPhone; существующие локальные данные не перезаписываются.",
+            "Одна подписка предназначена для одного подопечного. Спонсор управляет оплатой, а подопечный — своими отметками и личными данными."
         ]
     }
-    
+
     private var sponsoredPlans:
     [SubscriptionPlanDescription] {
         if isEnglish {
@@ -677,6 +681,13 @@ struct SubscriptionPlansInfoView: View {
                     title: "6. Annual Plan for a Loved One",
                     paragraphs: [
                         "Full MorningHello access for one recipient for one year. The subscription renews automatically every year until cancelled by the purchaser."
+                    ]
+                ),
+                SubscriptionPlanDescription(
+                    number: 7,
+                    title: "7. Annual Access for a Loved One with Setup Support",
+                    paragraphs: [
+                        "One year of MorningHello access for one recipient, plus one complimentary personal setup session of up to 30 minutes via Zoom or Google Meet."
                     ]
                 )
             ]
@@ -703,6 +714,13 @@ struct SubscriptionPlansInfoView: View {
                     paragraphs: [
                         "Acceso completo a MorningHello para una persona durante un año. La suscripción se renueva automáticamente cada año hasta que quien paga la cancele."
                     ]
+                ),
+                SubscriptionPlanDescription(
+                    number: 7,
+                    title: "7. Acceso anual para un ser querido con ayuda para la configuración",
+                    paragraphs: [
+                        "Un año de acceso a MorningHello para una persona y una sesión gratuita de ayuda para la configuración de hasta 30 minutos por Zoom o Google Meet."
+                    ]
                 )
             ]
         }
@@ -727,7 +745,14 @@ struct SubscriptionPlansInfoView: View {
                 paragraphs: [
                     "Полный доступ к MorningHello для одного получателя на один год. Подписка автоматически продлевается ежегодно, пока плательщик её не отменит."
                 ]
-            )
+            ),
+                SubscriptionPlanDescription(
+                    number: 7,
+                    title: "7. Годовой доступ для близкого с помощью в настройке",
+                    paragraphs: [
+                        "Годовой доступ к MorningHello для одного получателя и одна бесплатная персональная встреча до 30 минут по Zoom или Google Meet."
+                    ]
+                )
         ]
     }
     
@@ -818,6 +843,8 @@ struct SubscriptionPlansInfoView: View {
                 
             case "Тарифные планы":
                 return "Planes de suscripción"
+            case "Подписки для близкого":
+                return "Planes para un ser querido"
                 
             case "Закрыть":
                 return "Cerrar"
@@ -831,7 +858,7 @@ struct SubscriptionPlansInfoView: View {
             case "Все тарифные планы открывают одинаковые функции MorningHello. Они отличаются сроком действия подписки, способом её использования и наличием персональной помощи с подключением.":
                 return "Todos los planes incluyen las mismas funciones de MorningHello. Se diferencian por la duración de la suscripción, la forma de uso y la disponibilidad de ayuda personalizada para la configuración."
                 
-            case "7. Годовой доступ для близкого с настройкой":
+            case "7. Отдельная годовая подписка с персональной помощью":
                 return "7. Acceso anual para un ser querido con ayuda para la configuración"
                 
             case "Полный доступ к MorningHello для одного получателя на один год и одна бесплатная персональная встреча по Zoom или Google Meet продолжительностью до 30 минут.":

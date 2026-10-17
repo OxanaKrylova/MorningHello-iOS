@@ -615,3 +615,15 @@
 "paywall.links.apple" = "Стандартные условия использования Apple";
 "paywall.links.terms" = "Условия использования MorningHello";
 "paywall.links.privacy" = "Политика конфиденциальности";
+"sponsor.terms.title" = "Условия подписки";
+"sponsor.terms.renewal" = "Подписка оформляется через Apple App Store и автоматически продлевается, если автопродление не отключено в настройках Apple.";
+"sponsor.terms.deletion" = "Удаление приложения MorningHello не отменяет подписку и не останавливает серверный мониторинг.";
+"sponsor.terms.morninghello" = "Условия использования MorningHello";
+"sponsor.terms.apple" = "Условия использования Apple (EULA)";
+"sponsor.terms.privacy" = "Политика конфиденциальности";
+"sponsor.terms.title" = "Условия подписки";
+"sponsor.terms.renewal" = "Подписка оформляется через Apple App Store и автоматически продлевается, если автопродление не отключено в настройках Apple.";
+"sponsor.terms.deletion" = "Удаление приложения MorningHello не отменяет подписку и не останавливает серверный мониторинг.";
+"sponsor.terms.morninghello" = "Условия использования MorningHello";
+"sponsor.terms.apple" = "Условия использования Apple (EULA)";
+"sponsor.terms.privacy" = "Политика конфиденциальности";

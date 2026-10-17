@@ -2085,3 +2085,15 @@
 "paywall.links.apple" = "Apple Standard Terms of Use";
 "paywall.links.terms" = "MorningHello Terms of Use";
 "paywall.links.privacy" = "Privacy Policy";
+"sponsor.terms.title" = "Subscription Terms";
+"sponsor.terms.renewal" = "Subscriptions are purchased through the Apple App Store and renew automatically unless auto-renewal is turned off in Apple settings.";
+"sponsor.terms.deletion" = "Deleting MorningHello does not cancel your subscription or stop server-based monitoring.";
+"sponsor.terms.morninghello" = "MorningHello Terms of Use";
+"sponsor.terms.apple" = "Apple Terms of Use (EULA)";
+"sponsor.terms.privacy" = "Privacy Policy";
+"sponsor.terms.title" = "Subscription Terms";
+"sponsor.terms.renewal" = "Subscriptions are purchased through the Apple App Store and renew automatically unless auto-renewal is turned off in Apple settings.";
+"sponsor.terms.deletion" = "Deleting MorningHello does not cancel your subscription or stop server-based monitoring.";
+"sponsor.terms.morninghello" = "MorningHello Terms of Use";
+"sponsor.terms.apple" = "Apple Terms of Use (EULA)";
+"sponsor.terms.privacy" = "Privacy Policy";

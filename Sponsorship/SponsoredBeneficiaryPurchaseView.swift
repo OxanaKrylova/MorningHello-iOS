@@ -68,12 +68,14 @@ struct SponsoredBeneficiaryPurchaseView: View {
                             statusMessageKey
                         )
                     )
-                    .font(.footnote.weight(.bold))
-                    .foregroundStyle(Color.white)
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(
+                        statusMessageKey ==
+                            "sponsor.purchase.pending"
+                            ? Color.orange
+                            : Color.red
+                    )
                     .multilineTextAlignment(.center)
-                    .padding(12)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.black.opacity(0.62), in: RoundedRectangle(cornerRadius: 14))
                 } else if purchaseManager.lastError != nil {
 
                     Text(
@@ -83,12 +85,9 @@ struct SponsoredBeneficiaryPurchaseView: View {
                             : "sponsor.purchase.failed"
                         )
                     )
-                        .font(.footnote.weight(.bold))
-                        .foregroundStyle(Color.white)
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(.red)
                         .multilineTextAlignment(.center)
-                        .padding(12)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.black.opacity(0.62), in: RoundedRectangle(cornerRadius: 14))
                 }
 
                 purchaseButton
@@ -101,11 +100,8 @@ struct SponsoredBeneficiaryPurchaseView: View {
                             "sponsor.purchase.restore"
                         )
                     )
-                    .font(.subheadline.weight(.bold))
-                    .foregroundStyle(Color.white)
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 12)
-                    .background(Color.black.opacity(0.62), in: Capsule())
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.orange)
                 }
                 .buttonStyle(.plain)
                 .disabled(purchaseManager.isProcessing)
@@ -115,12 +111,11 @@ struct SponsoredBeneficiaryPurchaseView: View {
                         "sponsor.purchase.footer"
                     )
                 )
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(Color.white)
+                .font(.caption)
+                .foregroundStyle(
+                    AppAdaptiveColor.secondaryText
+                )
                 .multilineTextAlignment(.center)
-                .padding(12)
-                .frame(maxWidth: .infinity)
-                .background(Color.black.opacity(0.62), in: RoundedRectangle(cornerRadius: 14))
             }
             .padding(.horizontal, 22)
             .padding(.vertical, 28)
@@ -168,27 +163,58 @@ struct SponsoredBeneficiaryPurchaseView: View {
     }
 
     private func sponsoredDuration(for product: Product) -> String? {
-        let id = product.id.lowercased()
-        if id.hasSuffix(".monthly") { return "month" }
-        if id.hasSuffix(".quarterly") { return "quarter" }
-        if id.hasSuffix(".annual") { return "year" }
-        return nil
+        switch product.id {
+        case "com.morninghello.sponsored.monthly": return "month"
+        case "com.morninghello.sponsored.quarterly": return "quarter"
+        case "com.morninghello.sponsored.annual": return "year"
+        case "com.morninghello.sponsored.assisted.annual": return "assistedYear"
+        default: return nil
+        }
     }
 
     private func localizedProductName(for product: Product) -> String {
-        guard let duration = sponsoredDuration(for: product) else { return product.displayName }
+        guard let duration = sponsoredDuration(for: product) else {
+            return product.displayName
+        }
         switch selectedLanguage {
         case .russian:
-            return "Для близкого — " + (duration == "month" ? "1 месяц" : duration == "quarter" ? "3 месяца" : "1 год")
+            switch duration {
+            case "month": return "Для близкого — 1 месяц"
+            case "quarter": return "Для близкого — 3 месяца"
+            case "assistedYear": return "Для близкого — 1 год с помощью в настройке"
+            default: return "Для близкого — 1 год"
+            }
         case .englishUS:
-            return "For a Loved One — " + (duration == "month" ? "1 Month" : duration == "quarter" ? "3 Months" : "1 Year")
+            switch duration {
+            case "month": return "For a Loved One — 1 Month"
+            case "quarter": return "For a Loved One — 3 Months"
+            case "assistedYear": return "For a Loved One — Annual with Setup Support"
+            default: return "For a Loved One — 1 Year"
+            }
         case .spanishLatinAmerica:
-            return "Para un ser querido — " + (duration == "month" ? "1 mes" : duration == "quarter" ? "3 meses" : "1 año")
+            switch duration {
+            case "month": return "Para un ser querido — 1 mes"
+            case "quarter": return "Para un ser querido — 3 meses"
+            case "assistedYear": return "Para un ser querido — anual con ayuda para la configuración"
+            default: return "Para un ser querido — 1 año"
+            }
         }
     }
 
     private func localizedProductDescription(for product: Product) -> String {
-        guard sponsoredDuration(for: product) != nil else { return product.description }
+        guard let duration = sponsoredDuration(for: product) else {
+            return product.description
+        }
+        if duration == "assistedYear" {
+            switch selectedLanguage {
+            case .russian:
+                return "Годовой доступ для одного близкого и одна бесплатная встреча по Zoom или Google Meet до 30 минут."
+            case .englishUS:
+                return "One year for one loved one, plus a complimentary setup session of up to 30 minutes via Zoom or Google Meet."
+            case .spanishLatinAmerica:
+                return "Un año para un ser querido, más una sesión gratuita de ayuda de hasta 30 minutos por Zoom o Google Meet."
+            }
+        }
         switch selectedLanguage {
         case .russian: return "Доступ к MorningHello для одного близкого"
         case .englishUS: return "MorningHello access for one loved one"

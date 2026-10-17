@@ -19,7 +19,8 @@ enum SponsorshipFeatureConfiguration {
     static let sponsoredProductIDs: Set<String> = [
         "com.morninghello.sponsored.monthly",
         "com.morninghello.sponsored.quarterly",
-        "com.morninghello.sponsored.annual"
+        "com.morninghello.sponsored.annual",
+        "com.morninghello.sponsored.assisted.annual"
     ]
 }
 
