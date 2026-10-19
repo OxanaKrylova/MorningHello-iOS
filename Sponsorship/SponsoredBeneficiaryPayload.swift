@@ -21,6 +21,7 @@ struct SponsoredBeneficiaryPayload: Codable, Equatable {
     let holidayPreferences: HolidayPreferences
     let pets: [Pet]
     let reminders: [Reminder]
+    let petCareContacts: [PetCareContact]?
 
     init(draft: SponsoredBeneficiaryDraft) {
         schemaVersion = draft.schemaVersion
@@ -40,6 +41,8 @@ struct SponsoredBeneficiaryPayload: Codable, Equatable {
         reminders = draft.reminders.map {
             Reminder(draft: $0)
         }
+        // Populated by a later sponsor form integration; omitted until then.
+        petCareContacts = nil
     }
 
     struct Profile: Codable, Equatable {
@@ -77,6 +80,7 @@ struct SponsoredBeneficiaryPayload: Codable, Equatable {
         let phone: String
         let email: String
         let salutation: String
+        let messageLanguage: String?
 
         init(
             draft:
@@ -88,6 +92,7 @@ struct SponsoredBeneficiaryPayload: Codable, Equatable {
             phone = draft.phone
             email = draft.email
             salutation = draft.salutation
+            messageLanguage = nil
         }
     }
 
@@ -145,6 +150,16 @@ struct SponsoredBeneficiaryPayload: Codable, Equatable {
             additionalInstructions =
                 draft.additionalInstructions
         }
+    }
+
+    struct PetCareContact: Codable, Equatable {
+        let id: UUID
+        let role: String
+        let firstName: String
+        let lastName: String
+        let phone: String
+        let email: String
+        let messageLanguage: String
     }
 
     struct Reminder: Codable, Equatable {

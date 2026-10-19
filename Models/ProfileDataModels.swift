@@ -15,19 +15,22 @@ struct ProfileDataRequest: Encodable {
     let languageCode: String
     let phone: String?
     let countryCode: String?
+    let pets: [ProfileDataPet]?
     let pet: ProfileDataPet?
 
     init(
         languageCode: String,
         phone: String?,
         countryCode: String?,
-        pet: ProfileDataPet?
+        pets: [ProfileDataPet]? = nil,
+        pet: ProfileDataPet? = nil
     ) {
-        self.schemaVersion = 2
+        self.schemaVersion = pets == nil ? 2 : 3
         self.languageCode = languageCode
         self.phone = phone
         self.countryCode = countryCode
         self.pet = pet
+        self.pets = pets
     }
 
     enum CodingKeys: String, CodingKey {
@@ -36,6 +39,7 @@ struct ProfileDataRequest: Encodable {
         case phone
         case countryCode
         case pet
+        case pets
     }
 
     func encode(
@@ -78,15 +82,12 @@ struct ProfileDataRequest: Encodable {
             )
         }
 
-        if let pet {
-            try container.encode(
-                pet,
-                forKey: .pet
-            )
+        if let pets {
+            try container.encode(pets, forKey: .pets)
+        } else if let pet {
+            try container.encode(pet, forKey: .pet)
         } else {
-            try container.encodeNil(
-                forKey: .pet
-            )
+            try container.encodeNil(forKey: .pet)
         }
     }
 }
@@ -95,6 +96,7 @@ struct ProfileDataRequest: Encodable {
 
 struct ProfileDataPet: Encodable {
 
+    let id: UUID?
     let name: String
     let species: String
     let location: String
@@ -108,7 +110,8 @@ struct ProfileDataPet: Encodable {
     let additionalInstructions: String?
 
     init?(
-        profile: PetProfile
+        profile: PetProfile,
+        includeID: Bool = true
     ) {
         guard let species =
                 profile.species else {
@@ -131,6 +134,7 @@ struct ProfileDataPet: Encodable {
             return nil
         }
 
+        self.id = includeID ? profile.id : nil
         self.name = trimmedName
         self.species = species.rawValue
         self.location = trimmedLocation

@@ -97,6 +97,8 @@
 		29B76CA53021301A00D1D295 /* HeartbeatRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76CA43021301A00D1D295 /* HeartbeatRequestBuilder.swift */; };
 		29B76CA73021304700D1D295 /* HeartbeatAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76CA63021304700D1D295 /* HeartbeatAPIClient.swift */; };
 		29B76CAC302144C000D1D295 /* SeptemberPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B76CAB302144C000D1D295 /* SeptemberPostcardProvider.swift */; };
+		29B788D430856E82001336C0 /* PetCareAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B788D330856E82001336C0 /* PetCareAPIClient.swift */; };
+		29B788D630856E8F001336C0 /* PetCareModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29B788D530856E8F001336C0 /* PetCareModels.swift */; };
 		29BCCCED302A68140027557C /* EmergencyContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BCCCEC302A68140027557C /* EmergencyContact.swift */; };
 		29BCCD01302D9EAF0027557C /* EmergencyContactInviteModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BCCD00302D9EAF0027557C /* EmergencyContactInviteModels.swift */; };
 		29BCCD04302D9F260027557C /* EmergencyContactAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BCCD03302D9F260027557C /* EmergencyContactAPIClient.swift */; };
@@ -224,6 +226,8 @@
 		29B76CA43021301A00D1D295 /* HeartbeatRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartbeatRequestBuilder.swift; sourceTree = "<group>"; };
 		29B76CA63021304700D1D295 /* HeartbeatAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartbeatAPIClient.swift; sourceTree = "<group>"; };
 		29B76CAB302144C000D1D295 /* SeptemberPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeptemberPostcardProvider.swift; sourceTree = "<group>"; };
+		29B788D330856E82001336C0 /* PetCareAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCareAPIClient.swift; sourceTree = "<group>"; };
+		29B788D530856E8F001336C0 /* PetCareModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCareModels.swift; sourceTree = "<group>"; };
 		29BCCCEC302A68140027557C /* EmergencyContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContact.swift; sourceTree = "<group>"; };
 		29BCCD00302D9EAF0027557C /* EmergencyContactInviteModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContactInviteModels.swift; sourceTree = "<group>"; };
 		29BCCD03302D9F260027557C /* EmergencyContactAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContactAPIClient.swift; sourceTree = "<group>"; };
@@ -486,9 +490,12 @@
 		29B76C70301BCFEC00D1D295 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				29BCCCEC302A68140027557C /* EmergencyContact.swift */,
 				29BCCD00302D9EAF0027557C /* EmergencyContactInviteModels.swift */,
+				29B76CA230212FD700D1D295 /* HeartbeatModels.swift */,
+				29BCCCEC302A68140027557C /* EmergencyContact.swift */,
 				29B76C71301BD0B000D1D295 /* HolidayContent.swift */,
+				29B788D530856E8F001336C0 /* PetCareModels.swift */,
+				2988747A3067141800361B7D /* ProfileDataModels.swift */,
 				29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */,
 				29B76C73301BD1F300D1D295 /* SelectedPostcard.swift */,
 			);
@@ -544,18 +551,17 @@
 		29BCCD02302D9F140027557C /* Backend */ = {
 			isa = PBXGroup;
 			children = (
+				29B788D330856E82001336C0 /* PetCareAPIClient.swift */,
 				29887478306713EB00361B7D /* AppInstanceIDProvider..swift */,
 				29CB1C24306ECF63009EB187 /* BackendFailureLogger.swift */,
 				29CB1C2A306ED220009EB187 /* DiagnosticLogShareSheet.swift */,
 				29BCCD03302D9F260027557C /* EmergencyContactAPIClient.swift */,
 				29B76CA63021304700D1D295 /* HeartbeatAPIClient.swift */,
-				29B76CA230212FD700D1D295 /* HeartbeatModels.swift */,
 				29B76CA43021301A00D1D295 /* HeartbeatRequestBuilder.swift */,
-				2988747C3067144900361B7D /* ProfileDataAPIClient.swift */,
 				2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */,
 				29CB1C26306ED142009EB187 /* PendingContactReminderManager.swift */,
 				29CB1C28306ED1D9009EB187 /* PendingContactReminderHost.swift */,
-				2988747A3067141800361B7D /* ProfileDataModels.swift */,
+				2988747C3067144900361B7D /* ProfileDataAPIClient.swift */,
 				2988747E3067146800361B7D /* ProfileDataSyncService.swift */,
 			);
 			path = Backend;
@@ -754,6 +760,7 @@
 				29B76C8F301E9DB300D1D295 /* AugustPostcardProvider.swift in Sources */,
 				29EC86F33006AABE00E16D51 /* MessageComposerView.swift in Sources */,
 				291FE049307A26C200535330 /* SponsoredBeneficiaryRemindersOnboardingView.swift in Sources */,
+				29B788D630856E8F001336C0 /* PetCareModels.swift in Sources */,
 				29CB1C2B306ED220009EB187 /* DiagnosticLogShareSheet.swift in Sources */,
 				291FE04D307A2EC300535330 /* SponsoredBeneficiaryPurchaseView.swift in Sources */,
 				29CD4FAD307CC200009860A6 /* SponsorFormCloseButton.swift in Sources */,
@@ -765,6 +772,7 @@
 				29CB1C27306ED142009EB187 /* PendingContactReminderManager.swift in Sources */,
 				296D4CC730462788000248AD /* AppSoundPlayer.swift in Sources */,
 				29AFFFA03037B6F9007FE955 /* JanuaryPostcardProvider.swift in Sources */,
+				29B788D430856E82001336C0 /* PetCareAPIClient.swift in Sources */,
 				29B76C7E301BF11200D1D295 /* DecemberPostcardProvider.swift in Sources */,
 				29DD590C30350B360067B04F /* OctoberPostcardProvider.swift in Sources */,
 				29CA8E2B2FFEF94500F59ECA /* HolidaySettingsView.swift in Sources */,
@@ -908,7 +916,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 01;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -928,7 +936,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oxana.morninghello;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -952,7 +960,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 39;
+				CURRENT_PROJECT_VERSION = 01;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -972,7 +980,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0;
+				MARKETING_VERSION = 4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.oxana.morninghello;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;

@@ -148,7 +148,9 @@ struct EmergencyContactAPIClient {
                             phone:
                                 contact.phoneDigits,
                             email:
-                                contact.email
+                                contact.email,
+                            messageLanguage: PetCareFeatureFlags.backendV3Enabled
+                                ? contact.messageLanguage.rawValue : nil
                         )
                     }
             )
@@ -289,6 +291,7 @@ private struct ServerContact:
     let lastName: String
     let phone: String
     let email: String
+    let messageLanguage: String?
 }
 
 

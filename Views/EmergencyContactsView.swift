@@ -1160,7 +1160,7 @@ struct EmergencyContactsView: View {
                             HStack(spacing: 10) {
                                 if !deletingContactIDs.isEmpty {
                                     ProgressView()
-                                        .tint(AppAdaptiveColor.secondaryText)
+                                        .tint(.red)
                                 } else {
                                     Image(
                                         systemName:
@@ -1172,14 +1172,8 @@ struct EmergencyContactsView: View {
                                     "Прекратить мониторинг"
                                 )
                             }
-                            .font(
-                                .system(
-                                    .caption,
-                                    design: .rounded
-                                )
-                                .weight(.semibold)
-                            )
-                            .foregroundStyle(AppAdaptiveColor.secondaryText)
+                            .font(.system(size: 18, weight: .bold, design: .rounded))
+                            .foregroundStyle(Color.red)
                             .frame(
                                 maxWidth: .infinity,
                                 alignment: .leading

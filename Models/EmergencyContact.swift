@@ -7,6 +7,20 @@
 
 import Foundation
 
+enum ContactMessageLanguage: String, Codable, CaseIterable, Identifiable {
+    case english = "en"
+    case spanish = "es"
+    case russian = "ru"
+    var id: String { rawValue }
+    var displayName: String {
+        switch self {
+        case .english: return "English"
+        case .spanish: return "Español"
+        case .russian: return "Русский"
+        }
+    }
+}
+
 enum EmergencyContactStatus: String, Codable {
     case pending
     case confirmed
@@ -23,6 +37,7 @@ struct EmergencyContact: Identifiable, Codable {
     var email: String
     var salutation: String
     var status: EmergencyContactStatus
+    var messageLanguage: ContactMessageLanguage
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -32,6 +47,7 @@ struct EmergencyContact: Identifiable, Codable {
         case email
         case salutation
         case status
+        case messageLanguage
     }
 
     init(
@@ -41,7 +57,8 @@ struct EmergencyContact: Identifiable, Codable {
         phoneDigits: String,
         email: String,
         salutation: String = "Уважаемый",
-        status: EmergencyContactStatus = .pending
+        status: EmergencyContactStatus = .pending,
+        messageLanguage: ContactMessageLanguage = .english
     ) {
         self.id = id
         self.name = name
@@ -50,6 +67,7 @@ struct EmergencyContact: Identifiable, Codable {
         self.email = email
         self.salutation = salutation
         self.status = status
+        self.messageLanguage = messageLanguage
     }
 
     init(from decoder: Decoder) throws {
@@ -102,5 +120,9 @@ struct EmergencyContact: Identifiable, Codable {
                 EmergencyContactStatus.self,
                 forKey: .status
             ) ?? .pending
+
+        messageLanguage = try container.decodeIfPresent(
+            ContactMessageLanguage.self, forKey: .messageLanguage
+        ) ?? .english
     }
 }

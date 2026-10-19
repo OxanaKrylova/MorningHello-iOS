@@ -192,14 +192,15 @@ final class ProfileDataSyncService {
             countryCode = nil
         }
 
-        let pet =
-            PetProfileStorage
-                .load()
-                .flatMap {
-                    ProfileDataPet(
-                        profile: $0
-                    )
-                }
+        let allPets = PetProfileStorage.loadAll()
+        let pets = allPets.compactMap { ProfileDataPet(profile: $0) }
+        // Never silently omit an incomplete pet from the server's full-replace array.
+        let canSendV3 = PetCareFeatureFlags.backendV3Enabled &&
+            pets.count == allPets.count &&
+            allPets.count <= PetProfileStorage.maximumPetCount
+        let legacyPet = PetProfileStorage.load().flatMap {
+            ProfileDataPet(profile: $0, includeID: false)
+        }
 
         return ProfileDataRequest(
             languageCode:
@@ -208,8 +209,8 @@ final class ProfileDataSyncService {
                 phone,
             countryCode:
                 countryCode,
-            pet:
-                pet
+            pets: canSendV3 ? pets : nil,
+            pet: canSendV3 ? nil : legacyPet
         )
     }
 }

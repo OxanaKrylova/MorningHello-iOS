@@ -1729,7 +1729,7 @@ struct ContentView: View {
                             utilityActionLabel(
                                 title: selectedLanguage.localized("emergency.home.title"),
                                 subtitle: selectedLanguage.localized("emergency.home.hint"),
-                                artworkName: "icon_EmergencyServices"
+                                artworkName: "icon_SOS"
                             )
                         }
                         .buttonStyle(.plain)

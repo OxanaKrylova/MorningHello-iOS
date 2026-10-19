@@ -96,7 +96,10 @@ enum SubscriptionPaywallMode: Equatable {
         var body: some View {
             NavigationStack {
                 ZStack {
-                    MorningHelloScreenBackground(name: "BG_Subscription")
+                    Image(mode.backgroundImageName(for: selectedLanguage))
+                        .resizable()
+                        .scaledToFill()
+                        .ignoresSafeArea()
                     
                     ScrollView {
                         VStack(spacing: 18) {

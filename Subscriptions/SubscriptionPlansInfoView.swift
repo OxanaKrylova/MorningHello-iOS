@@ -2,9 +2,8 @@
 //  SubscriptionPlansInfoView.swift
 //  MorningHello
 //
-//  Oxana Krylova built this version 20-09-2026
+//  Updated for sponsor plans and revised plan information
 //
-
 
 import SwiftUI
 
@@ -29,20 +28,34 @@ struct SubscriptionPlansInfoView: View {
     
     @State private var expandedSection: InfoSection?
     
+    private let sectionHeaderIconAssetName = "icon_Check-In"
+    
     private var selectedLanguage: AppLanguage {
         AppLanguage(
             rawValue: selectedLanguageCode
         ) ?? .initial
     }
     
-    private var isEnglish: Bool {
-        selectedLanguage == .englishUS
+    private func tr(_ key: String) -> String {
+        let language: String
+        switch selectedLanguage {
+        case .russian: language = "ru"
+        case .englishUS: language = "en"
+        case .spanishLatinAmerica: language = "es"
+        }
+
+        // The translated table must be included in Copy Bundle Resources.
+        // If Xcode has not bundled it, never show a raw localization key.
+        if let path = Bundle.main.path(forResource: language, ofType: "lproj"),
+           let languageBundle = Bundle(path: path) {
+            let translated = languageBundle.localizedString(
+                forKey: key, value: key, table: "Localizable"
+            )
+            if translated != key { return translated }
+        }
+        return SubscriptionPlansFallback.text(key, language: language)
     }
-    
-    private var isSpanish: Bool {
-        selectedLanguage == .spanishLatinAmerica
-    }
-    
+
     private var background: some View {
         MorningHelloScreenBackground(name: "BG_Subscription")
     }
@@ -61,36 +74,29 @@ struct SubscriptionPlansInfoView: View {
                         
                         collapsibleSection(
                             section: .included,
-                            title: text(
-                                ru: "ЧТО ВХОДИТ В ПОДПИСКУ",
-                                en: "WHAT IS INCLUDED"
-                            ),
-                            systemImage: "checkmark.circle.fill"
+                            title: tr("subplans.ui.01")
                         ) {
-                            bulletList(includedFeatures)
+                            VStack(alignment: .leading, spacing: 14) {
+                                bodyText(includedFeaturesIntro)
+                                bulletList(includedFeatures)
+                            }
                         }
                         
-                        if !showsSponsoredPlansOnly { collapsibleSection(
-                            section: .personal,
-                            title: text(
-                                ru: "ПОДПИСКИ ДЛЯ СЕБЯ",
-                                en: "PLANS FOR YOURSELF"
-                            ),
-                            systemImage: "person.fill"
-                        ) {
-                            plansContent(
-                                introduction: nil,
-                                plans: personalPlans
-                            )
-                        } }
+                        if !showsSponsoredPlansOnly {
+                            collapsibleSection(
+                                section: .personal,
+                                title: tr("subplans.ui.02")
+                            ) {
+                                plansContent(
+                                    introduction: nil,
+                                    plans: personalPlans
+                                )
+                            }
+                        }
                         
                         collapsibleSection(
                             section: .lovedOne,
-                            title: text(
-                                ru: "ПОДПИСКИ ДЛЯ БЛИЗКОГО",
-                                en: "PLANS FOR A LOVED ONE"
-                            ),
-                            systemImage: "person.2.fill"
+                            title: tr("subplans.ui.sponsorHeader")
                         ) {
                             plansContent(
                                 introduction: lovedOneIntroduction,
@@ -100,22 +106,14 @@ struct SubscriptionPlansInfoView: View {
                         
                         collapsibleSection(
                             section: .onboarding,
-                            title: text(
-                                ru: "ПЕРСОНАЛЬНАЯ ПОМОЩЬ",
-                                en: "PERSONAL ONBOARDING SUPPORT"
-                            ),
-                            systemImage: "person.crop.circle.badge.checkmark"
+                            title: tr("subplans.ui.04")
                         ) {
                             onboardingSupportContent
                         }
                         
                         collapsibleSection(
                             section: .terms,
-                            title: text(
-                                ru: "УСЛОВИЯ ПОДПИСКИ",
-                                en: "SUBSCRIPTION TERMS"
-                            ),
-                            systemImage: "doc.text.fill"
+                            title: tr("subplans.ui.05")
                         ) {
                             subscriptionTermsContent
                         }
@@ -127,8 +125,8 @@ struct SubscriptionPlansInfoView: View {
             }
             .navigationTitle(
                 showsSponsoredPlansOnly
-                    ? text(ru: "Подписки для близкого", en: "Plans for a Loved One")
-                    : text(ru: "Тарифные планы", en: "Subscription Plans")
+                    ? tr("subplans.ui.sponsorTitle")
+                    : tr("subplans.ui.07")
             )
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -141,10 +139,7 @@ struct SubscriptionPlansInfoView: View {
                         Image(systemName: "xmark")
                     }
                     .accessibilityLabel(
-                        text(
-                            ru: "Закрыть",
-                            en: "Close"
-                        )
+                        tr("subplans.ui.08")
                     )
                 }
             }
@@ -165,10 +160,7 @@ struct SubscriptionPlansInfoView: View {
                 .foregroundStyle(.orange)
                 
                 Text(
-                    text(
-                        ru: "ТАРИФНЫЕ ПЛАНЫ MORNINGHELLO",
-                        en: "MORNINGHELLO SUBSCRIPTION PLANS"
-                    )
+                    tr("subplans.ui.09")
                 )
                 .font(
                     .system(
@@ -183,17 +175,11 @@ struct SubscriptionPlansInfoView: View {
             }
             
             bodyText(
-                text(
-                    ru: "Выберите подписку для себя или оплатите доступ для близкого человека.",
-                    en: "Choose a subscription for yourself or sponsor MorningHello access for a loved one."
-                )
+                tr("subplans.ui.10")
             )
             
             bodyText(
-                text(
-                    ru: "Все тарифные планы открывают одинаковые функции MorningHello. Они отличаются сроком действия подписки, способом её использования и наличием персональной помощи с подключением.",
-                    en: "All plans include the same MorningHello features. They differ in billing period, who receives access, and whether personal onboarding support is included."
-                )
+                tr("subplans.ui.11")
             )
         }
         .infoCard()
@@ -263,52 +249,35 @@ struct SubscriptionPlansInfoView: View {
             alignment: .leading,
             spacing: 14
         ) {
-            Text(
-                text(
-                    ru: "7. Отдельная годовая подписка с персональной помощью",
-                    en: "7. Separate Annual Plan with Setup Support"
+            Text(onboardingSupportPlanTitle)
+                .font(
+                    .system(
+                        .title3,
+                        design: .rounded
+                    )
+                    .weight(.bold)
                 )
-            )
-            .font(
-                .system(
-                    .title3,
-                    design: .rounded
+                .foregroundStyle(
+                    AppAdaptiveColor.text
                 )
-                .weight(.bold)
-            )
-            .foregroundStyle(
-                AppAdaptiveColor.text
+            
+            bodyText(
+                tr("subplans.ui.12")
             )
             
             bodyText(
-                text(
-                    ru: "Полный доступ к MorningHello для одного получателя на один год и одна бесплатная персональная встреча по Zoom или Google Meet продолжительностью до 30 минут.",
-                    en: "Full MorningHello access for one recipient for one year, plus one complimentary personal onboarding session of up to 30 minutes via Zoom or Google Meet."
-                )
-            )
-            
-            bodyText(
-                text(
-                    ru: "Во время встречи мы поможем:",
-                    en: "During the session, we can help the recipient:"
-                )
+                tr("subplans.ui.13")
             )
             .fontWeight(.semibold)
             
             bulletList(onboardingFeatures)
             
             bodyText(
-                text(
-                    ru: "Встреча является бесплатной услугой поддержки. Она не оплачивается отдельно, не является обязательной и не влияет на активацию подписки. Доступ к MorningHello открывается после успешного оформления подписки.",
-                    en: "The onboarding session is a complimentary customer-support service. It is not sold separately, is not required, and does not affect subscription activation. MorningHello access becomes available after the subscription purchase is completed successfully."
-                )
+                tr("subplans.ui.14")
             )
             
             Label(
-                text(
-                    ru: "Во время встречи мы никогда не просим сообщать пароль Apple ID, банковские данные или коды подтверждения.",
-                    en: "We will never ask for an Apple Account password, banking information, or verification codes during the session."
-                ),
+                tr("subplans.ui.15"),
                 systemImage: "lock.shield.fill"
             )
             .font(
@@ -335,10 +304,7 @@ struct SubscriptionPlansInfoView: View {
             }
             
             Label(
-                text(
-                    ru: "MorningHello не является службой экстренной помощи и не заменяет звонок в экстренные службы.",
-                    en: "MorningHello is not an emergency service and does not replace contacting local emergency services."
-                ),
+                tr("subplans.ui.16"),
                 systemImage:
                     "exclamationmark.triangle.fill"
             )
@@ -356,7 +322,6 @@ struct SubscriptionPlansInfoView: View {
     private func collapsibleSection<Content: View>(
         section: InfoSection,
         title: String,
-        systemImage: String,
         @ViewBuilder content: () -> Content
     ) -> some View {
         let isExpanded = expandedSection == section
@@ -375,13 +340,11 @@ struct SubscriptionPlansInfoView: View {
                 }
             } label: {
                 HStack(spacing: 12) {
-                    Image(systemName: systemImage)
-                        .font(
-                            .system(
-                                size: 20,
-                                weight: .semibold
-                            )
-                        )
+                    Image(sectionHeaderIconAssetName)
+                        .resizable()
+                        .renderingMode(.original)
+                        .scaledToFit()
+                        .frame(width: 28, height: 28)
                     
                     Text(title)
                         .font(
@@ -392,6 +355,7 @@ struct SubscriptionPlansInfoView: View {
                             .weight(.bold)
                         )
                         .multilineTextAlignment(.leading)
+                        .foregroundStyle(AppAdaptiveColor.text)
                     
                     Spacer(minLength: 8)
                     
@@ -406,8 +370,8 @@ struct SubscriptionPlansInfoView: View {
                             weight: .bold
                         )
                     )
+                    .foregroundStyle(AppAdaptiveColor.text)
                 }
-                .foregroundStyle(.orange)
                 .padding(.horizontal, 18)
                 .padding(.vertical, 18)
                 .contentShape(Rectangle())
@@ -452,8 +416,8 @@ struct SubscriptionPlansInfoView: View {
         .accessibilityLabel(title)
         .accessibilityValue(
             isExpanded
-            ? text(ru: "Развёрнуто", en: "Expanded")
-            : text(ru: "Свёрнуто", en: "Collapsed")
+            ? tr("subplans.ui.17")
+            : tr("subplans.ui.18")
         )
     }
     
@@ -501,395 +465,48 @@ struct SubscriptionPlansInfoView: View {
         }
     }
     
+    private var includedFeaturesIntro: String { tr("subplans.included.intro") }
+
     private var includedFeatures: [String] {
-        if isEnglish {
-            return [
-                "regular “I’m OK” check-ins;",
-                "a choice of 24, 48, or 72 hours between check-ins;",
-                "server-based monitoring, even when the app is closed;",
-                "alerts to confirmed trusted contacts if a check-in is missed;",
-                "server-confirmed check-in status and a countdown to the next check-in;",
-                "a new daily postcard with a kind message;",
-                "a catalog of seasonal, holiday, and themed postcards;",
-                "the option to add a personal message and send a postcard to someone you care about;",
-                "daily emotional check-ins;",
-                "a monthly emotional check-in calendar;",
-                "supportive wellbeing tips for anxious moments;",
-                "a guided box-breathing exercise."
-            ]
-        }
-        if isSpanish {
-            return [
-                "confirmaciones periódicas «Estoy bien»;",
-                "elección de un intervalo de 24, 48 o 72 horas entre confirmaciones;",
-                "monitoreo del servidor incluso cuando la aplicación está cerrada;",
-                "avisos a los contactos de confianza confirmados si no se realiza una confirmación a tiempo;",
-                "estado de la confirmación aceptada por el servidor y cuenta regresiva hasta la siguiente confirmación;",
-                "una nueva postal diaria con un mensaje amable;",
-                "un catálogo de postales de temporada, festivas y temáticas;",
-                "la posibilidad de añadir un mensaje personal y enviar una postal a un ser querido;",
-                "registro diario del estado emocional;",
-                "calendario mensual del estado emocional;",
-                "consejos de bienestar para momentos de ansiedad;",
-                "ejercicio guiado de respiración cuadrada."
-            ]
-        }
-        return [
-            "регулярная отметка «Я в порядке»;",
-            "выбор периода между отметками: 24, 48 или 72 часа;",
-            "серверный контроль следующей отметки, даже когда приложение закрыто;",
-            "уведомление подтверждённых тревожных контактов, если отметка не поступила вовремя;",
-            "статус принятой сервером отметки и обратный отсчёт до следующей;",
-            "ежедневная открытка с пожеланием;",
-            "каталог сезонных, праздничных и тематических открыток;",
-            "возможность добавить к открытке собственное пожелание и отправить её близким;",
-            "ежедневная оценка эмоционального состояния;",
-            "месячный календарь эмоциональных оценок;",
-            "поддерживающие советы при тревожных состояниях;",
-            "упражнение «Квадрат дыхания»."
-        ]
-    }
-    
-    private var personalPlans:
-    [SubscriptionPlanDescription] {
-        if isEnglish {
-            return [
-                SubscriptionPlanDescription(
-                    number: 1,
-                    title: "1. Monthly Plan",
-                    paragraphs: [
-                        "Full access to all MorningHello features for one month. The subscription renews automatically every month until cancelled.",
-                        "A flexible option for anyone who prefers monthly billing."
-                    ]
-                ),
-                SubscriptionPlanDescription(
-                    number: 2,
-                    title: "2. Three-Month Plan",
-                    paragraphs: [
-                        "Full access to all MorningHello features for three months. The subscription renews automatically every three months until cancelled.",
-                        "A convenient option for anyone who prefers less frequent billing."
-                    ]
-                ),
-                SubscriptionPlanDescription(
-                    number: 3,
-                    title: "3. Annual Plan",
-                    paragraphs: [
-                        "Full access to all MorningHello features for one year. The subscription renews automatically every year until cancelled.",
-                        "Designed for ongoing use and long-term peace of mind for you and your loved ones."
-                    ]
-                )
-            ]
-        }
-        if isSpanish {
-            return [
-                SubscriptionPlanDescription(
-                    number: 1,
-                    title: "1. Suscripción mensual",
-                    paragraphs: [
-                        "Acceso completo a todas las funciones de MorningHello durante un mes. La suscripción se renueva automáticamente cada mes hasta que la canceles.",
-                        "Una opción flexible si prefieres pagar mensualmente."
-                    ]
-                ),
-                SubscriptionPlanDescription(
-                    number: 2,
-                    title: "2. Suscripción de 3 meses",
-                    paragraphs: [
-                        "Acceso completo a todas las funciones de MorningHello durante tres meses. La suscripción se renueva automáticamente cada tres meses hasta que la canceles.",
-                        "Una opción cómoda si prefieres realizar los pagos con menos frecuencia."
-                    ]
-                ),
-                SubscriptionPlanDescription(
-                    number: 3,
-                    title: "3. Suscripción anual",
-                    paragraphs: [
-                        "Acceso completo a todas las funciones de MorningHello durante un año. La suscripción se renueva automáticamente cada año hasta que la canceles.",
-                        "Una opción pensada para el uso continuo y la tranquilidad a largo plazo para ti y tus seres queridos."
-                    ]
-                )
-            ]
-        }
-        return [
-            SubscriptionPlanDescription(
-                number: 1,
-                title: "1. Ежемесячная подписка",
-                paragraphs: [
-                    "Полный доступ ко всем функциям MorningHello на один месяц. Подписка автоматически продлевается каждый месяц, пока вы её не отмените.",
-                    "Подходит, если вы хотите оплачивать MorningHello помесячно."
-                ]
-            ),
-            SubscriptionPlanDescription(
-                number: 2,
-                title: "2. Подписка на 3 месяца",
-                paragraphs: [
-                    "Полный доступ ко всем функциям MorningHello на три месяца. Подписка автоматически продлевается каждые три месяца, пока вы её не отмените.",
-                    "Подходит, если вы хотите оплачивать приложение реже и пользоваться им без ежемесячного продления."
-                ]
-            ),
-            SubscriptionPlanDescription(
-                number: 3,
-                title: "3. Годовая подписка",
-                paragraphs: [
-                    "Полный доступ ко всем функциям MorningHello на один год. Подписка автоматически продлевается ежегодно, пока вы её не отмените.",
-                    "Подходит для постоянного использования MorningHello и долгосрочной связи с близкими."
-                ]
-            )
-        ]
-    }
-    
-    private var lovedOneIntroduction: [String] {
-        if isEnglish {
-            return [
-                "These plans let you pay for MorningHello access for an older parent or another loved one.",
-                "The sponsor prepares an invitation and may prefill the beneficiary's details. The beneficiary accepts the invitation on their iPhone; existing local data is not overwritten.",
-                "Each subscription is for one beneficiary. The sponsor manages payments, while the beneficiary controls their own check-ins and personal information."
-            ]
-        }
-        if isSpanish {
-            return [
-                "Estos planes permiten pagar el acceso a MorningHello de un familiar mayor u otro ser querido.",
-                "Quien patrocina prepara una invitación y puede completar los datos iniciales. La persona beneficiaria acepta la invitación en su iPhone; sus datos existentes no se sobrescriben.",
-                "Cada suscripción es para una persona beneficiaria. Quien patrocina administra los pagos y la persona beneficiaria controla sus registros y datos personales."
-            ]
-        }
-        return [
-            "Эти планы позволяют оплатить MorningHello для пожилого родителя или другого близкого человека.",
-            "Спонсор готовит приглашение и может предварительно заполнить данные. Подопечный принимает приглашение на своём iPhone; существующие локальные данные не перезаписываются.",
-            "Одна подписка предназначена для одного подопечного. Спонсор управляет оплатой, а подопечный — своими отметками и личными данными."
-        ]
+        (1...18).map { tr(String(format: "subplans.included.%02d", $0)) }
     }
 
-    private var sponsoredPlans:
-    [SubscriptionPlanDescription] {
-        if isEnglish {
-            return [
-                SubscriptionPlanDescription(
-                    number: 4,
-                    title: "4. Monthly Plan for a Loved One",
-                    paragraphs: [
-                        "Full MorningHello access for one recipient for one month. The subscription renews automatically every month until cancelled by the purchaser."
-                    ]
-                ),
-                SubscriptionPlanDescription(
-                    number: 5,
-                    title: "5. Three-Month Plan for a Loved One",
-                    paragraphs: [
-                        "Full MorningHello access for one recipient for three months. The subscription renews automatically every three months until cancelled by the purchaser."
-                    ]
-                ),
-                SubscriptionPlanDescription(
-                    number: 6,
-                    title: "6. Annual Plan for a Loved One",
-                    paragraphs: [
-                        "Full MorningHello access for one recipient for one year. The subscription renews automatically every year until cancelled by the purchaser."
-                    ]
-                ),
-                SubscriptionPlanDescription(
-                    number: 7,
-                    title: "7. Annual Access for a Loved One with Setup Support",
-                    paragraphs: [
-                        "One year of MorningHello access for one recipient, plus one complimentary personal setup session of up to 30 minutes via Zoom or Google Meet."
-                    ]
-                )
-            ]
+    private var personalPlans: [SubscriptionPlanDescription] {
+        (1...3).map { plan in
+            SubscriptionPlanDescription(
+                number: plan,
+                title: tr("subplans.personal.\(plan).title"),
+                paragraphs: (1...2).map { tr("subplans.personal.\(plan).description.\($0)") }
+            )
         }
-        if isSpanish {
-            return [
-                SubscriptionPlanDescription(
-                    number: 4,
-                    title: "4. Suscripción mensual para un ser querido",
-                    paragraphs: [
-                        "Acceso completo a MorningHello para una persona durante un mes. La suscripción se renueva automáticamente cada mes hasta que quien paga la cancele."
-                    ]
-                ),
-                SubscriptionPlanDescription(
-                    number: 5,
-                    title: "5. Suscripción de 3 meses para un ser querido",
-                    paragraphs: [
-                        "Acceso completo a MorningHello para una persona durante tres meses. La suscripción se renueva automáticamente cada tres meses hasta que quien paga la cancele."
-                    ]
-                ),
-                SubscriptionPlanDescription(
-                    number: 6,
-                    title: "6. Suscripción anual para un ser querido",
-                    paragraphs: [
-                        "Acceso completo a MorningHello para una persona durante un año. La suscripción se renueva automáticamente cada año hasta que quien paga la cancele."
-                    ]
-                ),
-                SubscriptionPlanDescription(
-                    number: 7,
-                    title: "7. Acceso anual para un ser querido con ayuda para la configuración",
-                    paragraphs: [
-                        "Un año de acceso a MorningHello para una persona y una sesión gratuita de ayuda para la configuración de hasta 30 minutos por Zoom o Google Meet."
-                    ]
-                )
-            ]
-        }
-        return [
-            SubscriptionPlanDescription(
-                number: 4,
-                title: "4. Ежемесячная подписка для близкого",
-                paragraphs: [
-                    "Полный доступ к MorningHello для одного получателя на один месяц. Подписка автоматически продлевается каждый месяц, пока плательщик её не отменит."
-                ]
-            ),
-            SubscriptionPlanDescription(
-                number: 5,
-                title: "5. Подписка для близкого на 3 месяца",
-                paragraphs: [
-                    "Полный доступ к MorningHello для одного получателя на три месяца. Подписка автоматически продлевается каждые три месяца, пока плательщик её не отменит."
-                ]
-            ),
-            SubscriptionPlanDescription(
-                number: 6,
-                title: "6. Годовая подписка для близкого",
-                paragraphs: [
-                    "Полный доступ к MorningHello для одного получателя на один год. Подписка автоматически продлевается ежегодно, пока плательщик её не отменит."
-                ]
-            ),
-                SubscriptionPlanDescription(
-                    number: 7,
-                    title: "7. Годовой доступ для близкого с помощью в настройке",
-                    paragraphs: [
-                        "Годовой доступ к MorningHello для одного получателя и одна бесплатная персональная встреча до 30 минут по Zoom или Google Meet."
-                    ]
-                )
-        ]
     }
-    
+
+    private var lovedOneIntroduction: [String] {
+        (1...3).map { tr("subplans.sponsor.intro.\($0)") }
+    }
+
+    private var sponsoredPlans: [SubscriptionPlanDescription] {
+        (1...3).map { plan in
+            SubscriptionPlanDescription(
+                number: plan + 3,
+                title: tr("subplans.sponsor.\(plan).title"),
+                paragraphs: [tr("subplans.sponsor.\(plan).description.1")]
+            )
+        }
+    }
+
+    private var onboardingSupportPlanTitle: String {
+        tr("subplans.ui.supportTitle")
+    }
+
     private var onboardingFeatures: [String] {
-        if isEnglish {
-            return [
-                "complete the installation and first launch of MorningHello;",
-                "set up their profile;",
-                "add trusted contacts;",
-                "select a check-in interval;",
-                "complete the first check-in;",
-                "understand the monitoring status and countdown;",
-                "learn how to use postcards, emotional check-ins, and the box-breathing exercise."
-            ]
-        }
-        if isSpanish {
-            return [
-                "completar la instalación y el primer inicio de MorningHello;",
-                "configurar su perfil;",
-                "añadir contactos de confianza;",
-                "elegir el intervalo entre confirmaciones;",
-                "realizar la primera confirmación;",
-                "comprender el estado del monitoreo y la cuenta regresiva;",
-                "aprender a utilizar las postales, los registros emocionales y el ejercicio de respiración cuadrada."
-            ]
-        }
-        return [
-            "пройти установку и первый запуск MorningHello;",
-            "заполнить профиль;",
-            "добавить тревожные контакты;",
-            "выбрать период отметок;",
-            "выполнить первую отметку;",
-            "разобраться со статусом мониторинга и обратным отсчётом;",
-            "научиться пользоваться открытками, эмоциональными оценками и квадратом дыхания."
-        ]
+        (1...7).map { tr(String(format: "subplans.support.feature.%02d", $0)) }
     }
-    
+
     private var subscriptionTerms: [String] {
-        if isEnglish {
-            return [
-                "The actual price of each plan is displayed by the App Store before purchase and may vary by country or region.",
-                "If a free introductory period is available for a selected plan, the App Store will display its terms before purchase. Eligibility for introductory offers is determined by Apple.",
-                "Payment is charged to the purchaser’s Apple Account. The subscription renews automatically unless it is cancelled in the Apple Account subscription settings before the next renewal date.",
-                "After cancellation, access remains available until the end of the already paid subscription period."
-            ]
-        }
-        if isSpanish {
-            return [
-                "El precio real de cada plan se muestra en App Store antes de confirmar la compra y puede variar según el país o la región.",
-                "Si el plan seleccionado ofrece un período introductorio gratuito, App Store mostrará sus condiciones antes de la compra. Apple determina quién puede utilizar las ofertas introductorias.",
-                "El pago se carga a la cuenta de Apple de quien realiza la compra. La suscripción se renueva automáticamente, salvo que se cancele en la configuración de suscripciones de Apple antes de la siguiente fecha de renovación.",
-                "Después de la cancelación, el acceso se mantiene hasta el final del período ya pagado. La suscripción puede administrarse desde la configuración de la cuenta de Apple."
-            ]
-        }
-        return [
-            "Фактическая стоимость каждого плана отображается App Store перед подтверждением покупки и может отличаться в зависимости от страны или региона.",
-            "Если для выбранного плана доступен бесплатный ознакомительный период, App Store покажет его условия перед оформлением. Право на ознакомительное предложение определяется Apple.",
-            "Оплата списывается с Apple Account плательщика. Подписка продлевается автоматически, если её не отменить в настройках Apple до даты следующего продления.",
-            "После отмены доступ сохраняется до окончания уже оплаченного периода. Управлять подпиской можно в настройках Apple Account."
-        ]
+        (1...4).map { tr(String(format: "subplans.terms.paragraph.%02d", $0)) }
     }
-    
-    private func text(
-        ru: String,
-        en: String
-    ) -> String {
-        
-        if isEnglish {
-            return en
-        }
-        
-        if isSpanish {
-            switch ru {
-            case "ЧТО ВХОДИТ В ПОДПИСКУ":
-                return "QUÉ INCLUYE LA SUSCRIPCIÓN"
-                
-            case "ПОДПИСКИ ДЛЯ СЕБЯ":
-                return "PLANES PARA TI"
-                
-            case "ПОДПИСКИ ДЛЯ БЛИЗКОГО":
-                return "PLANES PARA UN SER QUERIDO"
-                
-            case "ПЕРСОНАЛЬНАЯ ПОМОЩЬ":
-                return "ASISTENCIA PERSONAL"
-                
-            case "УСЛОВИЯ ПОДПИСКИ":
-                return "CONDICIONES DE SUSCRIPCIÓN"
-                
-            case "Тарифные планы":
-                return "Planes de suscripción"
-            case "Подписки для близкого":
-                return "Planes para un ser querido"
-                
-            case "Закрыть":
-                return "Cerrar"
-                
-            case "ТАРИФНЫЕ ПЛАНЫ MORNINGHELLO":
-                return "PLANES DE SUSCRIPCIÓN DE MORNINGHELLO"
-                
-            case "Выберите подписку для себя или оплатите доступ для близкого человека.":
-                return "Elige una suscripción para ti o paga el acceso de un ser querido."
-                
-            case "Все тарифные планы открывают одинаковые функции MorningHello. Они отличаются сроком действия подписки, способом её использования и наличием персональной помощи с подключением.":
-                return "Todos los planes incluyen las mismas funciones de MorningHello. Se diferencian por la duración de la suscripción, la forma de uso y la disponibilidad de ayuda personalizada para la configuración."
-                
-            case "7. Отдельная годовая подписка с персональной помощью":
-                return "7. Acceso anual para un ser querido con ayuda para la configuración"
-                
-            case "Полный доступ к MorningHello для одного получателя на один год и одна бесплатная персональная встреча по Zoom или Google Meet продолжительностью до 30 минут.":
-                return "Acceso completo a MorningHello para una persona durante un año y una sesión personal gratuita de hasta 30 minutos por Zoom o Google Meet."
-                
-            case "Во время встречи мы поможем:":
-                return "Durante la sesión ayudaremos a la persona a:"
-                
-            case "Встреча является бесплатной услугой поддержки. Она не оплачивается отдельно, не является обязательной и не влияет на активацию подписки. Доступ к MorningHello открывается после успешного оформления подписки.":
-                return "La sesión es un servicio gratuito de asistencia. No se cobra por separado, no es obligatoria y no afecta la activación de la suscripción. El acceso a MorningHello se activa después de completar correctamente la compra."
-                
-            case "Во время встречи мы никогда не просим сообщать пароль Apple ID, банковские данные или коды подтверждения.":
-                return "Durante la sesión nunca solicitaremos la contraseña de tu Apple ID, datos bancarios ni códigos de verificación."
-                
-            case "MorningHello не является службой экстренной помощи и не заменяет звонок в экстренные службы.":
-                return "MorningHello no es un servicio de emergencia y no sustituye una llamada a los servicios de emergencia locales."
-                
-            case "Развёрнуто":
-                return "Expandido"
-                
-            case "Свёрнуто":
-                return "Contraído"
-                
-            default:
-                return en
-            }
-        }
-        
-        return ru
-    }
-    
+
     private struct SubscriptionPlanDescription:
         Identifiable {
         
@@ -902,6 +519,7 @@ struct SubscriptionPlansInfoView: View {
         }
     }
 }
+
 private extension View {
 
     func infoCard() -> some View {
@@ -927,4 +545,231 @@ private extension View {
                 y: 3
             )
     }
+}
+
+// Built-in fallback is a safety net for an incorrectly bundled .strings file.
+// Maintain the .strings files as the source of truth for translations.
+private enum SubscriptionPlansFallback {
+    static func text(_ key: String, language: String) -> String {
+        let entries: [String: String]
+        switch language {
+        case "ru": entries = russian
+        case "es": entries = spanish
+        default: entries = english
+        }
+        return entries[key] ?? english[key] ?? key
+    }
+    private static let russian: [String: String] = [
+        "subplans.included.01": "регулярные отметки «Я в порядке»;",
+        "subplans.included.02": "выбор интервала между отметками: 24, 48 или 72 часа;",
+        "subplans.included.03": "серверный мониторинг, даже когда приложение закрыто;",
+        "subplans.included.04": "уведомления подтверждённым тревожным контактам, если отметка пропущена;",
+        "subplans.included.05": "подтверждение успешной отправки отметки на сервер;",
+        "subplans.included.06": "обратный отсчёт до следующей отметки;",
+        "subplans.included.07": "новую ежедневную открытку с тёплым пожеланием;",
+        "subplans.included.08": "коллекцию сезонных, праздничных и тематических открыток;",
+        "subplans.included.09": "возможность добавить личное пожелание на открытку;",
+        "subplans.included.10": "отправку открыток через совместимые приложения, установленные на iPhone;",
+        "subplans.included.11": "ежедневные эмоциональные отметки;",
+        "subplans.included.12": "календарь эмоций со статистикой спокойных дней за месяц;",
+        "subplans.included.13": "поддерживающие советы для тревожных моментов;",
+        "subplans.included.14": "дыхательное упражнение «Квадрат дыхания»;",
+        "subplans.included.15": "каталог экстренных и специализированных служб по странам, а для США – по штатам;",
+        "subplans.included.16": "ведение личных напоминаний и их отображение на ежедневной открытке;",
+        "subplans.included.17": "синхронизацию напоминаний с календарями iPhone;",
+        "subplans.included.18": "подробные профили до двух питомцев: местонахождение, кормление, лекарства, особенности здоровья и поведения, контакты ветеринарной клиники и другие сведения об уходе.",
+        "subplans.included.intro": "Каждый тарифный план включает:",
+        "subplans.personal.1.description.1": "Полный доступ ко всем функциям MorningHello на один месяц. Подписка автоматически продлевается каждый месяц, пока вы её не отмените.",
+        "subplans.personal.1.description.2": "Подходит, если вы хотите оплачивать MorningHello помесячно.",
+        "subplans.personal.1.title": "Ежемесячная подписка",
+        "subplans.personal.2.description.1": "Полный доступ ко всем функциям MorningHello на три месяца. Подписка автоматически продлевается каждые три месяца, пока вы её не отмените.",
+        "subplans.personal.2.description.2": "Подходит, если вы хотите оплачивать приложение реже и пользоваться им без ежемесячного продления.",
+        "subplans.personal.2.title": "Подписка на 3 месяца",
+        "subplans.personal.3.description.1": "Полный доступ ко всем функциям MorningHello на один год. Подписка автоматически продлевается ежегодно, пока вы её не отмените.",
+        "subplans.personal.3.description.2": "Подходит для постоянного использования MorningHello и долгосрочной связи с близкими.",
+        "subplans.personal.3.title": "Годовая подписка",
+        "subplans.sponsor.1.description.1": "Полный доступ к MorningHello для одного получателя на один месяц. Подписка автоматически продлевается каждый месяц, пока плательщик её не отменит.",
+        "subplans.sponsor.1.title": "Ежемесячная подписка для близкого",
+        "subplans.sponsor.2.description.1": "Полный доступ к MorningHello для одного получателя на три месяца. Подписка автоматически продлевается каждые три месяца, пока плательщик её не отменит.",
+        "subplans.sponsor.2.title": "Подписка для близкого на 3 месяца",
+        "subplans.sponsor.3.description.1": "Полный доступ к MorningHello для одного получателя на один год. Подписка автоматически продлевается ежегодно, пока плательщик её не отменит.",
+        "subplans.sponsor.3.title": "Годовая подписка для близкого",
+        "subplans.sponsor.intro.1": "Эти планы позволяют оплатить MorningHello для пожилого родителя или другого близкого человека.",
+        "subplans.sponsor.intro.2": "Спонсор готовит приглашение и может предварительно заполнить данные. Подопечный принимает приглашение на своём iPhone; существующие локальные данные не перезаписываются.",
+        "subplans.sponsor.intro.3": "Одна подписка предназначена для одного подопечного. Спонсор управляет оплатой, а подопечный — своими отметками и личными данными.",
+        "subplans.support.feature.01": "пройти установку и первый запуск MorningHello;",
+        "subplans.support.feature.02": "заполнить профиль;",
+        "subplans.support.feature.03": "добавить тревожные контакты;",
+        "subplans.support.feature.04": "выбрать период отметок;",
+        "subplans.support.feature.05": "выполнить первую отметку;",
+        "subplans.support.feature.06": "разобраться со статусом мониторинга и обратным отсчётом;",
+        "subplans.support.feature.07": "научиться пользоваться открытками, эмоциональными оценками и квадратом дыхания.",
+        "subplans.terms.paragraph.01": "Фактическая стоимость каждого плана отображается App Store перед подтверждением покупки и может отличаться в зависимости от страны или региона.",
+        "subplans.terms.paragraph.02": "Если для выбранного плана доступен бесплатный ознакомительный период, App Store покажет его условия перед оформлением. Право на ознакомительное предложение определяется Apple.",
+        "subplans.terms.paragraph.03": "Оплата списывается с Apple Account плательщика. Подписка продлевается автоматически, если её не отменить в настройках Apple до даты следующего продления.",
+        "subplans.terms.paragraph.04": "После отмены доступ сохраняется до окончания уже оплаченного периода. Управлять подпиской можно в настройках Apple Account.",
+        "subplans.ui.01": "ЧТО ВХОДИТ В ПОДПИСКУ",
+        "subplans.ui.02": "ПОДПИСКИ ДЛЯ СЕБЯ",
+        "subplans.ui.03": "СПОНСОРСКИЕ ПЛАНЫ",
+        "subplans.ui.04": "ПЕРСОНАЛЬНАЯ ПОМОЩЬ",
+        "subplans.ui.05": "УСЛОВИЯ ПОДПИСКИ",
+        "subplans.ui.06": "Спонсорские планы",
+        "subplans.ui.07": "Тарифные планы",
+        "subplans.ui.08": "Закрыть",
+        "subplans.ui.09": "ТАРИФНЫЕ ПЛАНЫ MORNINGHELLO",
+        "subplans.ui.10": "Выберите подписку для себя или оплатите доступ для близкого человека.",
+        "subplans.ui.11": "Все тарифные планы открывают одинаковые функции MorningHello. Они отличаются сроком действия подписки, способом её использования и наличием персональной помощи с подключением.",
+        "subplans.ui.12": "Полный доступ к MorningHello для одного получателя на один год и одна бесплатная персональная встреча по Zoom или Google Meet продолжительностью до 30 минут.",
+        "subplans.ui.13": "Во время встречи мы поможем:",
+        "subplans.ui.14": "Встреча является бесплатной услугой поддержки. Она не оплачивается отдельно, не является обязательной и не влияет на активацию подписки. Доступ к MorningHello открывается после успешного оформления подписки.",
+        "subplans.ui.15": "Во время встречи мы никогда не просим сообщать пароль Apple ID, банковские данные или коды подтверждения.",
+        "subplans.ui.16": "MorningHello не является службой экстренной помощи и не заменяет звонок в экстренные службы.",
+        "subplans.ui.17": "Развёрнуто",
+        "subplans.ui.18": "Свёрнуто",
+        "subplans.ui.sponsorHeader": "СПОНСОРСКИЕ ПЛАНЫ",
+        "subplans.ui.sponsorTitle": "Спонсорские планы",
+        "subplans.ui.supportTitle": "Годовой доступ для близкого с помощью в настройке",
+    ]
+    private static let english: [String: String] = [
+        "subplans.included.01": "regular “I’m OK” check-ins;",
+        "subplans.included.02": "a choice of 24, 48, or 72 hours between check-ins;",
+        "subplans.included.03": "server-based monitoring, even when the app is closed;",
+        "subplans.included.04": "notifications to confirmed emergency contacts if a check-in is missed;",
+        "subplans.included.05": "server-confirmed check-in status;",
+        "subplans.included.06": "a countdown to the next check-in;",
+        "subplans.included.07": "a new daily postcard with a kind message;",
+        "subplans.included.08": "a collection of seasonal, holiday, and themed postcards;",
+        "subplans.included.09": "the option to add a personal message to a postcard;",
+        "subplans.included.10": "the ability to share postcards through compatible apps installed on the iPhone;",
+        "subplans.included.11": "daily emotional check-ins;",
+        "subplans.included.12": "an emotional calendar with monthly statistics on calm days;",
+        "subplans.included.13": "supportive wellbeing tips for anxious moments;",
+        "subplans.included.14": "a guided box breathing exercise;",
+        "subplans.included.15": "a directory of emergency and specialized services by country and, in the United States, by state;",
+        "subplans.included.16": "personal reminders displayed on the daily postcard;",
+        "subplans.included.17": "synchronization of reminders with iPhone calendars;",
+        "subplans.included.18": "detailed profiles for up to two pets, including their location, feeding instructions, medications, health needs, behavior, veterinary contacts, and other care information.",
+        "subplans.included.intro": "Every subscription plan includes:",
+        "subplans.personal.1.description.1": "Full access to all MorningHello features for one month. The subscription renews automatically every month until cancelled.",
+        "subplans.personal.1.description.2": "A flexible option for anyone who prefers monthly billing.",
+        "subplans.personal.1.title": "Monthly Plan",
+        "subplans.personal.2.description.1": "Full access to all MorningHello features for three months. The subscription renews automatically every three months until cancelled.",
+        "subplans.personal.2.description.2": "A convenient option for anyone who prefers less frequent billing.",
+        "subplans.personal.2.title": "Three-Month Plan",
+        "subplans.personal.3.description.1": "Full access to all MorningHello features for one year. The subscription renews automatically every year until cancelled.",
+        "subplans.personal.3.description.2": "Designed for ongoing use and long-term peace of mind for you and your loved ones.",
+        "subplans.personal.3.title": "Annual Plan",
+        "subplans.sponsor.1.description.1": "Full MorningHello access for one recipient for one month. The subscription renews automatically every month until cancelled by the purchaser.",
+        "subplans.sponsor.1.title": "Monthly Plan for a Loved One",
+        "subplans.sponsor.2.description.1": "Full MorningHello access for one recipient for three months. The subscription renews automatically every three months until cancelled by the purchaser.",
+        "subplans.sponsor.2.title": "Three-Month Plan for a Loved One",
+        "subplans.sponsor.3.description.1": "Full MorningHello access for one recipient for one year. The subscription renews automatically every year until cancelled by the purchaser.",
+        "subplans.sponsor.3.title": "Annual Plan for a Loved One",
+        "subplans.sponsor.intro.1": "These plans let you pay for MorningHello access for an older parent or another loved one.",
+        "subplans.sponsor.intro.2": "The sponsor prepares an invitation and may prefill the beneficiary's details. The beneficiary accepts the invitation on their iPhone; existing local data is not overwritten.",
+        "subplans.sponsor.intro.3": "Each subscription is for one beneficiary. The sponsor manages payments, while the beneficiary controls their own check-ins and personal information.",
+        "subplans.support.feature.01": "complete the installation and first launch of MorningHello;",
+        "subplans.support.feature.02": "set up their profile;",
+        "subplans.support.feature.03": "add trusted contacts;",
+        "subplans.support.feature.04": "select a check-in interval;",
+        "subplans.support.feature.05": "complete the first check-in;",
+        "subplans.support.feature.06": "understand the monitoring status and countdown;",
+        "subplans.support.feature.07": "learn how to use postcards, emotional check-ins, and the box-breathing exercise.",
+        "subplans.terms.paragraph.01": "The actual price of each plan is displayed by the App Store before purchase and may vary by country or region.",
+        "subplans.terms.paragraph.02": "If a free introductory period is available for a selected plan, the App Store will display its terms before purchase. Eligibility for introductory offers is determined by Apple.",
+        "subplans.terms.paragraph.03": "Payment is charged to the purchaser’s Apple Account. The subscription renews automatically unless it is cancelled in the Apple Account subscription settings before the next renewal date.",
+        "subplans.terms.paragraph.04": "After cancellation, access remains available until the end of the already paid subscription period.",
+        "subplans.ui.01": "WHAT IS INCLUDED",
+        "subplans.ui.02": "PLANS FOR YOURSELF",
+        "subplans.ui.03": "SPONSOR PLANS",
+        "subplans.ui.04": "PERSONAL ONBOARDING SUPPORT",
+        "subplans.ui.05": "SUBSCRIPTION TERMS",
+        "subplans.ui.06": "Sponsor Plans",
+        "subplans.ui.07": "Subscription Plans",
+        "subplans.ui.08": "Close",
+        "subplans.ui.09": "MORNINGHELLO SUBSCRIPTION PLANS",
+        "subplans.ui.10": "Choose a subscription for yourself or sponsor MorningHello access for a loved one.",
+        "subplans.ui.11": "All plans include the same MorningHello features. They differ in billing period, who receives access, and whether personal onboarding support is included.",
+        "subplans.ui.12": "Full MorningHello access for one recipient for one year, plus one complimentary personal onboarding session of up to 30 minutes via Zoom or Google Meet.",
+        "subplans.ui.13": "During the session, we can help the recipient:",
+        "subplans.ui.14": "The onboarding session is a complimentary customer-support service. It is not sold separately, is not required, and does not affect subscription activation. MorningHello access becomes available after the subscription purchase is completed successfully.",
+        "subplans.ui.15": "We will never ask for an Apple Account password, banking information, or verification codes during the session.",
+        "subplans.ui.16": "MorningHello is not an emergency service and does not replace contacting local emergency services.",
+        "subplans.ui.17": "Expanded",
+        "subplans.ui.18": "Collapsed",
+        "subplans.ui.sponsorHeader": "SPONSOR PLANS",
+        "subplans.ui.sponsorTitle": "Sponsor Plans",
+        "subplans.ui.supportTitle": "Annual Access for a Loved One with Setup Support",
+    ]
+    private static let spanish: [String: String] = [
+        "subplans.included.01": "confirmaciones periódicas de “Estoy bien”;",
+        "subplans.included.02": "intervalos de 24, 48 o 72 horas entre confirmaciones;",
+        "subplans.included.03": "seguimiento desde el servidor, incluso cuando la app está cerrada;",
+        "subplans.included.04": "notificaciones a los contactos de emergencia confirmados si no se realiza una confirmación a tiempo;",
+        "subplans.included.05": "confirmación de que el servidor recibió la actualización;",
+        "subplans.included.06": "una cuenta regresiva hasta la próxima confirmación;",
+        "subplans.included.07": "una nueva postal diaria con un mensaje cálido;",
+        "subplans.included.08": "una colección de postales de temporada, celebraciones y diferentes temas;",
+        "subplans.included.09": "la opción de agregar un mensaje personal a una postal;",
+        "subplans.included.10": "la posibilidad de compartir postales mediante aplicaciones compatibles instaladas en el iPhone;",
+        "subplans.included.11": "un registro diario del estado emocional;",
+        "subplans.included.12": "un calendario emocional con estadísticas mensuales de los días de calma;",
+        "subplans.included.13": "consejos de bienestar para los momentos de ansiedad;",
+        "subplans.included.14": "un ejercicio guiado de respiración en caja;",
+        "subplans.included.15": "un directorio de servicios de emergencia y especializados por país y, en Estados Unidos, por estado;",
+        "subplans.included.16": "recordatorios personales que se muestran en la postal del día;",
+        "subplans.included.17": "sincronización de recordatorios con los calendarios del iPhone;",
+        "subplans.included.18": "perfiles detallados de hasta dos mascotas, con su ubicación, instrucciones de alimentación, medicamentos, necesidades de salud, comportamiento, contactos veterinarios y otros datos para su cuidado.",
+        "subplans.included.intro": "Todos los planes de suscripción incluyen:",
+        "subplans.personal.1.description.1": "Acceso completo a todas las funciones de MorningHello durante un mes. La suscripción se renueva automáticamente cada mes hasta que la canceles.",
+        "subplans.personal.1.description.2": "Una opción flexible si prefieres pagar mensualmente.",
+        "subplans.personal.1.title": "Suscripción mensual",
+        "subplans.personal.2.description.1": "Acceso completo a todas las funciones de MorningHello durante tres meses. La suscripción se renueva automáticamente cada tres meses hasta que la canceles.",
+        "subplans.personal.2.description.2": "Una opción cómoda si prefieres realizar los pagos con menos frecuencia.",
+        "subplans.personal.2.title": "Suscripción de 3 meses",
+        "subplans.personal.3.description.1": "Acceso completo a todas las funciones de MorningHello durante un año. La suscripción se renueva automáticamente cada año hasta que la canceles.",
+        "subplans.personal.3.description.2": "Una opción pensada para el uso continuo y la tranquilidad a largo plazo para ti y tus seres queridos.",
+        "subplans.personal.3.title": "Suscripción anual",
+        "subplans.sponsor.1.description.1": "Acceso completo a MorningHello para una persona durante un mes. La suscripción se renueva automáticamente cada mes hasta que quien paga la cancele.",
+        "subplans.sponsor.1.title": "Plan mensual para un ser querido",
+        "subplans.sponsor.2.description.1": "Acceso completo a MorningHello para una persona durante tres meses. La suscripción se renueva automáticamente cada tres meses hasta que quien paga la cancele.",
+        "subplans.sponsor.2.title": "Plan trimestral para un ser querido",
+        "subplans.sponsor.3.description.1": "Acceso completo a MorningHello para una persona durante un año. La suscripción se renueva automáticamente cada año hasta que quien paga la cancele.",
+        "subplans.sponsor.3.title": "Plan anual para un ser querido",
+        "subplans.sponsor.intro.1": "Estos planes permiten pagar el acceso a MorningHello de un familiar mayor u otro ser querido.",
+        "subplans.sponsor.intro.2": "Quien patrocina prepara una invitación y puede completar los datos iniciales. La persona beneficiaria acepta la invitación en su iPhone; sus datos existentes no se sobrescriben.",
+        "subplans.sponsor.intro.3": "Cada suscripción es para una persona beneficiaria. Quien patrocina administra los pagos y la persona beneficiaria controla sus registros y datos personales.",
+        "subplans.support.feature.01": "completar la instalación y el primer inicio de MorningHello;",
+        "subplans.support.feature.02": "configurar su perfil;",
+        "subplans.support.feature.03": "añadir contactos de confianza;",
+        "subplans.support.feature.04": "elegir el intervalo entre confirmaciones;",
+        "subplans.support.feature.05": "realizar la primera confirmación;",
+        "subplans.support.feature.06": "comprender el estado del monitoreo y la cuenta regresiva;",
+        "subplans.support.feature.07": "aprender a utilizar las postales, los registros emocionales y el ejercicio de respiración cuadrada.",
+        "subplans.terms.paragraph.01": "El precio real de cada plan se muestra en App Store antes de confirmar la compra y puede variar según el país o la región.",
+        "subplans.terms.paragraph.02": "Si el plan seleccionado ofrece un período introductorio gratuito, App Store mostrará sus condiciones antes de la compra. Apple determina quién puede utilizar las ofertas introductorias.",
+        "subplans.terms.paragraph.03": "El pago se carga a la cuenta de Apple de quien realiza la compra. La suscripción se renueva automáticamente, salvo que se cancele en la configuración de suscripciones de Apple antes de la siguiente fecha de renovación.",
+        "subplans.terms.paragraph.04": "Después de la cancelación, el acceso se mantiene hasta el final del período ya pagado. La suscripción puede administrarse desde la configuración de la cuenta de Apple.",
+        "subplans.ui.01": "QUÉ INCLUYE LA SUSCRIPCIÓN",
+        "subplans.ui.02": "PLANES PARA TI",
+        "subplans.ui.03": "PLANES PATROCINADOS",
+        "subplans.ui.04": "ASISTENCIA PERSONAL",
+        "subplans.ui.05": "CONDICIONES DE SUSCRIPCIÓN",
+        "subplans.ui.06": "Planes patrocinados",
+        "subplans.ui.07": "Planes de suscripción",
+        "subplans.ui.08": "Cerrar",
+        "subplans.ui.09": "PLANES DE SUSCRIPCIÓN DE MORNINGHELLO",
+        "subplans.ui.10": "Elige una suscripción para ti o paga el acceso de un ser querido.",
+        "subplans.ui.11": "Todos los planes incluyen las mismas funciones de MorningHello. Se diferencian por la duración de la suscripción, la forma de uso y la disponibilidad de ayuda personalizada para la configuración.",
+        "subplans.ui.12": "Acceso completo a MorningHello para una persona durante un año y una sesión personal gratuita de hasta 30 minutos por Zoom o Google Meet.",
+        "subplans.ui.13": "Durante la sesión ayudaremos a la persona a:",
+        "subplans.ui.14": "La sesión es un servicio gratuito de asistencia. No se cobra por separado, no es obligatoria y no afecta la activación de la suscripción. El acceso a MorningHello se activa después de completar correctamente la compra.",
+        "subplans.ui.15": "Durante la sesión nunca solicitaremos la contraseña de tu Apple ID, datos bancarios ni códigos de verificación.",
+        "subplans.ui.16": "MorningHello no es un servicio de emergencia y no sustituye una llamada a los servicios de emergencia locales.",
+        "subplans.ui.17": "Expandido",
+        "subplans.ui.18": "Contraído",
+        "subplans.ui.sponsorHeader": "PLANES PATROCINADOS",
+        "subplans.ui.sponsorTitle": "Planes patrocinados",
+        "subplans.ui.supportTitle": "Acceso anual para un ser querido con ayuda para la configuración",
+    ]
 }
