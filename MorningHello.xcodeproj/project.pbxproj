@@ -551,7 +551,6 @@
 		29BCCD02302D9F140027557C /* Backend */ = {
 			isa = PBXGroup;
 			children = (
-				29B788D330856E82001336C0 /* PetCareAPIClient.swift */,
 				29887478306713EB00361B7D /* AppInstanceIDProvider..swift */,
 				29CB1C24306ECF63009EB187 /* BackendFailureLogger.swift */,
 				29CB1C2A306ED220009EB187 /* DiagnosticLogShareSheet.swift */,
@@ -561,6 +560,7 @@
 				2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */,
 				29CB1C26306ED142009EB187 /* PendingContactReminderManager.swift */,
 				29CB1C28306ED1D9009EB187 /* PendingContactReminderHost.swift */,
+				29B788D330856E82001336C0 /* PetCareAPIClient.swift */,
 				2988747C3067144900361B7D /* ProfileDataAPIClient.swift */,
 				2988747E3067146800361B7D /* ProfileDataSyncService.swift */,
 			);

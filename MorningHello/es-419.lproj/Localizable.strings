@@ -2157,3 +2157,19 @@
 "subplans.ui.sponsorHeader" = "PLANES PATROCINADOS";
 "subplans.ui.sponsorTitle" = "Planes patrocinados";
 "subplans.ui.supportTitle" = "Acceso anual para un ser querido con ayuda para la configuración";
+
+"petcare.notificationLanguage" = "Idioma de los mensajes";
+"petcare.title" = "¿Quién cuidará de mis mascotas?";
+"petcare.primary" = "Responsable principal de las mascotas";
+"petcare.backup" = "Responsable de respaldo";
+"petcare.explanation" = "Si no realizas tu confirmación a tiempo, la persona responsable principal que haya aceptado recibirá una notificación e instrucciones de cuidado. Si no confirma en un plazo de 8 horas, se notificará inmediatamente a la persona de respaldo que haya aceptado. Una nueva confirmación de “Estoy bien” cancela todos los avisos pendientes de envío.";
+"petcare.save" = "Guardar responsables";
+"petcare.firstName" = "Nombre";
+"petcare.lastName" = "Apellido";
+"petcare.phone" = "Teléfono (+código de país)";
+"petcare.email" = "Correo electrónico";
+"petcare.pendingConsent" = "Consentimiento: pendiente de confirmación del servidor";
+"petcare.invalid" = "Completa el nombre, apellido, teléfono internacional y correo válido de cada responsable, o deja el puesto vacío.";
+"petcare.samePerson" = "La misma persona no puede ser responsable principal y de respaldo.";
+"petcare.savedLocally" = "Guardado en este iPhone. Las invitaciones y notificaciones del servidor aún no están habilitadas.";
+"petcare.saveFailed" = "No se pudieron guardar los responsables.";

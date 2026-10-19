@@ -98,6 +98,13 @@ struct ProfileDataAPIClient {
                 httpResponse.statusCode
             )
         else {
+#if DEBUG
+            // Spring validation details are essential when diagnosing 400.
+            // Do not log the outgoing profile JSON or authorization header.
+            if httpResponse.statusCode == 400 {
+                print("PROFILE VALIDATION RESPONSE (400):", String(data: data, encoding: .utf8) ?? "<non-UTF8 response>")
+            }
+#endif
             let serverError =
                 try? JSONDecoder().decode(
                     ProfileDataServerError.self,

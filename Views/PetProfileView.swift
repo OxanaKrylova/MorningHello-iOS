@@ -718,6 +718,56 @@ enum PetPhotoStorageError:
 
 // MARK: - Экран питомцев
 
+private struct PetCareFormValues {
+    var id = UUID()
+    var firstName = ""
+    var lastName = ""
+    var phone = ""
+    var email = ""
+    var messageLanguage: ContactMessageLanguage = .english
+    var hasSavedContact = false
+
+    init() {}
+    init(_ contact: PetCareResponsibleContact) {
+        id = contact.id
+        firstName = contact.firstName
+        lastName = contact.lastName
+        phone = contact.phone
+        email = contact.email
+        messageLanguage = contact.messageLanguage
+        hasSavedContact = true
+    }
+
+    var trimmed: Self {
+        var result = self
+        result.firstName = firstName.trimmingCharacters(in: .whitespacesAndNewlines)
+        result.lastName = lastName.trimmingCharacters(in: .whitespacesAndNewlines)
+        result.phone = phone.trimmingCharacters(in: .whitespacesAndNewlines)
+        result.email = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        return result
+    }
+    var isBlank: Bool {
+        [firstName, lastName, phone, email].allSatisfy {
+            $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }
+    }
+    var isValid: Bool {
+        let number = phone.filter(\.isNumber)
+        let emailPattern = #"^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$"#
+        return !firstName.isEmpty && !lastName.isEmpty &&
+            phone.first == "+" && number.count >= 8 && number.count <= 15 &&
+            phone.filter({ $0 == "+" }).count == 1 &&
+            email.range(of: emailPattern, options: [.regularExpression, .caseInsensitive]) != nil
+    }
+    func asContact(role: PetCareRole) -> PetCareResponsibleContact {
+        PetCareResponsibleContact(
+            id: id, role: role, firstName: firstName, lastName: lastName,
+            phone: phone, email: email, messageLanguage: messageLanguage,
+            status: .pending
+        )
+    }
+}
+
 struct PetProfileView: View {
     @Environment(\.dismiss)
     private var dismiss
@@ -770,6 +820,12 @@ struct PetProfileView: View {
 
     @State private var lastSavedAt:
         Date? = PetProfileStorage.lastSavedAt()
+
+    @State private var primaryCaregiver = PetCareFormValues()
+    @State private var backupCaregiver = PetCareFormValues()
+    @State private var caregiverStatusMessage: String?
+    @State private var caregiverStatusIsError = false
+    @State private var petCareContactsLoaded = false
     
     private var selectedLanguage:
         AppLanguage {
@@ -830,7 +886,7 @@ struct PetProfileView: View {
         NavigationStack {
             Form {
                 introductionSection
-                
+                petCareContactsSection
                 lastSavedInformationSection
                 
                 if savedProfiles.count > 1 {
@@ -895,6 +951,7 @@ struct PetProfileView: View {
             }
             .onAppear {
                 loadProfilesIfNeeded()
+                loadPetCareContactsIfNeeded()
             }
             .onChange(
                 of: selectedPhotoItem
@@ -979,6 +1036,144 @@ struct PetProfileView: View {
             .font(.subheadline)
             .foregroundStyle(.secondary)
         }
+    }
+
+    // MARK: - Pet caregivers (not a heartbeat)
+
+    private func petCareString(_ key: String, fallback: String) -> String {
+        let code: String
+        switch selectedLanguage {
+        case .russian: code = "ru"
+        case .englishUS: code = "en"
+        case .spanishLatinAmerica: code = "es"
+        }
+        guard let path = Bundle.main.path(forResource: code, ofType: "lproj"),
+              let bundle = Bundle(path: path) else { return fallback }
+        return bundle.localizedString(forKey: key, value: fallback, table: "Localizable")
+    }
+
+    private var petCareContactsSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 12) {
+                Text(petCareString("petcare.explanation", fallback:
+                    "If you miss a check-in, your confirmed primary pet caregiver will be notified. If they do not confirm within 8 hours, the confirmed backup caregiver will be notified. A new check-in cancels all unsent notifications."))
+                    .font(.subheadline)
+                    .foregroundStyle(AppAdaptiveColor.text)
+                    .fixedSize(horizontal: false, vertical: true)
+                caregiverFields(
+                    title: petCareString("petcare.primary", fallback: "Primary pet caregiver"),
+                    values: $primaryCaregiver
+                )
+                Divider()
+                caregiverFields(
+                    title: petCareString("petcare.backup", fallback: "Backup pet caregiver"),
+                    values: $backupCaregiver
+                )
+                if let caregiverStatusMessage {
+                    Text(caregiverStatusMessage)
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(caregiverStatusIsError ? Color.red : AppAdaptiveColor.text)
+                }
+                Button {
+                    savePetCareContacts()
+                } label: {
+                    Text(petCareString("petcare.save", fallback: "Save caregivers"))
+                        .font(.headline.weight(.bold))
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.orange)
+            }
+            .padding(.vertical, 4)
+        } header: {
+            Text(petCareString("petcare.title", fallback: "Who will look after my pets?"))
+                .font(.headline.weight(.bold))
+                .foregroundStyle(AppAdaptiveColor.text)
+        }
+    }
+
+    private func caregiverFields(title: String, values: Binding<PetCareFormValues>) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title).font(.headline.weight(.bold))
+            TextField(petCareString("petcare.firstName", fallback: "First name"), text: values.firstName)
+                .textContentType(.givenName)
+            TextField(petCareString("petcare.lastName", fallback: "Last name"), text: values.lastName)
+                .textContentType(.familyName)
+            TextField(petCareString("petcare.phone", fallback: "Phone (+country code)"), text: values.phone)
+                .keyboardType(.phonePad)
+                .textContentType(.telephoneNumber)
+            TextField(petCareString("petcare.email", fallback: "Email"), text: values.email)
+                .keyboardType(.emailAddress)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+            Picker(petCareString("petcare.notificationLanguage", fallback: "Notification language"),
+                   selection: values.messageLanguage) {
+                ForEach(ContactMessageLanguage.allCases) { language in
+                    Text(language.displayName).tag(language)
+                }
+            }
+            .pickerStyle(.menu)
+            if values.wrappedValue.hasSavedContact {
+                Text(petCareString("petcare.pendingConsent", fallback: "Consent: pending server confirmation"))
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.orange)
+            }
+        }
+        .textFieldStyle(.roundedBorder)
+    }
+
+    private func loadPetCareContactsIfNeeded() {
+        guard !petCareContactsLoaded else { return }
+        petCareContactsLoaded = true
+        let values = PetCareContactStorage.load()
+        if let primary = values.first(where: { $0.role == .primary }) {
+            primaryCaregiver = PetCareFormValues(primary)
+        }
+        if let backup = values.first(where: { $0.role == .backup }) {
+            backupCaregiver = PetCareFormValues(backup)
+        }
+    }
+
+    private func savePetCareContacts() {
+        var contacts: [PetCareResponsibleContact] = []
+        let primary = primaryCaregiver.trimmed
+        let backup = backupCaregiver.trimmed
+        for (role, value) in [(PetCareRole.primary, primary), (.backup, backup)] {
+            if value.isBlank { continue }
+            guard value.isValid else {
+                showPetCareError("petcare.invalid", fallback:
+                    "Complete each caregiver's first name, last name, international phone and valid email, or leave the role empty.")
+                return
+            }
+            contacts.append(value.asContact(role: role))
+        }
+        if contacts.count == 2 {
+            let a = contacts[0], b = contacts[1]
+            let emailMatches = a.email.lowercased() == b.email.lowercased()
+            let phoneMatches = a.phone.filter(\.isNumber) == b.phone.filter(\.isNumber)
+            if emailMatches || phoneMatches {
+                showPetCareError("petcare.samePerson", fallback:
+                    "The same person cannot be the primary and backup caregiver.")
+                return
+            }
+        }
+        do {
+            try PetCareContactStorage.save(contacts)
+            primaryCaregiver = contacts.first(where: { $0.role == .primary }).map(PetCareFormValues.init) ?? .init()
+            backupCaregiver = contacts.first(where: { $0.role == .backup }).map(PetCareFormValues.init) ?? .init()
+            caregiverStatusIsError = false
+            caregiverStatusMessage = petCareString("petcare.savedLocally", fallback:
+                "Saved on this iPhone. Server invitations and notifications are not active yet.")
+            // Server endpoint is not available until Backend approval.
+            // Never use heartbeat to synchronize caregivers.
+        } catch {
+            showPetCareError("petcare.saveFailed", fallback: "Could not save caregivers.")
+        }
+    }
+
+    private func showPetCareError(_ key: String, fallback: String) {
+        caregiverStatusIsError = true
+        caregiverStatusMessage = petCareString(key, fallback: fallback)
     }
 
     private var lastSavedInformationSection:

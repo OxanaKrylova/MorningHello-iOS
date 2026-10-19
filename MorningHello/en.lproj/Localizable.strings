@@ -2167,3 +2167,19 @@
 "subplans.ui.sponsorHeader" = "SPONSOR PLANS";
 "subplans.ui.sponsorTitle" = "Sponsor Plans";
 "subplans.ui.supportTitle" = "Annual Access for a Loved One with Setup Support";
+
+"petcare.notificationLanguage" = "Notification language";
+"petcare.title" = "Who will look after my pets?";
+"petcare.primary" = "Primary pet caregiver";
+"petcare.backup" = "Backup pet caregiver";
+"petcare.explanation" = "If you miss a check-in, your confirmed primary pet caregiver will receive a notification and care instructions. If they do not confirm within 8 hours, your confirmed backup caregiver will be notified immediately afterward. A new “I’m OK” check-in cancels all notifications that have not yet been sent.";
+"petcare.save" = "Save caregivers";
+"petcare.firstName" = "First name";
+"petcare.lastName" = "Last name";
+"petcare.phone" = "Phone (+country code)";
+"petcare.email" = "Email";
+"petcare.pendingConsent" = "Consent: awaiting server confirmation";
+"petcare.invalid" = "Complete each caregiver’s first name, last name, international phone and valid email, or leave the role empty.";
+"petcare.samePerson" = "The same person cannot be the primary and backup caregiver.";
+"petcare.savedLocally" = "Saved on this iPhone. Server invitations and notifications are not active yet.";
+"petcare.saveFailed" = "Could not save caregivers.";

@@ -1,216 +1,96 @@
-//
-//  ProfileDataSyncService.swift
-//  MorningHello
-//
-//  Created by Oxana Krylova on 25/09/2026.
-//
-
+// ProfileDataSyncService.swift — Backend API interface 0.12.0
 import Foundation
 
 @MainActor
 final class ProfileDataSyncService {
-
-    static let shared =
-        ProfileDataSyncService()
-
-    private let pendingStorageKey =
-        "profile_data_sync_pending"
-
-    private let countryStorageKey =
-        "profile_country_code"
-
-    private let phoneStorageKey =
-        "profile_phone"
-    
+    static let shared = ProfileDataSyncService()
+    private let pendingStorageKey = "profile_data_sync_pending"
     private var isSyncing = false
 
-    private init() {
-    }
+    private init() {}
 
-    // MARK: - Постановка синхронизации в очередь
-
+    // Safe to call after a profile change. Never sends a heartbeat.
     func scheduleSync() {
-        UserDefaults.standard.set(
-            true,
-            forKey: pendingStorageKey
-        )
-
-        guard !isSyncing else {
-            return
-        }
-
-        Task {
-            await synchronizePendingChanges()
-        }
+        UserDefaults.standard.set(true, forKey: pendingStorageKey)
+        guard !isSyncing else { return }
+        Task { await synchronizePendingChanges() }
     }
-
-    // MARK: - Повтор неудачной синхронизации
 
     func retryPendingSync() async {
-        let isPending =
-            UserDefaults.standard.bool(
-                forKey: pendingStorageKey
-            )
-
-        guard isPending,
-              !isSyncing
-        else {
-            return
-        }
-
+        guard UserDefaults.standard.bool(forKey: pendingStorageKey),
+              !isSyncing else { return }
         await synchronizePendingChanges()
     }
 
-    // MARK: - Выполнение синхронизации
-
-    private func synchronizePendingChanges()
-    async {
-        guard !isSyncing else {
-            return
-        }
-
+    private func synchronizePendingChanges() async {
+        guard !isSyncing else { return }
         isSyncing = true
+        defer { isSyncing = false }
 
-        defer {
-            isSyncing = false
-        }
+        while UserDefaults.standard.bool(forKey: pendingStorageKey) {
+            // During onboarding the interval can be 0. The server requires >=1;
+            // keep pending data until the user actually chooses an interval.
+            guard let request = makeCurrentRequest() else {
+#if DEBUG
+                print("PROFILE DATA SYNC DEFERRED: check-in interval not configured")
+#endif
+                return
+            }
 
-        while UserDefaults.standard.bool(
-            forKey: pendingStorageKey
-        ) {
-            /*
-             Перед началом отправки снимаем флаг.
-             Если пользователь изменит профиль,
-             пока запрос выполняется, scheduleSync()
-             снова установит его в true.
-             Тогда цикл отправит новые данные ещё раз.
-             */
-
-            UserDefaults.standard.set(
-                false,
-                forKey: pendingStorageKey
-            )
-
-            let request =
-                makeCurrentRequest()
-
-            let appInstanceID =
-                AppInstanceIDProvider.getOrCreate()
+            // Clear before sending, so changes while the request is in flight
+            // can set the flag again and trigger one more iteration.
+            UserDefaults.standard.set(false, forKey: pendingStorageKey)
+            let appInstanceID = AppInstanceIDProvider.getOrCreate()
 
             do {
-                try await ProfileDataAPIClient
-                    .shared
-                    .updateProfile(
-                        appInstanceID:
-                            appInstanceID,
-                        request:
-                            request
-                    )
-
-#if DEBUG
-
-                print(
-                    """
-                    
-                    PROFILE DATA SYNC SUCCEEDED
-                    LANGUAGE: \(request.languageCode)
-                    PHONE: \(request.phone == nil ? "nil" : "present")
-                    COUNTRY: \(request.countryCode ?? "nil")
-                    PET: \(request.pet == nil ? "nil" : "present")
-                    """
+                try await ProfileDataAPIClient.shared.updateProfile(
+                    appInstanceID: appInstanceID,
+                    request: request
                 )
-
+#if DEBUG
+                print("PROFILE DATA SYNC SUCCEEDED; interval=\(request.checkInIntervalHours), language=\(request.user.language)")
 #endif
             } catch {
-                UserDefaults.standard.set(
-                    true,
-                    forKey:
-                        pendingStorageKey
-                )
-
+                // Keep unsent changes, but do not endlessly retry a server
+                // validation failure. A subsequent edit or explicit retry can
+                // attempt the operation again after it is corrected.
+                UserDefaults.standard.set(true, forKey: pendingStorageKey)
 #if DEBUG
-
-                print(
-                    """
-                    
-                    PROFILE DATA SYNC FAILED
-                    \(error.localizedDescription)
-                    The local profile remains saved.
-                    Synchronization will be retried later.
-                    
-                    """
-                )
-
+                print("PROFILE DATA SYNC FAILED: \(error.localizedDescription)")
 #endif
-
                 return
             }
         }
     }
 
-    // MARK: - Формирование текущего запроса
+    private func makeCurrentRequest() -> ProfileDataRequest? {
+        let defaults = UserDefaults.standard
+        let interval = defaults.integer(forKey: "check_in_interval_hours")
+        guard interval >= 1 else { return nil }
 
-    private func makeCurrentRequest()
-    -> ProfileDataRequest {
+        let name = defaults.string(forKey: "profile_display_name")?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        let salutation = defaults.string(forKey: "profile_salutation")?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        let languageCode =
-            AppLanguage.selected.rawValue
-
-        let storedPhone =
-            UserDefaults.standard.string(
-                forKey: phoneStorageKey
-            )?
-            .trimmingCharacters(
-                in: .whitespacesAndNewlines
-            )
-
-        let phone: String?
-
-        if let storedPhone,
-           !storedPhone.isEmpty {
-            phone = storedPhone
-        } else {
-            phone = nil
-        }
-        
-        let storedCountryCode =
-            UserDefaults.standard.string(
-                forKey: countryStorageKey
-            )?
-            .trimmingCharacters(
-                in: .whitespacesAndNewlines
-            )
-            .uppercased()
-
-        let countryCode: String?
-
-        if let storedCountryCode,
-           !storedCountryCode.isEmpty {
-            countryCode =
-                storedCountryCode
-        } else {
-            countryCode = nil
+        let gender: String?
+        switch salutation {
+        case "Уважаемый": gender = "male"
+        case "Уважаемая": gender = "female"
+        default: gender = nil
         }
 
-        let allPets = PetProfileStorage.loadAll()
-        let pets = allPets.compactMap { ProfileDataPet(profile: $0) }
-        // Never silently omit an incomplete pet from the server's full-replace array.
-        let canSendV3 = PetCareFeatureFlags.backendV3Enabled &&
-            pets.count == allPets.count &&
-            allPets.count <= PetProfileStorage.maximumPetCount
-        let legacyPet = PetProfileStorage.load().flatMap {
-            ProfileDataPet(profile: $0, includeID: false)
-        }
+        // The selected in-app language is authoritative, not the iPhone locale.
+        let language = AppLanguage.selected.rawValue
 
         return ProfileDataRequest(
-            languageCode:
-                languageCode,
-            phone:
-                phone,
-            countryCode:
-                countryCode,
-            pets: canSendV3 ? pets : nil,
-            pet: canSendV3 ? nil : legacyPet
+            user: ProfileDataUser(
+                name: name?.isEmpty == false ? name : nil,
+                gender: gender,
+                timezone: TimeZone.current.identifier,
+                language: language
+            ),
+            checkInIntervalHours: interval
         )
     }
 }
