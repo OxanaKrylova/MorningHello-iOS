@@ -105,6 +105,25 @@ actor SponsorshipAPIClient {
         )
     }
 
+    // A restore link is distinct from an invitation. Never store it as one.
+    func createRestoreLink(
+        appInstanceId: UUID,
+        originalTransactionId: String,
+        language: String?
+    ) async throws -> SponsoredBeneficiaryProvisioningResponse {
+        let url = endpoint(appInstanceId: appInstanceId)
+            .appendingPathComponent(originalTransactionId)
+            .appendingPathComponent("restore-link")
+        return try await send(url: url, method: "POST", body: RestoreLinkCreationBody(language: language))
+    }
+
+    func redeemRestoreLink(token: String) async throws -> RestoreLinkResponse {
+        let url = baseURL.appendingPathComponent("restore-links")
+            .appendingPathComponent("redeem")
+        return try await send(url: url, method: "POST",
+                              body: RedeemSponsorshipInvitationRequest(token: token))
+    }
+
     func redeemInvitation(
         appInstanceId: UUID,
         token: String
@@ -201,12 +220,8 @@ actor SponsorshipAPIClient {
                 )
         }
 
-        let (
-            data,
-            response
-        ) = try await URLSession.shared.data(
-            for: request
-        )
+        let result = try await BackendLoggedRequest.perform(request)
+        let (data, response) = (result.data, result.response)
 
         guard let httpResponse =
                 response as? HTTPURLResponse
@@ -241,25 +256,20 @@ actor SponsorshipAPIClient {
             )
         } catch {
 #if DEBUG
-            let responseText =
-                String(
-                    data: data,
-                    encoding: .utf8
-                ) ?? ""
-
-            print(
-                """
-                SPONSORSHIP DECODING ERROR:
-                \(error)
-
-                RESPONSE:
-                \(responseText)
-                """
-            )
+            // Do not print response bodies: invitation and restore responses
+            // carry one-time bearer tokens.
+            print("SPONSORSHIP RESPONSE DECODING FAILED:", error)
 #endif
 
             throw SponsorshipAPIError
                 .invalidResponse
         }
     }
+}
+
+private struct RestoreLinkCreationBody: Encodable { let language: String? }
+
+struct RestoreLinkResponse: Decodable {
+    let appInstanceId: UUID
+    let sponsored: SponsoredAccess?
 }

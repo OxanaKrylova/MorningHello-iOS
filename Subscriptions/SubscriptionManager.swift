@@ -75,6 +75,9 @@ final class SubscriptionManager:
 
     // MARK: - Identity Candidate
 
+    @Published private(set) var identityRecoveryRequired = false
+    @Published private(set) var identityRecoveryMessage: String?
+
     private struct IdentityCandidate {
 
         let identifier:
@@ -88,6 +91,8 @@ final class SubscriptionManager:
 
         let originalTransactionID:
             String
+
+        let signedTransaction: String
     }
 
     // MARK: - Product IDs
@@ -251,6 +256,8 @@ final class SubscriptionManager:
          3. Новый UUID.
          */
 
+        identityRecoveryRequired = false
+        identityRecoveryMessage = nil
         let resolvedAppInstanceID =
             await resolveAppInstanceID(
                 from:
@@ -382,7 +389,9 @@ final class SubscriptionManager:
                     from:
                         transaction,
                     now:
-                        now
+                        now,
+                    signedTransaction:
+                        verificationResult.jwsRepresentation
                 )
             else {
                 continue
@@ -407,9 +416,35 @@ final class SubscriptionManager:
                 }
             ) {
 
-            AppInstanceIDProvider.restore(
+            let selectedIdentityDiffersFromLocal =
+                AppInstanceIDProvider.storedIdentifier() != selectedCandidate.identifier
+            let mustRebindSecret = AppInstanceIDProvider.restore(
                 selectedCandidate.identifier
             )
+            if mustRebindSecret || AppInstanceIDProvider.requiresPurchaseRecovery(for: selectedCandidate.identifier) {
+                do {
+                    let outcome = try await restoreWithFreshProof(
+                        appInstanceId: selectedCandidate.identifier,
+                        productId: selectedCandidate.productID,
+                        signedTransaction: selectedCandidate.signedTransaction
+                    )
+                    guard outcome.secretBound else {
+                        throw IdentityRecoveryFailure.secretNotBound
+                    }
+                    AppInstanceIDProvider.markPurchaseRecoveryCompleted(for: selectedCandidate.identifier)
+                    // Do not fabricate a heartbeat during recovery.
+                    await ServerProfileRecovery.shared.fetchAndApply(
+                        appInstanceId: selectedCandidate.identifier,
+                        replaceIdentityFields: selectedIdentityDiffersFromLocal
+                    )
+                } catch {
+                    identityRecoveryRequired = true
+                    identityRecoveryMessage = error.localizedDescription
+                    #if DEBUG
+                    print("[IDENTITY] Purchase-based secret recovery failed: \(error.localizedDescription)")
+                    #endif
+                }
+            }
 
 #if DEBUG
 
@@ -436,6 +471,11 @@ final class SubscriptionManager:
         let localIdentifier =
             AppInstanceIDProvider
                 .getOrCreate()
+
+        if AppInstanceIDProvider.requiresPurchaseRecovery(for: localIdentifier) {
+            identityRecoveryRequired = true
+            identityRecoveryMessage = "A purchase is needed to complete secret recovery."
+        }
 
 #if DEBUG
 
@@ -487,10 +527,10 @@ final class SubscriptionManager:
         }
 
         return identityCandidate(
-            from:
-                transaction,
-            now:
-                now
+            from: transaction,
+            now: now,
+            signedTransaction: status.transaction.jwsRepresentation,
+            allowsGracePeriod: status.state == .inGracePeriod
         )
     }
 
@@ -498,7 +538,9 @@ final class SubscriptionManager:
         from transaction:
             Transaction,
         now:
-            Date
+            Date,
+        signedTransaction: String,
+        allowsGracePeriod: Bool = false
     ) -> IdentityCandidate? {
 
         /*
@@ -558,7 +600,7 @@ final class SubscriptionManager:
 
         guard let expirationDate =
             transaction.expirationDate,
-              expirationDate > now
+              (expirationDate > now || allowsGracePeriod)
         else {
             return nil
         }
@@ -571,10 +613,70 @@ final class SubscriptionManager:
             productID:
                 transaction.productID,
             originalTransactionID:
-                String(
-                    transaction.originalID
-                )
+                String(transaction.originalID),
+            signedTransaction: signedTransaction
         )
+    }
+
+    /// Retry a stale signed transaction using the latest verified StoreKit JWS.
+    private func restoreWithFreshProof(
+        appInstanceId: UUID,
+        productId: String,
+        signedTransaction: String
+    ) async throws -> RestoreAccountResponse {
+        do {
+            return try await SubscriptionLifecycleAPIClient.shared.restoreAccount(
+                appInstanceId: appInstanceId,
+                signedTransaction: signedTransaction
+            )
+        } catch let error as SubscriptionLifecycleAPIError {
+            guard case let .backendError(_, code, _) = error,
+                  code == "TRANSACTION_TOO_OLD" else { throw error }
+            guard let latest = await Transaction.latest(for: productId),
+                  case .verified(let transaction) = latest,
+                  transaction.appAccountToken == appInstanceId,
+                  transaction.ownershipType != .familyShared else { throw error }
+            return try await SubscriptionLifecycleAPIClient.shared.restoreAccount(
+                appInstanceId: appInstanceId,
+                signedTransaction: latest.jwsRepresentation
+            )
+        }
+    }
+
+    /// Explicit recovery from a 401 SECRET_MISMATCH; never creates a new ID.
+    func recoverCurrentInstallationSecret() async {
+        let identifier = AppInstanceIDProvider.getOrCreate()
+        AppInstanceIDProvider.markPurchaseRecoveryRequired(for: identifier)
+        var foundProof = false
+        for await verification in Transaction.currentEntitlements {
+            guard case .verified(let transaction) = verification,
+                  transaction.appAccountToken == identifier,
+                  identityProductIDs.contains(transaction.productID),
+                  transaction.ownershipType != .familyShared else { continue }
+            foundProof = true
+            do {
+                let result = try await restoreWithFreshProof(
+                    appInstanceId: identifier,
+                    productId: transaction.productID,
+                    signedTransaction: verification.jwsRepresentation
+                )
+                if result.secretBound {
+                    AppInstanceIDProvider.markPurchaseRecoveryCompleted(for: identifier)
+                    identityRecoveryRequired = false
+                    identityRecoveryMessage = nil
+                    InstallationSecurityState.shared.clear()
+                    await ServerProfileRecovery.shared.fetchAndApply(appInstanceId: identifier)
+                    await refreshAndSync()
+                    return
+                }
+            } catch {
+                identityRecoveryRequired = true
+                identityRecoveryMessage = error.localizedDescription
+            }
+        }
+        if !foundProof {
+            identityRecoveryMessage = "No matching active StoreKit transaction is available."
+        }
     }
 
     // MARK: - Purchase
@@ -811,6 +913,8 @@ final class SubscriptionManager:
          */
 
         await refreshSubscriptionStatus()
+        guard !identityRecoveryRequired,
+              !ServerProfileRecovery.shared.isRecoveryPending else { return }
 
         let appInstanceID =
             AppInstanceIDProvider
@@ -1010,5 +1114,12 @@ private enum SubscriptionPurchaseError:
             return
                 "Не удалось получить тарифные планы из App Store."
         }
+    }
+}
+
+private enum IdentityRecoveryFailure: LocalizedError {
+    case secretNotBound
+    var errorDescription: String? {
+        "The backend did not confirm installation secret recovery."
     }
 }

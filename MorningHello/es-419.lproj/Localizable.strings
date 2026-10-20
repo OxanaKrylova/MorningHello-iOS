@@ -1794,6 +1794,7 @@
 "emergency.message.send_all_contacts" = "Enviar a todos los contactos de emergencia";
 "emergency.message.choose_messenger" = "Elegir mensajería o contacto";
 "emergency.service.poison_control" = "Centro de toxicología";
+"emergency.service.civil_protection" = "Protección civil y gestión de emergencias";
 "common.cancel" = "Cancelar";
 
 "games.title" = "Juegos";
@@ -2025,7 +2026,6 @@
 "sponsor.review.footer" = "Por ahora, toda la información se guarda únicamente en el borrador separado del beneficiario y no modifica el perfil del patrocinador.";
 "sponsor.review.saveError" = "No se pudo guardar el borrador final. Inténtelo nuevamente.";
 
-/* Sponsor purchase */
 "sponsor.purchase.title" = "Suscripción para un ser querido";
 "sponsor.purchase.subtitle" = "Elija un plan para un beneficiario.";
 "sponsor.purchase.button" = "Comprar suscripción";
@@ -2173,3 +2173,14 @@
 "petcare.samePerson" = "La misma persona no puede ser responsable principal y de respaldo.";
 "petcare.savedLocally" = "Guardado en este iPhone. Las invitaciones y notificaciones del servidor aún no están habilitadas.";
 "petcare.saveFailed" = "No se pudieron guardar los responsables.";
+"identity.restore.title" = "Restaurar el acceso";
+"identity.restore.message" = "No se pudo verificar de forma segura esta instalación. Vuelve a intentar recuperar la compra. Se conservó el identificador anterior.";
+"identity.restore.retry" = "Reintentar la recuperación";
+"identity.restore.purchases" = "Restaurar compras de Apple";
+"identity.restore.missingSecret" = "Falta el secreto de instalación. Vuelve a intentar recuperar la compra o comunícate con el desarrollador.";
+"identity.restore.mismatch" = "El secreto no coincide con el guardado en el servidor. Si alguien patrocina tu acceso, pídele un enlace de recuperación.";
+"identity.sponsor.restore" = "Restaurar acceso del beneficiario";
+"identity.sponsor.shareRestore" = "Compartir enlace de recuperación";
+"identity.profile.title" = "Recuperando tu perfil";
+"identity.profile.message" = "Para continuar con seguridad, la aplicación debe recuperar del servidor tu nombre, intervalo de confirmación y contactos de emergencia.";
+"petcare.chooseTrustedContact" = "Elegir de los contactos de emergencia";

@@ -10,6 +10,10 @@ import Security
 
 enum AppInstanceIDProvider {
 
+    // Serialize first-install creation and ID/secret changes. Concurrent API
+    // requests must never generate different credentials for one identity.
+    private static let identityLock = NSRecursiveLock()
+
     private struct StoredIdentifier {
 
         let identifier: UUID
@@ -18,6 +22,23 @@ enum AppInstanceIDProvider {
 
     private static let keychainAccount =
         "morninghello-app-instance-id"
+
+    private static let pendingPurchaseProofKey = "pending_install_secret_purchase_proof_id"
+
+    static func requiresPurchaseRecovery(for id: UUID) -> Bool {
+        UserDefaults.standard.string(forKey: pendingPurchaseProofKey) == id.uuidString
+    }
+
+    static func markPurchaseRecoveryRequired(for id: UUID) {
+        UserDefaults.standard.set(id.uuidString, forKey: pendingPurchaseProofKey)
+    }
+
+    static func markPurchaseRecoveryCompleted(for id: UUID) {
+        if requiresPurchaseRecovery(for: id) {
+            UserDefaults.standard.removeObject(forKey: pendingPurchaseProofKey)
+        }
+    }
+
 
     private static var keychainService: String {
 
@@ -31,6 +52,8 @@ enum AppInstanceIDProvider {
     // MARK: - Public API
 
     static func getOrCreate() -> UUID {
+        identityLock.lock()
+        defer { identityLock.unlock() }
 
         if let storedValue =
             readFromKeychain() {
@@ -64,6 +87,9 @@ enum AppInstanceIDProvider {
 
 #endif
 
+            if InstallSecretProvider.stored() == nil {
+                InstallSecretProvider.replaceWithNew()
+            }
             return storedValue.identifier
         }
 
@@ -73,6 +99,7 @@ enum AppInstanceIDProvider {
         saveToKeychain(
             newID
         )
+        InstallSecretProvider.replaceWithNew()
 
 #if DEBUG
 
@@ -87,9 +114,12 @@ enum AppInstanceIDProvider {
 
     /// Заменяет локальный идентификатор значением,
     /// восстановленным из проверенной активной покупки StoreKit.
+    @discardableResult
     static func restore(
         _ restoredID: UUID
-    ) {
+    ) -> Bool {
+        identityLock.lock()
+        defer { identityLock.unlock() }
 
         if let storedValue =
             readFromKeychain(),
@@ -123,7 +153,12 @@ enum AppInstanceIDProvider {
 
 #endif
 
-            return
+            if InstallSecretProvider.stored() == nil {
+                markPurchaseRecoveryRequired(for: restoredID)
+                InstallSecretProvider.replaceWithNew()
+                return true
+            }
+            return false
         }
 
         let previousID =
@@ -133,6 +168,8 @@ enum AppInstanceIDProvider {
         saveToKeychain(
             restoredID
         )
+        InstallSecretProvider.replaceWithNew()
+        markPurchaseRecoveryRequired(for: restoredID)
 
 #if DEBUG
 
@@ -153,13 +190,25 @@ enum AppInstanceIDProvider {
         }
 
 #endif
+        return true
+    }
+
+    /// Adopt the existing account ID after /restore-links/redeem.
+    /// Do not change the secret: the server bound this exact secret.
+    static func adoptFromRestoreLink(_ restoredID: UUID) {
+        identityLock.lock()
+        defer { identityLock.unlock() }
+        saveToKeychain(restoredID)
+        // The restore-link server has already bound this installation's secret.
+        UserDefaults.standard.removeObject(forKey: pendingPurchaseProofKey)
     }
 
     /// Читает UUID без создания нового.
     static func storedIdentifier() -> UUID? {
+        identityLock.lock()
+        defer { identityLock.unlock() }
 
-        readFromKeychain()?
-            .identifier
+        return readFromKeychain()?.identifier
     }
 
     // MARK: - Keychain Query

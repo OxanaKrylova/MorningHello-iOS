@@ -46,6 +46,9 @@
 		293CF92330594601002DACBD /* SponsorshipRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91B30594601002DACBD /* SponsorshipRootView.swift */; };
 		293CF92430594601002DACBD /* SponsorshipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91C30594601002DACBD /* SponsorshipStore.swift */; };
 		293CF92530594601002DACBD /* SponsorshipModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91A30594601002DACBD /* SponsorshipModels.swift */; };
+		294C079B3087462F00D2C920 /* InstallSecretProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C079A3087462F00D2C920 /* InstallSecretProvider.swift */; };
+		294C079C3087462F00D2C920 /* InstallationSecurityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C07993087462F00D2C920 /* InstallationSecurityState.swift */; };
+		294C079E3087464F00D2C920 /* ServerProfileRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C079D3087464F00D2C920 /* ServerProfileRecovery.swift */; };
 		296D4CC43046275F000248AD /* checkin_success.wav in Resources */ = {isa = PBXBuildFile; fileRef = 296D4CC23046210D000248AD /* checkin_success.wav */; };
 		296D4CC730462788000248AD /* AppSoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D4CC630462788000248AD /* AppSoundPlayer.swift */; };
 		296D4CDB3046B1AC000248AD /* SettingsView..swift in Sources */ = {isa = PBXBuildFile; fileRef = 296D4CDA3046B1AC000248AD /* SettingsView..swift */; };
@@ -175,6 +178,9 @@
 		293CF91B30594601002DACBD /* SponsorshipRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipRootView.swift; sourceTree = "<group>"; };
 		293CF91C30594601002DACBD /* SponsorshipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipStore.swift; sourceTree = "<group>"; };
 		293CF91D30594601002DACBD /* SponsorshipViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipViews.swift; sourceTree = "<group>"; };
+		294C07993087462F00D2C920 /* InstallationSecurityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationSecurityState.swift; sourceTree = "<group>"; };
+		294C079A3087462F00D2C920 /* InstallSecretProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallSecretProvider.swift; sourceTree = "<group>"; };
+		294C079D3087464F00D2C920 /* ServerProfileRecovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerProfileRecovery.swift; sourceTree = "<group>"; };
 		296D4CC23046210D000248AD /* checkin_success.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = checkin_success.wav; sourceTree = "<group>"; };
 		296D4CC630462788000248AD /* AppSoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSoundPlayer.swift; sourceTree = "<group>"; };
 		296D4CDA3046B1AC000248AD /* SettingsView..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView..swift; sourceTree = "<group>"; };
@@ -555,6 +561,8 @@
 				29CB1C24306ECF63009EB187 /* BackendFailureLogger.swift */,
 				29CB1C2A306ED220009EB187 /* DiagnosticLogShareSheet.swift */,
 				29BCCD03302D9F260027557C /* EmergencyContactAPIClient.swift */,
+				294C07993087462F00D2C920 /* InstallationSecurityState.swift */,
+				294C079A3087462F00D2C920 /* InstallSecretProvider.swift */,
 				29B76CA63021304700D1D295 /* HeartbeatAPIClient.swift */,
 				29B76CA43021301A00D1D295 /* HeartbeatRequestBuilder.swift */,
 				2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */,
@@ -563,6 +571,7 @@
 				29B788D330856E82001336C0 /* PetCareAPIClient.swift */,
 				2988747C3067144900361B7D /* ProfileDataAPIClient.swift */,
 				2988747E3067146800361B7D /* ProfileDataSyncService.swift */,
+				294C079D3087464F00D2C920 /* ServerProfileRecovery.swift */,
 			);
 			path = Backend;
 			sourceTree = "<group>";
@@ -675,8 +684,11 @@
 				2976EF133027D69B00C0E8B1 /* AppEntryView.swift in Sources */,
 				29E0059F306E390100222DE6 /* SponsorshipL10n.swift in Sources */,
 				29B76C72301BD0B000D1D295 /* HolidayContent.swift in Sources */,
+				294C079E3087464F00D2C920 /* ServerProfileRecovery.swift in Sources */,
 				298D841030694E9A00F94646 /* MoodCalendarView.swift in Sources */,
 				2992CC2D304A2C29003301E9 /* AprilPostcardProvider.swift in Sources */,
+				294C079B3087462F00D2C920 /* InstallSecretProvider.swift in Sources */,
+				294C079C3087462F00D2C920 /* InstallationSecurityState.swift in Sources */,
 				29AFFFBE30390261007FE955 /* CatalogPostcardPreviewView.swift in Sources */,
 				29C3A9633060727C0031851C /* SubscriptionPlansInfoView.swift in Sources */,
 				29B76C84301D4D8500D1D295 /* SukkotPostcardProvider..swift in Sources */,
@@ -916,7 +928,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 01;
+				CURRENT_PROJECT_VERSION = 02;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -960,7 +972,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 01;
+				CURRENT_PROJECT_VERSION = 02;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

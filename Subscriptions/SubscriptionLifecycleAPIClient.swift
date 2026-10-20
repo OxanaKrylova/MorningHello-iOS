@@ -181,6 +181,21 @@ actor SubscriptionLifecycleAPIClient {
     }
 
 
+    // MARK: - Installation secret recovery by a verified purchase
+    func restoreAccount(appInstanceId: UUID, signedTransaction: String) async throws -> RestoreAccountResponse {
+        let url = baseURL.appendingPathComponent("users")
+            .appendingPathComponent(appInstanceId.uuidString)
+            .appendingPathComponent("restore")
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.httpBody = try encoder.encode(
+            LifecycleRegisterSubscriptionRequest(signedTransaction: signedTransaction)
+        )
+        return try decoder.decode(RestoreAccountResponse.self, from: await perform(request))
+    }
+
     // MARK: - Request
 
     private func perform(
@@ -191,10 +206,8 @@ actor SubscriptionLifecycleAPIClient {
         let response: URLResponse
 
         do {
-            (data, response) =
-                try await session.data(
-                    for: request
-                )
+            let result = try await BackendLoggedRequest.perform(request, using: session)
+            (data, response) = (result.data, result.response)
 
         } catch {
             throw SubscriptionLifecycleAPIError
@@ -400,4 +413,10 @@ enum SubscriptionLifecycleAPIError:
             """
         }
     }
+}
+
+struct RestoreAccountResponse: Decodable {
+    let restored: Bool
+    let monitoringActive: Bool
+    let secretBound: Bool
 }

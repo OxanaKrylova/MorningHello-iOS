@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import SwiftData
+import StoreKit
 
 struct AppEntryView:
     View {
@@ -166,6 +167,9 @@ struct AppEntryView:
     @Environment(\.modelContext)
     private var modelContext
 
+    @StateObject private var installationSecurity = InstallationSecurityState.shared
+    @StateObject private var serverProfileRecovery = ServerProfileRecovery.shared
+
     @StateObject
     private var sponsorshipStore = SponsorshipStore.shared
 
@@ -204,6 +208,15 @@ struct AppEntryView:
                 .hasLoadedSubscriptionStatus {
 
                 subscriptionLoadingView
+
+            } else if installationSecurity.errorCode != nil {
+                installationSecurityView
+
+            } else if subscriptionManager.identityRecoveryRequired {
+                identityRecoveryView
+
+            } else if serverProfileRecovery.isRecoveryPending {
+                profileRecoveryView
 
             } else if shouldShowSubscriptionRetry && !hasPendingInvitation &&
                         !sponsorshipStore.hasActiveSponsoredAccess {
@@ -297,6 +310,92 @@ struct AppEntryView:
 
             refreshEmergencyContacts()
         }
+    }
+
+    private var installationSecurityView: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "lock.shield.fill").font(.system(size: 48))
+            Text(selectedLanguage.localized("identity.restore.title")).font(.title2.bold())
+            Text(selectedLanguage.localized(
+                installationSecurity.errorCode == "SECRET_REQUIRED"
+                ? "identity.restore.missingSecret"
+                : "identity.restore.mismatch"
+            ))
+            .multilineTextAlignment(.center)
+            Button(selectedLanguage.localized("identity.restore.retry")) {
+                Task { await subscriptionManager.recoverCurrentInstallationSecret() }
+            }
+            .buttonStyle(.borderedProminent)
+            Button(selectedLanguage.localized("identity.restore.purchases")) {
+                Task {
+                    do {
+                        try await AppStore.sync()
+                        await subscriptionManager.recoverCurrentInstallationSecret()
+                    } catch {
+                        // StoreKit displays its own authentication sheet; the
+                        // ordinary retry remains available after cancellation.
+                    }
+                }
+            }
+            .buttonStyle(.bordered)
+            if let message = subscriptionManager.identityRecoveryMessage {
+                Text(message).font(.footnote).foregroundStyle(.secondary)
+            }
+        }
+        .padding(28)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(MorningHelloScreenBackground(name: "BG_Onboarding"))
+    }
+
+    private var profileRecoveryView: some View {
+        VStack(spacing: 18) {
+            Image(systemName: "person.crop.circle.badge.clock").font(.system(size: 46))
+            Text(selectedLanguage.localized("identity.profile.title")).font(.title2.bold())
+            Text(selectedLanguage.localized("identity.profile.message"))
+                .multilineTextAlignment(.center)
+            if let serverError = serverProfileRecovery.lastError {
+                Text(serverError).font(.footnote).foregroundStyle(.secondary)
+            }
+            Button(selectedLanguage.localized("identity.restore.retry")) {
+                Task { await serverProfileRecovery.retryPendingIfNeeded() }
+            }
+            .buttonStyle(.borderedProminent)
+        }
+        .padding(28)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(MorningHelloScreenBackground(name: "BG_Onboarding"))
+    }
+
+    private var identityRecoveryView: some View {
+        VStack(spacing: 20) {
+            Image(systemName: "lock.shield")
+                .font(.system(size: 46))
+            Text(selectedLanguage.localized("identity.restore.title"))
+                .font(.title2.bold())
+            Text(selectedLanguage.localized("identity.restore.message"))
+                .multilineTextAlignment(.center)
+            if let message = subscriptionManager.identityRecoveryMessage {
+                Text(message).font(.footnote).foregroundStyle(.secondary)
+            }
+            Button(selectedLanguage.localized("identity.restore.retry")) {
+                Task { await subscriptionManager.refreshAndSync() }
+            }
+            .buttonStyle(.borderedProminent)
+            Button(selectedLanguage.localized("identity.restore.purchases")) {
+                Task {
+                    do {
+                        try await AppStore.sync()
+                        await subscriptionManager.refreshAndSync()
+                    } catch {
+                        // Keep the recovery screen; user can retry later.
+                    }
+                }
+            }
+            .buttonStyle(.bordered)
+        }
+        .padding(28)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(MorningHelloScreenBackground(name: "BG_Onboarding"))
     }
 
     // MARK: - Sponsored beneficiary activation

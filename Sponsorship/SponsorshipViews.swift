@@ -80,6 +80,10 @@ struct SponsorHomeView: View {
     @State
     private var showInvitationNotReady = false
 
+    @State private var restoringBeneficiary = false
+    @State private var beneficiaryRestoreLinks: [String: URL] = [:]
+    @State private var beneficiaryRestoreError: String?
+
     @State
     private var invitationExpiresAt: Date?
 
@@ -158,6 +162,52 @@ struct SponsorHomeView: View {
 
                     invitationCard
                         .frame(maxWidth: 340)
+
+                    ForEach(sponsorshipStore.activeSponsoringSubscriptions.filter { $0.hasBeneficiary }) { subscription in
+                        VStack(spacing: 8) {
+                            Text(subscription.productId)
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                                .lineLimit(1)
+                            if let beneficiaryRestoreLink = beneficiaryRestoreLinks[subscription.originalTransactionId] {
+                                ShareLink(item: beneficiaryRestoreLink) {
+                                    Label(selectedLanguage.localized("identity.sponsor.shareRestore"),
+                                          systemImage: "square.and.arrow.up")
+                                }
+                                .font(.headline)
+                            } else {
+                                Button {
+                                    Task {
+                                        restoringBeneficiary = true
+                                        beneficiaryRestoreError = nil
+                                        defer { restoringBeneficiary = false }
+                                        do {
+                                            let response = try await SponsorshipAPIClient.shared.createRestoreLink(
+                                                appInstanceId: AppInstanceIDProvider.getOrCreate(),
+                                                originalTransactionId: subscription.originalTransactionId,
+                                                language: beneficiaryDraft.profile.languageCode
+                                            )
+                                            beneficiaryRestoreLinks[subscription.originalTransactionId] = response.url
+                                        } catch {
+                                            beneficiaryRestoreError = error.localizedDescription
+                                        }
+                                    }
+                                } label: {
+                                    Label(selectedLanguage.localized("identity.sponsor.restore"),
+                                          systemImage: "lock.rotation")
+                                }
+                                .disabled(restoringBeneficiary)
+                            }
+                            if restoringBeneficiary { ProgressView() }
+                            if let beneficiaryRestoreError {
+                                Text(beneficiaryRestoreError).font(.footnote).foregroundStyle(.red)
+                            }
+                        }
+                        .frame(maxWidth: 340)
+                        .padding(12)
+                        .background(AppAdaptiveColor.warmCardBackground,
+                                    in: RoundedRectangle(cornerRadius: 18))
+                    }
 
                     VStack(spacing: 14) {
                         HStack(spacing: 24) {

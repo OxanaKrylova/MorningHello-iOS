@@ -274,7 +274,7 @@
 "emergency.service.veterinary_emergency" = "Срочная помощь питомцу";
 "emergency.service.senior_support" = "Помощь пожилым";
 "emergency.number.unavailable" = "Подтверждённый номер пока не найден";
-
+"emergency.service.civil_protection" = "Гражданская оборона и защита населения";
 "Ежедневно" = "Ежедневно";
 "connection.intro" = "Все введённые напоминания будут отображаться внизу открытки после отметки «Я в порядке».";
 "Ошибочные обращения к серверу за последние 7 дней" = "Ошибочные обращения к серверу за последние 7 дней";
@@ -564,7 +564,6 @@
 "sponsor.review.footer" = "Все сведения пока хранятся только в отдельном черновике подопечного и не изменяют профиль спонсора.";
 "sponsor.review.saveError" = "Не удалось сохранить итоговый черновик. Попробуйте ещё раз.";
 
-/* Sponsor purchase */
 "sponsor.purchase.title" = "Спонсорская подписка";
 "sponsor.purchase.subtitle" = "Выберите тариф для одного подопечного.";
 "sponsor.purchase.button" = "Купить подписку";
@@ -585,7 +584,6 @@
 "sponsor.purchase.product.annual.title" = "Для близкого — 1 год";
 "sponsor.purchase.product.annual.description" = "Доступ MorningHello для одного подопечного на один год";
 
-/* Sponsorship invitation errors */
 "sponsor.invitation.error.ok" = "Понятно";
 "sponsor.invitation.error.notFound.title" = "Ссылка не найдена";
 "sponsor.invitation.error.notFound.message" = "Эта ссылка не работает. Попросите близкого человека прислать вам приглашение ещё раз.";
@@ -713,3 +711,14 @@
 "petcare.samePerson" = "Нельзя назначать одного человека основным и резервным ответственным.";
 "petcare.savedLocally" = "Сохранено на iPhone. Серверные приглашения и оповещения пока не подключены.";
 "petcare.saveFailed" = "Не удалось сохранить ответственных.";
+"identity.restore.title" = "Требуется восстановление доступа";
+"identity.restore.message" = "Не удалось подтвердить безопасность установки. Повторите восстановление покупки. Ваш прежний идентификатор сохранён.";
+"identity.restore.retry" = "Повторить восстановление";
+"identity.restore.purchases" = "Восстановить покупки Apple";
+"identity.restore.missingSecret" = "Секрет установки отсутствует. Повторите восстановление покупки или обратитесь к разработчику.";
+"identity.restore.mismatch" = "Секрет не совпадает с сохранённым на сервере. Если подписку оплачивает близкий, попросите его прислать ссылку восстановления доступа.";
+"identity.sponsor.restore" = "Восстановить доступ подопечному";
+"identity.sponsor.shareRestore" = "Отправить ссылку восстановления";
+"identity.profile.title" = "Восстанавливаем профиль";
+"identity.profile.message" = "Для безопасного продолжения нужно получить с сервера сохранённые имя, интервал и тревожные контакты.";
+"petcare.chooseTrustedContact" = "Выбрать из тревожных контактов";

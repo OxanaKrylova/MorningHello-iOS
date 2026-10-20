@@ -507,6 +507,16 @@ enum BackendLoggedRequest {
         durationMilliseconds: Int
     ) {
 
+        var request = request
+        if request.url?.scheme?.lowercased() == "https",
+           request.url?.host?.lowercased() == "api.morninghelloapp.com" {
+            // Ensure an identity exists before the first backend call.
+            _ = AppInstanceIDProvider.getOrCreate()
+            if let secret = InstallSecretProvider.stored() {
+                request.setValue("Bearer \(secret)", forHTTPHeaderField: "Authorization")
+            }
+        }
+
         let startedAt =
             Date()
 
@@ -589,6 +599,13 @@ enum BackendLoggedRequest {
                 response,
                 duration
             )
+        }
+
+        if httpResponse.statusCode == 401,
+           let body = try? JSONDecoder().decode(BackendErrorBody.self, from: data),
+           let code = body.error,
+           code == "SECRET_MISMATCH" || code == "SECRET_REQUIRED" {
+            await InstallationSecurityState.shared.set(errorCode: code)
         }
 
         if !(200...299).contains(

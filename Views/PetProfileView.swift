@@ -1092,17 +1092,82 @@ struct PetProfileView: View {
         }
     }
 
+    // An existing emergency contact can be reused as a caregiver. This copies
+    // fields locally, without changing the original emergency contact or sending API calls.
+    private var availableEmergencyContacts: [EmergencyContact] {
+        guard let data = UserDefaults.standard.data(forKey: "emergency_contacts"),
+              let contacts = try? JSONDecoder().decode([EmergencyContact].self, from: data)
+        else { return [] }
+        return contacts
+    }
+
+    private func fillCaregiver(_ contact: EmergencyContact, into values: Binding<PetCareFormValues>) {
+        var copy = values.wrappedValue
+        copy.firstName = contact.name
+        copy.lastName = contact.surname
+        copy.phone = contact.phoneDigits
+        copy.email = contact.email
+        copy.messageLanguage = contact.messageLanguage
+        // Consent to emergency monitoring does NOT imply consent to pet care.
+        copy.hasSavedContact = false
+        values.wrappedValue = copy
+        caregiverStatusMessage = nil
+    }
+
+    private func caregiverInput(
+        _ key: String,
+        fallback: String,
+        text: Binding<String>
+    ) -> some View {
+        TextField("", text: text, prompt: Text(petCareString(key, fallback: fallback))
+            .foregroundColor(AppAdaptiveColor.tertiaryText))
+            .padding(.horizontal, 16)
+            .frame(height: 54)
+            .background(AppAdaptiveColor.warmCardBackground)
+            .overlay {
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(.brown.opacity(0.16), lineWidth: 1)
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+    }
+
     private func caregiverFields(title: String, values: Binding<PetCareFormValues>) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 12) {
             Text(title).font(.headline.weight(.bold))
-            TextField(petCareString("petcare.firstName", fallback: "First name"), text: values.firstName)
+
+            let contacts = availableEmergencyContacts
+            if !contacts.isEmpty {
+                Menu {
+                    ForEach(contacts) { contact in
+                        Button("\(contact.name) \(contact.surname)") {
+                            fillCaregiver(contact, into: values)
+                        }
+                    }
+                } label: {
+                    HStack(spacing: 9) {
+                        Image(systemName: "person.crop.circle.badge.checkmark")
+                        Text(petCareString("petcare.chooseTrustedContact", fallback: "Choose from trusted contacts"))
+                            .fontWeight(.semibold)
+                        Spacer(minLength: 4)
+                        Image(systemName: "chevron.down")
+                    }
+                    .font(.subheadline)
+                    .foregroundStyle(AppAdaptiveColor.text)
+                    .padding(14)
+                    .background(AppAdaptiveColor.warmCardBackground,
+                                in: RoundedRectangle(cornerRadius: 15))
+                }
+                .accessibilityLabel(petCareString("petcare.chooseTrustedContact", fallback: "Choose from trusted contacts"))
+            }
+
+            caregiverInput("petcare.firstName", fallback: "First name", text: values.firstName)
                 .textContentType(.givenName)
-            TextField(petCareString("petcare.lastName", fallback: "Last name"), text: values.lastName)
+            caregiverInput("petcare.lastName", fallback: "Last name", text: values.lastName)
                 .textContentType(.familyName)
-            TextField(petCareString("petcare.phone", fallback: "Phone (+country code)"), text: values.phone)
+            caregiverInput("petcare.phone", fallback: "Phone (+country code)", text: values.phone)
                 .keyboardType(.phonePad)
                 .textContentType(.telephoneNumber)
-            TextField(petCareString("petcare.email", fallback: "Email"), text: values.email)
+            caregiverInput("petcare.email", fallback: "Email", text: values.email)
                 .keyboardType(.emailAddress)
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
@@ -1119,7 +1184,6 @@ struct PetProfileView: View {
                     .foregroundStyle(.orange)
             }
         }
-        .textFieldStyle(.roundedBorder)
     }
 
     private func loadPetCareContactsIfNeeded() {

@@ -18,6 +18,7 @@ enum EmergencyServiceCategory: String, Codable, CaseIterable {
     case homeFront
     case rescue
     case coastGuard
+    case civilProtection
     case socialSupport
     case crisisSupport
     case policeNonEmergency
@@ -42,6 +43,7 @@ enum EmergencyServiceCategory: String, Codable, CaseIterable {
         case .homeFront: return "emergency.service.home_front"
         case .rescue: return "emergency.service.rescue"
         case .coastGuard: return "emergency.service.coast_guard"
+        case .civilProtection: return "emergency.service.civil_protection"
         case .socialSupport: return "emergency.service.social_support"
         case .crisisSupport: return "emergency.service.crisis_support"
         case .policeNonEmergency: return "emergency.service.police_non_emergency"
@@ -69,6 +71,7 @@ enum EmergencyServiceCategory: String, Codable, CaseIterable {
         case .homeFront: return "exclamationmark.triangle.fill"
         case .rescue: return "lifepreserver.fill"
         case .coastGuard: return "water.waves"
+        case .civilProtection: return "shield.lefthalf.filled"
         case .socialSupport, .seniorSupport: return "person.2.fill"
         case .crisisSupport: return "heart.text.square.fill"
         case .policeNonEmergency: return "shield"
@@ -121,6 +124,7 @@ struct CountryEmergencyService: Identifiable, Codable {
     let category: EmergencyServiceCategory
     let scope: EmergencyServiceScope
     let region: String?
+    let stateCode: String?
     let localizedNames: [String: String]
     let localizedNotes: [String: String]
     let noteKey: String?
@@ -148,6 +152,7 @@ struct CountryEmergencyService: Identifiable, Codable {
         self.category = kind
         self.scope = .national
         self.region = nil
+        self.stateCode = nil
         self.localizedNames = [:]
         self.localizedNotes = [:]
         self.noteKey = noteKey
@@ -318,8 +323,25 @@ final class CountryEmergencyDirectoryStore: ObservableObject {
             return nil
         }
 
+        return directory(for: normalized, stateCode: nil)
+    }
+
+    // Pass the selected US state from the profile UI when available.
+    // Without a state selection the result includes national numbers only;
+    // showing all 50 states' office lines to every US user is unsafe.
+    func directory(
+        for countryCode: String,
+        stateCode: String?
+    ) -> CountryEmergencyDirectory? {
+        let normalized = Self.normalizedCountryCode(countryCode)
+        guard document.countryCodes.contains(normalized) else { return nil }
+        let normalizedState = stateCode?.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         let services = document.services
-            .filter { $0.countryCode == normalized }
+            .filter { service in
+                guard service.countryCode == normalized else { return false }
+                guard normalized == "US" else { return true }
+                return service.stateCode == nil || service.stateCode == normalizedState
+            }
             .sorted { left, right in
                 if left.verificationStatus != right.verificationStatus {
                     return Self.verificationRank(

@@ -36,6 +36,9 @@ struct MorningHelloApp: App {
             .task {
                 _ = await CheckInNotificationManager.shared.requestPermission()
                 await SubscriptionManager.shared.refreshAndSync()
+                guard !SubscriptionManager.shared.identityRecoveryRequired else { return }
+                await ServerProfileRecovery.shared.retryPendingIfNeeded()
+                guard !ServerProfileRecovery.shared.isRecoveryPending else { return }
                 await SponsorshipStore.shared.refresh()
             }
             .task {
@@ -44,6 +47,8 @@ struct MorningHelloApp: App {
                         continue
                     }
                     if SponsoredPurchaseManager.isSponsoredProduct(transaction.productID) {
+                        await SubscriptionManager.shared.refreshSubscriptionStatus()
+                        guard !SubscriptionManager.shared.identityRecoveryRequired else { continue }
                         do {
                             try await SponsoredPurchaseManager.shared
                                 .handleTransactionUpdate(update)
@@ -62,6 +67,9 @@ struct MorningHelloApp: App {
                 guard newPhase == .active else { return }
                 Task {
                     await SubscriptionManager.shared.refreshAndSync()
+                    guard !SubscriptionManager.shared.identityRecoveryRequired else { return }
+                    await ServerProfileRecovery.shared.retryPendingIfNeeded()
+                    guard !ServerProfileRecovery.shared.isRecoveryPending else { return }
                     await SponsorshipStore.shared.refresh()
                     if SponsorshipFeatureConfiguration.isEnabled {
                         await SponsoredPurchaseManager.shared.recoverUnfinishedPurchases()

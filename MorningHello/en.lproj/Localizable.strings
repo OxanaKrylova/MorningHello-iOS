@@ -1803,7 +1803,7 @@
 "emergency.message.send_all_contacts" = "Send to all emergency contacts";
 "emergency.message.choose_messenger" = "Choose a messenger or contact";
 "emergency.service.poison_control" = "Poison Control";
-
+"emergency.service.civil_protection" = "Civil Defence & Emergency Management";
 "common.cancel" = "Cancel";
 
 "games.title" = "Games";
@@ -2183,3 +2183,14 @@
 "petcare.samePerson" = "The same person cannot be the primary and backup caregiver.";
 "petcare.savedLocally" = "Saved on this iPhone. Server invitations and notifications are not active yet.";
 "petcare.saveFailed" = "Could not save caregivers.";
+"identity.restore.title" = "Restore access";
+"identity.restore.message" = "This installation could not be securely verified. Retry purchase recovery. Your existing account identifier has been kept.";
+"identity.restore.retry" = "Retry recovery";
+"identity.restore.purchases" = "Restore Apple purchases";
+"identity.restore.missingSecret" = "The installation secret is missing. Retry purchase recovery or contact the developer.";
+"identity.restore.mismatch" = "The secret does not match the one on the server. If someone sponsors your access, ask them for a restore link.";
+"identity.sponsor.restore" = "Restore beneficiary access";
+"identity.sponsor.shareRestore" = "Share restore link";
+"identity.profile.title" = "Restoring your profile";
+"identity.profile.message" = "To continue safely, the app must retrieve your saved name, check-in interval and emergency contacts.";
+"petcare.chooseTrustedContact" = "Choose from trusted contacts";
