@@ -724,6 +724,13 @@ struct ConnectionCalendarView: View {
         VStack(
             spacing: 14
         ) {
+            Image("icon_Reminders")
+                .resizable()
+                .renderingMode(.original)
+                .scaledToFit()
+                .frame(width: 60, height: 60)
+                .accessibilityHidden(true)
+
             Text(
                 localized(
                     "connection.title"
@@ -824,19 +831,11 @@ struct ConnectionCalendarView: View {
                 alignment: .center,
                 spacing: 14
             ) {
-                Image(
-                    systemName:
-                        "calendar.badge.checkmark"
-                )
-                .font(
-                    .system(
-                        size: 25,
-                        weight: .semibold
-                    )
-                )
-                .foregroundStyle(
-                    accentColor
-                )
+                Image("icon_Calendar")
+                .resizable()
+                .renderingMode(.original)
+                .scaledToFit()
+                .frame(width: 31, height: 31)
                 .frame(
                     width: 46,
                     height: 46
@@ -1486,18 +1485,11 @@ struct ConnectionCalendarView: View {
             alignment: .top,
             spacing: 10
         ) {
-            Image(
-                systemName: "calendar"
-            )
-            .font(
-                .system(
-                    size: 15,
-                    weight: .semibold
-                )
-            )
-            .foregroundStyle(
-                accentColor
-            )
+            Image("icon_Calendar")
+                .resizable()
+                .renderingMode(.original)
+                .scaledToFit()
+                .frame(width: 21, height: 21)
             .frame(
                 width: 22
             )
@@ -1622,19 +1614,11 @@ struct ConnectionCalendarView: View {
         VStack(
             spacing: 14
         ) {
-            Image(
-                systemName:
-                    "calendar.badge.plus"
-            )
-            .font(
-                .system(
-                    size: 34,
-                    weight: .medium
-                )
-            )
-            .foregroundStyle(
-                accentColor
-            )
+            Image("icon_Calendar")
+                .resizable()
+                .renderingMode(.original)
+                .scaledToFit()
+                .frame(width: 40, height: 40)
 
             Text(
                 localized(
@@ -1877,18 +1861,11 @@ struct ConnectionCalendarView: View {
             alignment: .top,
             spacing: 14
         ) {
-            Image(
-                systemName: "calendar"
-            )
-            .font(
-                .system(
-                    size: 23,
-                    weight: .semibold
-                )
-            )
-            .foregroundStyle(
-                accentColor
-            )
+            Image("icon_Calendar")
+                .resizable()
+                .renderingMode(.original)
+                .scaledToFit()
+                .frame(width: 29, height: 29)
             .frame(
                 width: 44,
                 height: 44

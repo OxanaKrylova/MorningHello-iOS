@@ -71,6 +71,12 @@ struct SettingsView: View {
     @State private var showDiagnosticLogShare =
         false
     @State private var showPetProfile = false
+    @State private var showAccountDeletion = false
+    @State private var showStopMonitoringConfirmation = false
+    @State private var isStoppingMonitoring = false
+    @State private var stopMonitoringAlertTitle = ""
+    @State private var stopMonitoringAlertMessage = ""
+    @State private var showStopMonitoringResult = false
     @State private var diagnosticLogError:
         String?
     
@@ -131,6 +137,7 @@ struct SettingsView: View {
                             languageSection
                             feedbackSection
                             diagnosticsSection
+                            privacySection
                             applicationSection
                         }
                         .padding(.top, 16)
@@ -209,6 +216,27 @@ struct SettingsView: View {
         .sheet(isPresented: $showFeedback) {
             FeedbackView()
         }
+        .sheet(isPresented: $showAccountDeletion) {
+            AccountDeletionView(mode: .personal)
+        }
+        .confirmationDialog(
+            privacyText("Остановить мониторинг?", "Stop monitoring?", "¿Detener el monitoreo?"),
+            isPresented: $showStopMonitoringConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button(privacyText("Остановить мониторинг", "Stop Monitoring", "Detener el monitoreo"), role: .destructive) {
+                Task { await stopMonitoringFromSettings() }
+            }
+            Button(privacyText("Отмена", "Cancel", "Cancelar"), role: .cancel) {}
+        } message: {
+            Text(privacyText(
+                "Мониторинг прекратится. Тревожные контакты будут уведомлены об остановке. Данные и аккаунт сохранятся. Для возобновления потребуется отдельное действие и новая отметка «Я в порядке».",
+                "Monitoring will stop. Emergency contacts will be notified that monitoring is paused. Your account and data remain. Resuming requires a separate action and a new I’m OK check-in.",
+                "El monitoreo se detendrá. Los contactos de emergencia recibirán un aviso. Tu cuenta y datos permanecen. Para reanudarlo necesitarás otra acción y una nueva confirmación de que estás bien."))
+        }
+        .alert(stopMonitoringAlertTitle, isPresented: $showStopMonitoringResult) {
+            Button(privacyText("ОК", "OK", "Aceptar"), role: .cancel) {}
+        } message: { Text(stopMonitoringAlertMessage) }
         .sheet(
             isPresented:
                 $showDiagnosticLogShare,
@@ -529,6 +557,150 @@ struct SettingsView: View {
         }
     }
     
+    // MARK: - Данные и конфиденциальность
+    // Этап 1: переход на форму удаления аккаунта. Никакие данные не удаляются.
+
+    private func privacyText(_ ru: String, _ en: String, _ es: String) -> String {
+        switch selectedLanguage {
+        case .russian: return ru
+        case .englishUS: return en
+        case .spanishLatinAmerica: return es
+        }
+    }
+
+    private var privacySection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(privacyText("Данные и конфиденциальность", "Data & Privacy", "Datos y privacidad"))
+                .font(.system(.headline, design: .rounded).weight(.bold))
+                .foregroundStyle(titleColor)
+                .padding(.horizontal, 28)
+
+            VStack(alignment: .leading, spacing: 0) {
+                Button {
+                    showStopMonitoringConfirmation = true
+                } label: {
+                    HStack(alignment: .center, spacing: 14) {
+                        Image("icon_sun")
+                            .resizable().renderingMode(.original).scaledToFit()
+                            .frame(width: 42, height: 42)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(privacyText("Остановить мониторинг", "Stop Monitoring", "Detener el monitoreo"))
+                                .font(.system(.headline, design: .rounded).weight(.bold))
+                                .foregroundStyle(Color.red)
+                            Text(privacyText(
+                                "Аккаунт и данные сохраняются, но сервер прекращает ожидание отметок и отправку тревожных сообщений.",
+                                "Keep the account and data while stopping server check-in monitoring and emergency alerts.",
+                                "Se conservan la cuenta y los datos; se detienen el monitoreo y las alertas de emergencia."))
+                                .font(.footnote).foregroundStyle(secondaryForegroundColor)
+                        }
+                        Spacer(minLength: 8)
+                        if isStoppingMonitoring { ProgressView() }
+                        else { Image(systemName: "chevron.right").foregroundStyle(secondaryForegroundColor) }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle()).padding(.vertical, 8)
+                }
+                .buttonStyle(.plain)
+                .disabled(isStoppingMonitoring)
+                Divider().padding(.leading, 46)
+                privacyPendingRow(
+                    title: privacyText("Удалить локальные данные", "Delete Local Data", "Eliminar datos locales"),
+                    subtitle: privacyText(
+                        "Очистка данных iPhone будет доступна после согласования состава удаляемых данных.",
+                        "Device data cleanup will be available after its scope is agreed.",
+                        "La limpieza de datos del dispositivo estará disponible tras definir su alcance."
+                    ),
+                    icon: "icon_deletion"
+                )
+                Divider().padding(.leading, 46)
+                Button {
+                    showAccountDeletion = true
+                } label: {
+                    HStack(alignment: .center, spacing: 14) {
+                        Image("icon_clean")
+                            .resizable()
+                            .renderingMode(.original)
+                            .scaledToFit()
+                            .frame(width: 42, height: 42)
+                            .accessibilityHidden(true)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(privacyText("Удалить аккаунт и данные", "Delete Account & Data", "Eliminar cuenta y datos"))
+                                .font(.system(.headline, design: .rounded).weight(.bold))
+                                .foregroundStyle(Color.red)
+                            Text(privacyText(
+                                "Последствия удаления, действующий тариф и подтверждение.",
+                                "Review the consequences, current plan and confirmation.",
+                                "Consulta las consecuencias, el plan actual y la confirmación."
+                            ))
+                                .font(.footnote)
+                                .foregroundStyle(secondaryForegroundColor)
+                        }
+                        Spacer(minLength: 8)
+                        Image(systemName: "chevron.right")
+                            .foregroundStyle(secondaryForegroundColor)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
+                    .padding(.vertical, 8)
+                }
+                .buttonStyle(.plain)
+            }
+            .settingsCard()
+        }
+    }
+
+    private func privacyPendingRow(title: String, subtitle: String, icon: String, danger: Bool = false) -> some View {
+        HStack(alignment: .center, spacing: 14) {
+            Image(icon)
+                .resizable()
+                .renderingMode(.original)
+                .scaledToFit()
+                .frame(width: 42, height: 42)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(title)
+                    .font(.system(.headline, design: .rounded).weight(danger ? .bold : .semibold))
+                    .foregroundStyle(danger ? Color.red : textColor)
+                Text(subtitle)
+                    .font(.footnote)
+                    .foregroundStyle(secondaryForegroundColor)
+                Text(privacyText("Скоро", "Coming soon", "Próximamente"))
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(secondaryForegroundColor)
+            }
+            Spacer(minLength: 8)
+            Image(systemName: "lock.fill")
+                .font(.caption)
+                .foregroundStyle(secondaryForegroundColor)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 8)
+        .accessibilityElement(children: .combine)
+    }
+
+    @MainActor
+    private func stopMonitoringFromSettings() async {
+        guard !isStoppingMonitoring else { return }
+        isStoppingMonitoring = true
+        defer { isStoppingMonitoring = false }
+        do {
+            let state = try await MorningHelloMonitoringAPIClient.shared.pauseByUser()
+            guard !state.active else { throw MorningHelloMonitoringAPIError.unexpectedState }
+            stopMonitoringAlertTitle = privacyText("Мониторинг остановлен", "Monitoring stopped", "Monitoreo detenido")
+            stopMonitoringAlertMessage = privacyText(
+                "Сервер подтвердил остановку мониторинга. Аккаунт и контакты сохранены.",
+                "The server confirmed monitoring is paused. Your account and contacts are preserved.",
+                "El servidor confirmó que el monitoreo está detenido. Tu cuenta y contactos se conservan.")
+        } catch {
+            stopMonitoringAlertTitle = privacyText("Не удалось остановить мониторинг", "Could not stop monitoring", "No se pudo detener el monitoreo")
+            stopMonitoringAlertMessage = privacyText(
+                "Сервер не подтвердил остановку. Не считайте мониторинг отключённым. Проверьте соединение и попробуйте снова.",
+                "The server did not confirm the pause. Do not assume monitoring has stopped. Check your connection and try again.",
+                "El servidor no confirmó la pausa. No supongas que el monitoreo se detuvo. Comprueba la conexión e inténtalo de nuevo.")
+        }
+        showStopMonitoringResult = true
+    }
+
     // MARK: - О приложении
     
     private var applicationSection: some View {

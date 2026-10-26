@@ -44,14 +44,14 @@ struct SponsoredBeneficiaryReviewView: View {
                     reviewCard(
                         titleKey: "sponsor.review.profile",
                         systemImage:
-                            "person.crop.circle.fill",
+                            "icon_Profile",
                         detail: profileSummary,
                         editor: .profile
                     )
 
                     reviewCard(
                         titleKey: "sponsor.review.contacts",
-                        systemImage: "person.2.fill",
+                        systemImage: "icon_Emergency_Contacts",
                         detail:
                             String(
                                 format:
@@ -67,21 +67,21 @@ struct SponsoredBeneficiaryReviewView: View {
 
                     reviewCard(
                         titleKey: "sponsor.review.holidays",
-                        systemImage: "sparkles",
+                        systemImage: "icon_Holidays",
                         detail: holidaySummary,
                         editor: .holidays
                     )
 
                     reviewCard(
                         titleKey: "sponsor.review.pets",
-                        systemImage: "pawprint.fill",
+                        systemImage: "icon_Pet",
                         detail: petsSummary,
                         editor: .pets
                     )
 
                     reviewCard(
                         titleKey: "sponsor.review.reminders",
-                        systemImage: "calendar.badge.clock",
+                        systemImage: "icon_Reminders",
                         detail:
                             String(
                                 format:
@@ -208,10 +208,10 @@ private var header: some View {
         editor: SponsoredReviewEditor
     ) -> some View {
         HStack(alignment: .top, spacing: 14) {
-            Image(systemName: systemImage)
-                .font(.system(size: 24))
-                .foregroundStyle(.orange)
-                .frame(width: 32)
+            Image(systemImage)
+                .resizable().scaledToFit()
+                .frame(width: 36, height: 36)
+                .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(

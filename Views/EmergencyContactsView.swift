@@ -18,7 +18,6 @@ struct EmergencyContactsView: View {
     @State private var phoneDigits = ""
     @State private var email = ""
     @State private var salutation = "Уважаемый"
-    @State private var messageLanguage: ContactMessageLanguage = .english
     @State private var contacts: [EmergencyContact] = []
 
     @State private var showPhoneError = false
@@ -45,19 +44,6 @@ struct EmergencyContactsView: View {
     @AppStorage("check_in_interval_hours")
     private var checkInIntervalHours = 0
     
-    private func petCareLocalized(_ key: String, fallback: String) -> String {
-        let language = AppLanguage.selected
-        let code: String
-        switch language {
-        case .russian: code = "ru"
-        case .englishUS: code = "en"
-        case .spanishLatinAmerica: code = "es"
-        }
-        guard let path = Bundle.main.path(forResource: code, ofType: "lproj"),
-              let bundle = Bundle(path: path) else { return fallback }
-        return bundle.localizedString(forKey: key, value: fallback, table: "Localizable")
-    }
-
     private let contactsKey = "emergency_contacts"
     
     private var isStoppingMonitoring: Bool {
@@ -257,7 +243,6 @@ struct EmergencyContactsView: View {
                 phoneDigits = ""
                 email = ""
                 salutation = "Уважаемый"
-                messageLanguage = .english
                 isContactFormExpanded = false
             } else if let editingContactID {
                 self.editingIndex =
@@ -408,9 +393,6 @@ struct EmergencyContactsView: View {
                                 phoneDigits = ""
                                 email = ""
                                 salutation = "Уважаемый"
-                             messageLanguage = .english
-                             messageLanguage = .english
-                                messageLanguage = .english
                             }
                         }
                     } label: {
@@ -635,17 +617,6 @@ struct EmergencyContactsView: View {
                                     style: .continuous
                                 )
                             )
-
-                            Picker(
-                                petCareLocalized("petcare.notificationLanguage", fallback: "Notification language"),
-                                selection: $messageLanguage
-                            ) {
-                                ForEach(ContactMessageLanguage.allCases) { language in
-                                    Text(language.displayName).tag(language)
-                                }
-                            }
-                            .pickerStyle(.menu)
-                            .tint(.brown)
                         }
                         .font(
                             .system(
@@ -819,8 +790,7 @@ struct EmergencyContactsView: View {
                                 phoneDigits: normalizedPhone,
                                 email: trimmedEmail,
                                 salutation: salutation,
-                                status: contactStatus,
-                                 messageLanguage: messageLanguage
+                                status: contactStatus
                             )
                             
                             
@@ -900,7 +870,6 @@ struct EmergencyContactsView: View {
                             email = ""
                             salutation = "Уважаемый"
                             
-                            messageLanguage = .english
                             originalEditingEmail = ""
                             
                             withAnimation(
@@ -1175,7 +1144,6 @@ struct EmergencyContactsView: View {
                             phoneDigits = contact.phoneDigits
                             email = contact.email
                             salutation = contact.salutation
-                            messageLanguage = contact.messageLanguage
                             
                             withAnimation(
                                 .easeInOut(duration: 0.22)
@@ -1194,10 +1162,11 @@ struct EmergencyContactsView: View {
                                     ProgressView()
                                         .tint(.red)
                                 } else {
-                                    Image(
-                                        systemName:
-                                            "person.2.slash.fill"
-                                    )
+                                    Image("icon_sun")
+                                        .resizable()
+                                        .renderingMode(.original)
+                                        .scaledToFit()
+                                        .frame(width: 24, height: 24)
                                 }
                                 
                                 Text(

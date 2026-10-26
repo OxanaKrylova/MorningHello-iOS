@@ -173,31 +173,31 @@ struct HolidaySettingsView: View {
         VStack(spacing: 14) {
             holidayToggle(
                 title: "Протестантские",
-                systemImage: "cross.fill",
+                systemImage: "icon_Protestant",
                 isOn: $showProtestantHolidays
             )
             
             holidayToggle(
                 title: "Православные",
-                systemImage: "building.columns.fill",
+                systemImage: "icon_Orthodox",
                 isOn: $showOrthodoxHolidays
             )
             
             holidayToggle(
                 title: "Католические",
-                systemImage: "cross.fill",
+                systemImage: "icon_Catholic",
                 isOn: $showCatholicHolidays
             )
             
             holidayToggle(
                 title: "Еврейские",
-                systemImage: "sparkles",
+                systemImage: "icon_Jew",
                 isOn: $showJewishHolidays
             )
             
             holidayToggle(
                 title: "Праздники Латинской Америки",
-                systemImage: "sun.max.fill",
+                systemImage: "icon_LA",
                 isOn: $showLatinAmericanHolidays
             )
         }
@@ -221,10 +221,14 @@ struct HolidaySettingsView: View {
         Toggle(
             isOn: isOn
         ) {
-            Label(
-                AppLanguage.selected.localized(title),
-                systemImage: systemImage
-            )
+            HStack(spacing: 12) {
+                Image(systemImage)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 34, height: 34)
+                    .accessibilityHidden(true)
+                Text(AppLanguage.selected.localized(title))
+            }
             .font(
                 .system(
                     .title3,
@@ -380,14 +384,14 @@ struct HolidaySettingsView: View {
             holidaySectionCard(
                 group: .protestant,
                 title: "Протестантские",
-                systemImage: "cross.fill",
+                systemImage: "icon_Protestant",
                 holidays: protestantHolidays
             )
             
             holidaySectionCard(
                 group: .catholic,
                 title: "Католические",
-                systemImage: "cross.fill",
+                systemImage: "icon_Catholic",
                 holidays: catholicHolidays
             )
             
@@ -395,14 +399,14 @@ struct HolidaySettingsView: View {
                 group: .orthodox,
                 title: "Православные",
                 systemImage:
-                    "building.columns.fill",
+                    "icon_Orthodox",
                 holidays: orthodoxHolidays
             )
             
             holidaySectionCard(
                 group: .jewish,
                 title: "Еврейские",
-                systemImage: "sparkles",
+                systemImage: "icon_Jew",
                 holidays: jewishHolidays
             )
         }
@@ -436,17 +440,18 @@ struct HolidaySettingsView: View {
             } label: {
                 HStack(spacing: 12) {
                     
-                    Image(
-                        systemName:
-                            systemImage
-                    )
-                    .font(
-                        .system(
-                            size: 20,
-                            weight: .semibold
-                        )
-                    )
-                    .foregroundColor(.orange)
+                    if systemImage.hasPrefix("icon_") {
+                        Image(systemImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 28, height: 28)
+                            .accessibilityHidden(true)
+                    } else {
+                        Image(systemName: systemImage)
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundColor(.orange)
+                            .frame(width: 28, height: 28)
+                    }
                     
                     Text(AppLanguage.selected.localized(title))
                         .font(

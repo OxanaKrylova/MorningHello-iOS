@@ -205,9 +205,6 @@ final class IPhoneCalendarService:
                 .requestFullAccessToEvents()
 
             refreshAuthorizationAndCalendars()
-            if hasReadAccess {
-                loadEvents(for: Date())
-            }
 
         } catch {
             authorizationStatus =
@@ -244,7 +241,6 @@ final class IPhoneCalendarService:
         }
 
         saveSelectedCalendarIdentifiers()
-        loadEvents(for: Date())
     }
 
     func selectAllCalendars() {
@@ -254,7 +250,6 @@ final class IPhoneCalendarService:
             )
 
         saveSelectedCalendarIdentifiers()
-        loadEvents(for: Date())
     }
 
     func clearCalendarSelection() {
@@ -477,36 +472,9 @@ struct IPhoneCalendarSelectionView:
                 }
             }
             .background(
-                Color(
-                    red: 1.00,
-                    green: 0.97,
-                    blue: 0.87
-                )
-                .ignoresSafeArea()
+                MorningHelloScreenBackground(name: "BG_Reminders")
             )
             .toolbar {
-                ToolbarItem(
-                    placement: .principal
-                ) {
-                    Text(
-                        localized(
-                            "iphoneCalendar.selection.title"
-                        )
-                    )
-                    .font(
-                        .system(
-                            size: 25,
-                            weight: .bold,
-                            design: .rounded
-                        )
-                    )
-                    .multilineTextAlignment(
-                        .center
-                    )
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.75)
-                }
-
                 ToolbarItem(
                     placement: .topBarTrailing
                 ) {
@@ -700,19 +668,11 @@ struct IPhoneCalendarSelectionView:
         ) {
             Spacer()
 
-            Image(
-                systemName:
-                    "calendar.badge.checkmark"
-            )
-            .font(
-                .system(
-                    size: 62,
-                    weight: .semibold
-                )
-            )
-            .foregroundStyle(
-                Color.orange
-            )
+            Image("icon_Reminders")
+                .resizable()
+                .renderingMode(.original)
+                .scaledToFit()
+                .frame(width: 72, height: 72)
 
             Text(
                 localized(

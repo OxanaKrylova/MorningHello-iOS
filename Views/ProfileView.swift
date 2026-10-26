@@ -950,8 +950,11 @@ struct ProfileView: View {
             Label {
                 Text("Дата рождения для персональной открытки")
             } icon: {
-                Image(systemName: "birthday.cake.fill")
-                    .foregroundColor(.orange)
+                Image("icon_Holidays")
+                    .resizable()
+                    .renderingMode(.original)
+                    .scaledToFit()
+                    .frame(width: 28, height: 28)
             }
             .font(
                 .system(

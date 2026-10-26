@@ -46,6 +46,10 @@
 		293CF92330594601002DACBD /* SponsorshipRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91B30594601002DACBD /* SponsorshipRootView.swift */; };
 		293CF92430594601002DACBD /* SponsorshipStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91C30594601002DACBD /* SponsorshipStore.swift */; };
 		293CF92530594601002DACBD /* SponsorshipModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293CF91A30594601002DACBD /* SponsorshipModels.swift */; };
+		293D39DD308A2A6B00458643 /* MorningHelloMonitoringAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293D39DC308A2A6B00458643 /* MorningHelloMonitoringAPIClient.swift */; };
+		293D39DF308AADFE00458643 /* AccountDeletionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293D39DE308AADFE00458643 /* AccountDeletionService.swift */; };
+		293D39E1308AAE7300458643 /* DeletedMorningHelloAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293D39E0308AAE7300458643 /* DeletedMorningHelloAccountView.swift */; };
+		293D39E4308AAFAA00458643 /* PetCareInvitationReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293D39E3308AAFAA00458643 /* PetCareInvitationReminder.swift */; };
 		294C079B3087462F00D2C920 /* InstallSecretProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C079A3087462F00D2C920 /* InstallSecretProvider.swift */; };
 		294C079C3087462F00D2C920 /* InstallationSecurityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C07993087462F00D2C920 /* InstallationSecurityState.swift */; };
 		294C079E3087464F00D2C920 /* ServerProfileRecovery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 294C079D3087464F00D2C920 /* ServerProfileRecovery.swift */; };
@@ -135,6 +139,7 @@
 		29EC924C3053143A00D9BD71 /* MoodChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC92403053143A00D9BD71 /* MoodChartView.swift */; };
 		29EC924D3053143A00D9BD71 /* MoodRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC92453053143A00D9BD71 /* MoodRepository.swift */; };
 		29EC924F3053144800D9BD71 /* SwiftDataMoodRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EC924E3053144800D9BD71 /* SwiftDataMoodRepository.swift */; };
+		29FAACB73088117B004B6900 /* AccountDeletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FAACB63088117B004B6900 /* AccountDeletionView.swift */; };
 		29FAEAF23040DE51003CFA12 /* MarchPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FAEAF13040DE51003CFA12 /* MarchPostcardProvider.swift */; };
 /* End PBXBuildFile section */
 
@@ -178,6 +183,10 @@
 		293CF91B30594601002DACBD /* SponsorshipRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipRootView.swift; sourceTree = "<group>"; };
 		293CF91C30594601002DACBD /* SponsorshipStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipStore.swift; sourceTree = "<group>"; };
 		293CF91D30594601002DACBD /* SponsorshipViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipViews.swift; sourceTree = "<group>"; };
+		293D39DC308A2A6B00458643 /* MorningHelloMonitoringAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorningHelloMonitoringAPIClient.swift; sourceTree = "<group>"; };
+		293D39DE308AADFE00458643 /* AccountDeletionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDeletionService.swift; sourceTree = "<group>"; };
+		293D39E0308AAE7300458643 /* DeletedMorningHelloAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletedMorningHelloAccountView.swift; sourceTree = "<group>"; };
+		293D39E3308AAFAA00458643 /* PetCareInvitationReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCareInvitationReminder.swift; sourceTree = "<group>"; };
 		294C07993087462F00D2C920 /* InstallationSecurityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationSecurityState.swift; sourceTree = "<group>"; };
 		294C079A3087462F00D2C920 /* InstallSecretProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallSecretProvider.swift; sourceTree = "<group>"; };
 		294C079D3087464F00D2C920 /* ServerProfileRecovery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerProfileRecovery.swift; sourceTree = "<group>"; };
@@ -268,6 +277,7 @@
 		29EC92463053143A00D9BD71 /* MoodStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodStore.swift; sourceTree = "<group>"; };
 		29EC924E3053144800D9BD71 /* SwiftDataMoodRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataMoodRepository.swift; sourceTree = "<group>"; };
 		29F44CBD303F95F10043E63A /* SubscriptionPaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPaywallView.swift; sourceTree = "<group>"; };
+		29FAACB63088117B004B6900 /* AccountDeletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDeletionView.swift; sourceTree = "<group>"; };
 		29FAEAF13040DE51003CFA12 /* MarchPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarchPostcardProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -355,7 +365,6 @@
 				291FE0403079556700535330 /* SponsoredBeneficiaryProfileView.swift */,
 				291FE04A307A26E400535330 /* SponsoredBeneficiaryReviewView.swift */,
 				291FE044307A268E00535330 /* SponsoredBeneficiaryHolidayPreferencesView.swift */,
-				291FE046307A26AA00535330 /* SponsoredBeneficiaryPetOnboardingView.swift */,
 				291FE048307A26C200535330 /* SponsoredBeneficiaryRemindersOnboardingView.swift */,
 				291FE042307A1AAE00535330 /* SponsoredBeneficiaryEmergencyContactsView.swift */,
 				291FE04C307A2EC300535330 /* SponsoredBeneficiaryPurchaseView.swift */,
@@ -370,6 +379,18 @@
 				29C28BF4307B9E0A00DD2347 /* SponsorshipUniversalLinkHandler.swift */,
 			);
 			path = Sponsorship;
+			sourceTree = "<group>";
+		};
+		293D39E2308AAF5F00458643 /* Pet */ = {
+			isa = PBXGroup;
+			children = (
+				29B788D330856E82001336C0 /* PetCareAPIClient.swift */,
+				293D39E3308AAFAA00458643 /* PetCareInvitationReminder.swift */,
+				29B788D530856E8F001336C0 /* PetCareModels.swift */,
+				2988745A3065D25200361B7D /* PetProfileView.swift */,
+				291FE046307A26AA00535330 /* SponsoredBeneficiaryPetOnboardingView.swift */,
+			);
+			path = Pet;
 			sourceTree = "<group>";
 		};
 		296D4CC03046206C000248AD /* Sounds */ = {
@@ -437,6 +458,7 @@
 				29EC923F3053141A00D9BD71 /* Mood */,
 				29B441A42F3BE23E00A4F417 /* MorningHello */,
 				29B76C76301BD28400D1D295 /* Notifications */,
+				293D39E2308AAF5F00458643 /* Pet */,
 				2976EF0F3027D63C00C0E8B1 /* Onboarding */,
 				29B441A32F3BE23E00A4F417 /* Products */,
 				296D4CC03046206C000248AD /* Sounds */,
@@ -500,7 +522,6 @@
 				29B76CA230212FD700D1D295 /* HeartbeatModels.swift */,
 				29BCCCEC302A68140027557C /* EmergencyContact.swift */,
 				29B76C71301BD0B000D1D295 /* HolidayContent.swift */,
-				29B788D530856E8F001336C0 /* PetCareModels.swift */,
 				2988747A3067141800361B7D /* ProfileDataModels.swift */,
 				29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */,
 				29B76C73301BD1F300D1D295 /* SelectedPostcard.swift */,
@@ -530,16 +551,17 @@
 		29B76C77301BD2AB00D1D295 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				29FAACB63088117B004B6900 /* AccountDeletionView.swift */,
 				29B76C5A301B6DA500D1D295 /* BirthdayGreetingView.swift */,
 				290E2524304D97FB000D4A2D /* BreathingSquareView.swift */,
+				293D39E0308AAE7300458643 /* DeletedMorningHelloAccountView.swift */,
 				292B3D5430126C50005F4183 /* FeedbackView.swift */,
+				291FE0383078CCA000535330 /* GameHubView.swift */,
 				29D0C196304CAC8C0061569D /* EmergencyContactsView.swift */,
 				29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */,
-				2988745A3065D25200361B7D /* PetProfileView.swift */,
 				29B76C42301AA86B00D1D295 /* PostcardScreen.swift */,
 				29CA8E2C300197C800F59ECA /* ProfileView.swift */,
 				296D4CDA3046B1AC000248AD /* SettingsView..swift */,
-				291FE0383078CCA000535330 /* GameHubView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -557,6 +579,7 @@
 		29BCCD02302D9F140027557C /* Backend */ = {
 			isa = PBXGroup;
 			children = (
+				293D39DE308AADFE00458643 /* AccountDeletionService.swift */,
 				29887478306713EB00361B7D /* AppInstanceIDProvider..swift */,
 				29CB1C24306ECF63009EB187 /* BackendFailureLogger.swift */,
 				29CB1C2A306ED220009EB187 /* DiagnosticLogShareSheet.swift */,
@@ -565,10 +588,10 @@
 				294C079A3087462F00D2C920 /* InstallSecretProvider.swift */,
 				29B76CA63021304700D1D295 /* HeartbeatAPIClient.swift */,
 				29B76CA43021301A00D1D295 /* HeartbeatRequestBuilder.swift */,
+				293D39DC308A2A6B00458643 /* MorningHelloMonitoringAPIClient.swift */,
 				2916AEBF305D90C0007248C3 /* MonitoringSnapshot.swift */,
 				29CB1C26306ED142009EB187 /* PendingContactReminderManager.swift */,
 				29CB1C28306ED1D9009EB187 /* PendingContactReminderHost.swift */,
-				29B788D330856E82001336C0 /* PetCareAPIClient.swift */,
 				2988747C3067144900361B7D /* ProfileDataAPIClient.swift */,
 				2988747E3067146800361B7D /* ProfileDataSyncService.swift */,
 				294C079D3087464F00D2C920 /* ServerProfileRecovery.swift */,
@@ -579,7 +602,6 @@
 		29EC923F3053141A00D9BD71 /* Mood */ = {
 			isa = PBXGroup;
 			children = (
-				29EC924E3053144800D9BD71 /* SwiftDataMoodRepository.swift */,
 				29EC92403053143A00D9BD71 /* MoodChartView.swift */,
 				29EC92413053143A00D9BD71 /* MoodCheckInView.swift */,
 				29EC92423053143A00D9BD71 /* MoodEntry.swift */,
@@ -587,6 +609,7 @@
 				29EC92453053143A00D9BD71 /* MoodRepository.swift */,
 				29EC92463053143A00D9BD71 /* MoodStore.swift */,
 				298D840F30694E9A00F94646 /* MoodCalendarView.swift */,
+				29EC924E3053144800D9BD71 /* SwiftDataMoodRepository.swift */,
 			);
 			path = Mood;
 			sourceTree = "<group>";
@@ -681,6 +704,7 @@
 				29BCCD2B3030533A0027557C /* NovemberPostcardProvider.swift in Sources */,
 				290E2525304D97FB000D4A2D /* BreathingSquareView.swift in Sources */,
 				291FE03F3079478C00535330 /* SponsoredBeneficiaryDraft.swift in Sources */,
+				293D39DF308AADFE00458643 /* AccountDeletionService.swift in Sources */,
 				2976EF133027D69B00C0E8B1 /* AppEntryView.swift in Sources */,
 				29E0059F306E390100222DE6 /* SponsorshipL10n.swift in Sources */,
 				29B76C72301BD0B000D1D295 /* HolidayContent.swift in Sources */,
@@ -748,6 +772,7 @@
 				293CF92130594601002DACBD /* SponsoredPurchaseManager.swift in Sources */,
 				293CF92230594601002DACBD /* AccountSession.swift in Sources */,
 				293CF92330594601002DACBD /* SponsorshipRootView.swift in Sources */,
+				293D39DD308A2A6B00458643 /* MorningHelloMonitoringAPIClient.swift in Sources */,
 				2988741D306332A900361B7D /* LatinAmericanHolidayProvider.swift in Sources */,
 				292FB2F3306AD3270071D95A /* ConnectionReminderFormView.swift in Sources */,
 				293CF92430594601002DACBD /* SponsorshipStore.swift in Sources */,
@@ -763,6 +788,7 @@
 				29EC924B3053143A00D9BD71 /* MoodEntry.swift in Sources */,
 				291FE043307A1AAE00535330 /* SponsoredBeneficiaryEmergencyContactsView.swift in Sources */,
 				291FE03D3079456E00535330 /* SponsorOnboardingIntroView.swift in Sources */,
+				29FAACB73088117B004B6900 /* AccountDeletionView.swift in Sources */,
 				29EC924C3053143A00D9BD71 /* MoodChartView.swift in Sources */,
 				292FB2F1306AD2EA0071D95A /* SystemContactPicker.swift in Sources */,
 				29EC924D3053143A00D9BD71 /* MoodRepository.swift in Sources */,
@@ -771,10 +797,12 @@
 				29CA8E2D300197C900F59ECA /* ProfileView.swift in Sources */,
 				29B76C8F301E9DB300D1D295 /* AugustPostcardProvider.swift in Sources */,
 				29EC86F33006AABE00E16D51 /* MessageComposerView.swift in Sources */,
+				293D39E4308AAFAA00458643 /* PetCareInvitationReminder.swift in Sources */,
 				291FE049307A26C200535330 /* SponsoredBeneficiaryRemindersOnboardingView.swift in Sources */,
 				29B788D630856E8F001336C0 /* PetCareModels.swift in Sources */,
 				29CB1C2B306ED220009EB187 /* DiagnosticLogShareSheet.swift in Sources */,
 				291FE04D307A2EC300535330 /* SponsoredBeneficiaryPurchaseView.swift in Sources */,
+				293D39E1308AAE7300458643 /* DeletedMorningHelloAccountView.swift in Sources */,
 				29CD4FAD307CC200009860A6 /* SponsorFormCloseButton.swift in Sources */,
 				29CD29F63023DBB800C72D5D /* PostcardRenderer..swift in Sources */,
 				29B76C8A301E91C000D1D295 /*  BirthdayPostcardProvider.swift in Sources */,
@@ -928,7 +956,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 02;
+				CURRENT_PROJECT_VERSION = 06;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -972,7 +1000,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 02;
+				CURRENT_PROJECT_VERSION = 06;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

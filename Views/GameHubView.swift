@@ -87,9 +87,7 @@ struct GameHubView: View {
 
     var body: some View {
         ZStack {
-            AppAdaptiveColor
-                .warmFormBackground
-                .ignoresSafeArea()
+            MorningHelloScreenBackground(name: "BG_Games")
 
             ScrollView {
                 VStack(spacing: 28) {
@@ -346,9 +344,7 @@ private struct SudokuBoardView: View {
 
     var body: some View {
         ZStack {
-            AppAdaptiveColor
-                .warmFormBackground
-                .ignoresSafeArea()
+            MorningHelloScreenBackground(name: "BG_Games")
 
             VStack(spacing: 28) {
                 ZStack {

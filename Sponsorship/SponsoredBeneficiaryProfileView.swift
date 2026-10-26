@@ -298,6 +298,9 @@ struct SponsoredBeneficiaryProfileView: View {
 
     private var header: some View {
         VStack(spacing: 10) {
+            Image("icon_Profile")
+                .resizable().scaledToFit().frame(width: 72, height: 72)
+                .accessibilityHidden(true)
             Text(
                 localized("Профиль подопечного")
             )
@@ -349,8 +352,8 @@ struct SponsoredBeneficiaryProfileView: View {
                         )
                     )
                 } icon: {
-                    Image(systemName: "person.fill")
-                        .foregroundStyle(.orange)
+                    Image("icon_Profile")
+                        .resizable().scaledToFit().frame(width: 30, height: 30)
                 }
                 .font(
                     .system(
@@ -477,8 +480,8 @@ struct SponsoredBeneficiaryProfileView: View {
                     )
                 )
             } icon: {
-                Image(systemName: "character.bubble.fill")
-                    .foregroundStyle(.orange)
+                Image("icon_Language")
+                        .resizable().scaledToFit().frame(width: 30, height: 30)
             }
             .font(
                 .system(
@@ -557,11 +560,11 @@ struct SponsoredBeneficiaryProfileView: View {
             alignment: .leading,
             spacing: 12
         ) {
-            Text(
-                localized(
-                    "Интервал тревожного оповещения"
-                )
-            )
+            HStack(spacing: 10) {
+                Image("icon_Check-In")
+                    .resizable().scaledToFit().frame(width: 30, height: 30)
+                Text(localized("Интервал тревожного оповещения"))
+            }
             .font(
                 .system(
                     .headline,
@@ -624,8 +627,8 @@ struct SponsoredBeneficiaryProfileView: View {
                     )
                 )
             } icon: {
-                Image(systemName: "phone.fill")
-                    .foregroundStyle(.orange)
+                Image("icon_telephone")
+                        .resizable().scaledToFit().frame(width: 30, height: 30)
             }
             .font(
                 .system(
@@ -705,8 +708,8 @@ struct SponsoredBeneficiaryProfileView: View {
                     localized("Страна проживания")
                 )
             } icon: {
-                Image(systemName: "globe")
-                    .foregroundStyle(.orange)
+                Image("icon_Country")
+                        .resizable().scaledToFit().frame(width: 30, height: 30)
             }
             .font(
                 .system(
@@ -791,8 +794,8 @@ struct SponsoredBeneficiaryProfileView: View {
                     )
                 )
             } icon: {
-                Image(systemName: "birthday.cake.fill")
-                    .foregroundStyle(.orange)
+                Image("icon_Holidays")
+                        .resizable().scaledToFit().frame(width: 30, height: 30)
             }
             .font(
                 .system(

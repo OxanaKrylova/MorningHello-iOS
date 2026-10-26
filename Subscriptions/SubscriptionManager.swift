@@ -174,6 +174,7 @@ final class SubscriptionManager:
     // MARK: - Refresh
 
     func refreshSubscriptionStatus() async {
+        guard !AccountDeletionState.isDeleted else { return }
 
         isLoading =
             true
@@ -645,6 +646,7 @@ final class SubscriptionManager:
 
     /// Explicit recovery from a 401 SECRET_MISMATCH; never creates a new ID.
     func recoverCurrentInstallationSecret() async {
+        guard !AccountDeletionState.isDeleted else { return }
         let identifier = AppInstanceIDProvider.getOrCreate()
         AppInstanceIDProvider.markPurchaseRecoveryRequired(for: identifier)
         var foundProof = false
@@ -906,6 +908,7 @@ final class SubscriptionManager:
     // MARK: - Refresh + Backend Sync
 
     func refreshAndSync() async {
+        guard !AccountDeletionState.isDeleted else { return }
 
         /*
          refreshSubscriptionStatus сначала выбирает
@@ -913,7 +916,8 @@ final class SubscriptionManager:
          */
 
         await refreshSubscriptionStatus()
-        guard !identityRecoveryRequired,
+        guard !AccountDeletionState.isDeleted,
+              !identityRecoveryRequired,
               !ServerProfileRecovery.shared.isRecoveryPending else { return }
 
         let appInstanceID =

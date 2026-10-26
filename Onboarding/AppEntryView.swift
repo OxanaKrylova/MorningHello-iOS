@@ -160,6 +160,8 @@ struct AppEntryView:
     private var selectedLanguageCode =
         AppLanguage.initial.rawValue
 
+    @AppStorage(AccountDeletionState.deletedAtKey) private var deletionTimestamp: Double = 0
+
     @StateObject
     private var subscriptionManager =
         SubscriptionManager.shared
@@ -195,7 +197,9 @@ struct AppEntryView:
         some View {
 
         Group {
-
+            if deletionTimestamp > 0 {
+                DeletedMorningHelloAccountView()
+            } else {
             /*
              Сначала приложение должно проверить StoreKit
              и окончательно выбрать appInstanceId.
@@ -278,6 +282,7 @@ struct AppEntryView:
 
                 personalOnboardingFlow
             }
+        }
         }
         .environment(
             \.locale,

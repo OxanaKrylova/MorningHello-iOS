@@ -142,6 +142,7 @@ struct SponsorHomeView: View {
                     .ignoresSafeArea()
                 }
 
+                ScrollView {
                 VStack(spacing: 22) {
                     HStack(alignment: .center, spacing: 10) {
                         greetingHeader
@@ -163,51 +164,6 @@ struct SponsorHomeView: View {
                     invitationCard
                         .frame(maxWidth: 340)
 
-                    ForEach(sponsorshipStore.activeSponsoringSubscriptions.filter { $0.hasBeneficiary }) { subscription in
-                        VStack(spacing: 8) {
-                            Text(subscription.productId)
-                                .font(.caption2)
-                                .foregroundStyle(.secondary)
-                                .lineLimit(1)
-                            if let beneficiaryRestoreLink = beneficiaryRestoreLinks[subscription.originalTransactionId] {
-                                ShareLink(item: beneficiaryRestoreLink) {
-                                    Label(selectedLanguage.localized("identity.sponsor.shareRestore"),
-                                          systemImage: "square.and.arrow.up")
-                                }
-                                .font(.headline)
-                            } else {
-                                Button {
-                                    Task {
-                                        restoringBeneficiary = true
-                                        beneficiaryRestoreError = nil
-                                        defer { restoringBeneficiary = false }
-                                        do {
-                                            let response = try await SponsorshipAPIClient.shared.createRestoreLink(
-                                                appInstanceId: AppInstanceIDProvider.getOrCreate(),
-                                                originalTransactionId: subscription.originalTransactionId,
-                                                language: beneficiaryDraft.profile.languageCode
-                                            )
-                                            beneficiaryRestoreLinks[subscription.originalTransactionId] = response.url
-                                        } catch {
-                                            beneficiaryRestoreError = error.localizedDescription
-                                        }
-                                    }
-                                } label: {
-                                    Label(selectedLanguage.localized("identity.sponsor.restore"),
-                                          systemImage: "lock.rotation")
-                                }
-                                .disabled(restoringBeneficiary)
-                            }
-                            if restoringBeneficiary { ProgressView() }
-                            if let beneficiaryRestoreError {
-                                Text(beneficiaryRestoreError).font(.footnote).foregroundStyle(.red)
-                            }
-                        }
-                        .frame(maxWidth: 340)
-                        .padding(12)
-                        .background(AppAdaptiveColor.warmCardBackground,
-                                    in: RoundedRectangle(cornerRadius: 18))
-                    }
 
                     VStack(spacing: 14) {
                         HStack(spacing: 24) {
@@ -272,7 +228,56 @@ struct SponsorHomeView: View {
                     }
                     .frame(maxWidth: 340)
 
-                    Spacer(minLength: 12)
+                    Spacer(minLength: 110)
+
+                    ForEach(sponsorshipStore.activeSponsoringSubscriptions.filter { $0.hasBeneficiary }) { subscription in
+                        VStack(spacing: 8) {
+                            Text(sponsorPlanDisplayName(subscription.productId))
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                                .lineLimit(1)
+                            if let beneficiaryRestoreLink = beneficiaryRestoreLinks[subscription.originalTransactionId] {
+                                ShareLink(item: beneficiaryRestoreLink) {
+                                    Label(selectedLanguage.localized("identity.sponsor.shareRestore"),
+                                          systemImage: "square.and.arrow.up")
+                                }
+                                .font(.headline)
+                            } else {
+                                Button {
+                                    Task {
+                                        restoringBeneficiary = true
+                                        beneficiaryRestoreError = nil
+                                        defer { restoringBeneficiary = false }
+                                        do {
+                                            let response = try await SponsorshipAPIClient.shared.createRestoreLink(
+                                                appInstanceId: AppInstanceIDProvider.getOrCreate(),
+                                                originalTransactionId: subscription.originalTransactionId,
+                                                language: beneficiaryDraft.profile.languageCode
+                                            )
+                                            beneficiaryRestoreLinks[subscription.originalTransactionId] = response.url
+                                        } catch {
+                                            beneficiaryRestoreError = error.localizedDescription
+                                        }
+                                    }
+                                } label: {
+                                    Label(selectedLanguage.localized("identity.sponsor.restore"),
+                                          systemImage: "lock.rotation")
+                                }
+                                .disabled(restoringBeneficiary)
+                            }
+                            if restoringBeneficiary { ProgressView() }
+                            if let beneficiaryRestoreError {
+                                Text(beneficiaryRestoreError).font(.footnote).foregroundStyle(.red)
+                            }
+                        }
+                        .frame(maxWidth: 340)
+                        .padding(12)
+                        .background(AppAdaptiveColor.warmCardBackground,
+                                    in: RoundedRectangle(cornerRadius: 18))
+                    }
+
+
+                    Spacer(minLength: 0)
                 }
                 .frame(
                     maxWidth: .infinity,
@@ -281,6 +286,8 @@ struct SponsorHomeView: View {
                 )
                 .padding(.horizontal, 20)
                 .safeAreaPadding(.top, 28)
+                .padding(.bottom, 28)
+                }
             }
         }
         .environment(
@@ -565,6 +572,24 @@ struct SponsorHomeView: View {
                 style: .continuous
             )
         )
+    }
+
+    private func sponsorPlanDisplayName(_ productID: String) -> String {
+        let duration: String
+        if productID.hasSuffix(".monthly") {
+            duration = selectedLanguage == .russian ? "1 месяц" : (selectedLanguage == .spanishLatinAmerica ? "1 mes" : "1 month")
+        } else if productID.hasSuffix(".quarterly") {
+            duration = selectedLanguage == .russian ? "3 месяца" : (selectedLanguage == .spanishLatinAmerica ? "3 meses" : "3 months")
+        } else if productID.hasSuffix(".annual") {
+            duration = selectedLanguage == .russian ? "1 год" : (selectedLanguage == .spanishLatinAmerica ? "1 año" : "1 year")
+        } else {
+            return selectedLanguage == .russian ? "Спонсорская подписка" : (selectedLanguage == .spanishLatinAmerica ? "Suscripción patrocinada" : "Sponsored subscription")
+        }
+        switch selectedLanguage {
+        case .russian: return "Подписка для близкого · " + duration
+        case .englishUS: return "For a loved one · " + duration
+        case .spanishLatinAmerica: return "Para un ser querido · " + duration
+        }
     }
 
     // Localized fallback for sponsor home labels missing from AppLanguage tables.

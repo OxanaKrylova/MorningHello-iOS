@@ -162,9 +162,6 @@ struct PostcardCatalogView: View {
 
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 8) {
-                    Image(systemName: collection.systemImage)
-                        .foregroundStyle(.orange)
-
                     Text(AppLanguage.selected.localized(collection.title))
                         .font(
                             .system(

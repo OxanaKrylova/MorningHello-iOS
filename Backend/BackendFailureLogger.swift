@@ -508,6 +508,12 @@ enum BackendLoggedRequest {
     ) {
 
         var request = request
+        if AccountDeletionState.isDeleted,
+           request.url?.host?.lowercased() == "api.morninghelloapp.com" {
+            // Never resurrect or modify a deleted ID through background work.
+            // Explicit account recovery must use its own, separately verified flow.
+            throw URLError(.userAuthenticationRequired)
+        }
         if request.url?.scheme?.lowercased() == "https",
            request.url?.host?.lowercased() == "api.morninghelloapp.com" {
             // Ensure an identity exists before the first backend call.

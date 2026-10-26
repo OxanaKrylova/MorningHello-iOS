@@ -127,14 +127,14 @@ struct MoodCheckInView: View {
                 HStack(spacing: 12) {
                     actionButton(
                         title: "Квадрат дыхания",
-                        systemImage: "wind"
+                        assetName: "icon_Breathing"
                     ) {
                         showBreathingSquare = true
                     }
 
                     actionButton(
                         title: "Календарь",
-                        systemImage: "calendar"
+                        assetName: "icon_Calendar"
                     ) {
                         showHistory = true
                     }
@@ -205,14 +205,16 @@ struct MoodCheckInView: View {
 
     private func actionButton(
         title: LocalizedStringKey,
-        systemImage: String,
+        assetName: String,
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
             VStack(spacing: 8) {
-                Image(systemName: systemImage)
-                    .font(.system(size: 24, weight: .semibold))
-                    .foregroundStyle(.orange)
+                Image(assetName)
+                    .resizable()
+                    .renderingMode(.original)
+                    .scaledToFit()
+                    .frame(width: 34, height: 34)
 
                 Text(title)
                     .font(

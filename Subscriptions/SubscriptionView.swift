@@ -182,8 +182,14 @@ struct SubscriptionView: View {
                     .padding(.bottom, 40)
                 }
             }
-            .navigationTitle("Подписка")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text(localized("Подписка"))
+                        .font(.system(size: 34, weight: .bold, design: .rounded))
+                        .foregroundStyle(AppAdaptiveColor.text)
+                }
+            }
             .toolbar {
                 ToolbarItem(
                     placement: .topBarTrailing
@@ -202,7 +208,7 @@ struct SubscriptionView: View {
         .sheet(
             isPresented: $showSubscriptionPlansInfo
         ) {
-            SubscriptionPlansInfoView()
+            SubscriptionPlansInfoView(showsSponsoredPlansOnly: mode == .sponsored)
         }
         .alert(sponsorLocalized("О спонсорском тарифе", "Sponsored plan details", "Detalles del plan patrocinado"),
                isPresented: $showSponsorPlanInfo) {
@@ -463,11 +469,11 @@ struct SubscriptionView: View {
             Group {
                 switch systemImage {
                 case "gearshape":
-                    MorningHelloArtwork(name: "bg_settings", size: 29)
+                    MorningHelloArtwork(name: "icon_Settings", size: 29)
                 case "list.bullet.rectangle.portrait":
-                    MorningHelloArtwork(name: "bg_reminders", size: 29)
+                    MorningHelloArtwork(name: "icon_Reminders", size: 29)
                 case "arrow.clockwise":
-                    MorningHelloArtwork(name: "bg_morning", size: 29)
+                    MorningHelloArtwork(name: "icon_morning", size: 29)
                 default:
                     Image(systemName: systemImage)
                         .font(.title3)
@@ -589,7 +595,7 @@ struct SubscriptionView: View {
             }
             .buttonStyle(SubscriptionActionButtonStyle())
 
-            Button { showSponsorPlanInfo = true } label: {
+            Button { showSubscriptionPlansInfo = true } label: {
                 actionButtonLabel(
                     title: sponsorLocalized("О тарифе", "Plan Details", "Detalles del plan"),
                     systemImage: "list.bullet.rectangle.portrait", imageColor: .orange, showsChevron: true)
