@@ -826,6 +826,7 @@ struct PetProfileView: View {
     @State private var caregiverStatusMessage: String?
     @State private var caregiverStatusIsError = false
     @State private var petCareContactsLoaded = false
+    @State private var showPetStopPreview = false
 
     private enum ExpandedPetSection: String {
         case caregivers, required, care, health, additional
@@ -840,36 +841,30 @@ struct PetProfileView: View {
         } label: {
             HStack(spacing: 12) {
                 Image(icon)
-                    .resizable()
-                    .renderingMode(.original)
-                    .scaledToFit()
-                    .frame(width: 30, height: 30)
+                    .resizable().renderingMode(.original).scaledToFit()
+                    .frame(width: 32, height: 32)
                 Text(title)
                     .font(.system(size: 19, weight: .bold, design: .rounded))
                     .multilineTextAlignment(.leading)
                 Spacer(minLength: 4)
                 Image(systemName: expandedPetSection == section ? "chevron.up" : "chevron.down")
                     .font(.system(size: 16, weight: .bold))
-                    .foregroundStyle(AppAdaptiveColor.text)
             }
             .foregroundStyle(AppAdaptiveColor.text)
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(
-                AppAdaptiveColor.warmCardBackground,
-                in: RoundedRectangle(cornerRadius: 18, style: .continuous)
-            )
-            .overlay {
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(.brown.opacity(0.14), lineWidth: 1)
-            }
+            .background(AppAdaptiveColor.groupedBackground,
+                        in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .overlay { RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(.gray.opacity(0.18), lineWidth: 1) }
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .accessibilityAddTraits(.isButton)
     }
 
+    
     private var selectedLanguage:
         AppLanguage {
 
@@ -930,7 +925,6 @@ struct PetProfileView: View {
             Form {
                 introductionSection
                 petCareContactsSection
-                lastSavedInformationSection
                 
                 if savedProfiles.count > 1 {
                     petSelectionSection
@@ -946,6 +940,8 @@ struct PetProfileView: View {
                 healthSection
                 additionalInformationSection
                 actionsSection
+                petMonitoringStopSection
+                lastSavedInformationSection
             }
             .scrollContentBackground(.hidden)
             .background(
@@ -987,15 +983,27 @@ struct PetProfileView: View {
                     )
                 }
 
-                ToolbarItem(
-                    placement: .cancellationAction
-                ) {
-                    Button(
-                        localized("Закрыть")
-                    ) {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
                         dismiss()
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 18, weight: .bold))
+                            .foregroundStyle(AppAdaptiveColor.text)
+                            .frame(width: 42, height: 42)
+                            .background(AppAdaptiveColor.warmCardBackground, in: Circle())
                     }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(localized("Закрыть"))
                 }
+            }
+            .alert(petCareStopText("Функция готовится", "Coming soon", "Próximamente"), isPresented: $showPetStopPreview) {
+                Button(petCareStopText("Понятно", "OK", "Aceptar"), role: .cancel) {}
+            } message: {
+                Text(petCareStopText(
+                    "Остановка только оповещений ответственных за питомцев станет доступной после обновления сервера. Данные питомцев сохраняются. Сейчас ничего не отключено.",
+                    "Stopping only pet-care alerts will be available after the server update. Pet records will be retained. Nothing has been turned off.",
+                    "La desactivación exclusiva de alertas para mascotas estará disponible tras actualizar el servidor. Los datos se conservarán. No se ha desactivado nada."))
             }
             .onAppear {
                 loadProfilesIfNeeded()
@@ -1090,23 +1098,12 @@ struct PetProfileView: View {
         return bundle.localizedString(forKey: key, value: fallback, table: "Localizable")
     }
 
-
-    private var caregiverExplanationText: String {
-        switch selectedLanguage {
-        case .russian:
-            return "Если отметка “I’m OK” будет пропущена, MorningHello сразу отправит уведомления основному и резервному ответственным за питомца — но только тем, кто заранее подтвердил согласие получать такие сообщения. Пока согласие не подтверждено, статус остаётся Pending, и уведомления не отправляются. Новая отметка “I’m OK” отменяет ещё не отправленные уведомления."
-        case .englishUS:
-            return "If an “I’m OK” check-in is missed, MorningHello will notify the primary and backup pet caregivers immediately — but only after each person has agreed to receive pet-care alerts. Until consent is confirmed, the status remains Pending and pet-care alerts are not sent. A new “I’m OK” check-in cancels any pet-care alerts that have not yet been sent."
-        case .spanishLatinAmerica:
-            return "Si se pierde una confirmación “I’m OK”, MorningHello notificará de inmediato al responsable principal y al responsable de respaldo de la mascota, pero solo después de que cada persona haya aceptado recibir estas alertas. Hasta que el consentimiento sea confirmado, el estado permanece Pending y no se envían alertas. Una nueva confirmación “I’m OK” cancela las alertas que aún no se hayan enviado."
-        }
-    }
-
     private var petCareContactsSection: some View {
         Section {
             if expandedPetSection == .caregivers {
             VStack(alignment: .leading, spacing: 12) {
-                Text(caregiverExplanationText)
+                Text(petCareString("petcare.explanation", fallback:
+                    "If you miss a check-in, your confirmed primary pet caregiver will be notified. If they do not confirm within 8 hours, the confirmed backup caregiver will be notified. A new check-in cancels all unsent notifications."))
                     .font(.subheadline)
                     .foregroundStyle(AppAdaptiveColor.text)
                     .fixedSize(horizontal: false, vertical: true)
@@ -1180,6 +1177,19 @@ struct PetProfileView: View {
             .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
     }
 
+    private func ordinaryContactStatusText(_ status: EmergencyContactStatus) -> String {
+        switch status {
+        case .confirmed:
+            return petCareStopText("Тревожный контакт: подтверждён", "Emergency contact: confirmed", "Contacto de emergencia: confirmado")
+        case .pending:
+            return petCareStopText("Тревожный контакт: ожидает подтверждения", "Emergency contact: pending", "Contacto de emergencia: pendiente")
+        case .declined:
+            return petCareStopText("Тревожный контакт: отказался", "Emergency contact: declined", "Contacto de emergencia: rechazado")
+        case .revoked:
+            return petCareStopText("Тревожный контакт: согласие отозвано", "Emergency contact: revoked", "Contacto de emergencia: revocado")
+        }
+    }
+
     private func caregiverFields(title: String, values: Binding<PetCareFormValues>) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title).font(.headline.weight(.bold))
@@ -1227,6 +1237,24 @@ struct PetProfileView: View {
                 }
             }
             .pickerStyle(.menu)
+            if let matchingContact = availableEmergencyContacts.first(where: {
+                $0.email.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() ==
+                    values.wrappedValue.email.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+                && !$0.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            }) {
+                HStack(spacing: 7) {
+                    Image(systemName: matchingContact.status == .confirmed ? "checkmark.circle.fill" : "clock.fill")
+                    Text(ordinaryContactStatusText(matchingContact.status))
+                }
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(matchingContact.status == .confirmed ? Color.green : Color.orange)
+                Text(petCareStopText(
+                    "Это статус согласия для тревожных контактов. Отдельный статус оповещений о питомцах появится после обновления сервера.",
+                    "This is the emergency-contact consent status. Separate pet-care alert authorization will be available after the server update.",
+                    "Este es el estado de consentimiento para contactos de emergencia. La autorización de alertas para mascotas estará disponible tras actualizar el servidor."))
+                    .font(.caption)
+                    .foregroundStyle(AppAdaptiveColor.secondaryText)
+            }
             if values.wrappedValue.hasSavedContact {
                 Text(petCareString("petcare.pendingConsent", fallback: "Consent: pending server confirmation"))
                     .font(.caption.weight(.semibold))
@@ -1413,17 +1441,8 @@ struct PetProfileView: View {
                 )
                 .padding(.horizontal, 16)
                 .frame(height: 54)
-                .background(AppAdaptiveColor.warmCardBackground)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 15)
-                        .stroke(.brown.opacity(0.16), lineWidth: 1)
-                }
-                .clipShape(
-                    RoundedRectangle(
-                        cornerRadius: 15,
-                        style: .continuous
-                    )
-                )
+                .background(AppAdaptiveColor.warmCardBackground, in: RoundedRectangle(cornerRadius: 15))
+                .overlay { RoundedRectangle(cornerRadius: 15).stroke(.brown.opacity(0.16), lineWidth: 1) }
             }
 
             VStack(
@@ -1469,17 +1488,8 @@ struct PetProfileView: View {
                 .labelsHidden()
                 .padding(.horizontal, 16)
                 .frame(maxWidth: .infinity, minHeight: 54, alignment: .leading)
-                .background(AppAdaptiveColor.warmCardBackground)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 15)
-                        .stroke(.brown.opacity(0.16), lineWidth: 1)
-                }
-                .clipShape(
-                    RoundedRectangle(
-                        cornerRadius: 15,
-                        style: .continuous
-                    )
-                )
+                .background(AppAdaptiveColor.warmCardBackground, in: RoundedRectangle(cornerRadius: 15))
+                .overlay { RoundedRectangle(cornerRadius: 15).stroke(.brown.opacity(0.16), lineWidth: 1) }
             }
             }
         } header: {
@@ -1726,6 +1736,38 @@ struct PetProfileView: View {
         }
     }
 
+    private func petCareStopText(_ ru: String, _ en: String, _ es: String) -> String {
+        switch selectedLanguage {
+        case .russian: return ru
+        case .englishUS: return en
+        case .spanishLatinAmerica: return es
+        }
+    }
+
+    private var petMonitoringStopSection: some View {
+        Section {
+            Button(role: .destructive) {
+                showPetStopPreview = true
+            } label: {
+                HStack(spacing: 12) {
+                    Image("icon_sun")
+                        .resizable().renderingMode(.original).scaledToFit()
+                        .frame(width: 42, height: 42)
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text(petCareStopText("Остановить мониторинг питомцев", "Stop pet monitoring", "Detener monitoreo de mascotas"))
+                            .font(.system(.headline, design: .rounded).weight(.bold))
+                            .foregroundStyle(Color.red)
+                        Text(petCareStopText(
+                            "Остановятся только сообщения ответственным за питомцев; профиль питомца и инструкции сохранятся. Доступно после обновления сервера.",
+                            "Only pet-care alerts will stop. Pet records and care instructions will remain. Available after the server update.",
+                            "Solo se detendrán las alertas a responsables de mascotas. Se conservarán los datos y las instrucciones. Disponible tras actualizar el servidor."))
+                            .font(.footnote).foregroundStyle(AppAdaptiveColor.secondaryText)
+                    }
+                }.padding(.vertical, 12)
+            }.buttonStyle(.plain)
+        }
+    }
+
     // MARK: - Кнопки
 
     private var actionsSection:
@@ -1885,11 +1927,11 @@ struct PetProfileView: View {
                     )
                     .padding(
                         .horizontal,
-                        18
+                        5
                     )
                     .padding(
                         .vertical,
-                        16
+                        8
                     )
                     .allowsHitTesting(
                         false
@@ -1902,32 +1944,17 @@ struct PetProfileView: View {
                 .frame(
                     minHeight: 90
                 )
-                .padding(.horizontal, 10)
-                .padding(.vertical, 8)
                 .scrollContentBackground(
                     .hidden
                 )
-                .background(
-                    Color.clear
-                )
+                .background(Color.clear)
             }
-            .background(
-                AppAdaptiveColor.warmCardBackground,
-                in: RoundedRectangle(
-                    cornerRadius: 16,
-                    style: .continuous
-                )
-            )
-            .overlay {
-                RoundedRectangle(
-                    cornerRadius: 16,
-                    style: .continuous
-                )
-                .stroke(
-                    .brown.opacity(0.16),
-                    lineWidth: 1
-                )
-            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 8)
+            .background(AppAdaptiveColor.warmCardBackground,
+                        in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            .overlay { RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .stroke(.brown.opacity(0.16), lineWidth: 1) }
         }
         .padding(
             .vertical,

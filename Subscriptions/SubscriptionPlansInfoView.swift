@@ -123,11 +123,6 @@ struct SubscriptionPlansInfoView: View {
                     .padding(.bottom, 40)
                 }
             }
-            .navigationTitle(
-                showsSponsoredPlansOnly
-                    ? tr("subplans.ui.sponsorTitle")
-                    : tr("subplans.ui.07")
-            )
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(
@@ -152,12 +147,11 @@ struct SubscriptionPlansInfoView: View {
             spacing: 14
         ) {
             HStack(spacing: 12) {
-                Image(
-                    systemName:
-                        "creditcard.circle.fill"
-                )
-                .font(.system(size: 38))
-                .foregroundStyle(.orange)
+                Image("icon_morning")
+                    .resizable()
+                    .renderingMode(.original)
+                    .scaledToFit()
+                    .frame(width: 46, height: 46)
                 
                 Text(
                     tr("subplans.ui.09")
@@ -287,7 +281,7 @@ struct SubscriptionPlansInfoView: View {
                 )
                 .weight(.semibold)
             )
-            .foregroundStyle(AppAdaptiveColor.text)
+            .foregroundStyle(.orange)
         }
     }
     
@@ -315,7 +309,7 @@ struct SubscriptionPlansInfoView: View {
                 )
                 .weight(.semibold)
             )
-            .foregroundStyle(AppAdaptiveColor.text)
+            .foregroundStyle(.orange)
         }
     }
     

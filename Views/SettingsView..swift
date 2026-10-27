@@ -70,7 +70,7 @@ struct SettingsView: View {
 
     @State private var showDiagnosticLogShare =
         false
-    @State private var showPetProfile = false
+    @State private var showCheckInSettings = false
     @State private var showAccountDeletion = false
     @State private var showStopMonitoringConfirmation = false
     @State private var isStoppingMonitoring = false
@@ -194,8 +194,8 @@ struct SettingsView: View {
         .sheet(isPresented: $showProfile) {
             ProfileView()
         }
-        .sheet(isPresented: $showPetProfile) {
-        PetProfileView()
+        .sheet(isPresented: $showCheckInSettings) {
+            CheckInSettingsView()
         }
         .sheet(isPresented: $showContacts) {
             EmergencyContactsView()
@@ -217,15 +217,21 @@ struct SettingsView: View {
             FeedbackView()
         }
         .sheet(isPresented: $showAccountDeletion) {
-            AccountDeletionView(mode: .personal)
+            AccountDeletionView()
         }
         .confirmationDialog(
             privacyText("Остановить мониторинг?", "Stop monitoring?", "¿Detener el monitoreo?"),
             isPresented: $showStopMonitoringConfirmation,
             titleVisibility: .visible
         ) {
-            Button(privacyText("Остановить мониторинг", "Stop Monitoring", "Detener el monitoreo"), role: .destructive) {
-                Task { await stopMonitoringFromSettings() }
+            Button(privacyText("Остановить оповещения близких", "Stop alerts to loved ones", "Detener alertas a familiares"), role: .destructive) {
+                stopMonitoringAlertTitle = privacyText("Функция готовится", "Coming soon", "Próximamente")
+                stopMonitoringAlertMessage = privacyText(
+                    "Отдельная остановка уведомлений близким будет подключена после обновления сервера. Сейчас мониторинг не изменён.",
+                    "Separate alerts for loved ones will be available after the server update. Monitoring has not changed.",
+                    "Las alertas independientes para familiares estarán disponibles tras actualizar el servidor. El monitoreo no ha cambiado."
+                )
+                showStopMonitoringResult = true
             }
             Button(privacyText("Отмена", "Cancel", "Cancelar"), role: .cancel) {}
         } message: {
@@ -352,7 +358,7 @@ struct SettingsView: View {
             VStack(spacing: 0) {
                 settingsRow(
                     title: "Профиль",
-                    subtitle: "Имя, дата рождения и интервал отметки",
+                    subtitle: "Имя, дата рождения и телефон",
                     systemImage: "person.crop.circle.fill"
                 ) {
                     showProfile = true
@@ -361,11 +367,11 @@ struct SettingsView: View {
                     .padding(.leading, 46)
 
                 settingsRow(
-                    title: "Питомец",
-                    subtitle: "Корм, лекарства и инструкции по уходу",
-                    systemImage: "pawprint.fill"
+                    title: "Отметки",
+                    subtitle: "Мой график и напоминания",
+                    systemImage: "mh-checkin-icon"
                 ) {
-                    showPetProfile = true
+                    showCheckInSettings = true
                 }
                 Divider()
                     .padding(.leading, 46)
@@ -584,13 +590,13 @@ struct SettingsView: View {
                             .resizable().renderingMode(.original).scaledToFit()
                             .frame(width: 42, height: 42)
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(privacyText("Остановить мониторинг", "Stop Monitoring", "Detener el monitoreo"))
+                            Text(privacyText("Остановить оповещения близких", "Stop alerts to loved ones", "Detener alertas a familiares"))
                                 .font(.system(.headline, design: .rounded).weight(.bold))
                                 .foregroundStyle(Color.red)
                             Text(privacyText(
-                                "Аккаунт и данные сохраняются, но сервер прекращает ожидание отметок и отправку тревожных сообщений.",
-                                "Keep the account and data while stopping server check-in monitoring and emergency alerts.",
-                                "Se conservan la cuenta y los datos; se detienen el monitoreo y las alertas de emergencia."))
+                                "Только тревожные контакты. Оповещения ответственных за питомцев продолжат работать после обновления сервера. Пока функция недоступна.",
+                                "Emergency contacts only. Pet-care alerts will remain independent after the server update. Not yet available.",
+                                "Solo contactos de emergencia. Las alertas para mascotas seguirán siendo independientes tras la actualización del servidor. Aún no disponible."))
                                 .font(.footnote).foregroundStyle(secondaryForegroundColor)
                         }
                         Spacer(minLength: 8)
@@ -751,7 +757,7 @@ struct SettingsView: View {
                     subtitle:
                         "Ошибочные обращения к серверу за последние 7 дней",
                     systemImage:
-                        "doc.text.magnifyingglass"
+                        "mh-export-icon"
                 ) {
                     prepareDiagnosticLog()
                 }
@@ -788,7 +794,9 @@ struct SettingsView: View {
         switch systemImage {
         case "person.crop.circle.fill": return "icon_Profile"
         case "pawprint.fill": return "icon_Pet"
-        case "person.2.fill": return "icon_Emergency Contacts"
+        case "person.2.fill": return "icon_trusted_person"
+        case "mh-checkin-icon": return "icon_Notification"
+        case "mh-export-icon": return "icon_Share"
         case "calendar": return "icon_Holidays"
         case "creditcard.fill": return "icon_Subscription"
         case "envelope.fill": return "icon_email"

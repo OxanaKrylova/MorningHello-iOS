@@ -55,6 +55,7 @@ struct ContentView: View {
     
     @State private var showPostcardCatalog = false
     @State private var showSettings = false
+    @State private var showPetProfile = false
     @State private var showMoodCheckIn = false
     @State private var showConnectionCalendar = false
     @State private var showEmergencyServices = false
@@ -598,6 +599,10 @@ struct ContentView: View {
 
         monitoringSnapshot =
             nil
+        CheckInDeadlineReminder.shared.synchronize(
+            snapshot: nil,
+            language: selectedLanguage
+        )
 
         serverClockOffset =
             0
@@ -1257,6 +1262,10 @@ struct ContentView: View {
         }
 
         monitoringSnapshot = response
+        CheckInDeadlineReminder.shared.synchronize(
+            snapshot: response,
+            language: selectedLanguage
+        )
         serverClockOffset = response.serverNow
             .timeIntervalSince(Date())
 
@@ -1342,6 +1351,10 @@ struct ContentView: View {
 
                 monitoringSnapshot =
                     nil
+                CheckInDeadlineReminder.shared.synchronize(
+                    snapshot: nil,
+                    language: selectedLanguage
+                )
 
                 monitoringRequestFailed =
                     false
@@ -1378,6 +1391,10 @@ struct ContentView: View {
             from: data
         ) {
             monitoringSnapshot = snapshot
+            CheckInDeadlineReminder.shared.synchronize(
+                snapshot: snapshot,
+                language: selectedLanguage
+            )
             serverClockOffset = UserDefaults.standard.double(
                 forKey: serverClockOffsetKey
             )
@@ -1438,23 +1455,10 @@ struct ContentView: View {
 
 
     func scheduleCheckInReminder() {
-        let content = UNMutableNotificationContent()
-        content.title = selectedLanguage.localized("Мы волнуемся за вас!")
-        content.body = selectedLanguage.localized(
-            "Пожалуйста, подтвердите, что с вами всё хорошо"
+        CheckInDeadlineReminder.shared.synchronize(
+            snapshot: monitoringSnapshot,
+            language: selectedLanguage
         )
-        content.sound = .default
-
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 36 * 60 * 60, repeats: false)
-
-        let request = UNNotificationRequest(
-            identifier: "check_in_reminder",
-            content: content,
-            trigger: trigger
-        )
-
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["check_in_reminder"])
-        UNUserNotificationCenter.current().add(request)
     }
 
     func isHolidayAllowed(
@@ -1533,6 +1537,7 @@ struct ContentView: View {
                                 : AppAdaptiveColor.text
                         )
 
+                    VStack(spacing: 10) {
                     Button {
                         AppSoundPlayer.shared.play(.openForm)
                         showSettings = true
@@ -1547,6 +1552,16 @@ struct ContentView: View {
                     .accessibilityLabel(
                        "Настройки"
                     )
+                    Button {
+                        AppSoundPlayer.shared.play(.openForm)
+                        showPetProfile = true
+                    } label: {
+                        MorningHelloArtwork(name: "icon_Pet", size: 36)
+                            .frame(width: 44, height: 44)
+                            .background(AppAdaptiveColor.warmCardBackground, in: Circle())
+                    }
+                    .accessibilityLabel(selectedLanguage.localized("Питомец"))
+                    }
                 }
                 .frame(maxWidth: .infinity)
 
@@ -2693,6 +2708,9 @@ struct ContentView: View {
                     .sheet(isPresented: $showSettings) {
                         SettingsView()
                     }
+                    .sheet(isPresented: $showPetProfile) {
+                        PetProfileView()
+                    }
                     .sheet(isPresented: $showMoodCheckIn) {
                         MoodCheckInView()
                     }
@@ -2778,6 +2796,7 @@ struct ContentView: View {
                         of: selectedLanguageCode
                     ) { _, _ in
                         applyHolidayPreset()
+                        scheduleCheckInReminder()
                     }
                     .onChange(of: scenePhase) { _, newPhase in
                         guard newPhase == .active else { return }

@@ -1,4 +1,9 @@
-// CheckInDeadlineReminder.swift — local reminder based on the confirmed server deadline.
+//
+// CheckInDeadlineReminder.swift
+// local reminder based on the confirmed server deadline.
+//
+//  Created by Oxana Krylova on 15/07/2026.
+//
 import Foundation
 import UserNotifications
 

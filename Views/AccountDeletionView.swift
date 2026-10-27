@@ -1,5 +1,7 @@
 // AccountDeletionView.swift
 // MorningHello — UI-only stage. No backend deletion or Keychain mutation.
+
+
 import SwiftUI
 import SwiftData
 import StoreKit
@@ -160,6 +162,21 @@ struct AccountDeletionView: View {
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
+            .overlay(alignment: .topTrailing) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 17, weight: .bold))
+                        .foregroundStyle(AppAdaptiveColor.text)
+                        .frame(width: 44, height: 44)
+                        .background(AppAdaptiveColor.warmCardBackground, in: Circle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(tr("accountDeletion.cancel"))
+                .padding(.top, 8)
+                .padding(.trailing, 18)
+            }
             .manageSubscriptionsSheet(isPresented: $showManageAppleSubscriptions)
             .alert(deletionText("Не удалось удалить аккаунт", "Account deletion failed", "No se pudo eliminar la cuenta"),
                    isPresented: $showDeletionError) {

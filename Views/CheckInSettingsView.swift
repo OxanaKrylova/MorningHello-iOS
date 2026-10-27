@@ -1,3 +1,10 @@
+//
+//  CheckInSettingsView.swift
+//  MorningHello
+//
+//  Created by Oxana Krylova on 26/10/2026.
+//
+
 import SwiftUI
 import UserNotifications
 import UIKit
@@ -30,72 +37,100 @@ struct CheckInSettingsView: View {
         }
     }
     private var hourChoices: [Int] { Array(0...23) }
+    private func choice(_ name: String, hoursValue: Int?) -> some View {
+        let active = hoursValue == hours && hoursValue != nil
+        return HStack(spacing: 12) {
+            Image(systemName: active ? "largecircle.fill.circle" : hoursValue == nil ? "lock.circle" : "circle")
+                .foregroundStyle(active ? Color.orange : AppAdaptiveColor.text)
+            Text(name).font(.system(.body, design: .rounded))
+            Spacer(minLength: 6)
+        }
+        .padding(.vertical, 6)
+        .contentShape(Rectangle())
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 20) {
+                    HStack(spacing: 14) {
+                        Image("icon_Notification")
+                            .resizable().renderingMode(.original).scaledToFit()
+                            .frame(width: 66, height: 66)
+                        Text(t("Отметки", "Check-ins", "Confirmaciones"))
+                            .font(.system(size: 34, weight: .bold, design: .rounded))
+                            .foregroundStyle(AppAdaptiveColor.text)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 32)
+
                     Text(t("Как часто вы хотите отмечаться?", "How often would you like to check in?", "¿Con qué frecuencia quieres confirmar que estás bien?"))
-                        .font(.title2.bold())
+                        .font(.system(size: 22, weight: .bold, design: .rounded))
                     VStack(alignment: .leading, spacing: 12) {
-                        ForEach([24,48,72], id: \.self) { interval in
+                        VStack(alignment: .leading, spacing: 4) {
+                            choice(t("Два раза в день", "Twice a day", "Dos veces al día"), hoursValue: nil)
+                            HStack {
+                                Text(t("До", "By", "Hasta"))
+                                Picker(t("Первое время", "First time", "Primera hora"), selection: $twiceMorning) {
+                                    ForEach(hourChoices, id: \.self) { hour in Text(String(format: "%02d:00", hour)).tag(hour) }
+                                }
+                                Text(t("и до", "and by", "y hasta"))
+                                Picker(t("Второе время", "Second time", "Segunda hora"), selection: $twiceEvening) {
+                                    ForEach(hourChoices, id: \.self) { hour in Text(String(format: "%02d:00", hour)).tag(hour) }
+                                }
+                            }
+                            .pickerStyle(.menu)
+                            .disabled(true)
+                            .opacity(0.7)
+                        }
+                        Divider()
+                        VStack(alignment: .leading, spacing: 4) {
+                            choice(t("Ежедневно ко времени", "Daily by a set time", "Diariamente a una hora fija"), hoursValue: nil)
+                            Picker(t("Время", "Time", "Hora"), selection: $dailyHour) {
+                                ForEach(hourChoices, id: \.self) { hour in Text(String(format: "%02d:00", hour)).tag(hour) }
+                            }
+                            .pickerStyle(.menu)
+                            .disabled(true)
+                            .opacity(0.7)
+                        }
+                        Divider()
+                        choice(t("Три раза в неделю (каждые 48 часов)", "Three times a week (every 48 hours)", "Tres veces por semana (cada 48 horas)"), hoursValue: nil)
+                        Divider()
+                        choice(t("Два раза в неделю (каждые 72 часа)", "Twice a week (every 72 hours)", "Dos veces por semana (cada 72 horas)"), hoursValue: nil)
+                        Divider()
+                        ForEach([24, 48, 72], id: \.self) { interval in
                             Button {
                                 hours = interval
                                 confirmed = true
                             } label: {
-                                HStack {
-                                    Image(systemName: hours == interval ? "largecircle.fill.circle" : "circle")
-                                    Text(interval == 24 ? t("Раз в сутки", "Once a day", "Una vez al día") : interval == 48 ? t("Раз в 2 дня", "Every 2 days", "Cada 2 días") : t("Раз в 3 дня", "Every 3 days", "Cada 3 días"))
-                                    Spacer()
-                                }.foregroundStyle(AppAdaptiveColor.text)
-                            }.buttonStyle(.plain)
+                                choice(interval == 24 ? t("Раз в сутки", "Once a day", "Una vez al día") : interval == 48 ? t("Раз в 2 дня", "Every 2 days", "Cada 2 días") : t("Раз в 3 дня", "Every 3 days", "Cada 3 días"), hoursValue: interval)
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
-                    .padding(18)
-                    .background(AppAdaptiveColor.warmCardBackground, in: RoundedRectangle(cornerRadius: 20))
-                    Text(t("Отсчёт начинается после принятой сервером отметки «Я в порядке». Следующий срок наступит через 24, 48 или 72 часа. Например, после отметки в 09:30 с режимом «Раз в сутки» следующая отметка нужна до 09:30 завтра.", "The timer starts after the server accepts an ‘I’m OK’ check-in. The next deadline is 24, 48 or 72 hours later. For example, a 9:30 AM daily check-in is due again at 9:30 AM tomorrow.", "El plazo comienza cuando el servidor acepta «Estoy bien». El siguiente vencimiento llega tras 24, 48 o 72 horas. Por ejemplo, una confirmación diaria a las 9:30 vence mañana a las 9:30."))
+                    .padding(20)
+                    .background(AppAdaptiveColor.warmCardBackground, in: RoundedRectangle(cornerRadius: 22))
+
+                    Text(t("Сейчас работают интервалы 24, 48 и 72 часа: отсчёт начинается после каждой принятой сервером отметки «Я в порядке». В будущих режимах можно будет выбрать два времени в день или одно ежедневное время. Вариант «три раза в неделю» использует ожидание 48 часов, «два раза в неделю» — 72 часа. Эти варианты означают интервалы между отметками, а не строго заданные дни недели. Новые режимы станут доступны после обновления сервера. Если отметка пропущена, MorningHello уведомляет назначенные контакты согласно настройкам и согласию; это не означает автоматически чрезвычайную ситуацию. Приложение не отслеживает местоположение, шаги или повседневную активность.",
+                           "The currently active intervals are 24, 48, and 72 hours: the timer starts after each server-confirmed ‘I’m OK’ check-in. Future modes will allow two times per day or one daily deadline. ‘Three times a week’ means a 48-hour interval; ‘twice a week’ means 72 hours. These are rolling intervals, not fixed weekdays. The new modes will become available after the server update. A missed check-in triggers alerts to designated contacts according to their settings and consent; it does not necessarily indicate an emergency. The app does not track your location, steps, or daily activity.",
+                           "Los intervalos disponibles actualmente son 24, 48 y 72 horas: el plazo comienza después de cada confirmación ‘Estoy bien’ aceptada por el servidor. Los futuros modos permitirán elegir dos horas al día o una hora límite diaria. ‘Tres veces por semana’ equivale a un intervalo de 48 horas y ‘dos veces por semana’ a 72 horas. Son intervalos continuos, no días fijos de la semana. Los nuevos modos estarán disponibles tras actualizar el servidor. Una confirmación omitida activa alertas a los contactos designados según su configuración y consentimiento; no significa necesariamente una emergencia. La aplicación no rastrea tu ubicación, pasos ni actividad diaria."))
                         .font(.subheadline)
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text(t("Новые режимы — скоро", "New schedules — coming soon", "Nuevos horarios — próximamente"))
-                            .font(.headline)
-                        HStack { Image(systemName: "lock.fill"); Text(t("Два раза в день", "Twice a day", "Dos veces al día")) }
-                        HStack {
-                            Text(t("До", "By", "Hasta"))
-                            Picker("Morning", selection: $twiceMorning) {
-                                ForEach(hourChoices, id: \.self) { h in Text(String(format: "%02d:00", h)).tag(h) }
-                            }
-                            Text(t("и до", "and by", "y hasta"))
-                            Picker("Evening", selection: $twiceEvening) {
-                                ForEach(hourChoices, id: \.self) { h in Text(String(format: "%02d:00", h)).tag(h) }
-                            }
-                        }.pickerStyle(.menu)
-                        Text(t("Для режима два раза в день выбираются два отдельных контрольных времени, например до 11:00 и до 21:00. Требуется самостоятельная отметка к каждому сроку.", "Twice a day uses two editable deadlines, such as 11:00 AM and 9:00 PM. Each deadline requires a separate check-in.", "Dos veces al día usa dos horas límite editables, por ejemplo 11:00 y 21:00. Cada horario requiere su propia confirmación."))
-                            .font(.footnote)
-                        Divider()
-                        HStack { Image(systemName: "lock.fill"); Text(t("Ежедневно до…", "Daily by…", "Todos los días antes de…")) }
-                        Picker(t("Выберите время", "Choose a time", "Elige la hora"), selection: $dailyHour) {
-                            ForEach(hourChoices, id: \.self) { h in Text(String(format: "%02d:00", h)).tag(h) }
-                        }.pickerStyle(.menu)
-                        Text(t("Новые графики доступны для просмотра. Они не сохраняются как действующий мониторинг до обновления Backend.", "These schedules are previews only. They cannot activate monitoring until the backend is updated.", "Estos horarios son solo una vista previa. No activan el monitoreo hasta que se actualice el servidor."))
-                            .font(.footnote)
-                    }
-                    .foregroundStyle(AppAdaptiveColor.text)
-                    .padding(18)
-                    .background(AppAdaptiveColor.warmCardBackground, in: RoundedRectangle(cornerRadius: 20))
-                    Text(t("Если отметка пропущена, сервер запускает оповещения назначенных контактов согласно их согласию. Это не доказывает, что возникла чрезвычайная ситуация. MorningHello не отслеживает ваше местоположение, шаги или повседневную активность.", "If a check-in is missed, the server starts alerts to designated contacts according to their consent. A missed check-in does not prove there is an emergency. MorningHello does not track location, steps or daily activity.", "Si falta una confirmación, el servidor inicia alertas a los contactos designados según su consentimiento. Esto no significa necesariamente que haya una emergencia. MorningHello no rastrea ubicación, pasos ni actividad cotidiana."))
-                        .font(.footnote)
+                        .foregroundStyle(AppAdaptiveColor.secondaryText)
+                        .padding(16)
+                        .background(AppAdaptiveColor.warmCardBackground, in: RoundedRectangle(cornerRadius: 18))
                     if permissionChecked && !notificationsAllowed {
                         VStack(alignment: .leading, spacing: 10) {
-                            Label(t("Разрешите уведомления для напоминания за час до срока.", "Allow notifications to receive a reminder one hour before the deadline.", "Permite las notificaciones para recibir un recordatorio una hora antes del plazo."), systemImage: "bell.slash")
+                            Label(t("Для напоминания за час до срока разрешите уведомления.", "Allow notifications for a reminder one hour before the deadline.", "Permite las notificaciones para recibir un recordatorio una hora antes del plazo."), systemImage: "bell.slash")
                             Button(t("Открыть настройки iPhone", "Open iPhone Settings", "Abrir ajustes del iPhone")) {
                                 if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
                             }.buttonStyle(.bordered)
                         }.padding(14).background(AppAdaptiveColor.warmCardBackground, in: RoundedRectangle(cornerRadius: 18))
                     }
                 }
-                .padding(20)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 32)
             }
             .background(MorningHelloScreenBackground(name: "BG_Settings"))
-            .navigationTitle(t("Отметки", "Check-ins", "Confirmaciones"))
             .toolbar { ToolbarItem(placement: .confirmationAction) { Button(t("Готово", "Done", "Listo")) { dismiss() } } }
             .onAppear(perform: refreshPermission)
             .onChange(of: scenePhase) { _, phase in if phase == .active { refreshPermission() } }

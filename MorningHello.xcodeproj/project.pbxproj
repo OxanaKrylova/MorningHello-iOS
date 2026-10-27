@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2903A48A3090D14A0072BBCF /* CheckInDeadlineReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2903A4893090D14A0072BBCF /* CheckInDeadlineReminder.swift */; };
+		2903A48C3090F0B30072BBCF /* CheckInSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2903A48B3090F0B30072BBCF /* CheckInSettingsView.swift */; };
 		290CA89F305A5CF7008BA815 /* AdaptiveColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290CA89E305A5CF7008BA815 /* AdaptiveColors.swift */; };
 		290E2525304D97FB000D4A2D /* BreathingSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 290E2524304D97FB000D4A2D /* BreathingSquareView.swift */; };
 		290E252A304E13A6000D4A2D /* Breathing_Square_2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 290E2527304E13A6000D4A2D /* Breathing_Square_2.wav */; };
@@ -144,6 +146,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2903A4893090D14A0072BBCF /* CheckInDeadlineReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInDeadlineReminder.swift; sourceTree = "<group>"; };
+		2903A48B3090F0B30072BBCF /* CheckInSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInSettingsView.swift; sourceTree = "<group>"; };
 		290CA89E305A5CF7008BA815 /* AdaptiveColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveColors.swift; sourceTree = "<group>"; };
 		290E2524304D97FB000D4A2D /* BreathingSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingSquareView.swift; sourceTree = "<group>"; };
 		290E2526304E13A6000D4A2D /* Breathing_Square_1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Breathing_Square_1.wav; sourceTree = "<group>"; };
@@ -541,6 +545,7 @@
 		29B76C76301BD28400D1D295 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				2903A4893090D14A0072BBCF /* CheckInDeadlineReminder.swift */,
 				29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */,
 				29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */,
 				29DD591F3035DCCB0067B04F /* TrialNotificationManager.swift */,
@@ -554,6 +559,7 @@
 				29FAACB63088117B004B6900 /* AccountDeletionView.swift */,
 				29B76C5A301B6DA500D1D295 /* BirthdayGreetingView.swift */,
 				290E2524304D97FB000D4A2D /* BreathingSquareView.swift */,
+				2903A48B3090F0B30072BBCF /* CheckInSettingsView.swift */,
 				293D39E0308AAE7300458643 /* DeletedMorningHelloAccountView.swift */,
 				292B3D5430126C50005F4183 /* FeedbackView.swift */,
 				291FE0383078CCA000535330 /* GameHubView.swift */,
@@ -722,6 +728,7 @@
 				297E669D30712BFD00CF3173 /* EmergencyServicesView.swift in Sources */,
 				29FAEAF23040DE51003CFA12 /* MarchPostcardProvider.swift in Sources */,
 				29EC924F3053144800D9BD71 /* SwiftDataMoodRepository.swift in Sources */,
+				2903A48C3090F0B30072BBCF /* CheckInSettingsView.swift in Sources */,
 				29CD4FAF307CC611009860A6 /* SponsoredInvitationEntryView.swift in Sources */,
 				291FE04F307A2FD600535330 /* SponsoredBeneficiaryPayload.swift in Sources */,
 				2916AEC0305D90C0007248C3 /* MonitoringSnapshot.swift in Sources */,
@@ -806,6 +813,7 @@
 				29CD4FAD307CC200009860A6 /* SponsorFormCloseButton.swift in Sources */,
 				29CD29F63023DBB800C72D5D /* PostcardRenderer..swift in Sources */,
 				29B76C8A301E91C000D1D295 /*  BirthdayPostcardProvider.swift in Sources */,
+				2903A48A3090D14A0072BBCF /* CheckInDeadlineReminder.swift in Sources */,
 				29B76C5B301B6DA500D1D295 /* BirthdayGreetingView.swift in Sources */,
 				29CB1C4D30705D94009EB187 /* MonitoringSetupIntroView.swift in Sources */,
 				2988743D30647BF500361B7D /* JulyPostcardProvider.swift in Sources */,
@@ -956,7 +964,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 06;
+				CURRENT_PROJECT_VERSION = 07;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1000,7 +1008,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 06;
+				CURRENT_PROJECT_VERSION = 07;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

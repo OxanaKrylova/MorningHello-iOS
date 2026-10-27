@@ -339,7 +339,9 @@ struct EmergencyContactsView: View {
                     
                     VStack(alignment: .leading, spacing: 8) {
                         HStack(alignment: .top, spacing: 10) {
-                            Image(systemName: "envelope.badge.fill")
+                            Image("icon_trusted_person")
+                                .resizable().renderingMode(.original).scaledToFit()
+                                .frame(width: 28, height: 28)
                                 .font(
                                     .system(
                                         size: 19,
@@ -398,12 +400,9 @@ struct EmergencyContactsView: View {
                     } label: {
                         HStack(spacing: 10) {
                             
-                            Image(
-                                systemName:
-                                    editingIndex == nil
-                                ? "person.badge.plus"
-                                : "person.crop.circle.badge.checkmark"
-                            )
+                            Image("icon_trusted_person")
+                                .resizable().renderingMode(.original).scaledToFit()
+                                .frame(width: 28, height: 28)
                             
                             Text(
                                 editingIndex == nil
@@ -938,28 +937,6 @@ struct EmergencyContactsView: View {
                     }
                     
                     
-                    // MARK: - Период оповещения
-                    // MARK: - Период оповещения
-                    VStack(alignment: .leading, spacing: 12) {
-                        
-                        Text("Период оповещения")
-                            .font(.headline)
-                        
-                        Picker("Период оповещения", selection: $checkInIntervalHours) {
-                            Text("24 часа").tag(24)
-                            Text("48 часов").tag(48)
-                            Text("72 часа").tag(72)
-                        }
-                        .pickerStyle(.segmented)
-                        
-                        Text("Выберите время, через которое мы сообщим вашим близким, если вы не отметитесь.")
-                            .font(.footnote)
-                            .foregroundColor(headerSecondaryColor)
-                        
-                    }
-                    .padding()
-                    .background(cardFillColor)
-                    .cornerRadius(16)
                     // MARK: - Список контактов
                     
                     Text("Контакты \(contacts.count)/2")

@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import UIKit
+import UserNotifications
 
 // MARK: - Форма обращения
 
@@ -48,6 +50,10 @@ struct ProfileView: View {
     
     @AppStorage("check_in_interval_confirmed")
     private var checkInIntervalConfirmed = false
+
+    @State private var notificationAuthorizationChecked = false
+    @State private var notificationsAllowed = false
+    @Environment(\.scenePhase) private var scenePhase
     
     @Environment(\.dismiss)
     private var dismiss
@@ -197,9 +203,7 @@ struct ProfileView: View {
         normalizedProfilePhone != nil &&
         !countryCode.isEmpty &&
         birthDay > 0 &&
-        birthMonth > 0 &&
-        checkInIntervalHours > 0 &&
-        checkInIntervalConfirmed
+        birthMonth > 0
     }
     
     // MARK: Основной экран
@@ -222,7 +226,6 @@ struct ProfileView: View {
 
                             nameSection
 
-                            checkInIntervalSection
 
                             phoneSection
 
@@ -492,8 +495,9 @@ struct ProfileView: View {
                     Label {
                         Text("Как обращаться в сообщении?")
                     } icon: {
-                        Image(systemName: "text.bubble.fill")
-                            .foregroundColor(.orange)
+                        Image("icon_Language")
+                            .resizable().renderingMode(.original).scaledToFit()
+                            .frame(width: 26, height: 26)
                     }
                     .font(
                         .system(
@@ -566,59 +570,129 @@ struct ProfileView: View {
         .profileCard()
     }
     
-    // MARK: - Интервал тревожного оповещения
-    
+    // MARK: - Период отметок: действующие серверные интервалы 24 / 48 / 72 ч
+
+    private func rhythmText(_ ru: String, _ en: String, _ es: String) -> String {
+        switch selectedLanguage {
+        case .russian: return ru
+        case .englishUS: return en
+        case .spanishLatinAmerica: return es
+        }
+    }
+
+    private func refreshNotificationPermission() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            let allowed: Bool
+            switch settings.authorizationStatus {
+            case .authorized, .provisional, .ephemeral:
+                allowed = true
+            default:
+                allowed = false
+            }
+            DispatchQueue.main.async {
+                notificationsAllowed = allowed
+                notificationAuthorizationChecked = true
+            }
+        }
+    }
+
+    private func openIPhoneNotificationSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+        UIApplication.shared.open(url)
+    }
+
     private var checkInIntervalSection: some View {
-        VStack(
-            alignment: .leading,
-            spacing: 12
-        ) {
-            Text("Интервал тревожного оповещения")
-                .font(
-                    .system(
-                        .headline,
-                        design: .rounded
-                    )
-                )
-            
-            Text(
-                "Выберите, через сколько часов без новой отметки «Я в порядке» нужно предупредить тревожные контакты."
-            )
-            .font(.subheadline)
-            .foregroundColor(.secondary)
-            
+        VStack(alignment: .leading, spacing: 14) {
+            Text(rhythmText("Как часто вы хотите отмечаться?",
+                            "How often would you like to check in?",
+                            "¿Con qué frecuencia quieres confirmar que estás bien?"))
+                .font(.system(.title3, design: .rounded).weight(.bold))
+                .foregroundStyle(AppAdaptiveColor.text)
+
             Picker(
-                "Интервал",
+                rhythmText("Период отметок", "Check-in frequency", "Frecuencia de confirmación"),
                 selection: $checkInIntervalHours
             ) {
-                Text("Выберите интервал")
-                    .tag(0)
-                
-                Text("24 часа")
-                    .tag(24)
-                
-                Text("48 часов")
-                    .tag(48)
-                
-                Text("72 часа")
-                    .tag(72)
+                Text(rhythmText("Выберите период", "Choose a frequency", "Elige la frecuencia")).tag(0)
+                Text(rhythmText("Раз в сутки", "Once a day", "Una vez al día")).tag(24)
+                Text(rhythmText("Раз в 2 дня", "Every 2 days", "Cada 2 días")).tag(48)
+                Text(rhythmText("Раз в 3 дня", "Every 3 days", "Cada 3 días")).tag(72)
             }
             .pickerStyle(.menu)
-            .onChange(
-                of: checkInIntervalHours
-            ) { _, newValue in
-                if newValue == 24 ||
-                    newValue == 48 ||
-                    newValue == 72 {
+            .tint(.orange)
+            .onChange(of: checkInIntervalHours) { _, value in
+                if [24, 48, 72].contains(value) {
                     checkInIntervalConfirmed = true
                 }
             }
+
+            Text(rhythmText(
+                "Отсчёт начинается после каждой подтверждённой сервером отметки «Я в порядке». Например, если вы отметились сегодня в 09:30 и выбрали «Раз в сутки», следующая отметка нужна до 09:30 завтра. Для двух и трёх дней срок наступит через 48 или 72 часа соответственно. Это не фиксированное время утра.",
+                "The countdown starts after each ‘I'm OK’ check-in accepted by the server. For example, if you check in today at 9:30 AM and choose ‘Once a day’, your next check-in is due by 9:30 AM tomorrow. The other options mean 48 or 72 hours. This is not a fixed morning time.",
+                "La cuenta regresiva comienza después de cada confirmación «Estoy bien» aceptada por el servidor. Por ejemplo, si confirmas hoy a las 9:30 y eliges «Una vez al día», la próxima confirmación vence mañana a las 9:30. Las otras opciones equivalen a 48 o 72 horas. No es una hora fija por la mañana."
+            ))
+            .font(.subheadline)
+            .foregroundStyle(AppAdaptiveColor.secondaryText)
+            .fixedSize(horizontal: false, vertical: true)
+
+            Text(rhythmText(
+                "Если отметка не поступит к сроку, сервер считает её пропущенной и запускает оповещение назначенных тревожных контактов по действующим правилам согласия. Пропуск не означает, что с вами обязательно случилась беда. MorningHello не отслеживает ваше местоположение, шаги или повседневную активность.",
+                "If the check-in is not received by the deadline, the server marks it as missed and begins notifying your designated emergency contacts according to the applicable consent rules. A missed check-in does not necessarily mean an emergency. MorningHello does not track your location, steps, or daily activity.",
+                "Si la confirmación no llega a tiempo, el servidor la marca como omitida e inicia las alertas a tus contactos de emergencia designados según las reglas de consentimiento. Omitir una confirmación no significa necesariamente que haya una emergencia. MorningHello no rastrea tu ubicación, pasos ni actividad cotidiana."
+            ))
+            .font(.footnote)
+            .foregroundStyle(AppAdaptiveColor.secondaryText)
+            .fixedSize(horizontal: false, vertical: true)
+
+            if notificationAuthorizationChecked && !notificationsAllowed {
+                VStack(alignment: .leading, spacing: 10) {
+                    Label {
+                        Text(rhythmText(
+                            "Чтобы получить напоминание на iPhone за час до окончания периода, разрешите уведомления для MorningHello.",
+                            "To receive an iPhone reminder one hour before the deadline, allow notifications for MorningHello.",
+                            "Para recibir un recordatorio en el iPhone una hora antes del plazo, permite las notificaciones de MorningHello."
+                        ))
+                    } icon: {
+                        Image(systemName: "bell.slash.fill")
+                    }
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(AppAdaptiveColor.text)
+
+                    Button(action: openIPhoneNotificationSettings) {
+                        Label(
+                            rhythmText("Открыть настройки iPhone", "Open iPhone Settings", "Abrir ajustes del iPhone"),
+                            systemImage: "gearshape.fill"
+                        )
+                        .font(.subheadline.weight(.semibold))
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(.orange)
+                }
+                .padding(12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(
+                    AppAdaptiveColor.warmCardBackground,
+                    in: RoundedRectangle(cornerRadius: 14)
+                )
+            } else if notificationsAllowed {
+                Label(
+                    rhythmText(
+                        "Напоминание на iPhone придёт за 1 час до следующей отметки, если до неё осталось достаточно времени.",
+                        "Your iPhone will remind you one hour before the next check-in, provided there is enough time remaining.",
+                        "El iPhone te recordará una hora antes de la próxima confirmación, siempre que quede tiempo suficiente."
+                    ),
+                    systemImage: "bell.badge.fill"
+                )
+                .font(.footnote)
+                .foregroundStyle(AppAdaptiveColor.secondaryText)
+            }
         }
-        .frame(
-            maxWidth: .infinity,
-            alignment: .leading
-        )
+        .frame(maxWidth: .infinity, alignment: .leading)
         .profileCard()
+        .onAppear(perform: refreshNotificationPermission)
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { refreshNotificationPermission() }
+        }
     }
 
     // MARK: - Телефон пользователя
@@ -951,9 +1025,7 @@ struct ProfileView: View {
                 Text("Дата рождения для персональной открытки")
             } icon: {
                 Image("icon_Holidays")
-                    .resizable()
-                    .renderingMode(.original)
-                    .scaledToFit()
+                    .resizable().renderingMode(.original).scaledToFit()
                     .frame(width: 28, height: 28)
             }
             .font(
