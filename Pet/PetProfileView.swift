@@ -763,7 +763,7 @@ private struct PetCareFormValues {
         PetCareResponsibleContact(
             id: id, role: role, firstName: firstName, lastName: lastName,
             phone: phone, email: email, messageLanguage: messageLanguage,
-            status: .pending
+            status: .confirmed // Temporary local UI status; not server consent.
         )
     }
 }

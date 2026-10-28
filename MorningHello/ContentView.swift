@@ -1518,7 +1518,7 @@ struct ContentView: View {
     }
     var welcomeScreen: some View {
         ZStack(alignment: .top) {
-            VStack(spacing: 22) {
+            VStack(spacing: 12) {
 
                 HStack(spacing: 8) {
                     Text(timeGreeting)

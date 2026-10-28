@@ -554,12 +554,11 @@ struct SponsoredBeneficiaryProfileView: View {
     private var beneficiaryScheduleInfoButton: some View {
         Button { showBeneficiaryScheduleInfo = true } label: {
             HStack(spacing: 12) {
-                Image("icon_Notification")
-                    .resizable().scaledToFit().frame(width: 36, height: 36)
+                Image("icon_Notification").resizable().scaledToFit().frame(width: 36, height: 36)
                 VStack(alignment: .leading, spacing: 4) {
                     Text(scheduleWord("Отметки", "Check-ins", "Confirmaciones"))
                         .font(.system(.title3, design: .rounded).weight(.semibold))
-                    Text(scheduleWord("График подопечного (просмотр)", "Beneficiary schedule (view only)", "Horario del beneficiario (solo lectura)"))
+                    Text(scheduleWord("График выбирает подопечный", "Chosen by the beneficiary", "Elegido por el beneficiario"))
                         .font(.footnote).foregroundStyle(AppAdaptiveColor.secondaryText)
                 }
                 Spacer()
@@ -567,75 +566,56 @@ struct SponsoredBeneficiaryProfileView: View {
             }
             .foregroundStyle(AppAdaptiveColor.text)
             .padding(16)
+            .frame(maxWidth: .infinity)
             .background(AppAdaptiveColor.warmCardBackground,
                         in: RoundedRectangle(cornerRadius: 20))
         }
         .buttonStyle(.plain)
         .sheet(isPresented: $showBeneficiaryScheduleInfo) {
             NavigationStack {
-                VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: 18) {
                     HStack(spacing: 12) {
-                        Image("icon_Notification").resizable().scaledToFit().frame(width: 55, height: 55)
+                        Image("icon_Notification").resizable().scaledToFit().frame(width: 58, height: 58)
                         Text(scheduleWord("Отметки", "Check-ins", "Confirmaciones"))
-                            .font(.system(size: 31, weight: .bold, design: .rounded))
+                            .font(.system(size: 34, weight: .bold, design: .rounded))
                     }
-                    Text(scheduleWord("Текущий график", "Current schedule", "Horario actual"))
-                        .font(.headline)
-                    Text(scheduleDescription)
-                        .font(.title3.weight(.semibold))
-                    VStack(alignment: .leading, spacing: 14) {
-                        scheduleOption(24, "Раз в сутки", "Once a day", "Una vez al día")
-                        scheduleOption(48, "Раз в 2 дня", "Every 2 days", "Cada 2 días")
-                        scheduleOption(72, "Раз в 3 дня", "Every 3 days", "Cada 3 días")
-                        Divider()
-                        HStack {
-                            Image(systemName: "lock.fill")
-                            Text(scheduleWord("Дважды в день — скоро", "Twice a day — coming soon", "Dos veces al día — próximamente"))
+                    ForEach(scheduleLabels, id: \.self) { label in
+                        HStack(spacing: 12) {
+                            Image(systemName: "circle").foregroundStyle(AppAdaptiveColor.secondaryText)
+                            Text(label).font(.system(size: 17, design: .rounded))
+                            Spacer()
                         }
-                        HStack {
-                            Image(systemName: "lock.fill")
-                            Text(scheduleWord("Ежедневно к выбранному времени — скоро", "Daily by selected time — coming soon", "Todos los días a una hora elegida — próximamente"))
-                        }
+                        .padding(.vertical, 8)
                     }
                     .padding(18)
-                    .background(AppAdaptiveColor.warmCardBackground, in: RoundedRectangle(cornerRadius: 20))
+                    .background(AppAdaptiveColor.warmCardBackground,
+                                in: RoundedRectangle(cornerRadius: 20))
                     Text(scheduleWord(
-                        "График определяет сам подопечный. Спонсор не может изменить время или частоту его отметок.",
-                        "The beneficiary controls their own schedule. A sponsor cannot change check-in frequency or deadlines.",
-                        "El beneficiario controla su propio horario. El patrocinador no puede cambiar la frecuencia ni los plazos de las confirmaciones."))
-                        .foregroundStyle(.secondary)
+                        "Расписание выбирает сам подопечный во время своего онбординга. Спонсор не может устанавливать или менять его график. Для режимов три и два раза в неделю сервер использует интервалы 48 и 72 часа соответственно.",
+                        "The beneficiary chooses their own schedule during onboarding. The sponsor cannot set or change it. The three- and two-times-a-week options use 48- and 72-hour intervals respectively.",
+                        "El beneficiario elige su horario durante el registro. El patrocinador no puede configurarlo ni cambiarlo. Las opciones de tres y dos veces por semana usan intervalos de 48 y 72 horas, respectivamente."))
+                        .font(.footnote)
+                        .foregroundStyle(AppAdaptiveColor.secondaryText)
                     Spacer()
                 }
                 .padding(24)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 .background(MorningHelloScreenBackground(name: "BG_Reminders"))
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button(scheduleWord("Готово", "Done", "Listo")) { showBeneficiaryScheduleInfo = false }
+                        Button(scheduleWord("Закрыть", "Close", "Cerrar")) { showBeneficiaryScheduleInfo = false }
                     }
                 }
             }
         }
     }
 
-    private func scheduleOption(_ hours: Int, _ ru: String, _ en: String, _ es: String) -> some View {
-        HStack(spacing: 12) {
-            Image(systemName: checkInIntervalHours == hours ? "largecircle.fill.circle" : "circle")
-                .foregroundStyle(checkInIntervalHours == hours ? Color.orange : AppAdaptiveColor.secondaryText)
-            Text(scheduleWord(ru, en, es))
-                .font(.system(size: 17, design: .rounded))
-            Spacer()
-        }
-        .accessibilityElement(children: .combine)
-    }
-
-    private var scheduleDescription: String {
-        switch checkInIntervalHours {
-        case 24: return scheduleWord("Раз в сутки (24 часа)", "Once a day (24 hours)", "Una vez al día (24 horas)")
-        case 48: return scheduleWord("Раз в 2 дня (48 часов)", "Every 2 days (48 hours)", "Cada 2 días (48 horas)")
-        case 72: return scheduleWord("Раз в 3 дня (72 часа)", "Every 3 days (72 hours)", "Cada 3 días (72 horas)")
-        default: return scheduleWord("Не задан", "Not set", "Sin configurar")
-        }
+    private var scheduleLabels: [String] {
+        [
+            scheduleWord("Два раза в день", "Twice a day", "Dos veces al día"),
+            scheduleWord("Ежедневно до выбранного времени", "Every day by a selected time", "Cada día antes de la hora elegida"),
+            scheduleWord("Три раза в неделю", "Three times a week", "Tres veces por semana"),
+            scheduleWord("Два раза в неделю", "Twice a week", "Dos veces por semana")
+        ]
     }
 
     private func scheduleWord(_ ru: String, _ en: String, _ es: String) -> String {
