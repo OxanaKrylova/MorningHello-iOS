@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct SponsoredBeneficiaryPetOnboardingView: View {
+    @Environment(\.dismiss) private var dismiss
 
     @Binding
     var draft: SponsoredBeneficiaryDraft
@@ -91,6 +92,17 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
+                    HStack {
+                        Spacer()
+                        Button { dismiss() } label: {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundStyle(AppAdaptiveColor.text)
+                                .frame(width: 44, height: 44)
+                                .background(AppAdaptiveColor.warmCardBackground, in: Circle())
+                        }
+                        .accessibilityLabel(selectedLanguage.localized("Закрыть"))
+                    }
                     header
 
                     if !pets.isEmpty {
@@ -274,22 +286,6 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
                 }
                 .pickerStyle(.menu)
                 .tint(.orange)
-                .padding(.horizontal, 14)
-                .frame(maxWidth: .infinity, minHeight: 54, alignment: .leading)
-                .background(
-                    AppAdaptiveColor.warmFormBackground,
-                    in: RoundedRectangle(
-                        cornerRadius: 16,
-                        style: .continuous
-                    )
-                )
-                .overlay {
-                    RoundedRectangle(
-                        cornerRadius: 16,
-                        style: .continuous
-                    )
-                    .stroke(.brown.opacity(0.16), lineWidth: 1)
-                }
             }
 
             multilineField(
@@ -400,7 +396,7 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
                     Image(systemName: expandedSection == section ? "chevron.up" : "chevron.down")
                         .font(.headline)
                 }
-                .foregroundStyle(AppAdaptiveColor.text)
+                .foregroundStyle(Color.orange)
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
@@ -410,17 +406,13 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(AppAdaptiveColor.secondaryBackground,
                     in: RoundedRectangle(cornerRadius: 26))
-        .overlay {
-            RoundedRectangle(cornerRadius: 26, style: .continuous)
-                .stroke(.brown.opacity(0.14), lineWidth: 1)
-        }
     }
 
     private var caregiversSection: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(careText("Если отметка “I’m OK” будет пропущена, MorningHello сразу уведомит основного и резервного ответственных за питомца, но только после того, как каждый из них подтвердит согласие получать такие сообщения. До подтверждения согласия уведомления не отправляются.",
-                          "If an “I’m OK” check-in is missed, MorningHello will notify the primary and backup pet caregivers immediately, but only after each person has agreed to receive these alerts. Until consent is confirmed, no pet-care alert is sent.",
-                          "Si se pierde una confirmación “I’m OK”, MorningHello notificará de inmediato al responsable principal y al responsable de respaldo de la mascota, pero solo después de que cada persona confirme que acepta recibir estas alertas. Hasta entonces, no se envían alertas."))
+            Text(careText("Ответственные сохраняются в черновике подопечного на этом iPhone. Приглашения и оповещения пока не отправляются.",
+                          "Caregivers are saved in this beneficiary draft on this iPhone. Invitations and alerts are not yet sent.",
+                          "Los responsables se guardan en el borrador del beneficiario en este iPhone. Aún no se envían invitaciones ni alertas."))
                 .font(.footnote).foregroundStyle(.secondary)
             caregiverFields(title: careText("Основной ответственный", "Primary caregiver", "Responsable principal"), caregiver: $primaryCaregiver)
             Divider()
@@ -457,10 +449,6 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
                 .padding(12)
                 .background(AppAdaptiveColor.warmFormBackground,
                             in: RoundedRectangle(cornerRadius: 14))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .stroke(.brown.opacity(0.16), lineWidth: 1)
-                }
             }
             .disabled(draft.emergencyContacts.isEmpty)
             caregiverInput(careText("Имя", "First name", "Nombre"), text: caregiver.firstName)
@@ -483,10 +471,6 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
             .padding(14)
             .background(AppAdaptiveColor.warmFormBackground,
                         in: RoundedRectangle(cornerRadius: 15))
-            .overlay {
-                RoundedRectangle(cornerRadius: 15, style: .continuous)
-                    .stroke(.brown.opacity(0.16), lineWidth: 1)
-            }
     }
 
     private func loadCaregivers() {
@@ -531,7 +515,7 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
                 .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
-            .tint(.orange)
+            .tint(.blue)
             .controlSize(.large)
 
             if pets.count
@@ -557,24 +541,26 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
                     )
                     .frame(maxWidth: .infinity)
                 }
-                .buttonStyle(.bordered)
-                .tint(.orange)
+                .buttonStyle(.borderedProminent)
+                .tint(.blue)
                 .controlSize(.large)
             }
 
             if pets.contains(
                 where: { $0.id == currentPet.id }
             ) {
-                Button(role: .destructive) {
+                Button {
                     deleteCurrentPet()
                 } label: {
                     Label(
-                        selectedLanguage.localized(
-                            "sponsor.pet.delete"
-                        ),
+                        selectedLanguage.localized("sponsor.pet.delete"),
                         systemImage: "trash"
                     )
+                    .frame(maxWidth: .infinity)
                 }
+                .buttonStyle(.borderedProminent)
+                .tint(.blue)
+                .controlSize(.large)
             }
         }
     }
@@ -653,13 +639,6 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
                     style: .continuous
                 )
             )
-            .overlay {
-                RoundedRectangle(
-                    cornerRadius: 16,
-                    style: .continuous
-                )
-                .stroke(.brown.opacity(0.16), lineWidth: 1)
-            }
         }
     }
 
@@ -681,13 +660,6 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
                         style: .continuous
                     )
                 )
-                .overlay {
-                    RoundedRectangle(
-                        cornerRadius: 16,
-                        style: .continuous
-                    )
-                    .stroke(.brown.opacity(0.16), lineWidth: 1)
-                }
         }
     }
 

@@ -144,8 +144,7 @@ struct SponsoredBeneficiaryDraft:
             && isPhoneValid
             && profile.birthDay > 0
             && profile.birthMonth > 0
-            && profile.checkInIntervalHours > 0
-            && profile.checkInIntervalConfirmed
+            // The beneficiary chooses their own check-in schedule.
     }
 }
 

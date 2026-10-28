@@ -88,7 +88,7 @@ struct SponsoredBeneficiaryHolidayPreferencesView:
                             subtitleKey:
                                 "sponsor.holidays.protestant.subtitle",
                             systemImage:
-                                "icon_Protestant",
+                                "cross.fill",
                             isOn:
                                 $preferences.showProtestantHolidays
                         )
@@ -101,7 +101,7 @@ struct SponsoredBeneficiaryHolidayPreferencesView:
                             subtitleKey:
                                 "sponsor.holidays.orthodox.subtitle",
                             systemImage:
-                                "icon_Orthodox",
+                                "building.columns.fill",
                             isOn:
                                 $preferences.showOrthodoxHolidays
                         )
@@ -114,7 +114,7 @@ struct SponsoredBeneficiaryHolidayPreferencesView:
                             subtitleKey:
                                 "sponsor.holidays.catholic.subtitle",
                             systemImage:
-                                "icon_Catholic",
+                                "cross.case.fill",
                             isOn:
                                 $preferences.showCatholicHolidays
                         )
@@ -127,7 +127,7 @@ struct SponsoredBeneficiaryHolidayPreferencesView:
                             subtitleKey:
                                 "sponsor.holidays.jewish.subtitle",
                             systemImage:
-                                "icon_Jew",
+                                "star.fill",
                             isOn:
                                 $preferences.showJewishHolidays
                         )
@@ -140,7 +140,7 @@ struct SponsoredBeneficiaryHolidayPreferencesView:
                             subtitleKey:
                                 "sponsor.holidays.latinAmerican.subtitle",
                             systemImage:
-                                "icon_LA",
+                                "sparkles",
                             isOn:
                                 $preferences.showLatinAmericanHolidays
                         )
@@ -253,11 +253,15 @@ struct SponsoredBeneficiaryHolidayPreferencesView:
     ) -> some View {
         Toggle(isOn: isOn) {
             HStack(spacing: 14) {
-                Image(systemImage)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 34, height: 34)
-                    .accessibilityHidden(true)
+                Image(systemName: systemImage)
+                    .font(
+                        .system(
+                            size: 23,
+                            weight: .semibold
+                        )
+                    )
+                    .foregroundStyle(Color.orange)
+                    .frame(width: 30)
 
                 VStack(
                     alignment: .leading,
@@ -308,6 +312,27 @@ struct SponsoredBeneficiaryHolidayPreferencesView:
                 "О праздничных открытках", "About holiday postcards", "Sobre las postales festivas"
             ))
             .font(.headline.weight(.bold))
+
+            VStack(alignment: .leading, spacing: 12) {
+                Group {
+                    Text(holidayText("Протестантские праздники: специальные открытки к протестантским праздникам и воскресеньям.",
+                                     "Protestant holidays: special postcards for Protestant celebrations and Sundays.",
+                                     "Festividades protestantes: postales especiales para celebraciones protestantes y domingos."))
+                    Text(holidayText("Православные праздники: православный календарь, Пасха и связанные с ней дни.",
+                                     "Orthodox holidays: the Orthodox calendar, Easter, and related observances.",
+                                     "Festividades ortodoxas: calendario ortodoxo, Pascua y celebraciones relacionadas."))
+                    Text(holidayText("Католические праздники: католический календарь, Великий пост и Адвент.",
+                                     "Catholic holidays: the Catholic calendar, Lent, and Advent.",
+                                     "Festividades católicas: calendario católico, Cuaresma y Adviento."))
+                    Text(holidayText("Еврейские праздники: праздники, посты и открытки к Шабату.",
+                                     "Jewish holidays: celebrations, fasts, and Shabbat postcards.",
+                                     "Festividades judías: celebraciones, ayunos y postales de Shabat."))
+                    Text(holidayText("Праздники Латинской Америки: региональные праздничные открытки.",
+                                     "Latin American holidays: regional holiday postcards.",
+                                     "Festividades latinoamericanas: postales de celebraciones regionales."))
+                }
+                .font(.subheadline)
+            }
 
             Text(holidayText(
                 "Нейтральные и международные праздничные открытки доступны независимо от выбранных категорий.",

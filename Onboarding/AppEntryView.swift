@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import SwiftData
-import StoreKit
 
 struct AppEntryView:
     View {
@@ -57,6 +56,9 @@ struct AppEntryView:
     )
     private var checkInIntervalConfirmed =
         false
+
+    @AppStorage("check_in_schedule_onboarding_completed_v4")
+    private var checkInScheduleOnboardingCompleted = false
 
     @AppStorage(
         "contacts_onboarding_completed"
@@ -160,17 +162,12 @@ struct AppEntryView:
     private var selectedLanguageCode =
         AppLanguage.initial.rawValue
 
-    @AppStorage(AccountDeletionState.deletedAtKey) private var deletionTimestamp: Double = 0
-
     @StateObject
     private var subscriptionManager =
         SubscriptionManager.shared
 
     @Environment(\.modelContext)
     private var modelContext
-
-    @StateObject private var installationSecurity = InstallationSecurityState.shared
-    @StateObject private var serverProfileRecovery = ServerProfileRecovery.shared
 
     @StateObject
     private var sponsorshipStore = SponsorshipStore.shared
@@ -197,9 +194,7 @@ struct AppEntryView:
         some View {
 
         Group {
-            if deletionTimestamp > 0 {
-                DeletedMorningHelloAccountView()
-            } else {
+
             /*
              Сначала приложение должно проверить StoreKit
              и окончательно выбрать appInstanceId.
@@ -212,15 +207,6 @@ struct AppEntryView:
                 .hasLoadedSubscriptionStatus {
 
                 subscriptionLoadingView
-
-            } else if installationSecurity.errorCode != nil {
-                installationSecurityView
-
-            } else if subscriptionManager.identityRecoveryRequired {
-                identityRecoveryView
-
-            } else if serverProfileRecovery.isRecoveryPending {
-                profileRecoveryView
 
             } else if shouldShowSubscriptionRetry && !hasPendingInvitation &&
                         !sponsorshipStore.hasActiveSponsoredAccess {
@@ -283,7 +269,6 @@ struct AppEntryView:
                 personalOnboardingFlow
             }
         }
-        }
         .environment(
             \.locale,
             selectedAppLocale
@@ -315,92 +300,6 @@ struct AppEntryView:
 
             refreshEmergencyContacts()
         }
-    }
-
-    private var installationSecurityView: some View {
-        VStack(spacing: 16) {
-            Image(systemName: "lock.shield.fill").font(.system(size: 48))
-            Text(selectedLanguage.localized("identity.restore.title")).font(.title2.bold())
-            Text(selectedLanguage.localized(
-                installationSecurity.errorCode == "SECRET_REQUIRED"
-                ? "identity.restore.missingSecret"
-                : "identity.restore.mismatch"
-            ))
-            .multilineTextAlignment(.center)
-            Button(selectedLanguage.localized("identity.restore.retry")) {
-                Task { await subscriptionManager.recoverCurrentInstallationSecret() }
-            }
-            .buttonStyle(.borderedProminent)
-            Button(selectedLanguage.localized("identity.restore.purchases")) {
-                Task {
-                    do {
-                        try await AppStore.sync()
-                        await subscriptionManager.recoverCurrentInstallationSecret()
-                    } catch {
-                        // StoreKit displays its own authentication sheet; the
-                        // ordinary retry remains available after cancellation.
-                    }
-                }
-            }
-            .buttonStyle(.bordered)
-            if let message = subscriptionManager.identityRecoveryMessage {
-                Text(message).font(.footnote).foregroundStyle(.secondary)
-            }
-        }
-        .padding(28)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(MorningHelloScreenBackground(name: "BG_Onboarding"))
-    }
-
-    private var profileRecoveryView: some View {
-        VStack(spacing: 18) {
-            Image(systemName: "person.crop.circle.badge.clock").font(.system(size: 46))
-            Text(selectedLanguage.localized("identity.profile.title")).font(.title2.bold())
-            Text(selectedLanguage.localized("identity.profile.message"))
-                .multilineTextAlignment(.center)
-            if let serverError = serverProfileRecovery.lastError {
-                Text(serverError).font(.footnote).foregroundStyle(.secondary)
-            }
-            Button(selectedLanguage.localized("identity.restore.retry")) {
-                Task { await serverProfileRecovery.retryPendingIfNeeded() }
-            }
-            .buttonStyle(.borderedProminent)
-        }
-        .padding(28)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(MorningHelloScreenBackground(name: "BG_Onboarding"))
-    }
-
-    private var identityRecoveryView: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "lock.shield")
-                .font(.system(size: 46))
-            Text(selectedLanguage.localized("identity.restore.title"))
-                .font(.title2.bold())
-            Text(selectedLanguage.localized("identity.restore.message"))
-                .multilineTextAlignment(.center)
-            if let message = subscriptionManager.identityRecoveryMessage {
-                Text(message).font(.footnote).foregroundStyle(.secondary)
-            }
-            Button(selectedLanguage.localized("identity.restore.retry")) {
-                Task { await subscriptionManager.refreshAndSync() }
-            }
-            .buttonStyle(.borderedProminent)
-            Button(selectedLanguage.localized("identity.restore.purchases")) {
-                Task {
-                    do {
-                        try await AppStore.sync()
-                        await subscriptionManager.refreshAndSync()
-                    } catch {
-                        // Keep the recovery screen; user can retry later.
-                    }
-                }
-            }
-            .buttonStyle(.bordered)
-        }
-        .padding(28)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(MorningHelloScreenBackground(name: "BG_Onboarding"))
     }
 
     // MARK: - Sponsored beneficiary activation
@@ -475,8 +374,11 @@ struct AppEntryView:
                 birthDay = prefill.profile.birthDay
                 birthMonth = prefill.profile.birthMonth
                 savedSalutation = prefill.profile.salutation
-                checkInIntervalHours = prefill.profile.checkInIntervalHours
-                checkInIntervalConfirmed = true
+                // The sponsor's legacy interval must NOT set the beneficiary's schedule.
+                checkInIntervalHours = 0
+                checkInIntervalConfirmed = false
+                UserDefaults.standard.removeObject(forKey: "check_in_schedule_mode_v4")
+                checkInScheduleOnboardingCompleted = false
                 selectedLanguageCode = prefill.profile.languageCode
 
                 // Contact synchronization does not send a heartbeat.
@@ -522,7 +424,14 @@ struct AppEntryView:
 
             ProfileView()
 
-        // Шаг 3 – Тревожные контакты
+        // Шаг 3 – Независимый выбор расписания (также для подопечного).
+        } else if !checkInScheduleOnboardingCompleted {
+
+            CheckInSettingsView(isOnboarding: true) {
+                checkInScheduleOnboardingCompleted = true
+            }
+
+        // Шаг 4 – Тревожные контакты
         } else if !contactsOnboardingCompleted {
 
             EmergencyContactsView(
@@ -1032,9 +941,7 @@ struct AppEntryView:
             !trimmedName.isEmpty &&
             !trimmedSalutation.isEmpty &&
             birthDay > 0 &&
-            birthMonth > 0 &&
-            checkInIntervalHours > 0 &&
-            checkInIntervalConfirmed
+            birthMonth > 0
         )
     }
 

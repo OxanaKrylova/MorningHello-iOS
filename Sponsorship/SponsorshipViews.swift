@@ -69,6 +69,9 @@ struct SponsorHomeView: View {
     private var showBeneficiaryContacts = false
 
     @State
+    private var showBeneficiaryPets = false
+
+    @State
     private var showBeneficiaryHolidays = false
 
     @State
@@ -198,15 +201,12 @@ struct SponsorHomeView: View {
 
                         HStack(spacing: 24) {
                             Button {
-                                showBeneficiaryHolidays = true
+                                showBeneficiaryPets = true
                             } label: {
                                 sponsorActionLabel(
-                                    titleKey:
-                                        "sponsor.home.holidays.title",
-                                    subtitleKey:
-                                        "sponsor.home.holidays.subtitle",
-                                    systemImage:
-                                        "icon_Holidays"
+                                    titleKey: "sponsor.home.pets.title",
+                                    subtitleKey: "sponsor.home.pets.subtitle",
+                                    systemImage: "icon_Pet"
                                 )
                             }
                             .buttonStyle(.plain)
@@ -228,7 +228,7 @@ struct SponsorHomeView: View {
                     }
                     .frame(maxWidth: 340)
 
-                    Spacer(minLength: 110)
+                    Spacer(minLength: 12)
 
                     ForEach(sponsorshipStore.activeSponsoringSubscriptions.filter { $0.hasBeneficiary }) { subscription in
                         VStack(spacing: 8) {
@@ -318,6 +318,15 @@ struct SponsorHomeView: View {
                 onContinue: {
                     reloadBeneficiaryDraft()
                     showBeneficiaryContacts = false
+                }
+            )
+        }
+        .sheet(isPresented: $showBeneficiaryPets) {
+            SponsoredBeneficiaryPetOnboardingView(
+                draft: $beneficiaryDraft,
+                onContinue: {
+                    reloadBeneficiaryDraft()
+                    showBeneficiaryPets = false
                 }
             )
         }
@@ -600,6 +609,10 @@ struct SponsorHomeView: View {
         let isSpanish = language.hasPrefix("es")
 
         switch key {
+        case "sponsor.home.pets.title":
+            return isRussian ? "Питомцы" : (isSpanish ? "Mascotas" : "Pets")
+        case "sponsor.home.pets.subtitle":
+            return isRussian ? "Уход и ответственные" : (isSpanish ? "Cuidados y responsables" : "Care and caregivers")
         case "sponsor.home.holidays.title":
             return isRussian ? "Праздники" : (isSpanish ? "Festividades" : "Holidays")
         case "sponsor.home.holidays.subtitle":
@@ -893,7 +906,17 @@ private struct SponsorLanguageSettingsView: View {
             }
             .scrollContentBackground(.hidden)
             .background(MorningHelloScreenBackground(name: "BG_Settings"))
-            .navigationTitle(tr("Настройки", "Settings", "Configuración"))
+            .navigationTitle("")
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    HStack(spacing: 10) {
+                        Image("icon_Settings").resizable().scaledToFit().frame(width: 34, height: 34)
+                        Text(tr("Настройки", "Settings", "Configuración"))
+                            .font(.system(size: 30, weight: .bold, design: .rounded))
+                            .foregroundStyle(AppAdaptiveColor.text)
+                    }
+                }
+            }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
