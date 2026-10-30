@@ -177,6 +177,10 @@ struct SponsoredBeneficiaryPurchaseView: View {
             return "For a Loved One — " + (duration == "month" ? "1 Month" : duration == "quarter" ? "3 Months" : "1 Year")
         case .spanishLatinAmerica:
             return "Para un ser querido — " + (duration == "month" ? "1 mes" : duration == "quarter" ? "3 meses" : "1 año")
+        case .hebrew:
+            return "עבור אדם קרוב – " +
+                (duration == "month" ? "חודש אחד" :
+                 duration == "quarter" ? "3 חודשים" : "שנה אחת")
         }
     }
 
@@ -186,6 +190,8 @@ struct SponsoredBeneficiaryPurchaseView: View {
         case .russian: return "Доступ к MorningHello для одного близкого"
         case .englishUS: return "MorningHello access for one loved one"
         case .spanishLatinAmerica: return "Acceso a MorningHello para un ser querido"
+        case .hebrew:
+            return "גישה ל-MorningHello עבור אדם קרוב אחד"
         }
     }
 

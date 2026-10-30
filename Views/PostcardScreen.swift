@@ -191,7 +191,7 @@ struct PostcardScreen: View {
                                 Image(systemName: "pencil")
                                     .font(.title3)
 
-                                Text("Напиши")
+                                Text(AppLanguage.selected.localized("Напиши"))
                                     .font(
                                         .system(
                                             size: 11,
@@ -209,7 +209,7 @@ struct PostcardScreen: View {
                             .clipShape(Circle())
                         }
                         .accessibilityLabel(
-                            "Написать текст на открытке"
+                            AppLanguage.selected.localized("Написать текст на открытке")
                         )
 
                         Button {
@@ -294,6 +294,8 @@ struct PostcardScreen: View {
                 isCustomMessageFocused = false
             }
         }
+        .environment(\.locale, AppLanguage.selected.locale)
+        .environment(\.layoutDirection, AppLanguage.selected.isRightToLeft ? .rightToLeft : .leftToRight)
         .ignoresSafeArea()
         .ignoresSafeArea(
             .keyboard,
@@ -548,7 +550,7 @@ struct PostcardScreen: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 12) {
 
-                Text("Напиши текст для открытки")
+                Text(AppLanguage.selected.localized("Напиши текст для открытки"))
                     .font(
                         .system(
                             .headline,
@@ -560,7 +562,7 @@ struct PostcardScreen: View {
                 ZStack(alignment: .topLeading) {
 
                     if customMessage.isEmpty {
-                        Text("Напиши пару тёплых слов...")
+                        Text(AppLanguage.selected.localized("Напиши пару тёплых слов..."))
                             .font(
                                 .system(
                                     .body,
@@ -622,13 +624,13 @@ struct PostcardScreen: View {
                 Spacer()
             }
             .padding(20)
-            .navigationTitle("Текст открытки")
+            .navigationTitle(AppLanguage.selected.localized("Текст открытки"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(
                     placement: .topBarTrailing
                 ) {
-                    Button("Готово") {
+                    Button(AppLanguage.selected.localized("Готово")) {
                         isCustomMessageFocused = false
                         showCustomMessageEditor = false
                     }

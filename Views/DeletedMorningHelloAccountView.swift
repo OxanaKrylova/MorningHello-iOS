@@ -12,6 +12,8 @@ struct DeletedMorningHelloAccountView: View {
         case .russian: return ru
         case .englishUS: return en
         case .spanishLatinAmerica: return es
+        case .hebrew:
+            return en
         }
     }
     var body: some View {

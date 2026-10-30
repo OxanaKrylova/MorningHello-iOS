@@ -49,6 +49,10 @@ struct SettingsView: View {
             return active
                 ? "Tu ser querido paga tu acceso a MorningHello. El patrocinador administra la suscripción."
                 : "Tu acceso patrocinado no está confirmado actualmente. Comunícate con la persona que contrató la suscripción."
+        case .hebrew:
+            return active
+                ? "אדם קרוב משלם עבור הגישה שלך ל-MorningHello. ניהול המינוי נמצא באחריות נותן החסות."
+                : "הגישה הממומנת שלך אינה מאושרת כרגע. יש לפנות לאדם שרכש עבורך את המינוי."
         }
     }
 
@@ -57,6 +61,8 @@ struct SettingsView: View {
         case .russian: return "Спонсорский доступ"
         case .englishUS: return "Sponsored access"
         case .spanishLatinAmerica: return "Acceso patrocinado"
+        case .hebrew:
+            return "גישה ממומנת"
         }
     }
 
@@ -575,6 +581,8 @@ struct SettingsView: View {
         case .russian: return ru
         case .englishUS: return en
         case .spanishLatinAmerica: return es
+        case .hebrew:
+            return en
         }
     }
 

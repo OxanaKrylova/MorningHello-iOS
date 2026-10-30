@@ -43,6 +43,8 @@ struct ConnectionReminderFormView: View {
         case .russian: return ru
         case .englishUS: return en
         case .spanishLatinAmerica: return es
+        case .hebrew:
+            return en
         }
     }
 
@@ -237,6 +239,8 @@ struct ConnectionReminderFormView: View {
         case .russian: return "Из доверенных контактов"
         case .englishUS: return "From Trusted Contacts"
         case .spanishLatinAmerica: return "De contactos de confianza"
+        case .hebrew:
+            return "מתוך אנשי הקשר המהימנים"
         }
     }
 
@@ -245,6 +249,8 @@ struct ConnectionReminderFormView: View {
         case .russian: return "Выберите доверенный контакт"
         case .englishUS: return "Select a trusted contact"
         case .spanishLatinAmerica: return "Selecciona un contacto de confianza"
+        case .hebrew:
+            return "בחרו איש קשר מהימן"
         }
     }
 

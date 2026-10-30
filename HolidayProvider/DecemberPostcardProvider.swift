@@ -43,6 +43,9 @@ struct DecemberPostcardProvider {
         case .englishUS,
              .spanishLatinAmerica:
             imagePrefix = "DecemberUSA_"
+            
+        case .hebrew:
+            imagePrefix = "DecemberUSA_"
         }
 
         let images = (1...26).map {
@@ -147,6 +150,8 @@ struct DecemberPostcardProvider {
 
         case .spanishLatinAmerica:
             phrases = spanishPhrases
+        case .hebrew:
+            phrases = englishPhrases
         }
 
         let availableCount = min(

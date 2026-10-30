@@ -2587,8 +2587,34 @@ struct ContentView: View {
             currentPostcard.image
         }
 
+    // Hebrew everyday greetings use a separate, predictable local-calendar rule.
+    // Holiday and birthday postcards preserve their own priority and imagery.
+    private var usesHebrewPostcardGreetings: Bool {
+        selectedLanguageCode.lowercased().hasPrefix("he")
+    }
+
+    private var hebrewOrdinaryPostcardPhrase: String {
+        let today = Date()
+        let weekday = Calendar.current.component(.weekday, from: today)
+        if weekday == 1 { return "שבוע טוב" }
+        let greetings = ["בוקר טוב", "יום טוב", "בהצלחה", "יום מקסים", "יום נעים"]
+        return greetings[stableDailyIndex(count: greetings.count, salt: 1207, date: today)]
+    }
+
     var smartPhrase: String {
-        selectedLanguage.localized(currentPostcard.phrase)
+        guard usesHebrewPostcardGreetings else {
+            return selectedLanguage.localized(currentPostcard.phrase)
+        }
+        // Do not replace birthday cards or enabled holiday postcards.
+        if birthdayContent() != nil || holidayContent() != nil ||
+            (showJewishHolidays && hanukkahContent() != nil) {
+            return selectedLanguage.localized(currentPostcard.phrase)
+        }
+        // A selected Shabbat card takes precedence over ordinary greetings.
+        if showJewishHolidays && currentShabbatContent() != nil {
+            return "שבת שלום"
+        }
+        return hebrewOrdinaryPostcardPhrase
     }
         var postcardScreen: some View {
             PostcardScreen(

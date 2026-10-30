@@ -78,6 +78,9 @@ struct HeartbeatRequestBuilder {
 
         case .spanishLatinAmerica:
             backendLanguage = .es419
+            
+        case .hebrew:
+            backendLanguage = .en
         }
         
         return HeartbeatRequest(

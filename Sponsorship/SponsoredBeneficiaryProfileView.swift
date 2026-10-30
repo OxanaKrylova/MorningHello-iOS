@@ -249,6 +249,8 @@ struct SponsoredBeneficiaryProfileView: View {
                 }
             }
         }
+        .environment(\.locale, AppLanguage.selected.locale)
+        .environment(\.layoutDirection, AppLanguage.selected.isRightToLeft ? .rightToLeft : .leftToRight)
         .interactiveDismissDisabled()
         .sheet(
             isPresented: $showCountrySelection
@@ -1064,6 +1066,9 @@ struct SponsoredBeneficiaryProfileView: View {
 
         case .spanishLatinAmerica:
             return "Español (Latinoamérica)"
+
+        case .hebrew:
+            return "עברית"
         }
     }
 }

@@ -64,6 +64,11 @@ struct SponsoredBeneficiaryHolidayPreferencesView:
 
             case .englishUS, .none:
                 initialValue = .init(showProtestantHolidays: true)
+                
+            case .hebrew:
+                initialValue = .init(
+                    showJewishHolidays: true
+                )
             }
         }
 
@@ -345,6 +350,8 @@ struct SponsoredBeneficiaryHolidayPreferencesView:
         case .russian: return ru
         case .englishUS: return en
         case .spanishLatinAmerica: return es
+        case .hebrew:
+            return en
         }
     }
 
@@ -553,6 +560,11 @@ struct SponsoredBeneficiaryHolidayPreferencesView:
              .none:
             return .init(
                 showProtestantHolidays: true
+            )
+            
+        case .hebrew:
+            return .init(
+                showJewishHolidays: true
             )
         }
     }

@@ -44,14 +44,14 @@ struct SponsoredBeneficiaryReviewView: View {
                     reviewCard(
                         titleKey: "sponsor.review.profile",
                         systemImage:
-                            "icon_Profile",
+                            "person.crop.circle.fill",
                         detail: profileSummary,
                         editor: .profile
                     )
 
                     reviewCard(
                         titleKey: "sponsor.review.contacts",
-                        systemImage: "icon_Emergency_Contacts",
+                        systemImage: "person.2.fill",
                         detail:
                             String(
                                 format:
@@ -67,21 +67,21 @@ struct SponsoredBeneficiaryReviewView: View {
 
                     reviewCard(
                         titleKey: "sponsor.review.holidays",
-                        systemImage: "icon_Holidays",
+                        systemImage: "sparkles",
                         detail: holidaySummary,
                         editor: .holidays
                     )
 
                     reviewCard(
                         titleKey: "sponsor.review.pets",
-                        systemImage: "icon_Pet",
+                        systemImage: "pawprint.fill",
                         detail: petsSummary,
                         editor: .pets
                     )
 
                     reviewCard(
                         titleKey: "sponsor.review.reminders",
-                        systemImage: "icon_Reminders",
+                        systemImage: "calendar.badge.clock",
                         detail:
                             String(
                                 format:
@@ -208,10 +208,10 @@ private var header: some View {
         editor: SponsoredReviewEditor
     ) -> some View {
         HStack(alignment: .top, spacing: 14) {
-            Image(systemImage)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 35, height: 35)
+            Image(systemName: systemImage)
+                .font(.system(size: 24))
+                .foregroundStyle(.orange)
+                .frame(width: 32)
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(
@@ -382,6 +382,8 @@ private var header: some View {
             return "English (US)"
         case .spanishLatinAmerica:
             return "Español (Latinoamérica)"
+        case .hebrew:
+            return "עברית"
         }
     }
 

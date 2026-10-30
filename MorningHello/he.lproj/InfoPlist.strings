@@ -1,10 +1,3 @@
-/* 
-  InfoPlist.strings
-  MorningHello
-
-  Created by Oxana Krylova on 03/10/2026.
-  
-*/
-"NSCameraUsageDescription" = "MorningHello uses the camera to photograph your pet’s food.";
-
-"NSCalendarsFullAccessUsageDescription" = "MorningHello reads events only from the calendars you select to show today's plans after check-in. Calendar events stay on this iPhone and are not sent to the server.";
+/* Hebrew localization – MorningHello */
+"NSCameraUsageDescription" = "MorningHello משתמשת במצלמה כדי לצלם את המזון של חיית המחמד שלך.";
+"NSCalendarsFullAccessUsageDescription" = "MorningHello קוראת אירועים רק מהיומנים שבחרת, כדי להציג את התוכניות להיום לאחר אישור שהכול בסדר. אירועי היומן נשארים ב-iPhone ואינם נשלחים לשרת.";

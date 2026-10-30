@@ -92,10 +92,11 @@ struct SponsoredInvitationEntryView: View {
     private func submit() {
         let input = invitationURL.trimmingCharacters(in: .whitespacesAndNewlines)
         guard let url = URL(string: input),
-              SponsorshipUniversalLinkHandler.link(from: url) != nil else {
+              SponsorshipUniversalLinkHandler.token(from: url) != nil else {
             validationMessage = tr("Enter a valid MorningHello invitation link.",
                                    "Введите правильную ссылку приглашения MorningHello.",
                                    "Introduce un enlace de invitación válido de MorningHello.")
+            
             return
         }
         validationMessage = nil

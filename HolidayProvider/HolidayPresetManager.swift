@@ -61,6 +61,15 @@ enum HolidayPresetManager {
                 latinAmerican: true,
                 defaults: defaults
             )
+        case .hebrew:
+            apply(
+                protestant: false,
+                orthodox: false,
+                catholic: false,
+                jewish: true,
+                latinAmerican: false,
+                defaults: defaults
+            )
         }
 
         defaults.set(

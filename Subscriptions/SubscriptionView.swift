@@ -134,6 +134,10 @@ struct SubscriptionView: View {
                 string:
                     "https://www.morninghelloapp.com/terms-and-conditions"
             )!
+        case .hebrew:
+            return URL(
+                string: "https://www.morninghelloapp.com/terms-and-conditions"
+            )!
         }
     }
 
@@ -149,6 +153,10 @@ struct SubscriptionView: View {
             return URL(
                 string:
                     "https://www.morninghelloapp.com/privacy-policy"
+            )!
+        case .hebrew:
+            return URL(
+                string: "https://www.morninghelloapp.com/privacy-policy"
             )!
         }
     }
@@ -515,6 +523,8 @@ struct SubscriptionView: View {
         case .russian: return ru
         case .englishUS: return en
         case .spanishLatinAmerica: return es
+        case .hebrew:
+            return en
         }
     }
 

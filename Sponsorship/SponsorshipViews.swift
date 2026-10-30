@@ -598,6 +598,8 @@ struct SponsorHomeView: View {
         case .russian: return "Подписка для близкого · " + duration
         case .englishUS: return "For a loved one · " + duration
         case .spanishLatinAmerica: return "Para un ser querido · " + duration
+        case .hebrew:
+            return "עבור אדם קרוב · " + duration
         }
     }
 
@@ -692,6 +694,8 @@ struct SponsorHomeView: View {
         case .russian: return "Настройки"
         case .englishUS: return "Settings"
         case .spanishLatinAmerica: return "Configuración"
+        case .hebrew:
+            return "הגדרות"
         }
     }
 
@@ -780,6 +784,8 @@ struct SponsorHomeView: View {
 
         case .spanishLatinAmerica:
             return "Enlace válido hasta \(formattedDate)"
+        case .hebrew:
+            return "הקישור תקף עד \(formattedDate)"
         }
     }
 
@@ -827,6 +833,21 @@ struct SponsorHomeView: View {
 
             No compartas este enlace con otras personas.
             """
+            
+        case .hebrew:
+            return """
+            שלום \(beneficiaryDisplayName)!
+
+            הכנתי עבורך את MorningHello.
+
+            להורדת האפליקציה:
+            \(websiteURL)
+
+            לאחר התקנת האפליקציה, יש לפתוח את הקישור האישי הזה ולהדביק אותו באפליקציה:
+            \(invitationURL.absoluteString)
+
+            אין לשתף את הקישור הזה עם אנשים אחרים.
+            """
         }
     }
 }
@@ -847,6 +868,8 @@ private struct SponsorLanguageSettingsView: View {
         case .russian: return ru
         case .englishUS: return en
         case .spanishLatinAmerica: return es
+        case .hebrew:
+            return en
         }
     }
 

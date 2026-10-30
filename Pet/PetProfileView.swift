@@ -1106,6 +1106,8 @@ struct PetProfileView: View {
         case .russian: code = "ru"
         case .englishUS: code = "en"
         case .spanishLatinAmerica: code = "es"
+        case .hebrew:
+            code = "he"
         }
         guard let path = Bundle.main.path(forResource: code, ofType: "lproj"),
               let bundle = Bundle(path: path) else { return fallback }
@@ -1755,6 +1757,8 @@ struct PetProfileView: View {
         case .russian: return ru
         case .englishUS: return en
         case .spanishLatinAmerica: return es
+        case .hebrew:
+            return en
         }
     }
 

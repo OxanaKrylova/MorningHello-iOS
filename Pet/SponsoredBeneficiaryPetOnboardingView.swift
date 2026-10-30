@@ -357,6 +357,8 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
         case .russian: return "Кто позаботится о моих питомцах?"
         case .englishUS: return "Who will care for my pets?"
         case .spanishLatinAmerica: return "¿Quién cuidará de mis mascotas?"
+        case .hebrew:
+            return "מי יטפל בחיות המחמד שלי?"
         }
     }
 
@@ -365,6 +367,8 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
         case .russian: return ru
         case .englishUS: return en
         case .spanishLatinAmerica: return es
+        case .hebrew:
+            return en
         }
     }
 

@@ -234,7 +234,7 @@ struct ProfileView: View {
                             birthdaySection
 
                             Text(
-                                "Данные профиля сохраняются на устройстве и синхронизируются с защищённым сервером MorningHello."
+                                profileText("Данные профиля сохраняются на устройстве и синхронизируются с защищённым сервером MorningHello.")
                             )
                             .font(
                                 .system(
@@ -272,6 +272,8 @@ struct ProfileView: View {
                 for: .navigationBar
             )
         }
+        .environment(\.locale, selectedLanguage.locale)
+        .environment(\.layoutDirection, selectedLanguage.isRightToLeft ? .rightToLeft : .leftToRight)
         .interactiveDismissDisabled(
             !canCloseProfile
         )
@@ -325,7 +327,7 @@ struct ProfileView: View {
         VStack(spacing: 8) {
             MorningHelloArtwork(name: "icon_Profile", size: 86)
             
-            Text("Профиль")
+            Text(profileText("Профиль"))
                 .font(
                     .system(
                         size: 34,
@@ -336,7 +338,7 @@ struct ProfileView: View {
                 .foregroundColor(headerTitleColor)
             
             Text(
-                "Эти данные помогут персонализировать открытки и тревожные сообщения."
+                profileText("Эти данные помогут персонализировать открытки и тревожные сообщения.")
             )
             .font(
                 .system(
@@ -414,7 +416,7 @@ struct ProfileView: View {
             
             VStack(alignment: .leading, spacing: 12) {
                 Label {
-                    Text("Как нам к вам обращаться?")
+                    Text(profileText("Как нам к вам обращаться?"))
                 } icon: {
                     MorningHelloArtwork(name: "icon_Profile", size: 28)
                 }
@@ -428,7 +430,7 @@ struct ProfileView: View {
                 .foregroundColor(AppAdaptiveColor.text)
                 
                 TextField(
-                    "Например, Анна или Анна Петрова",
+                    profileText("Например, Анна или Анна Петрова"),
                     text: $displayName
                 )
                 .focused(
@@ -463,7 +465,7 @@ struct ProfileView: View {
                 
                 HStack(alignment: .top) {
                     Text(
-                        "Напишите имя так, чтобы близкие поняли, от кого пришло тревожное сообщение."
+                        profileText("Напишите имя так, чтобы близкие поняли, от кого пришло тревожное сообщение.")
                     )
                     .frame(
                         maxWidth: .infinity,
@@ -493,7 +495,7 @@ struct ProfileView: View {
             VStack(alignment: .leading, spacing: 11) {
                 HStack(spacing: 4) {
                     Label {
-                        Text("Как обращаться в сообщении?")
+                        Text(profileText("Как обращаться в сообщении?"))
                     } icon: {
                         Image("icon_Language")
                             .resizable().renderingMode(.original).scaledToFit()
@@ -513,7 +515,7 @@ struct ProfileView: View {
                 .foregroundColor(AppAdaptiveColor.text)
                 
                 Text(
-                    "Это обязательное поле. Оно нужно для правильного текста тревожного сообщения."
+                    profileText("Это обязательное поле. Оно нужно для правильного текста тревожного сообщения.")
                 )
                 .font(
                     .system(
@@ -524,7 +526,7 @@ struct ProfileView: View {
                 .foregroundColor(AppAdaptiveColor.secondaryText)
                 
                 Picker(
-                    "Форма обращения",
+                    profileText("Форма обращения"),
                     selection: $savedSalutation
                 ) {
                     ForEach(
@@ -542,7 +544,7 @@ struct ProfileView: View {
                 
                 if savedSalutation.isEmpty {
                     Label(
-                        "Выберите один из двух вариантов",
+                        profileText("Выберите один из двух вариантов"),
                         systemImage: "exclamationmark.circle.fill"
                     )
                     .font(
@@ -554,7 +556,7 @@ struct ProfileView: View {
                     .foregroundColor(.red.opacity(0.75))
                 } else {
                     Label(
-                        "Форма обращения сохранена",
+                        profileText("Форма обращения сохранена"),
                         systemImage: "checkmark.circle.fill"
                     )
                     .font(
@@ -577,6 +579,7 @@ struct ProfileView: View {
         case .russian: return ru
         case .englishUS: return en
         case .spanishLatinAmerica: return es
+        case .hebrew: return selectedLanguage.localized(ru)
         }
     }
 
@@ -1022,7 +1025,7 @@ struct ProfileView: View {
     private var birthdaySection: some View {
         VStack(alignment: .leading, spacing: 14) {
             Label {
-                Text("Дата рождения для персональной открытки")
+                Text(profileText("Дата рождения для персональной открытки"))
             } icon: {
                 Image("icon_Holidays")
                     .resizable().renderingMode(.original).scaledToFit()
@@ -1079,7 +1082,7 @@ struct ProfileView: View {
             }
             
             Text(
-                "Год рождения не требуется. Приложение использует только день и месяц."
+                profileText("Год рождения не требуется. Приложение использует только день и месяц.")
             )
             .font(
                 .system(

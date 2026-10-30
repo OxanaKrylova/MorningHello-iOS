@@ -24,6 +24,8 @@ enum SubscriptionPaywallMode: Equatable {
 
         case .spanishLatinAmerica:
             return "Background_Pricing_ES"
+        case .hebrew:
+            return "Background_Pricing_EN"
         }
     }
 
@@ -484,6 +486,8 @@ enum SubscriptionPaywallMode: Equatable {
         case .russian: code = "ru"
         case .englishUS: code = "en"
         case .spanishLatinAmerica: code = "es"
+        case .hebrew:
+            code = "he"
         }
         if selectedLanguage == .spanishLatinAmerica {
             switch key {
@@ -506,6 +510,8 @@ enum SubscriptionPaywallMode: Equatable {
             case .russian: return ru
             case .englishUS: return en
             case .spanishLatinAmerica: return es
+            case .hebrew:
+                return en
             }
         }
 
@@ -553,6 +559,10 @@ enum SubscriptionPaywallMode: Equatable {
                     string:
                         "https://www.morninghelloapp.com/terms-and-conditions"
                 )!
+            case .hebrew:
+                return URL(
+                    string: "https://www.morninghelloapp.com/terms-and-conditions"
+                )!
             }
         }
         
@@ -570,6 +580,10 @@ enum SubscriptionPaywallMode: Equatable {
                 return URL(
                     string:
                         "https://www.morninghelloapp.com/privacy-policy"
+                )!
+            case .hebrew:
+                return URL(
+                    string: "https://www.morninghelloapp.com/privacy-policy"
                 )!
             }
         }

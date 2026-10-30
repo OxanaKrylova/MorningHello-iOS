@@ -12,6 +12,7 @@ enum AppLanguage: String, CaseIterable, Identifiable {
     case russian = "ru"
     case englishUS = "en-US"
     case spanishLatinAmerica = "es-419"
+    case hebrew = "he"
 
     static let storageKey = "app_language"
 
@@ -33,6 +34,9 @@ enum AppLanguage: String, CaseIterable, Identifiable {
 
         case .spanishLatinAmerica:
             return "es-419"
+
+        case .hebrew:
+            return "he"
         }
     }
 
@@ -46,7 +50,14 @@ enum AppLanguage: String, CaseIterable, Identifiable {
 
         case .spanishLatinAmerica:
             return "Español (Latinoamérica)"
+
+        case .hebrew:
+            return "עברית"
         }
+    }
+
+    var isRightToLeft: Bool {
+        self == .hebrew
     }
 
     var localizationBundle: Bundle {
@@ -83,6 +94,10 @@ enum AppLanguage: String, CaseIterable, Identifiable {
 
         if preferredLanguage.hasPrefix("es") {
             return .spanishLatinAmerica
+        }
+
+        if preferredLanguage.hasPrefix("he") || preferredLanguage.hasPrefix("iw") {
+            return .hebrew
         }
 
         return .englishUS

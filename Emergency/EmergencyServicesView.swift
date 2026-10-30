@@ -32,6 +32,8 @@ private struct USEmergencyState: Identifiable, Hashable {
         case .russian: return russianName
         case .englishUS: return englishName
         case .spanishLatinAmerica: return spanishName
+        case .hebrew:
+            return englishName
         }
     }
 
@@ -1456,6 +1458,8 @@ struct EmergencyServicesView: View {
             return "U.S. state"
         case .spanishLatinAmerica:
             return "Estado de EE. UU."
+        case .hebrew:
+            return "מדינה בארצות הברית"
         }
     }
 
@@ -1467,6 +1471,8 @@ struct EmergencyServicesView: View {
             return "Select a state"
         case .spanishLatinAmerica:
             return "Seleccione un estado"
+        case .hebrew:
+            return "בחרו מדינה"
         }
     }
 
@@ -1478,6 +1484,8 @@ struct EmergencyServicesView: View {
             return "After selection, national services and contacts for the selected state will be shown. Your selection is not saved."
         case .spanishLatinAmerica:
             return "Después de seleccionar, se mostrarán los servicios nacionales y los contactos del estado elegido. La selección no se guarda."
+        case .hebrew:
+            return "לאחר בחירת מדינה יוצגו שירותי החירום הארציים ופרטי הקשר של המדינה שנבחרה. הבחירה לא תישמר."
         }
     }
 

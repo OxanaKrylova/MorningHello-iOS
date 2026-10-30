@@ -35,6 +35,9 @@ final class CheckInDeadlineReminder {
         case .spanishLatinAmerica:
             content.title = "Se acerca tu confirmación"
             content.body = "Falta una hora para tu confirmación «Estoy bien». Abre MorningHello para confirmar que estás bien."
+        case .hebrew:
+            content.title = "הגיע הזמן להתכונן לצ'ק-אין"
+            content.body = "נותרה שעה עד למועד האישור הבא של 'אני בסדר'. יש לפתוח את MorningHello ולאשר שהכול בסדר."
         }
         content.sound = .default
         // Absolute date: server deadline, not an arbitrary elapsed interval.

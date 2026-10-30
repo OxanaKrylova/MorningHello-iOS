@@ -43,6 +43,9 @@ struct MonitoringSetupIntroView: View {
 
         case .spanishLatinAmerica:
             return "BG_Onboarding"
+            
+        case .hebrew:
+            return "BG_Onboarding"
         }
     }
 

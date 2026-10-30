@@ -521,6 +521,15 @@ struct SponsoredBeneficiaryEmergencyContactsView: View {
             case "Email": return "Correo electrónico"
             default: return localized(key)
             }
+        case .hebrew:
+            switch key {
+            case "Имя": return "שם פרטי"
+            case "Фамилия": return "שם משפחה"
+            case "Телефон в международном формате":
+                return "טלפון בפורמט בינלאומי"
+            case "Email": return "דואר אלקטרוני"
+            default: return localized(key)
+            }
         }
     }
 
@@ -529,6 +538,8 @@ struct SponsoredBeneficiaryEmergencyContactsView: View {
         case .russian: return "Телефон в международном формате"
         case .englishUS: return "Phone (international format)"
         case .spanishLatinAmerica: return "Teléfono (formato internacional)"
+        case .hebrew:
+            return "טלפון בפורמט בינלאומי"
         }
     }
 

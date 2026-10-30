@@ -42,6 +42,8 @@ struct SubscriptionPlansInfoView: View {
         case .russian: language = "ru"
         case .englishUS: language = "en"
         case .spanishLatinAmerica: language = "es"
+        case .hebrew:
+            language = "he"
         }
 
         // The translated table must be included in Copy Bundle Resources.
