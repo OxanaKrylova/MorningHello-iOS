@@ -38,6 +38,14 @@ struct ConnectionReminderFormView: View {
         selectedLanguage.localized(key)
     }
 
+    private func discardDialogText(_ ru: String, _ en: String, _ es: String) -> String {
+        switch selectedLanguage {
+        case .russian: return ru
+        case .englishUS: return en
+        case .spanishLatinAmerica: return es
+        }
+    }
+
     // MARK: - Reminder
 
     private let reminder:
@@ -84,6 +92,31 @@ struct ConnectionReminderFormView: View {
     @State private var saveErrorMessage:
         String?
 
+    @State private var showDiscardConfirmation = false
+
+    private var hasUnsavedChanges: Bool {
+        let initialName = reminder?.personName ?? ""
+        let initialSource = reminder?.personSource ?? .manual
+        let initialIdentifier = reminder?.sourceIdentifier
+        let initialMethod = reminder?.communicationMethod ?? .phoneCall
+        let initialCustom = reminder?.customCommunicationMethod ?? ""
+        let initialComment = reminder?.comment ?? ""
+        let initialDate = reminder?.startDate ?? initialStartDate
+        let initialRecurrence = reminder?.recurrence ?? .once
+        return personName != initialName || personSource != initialSource ||
+            sourceIdentifier != initialIdentifier || communicationMethod != initialMethod ||
+            customCommunicationMethod != initialCustom || comment != initialComment ||
+            !Calendar.current.isDate(startDate, inSameDayAs: initialDate) ||
+            recurrence != initialRecurrence
+    }
+
+    @State private var initialStartDate = Date()
+
+    private func closeForm() {
+        if hasUnsavedChanges { showDiscardConfirmation = true }
+        else { dismiss() }
+    }
+
     // MARK: - Initializer
 
     init(
@@ -124,10 +157,9 @@ struct ConnectionReminderFormView: View {
                 reminder?.comment ?? ""
         )
         
-        _startDate = State(
-            initialValue:
-                reminder?.startDate ?? Date()
-        )
+        let defaultDate = reminder?.startDate ?? Date()
+        _initialStartDate = State(initialValue: defaultDate)
+        _startDate = State(initialValue: defaultDate)
 
         _recurrence = State(
             initialValue:
@@ -182,6 +214,38 @@ struct ConnectionReminderFormView: View {
                 from: data
             )
         ) ?? []
+    }
+
+    // MARK: - Unified trusted contacts for social reminders
+    // Pet caregivers are read from their own local store, without changing consent.
+    private var trustedContacts: [StoredEmergencyContact] {
+        var contacts = emergencyContacts
+        let existingNames = Set(contacts.map { $0.displayName.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() })
+        var usedNames = existingNames
+        for caregiver in PetCareContactStorage.load() {
+            let full = "\(caregiver.firstName) \(caregiver.lastName)".trimmingCharacters(in: .whitespacesAndNewlines)
+            let key = full.lowercased()
+            guard !key.isEmpty, !usedNames.contains(key) else { continue }
+            usedNames.insert(key)
+            contacts.append(StoredEmergencyContact(id: caregiver.id, name: caregiver.firstName, surname: caregiver.lastName))
+        }
+        return contacts
+    }
+
+    private var trustedContactsLabel: String {
+        switch selectedLanguage {
+        case .russian: return "Из доверенных контактов"
+        case .englishUS: return "From Trusted Contacts"
+        case .spanishLatinAmerica: return "De contactos de confianza"
+        }
+    }
+
+    private var selectTrustedContactLabel: String {
+        switch selectedLanguage {
+        case .russian: return "Выберите доверенный контакт"
+        case .englishUS: return "Select a trusted contact"
+        case .spanishLatinAmerica: return "Selecciona un contacto de confianza"
+        }
     }
 
     // MARK: - Validation
@@ -275,36 +339,53 @@ struct ConnectionReminderFormView: View {
             }
             .scrollContentBackground(.hidden)
             .background(
-                MorningHelloScreenBackground(name: "BG_Reminders")
+                Color(
+                    red: 1.00,
+                    green: 0.97,
+                    blue: 0.87
+                )
+                .ignoresSafeArea()
             )
             .navigationBarTitleDisplayMode(
                 .inline
             )
-            .toolbar {
-                ToolbarItem(
-                    placement: .cancellationAction
-                ) {
-                    Button(
-                        localized(
-                            "connection.action.cancel"
-                        )
-                    ) {
-                        dismiss()
-                    }
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                Button(action: saveReminder) {
+                    Text(localized("connection.action.save"))
+                        .font(.system(size: 19, weight: .bold, design: .rounded))
+                        .foregroundStyle(Color.white)
+                        .frame(maxWidth: .infinity, minHeight: 54)
+                        .background(canSave ? Color.orange : Color.gray,
+                                    in: RoundedRectangle(cornerRadius: 20))
                 }
-
-                ToolbarItem(
-                    placement: .confirmationAction
-                ) {
-                    Button(
-                        localized(
-                            "connection.action.save"
-                        )
-                    ) {
-                        saveReminder()
+                .disabled(!canSave)
+                .padding(.horizontal, 22)
+                .padding(.vertical, 10)
+                .background(.regularMaterial)
+            }
+            .confirmationDialog(
+                discardDialogText("Отменить изменения?", "Discard changes?", "¿Descartar cambios?"),
+                isPresented: $showDiscardConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button(discardDialogText("Не сохранять", "Discard", "Descartar"), role: .destructive) {
+                    dismiss()
+                }
+                Button(discardDialogText("Продолжить редактирование", "Keep editing", "Seguir editando"), role: .cancel) {}
+            } message: {
+                Text(discardDialogText("Несохранённые изменения будут потеряны.",
+                                       "Your unsaved changes will be lost.",
+                                       "Se perderán los cambios no guardados."))
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: closeForm) {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 17, weight: .bold))
+                            .frame(width: 44, height: 44)
+                            .contentShape(Rectangle())
                     }
-                    .fontWeight(.semibold)
-                    .disabled(!canSave)
+                    .accessibilityLabel(localized("connection.action.cancel"))
                 }
             }
             .sheet(
@@ -383,11 +464,7 @@ struct ConnectionReminderFormView: View {
                         ConnectionPersonSource.manual
                     ]
                 ) { source in
-                    Text(
-                        localized(
-                            source.titleKey
-                        )
-                    )
+                    Text(source == .emergencyContact ? trustedContactsLabel : localized(source.titleKey))
                     .tag(source)
                 }
             } label: {
@@ -458,7 +535,7 @@ struct ConnectionReminderFormView: View {
         some View {
 
         Group {
-            if emergencyContacts.isEmpty {
+            if trustedContacts.isEmpty {
                 VStack(
                     alignment: .leading,
                     spacing: 8
@@ -480,20 +557,16 @@ struct ConnectionReminderFormView: View {
                 }
             } else {
                 Picker(
-                    localized(
-                        "connection.form.emergency.select"
-                    ),
+                    selectTrustedContactLabel,
                     selection: $sourceIdentifier
                 ) {
                     Text(
-                        localized(
-                            "connection.form.emergency.select"
-                        )
+                        selectTrustedContactLabel
                     )
                     .tag(String?.none)
 
                     ForEach(
-                        emergencyContacts
+                        trustedContacts
                     ) { contact in
                         Text(contact.displayName)
                             .tag(
@@ -713,7 +786,7 @@ struct ConnectionReminderFormView: View {
 
         case .emergencyContact:
             if let existingContact =
-                emergencyContacts.first(
+                trustedContacts.first(
                     where: {
                         $0.id.uuidString
                         == sourceIdentifier
@@ -727,7 +800,7 @@ struct ConnectionReminderFormView: View {
             }
 
             if let firstContact =
-                emergencyContacts.first {
+                trustedContacts.first {
 
                 sourceIdentifier =
                     firstContact.id.uuidString
@@ -756,7 +829,7 @@ struct ConnectionReminderFormView: View {
         guard
             let identifier,
             let selectedContact =
-                emergencyContacts.first(
+                trustedContacts.first(
                     where: {
                         $0.id.uuidString
                         == identifier

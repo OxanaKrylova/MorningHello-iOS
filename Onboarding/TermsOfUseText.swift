@@ -566,7 +566,7 @@ Estas Condiciones se rigen por las leyes del Estado de Israel, sin limitar los d
 
 La versión completa y actualizada de las Condiciones de Uso de MorningHello está disponible en el sitio web oficial:
 
-https://www.morninghelloapp.com/terms-and-conditions
+https://www.morninghelloapp.com/es/terms-and-conditions
 
 Se recomienda revisar el documento completo antes de utilizar la Aplicación.
 """

@@ -115,6 +115,7 @@
 		29BDC65C30082B5D00EEA736 /* CheckInNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */; };
 		29BDC65E30082BA800EEA736 /* NotificationDelegate..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */; };
 		29C28BF5307B9E0A00DD2347 /* SponsorshipUniversalLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C28BF4307B9E0A00DD2347 /* SponsorshipUniversalLinkHandler.swift */; };
+		29C2A6383093FB6E00AED536 /* PetCareMonitoringAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C2A6373093FB6E00AED536 /* PetCareMonitoringAPIClient.swift */; };
 		29C3A9633060727C0031851C /* SubscriptionPlansInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C3A9623060727C0031851C /* SubscriptionPlansInfoView.swift */; };
 		29C3A9BA3061DAAB0031851C /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29C3A9B93061DAAB0031851C /* SubscriptionView.swift */; };
 		29CA8E2B2FFEF94500F59ECA /* HolidaySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */; };
@@ -129,6 +130,8 @@
 		29CD29F63023DBB800C72D5D /* PostcardRenderer..swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */; };
 		29CD4FAD307CC200009860A6 /* SponsorFormCloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD4FAC307CC200009860A6 /* SponsorFormCloseButton.swift */; };
 		29CD4FAF307CC611009860A6 /* SponsoredInvitationEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29CD4FAE307CC611009860A6 /* SponsoredInvitationEntryView.swift */; };
+		29D012E03092B0C300E8638D /* DeviceActivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29D012DF3092B0C300E8638D /* DeviceActivity.framework */; };
+		29D012E83092B0C400E8638D /* MorningHelloDeviceActivityMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 29D012DE3092B0C300E8638D /* MorningHelloDeviceActivityMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		29D0C197304CAC8C0061569D /* EmergencyContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29D0C196304CAC8C0061569D /* EmergencyContactsView.swift */; };
 		29DD590C30350B360067B04F /* OctoberPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DD590B30350B360067B04F /* OctoberPostcardProvider.swift */; };
 		29DD59203035DCCB0067B04F /* TrialNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29DD591F3035DCCB0067B04F /* TrialNotificationManager.swift */; };
@@ -144,6 +147,30 @@
 		29FAACB73088117B004B6900 /* AccountDeletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FAACB63088117B004B6900 /* AccountDeletionView.swift */; };
 		29FAEAF23040DE51003CFA12 /* MarchPostcardProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FAEAF13040DE51003CFA12 /* MarchPostcardProvider.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		29D012E63092B0C400E8638D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B4419A2F3BE23E00A4F417 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 29D012DD3092B0C300E8638D;
+			remoteInfo = MorningHelloDeviceActivityMonitor;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		29D012E93092B0C400E8638D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				29D012E83092B0C400E8638D /* MorningHelloDeviceActivityMonitor.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2903A4893090D14A0072BBCF /* CheckInDeadlineReminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInDeadlineReminder.swift; sourceTree = "<group>"; };
@@ -254,6 +281,7 @@
 		29BDC65B30082B5D00EEA736 /* CheckInNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInNotificationManager.swift; sourceTree = "<group>"; };
 		29BDC65D30082BA800EEA736 /* NotificationDelegate..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationDelegate..swift; sourceTree = "<group>"; };
 		29C28BF4307B9E0A00DD2347 /* SponsorshipUniversalLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorshipUniversalLinkHandler.swift; sourceTree = "<group>"; };
+		29C2A6373093FB6E00AED536 /* PetCareMonitoringAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCareMonitoringAPIClient.swift; sourceTree = "<group>"; };
 		29C3A9623060727C0031851C /* SubscriptionPlansInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionPlansInfoView.swift; sourceTree = "<group>"; };
 		29C3A9B93061DAAB0031851C /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		29CA8E2A2FFEF94500F59ECA /* HolidaySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HolidaySettingsView.swift; sourceTree = "<group>"; };
@@ -268,6 +296,8 @@
 		29CD29F53023DBB800C72D5D /* PostcardRenderer..swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostcardRenderer..swift; sourceTree = "<group>"; };
 		29CD4FAC307CC200009860A6 /* SponsorFormCloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsorFormCloseButton.swift; sourceTree = "<group>"; };
 		29CD4FAE307CC611009860A6 /* SponsoredInvitationEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SponsoredInvitationEntryView.swift; sourceTree = "<group>"; };
+		29D012DE3092B0C300E8638D /* MorningHelloDeviceActivityMonitor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MorningHelloDeviceActivityMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		29D012DF3092B0C300E8638D /* DeviceActivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceActivity.framework; path = System/Library/Frameworks/DeviceActivity.framework; sourceTree = SDKROOT; };
 		29D0C196304CAC8C0061569D /* EmergencyContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContactsView.swift; sourceTree = "<group>"; };
 		29DD590B30350B360067B04F /* OctoberPostcardProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OctoberPostcardProvider.swift; sourceTree = "<group>"; };
 		29DD591F3035DCCB0067B04F /* TrialNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationManager.swift; sourceTree = "<group>"; };
@@ -293,6 +323,22 @@
 			);
 			target = 29B441A12F3BE23E00A4F417 /* MorningHello */;
 		};
+		29D012F93092B67B00E8638D /* Exceptions for "MorningHelloDeviceActivityMonitor" folder in "MorningHello" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				DeviceActivityMonitorExtension.swift,
+				Info.plist,
+			);
+			target = 29B441A12F3BE23E00A4F417 /* MorningHello */;
+		};
+		29D012FA3092B67B00E8638D /* Exceptions for "MorningHelloDeviceActivityMonitor" folder in "MorningHelloDeviceActivityMonitor" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				DeviceActivityMonitorExtension.swift,
+				ScreenTimeEventQueue.swift,
+			);
+			target = 29D012DD3092B0C300E8638D /* MorningHelloDeviceActivityMonitor */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -309,6 +355,15 @@
 			path = Videos;
 			sourceTree = "<group>";
 		};
+		29D012F73092B67B00E8638D /* MorningHelloDeviceActivityMonitor */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				29D012F93092B67B00E8638D /* Exceptions for "MorningHelloDeviceActivityMonitor" folder in "MorningHello" target */,
+				29D012FA3092B67B00E8638D /* Exceptions for "MorningHelloDeviceActivityMonitor" folder in "MorningHelloDeviceActivityMonitor" target */,
+			);
+			path = MorningHelloDeviceActivityMonitor;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -317,6 +372,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				290E2545304F655D000D4A2D /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29D012DB3092B0C300E8638D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				29D012E03092B0C300E8638D /* DeviceActivity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +403,7 @@
 			isa = PBXGroup;
 			children = (
 				290E2544304F655C000D4A2D /* StoreKit.framework */,
+				29D012DF3092B0C300E8638D /* DeviceActivity.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -391,6 +455,7 @@
 				29B788D330856E82001336C0 /* PetCareAPIClient.swift */,
 				293D39E3308AAFAA00458643 /* PetCareInvitationReminder.swift */,
 				29B788D530856E8F001336C0 /* PetCareModels.swift */,
+				29C2A6373093FB6E00AED536 /* PetCareMonitoringAPIClient.swift */,
 				2988745A3065D25200361B7D /* PetProfileView.swift */,
 				291FE046307A26AA00535330 /* SponsoredBeneficiaryPetOnboardingView.swift */,
 			);
@@ -460,6 +525,7 @@
 				29B76C78301BD31700D1D295 /* Intro */,
 				29B76C70301BCFEC00D1D295 /* Models */,
 				29EC923F3053141A00D9BD71 /* Mood */,
+				29D012F73092B67B00E8638D /* MorningHelloDeviceActivityMonitor */,
 				29B441A42F3BE23E00A4F417 /* MorningHello */,
 				29B76C76301BD28400D1D295 /* Notifications */,
 				293D39E2308AAF5F00458643 /* Pet */,
@@ -477,6 +543,7 @@
 			isa = PBXGroup;
 			children = (
 				29B441A22F3BE23E00A4F417 /* MorningHello.app */,
+				29D012DE3092B0C300E8638D /* MorningHelloDeviceActivityMonitor.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -630,14 +697,17 @@
 				29B4419E2F3BE23E00A4F417 /* Sources */,
 				29B4419F2F3BE23E00A4F417 /* Frameworks */,
 				29B441A02F3BE23E00A4F417 /* Resources */,
+				29D012E93092B0C400E8638D /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				29D012E73092B0C400E8638D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				29B441A42F3BE23E00A4F417 /* MorningHello */,
 				29CA8E2E30043ECB00F59ECA /* Videos */,
+				29D012F73092B67B00E8638D /* MorningHelloDeviceActivityMonitor */,
 			);
 			name = MorningHello;
 			packageProductDependencies = (
@@ -645,6 +715,25 @@
 			productName = MorningHello;
 			productReference = 29B441A22F3BE23E00A4F417 /* MorningHello.app */;
 			productType = "com.apple.product-type.application";
+		};
+		29D012DD3092B0C300E8638D /* MorningHelloDeviceActivityMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29D012ED3092B0C400E8638D /* Build configuration list for PBXNativeTarget "MorningHelloDeviceActivityMonitor" */;
+			buildPhases = (
+				29D012DA3092B0C300E8638D /* Sources */,
+				29D012DB3092B0C300E8638D /* Frameworks */,
+				29D012DC3092B0C300E8638D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MorningHelloDeviceActivityMonitor;
+			packageProductDependencies = (
+			);
+			productName = MorningHelloDeviceActivityMonitor;
+			productReference = 29D012DE3092B0C300E8638D /* MorningHelloDeviceActivityMonitor.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -657,6 +746,9 @@
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					29B441A12F3BE23E00A4F417 = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					29D012DD3092B0C300E8638D = {
 						CreatedOnToolsVersion = 26.2;
 					};
 				};
@@ -678,6 +770,7 @@
 			projectRoot = "";
 			targets = (
 				29B441A12F3BE23E00A4F417 /* MorningHello */,
+				29D012DD3092B0C300E8638D /* MorningHelloDeviceActivityMonitor */,
 			);
 		};
 /* End PBXProject section */
@@ -694,6 +787,13 @@
 				290E252C304E13A6000D4A2D /* Breathing_Square_4.wav in Resources */,
 				290E252D304E13A6000D4A2D /* Breathing_Square_1.wav in Resources */,
 				291B30BD3050AD70002C3689 /* open_form.wav in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		29D012DC3092B0C300E8638D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -796,6 +896,7 @@
 				291FE043307A1AAE00535330 /* SponsoredBeneficiaryEmergencyContactsView.swift in Sources */,
 				291FE03D3079456E00535330 /* SponsorOnboardingIntroView.swift in Sources */,
 				29FAACB73088117B004B6900 /* AccountDeletionView.swift in Sources */,
+				29C2A6383093FB6E00AED536 /* PetCareMonitoringAPIClient.swift in Sources */,
 				29EC924C3053143A00D9BD71 /* MoodChartView.swift in Sources */,
 				292FB2F1306AD2EA0071D95A /* SystemContactPicker.swift in Sources */,
 				29EC924D3053143A00D9BD71 /* MoodRepository.swift in Sources */,
@@ -835,7 +936,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		29D012DA3092B0C300E8638D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		29D012E73092B0C400E8638D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 29D012DD3092B0C300E8638D /* MorningHelloDeviceActivityMonitor */;
+			targetProxy = 29D012E63092B0C400E8638D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		29B441AB2F3BE24000A4F417 /* Debug */ = {
@@ -964,7 +1080,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 08;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1008,7 +1124,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MorningHello/MorningHello.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 08;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 84MJTX9554;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1045,6 +1161,64 @@
 			};
 			name = Release;
 		};
+		29D012EA3092B0C400E8638D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MorningHelloDeviceActivityMonitor/MorningHelloDeviceActivityMonitor.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 84MJTX9554;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MorningHelloDeviceActivityMonitor/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MorningHelloDeviceActivityMonitor;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oxana.morninghello.MorningHelloDeviceActivityMonitor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		29D012EB3092B0C400E8638D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MorningHelloDeviceActivityMonitor/MorningHelloDeviceActivityMonitor.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 84MJTX9554;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MorningHelloDeviceActivityMonitor/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MorningHelloDeviceActivityMonitor;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.oxana.morninghello.MorningHelloDeviceActivityMonitor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1062,6 +1236,15 @@
 			buildConfigurations = (
 				29B441AE2F3BE24000A4F417 /* Debug */,
 				29B441AF2F3BE24000A4F417 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		29D012ED3092B0C400E8638D /* Build configuration list for PBXNativeTarget "MorningHelloDeviceActivityMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				29D012EA3092B0C400E8638D /* Debug */,
+				29D012EB3092B0C400E8638D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

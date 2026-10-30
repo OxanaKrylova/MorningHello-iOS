@@ -349,10 +349,24 @@ final class SponsoredPurchaseManager: ObservableObject {
             throw SponsorshipAPIError.invalidTransaction
         }
 
-        let appInstanceID =
-            AppInstanceIDProvider.getOrCreate()
+        // Resolve any still-active, verified StoreKit identity before
+        // checking the transaction. SubscriptionManager also requests
+        // backend proof re-binding when required. Never blindly overwrite
+        // identity on the strength of an unrelated StoreKit transaction.
+        if !AccountDeletionState.isDeleted {
+            await SubscriptionManager.shared.refreshSubscriptionStatus()
+        }
+
+        let appInstanceID = AppInstanceIDProvider.getOrCreate()
 
         guard transaction.appAccountToken == appInstanceID else {
+            // This may happen after account deletion. Do not initiate another
+            // purchase or finish this transaction with a different token.
+            throw SponsorshipAPIError.appAccountTokenMismatch
+        }
+
+        guard !AppInstanceIDProvider.requiresPurchaseRecovery(for: appInstanceID),
+              !SubscriptionManager.shared.identityRecoveryRequired else {
             throw SponsorshipAPIError.appAccountTokenMismatch
         }
 

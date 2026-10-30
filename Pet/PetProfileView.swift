@@ -763,7 +763,7 @@ private struct PetCareFormValues {
         PetCareResponsibleContact(
             id: id, role: role, firstName: firstName, lastName: lastName,
             phone: phone, email: email, messageLanguage: messageLanguage,
-            status: .confirmed // Temporary local UI status; not server consent.
+            status: .pending
         )
     }
 }
@@ -826,7 +826,11 @@ struct PetProfileView: View {
     @State private var caregiverStatusMessage: String?
     @State private var caregiverStatusIsError = false
     @State private var petCareContactsLoaded = false
-    @State private var showPetStopPreview = false
+    @State private var showPetStopConfirmation = false
+    @State private var isPausingPetCare = false
+    @State private var showPetPauseResult = false
+    @State private var petPauseResultTitle = ""
+    @State private var petPauseResultMessage = ""
 
     private enum ExpandedPetSection: String {
         case caregivers, required, care, health, additional
@@ -997,14 +1001,24 @@ struct PetProfileView: View {
                     .accessibilityLabel(localized("Закрыть"))
                 }
             }
-            .alert(petCareStopText("Функция готовится", "Coming soon", "Próximamente"), isPresented: $showPetStopPreview) {
-                Button(petCareStopText("Понятно", "OK", "Aceptar"), role: .cancel) {}
+            .confirmationDialog(
+                petCareStopText("Остановить мониторинг питомцев?", "Stop pet monitoring?", "¿Detener el monitoreo de mascotas?"),
+                isPresented: $showPetStopConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button(petCareStopText("Остановить мониторинг питомцев", "Stop pet monitoring", "Detener monitoreo de mascotas"), role: .destructive) {
+                    Task { await pausePetMonitoring() }
+                }
+                Button(petCareStopText("Отмена", "Cancel", "Cancelar"), role: .cancel) {}
             } message: {
                 Text(petCareStopText(
-                    "Остановка только оповещений ответственных за питомцев станет доступной после обновления сервера. Данные питомцев сохраняются. Сейчас ничего не отключено.",
-                    "Stopping only pet-care alerts will be available after the server update. Pet records will be retained. Nothing has been turned off.",
-                    "La desactivación exclusiva de alertas para mascotas estará disponible tras actualizar el servidor. Los datos se conservarán. No se ha desactivado nada."))
+                    "Остановятся только оповещения ответственным за питомцев. Основной мониторинг и тревожные сообщения близким продолжатся. Профили питомцев, ответственные и инструкции сохранятся. Для возобновления потребуется отдельное действие.",
+                    "Only pet-care alerts will stop. Your regular monitoring and alerts to loved ones will continue. Pet profiles, caregivers and care instructions will remain. Resuming requires a separate action.",
+                    "Solo se detendrán las alertas a responsables de mascotas. El monitoreo general y las alertas a seres queridos continuarán. Se conservarán mascotas, responsables e instrucciones. Para reanudarlo se requiere otra acción."))
             }
+            .alert(petPauseResultTitle, isPresented: $showPetPauseResult) {
+                Button(petCareStopText("ОК", "OK", "Aceptar"), role: .cancel) {}
+            } message: { Text(petPauseResultMessage) }
             .onAppear {
                 loadProfilesIfNeeded()
                 loadPetCareContactsIfNeeded()
@@ -1747,7 +1761,7 @@ struct PetProfileView: View {
     private var petMonitoringStopSection: some View {
         Section {
             Button(role: .destructive) {
-                showPetStopPreview = true
+                showPetStopConfirmation = true
             } label: {
                 HStack(spacing: 12) {
                     Image("icon_sun")
@@ -1758,14 +1772,37 @@ struct PetProfileView: View {
                             .font(.system(.headline, design: .rounded).weight(.bold))
                             .foregroundStyle(Color.red)
                         Text(petCareStopText(
-                            "Остановятся только сообщения ответственным за питомцев; профиль питомца и инструкции сохранятся. Доступно после обновления сервера.",
-                            "Only pet-care alerts will stop. Pet records and care instructions will remain. Available after the server update.",
-                            "Solo se detendrán las alertas a responsables de mascotas. Se conservarán los datos y las instrucciones. Disponible tras actualizar el servidor."))
+                            "Отдельно от обычного мониторинга. Профили и инструкции сохранятся.",
+                            "Separate from regular monitoring. Profiles and instructions will remain.",
+                            "Independiente del monitoreo general. Se conservarán perfiles e instrucciones."))
                             .font(.footnote).foregroundStyle(AppAdaptiveColor.secondaryText)
                     }
                 }.padding(.vertical, 12)
             }.buttonStyle(.plain)
+            .disabled(isPausingPetCare)
         }
+    }
+
+    @MainActor
+    private func pausePetMonitoring() async {
+        guard !isPausingPetCare else { return }
+        isPausingPetCare = true
+        defer { isPausingPetCare = false }
+        do {
+            _ = try await PetCareMonitoringAPIClient.shared.pauseByUser()
+            petPauseResultTitle = petCareStopText("Мониторинг питомцев остановлен", "Pet monitoring stopped", "Monitoreo de mascotas detenido")
+            petPauseResultMessage = petCareStopText(
+                "Сервер подтвердил остановку только оповещений ответственным за питомцев. Основной мониторинг и данные сохранены.",
+                "The server confirmed that only pet-care alerts are paused. Regular monitoring and your data remain active.",
+                "El servidor confirmó que solo se pausaron las alertas para mascotas. El monitoreo general y los datos permanecen.")
+        } catch {
+            petPauseResultTitle = petCareStopText("Не удалось остановить мониторинг", "Could not stop pet monitoring", "No se pudo detener el monitoreo")
+            petPauseResultMessage = petCareStopText(
+                "Сервер не подтвердил остановку мониторинга питомцев. Считайте оповещения действующими. Функция станет доступной после обновления сервера.",
+                "The server did not confirm a Pet Care pause. Assume alerts are still active. This feature requires the backend update.",
+                "El servidor no confirmó la pausa. Considera las alertas activas. Se requiere la actualización del servidor.")
+        }
+        showPetPauseResult = true
     }
 
     // MARK: - Кнопки

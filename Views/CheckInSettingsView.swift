@@ -1,6 +1,9 @@
 import SwiftUI
 import UserNotifications
 import UIKit
+#if canImport(DeviceActivity)
+import DeviceActivity
+#endif
 #if canImport(FamilyControls)
 import FamilyControls
 #endif
@@ -32,6 +35,7 @@ struct CheckInSettingsView: View {
     @State private var showScreenTimeExplanation = false
     @State private var requestingScreenTime = false
     @State private var screenTimeError: String?
+    @State private var screenTimeDiagnosticStatus = ""
 
     private var language: AppLanguage { AppLanguage(rawValue: code) ?? .initial }
     private func t(_ ru: String, _ en: String, _ es: String) -> String {
@@ -126,6 +130,104 @@ struct CheckInSettingsView: View {
         .padding(16)
         .background(AppAdaptiveColor.warmCardBackground, in: RoundedRectangle(cornerRadius: 18))
     }
+
+    // DEBUG ONLY: Checks whether iOS dispatches a one-minute activity event.
+    // It NEVER sends a heartbeat, changes any deadline, or sends alerts.
+    #if DEBUG && canImport(DeviceActivity)
+    private let diagnosticActivity = DeviceActivityName("morninghello.oneMinuteDiagnostic")
+    private let diagnosticEvent = DeviceActivityEvent.Name("oneMinuteOfUsage")
+
+    @State private var queueSummary = ""
+
+    private func refreshQueue() {
+        do {
+            let events = try ScreenTimeEventQueue.snapshot()
+            let pending = events.filter { $0.state == .queued }.count
+            let tested = events.filter { $0.state == .deliveredInDiagnosticTest }.count
+            queueSummary = t("События: \(events.count), в очереди: \(pending), тестово доставлены: \(tested)",
+                             "Events: \(events.count), queued: \(pending), simulated deliveries: \(tested)",
+                             "Eventos: \(events.count), pendientes: \(pending), entregas simuladas: \(tested)")
+        } catch {
+            queueSummary = "App Group / queue: " + error.localizedDescription
+        }
+    }
+
+    private func refreshDiagnosticStatus() {
+        let center = DeviceActivityCenter()
+        screenTimeDiagnosticStatus = center.activities.contains(diagnosticActivity)
+            ? t("Тест запущен. Откройте другие приложения минимум на минуту и проверьте журнал расширения.",
+                "Test started. Use other apps for at least one minute, then check the extension log.",
+                "Prueba iniciada. Usa otras aplicaciones al menos un minuto y revisa el registro de la extensión.")
+            : t("Тест не запущен.", "Test not running.", "Prueba no iniciada.")
+    }
+
+    private func startDiagnostic() {
+        guard AuthorizationCenter.shared.authorizationStatus == .approved else {
+            screenTimeDiagnosticStatus = t("Сначала разрешите Screen Time.",
+                "Allow Screen Time access first.", "Primero autoriza Tiempo de uso.")
+            return
+        }
+        let center = DeviceActivityCenter()
+        // Daily local-time interval; usage prior to starting the monitor isn't counted.
+        let schedule = DeviceActivitySchedule(
+            intervalStart: DateComponents(hour: 0, minute: 0),
+            intervalEnd: DateComponents(hour: 23, minute: 59),
+            repeats: true
+        )
+        let event = DeviceActivityEvent(threshold: DateComponents(minute: 1))
+        do {
+            try center.startMonitoring(diagnosticActivity, during: schedule,
+                                       events: [diagnosticEvent: event])
+            refreshDiagnosticStatus()
+        } catch {
+            screenTimeDiagnosticStatus = t("Не удалось запустить тест: ",
+                "Could not start test: ", "No se pudo iniciar la prueba: ") + error.localizedDescription
+        }
+    }
+
+    private func stopDiagnostic() {
+        DeviceActivityCenter().stopMonitoring([diagnosticActivity])
+        refreshDiagnosticStatus()
+    }
+
+    private var deviceActivityDiagnosticSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(t("Тест Screen Time (только Debug)", "Screen Time test (Debug only)",
+                   "Prueba de Tiempo de uso (solo Debug)"))
+                .font(.headline)
+            Text(t("Проверка события через 1 минуту использования. Это НЕ автоматическая отметка.",
+                   "One-minute usage event test. This is NOT an automatic check-in.",
+                   "Prueba de evento tras un minuto de uso. NO es una confirmación automática."))
+                .font(.footnote)
+            HStack {
+                Button(t("Запустить тест", "Start test", "Iniciar prueba")) { startDiagnostic() }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(screenTimePermissionStatus != "approved")
+                Button(t("Остановить", "Stop", "Detener")) { stopDiagnostic() }
+                    .buttonStyle(.bordered)
+            }
+            Text(queueSummary).font(.footnote).foregroundStyle(AppAdaptiveColor.secondaryText)
+            HStack {
+                Button(t("Обновить очередь", "Refresh queue", "Actualizar cola")) { refreshQueue() }
+                Button(t("Симулировать сбой", "Simulate failure", "Simular fallo")) {
+                    do { _ = try ScreenTimeEventQueue.simulateNetworkFailure() } catch { queueSummary = error.localizedDescription }
+                    refreshQueue()
+                }
+            }.buttonStyle(.bordered)
+            Button(t("Тестовая доставка (без сети)", "Simulate delivery (offline)", "Simular entrega (sin red)")) {
+                do { _ = try ScreenTimeEventQueue.simulateDiagnosticDelivery() } catch { queueSummary = error.localizedDescription }
+                refreshQueue()
+            }.buttonStyle(.bordered)
+            if !screenTimeDiagnosticStatus.isEmpty {
+                Text(screenTimeDiagnosticStatus).font(.footnote)
+                    .foregroundStyle(AppAdaptiveColor.secondaryText)
+            }
+        }
+        .padding(16)
+        .background(AppAdaptiveColor.warmCardBackground,
+                    in: RoundedRectangle(cornerRadius: 18))
+    }
+    #endif
 
     private func choose(_ value: String, _ label: String) -> some View {
         Button { mode = value } label: {
@@ -243,6 +345,9 @@ struct CheckInSettingsView: View {
                     .padding(16)
                     .background(AppAdaptiveColor.warmCardBackground, in: RoundedRectangle(cornerRadius: 18))
                     automaticMonitoringSection
+                    #if DEBUG && canImport(DeviceActivity)
+                    deviceActivityDiagnosticSection
+                    #endif
                     if permissionChecked && !notificationsAllowed {
                         VStack(alignment: .leading, spacing: 9) {
                             Text(t("Разрешите уведомления, чтобы получать напоминания.", "Enable notifications to receive reminders.", "Activa las notificaciones para recibir recordatorios."))
@@ -268,7 +373,13 @@ struct CheckInSettingsView: View {
             .toolbar {
                 if !isOnboarding {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button(t("Закрыть", "Close", "Cerrar")) { dismiss() }
+                        Button { dismiss() } label: {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 17, weight: .bold))
+                                .frame(width: 44, height: 44)
+                                .contentShape(Rectangle())
+                        }
+                        .accessibilityLabel(t("Закрыть", "Close", "Cerrar"))
                     }
                 }
             }
@@ -283,11 +394,22 @@ struct CheckInSettingsView: View {
                 evening = savedEvening
                 daily = savedDaily
                 refreshPermission()
+                #if DEBUG && canImport(DeviceActivity)
+                refreshDiagnosticStatus()
+                refreshQueue()
+                #endif
                 #if canImport(FamilyControls)
                 screenTimePermissionStatus = AuthorizationCenter.shared.authorizationStatus == .approved ? "approved" : ""
                 #endif
             }
-            .onChange(of: scenePhase) { _, phase in if phase == .active { refreshPermission() } }
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active {
+                    refreshPermission()
+                    #if DEBUG && canImport(DeviceActivity)
+                    refreshQueue()
+                    #endif
+                }
+            }
         }
         .environment(\.locale, language.locale)
     }

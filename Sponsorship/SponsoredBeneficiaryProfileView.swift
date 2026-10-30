@@ -184,7 +184,6 @@ struct SponsoredBeneficiaryProfileView: View {
                 rawValue: beneficiaryLanguageCode
             ) != nil
             && isBirthdayValid
-            // Beneficiary chooses the schedule after accepting the invitation.
     }
 
     private var selectedCountryName: String {
@@ -211,7 +210,6 @@ struct SponsoredBeneficiaryProfileView: View {
                         header
                         nameSection
                         languageSection
-                        beneficiaryScheduleInfoButton
                         phoneSection
                         countrySection
                         birthdaySection
@@ -271,7 +269,7 @@ struct SponsoredBeneficiaryProfileView: View {
         } message: {
             Text(
                 localized(
-                    "Пожалуйста, заполните имя, форму обращения, телефон, страну проживания, день и месяц рождения и выберите интервал тревожного оповещения."
+                    "Пожалуйста, заполните имя, форму обращения, телефон, страну проживания, день и месяц рождения."
                 )
             )
         }
@@ -474,8 +472,10 @@ struct SponsoredBeneficiaryProfileView: View {
                     )
                 )
             } icon: {
-                Image(systemName: "character.bubble.fill")
-                    .foregroundStyle(.orange)
+                Image("icon_Language")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 27, height: 27)
             }
             .font(
                 .system(
@@ -547,83 +547,6 @@ struct SponsoredBeneficiaryProfileView: View {
             alignment: .leading
         )
         .sponsoredProfileCard()
-    }
-
-    @State private var showBeneficiaryScheduleInfo = false
-
-    private var beneficiaryScheduleInfoButton: some View {
-        Button { showBeneficiaryScheduleInfo = true } label: {
-            HStack(spacing: 12) {
-                Image("icon_Notification").resizable().scaledToFit().frame(width: 36, height: 36)
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(scheduleWord("Отметки", "Check-ins", "Confirmaciones"))
-                        .font(.system(.title3, design: .rounded).weight(.semibold))
-                    Text(scheduleWord("График выбирает подопечный", "Chosen by the beneficiary", "Elegido por el beneficiario"))
-                        .font(.footnote).foregroundStyle(AppAdaptiveColor.secondaryText)
-                }
-                Spacer()
-                Image(systemName: "chevron.right")
-            }
-            .foregroundStyle(AppAdaptiveColor.text)
-            .padding(16)
-            .frame(maxWidth: .infinity)
-            .background(AppAdaptiveColor.warmCardBackground,
-                        in: RoundedRectangle(cornerRadius: 20))
-        }
-        .buttonStyle(.plain)
-        .sheet(isPresented: $showBeneficiaryScheduleInfo) {
-            NavigationStack {
-                VStack(alignment: .leading, spacing: 18) {
-                    HStack(spacing: 12) {
-                        Image("icon_Notification").resizable().scaledToFit().frame(width: 58, height: 58)
-                        Text(scheduleWord("Отметки", "Check-ins", "Confirmaciones"))
-                            .font(.system(size: 34, weight: .bold, design: .rounded))
-                    }
-                    ForEach(scheduleLabels, id: \.self) { label in
-                        HStack(spacing: 12) {
-                            Image(systemName: "circle").foregroundStyle(AppAdaptiveColor.secondaryText)
-                            Text(label).font(.system(size: 17, design: .rounded))
-                            Spacer()
-                        }
-                        .padding(.vertical, 8)
-                    }
-                    .padding(18)
-                    .background(AppAdaptiveColor.warmCardBackground,
-                                in: RoundedRectangle(cornerRadius: 20))
-                    Text(scheduleWord(
-                        "Расписание выбирает сам подопечный во время своего онбординга. Спонсор не может устанавливать или менять его график. Для режимов три и два раза в неделю сервер использует интервалы 48 и 72 часа соответственно.",
-                        "The beneficiary chooses their own schedule during onboarding. The sponsor cannot set or change it. The three- and two-times-a-week options use 48- and 72-hour intervals respectively.",
-                        "El beneficiario elige su horario durante el registro. El patrocinador no puede configurarlo ni cambiarlo. Las opciones de tres y dos veces por semana usan intervalos de 48 y 72 horas, respectivamente."))
-                        .font(.footnote)
-                        .foregroundStyle(AppAdaptiveColor.secondaryText)
-                    Spacer()
-                }
-                .padding(24)
-                .background(MorningHelloScreenBackground(name: "BG_Reminders"))
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button(scheduleWord("Закрыть", "Close", "Cerrar")) { showBeneficiaryScheduleInfo = false }
-                    }
-                }
-            }
-        }
-    }
-
-    private var scheduleLabels: [String] {
-        [
-            scheduleWord("Два раза в день", "Twice a day", "Dos veces al día"),
-            scheduleWord("Ежедневно до выбранного времени", "Every day by a selected time", "Cada día antes de la hora elegida"),
-            scheduleWord("Три раза в неделю", "Three times a week", "Tres veces por semana"),
-            scheduleWord("Два раза в неделю", "Twice a week", "Dos veces por semana")
-        ]
-    }
-
-    private func scheduleWord(_ ru: String, _ en: String, _ es: String) -> String {
-        switch AppLanguage.selected {
-        case .russian: return ru
-        case .englishUS: return en
-        case .spanishLatinAmerica: return es
-        }
     }
 
     private var checkInIntervalSection: some View {
@@ -698,8 +621,10 @@ struct SponsoredBeneficiaryProfileView: View {
                     )
                 )
             } icon: {
-                Image(systemName: "phone.fill")
-                    .foregroundStyle(.orange)
+                Image("icon_Profile")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 27, height: 27)
             }
             .font(
                 .system(
@@ -779,8 +704,10 @@ struct SponsoredBeneficiaryProfileView: View {
                     localized("Страна проживания")
                 )
             } icon: {
-                Image(systemName: "globe")
-                    .foregroundStyle(.orange)
+                Image("icon_Language")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 27, height: 27)
             }
             .font(
                 .system(
@@ -865,8 +792,10 @@ struct SponsoredBeneficiaryProfileView: View {
                     )
                 )
             } icon: {
-                Image(systemName: "birthday.cake.fill")
-                    .foregroundStyle(.orange)
+                Image("icon_Holidays")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 27, height: 27)
             }
             .font(
                 .system(
@@ -1067,10 +996,10 @@ struct SponsoredBeneficiaryProfileView: View {
                 countryCode: countryCode,
                 languageCode:
                     beneficiaryLanguageCode,
-                // No sponsor-selected schedule. 0/false is a transitional
-                // draft payload until Backend stops requiring legacy fields.
-                checkInIntervalHours: 0,
-                checkInIntervalConfirmed: false
+                checkInIntervalHours:
+                    checkInIntervalHours,
+                checkInIntervalConfirmed:
+                    checkInIntervalConfirmed
             )
 
         updatedDraft.updatedAt = Date()
@@ -1123,29 +1052,20 @@ struct SponsoredBeneficiaryProfileView: View {
         AppLanguage.selected.localized(key)
     }
 
-    private func beneficiaryLanguageName(_ language: AppLanguage) -> String {
-        switch AppLanguage.selected {
+    private func beneficiaryLanguageName(
+        _ language: AppLanguage
+    ) -> String {
+        switch language {
         case .russian:
-            switch language {
-            case .russian: return "Русский"
-            case .englishUS: return "Английский (США)"
-            case .spanishLatinAmerica: return "Испанский (Латинская Америка)"
-            }
+            return "Русский"
+
         case .englishUS:
-            switch language {
-            case .russian: return "Russian"
-            case .englishUS: return "English (US)"
-            case .spanishLatinAmerica: return "Spanish (Latin America)"
-            }
+            return "English (US)"
+
         case .spanishLatinAmerica:
-            switch language {
-            case .russian: return "Ruso"
-            case .englishUS: return "Inglés (EE. UU.)"
-            case .spanishLatinAmerica: return "Español (Latinoamérica)"
-            }
+            return "Español (Latinoamérica)"
         }
     }
-
 }
 
 // MARK: - Выбор страны подопечного

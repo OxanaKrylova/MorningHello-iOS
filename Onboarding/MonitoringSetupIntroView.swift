@@ -219,7 +219,7 @@ struct MonitoringSetupIntroView: View {
         ) {
             setupRow(
                 icon:
-                    "person.crop.circle.fill",
+                    "icon_Profile",
                 titleKey:
                     "onboarding.setup.profile.title",
                 descriptionKey:
@@ -230,7 +230,7 @@ struct MonitoringSetupIntroView: View {
 
             setupRow(
                 icon:
-                    "person.2.fill",
+                    "icon_Emergency_Contacts",
                 titleKey:
                     "onboarding.setup.contacts.title",
                 descriptionKey:
@@ -241,7 +241,7 @@ struct MonitoringSetupIntroView: View {
 
             setupRow(
                 icon:
-                    "pawprint.fill",
+                    "icon_Pet",
                 titleKey:
                     "onboarding.setup.pet.title",
                 descriptionKey:
@@ -299,26 +299,10 @@ struct MonitoringSetupIntroView: View {
             alignment: .top,
             spacing: 13
         ) {
-            Image(
-                systemName: icon
-            )
-            .font(
-                .system(
-                    size: 23,
-                    weight: .semibold
-                )
-            )
-            .foregroundStyle(
-                Color.orange
-            )
-            .frame(
-                width: 42,
-                height: 42
-            )
-            .background(
-                Color.orange.opacity(0.12),
-                in: Circle()
-            )
+            Image(icon)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 48, height: 48)
 
             VStack(
                 alignment: .leading,

@@ -35,6 +35,11 @@ struct EmergencyContactsView: View {
     @State private var isRefreshingContactStatuses = false
     @State private var statusRefreshErrorMessage: String?
     
+    @State private var showPauseAllConfirmation = false
+    @State private var isPausingAllMonitoring = false
+    @State private var showPauseAllResult = false
+    @State private var pauseAllTitle = ""
+    @State private var pauseAllMessage = ""
     @State private var contactAwaitingDeletion: EmergencyContact?
     @State private var deletingContactIDs: Set<UUID> = []
     
@@ -190,6 +195,23 @@ struct EmergencyContactsView: View {
         return normalizedPhone
     }
     // MARK: - Прекращение мониторинга
+    @MainActor
+    private func pauseAllMonitoringFromContacts() async {
+        guard !isPausingAllMonitoring else { return }
+        isPausingAllMonitoring = true
+        defer { isPausingAllMonitoring = false }
+        do {
+            let state = try await MorningHelloMonitoringAPIClient.shared.pauseByUser()
+            guard !state.active else { throw MorningHelloMonitoringAPIError.unexpectedState }
+            pauseAllTitle = AppLanguage.selected.localized("Мониторинг остановлен")
+            pauseAllMessage = AppLanguage.selected.localized("Сервер подтвердил остановку мониторинга. Аккаунт и контакты сохранены.")
+        } catch {
+            pauseAllTitle = AppLanguage.selected.localized("Не удалось остановить мониторинг")
+            pauseAllMessage = AppLanguage.selected.localized("Сервер не подтвердил остановку. Не считайте мониторинг отключённым. Проверьте соединение и попробуйте снова.")
+        }
+        showPauseAllResult = true
+    }
+
 
     @MainActor
     private func stopMonitoring(
@@ -339,9 +361,7 @@ struct EmergencyContactsView: View {
                     
                     VStack(alignment: .leading, spacing: 8) {
                         HStack(alignment: .top, spacing: 10) {
-                            Image("icon_trusted_person")
-                                .resizable().renderingMode(.original).scaledToFit()
-                                .frame(width: 28, height: 28)
+                            Image(systemName: "envelope.badge.fill")
                                 .font(
                                     .system(
                                         size: 19,
@@ -400,9 +420,12 @@ struct EmergencyContactsView: View {
                     } label: {
                         HStack(spacing: 10) {
                             
-                            Image("icon_trusted_person")
-                                .resizable().renderingMode(.original).scaledToFit()
-                                .frame(width: 28, height: 28)
+                            Image(
+                                systemName:
+                                    editingIndex == nil
+                                ? "person.badge.plus"
+                                : "person.crop.circle.badge.checkmark"
+                            )
                             
                             Text(
                                 editingIndex == nil
@@ -937,6 +960,28 @@ struct EmergencyContactsView: View {
                     }
                     
                     
+                    // MARK: - Период оповещения
+                    // MARK: - Период оповещения
+                    VStack(alignment: .leading, spacing: 12) {
+                        
+                        Text("Период оповещения")
+                            .font(.headline)
+                        
+                        Picker("Период оповещения", selection: $checkInIntervalHours) {
+                            Text("24 часа").tag(24)
+                            Text("48 часов").tag(48)
+                            Text("72 часа").tag(72)
+                        }
+                        .pickerStyle(.segmented)
+                        
+                        Text("Выберите время, через которое мы сообщим вашим близким, если вы не отметитесь.")
+                            .font(.footnote)
+                            .foregroundColor(headerSecondaryColor)
+                        
+                    }
+                    .padding()
+                    .background(cardFillColor)
+                    .cornerRadius(16)
                     // MARK: - Список контактов
                     
                     Text("Контакты \(contacts.count)/2")
@@ -1131,8 +1176,7 @@ struct EmergencyContactsView: View {
                     }
                     if !contacts.isEmpty && !isOnboarding {
                         Button(role: .destructive) {
-                            contactAwaitingDeletion =
-                            contacts.first
+                            showPauseAllConfirmation = true
                         } label: {
                             HStack(spacing: 10) {
                                 if !deletingContactIDs.isEmpty {
@@ -1191,45 +1235,22 @@ struct EmergencyContactsView: View {
             }
             
             .confirmationDialog(
-                "Прекратить мониторинг?",
-                isPresented: Binding(
-                    get: {
-                        contactAwaitingDeletion != nil
-                    },
-                    set: { isPresented in
-                        if !isPresented {
-                            contactAwaitingDeletion = nil
-                        }
-                    }
-                ),
-                titleVisibility: .visible,
-                presenting: contactAwaitingDeletion
-            ) { contact in
-                Button(
-                    "Прекратить мониторинг",
-                    role: .destructive
-                ) {
-                    contactAwaitingDeletion = nil
-                    
-                    Task {
-                        await stopMonitoring(
-                            for: contact
-                        )
-                    }
+                AppLanguage.selected.localized("Остановить мониторинг?"),
+                isPresented: $showPauseAllConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button(AppLanguage.selected.localized("Остановить мониторинг"), role: .destructive) {
+                    Task { await pauseAllMonitoringFromContacts() }
                 }
-                
-                Button(
-                    "Отмена",
-                    role: .cancel
-                ) {
-                    contactAwaitingDeletion = nil
-                }
-            } message: { _ in
-                Text(
-                    "MorningHello остановит мониторинг и удалит все тревожные контакты."
-                )
+                Button(AppLanguage.selected.localized("Отмена"), role: .cancel) {}
+            } message: {
+                Text(AppLanguage.selected.localized(
+                    "Мониторинг прекратится. Тревожные контакты будут уведомлены об остановке. Данные и аккаунт сохранятся. Для возобновления потребуется отдельное действие и новая отметка «Я в порядке»."))
             }
-            
+            .alert(pauseAllTitle, isPresented: $showPauseAllResult) {
+                Button("OK", role: .cancel) {}
+            } message: { Text(pauseAllMessage) }
+
             .confirmationDialog(
                 "Добавить второй тревожный контакт?",
                 isPresented: $showSecondContactSuggestion,

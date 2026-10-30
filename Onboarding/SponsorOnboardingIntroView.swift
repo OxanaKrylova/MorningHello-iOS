@@ -12,13 +12,6 @@ struct SponsorOnboardingIntroView:
 
     let onContinue: () -> Void
 
-    @State private var selectedDevice: BeneficiaryPhoneType?
-
-    private enum BeneficiaryPhoneType: String {
-        case iPhone
-        case other
-    }
-
     @AppStorage(
         AppLanguage.storageKey
     )
@@ -86,7 +79,9 @@ struct SponsorOnboardingIntroView:
             .hidden
         )
         .background(
-            MorningHelloScreenBackground(name: "BG_Onboarding")
+            AppAdaptiveColor
+                .warmFormBackground
+                .ignoresSafeArea()
         )
     }
 
@@ -156,110 +151,142 @@ struct SponsorOnboardingIntroView:
         }
     }
 
-    private var deviceRequirementCard: some View {
-        VStack(spacing: 18) {
-            MorningHelloArtwork(name: "icon_telephone", size: 56)
-                .accessibilityHidden(true)
-            Text(deviceQuestion)
-                .font(.system(size: 22, weight: .bold, design: .rounded))
-                .foregroundStyle(AppAdaptiveColor.text)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
+    private var deviceRequirementCard:
+        some View {
 
-            deviceOption(.iPhone, title: "iPhone", icon: "iphone.gen3")
-            deviceOption(.other, title: otherPhoneTitle, icon: "smartphone")
+        VStack(
+            spacing:
+                14
+        ) {
 
-            if selectedDevice == .other {
-                Label {
-                    Text(unsupportedPhoneMessage)
-                        .fixedSize(horizontal: false, vertical: true)
-                } icon: {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                }
-                .font(.system(size: 16, weight: .semibold, design: .rounded))
-                .foregroundStyle(Color.red)
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .accessibilityAddTraits(.isStaticText)
+            Text(
+                localized(
+                    "onboarding.sponsor.device.title"
+                )
+            )
+            .font(
+                .system(
+                    size:
+                        22,
+                    weight:
+                        .bold,
+                    design:
+                        .rounded
+                )
+            )
+            .foregroundStyle(
+                AppAdaptiveColor.text
+            )
+            .multilineTextAlignment(
+                .center
+            )
+            .fixedSize(
+                horizontal:
+                    false,
+                vertical:
+                    true
+            )
+
+            HStack(
+                alignment:
+                    .top,
+                spacing:
+                    10
+            ) {
+
+                Image(
+                    systemName:
+                        "exclamationmark.triangle.fill"
+                )
+                .font(
+                    .system(
+                        size:
+                            22,
+                        weight:
+                            .bold
+                    )
+                )
+                .foregroundStyle(
+                    Color.orange
+                )
+                .accessibilityHidden(
+                    true
+                )
+
+                Text(
+                    localized(
+                        "onboarding.sponsor.device.android"
+                    )
+                )
+                .font(
+                    .system(
+                        size:
+                            17,
+                        weight:
+                            .semibold,
+                        design:
+                            .rounded
+                    )
+                )
+                .foregroundStyle(
+                    AppAdaptiveColor.text
+                )
+                .multilineTextAlignment(
+                    .leading
+                )
+                .fixedSize(
+                    horizontal:
+                        false,
+                    vertical:
+                        true
+                )
             }
         }
-        .padding(24)
-        .frame(maxWidth: .infinity)
+        .padding(
+            24
+        )
+        .frame(
+            maxWidth:
+                .infinity
+        )
         .background(
             AppAdaptiveColor.secondaryBackground,
-            in: RoundedRectangle(cornerRadius: 28, style: .continuous)
+            in:
+                RoundedRectangle(
+                    cornerRadius:
+                        28,
+                    style:
+                        .continuous
+                )
         )
         .overlay {
-            RoundedRectangle(cornerRadius: 28, style: .continuous)
-                .stroke(Color.orange.opacity(0.65), lineWidth: 2)
-        }
-        .shadow(color: .black.opacity(0.06), radius: 10, y: 5)
-    }
 
-    private func deviceOption(
-        _ type: BeneficiaryPhoneType,
-        title: String,
-        icon: String
-    ) -> some View {
-        Button {
-            selectedDevice = type
-        } label: {
-            HStack(spacing: 14) {
-                Image(systemName: icon)
-                    .font(.system(size: 24))
-                    .frame(width: 32)
-                Text(title)
-                    .font(.system(size: 18, weight: .semibold, design: .rounded))
-                Spacer(minLength: 4)
-                Image(systemName: selectedDevice == type
-                      ? "largecircle.fill.circle"
-                      : "circle")
-                    .font(.system(size: 23))
-            }
-            .foregroundStyle(AppAdaptiveColor.text)
-            .padding(.horizontal, 16)
-            .frame(minHeight: 62)
-            .background(
-                selectedDevice == type
-                    ? Color.orange.opacity(0.12)
-                    : AppAdaptiveColor.warmFormBackground,
-                in: RoundedRectangle(cornerRadius: 18, style: .continuous)
+            RoundedRectangle(
+                cornerRadius:
+                    28,
+                style:
+                    .continuous
             )
-            .overlay {
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(selectedDevice == type ? Color.orange : Color.gray.opacity(0.2),
-                            lineWidth: selectedDevice == type ? 2 : 1)
-            }
+            .stroke(
+                Color.orange.opacity(
+                    0.65
+                ),
+                lineWidth:
+                    3
+            )
         }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(selectedDevice == type ? [.isSelected] : [])
-    }
-
-    private var deviceQuestion: String {
-        switch selectedLanguage {
-        case .russian: return "Каким телефоном пользуется подопечный?"
-        case .englishUS: return "What phone does your loved one use?"
-        case .spanishLatinAmerica: return "¿Qué teléfono usa tu ser querido?"
-        }
-    }
-
-    private var otherPhoneTitle: String {
-        switch selectedLanguage {
-        case .russian: return "Другой телефон (Android и др.)"
-        case .englishUS: return "Other phone (Android, etc.)"
-        case .spanishLatinAmerica: return "Otro teléfono (Android, etc.)"
-        }
-    }
-
-    private var unsupportedPhoneMessage: String {
-        switch selectedLanguage {
-        case .russian:
-            return "Пока MorningHello работает только на iPhone. Продолжить оформление спонсорской подписки для другого телефона нельзя."
-        case .englishUS:
-            return "MorningHello is currently available for iPhone only. You cannot continue setting up a sponsored subscription for someone using another type of phone."
-        case .spanishLatinAmerica:
-            return "Por ahora, MorningHello solo funciona en iPhone. No puedes continuar la suscripción patrocinada para alguien que usa otro tipo de teléfono."
-        }
+        .shadow(
+            color:
+                Color.black.opacity(
+                    0.06
+                ),
+            radius:
+                10,
+            x:
+                0,
+            y:
+                5
+        )
     }
 
     private var preparationCard:
@@ -302,7 +329,7 @@ struct SponsorOnboardingIntroView:
 
             informationRow(
                 icon:
-                    "person.text.rectangle.fill",
+                    "icon_Profile",
                 textKey:
                     "onboarding.sponsor.preparation.data"
             )
@@ -311,7 +338,7 @@ struct SponsorOnboardingIntroView:
 
             informationRow(
                 icon:
-                    "creditcard.fill",
+                    "icon_Subscription",
                 textKey:
                     "onboarding.sponsor.preparation.purchase"
             )
@@ -320,7 +347,7 @@ struct SponsorOnboardingIntroView:
 
             informationRow(
                 icon:
-                    "link.circle.fill",
+                    "icon_Share",
                 textKey:
                     "onboarding.sponsor.preparation.invitation"
             )
@@ -372,21 +399,9 @@ struct SponsorOnboardingIntroView:
                 16
         ) {
 
-            Image(
-                systemName:
-                    icon
-            )
-            .font(
-                .system(
-                    size:
-                        30,
-                    weight:
-                        .semibold
-                )
-            )
-            .foregroundStyle(
-                Color.orange
-            )
+            Image(icon)
+            .resizable()
+            .scaledToFit()
             .frame(
                 width:
                     38
@@ -426,8 +441,9 @@ struct SponsorOnboardingIntroView:
         some View {
 
         Button {
-            guard selectedDevice == .iPhone else { return }
+
             onContinue()
+
         } label: {
 
             Text(
@@ -455,7 +471,7 @@ struct SponsorOnboardingIntroView:
                     60
             )
             .background(
-                selectedDevice == .iPhone ? Color.orange : Color.gray,
+                Color.orange,
                 in:
                     RoundedRectangle(
                         cornerRadius:
@@ -468,7 +484,6 @@ struct SponsorOnboardingIntroView:
         .buttonStyle(
             .plain
         )
-        .disabled(selectedDevice != .iPhone)
         .padding(
             .top,
             4

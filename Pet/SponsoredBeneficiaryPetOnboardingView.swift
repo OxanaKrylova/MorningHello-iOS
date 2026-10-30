@@ -109,7 +109,7 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
                         savedPetsSection
                     }
 
-                    accordionCard(.caregivers, title: caregiverTitle, icon: "icon_trusted_person") {
+                    accordionCard(.caregivers, title: caregiverTitle, icon: "icon_Emergency_Contacts") {
                         caregiversSection
                     }
                     accordionCard(.required, title: selectedLanguage.localized("sponsor.pet.required"), icon: "icon_Pet") {
@@ -452,20 +452,6 @@ struct SponsoredBeneficiaryPetOnboardingView: View {
                 Text("Español").tag("es")
             }
             .pickerStyle(.menu)
-            if caregiver.wrappedValue.isComplete {
-                Text(careText(
-                    "Статус: подтверждён (локально)",
-                    "Status: confirmed (locally)",
-                    "Estado: confirmado (localmente)"))
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(.green)
-                Text(careText(
-                    "Контакт сохранён в черновике. Это не подтверждение согласия сервером.",
-                    "The contact is in the draft. This is not server-confirmed consent.",
-                    "El contacto está en el borrador. Esto no confirma el consentimiento en el servidor."))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
         }
     }
 

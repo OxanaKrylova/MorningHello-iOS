@@ -177,9 +177,13 @@ struct SettingsView: View {
                 ToolbarItem(
                     placement: .confirmationAction
                 ) {
-                    Button("Готово") {
-                        dismiss()
+                    Button { dismiss() } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 17, weight: .bold))
+                            .frame(width: 40, height: 40)
+                            .contentShape(Rectangle())
                     }
+                    .accessibilityLabel(privacyText("Закрыть", "Close", "Cerrar"))
                     .foregroundStyle(titleColor)
                     .font(
                         .system(

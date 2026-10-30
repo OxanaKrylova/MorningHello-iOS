@@ -599,10 +599,6 @@ struct ContentView: View {
 
         monitoringSnapshot =
             nil
-        CheckInDeadlineReminder.shared.synchronize(
-            snapshot: nil,
-            language: selectedLanguage
-        )
 
         serverClockOffset =
             0
@@ -1262,10 +1258,6 @@ struct ContentView: View {
         }
 
         monitoringSnapshot = response
-        CheckInDeadlineReminder.shared.synchronize(
-            snapshot: response,
-            language: selectedLanguage
-        )
         serverClockOffset = response.serverNow
             .timeIntervalSince(Date())
 
@@ -1351,10 +1343,6 @@ struct ContentView: View {
 
                 monitoringSnapshot =
                     nil
-                CheckInDeadlineReminder.shared.synchronize(
-                    snapshot: nil,
-                    language: selectedLanguage
-                )
 
                 monitoringRequestFailed =
                     false
@@ -1391,10 +1379,6 @@ struct ContentView: View {
             from: data
         ) {
             monitoringSnapshot = snapshot
-            CheckInDeadlineReminder.shared.synchronize(
-                snapshot: snapshot,
-                language: selectedLanguage
-            )
             serverClockOffset = UserDefaults.standard.double(
                 forKey: serverClockOffsetKey
             )
@@ -1455,10 +1439,23 @@ struct ContentView: View {
 
 
     func scheduleCheckInReminder() {
-        CheckInDeadlineReminder.shared.synchronize(
-            snapshot: monitoringSnapshot,
-            language: selectedLanguage
+        let content = UNMutableNotificationContent()
+        content.title = selectedLanguage.localized("Мы волнуемся за вас!")
+        content.body = selectedLanguage.localized(
+            "Пожалуйста, подтвердите, что с вами всё хорошо"
         )
+        content.sound = .default
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 36 * 60 * 60, repeats: false)
+
+        let request = UNNotificationRequest(
+            identifier: "check_in_reminder",
+            content: content,
+            trigger: trigger
+        )
+
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["check_in_reminder"])
+        UNUserNotificationCenter.current().add(request)
     }
 
     func isHolidayAllowed(
@@ -1518,7 +1515,7 @@ struct ContentView: View {
     }
     var welcomeScreen: some View {
         ZStack(alignment: .top) {
-            VStack(spacing: 12) {
+            VStack(spacing: 22) {
 
                 HStack(spacing: 8) {
                     Text(timeGreeting)
@@ -1537,7 +1534,6 @@ struct ContentView: View {
                                 : AppAdaptiveColor.text
                         )
 
-                    VStack(spacing: 10) {
                     Button {
                         AppSoundPlayer.shared.play(.openForm)
                         showSettings = true
@@ -1552,15 +1548,18 @@ struct ContentView: View {
                     .accessibilityLabel(
                        "Настройки"
                     )
-                    Button {
-                        AppSoundPlayer.shared.play(.openForm)
-                        showPetProfile = true
-                    } label: {
-                        MorningHelloArtwork(name: "icon_Pet", size: 36)
-                            .frame(width: 44, height: 44)
-                            .background(AppAdaptiveColor.warmCardBackground, in: Circle())
-                    }
-                    .accessibilityLabel(selectedLanguage.localized("Питомец"))
+                    .overlay(alignment: .bottomTrailing) {
+                        Button {
+                            AppSoundPlayer.shared.play(.openForm)
+                            showPetProfile = true
+                        } label: {
+                            MorningHelloArtwork(name: "icon_Pet", size: 36)
+                                .frame(width: 44, height: 44)
+                                .background(AppAdaptiveColor.warmCardBackground, in: Circle())
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(selectedLanguage.localized("Питомцы"))
+                        .offset(y: 52)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -2796,7 +2795,6 @@ struct ContentView: View {
                         of: selectedLanguageCode
                     ) { _, _ in
                         applyHolidayPreset()
-                        scheduleCheckInReminder()
                     }
                     .onChange(of: scenePhase) { _, newPhase in
                         guard newPhase == .active else { return }

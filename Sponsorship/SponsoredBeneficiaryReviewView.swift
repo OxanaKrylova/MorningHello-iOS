@@ -209,9 +209,9 @@ private var header: some View {
     ) -> some View {
         HStack(alignment: .top, spacing: 14) {
             Image(systemImage)
-                .resizable().scaledToFit()
-                .frame(width: 36, height: 36)
-                .accessibilityHidden(true)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 35, height: 35)
 
             VStack(alignment: .leading, spacing: 6) {
                 Text(

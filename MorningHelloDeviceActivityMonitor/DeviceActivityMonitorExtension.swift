@@ -1,48 +1,18 @@
-//
-//  DeviceActivityMonitorExtension.swift
-//  MorningHelloDeviceActivityMonitor
-//
-//  Created by Oxana Krylova on 29/10/2026.
-//
-
 import DeviceActivity
+import Foundation
+import os
 
-// Optionally override any of the functions below.
-// Make sure that your class name matches the NSExtensionPrincipalClass in your Info.plist.
-class DeviceActivityMonitorExtension: DeviceActivityMonitor {
-    override func intervalDidStart(for activity: DeviceActivityName) {
-        super.intervalDidStart(for: activity)
-        
-        // Handle the start of the interval.
-    }
-    
-    override func intervalDidEnd(for activity: DeviceActivityName) {
-        super.intervalDidEnd(for: activity)
-        
-        // Handle the end of the interval.
-    }
-    
+final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
+    private let logger = Logger(subsystem: "com.oxana.morninghello.screen-time-test", category: "Queue")
     override func eventDidReachThreshold(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
         super.eventDidReachThreshold(event, activity: activity)
-        
-        // Handle the event reaching its threshold.
-    }
-    
-    override func intervalWillStartWarning(for activity: DeviceActivityName) {
-        super.intervalWillStartWarning(for: activity)
-        
-        // Handle the warning before the interval starts.
-    }
-    
-    override func intervalWillEndWarning(for activity: DeviceActivityName) {
-        super.intervalWillEndWarning(for: activity)
-        
-        // Handle the warning before the interval ends.
-    }
-    
-    override func eventWillReachThresholdWarning(_ event: DeviceActivityEvent.Name, activity: DeviceActivityName) {
-        super.eventWillReachThresholdWarning(event, activity: activity)
-        
-        // Handle the warning before the event reaches its threshold.
+        guard activity.rawValue == "morninghello.oneMinuteDiagnostic",
+              event.rawValue == "oneMinuteOfUsage" else { return }
+        do {
+            let inserted = try ScreenTimeEventQueue.enqueue(activity: activity.rawValue, event: event.rawValue)
+            logger.notice("MORNINGHELLO_SCREEN_TIME_QUEUE: event recorded, new=\(inserted)")
+        } catch {
+            logger.error("MORNINGHELLO_SCREEN_TIME_QUEUE: cannot persist event: \(error.localizedDescription, privacy: .public)")
+        }
     }
 }

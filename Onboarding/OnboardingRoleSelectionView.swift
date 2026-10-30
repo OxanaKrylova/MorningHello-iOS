@@ -60,14 +60,14 @@ struct OnboardingRoleSelectionView:
 
             VStack(
                 spacing:
-                    24
+                    14
             ) {
 
                 header
 
                 VStack(
                     spacing:
-                        16
+                        10
                 ) {
 
                     roleCard(
@@ -95,11 +95,10 @@ struct OnboardingRoleSelectionView:
                     )
                 }
 
-                continueButton
             }
             .frame(
                 maxWidth:
-                    680
+                    520
             )
             .padding(
                 .horizontal,
@@ -107,11 +106,11 @@ struct OnboardingRoleSelectionView:
             )
             .padding(
                 .top,
-                48
+                16
             )
             .padding(
                 .bottom,
-                36
+                16
             )
             .frame(
                 maxWidth:
@@ -121,6 +120,15 @@ struct OnboardingRoleSelectionView:
         .scrollIndicators(
             .hidden
         )
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            continueButton
+                .frame(maxWidth: 520)
+                .padding(.horizontal, 24)
+                .padding(.top, 10)
+                .padding(.bottom, 8)
+                .frame(maxWidth: .infinity)
+                .background(.regularMaterial)
+        }
         .background(
             MorningHelloScreenBackground(name: "BG_Onboarding")
         )
@@ -142,7 +150,7 @@ struct OnboardingRoleSelectionView:
             .font(
                 .system(
                     size:
-                        28,
+                        23,
                     weight:
                         .bold,
                     design:
@@ -170,7 +178,7 @@ struct OnboardingRoleSelectionView:
             .font(
                 .system(
                     size:
-                        19,
+                        15,
                     weight:
                         .semibold,
                     design:
@@ -222,7 +230,7 @@ struct OnboardingRoleSelectionView:
                     alignment:
                         .leading,
                     spacing:
-                        8
+                        4
                 ) {
 
                     Text(
@@ -233,7 +241,7 @@ struct OnboardingRoleSelectionView:
                     .font(
                         .system(
                             size:
-                                22,
+                                15,
                             weight:
                                 .bold,
                             design:
@@ -261,7 +269,7 @@ struct OnboardingRoleSelectionView:
                     .font(
                         .system(
                             size:
-                                17,
+                                14,
                             weight:
                                 .regular,
                             design:
@@ -296,7 +304,7 @@ struct OnboardingRoleSelectionView:
                 .font(
                     .system(
                         size:
-                            30,
+                            24,
                         weight:
                             .semibold
                     )
@@ -311,7 +319,7 @@ struct OnboardingRoleSelectionView:
                 )
             }
             .padding(
-                22
+                14
             )
             .frame(
                 maxWidth:
@@ -320,15 +328,11 @@ struct OnboardingRoleSelectionView:
                     .leading
             )
             .background(
-                isSelected
-                ? Color.orange.opacity(
-                    0.10
-                )
-                : AppAdaptiveColor.secondaryBackground,
+                AppAdaptiveColor.secondaryBackground,
                 in:
                     RoundedRectangle(
                         cornerRadius:
-                            28,
+                            20,
                         style:
                             .continuous
                     )
@@ -337,7 +341,7 @@ struct OnboardingRoleSelectionView:
 
                 RoundedRectangle(
                     cornerRadius:
-                        28,
+                        20,
                     style:
                         .continuous
                 )
@@ -346,7 +350,7 @@ struct OnboardingRoleSelectionView:
                     ? Color.orange
                     : Color.clear,
                     lineWidth:
-                        3
+                        2.5
                 )
             }
             .shadow(
@@ -406,7 +410,7 @@ struct OnboardingRoleSelectionView:
             .font(
                 .system(
                     size:
-                        20,
+                        18,
                     weight:
                         .bold,
                     design:
@@ -420,7 +424,7 @@ struct OnboardingRoleSelectionView:
                 maxWidth:
                     .infinity,
                 minHeight:
-                    60
+                    54
             )
             .background(
                 selectedRole == nil

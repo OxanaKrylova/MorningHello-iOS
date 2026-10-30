@@ -478,14 +478,13 @@ struct IPhoneCalendarSelectionView:
                 ToolbarItem(
                     placement: .topBarTrailing
                 ) {
-                    Button(
-                        localized(
-                            "iphoneCalendar.action.done"
-                        )
-                    ) {
-                        dismiss()
+                    Button { dismiss() } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 17, weight: .bold))
+                            .frame(width: 44, height: 44)
+                            .contentShape(Rectangle())
                     }
-                    .fontWeight(.semibold)
+                    .accessibilityLabel(localized("iphoneCalendar.action.done"))
                 }
             }
             .task {

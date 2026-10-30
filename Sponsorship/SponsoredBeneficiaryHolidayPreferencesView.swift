@@ -305,75 +305,39 @@ struct SponsoredBeneficiaryHolidayPreferencesView:
     }
 
 
-    // Informational only. Does not modify sponsor preferences or monitoring.
+    // Full holiday descriptions supplied for the sponsor's review.
+    // These lists are descriptive only; the existing toggles control saved preferences.
     private var holidayInformation: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Text(holidayText(
-                "О праздничных открытках", "About holiday postcards", "Sobre las postales festivas"
-            ))
-            .font(.headline.weight(.bold))
-
-            VStack(alignment: .leading, spacing: 12) {
-                Group {
-                    Text(holidayText("Протестантские праздники: специальные открытки к протестантским праздникам и воскресеньям.",
-                                     "Protestant holidays: special postcards for Protestant celebrations and Sundays.",
-                                     "Festividades protestantes: postales especiales para celebraciones protestantes y domingos."))
-                    Text(holidayText("Православные праздники: православный календарь, Пасха и связанные с ней дни.",
-                                     "Orthodox holidays: the Orthodox calendar, Easter, and related observances.",
-                                     "Festividades ortodoxas: calendario ortodoxo, Pascua y celebraciones relacionadas."))
-                    Text(holidayText("Католические праздники: католический календарь, Великий пост и Адвент.",
-                                     "Catholic holidays: the Catholic calendar, Lent, and Advent.",
-                                     "Festividades católicas: calendario católico, Cuaresma y Adviento."))
-                    Text(holidayText("Еврейские праздники: праздники, посты и открытки к Шабату.",
-                                     "Jewish holidays: celebrations, fasts, and Shabbat postcards.",
-                                     "Festividades judías: celebraciones, ayunos y postales de Shabat."))
-                    Text(holidayText("Праздники Латинской Америки: региональные праздничные открытки.",
-                                     "Latin American holidays: regional holiday postcards.",
-                                     "Festividades latinoamericanas: postales de celebraciones regionales."))
-                }
-                .font(.subheadline)
-            }
-
-            Text(holidayText(
-                "Нейтральные и международные праздничные открытки доступны независимо от выбранных категорий.",
-                "Neutral and international holiday postcards are available regardless of the selected categories.",
-                "Las postales de celebraciones neutrales e internacionales están disponibles independientemente de las categorías seleccionadas."
-            ))
-            .font(.subheadline.weight(.semibold))
-
-            DisclosureGroup {
-                VStack(alignment: .leading, spacing: 10) {
-                    ForEach(Array(neutralHolidayNames.enumerated()), id: \.offset) { index, name in
-                        Text("\(index + 1). \(selectedLanguage.localized(name))")
-                            .font(.subheadline.weight(.medium))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-                .padding(.top, 12)
-            } label: {
-                Text(holidayText("Полный список нейтральных праздников", "Full list of neutral holidays", "Lista completa de celebraciones neutrales"))
-                    .font(.subheadline.weight(.bold))
-            }
-            .tint(.orange)
-
-            Text(holidayText(
-                "При выборе протестантских, католических или православных праздников по воскресеньям могут показываться особые воскресные открытки.",
-                "When Protestant, Catholic, or Orthodox holidays are enabled, special Sunday postcards may be shown.",
-                "Al activar las festividades protestantes, católicas u ortodoxas, pueden mostrarse postales especiales los domingos."
-            ))
-            .font(.subheadline.weight(.semibold))
-
-            Text(holidayText(
-                "При выборе еврейских праздников с вечера пятницы до вечера субботы могут показываться открытки к Шабату.",
-                "When Jewish holidays are enabled, Shabbat postcards may be shown from Friday evening through Saturday evening.",
-                "Al activar las festividades judías, pueden mostrarse postales de Shabat desde la tarde del viernes hasta la tarde del sábado."
-            ))
-            .font(.subheadline.weight(.semibold))
+        VStack(spacing: 12) {
+            holidayInfoCard("Протестантские праздники", "Protestant holidays", "Festividades protestantes", names: protestantHolidayNames)
+            holidayInfoCard("Православные праздники", "Orthodox holidays", "Festividades ortodoxas", names: orthodoxHolidayNames)
+            holidayInfoCard("Католические праздники", "Catholic holidays", "Festividades católicas", names: catholicHolidayNames)
+            holidayInfoCard("Еврейские праздники", "Jewish holidays", "Festividades judías", names: jewishHolidayNames)
+            holidayInfoCard("Праздники Латинской Америки", "Latin American holidays", "Festividades latinoamericanas", names: latinAmericanHolidayNames)
+            holidayInfoCard("Нейтральные и международные праздники", "Neutral and international holidays", "Celebraciones neutrales e internacionales", names: neutralHolidayNames)
         }
-        .foregroundStyle(AppAdaptiveColor.text)
+    }
+
+    private func holidayInfoCard(_ ru: String, _ en: String, _ es: String,
+                                 names: [String]) -> some View {
+        DisclosureGroup {
+            LazyVStack(alignment: .leading, spacing: 10) {
+                ForEach(Array(names.enumerated()), id: \.offset) { index, name in
+                    Text("\(index + 1). \(name)")
+                        .font(.subheadline)
+                        .foregroundStyle(AppAdaptiveColor.text)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            }
+            .padding(.top, 12)
+        } label: {
+            Text(holidayText(ru, en, es))
+                .font(.headline)
+                .foregroundStyle(AppAdaptiveColor.text)
+        }
+        .tint(.blue)
         .padding(18)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(AppAdaptiveColor.secondaryBackground, in: RoundedRectangle(cornerRadius: 24))
+        .background(AppAdaptiveColor.secondaryBackground, in: RoundedRectangle(cornerRadius: 22))
     }
 
     private func holidayText(_ ru: String, _ en: String, _ es: String) -> String {
@@ -382,6 +346,111 @@ struct SponsoredBeneficiaryHolidayPreferencesView:
         case .englishUS: return en
         case .spanishLatinAmerica: return es
         }
+    }
+
+    private var protestantHolidayNames: [String] {
+        [
+            "25 декабря – Рождество Христово",
+            "6 января – Богоявление",
+            "16 января – День свободы вероисповедания",
+            "Страстная пятница – за два дня до Пасхи",
+            "Пасхальное воскресенье",
+            "Вознесение Господне – через 39 дней после Пасхи",
+            "Пятидесятница – через 49 дней после Пасхи",
+            "Пепельная среда – за 46 дней до Пасхи",
+            "Пальмовое воскресенье – за неделю до Пасхи",
+            "Великий четверг – за три дня до Пасхи",
+            "Преображенское воскресенье – перед Пепельной средой",
+            "День благодарения – четвёртый четверг ноября",
+            "Воскресенье Реформации – последнее воскресенье октября",
+            "День матери – второе воскресенье мая",
+            "День отца – третье воскресенье июня",
+            "Национальный день молитвы – первый четверг мая",
+            "31 октября – День Реформации",
+            "1 ноября – День всех святых"
+        ]
+    }
+
+    private var catholicHolidayNames: [String] {
+        [
+            "6 января — Богоявление (День трёх царей)",
+            "Блинный день — 47-й день до Пасхи",
+            "Пепельная среда. Начало Великого поста",
+            "17 марта — День святого Патрика",
+            "Четыре Пятниц Великого поста",
+            "Пальмовое воскресенье",
+            "Пасхальная неделя",
+            "Вознесение Господне — 40-й день после Пасхи",
+            "День Святой Троицы — 50-й день после Пасхи",
+            "24 июня — День святого Иоанна Крестителя",
+            "6 августа — Преображение Господне",
+            "15 августа - Успение Богородицы",
+            "31 октября — Хэллоуин",
+            "1 ноября — День всех святых",
+            "Четвёртый четверг ноября — День Благодарения",
+            "Первое воскресенье Адвента",
+            "8 декабря — Непорочное зачатие Пресвятой Богородицы",
+            "Три пятницы Адвента",
+            "25 декабря — Католическое Рождество"
+        ]
+    }
+
+    private var orthodoxHolidayNames: [String] {
+        [
+            "6 января — Рождественский сочельник",
+            "7 января — Православное Рождество",
+            "19 января — Крещение Господне",
+            "15 февраля — Сретение Господне",
+            "Прощеное воскресенье",
+            "Чистый понедельник",
+            "Первая пятница после Чистого понедельника",
+            "Второй понедельник Великого поста",
+            "7 апреля — Благовещение",
+            "Лазарева суббота",
+            "Вход Господень в Иерусалим (Вербное воскресенье)",
+            "Пасхальная неделя",
+            "Пятидесятница",
+            "Начало Петрова поста",
+            "7 июля — Рождество Иоанна Предтечи (ночь Иван Купала)",
+            "8 июля — День семьи, любви и верности",
+            "Завершение Петрова Поста",
+            "12 июля - праздник святых апостолов Петра и Павла",
+            "28 июля — Крещение Руси",
+            "Начало Успенского поста",
+            "19 августа — Преображение Господне (Яблочный Спас)",
+            "Последний день Успенского поста",
+            "28 августа — Успение Пресвятой Богородицы",
+            "Начало Рождественского поста"
+        ]
+    }
+
+    private var jewishHolidayNames: [String] {
+        [
+            "Рош ха-Шана — Еврейский Новый год",
+            "Йом-Кипур — Судный день",
+            "Неделя Суккота",
+            "Ханукальная неделя",
+            "Пурим",
+            "Песах",
+            "Шавуот",
+            "Ту би-Шват — Новый год деревьев",
+            "Тиша бе-Ав",
+            "Симха Тора",
+            "Пост Гедальи",
+            "Пост Десятое тевета",
+            "Пост Семнадцатое тамуза",
+            "Пост Эстер"
+        ]
+    }
+
+    private var latinAmericanHolidayNames: [String] {
+        [
+            "5–9 февраля 2027 — Карнавалы Бразилии и Колумбии",
+            "24 июня — Инти Райми",
+            "1–2 ноября — День мёртвых",
+            "16–24 декабря — Лас Посадас",
+            "25 декабря — Рождество"
+        ]
     }
 
     private var neutralHolidayNames: [String] {

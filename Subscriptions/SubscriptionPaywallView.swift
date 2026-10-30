@@ -30,11 +30,13 @@ enum SubscriptionPaywallMode: Equatable {
     func accessibilityHeader(for language: AppLanguage) -> String {
         switch self {
         case .initialOffer:
+            if language == .spanishLatinAmerica { return "Planes. Prueba MorningHello gratis durante 30 días." }
             return language.localized(
                 "Тарифные планы. Попробуйте MorningHello бесплатно в течение 30 дней."
             )
 
         case .accessEnded:
+            if language == .spanishLatinAmerica { return "La prueba gratuita terminó. El monitoreo se ha detenido." }
             return language.localized(
                 "Бесплатный период завершён. Мониторинг остановлен."
             )
@@ -137,13 +139,13 @@ enum SubscriptionPaywallMode: Equatable {
                     ProfileView()
                 }
                 .alert(
-                    "Подписка",
+                    paywallL10n("Подписка", "Subscription", "Suscripción"),
                     isPresented: Binding(
                         get: { purchaseMessage != nil },
                         set: { if !$0 { purchaseMessage = nil } }
                     )
                 ) {
-                    Button("Понятно", role: .cancel) {
+                    Button(paywallL10n("Понятно", "OK", "Entendido"), role: .cancel) {
                         purchaseMessage = nil
                     }
                 } message: {
@@ -160,14 +162,14 @@ enum SubscriptionPaywallMode: Equatable {
         
         private var navigationButtons: some View {
             HStack(spacing: 58) {
-                Button("Контакты") {
+                Button(paywallL10n("Контакты", "Contacts", "Contactos")) {
                     AppSoundPlayer.shared.play(
                         .openForm
                     )
                     showContacts = true
                 }
                 
-                Button("Профиль") {
+                Button(paywallL10n("Профиль", "Profile", "Perfil")) {
                     AppSoundPlayer.shared.play(
                         .openForm
                     )
@@ -193,21 +195,23 @@ enum SubscriptionPaywallMode: Equatable {
                     .fixedSize(horizontal: false, vertical: true)
                 
                 VStack(alignment: .leading, spacing: 9) {
-                    benefit("отмечаться «Я в порядке» каждые 24, 48 или 72 часа;")
-                    benefit("автоматически предупреждать подтверждённых контактов, если отметки нет;")
-                    benefit("отправлять близким открытки с добрыми пожеланиями.")
+                    benefit(paywallL10n("отмечаться «Я в порядке» каждые 24, 48 или 72 часа;", "Check in with “I’m OK” every 24, 48 or 72 hours;", "Confirmar que estás bien cada 24, 48 o 72 horas;"))
+                    benefit(paywallL10n("автоматически предупреждать подтверждённых контактов, если отметки нет;", "Notify confirmed emergency contacts if a check-in is missed;", "Avisar a los contactos de emergencia confirmados si falta una confirmación;"))
+                    benefit(paywallL10n("отправлять близким открытки с добрыми пожеланиями.", "Send warm postcards to your loved ones.", "Enviar postales con buenos deseos a tus seres queridos."))
                 }
                 
                 if mode == .initialOffer {
-                    Text(
-                        "Вы можете отменить подписку в настройках Apple до окончания бесплатного периода. В этом случае плата не будет списана."
-                    )
+                    Text(paywallL10n(
+                        "Вы можете отменить подписку в настройках Apple до окончания бесплатного периода. В этом случае плата не будет списана.",
+                        "You can cancel in Apple subscription settings before your free trial ends to avoid a charge.",
+                        "Puedes cancelar en los ajustes de suscripciones de Apple antes de que termine la prueba gratuita para evitar el cobro."
+                    ))
                     .font(.system(.footnote, design: .rounded))
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
                 }
                 
-                Text("Выберите подписку")
+                Text(paywallL10n("Выберите подписку", "Choose a subscription", "Elige una suscripción"))
                     .font(.system(.title3, design: .rounded).weight(.bold))
                     .padding(.top, 2)
                 
@@ -230,8 +234,8 @@ enum SubscriptionPaywallMode: Equatable {
                         
                         Text(
                             isPurchasing
-                            ? selectedLanguage.localized("Открываем App Store…")
-                            : selectedLanguage.localized("Подписка")
+                            ? paywallL10n("Открываем App Store…", "Opening App Store…", "Abriendo App Store…")
+                            : paywallL10n("Подписка", "Subscribe", "Suscribirse")
                         )
                             .font(.system(.headline, design: .rounded))
                     }
@@ -246,7 +250,7 @@ enum SubscriptionPaywallMode: Equatable {
                 
                 if subscriptionManager.products.isEmpty,
                    subscriptionManager.lastError != nil {
-                    Text("Не удалось загрузить тарифы App Store. Проверьте интернет и попробуйте ещё раз.")
+                    Text(paywallL10n("Не удалось загрузить тарифы App Store. Проверьте интернет и попробуйте ещё раз.", "Could not load App Store plans. Check your internet connection and try again.", "No se pudieron cargar los planes de App Store. Comprueba tu conexión e inténtalo de nuevo."))
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
@@ -262,20 +266,16 @@ enum SubscriptionPaywallMode: Equatable {
         private var paywallIntroText: String {
             switch mode {
             case .initialOffer:
-                return selectedLanguage.localized(
-                    "Попробуйте MorningHello бесплатно в течение 30 дней, чтобы:"
-                )
+                return paywallL10n("Попробуйте MorningHello бесплатно в течение 30 дней, чтобы:", "Try MorningHello free for 30 days to:", "Prueba MorningHello gratis durante 30 días para:")
             case .accessEnded:
-                return selectedLanguage.localized(
-                    "Продолжите пользоваться MorningHello, чтобы:"
-                )
+                return paywallL10n("Продолжите пользоваться MorningHello, чтобы:", "Continue using MorningHello to:", "Continúa usando MorningHello para:")
             }
         }
         
         private func benefit(_ text: String) -> some View {
             HStack(alignment: .top, spacing: 9) {
                 Text("•")
-                Text(selectedLanguage.localized(text))
+                Text(text)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .font(.system(.subheadline, design: .rounded))
@@ -295,9 +295,9 @@ enum SubscriptionPaywallMode: Equatable {
                         )
                     
                     VStack(alignment: .leading, spacing: 3) {
-                        Text(selectedLanguage.localized(plan.title))
+                        Text(planTitle(plan))
                             .font(.system(.headline, design: .rounded))
-                        Text(selectedLanguage.localized(plan.subtitle))
+                        Text(planSubtitle(plan))
                             .font(.system(.footnote, design: .rounded))
                             .foregroundStyle(.secondary)
                     }
@@ -329,7 +329,7 @@ enum SubscriptionPaywallMode: Equatable {
             .buttonStyle(.plain)
             .accessibilityValue(
                 selectedPlan == plan
-                ? selectedLanguage.localized("Выбрано")
+                ? paywallL10n("Выбрано", "Selected", "Seleccionado")
                 : ""
             )
         }
@@ -349,12 +349,8 @@ enum SubscriptionPaywallMode: Equatable {
 
                         Text(
                             isRestoring
-                            ? selectedLanguage.localized(
-                                "Восстанавливаем…"
-                            )
-                            : selectedLanguage.localized(
-                                "Восстановить покупки"
-                            )
+                            ? paywallL10n("Восстанавливаем…", "Restoring…", "Restaurando…")
+                            : paywallL10n("Восстановить покупки", "Restore purchases", "Restaurar compras")
                         )
                     }
                     .frame(
@@ -404,24 +400,18 @@ enum SubscriptionPaywallMode: Equatable {
 
                 if subscriptionManager.hasActiveSubscription {
                     purchaseMessage =
-                        selectedLanguage.localized(
-                            "Покупки восстановлены. Подписка активна."
-                        )
+                        paywallL10n("Покупки восстановлены. Подписка активна.", "Purchases restored. Your subscription is active.", "Compras restauradas. Tu suscripción está activa.")
 
                     onPurchaseCompleted?()
                 } else {
                     purchaseMessage =
-                        selectedLanguage.localized(
-                            "Активная подписка для этого Apple ID не найдена."
-                        )
+                        paywallL10n("Активная подписка для этого Apple ID не найдена.", "No active subscription was found for this Apple ID.", "No se encontró una suscripción activa para este Apple ID.")
                 }
             } catch {
                 purchaseMessage =
                     String(
                         format:
-                            selectedLanguage.localized(
-                                "Не удалось восстановить покупки: %@"
-                            ),
+                            paywallL10n("Не удалось восстановить покупки: %@", "Could not restore purchases: %@", "No se pudieron restaurar las compras: %@"),
                         locale:
                             selectedLanguage.locale,
                         error.localizedDescription
@@ -440,9 +430,7 @@ enum SubscriptionPaywallMode: Equatable {
                     selectedProduct
             else {
                 purchaseMessage =
-                    selectedLanguage.localized(
-                        "Тариф пока недоступен в App Store. Попробуйте ещё раз позднее."
-                    )
+                    paywallL10n("Тариф пока недоступен в App Store. Попробуйте ещё раз позднее.", "This plan is unavailable in the App Store. Try again later.", "Este plan no está disponible en App Store. Inténtalo más tarde.")
 
                 return
             }
@@ -478,9 +466,7 @@ enum SubscriptionPaywallMode: Equatable {
 
                 if outcome == .pending {
                     purchaseMessage =
-                        selectedLanguage.localized(
-                            "Покупка ожидает подтверждения. Доступ включится автоматически после одобрения App Store."
-                        )
+                        paywallL10n("Покупка ожидает подтверждения. Доступ включится автоматически после одобрения App Store.", "Your purchase is pending approval. Access will be enabled after App Store approval.", "Tu compra está pendiente de aprobación. El acceso se activará cuando App Store la apruebe.")
                 } else if outcome == .purchased {
                     onPurchaseCompleted?()
                 }
@@ -499,10 +485,45 @@ enum SubscriptionPaywallMode: Equatable {
         case .englishUS: code = "en"
         case .spanishLatinAmerica: code = "es"
         }
+        if selectedLanguage == .spanishLatinAmerica {
+            switch key {
+            case "paywall.header": return "Planes de MorningHello"
+            case "paywall.trial": return "Prueba MorningHello gratis durante 30 días"
+            case "paywall.ended": return "Sigue usando MorningHello"
+            case "paywall.links.apple": return "Condiciones estándar de uso de Apple"
+            case "paywall.links.terms": return "Términos y condiciones de MorningHello"
+            case "paywall.links.privacy": return "Política de privacidad"
+            default: break
+            }
+        }
         guard let path = Bundle.main.path(forResource: code, ofType: "lproj"),
               let bundle = Bundle(path: path) else { return fallback }
         return bundle.localizedString(forKey: key, value: fallback, table: "SubscriptionScreens")
     }
+
+        private func paywallL10n(_ ru: String, _ en: String, _ es: String) -> String {
+            switch selectedLanguage {
+            case .russian: return ru
+            case .englishUS: return en
+            case .spanishLatinAmerica: return es
+            }
+        }
+
+        private func planTitle(_ plan: Plan) -> String {
+            switch plan {
+            case .monthly: return paywallL10n("Ежемесячная", "Monthly", "Mensual")
+            case .quarterly: return paywallL10n("На 3 месяца", "3 months", "3 meses")
+            case .annual: return paywallL10n("Годовая", "Annual", "Anual")
+            }
+        }
+
+        private func planSubtitle(_ plan: Plan) -> String {
+            switch plan {
+            case .monthly: return paywallL10n("Оплата каждый месяц", "Billed monthly", "Pago mensual")
+            case .quarterly: return paywallL10n("Оплата каждые три месяца", "Billed every 3 months", "Pago cada 3 meses")
+            case .annual: return paywallL10n("Самый выгодный вариант", "Best value", "La opción más económica")
+            }
+        }
 
         private var selectedLanguage: AppLanguage {
             AppLanguage(
@@ -525,8 +546,9 @@ enum SubscriptionPaywallMode: Equatable {
                         "https://www.morninghelloapp.com/ru/terms-and-conditions"
                 )!
                 
-            case .englishUS,
-                    .spanishLatinAmerica:
+            case .spanishLatinAmerica:
+                return URL(string: "https://www.morninghelloapp.com/es/terms-and-conditions")!
+            case .englishUS:
                 return URL(
                     string:
                         "https://www.morninghelloapp.com/terms-and-conditions"
@@ -542,8 +564,9 @@ enum SubscriptionPaywallMode: Equatable {
                         "https://www.morninghelloapp.com/ru/privacy-policy"
                 )!
                 
-            case .englishUS,
-                    .spanishLatinAmerica:
+            case .spanishLatinAmerica:
+                return URL(string: "https://www.morninghelloapp.com/es/privacy-policy")!
+            case .englishUS:
                 return URL(
                     string:
                         "https://www.morninghelloapp.com/privacy-policy"
